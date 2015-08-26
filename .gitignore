@@ -1,0 +1,16 @@
+*.suo
+*.csproj.user
+*.pidb
+*.userprefs
+
+/Binaries/*.zip
+
+bin/
+obj/
+
+/Patcher/project.lock
+/Patcher/project.lock.json
+
+/packages
+
+.DS_Store
