@@ -1,4 +1,6 @@
 ﻿using System;
+
+#if WEBSERVER
 using System.Threading;
 using System.IO;
 using OTA.Logging;
@@ -15,11 +17,14 @@ using System.Security;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
+#endif
 
 namespace OTA.Web
 {
     public static class WebServer
     {
+
+        #if WEBSERVER
         public static System.Web.Http.HttpConfiguration Config { get; private set; }
 
         public static string StaticFileDirectory = "Web";
@@ -44,19 +49,25 @@ namespace OTA.Web
 
 //            Config.Formatters.Add(new System.Net.Http.Formatting.JsonMediaTypeFormatter());
         }
+        #endif
 
         public static void Start(string baseAddress)
         {
+            #if WEBSERVER
             Switch.Reset();
             (new Thread(OWINServer.StartServer)).Start(baseAddress);
+            #endif
         }
 
         public static void Stop()
         {
+            #if WEBSERVER
             Switch.Set();
+            #endif
         }
     }
 
+    #if WEBSERVER
     class PluginServiceResolver : System.Web.Http.Dispatcher.DefaultAssembliesResolver
     {
         public override System.Collections.Generic.ICollection<System.Reflection.Assembly> GetAssemblies()
@@ -215,5 +226,6 @@ namespace OTA.Web
             }
         }
     }
+    #endif
 }
 

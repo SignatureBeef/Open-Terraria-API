@@ -1,6 +1,8 @@
 ﻿
+
 using System;
 using System.Reflection;
+
 namespace OTA.Patcher
 {
     [Serializable]
@@ -12,7 +14,8 @@ namespace OTA.Patcher
         {
             get
             {
-                return (int)_api.GetType("TDSM.API.Globals").GetField("Build").GetValue(null);
+                return (int)_api.GetType("OTA.Globals").GetField("Build").GetValue(null);
+
             }
         }
 
@@ -20,7 +23,7 @@ namespace OTA.Patcher
         {
             get
             {
-                return (string)_api.GetType("TDSM.API.Globals").GetField("TerrariaVersion").GetValue(null);
+                return (string)_api.GetType("OTA.Globals").GetField("TerrariaVersion").GetValue(null);
             }
         }
 
@@ -29,7 +32,7 @@ namespace OTA.Patcher
         {
             get
             {
-                return (string)_api.GetType("TDSM.API.Globals").GetProperty("LibrariesPath").GetValue(null, null);
+                return (string)_api.GetType("OTA.Globals").GetProperty("LibrariesPath").GetValue(null, null);
             }
         }
 
@@ -37,7 +40,7 @@ namespace OTA.Patcher
         {
             get
             {
-                return (string)_api.GetType("TDSM.API.Globals").GetProperty("PluginPath").GetValue(null, null);
+                return (string)_api.GetType("OTA.Globals").GetProperty("PluginPath").GetValue(null, null);
             }
         }
 
@@ -45,11 +48,11 @@ namespace OTA.Patcher
         {
             get
             {
-                return (bool)_api.GetType("TDSM.API.Globals").GetProperty("IsPatching").GetValue(null, null);
+                return (bool)_api.GetType("OTA.Globals").GetProperty("IsPatching").GetValue(null, null);
             }
             set
             {
-                _api.GetType("TDSM.API.Globals").GetProperty("IsPatching").SetValue(null, value, null);
+                _api.GetType("OTA.Globals").GetProperty("IsPatching").SetValue(null, value, null);
             }
         }
 
@@ -57,9 +60,9 @@ namespace OTA.Patcher
         {
             IsPatching = true;
 
-            _api.GetType("TDSM.API.Globals").GetMethod("Touch").Invoke(null, null);
+            _api.GetType("OTA.Globals").GetMethod("Touch").Invoke(null, null);
 
-            var pm = _api.GetType("TDSM.API.PluginManager");
+            var pm = _api.GetType("OTA.PluginManager");
 
             pm.GetMethod("SetHookSource").Invoke(null, new object[] { _api.GetType("TDSM.API.Plugin.HookPoints") });
             pm.GetMethod("Initialize").Invoke(null, new object[] { PluginPath, LibrariesPath });
@@ -68,8 +71,8 @@ namespace OTA.Patcher
 
         public void InvokeEvent(byte[] terraria, bool isServer)
         {
-            var hct = _api.GetType("TDSM.API.Plugin.HookContext");
-            var hap = _api.GetType("TDSM.API.Plugin.HookArgs").GetNestedType("PatchServer");
+            var hct = _api.GetType("OTA.Plugin.HookContext");
+            var hap = _api.GetType("OTA.Plugin.HookArgs").GetNestedType("PatchServer");
 
             var ctx = Activator.CreateInstance(hct);
             var args = Activator.CreateInstance(hap);
@@ -78,7 +81,7 @@ namespace OTA.Patcher
             hap.GetProperty("IsServer").SetValue(args, isServer, null);
             hap.GetProperty("IsClient").SetValue(args, !isServer, null);
 
-            var pst = _api.GetType("TDSM.API.Plugin.HookPoints")
+            var pst = _api.GetType("OTA.Plugin.HookPoints")
                 .GetField("PatchServer");
             var pse = pst.GetValue(null);
 
@@ -105,6 +108,7 @@ namespace OTA.Patcher
         //static Assembly _api;
         static Proxy _api;
         static AppDomain _domain;
+
         static APIWrapper()
         {
             //_domain = AppDomain.CreateDomain("TDSM_API_WRAPPER", AppDomain.CurrentDomain.Evidence, new AppDomainSetup()
@@ -112,12 +116,12 @@ namespace OTA.Patcher
             //    //ShadowCopyFiles = "false",
             //    ApplicationBase = Environment.CurrentDirectory
             //});
-            _domain = AppDomain.CreateDomain("TDSM_API_WRAPPER", null /*AppDomain.CurrentDomain.Evidence*/, new AppDomainSetup()
-            {
-                //ShadowCopyFiles = "false",
-                ApplicationBase = Environment.CurrentDirectory/*, Commented out as OSX does not have this?
+            _domain = AppDomain.CreateDomain("OPEN_TERRARIA_API_WRAPPER", null /*AppDomain.CurrentDomain.Evidence*/, new AppDomainSetup()
+                {
+                    //ShadowCopyFiles = "false",
+                    ApplicationBase = Environment.CurrentDirectory/*, Commented out as OSX does not have this?
                 AppDomainManagerAssembly = String.Empty*/
-            });
+                });
 
             //Console.WriteLine("Domain: " + ((_domain == null) ? "null" : "not null"));
 
@@ -132,7 +136,7 @@ namespace OTA.Patcher
             //};
 
             var type = typeof(Proxy);
-            foreach (var file in new string[] { "tdsm-patcher.exe", "TDSM.API.dll" })
+            foreach (var file in new string[] { "Patcher.exe", "OTA.dll" })
             {
                 if (!System.IO.File.Exists(file))
                 {
@@ -149,7 +153,7 @@ namespace OTA.Patcher
             ////var p = r.GetRealObject(new System.Runtime.Serialization.StreamingContext( System.Runtime.Serialization.StreamingContextStates.CrossAppDomain));
             _api = plugin.Unwrap() as Proxy;
 
-            _api.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "TDSM.API.dll"));
+            _api.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "OTA.dll"));
 
             //var has = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.GetName().Name == "TDSM.API").Count() > 0;
             //var asm = _domain.GetAssemblies();

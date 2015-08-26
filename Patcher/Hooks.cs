@@ -298,21 +298,27 @@ namespace OTA.Patcher
         //            { return _asm.MainModule.Types.Single(x => x.Name == "ProgramServer"); }
         //        }
 
-        #if SERVER
+        /// <summary>
+        /// Entry class for windows
+        /// </summary>
+        /// <value>The windows launch.</value>
         public TypeDefinition WindowsLaunch
         {
             get
 
             { return _asm.MainModule.Types.Single(x => x.Name == "WindowsLaunch"); }
         }
-        #elif CLIENT
+
+        /// <summary>
+        /// Entry class for Mac
+        /// </summary>
+        /// <value>The program.</value>
         public TypeDefinition Program
         {
             get
 
             { return _asm.MainModule.Types.Single(x => x.Name == "Program"); }
         }
-        #endif
 
         public TypeDefinition NPC
         {

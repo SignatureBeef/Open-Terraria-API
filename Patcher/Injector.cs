@@ -95,15 +95,6 @@ namespace OTA.Patcher
                     _asm.CustomAttributes[x].Properties[0] = new CustomAttributeNamedArgument("FrameworkDisplayName", cs);
                 }
             }
-
-//            var xnaFramework = _asm.MainModule.AssemblyReferences
-//                .Where(x => x.Name.StartsWith("Microsoft.Xna.Framework"))
-//                .ToArray();
-//            
-//            foreach(var reference in _asm.MainModule.AssemblyReferences)
-//            {
-//                
-//            }
         }
 
         #region "Memory"
@@ -761,40 +752,46 @@ namespace OTA.Patcher
             }
         }
 
-        public void HookProgramStart()
+        public void HookProgramStart(PatchMode mode)
         {
-            #if SERVER
-            var method = Terraria.WindowsLaunch.Methods.Single(x => x.Name == "Main");
-            var callback = API.MainCallback.Methods.First(m => m.Name == "OnProgramStarted");
+            if (mode == PatchMode.Server)
+            {
+                var method = Terraria.WindowsLaunch.Methods.Single(x => x.Name == "Main");
+                var callback = API.MainCallback.Methods.First(m => m.Name == "OnProgramStarted");
 
-            var il = method.Body.GetILProcessor();
+                var il = method.Body.GetILProcessor();
 
-            var ret = il.Create(OpCodes.Ret);
-            var call = il.Create(OpCodes.Call, _asm.MainModule.Import(callback));
-            var first = method.Body.Instructions.First();
+                var ret = il.Create(OpCodes.Ret);
+                var call = il.Create(OpCodes.Call, _asm.MainModule.Import(callback));
+                var first = method.Body.Instructions.First();
 
-            il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
-            il.InsertBefore(first, call);
-            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
-            il.InsertBefore(first, ret);
-            #elif CLIENT
-            var method = Terraria.Program.Methods.Single(x => x.Name == "LaunchGame");
-            var callback = API.MainCallback.Methods.First(m => m.Name == "OnClientStarted");
+                il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
+                il.InsertBefore(first, call);
+                il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
+                il.InsertBefore(first, ret);
+            }
+            else if (mode == PatchMode.Client)
+            {
+                var method = Terraria.Program.Methods.Single(x => x.Name == "LaunchGame");
+                var callback = API.MainCallback.Methods.First(m => m.Name == "OnClientStarted");
 
-            var il = method.Body.GetILProcessor();
+                var il = method.Body.GetILProcessor();
 
-            var ret = il.Create(OpCodes.Ret);
-            var call = il.Create(OpCodes.Call, _asm.MainModule.Import(callback));
-            var first = method.Body.Instructions.First();
+                var ret = il.Create(OpCodes.Ret);
+                var call = il.Create(OpCodes.Call, _asm.MainModule.Import(callback));
+                var first = method.Body.Instructions.First();
 
-            il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
-            il.InsertBefore(first, call);
-            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
-            il.InsertBefore(first, ret);
-            #endif
+                il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
+                il.InsertBefore(first, call);
+                il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
+                il.InsertBefore(first, ret);
+            }
         }
 
-        #if SERVER
+        /// <summary>
+        /// Removes the console handler.
+        /// </summary>
+        /// <remarks>>Server only</remarks>
         public void RemoveConsoleHandler()
         {
             var method = Terraria.WindowsLaunch.Methods.Single(x => x.Name == "Main");
@@ -805,7 +802,6 @@ namespace OTA.Patcher
             il.Remove(target.Previous);
             il.Remove(target);
         }
-        #endif
 
         //        public void RemoveProcess()
         //        {
@@ -2354,40 +2350,41 @@ namespace OTA.Patcher
             il.InsertAfter(startBloodMoon.Next, il.Create(OpCodes.Ldc_I4_0));
         }
 
-        public void Save(string fileName, int apiBuild, string tdsmUID, string name)
+        public void Save(PatchMode mode, string fileName, int apiBuild, string tdsmUID, string name)
         {
-            #if SERVER
-            //Ensure the name is updated to the new one
-            _asm.Name = new AssemblyNameDefinition(name, new Version(0, 0, apiBuild, 0));
-            _asm.MainModule.Name = fileName;
-
-            //Change the uniqueness from what Terraria has, to something different (that way vanilla isn't picked up by assembly resolutions)
-            var g = _asm.CustomAttributes.Single(x => x.AttributeType.Name == "GuidAttribute");
-
-            for (var x = 0; x < _asm.CustomAttributes.Count; x++)
+            if (mode == PatchMode.Server)
             {
-                if (_asm.CustomAttributes[x].AttributeType.Name == "GuidAttribute")
+                //Ensure the name is updated to the new one
+                _asm.Name = new AssemblyNameDefinition(name, new Version(0, 0, apiBuild, 0));
+                _asm.MainModule.Name = fileName;
+
+                //Change the uniqueness from what Terraria has, to something different (that way vanilla isn't picked up by assembly resolutions)
+                var g = _asm.CustomAttributes.Single(x => x.AttributeType.Name == "GuidAttribute");
+
+                for (var x = 0; x < _asm.CustomAttributes.Count; x++)
                 {
-                    _asm.CustomAttributes[x].ConstructorArguments[0] =
+                    if (_asm.CustomAttributes[x].AttributeType.Name == "GuidAttribute")
+                    {
+                        _asm.CustomAttributes[x].ConstructorArguments[0] =
                         new CustomAttributeArgument(_asm.CustomAttributes[x].ConstructorArguments[0].Type, tdsmUID);
-                }
-                else if (_asm.CustomAttributes[x].AttributeType.Name == "AssemblyTitleAttribute")
-                {
-                    _asm.CustomAttributes[x].ConstructorArguments[0] =
+                    }
+                    else if (_asm.CustomAttributes[x].AttributeType.Name == "AssemblyTitleAttribute")
+                    {
+                        _asm.CustomAttributes[x].ConstructorArguments[0] =
                         new CustomAttributeArgument(_asm.CustomAttributes[x].ConstructorArguments[0].Type, name);
-                }
-                else if (_asm.CustomAttributes[x].AttributeType.Name == "AssemblyProductAttribute")
-                {
-                    _asm.CustomAttributes[x].ConstructorArguments[0] =
+                    }
+                    else if (_asm.CustomAttributes[x].AttributeType.Name == "AssemblyProductAttribute")
+                    {
+                        _asm.CustomAttributes[x].ConstructorArguments[0] =
                         new CustomAttributeArgument(_asm.CustomAttributes[x].ConstructorArguments[0].Type, name);
+                    }
+                    //else if (_asm.CustomAttributes[x].AttributeType.Name == "AssemblyFileVersionAttribute")
+                    //{
+                    //    _asm.CustomAttributes[x].ConstructorArguments[0] =
+                    //        new CustomAttributeArgument(_asm.CustomAttributes[x].ConstructorArguments[0].Type, "1.0.0.0");
+                    //}
                 }
-                //else if (_asm.CustomAttributes[x].AttributeType.Name == "AssemblyFileVersionAttribute")
-                //{
-                //    _asm.CustomAttributes[x].ConstructorArguments[0] =
-                //        new CustomAttributeArgument(_asm.CustomAttributes[x].ConstructorArguments[0].Type, "1.0.0.0");
-                //}
             }
-            #endif
 
             //_asm.Write(fileName);
             using (var fs = File.OpenWrite(fileName))
