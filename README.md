@@ -1,4 +1,4 @@
-# OTA  [![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](http://tdsm.sithous.com/slack)
+# Open Terraria API (OTA)  [![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](http://tdsm.sithous.com/slack)
 *Supporting Terraria v1.3!*  
 
 The Open Terraria API is a modification of the official dedicated Terraria server software.
