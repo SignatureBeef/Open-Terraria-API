@@ -2,6 +2,6 @@ language: csharp
 solution: tdsm.sln
 install:
   - mozroots --import --sync
-  - nuget restore tdsm.sln
+  - nuget restore Open\ Terraria\ API.sln
 script:
-  - xbuild /p:Configuration=Debug tdsm.sln
+  - xbuild /p:Configuration=Debug Open\ Terraria\ API.sln
