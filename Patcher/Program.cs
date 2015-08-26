@@ -705,7 +705,7 @@ namespace OTA.Patcher
                 "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.pdb",
                 "Libraries" + Path.DirectorySeparatorChar + "NLua.dll",
                 "Patcher.exe",
-                    "Patcher.pdb",
+                "Patcher.pdb",
                 "Vestris.ResourceLib.dll",
                 "Libraries" + Path.DirectorySeparatorChar + "KopiLua.dll",
                 "Libraries" + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
