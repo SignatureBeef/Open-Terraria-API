@@ -149,7 +149,7 @@ namespace OTA.Patcher
                 }
             }
             var plugin = _domain.CreateInstance(type.Assembly.FullName, type.FullName);
-            var r = plugin.CreateObjRef(typeof(MarshalByRefObject));
+//            var r = plugin.CreateObjRef(typeof(MarshalByRefObject));
             ////var p = r.GetRealObject(new System.Runtime.Serialization.StreamingContext( System.Runtime.Serialization.StreamingContextStates.CrossAppDomain));
             _api = plugin.Unwrap() as Proxy;
 

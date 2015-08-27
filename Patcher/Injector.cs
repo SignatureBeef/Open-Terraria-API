@@ -165,7 +165,7 @@ namespace OTA.Patcher
             var memTile = _self.MainModule.Types.Single(x => x.Name == "MemTile");
             var vt = _asm.MainModule.Import(memTile);
             var setCall = _asm.MainModule.Import(memTile.Methods.Single(x => x.Name == "SetTile"));
-            var emptyTile = _asm.MainModule.Import(memTile.Fields.Single(x => x.Name == "Empty"));
+//            var emptyTile = _asm.MainModule.Import(memTile.Fields.Single(x => x.Name == "Empty"));
             //var vt = _asm.MainModule.Import(_self.MainModule.Types.Single(x => x.Name == "VanillaTile"));
 
             if (ty.Name != "Tile")
@@ -213,7 +213,7 @@ namespace OTA.Patcher
 
                                 //                                if (mth.Name == "clearWorld")
                                 {
-                                    var sss = "";
+//                                    var sss = "";
                                     if (ins.OpCode == OpCodes.Call && ins.Operand is MemberReference)
                                     {
                                         var mr = ins.Operand as MemberReference;
@@ -456,7 +456,7 @@ namespace OTA.Patcher
                                 }
                                 else if (ins.Operand is MemberReference)
                                 {
-                                    var mem = ins.Operand as MemberReference;
+//                                    var mem = ins.Operand as MemberReference;
                                     //if (mem..Name == "Tile")
                                     //{
                                     //    vrb.VariableType = SwapToVanillaReference(vrb.VariableType, vt);
@@ -739,7 +739,7 @@ namespace OTA.Patcher
             var method = Terraria.Main.Methods.Single(x => x.Name == "DedServ");
             var callback = API.GameWindow.Methods.First(m => m.Name == "SetTitle");
 
-            var il = method.Body.GetILProcessor();
+//            var il = method.Body.GetILProcessor();
 
             var replacement = _asm.MainModule.Import(callback);
             foreach (var ins in method.Body.Instructions
@@ -873,7 +873,7 @@ namespace OTA.Patcher
             il = method.Body.GetILProcessor();
             il.InsertBefore(method.Body.Instructions.First(), il.Create(OpCodes.Call, _asm.MainModule.Import(callbackBegin)));
 
-            var old = method.Body.Instructions.Last();
+//            var old = method.Body.Instructions.Last();
             var newI = il.Create(OpCodes.Call, _asm.MainModule.Import(callbackEnd));
 
             for (var x = 0; x < method.Body.Instructions.Count; x++)
@@ -1498,7 +1498,8 @@ namespace OTA.Patcher
 
 
             var tl = _asm.MainModule.Types.Single(x => x.Name == "Tile");
-            MethodDefinition opInequality, opEquality;
+            MethodDefinition opInequality;
+//            MethodDefinition opEquality;
             //Add operators that call a static API function for comparisions
 
 
@@ -1535,7 +1536,7 @@ namespace OTA.Patcher
             //We're storing one local variable
             method.Body.Variables.Add(new VariableDefinition(boolType));
 
-            opEquality = method;
+//            opEquality = method;
             tl.Methods.Add(method);
 
             //Do != operator
@@ -1622,26 +1623,26 @@ namespace OTA.Patcher
                 }
             }
 
-            //Section 2 for inequality
-            foreach (var mtd in _asm.MainModule.Types
-                     .SelectMany(x => x.Methods)
-                     .Where(y => y.Body != null && y.Body.Instructions.Where(z =>
-                                                                    z.OpCode == OpCodes.Newobj
-                                                                    && z.Operand is MethodReference
-                                                                    && (z.Operand as MethodReference).DeclaringType.FullName == ("Terraria.Tile")
-                                                                    ).Count() > 0))
-            {
-                var instructions = mtd.Body.Instructions.Where(z =>
-                                                               z.OpCode == OpCodes.Newobj
-                                       && z.Operand is MethodReference
-                                       && (z.Operand as MethodReference).DeclaringType.FullName == ("Terraria.Tile")
-                                   ).ToArray();
-                var mil = mtd.Body.GetILProcessor();
-                foreach (var ins in instructions)
-                {
-
-                }
-            }
+//            //Section 2 for inequality
+//            foreach (var mtd in _asm.MainModule.Types
+//                     .SelectMany(x => x.Methods)
+//                     .Where(y => y.Body != null && y.Body.Instructions.Where(z =>
+//                                                                    z.OpCode == OpCodes.Newobj
+//                                                                    && z.Operand is MethodReference
+//                                                                    && (z.Operand as MethodReference).DeclaringType.FullName == ("Terraria.Tile")
+//                                                                    ).Count() > 0))
+//            {
+//                var instructions = mtd.Body.Instructions.Where(z =>
+//                                                               z.OpCode == OpCodes.Newobj
+//                                       && z.Operand is MethodReference
+//                                       && (z.Operand as MethodReference).DeclaringType.FullName == ("Terraria.Tile")
+//                                   ).ToArray();
+//                var mil = mtd.Body.GetILProcessor();
+//                foreach (var ins in instructions)
+//                {
+//
+//                }
+//            }
         }
 
         /// <summary>
@@ -1695,18 +1696,19 @@ namespace OTA.Patcher
         /// </summary>
         public void PatchSteam()
         {
-            return;
-            var xnaFramework = _asm.MainModule.AssemblyReferences
-                .Where(x => x.Name.StartsWith("Steamworks.NET"))
-                .ToArray();
-
-            for (var x = 0; x < xnaFramework.Length; x++)
-            {
-                xnaFramework[x].Name = _self.Name.Name;
-                xnaFramework[x].PublicKey = _self.Name.PublicKey;
-                xnaFramework[x].PublicKeyToken = _self.Name.PublicKeyToken;
-                xnaFramework[x].Version = _self.Name.Version;
-            }
+            //Not finished
+//            return;
+//            var xnaFramework = _asm.MainModule.AssemblyReferences
+//                .Where(x => x.Name.StartsWith("Steamworks.NET"))
+//                .ToArray();
+//
+//            for (var x = 0; x < xnaFramework.Length; x++)
+//            {
+//                xnaFramework[x].Name = _self.Name.Name;
+//                xnaFramework[x].PublicKey = _self.Name.PublicKey;
+//                xnaFramework[x].PublicKeyToken = _self.Name.PublicKeyToken;
+//                xnaFramework[x].Version = _self.Name.Version;
+//            }
         }
 
         public void HookMessageBuffer()
@@ -2359,7 +2361,7 @@ namespace OTA.Patcher
                 _asm.MainModule.Name = fileName;
 
                 //Change the uniqueness from what Terraria has, to something different (that way vanilla isn't picked up by assembly resolutions)
-                var g = _asm.CustomAttributes.Single(x => x.AttributeType.Name == "GuidAttribute");
+//                var g = _asm.CustomAttributes.Single(x => x.AttributeType.Name == "GuidAttribute");
 
                 for (var x = 0; x < _asm.CustomAttributes.Count; x++)
                 {

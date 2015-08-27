@@ -68,6 +68,13 @@ namespace OTA.Data
 
         PermissionNode[] UserNodes(string username);
 
+        /// <summary>
+        /// Fetches the lowest inherited group
+        /// </summary>
+        /// <returns>The inherited group for user.</returns>
+        /// <param name="username">Username.</param>
+        Group GetInheritedGroupForUser(string username);
+
         #endregion
     }
 
@@ -169,9 +176,9 @@ namespace OTA.Data
 
         public abstract QueryBuilder Where(params WhereFilter[] clause);
 
-//        public abstract QueryBuilder WhereNotExists(QueryBuilder bld);
-//
-//        public abstract QueryBuilder WhereExists(QueryBuilder bld);
+        //        public abstract QueryBuilder WhereNotExists(QueryBuilder bld);
+        //
+        //        public abstract QueryBuilder WhereExists(QueryBuilder bld);
 
         public abstract QueryBuilder Count(string expression = null);
 
@@ -543,6 +550,13 @@ namespace OTA.Data
             if (_connector == null)
                 throw new InvalidOperationException("No connector attached");
             return _connector.UserNodes(username);
+        }
+
+        public static Group GetInheritedGroupForUser(string username)
+        {
+            if (_connector == null)
+                throw new InvalidOperationException("No connector attached");
+            return _connector.GetInheritedGroupForUser(username);
         }
     }
 }
