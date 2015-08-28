@@ -114,6 +114,11 @@ namespace OTA.Misc
 
             return null;
         }
+
+        public bool Contains(string key, string value, bool compareAsLowered = false)
+        {
+            return base.Contains(key + PrefixKey + value, compareAsLowered);
+        }
     }
 
     /// <summary>
