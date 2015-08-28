@@ -1646,6 +1646,24 @@ namespace OTA.Patcher
         }
 
         /// <summary>
+        /// Ensures OTA references the current Terraria assemblyname
+        /// </summary>
+        public void SwapOTAReferences()
+        {
+            var terrariaReferences = _self.MainModule.AssemblyReferences
+                .Where(x => x.Name.StartsWith("Terraria"))
+                .ToArray();
+
+            foreach (var item in terrariaReferences)
+            {
+                item.Name = _asm.Name.Name;
+                item.PublicKey = _asm.Name.PublicKey;
+                item.PublicKeyToken = _asm.Name.PublicKeyToken;
+                item.Version = _asm.Name.Version;
+            }
+        }
+
+        /// <summary>
         /// Removes the references to the XNA binaries, and replaces them with dummies.
         /// </summary>
         public void PatchXNA(bool server)
