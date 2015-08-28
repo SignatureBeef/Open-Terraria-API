@@ -58,9 +58,6 @@
     <WarningLevel>4</WarningLevel>
     <AssemblyName>OTA</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyName>OTA</AssemblyName>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLua">
       <HintPath>..\External\NLua.dll</HintPath>

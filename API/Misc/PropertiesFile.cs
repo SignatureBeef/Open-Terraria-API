@@ -2,7 +2,7 @@
 
 namespace OTA.Misc
 {
-    public class PropertiesFile : DataRegister
+    public class PropertiesFile : PairFileRegister
     {
         //public PropertiesFile(string path)
         //    : base(path)
