@@ -138,7 +138,7 @@ namespace OTA.Callbacks
             System.Threading.Thread.CurrentThread.Name = "Client";
             Console.WriteLine("Starting client");
 
-            return true;
+            return OnProgramStarted(cmd);
         }
 
         public static bool OnProgramStarted(string[] cmd)
