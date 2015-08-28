@@ -395,9 +395,12 @@ namespace OTA.Patcher
 
 
             //#if DEBUG && SERVER
-            Console.Write("Updating Binaries folder...");
-            UpdateBinaries();
-            Console.WriteLine("Ok");
+            if (CopyProjectFiles)
+            {
+                Console.Write("Updating Binaries folder...");
+                UpdateBinaries();
+                Console.WriteLine("Ok");
+            }
             //#endif
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
