@@ -277,6 +277,12 @@ namespace OTA.Patcher
                 if (CopyProjectFiles)
                 {
                     Copy(root, "API", Environment.CurrentDirectory, "OTA", true);
+
+                    if (CopyDependencies != null)
+                        CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
+                            {
+                                RootDirectory = root
+                            });
                 }
             }
 
@@ -383,6 +389,13 @@ namespace OTA.Patcher
                 Console.Write("Ok\nHooking start...");
                 patcher.HookProgramStart(PatchMode);
                 Console.Write("Ok\n");
+
+                if (PerformPatch != null)
+                    PerformPatch.Invoke(null, new InjectorEventArgs()
+                        {
+                            Injector = patcher
+                        });
+                
             }
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
