@@ -58,6 +58,9 @@
     <WarningLevel>4</WarningLevel>
     <AssemblyName>OTA</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>OTA</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLua">
       <HintPath>..\External\NLua.dll</HintPath>
@@ -76,9 +79,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="TerrariaServer">
       <HintPath>..\Binaries\TerrariaServer.exe</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +224,5 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

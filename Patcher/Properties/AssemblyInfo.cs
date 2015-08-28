@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("tdsm.patcher")]
-[assembly: AssemblyDescription("TDSM Patcher Application")]
+[assembly: AssemblyTitle("OTA Patcher")]
+[assembly: AssemblyDescription("Open Terraria API Patcher Application")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("tdsm")]
-[assembly: AssemblyProduct("patcher")]
+[assembly: AssemblyCompany("TDSM")]
+[assembly: AssemblyProduct("OTA Patcher")]
 [assembly: AssemblyCopyright("Copyright © TDSM 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
