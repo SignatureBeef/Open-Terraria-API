@@ -19,7 +19,7 @@ namespace OTA.Callbacks
             {
                 try
                 {
-                    if (a.Name == "Terraria")
+                        if (a.Name == "Terraria" || a.Name == "TerrariaServer")
                         return Assembly.GetEntryAssembly();
                         
                     if (PluginManager._plugins != null)
