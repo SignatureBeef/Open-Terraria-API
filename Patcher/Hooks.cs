@@ -16,7 +16,12 @@ namespace OTA.Patcher
         }
     }
 
-    public sealed class HookAttribute : Attribute
+    public sealed class ServerHookAttribute : Attribute
+    {
+
+    }
+
+    public sealed class ClientHookAttribute : Attribute
     {
 
     }
@@ -37,11 +42,11 @@ namespace OTA.Patcher
             API = new APIOrganiser(_self);
         }
 
-        public void InjectHooks()
+        public void InjectHooks<T>()
         {
             var hooks = typeof(Injector)
                 .GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.GetCustomAttributes(typeof(HookAttribute), false).Count() == 1)
+                .Where(x => x.GetCustomAttributes(typeof(T), false).Count() == 1)
                 .ToArray();
 
             string line = null;
@@ -64,7 +69,7 @@ namespace OTA.Patcher
             Console.Write("Patching in hooks - ");
         }
 
-        [Hook]
+        [ServerHookAttribute]
         void OnPlayerKilled() //OnEntityHurt
         {
             //Routing all instances because i'm yet again in another rush
@@ -108,7 +113,8 @@ namespace OTA.Patcher
             }
         }
 
-        [Hook]
+        [ClientHookAttribute]
+        [ServerHookAttribute]
         void OnPlayerHurt() //OnEntityHurt
         {
             //Routing all instances because i'm yet again in another rush
@@ -139,7 +145,7 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
 
-        [Hook]
+        [ServerHookAttribute]
         void OnDeathMessage()
         {
             //Routing all instances because i'm yet again in another rush
@@ -165,7 +171,7 @@ namespace OTA.Patcher
             }
         }
 
-        [Hook]
+        [ServerHookAttribute]
         private void OnPlayerEntering()
         {
             var getData = Terraria.MessageBuffer.Methods.Single(x => x.Name == "GetData");
@@ -198,7 +204,7 @@ namespace OTA.Patcher
             il.InsertBefore(match, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [Hook]
+        [ServerHookAttribute]
         private void OnPlayerLeave()
         {
             var clientReset = Terraria.RemoteClient.Methods.Single(x => x.Name == "Reset");
@@ -219,7 +225,7 @@ namespace OTA.Patcher
             il.InsertBefore(ins, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [Hook]
+        [ServerHookAttribute]
         private void OnGreetPlayer()
         {
             var greetPlayer = Terraria.NetMessage.Methods.Single(x => x.Name == "greetPlayer");
@@ -234,7 +240,7 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
 
-        [Hook]
+        [ServerHookAttribute]
         private void OnConnectionAccepted()
         {
             var oca = Terraria.Netplay.Methods.Single(x => x.Name == "OnConnectionAccepted");
@@ -246,7 +252,7 @@ namespace OTA.Patcher
             il.InsertBefore(ldsfld, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [Hook]
+        [ServerHookAttribute]
         private void OnNPCKilled()
         {
             var oca = Terraria.NPC.Methods.Single(x => x.Name == "checkDead");

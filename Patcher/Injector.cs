@@ -1654,7 +1654,7 @@ namespace OTA.Patcher
                 .Where(x => x.Name.StartsWith("Terraria"))
                 .ToArray();
 
-
+//            Console.WriteLine("Changing {0} references to {1}", terrariaReferences.Length, _asm.Name.Name);
             foreach (var item in terrariaReferences)
             {
                 item.Name = _asm.Name.Name;
@@ -1664,7 +1664,7 @@ namespace OTA.Patcher
             }
 
             //Annnnnnd save
-            _self.Write("OTA.dll");
+            _self.Write(_self.Name.Name + ".dll");
         }
 
         /// <summary>

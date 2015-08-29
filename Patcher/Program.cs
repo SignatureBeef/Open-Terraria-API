@@ -408,7 +408,7 @@ namespace OTA.Patcher
                 //            patcher.DetectMissingXNA();
 
                 Console.Write("Ok\n");
-                patcher.InjectHooks();
+                patcher.InjectHooks<ServerHookAttribute>();
 
                 Console.Write("Ok\nUpdating to .NET v4.5.1...");
                 patcher.SwitchFramework("4.5.1");
@@ -433,6 +433,8 @@ namespace OTA.Patcher
 
                 Console.Write("Ok\nHooking start...");
                 patcher.HookProgramStart(PatchMode);
+                Console.Write("Ok\nInjecting hooks");
+                patcher.InjectHooks<ClientHookAttribute>();
                 Console.Write("Ok\n");
 
                 if (PerformPatch != null)
