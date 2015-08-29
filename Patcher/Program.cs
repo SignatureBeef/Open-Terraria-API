@@ -615,7 +615,11 @@ namespace OTA.Patcher
                 "Libraries" + Path.DirectorySeparatorChar + "KopiLua.dll",
                 "Libraries" + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
                 "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.dll",
-                "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.pdb"
+                "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.pdb",
+
+                "start-server.bat",
+                "start-server.sh",
+                "start-server.cmd"
             });
 
         public static void UpdateBinaries()
