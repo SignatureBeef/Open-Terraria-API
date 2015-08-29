@@ -110,9 +110,11 @@
     <None Include="packages.config" />
     <None Include="..\..\Terraria-s-Dedicated-Server-Mod\Open-Terraria-API\Binaries\start-server.cmd">
       <Link>start-server.cmd</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\..\Terraria-s-Dedicated-Server-Mod\Open-Terraria-API\Binaries\start-server.sh">
       <Link>start-server.sh</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
