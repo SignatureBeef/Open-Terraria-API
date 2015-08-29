@@ -584,7 +584,24 @@ namespace OTA.Patcher
             File.WriteAllText(outputPath, contents);
         }
 
-        public static void UpdateBinaries(string[] additionalFiles = null)
+        public static List<String> BinariesFiles = new List<String>(new string[]
+        {
+            "OTA.dll",
+            "OTA.dll.mdb",
+            "OTA.pdb",
+            "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.dll",
+            "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.pdb",
+            "Libraries" + Path.DirectorySeparatorChar + "NLua.dll",
+            "Patcher.exe",
+            "Patcher.pdb",
+            //                "Vestris.ResourceLib.dll",
+            "Libraries" + Path.DirectorySeparatorChar + "KopiLua.dll",
+            "Libraries" + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
+            "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.dll",
+            "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.pdb"
+        });
+
+        public static void UpdateBinaries()
         {
             var pathToBinaries = GetBinariesFolder();
             if (!pathToBinaries.Exists)
@@ -593,23 +610,9 @@ namespace OTA.Patcher
                 return;
             }
 
-            foreach (var rel in (new string[]
-                {
-                    "OTA.dll",
-                    "OTA.dll.mdb",
-                    "OTA.pdb",
-                    "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.dll",
-                    "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.pdb",
-                    "Libraries" + Path.DirectorySeparatorChar + "NLua.dll",
-                    "Patcher.exe",
-                    "Patcher.pdb",
-                    //                "Vestris.ResourceLib.dll",
-                    "Libraries" + Path.DirectorySeparatorChar + "KopiLua.dll",
-                    "Libraries" + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
-                    "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.dll",
-                    "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.pdb",
-                    OutputName + ".exe"
-                }).Concat(additionalFiles ?? new string[] {}))
+            BinariesFiles.Add(OutputName + ".exe");
+
+            foreach (var rel in BinariesFiles)
             {
                 if (File.Exists(rel))
                 {
