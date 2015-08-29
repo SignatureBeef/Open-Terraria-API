@@ -152,6 +152,8 @@ namespace OTA.Patcher
         /// <value>The libraries folder.</value>
         public static string LibrariesFolder { get; set; }
 
+        public static bool SwapOTAReferences { get; set; }
+
         static OTAPatcher()
         {
             LibrariesFolder = DefaultLibrariesFolder;
@@ -443,7 +445,7 @@ namespace OTA.Patcher
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write("Saving to {0}...", output);
-            patcher.Save(PatchMode, output, Build, OTAGuid, fileName);
+            patcher.Save(PatchMode, output, Build, OTAGuid, fileName, SwapOTAReferences);
             patcher.Dispose();
             Console.WriteLine("Ok");
 
