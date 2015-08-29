@@ -30,6 +30,9 @@ namespace OTA.Patcher
             //Allow auto running
             OTAPatcher.PromptToRun = true;
 
+            //Allow the copy of the API from it's bin folder
+            OTAPatcher.CopyAPI = true;
+
             OTAPatcher.DefaultProcess(args);
         }
     }
@@ -135,6 +138,12 @@ namespace OTA.Patcher
         /// <value><c>true</c> if auto run; otherwise, <c>false</c>.</value>
         public static bool PromptToRun { get; set; }
 
+        /// <summary>
+        /// Allows the copy of the API dll
+        /// </summary>
+        /// <value><c>true</c> if copy AP; otherwise, <c>false</c>.</value>
+        public static bool CopyAPI { get; set; }
+
         public class InjectorEventArgs
         {
             public Injector Injector { get; internal set; }
@@ -224,12 +233,16 @@ namespace OTA.Patcher
             {
                 if (CopyProjectFiles)
                 {
-                    Copy(root, "API", Environment.CurrentDirectory, "OTA", true);
-
-                    if (!String.IsNullOrEmpty(OTAProjectDirectory))
+                    if (CopyAPI)
                     {
-                        Copy(new DirectoryInfo(Path.Combine(root.FullName, OTAProjectDirectory)), "API", Environment.CurrentDirectory, "OTA", true);
+                        Copy(root, "API", Environment.CurrentDirectory, "OTA", true);
+
+                        if (!String.IsNullOrEmpty(OTAProjectDirectory))
+                        {
+                            Copy(new DirectoryInfo(Path.Combine(root.FullName, OTAProjectDirectory)), "API", Environment.CurrentDirectory, "OTA", true);
+                        }
                     }
+
                     //            Copy(root, "TDSM-Core", Path.Combine(Environment.CurrentDirectory, "Plugins"));
                     //            Copy(root, "Binaries", Path.Combine(Environment.CurrentDirectory), "TDSM.API");
                     //Copy (root, "Restrict", Path.Combine (Environment.CurrentDirectory, "Plugins"), "RestrictPlugin");
@@ -285,7 +298,15 @@ namespace OTA.Patcher
             {
                 if (CopyProjectFiles)
                 {
-                    Copy(root, "API", Environment.CurrentDirectory, "OTA", true);
+                    if (CopyAPI)
+                    {
+                        Copy(root, "API", Environment.CurrentDirectory, "OTA", true);
+
+                        if (!String.IsNullOrEmpty(OTAProjectDirectory))
+                        {
+                            Copy(new DirectoryInfo(Path.Combine(root.FullName, OTAProjectDirectory)), "API", Environment.CurrentDirectory, "OTA", true);
+                        }
+                    }
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
