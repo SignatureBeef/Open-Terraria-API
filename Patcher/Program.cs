@@ -27,6 +27,9 @@ namespace OTA.Patcher
             //Debugging :)
             OTAPatcher.CopyProjectFiles = true;
 
+            //Allow auto running
+            OTAPatcher.PromptToRun = true;
+
             OTAPatcher.DefaultProcess(args);
         }
     }
@@ -125,6 +128,12 @@ namespace OTA.Patcher
         /// Your solution directory if OTA fails to find Binaries
         /// </summary>
         public static string SolutionDirectory { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="OTA.Patcher.OTAPatcher"/> auto runs the output.
+        /// </summary>
+        /// <value><c>true</c> if auto run; otherwise, <c>false</c>.</value>
+        public static bool PromptToRun { get; set; }
 
         public class InjectorEventArgs
         {
@@ -418,15 +427,23 @@ namespace OTA.Patcher
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("You may now run {0} as you would normally.", output);
-            Console.WriteLine("Press [y] to run {0}, any other key will exit . . .", output);
 
-            var noRun = args != null && args.Where(x => x.ToLower() == "-norun").Count() > 0;
-            if (!noRun)
+            if (PromptToRun)
             {
-                if (Console.ReadKey(true).Key == ConsoleKey.Y)
+                var noRun = args != null && args.Where(x => x.ToLower() == "-norun").Count() > 0;
+                if (!noRun)
                 {
-                    Run(output, isMono);
+                    PromptUserToRun(output, isMono);
                 }
+            }
+        }
+
+        public static void PromptUserToRun(string output, bool isMono)
+        {
+            Console.WriteLine("Press [y] to run {0}, any other key will exit . . .", output);
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                Run(output, isMono);
             }
         }
 
@@ -585,21 +602,21 @@ namespace OTA.Patcher
         }
 
         public static List<String> BinariesFiles = new List<String>(new string[]
-        {
-            "OTA.dll",
-            "OTA.dll.mdb",
-            "OTA.pdb",
-            "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.dll",
-            "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.pdb",
-            "Libraries" + Path.DirectorySeparatorChar + "NLua.dll",
-            "Patcher.exe",
-            "Patcher.pdb",
-            //                "Vestris.ResourceLib.dll",
-            "Libraries" + Path.DirectorySeparatorChar + "KopiLua.dll",
-            "Libraries" + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
-            "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.dll",
-            "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.pdb"
-        });
+            {
+                "OTA.dll",
+                "OTA.dll.mdb",
+                "OTA.pdb",
+                "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.dll",
+                "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.pdb",
+                "Libraries" + Path.DirectorySeparatorChar + "NLua.dll",
+                "Patcher.exe",
+                "Patcher.pdb",
+                //                "Vestris.ResourceLib.dll",
+                "Libraries" + Path.DirectorySeparatorChar + "KopiLua.dll",
+                "Libraries" + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
+                "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.dll",
+                "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.pdb"
+            });
 
         public static void UpdateBinaries()
         {
