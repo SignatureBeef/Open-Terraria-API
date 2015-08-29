@@ -144,6 +144,19 @@ namespace OTA.Patcher
         /// <value><c>true</c> if copy AP; otherwise, <c>false</c>.</value>
         public static bool CopyAPI { get; set; }
 
+        const String DefaultLibrariesFolder = "Libraries";
+
+        /// <summary>
+        /// The path where to copy dependencies from into Binaries/Libraries
+        /// </summary>
+        /// <value>The libraries folder.</value>
+        public static string LibrariesFolder { get; set; }
+
+        static OTAPatcher()
+        {
+            LibrariesFolder = DefaultLibrariesFolder;
+        }
+
         public class InjectorEventArgs
         {
             public Injector Injector { get; internal set; }
@@ -246,11 +259,11 @@ namespace OTA.Patcher
                     //            Copy(root, "TDSM-Core", Path.Combine(Environment.CurrentDirectory, "Plugins"));
                     //            Copy(root, "Binaries", Path.Combine(Environment.CurrentDirectory), "TDSM.API");
                     //Copy (root, "Restrict", Path.Combine (Environment.CurrentDirectory, "Plugins"), "RestrictPlugin");
-                    Copy(root, "External", Path.Combine(Environment.CurrentDirectory, "Libraries"), "KopiLua", false);
-                    Copy(root, "External", Path.Combine(Environment.CurrentDirectory, "Libraries"), "NLua", false);
-                    Copy(root, "External", Path.Combine(Environment.CurrentDirectory, "Libraries"), "ICSharpCode.SharpZipLib", false);
-                    Copy(root, "External", Path.Combine(Environment.CurrentDirectory, "Libraries"), "Mono.Nat", false);
-                    //            Copy(root, "tdsm-core", Path.Combine(Environment.CurrentDirectory, "Libraries"), "Newtonsoft.Json", true);
+                    Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "KopiLua", false);
+                    Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "NLua", false);
+                    Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "ICSharpCode.SharpZipLib", false);
+                    Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Mono.Nat", false);
+                    //            Copy(root, "tdsm-core", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Newtonsoft.Json", true);
                     //            Copy(root, "tdsm-web", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-web", true);
                     //            Copy(root, "tdsm-mysql-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-mysql-connector", true);
                     //            Copy(root, "tdsm-sqlite-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-sqlite-connector", true);
@@ -627,16 +640,16 @@ namespace OTA.Patcher
                 "OTA.dll",
                 "OTA.dll.mdb",
                 "OTA.pdb",
-                "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.dll",
-                "Libraries" + Path.DirectorySeparatorChar + "Newtonsoft.Json.pdb",
-                "Libraries" + Path.DirectorySeparatorChar + "NLua.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Newtonsoft.Json.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Newtonsoft.Json.pdb",
+                LibrariesFolder + Path.DirectorySeparatorChar + "NLua.dll",
                 "Patcher.exe",
                 "Patcher.pdb",
                 //                "Vestris.ResourceLib.dll",
-                "Libraries" + Path.DirectorySeparatorChar + "KopiLua.dll",
-                "Libraries" + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
-                "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.dll",
-                "Libraries" + Path.DirectorySeparatorChar + "Mono.Nat.pdb",
+                LibrariesFolder + Path.DirectorySeparatorChar + "KopiLua.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Mono.Nat.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Mono.Nat.pdb",
 
                 "start-server.bat",
                 "start-server.sh",
@@ -671,13 +684,16 @@ namespace OTA.Patcher
             }
 
             //Copy Libraries
-            foreach (var item in Directory.GetFiles("Libraries"))
+            if (Directory.Exists(LibrariesFolder))
             {
-                if (item == "Libraries/.DS_Store") continue;
-                var target = Path.Combine(pathToBinaries.FullName, item);
+                foreach (var item in Directory.GetFiles(LibrariesFolder))
+                {
+                    if (item == Path.Combine(LibrariesFolder, ".DS_Store")) continue;
+                    var target = Path.Combine(pathToBinaries.FullName, item);
 
-                if (File.Exists(target)) File.Delete(target);
-                File.Copy(item, target);
+                    if (File.Exists(target)) File.Delete(target);
+                    File.Copy(item, target);
+                }
             }
         }
     }
