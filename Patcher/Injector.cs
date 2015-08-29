@@ -773,7 +773,7 @@ namespace OTA.Patcher
             else if (mode == PatchMode.Client)
             {
                 var method = Terraria.Program.Methods.Single(x => x.Name == "LaunchGame");
-                var callback = API.MainCallback.Methods.First(m => m.Name == "OnClientStarted");
+                var callback = API.MainCallback.Methods.First(m => m.Name == "OnProgramStarted");
 
                 var il = method.Body.GetILProcessor();
 

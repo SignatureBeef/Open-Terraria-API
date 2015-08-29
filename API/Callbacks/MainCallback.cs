@@ -19,7 +19,7 @@ namespace OTA.Callbacks
             {
                 try
                 {
-                        if (a.Name == "Terraria" || a.Name == "TerrariaServer")
+                    if (a.Name == "Terraria" || a.Name == "TerrariaServer")
                         return Assembly.GetEntryAssembly();
                         
                     if (PluginManager._plugins != null)
@@ -131,14 +131,6 @@ namespace OTA.Callbacks
 //                        Permissions.PermissionsManager.SetHandler(handler);
 //                }
 //            }
-        }
-
-        public static bool OnClientStarted(string[] cmd)
-        {
-            System.Threading.Thread.CurrentThread.Name = "Client";
-            Console.WriteLine("Starting client");
-
-            return OnProgramStarted(cmd);
         }
 
         public static bool OnProgramStarted(string[] cmd)
