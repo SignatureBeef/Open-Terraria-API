@@ -1648,11 +1648,12 @@ namespace OTA.Patcher
         /// <summary>
         /// Ensures OTA references the current Terraria assemblyname
         /// </summary>
-        public void SwapOTAReferences()
+        private void SwapOTAReferences()
         {
             var terrariaReferences = _self.MainModule.AssemblyReferences
                 .Where(x => x.Name.StartsWith("Terraria"))
                 .ToArray();
+
 
             foreach (var item in terrariaReferences)
             {
@@ -1661,6 +1662,9 @@ namespace OTA.Patcher
                 item.PublicKeyToken = _asm.Name.PublicKeyToken;
                 item.Version = _asm.Name.Version;
             }
+
+            //Annnnnnd save
+            _self.Write("OTA.dll");
         }
 
         /// <summary>
@@ -2370,7 +2374,7 @@ namespace OTA.Patcher
             il.InsertAfter(startBloodMoon.Next, il.Create(OpCodes.Ldc_I4_0));
         }
 
-        public void Save(PatchMode mode, string fileName, int apiBuild, string tdsmUID, string name)
+        public void Save(PatchMode mode, string fileName, int apiBuild, string tdsmUID, string name, bool swapOTA = false)
         {
             if (mode == PatchMode.Server)
             {
@@ -2413,6 +2417,8 @@ namespace OTA.Patcher
                 fs.Flush();
                 fs.Close();
             }
+
+            if (swapOTA) SwapOTAReferences();
         }
 
         public void Dispose()
