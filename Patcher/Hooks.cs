@@ -301,10 +301,14 @@ namespace OTA.Patcher
 
                 var il = method.Body.GetILProcessor();
                 var first = method.Body.Instructions.First();
-                var last = method.Body.Instructions.Last().Previous; //Previous to be before the ret
 
                 il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(begin)));
-                il.InsertAfter(last, il.Create(OpCodes.Call, _asm.MainModule.Import(end)));
+
+                //Before any exit point
+                foreach (var ins in method.Body.Instructions.Where(x => x.OpCode == OpCodes.Ret).Reverse())
+                {
+                    il.InsertBefore(ins, il.Create(OpCodes.Call, _asm.MainModule.Import(end)));
+                }
             }
         }
     }
