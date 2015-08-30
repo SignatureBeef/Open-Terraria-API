@@ -61,11 +61,12 @@ namespace OTA.Patcher
         public void InjectHooks<T>()
         {
             var hooks = typeof(Injector)
-                .GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)
                 .Where(x => x.GetCustomAttributes(typeof(T), false).Count() == 1)
                 .ToArray();
 
             string line = null;
+
             for (var x = 0; x < hooks.Length; x++)
             {
                 const String Fmt = "Patching in hooks - {0}/{1}";
@@ -85,7 +86,7 @@ namespace OTA.Patcher
             Console.Write("Patching in hooks - ");
         }
 
-        [ServerHookAttribute]
+        [ServerHook]
         void OnPlayerKilled() //OnEntityHurt
         {
             //Routing all instances because i'm yet again in another rush
@@ -129,8 +130,8 @@ namespace OTA.Patcher
             }
         }
 
-        [ClientHookAttribute]
-        [ServerHookAttribute]
+        [ClientHook]
+        [ServerHook]
         void OnPlayerHurt() //OnEntityHurt
         {
             //Routing all instances because i'm yet again in another rush
@@ -161,7 +162,7 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
 
-        [ServerHookAttribute]
+        [ServerHook]
         void OnDeathMessage()
         {
             //Routing all instances because i'm yet again in another rush
@@ -187,7 +188,7 @@ namespace OTA.Patcher
             }
         }
 
-        [ServerHookAttribute]
+        [ServerHook]
         private void OnPlayerEntering()
         {
             var getData = Terraria.MessageBuffer.Methods.Single(x => x.Name == "GetData");
@@ -220,7 +221,7 @@ namespace OTA.Patcher
             il.InsertBefore(match, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [ServerHookAttribute]
+        [ServerHook]
         private void OnPlayerLeave()
         {
             var clientReset = Terraria.RemoteClient.Methods.Single(x => x.Name == "Reset");
@@ -241,7 +242,7 @@ namespace OTA.Patcher
             il.InsertBefore(ins, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [ServerHookAttribute]
+        [ServerHook]
         private void OnGreetPlayer()
         {
             var greetPlayer = Terraria.NetMessage.Methods.Single(x => x.Name == "greetPlayer");
@@ -256,7 +257,7 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
 
-        [ServerHookAttribute]
+        [ServerHook]
         private void OnConnectionAccepted()
         {
             var oca = Terraria.Netplay.Methods.Single(x => x.Name == "OnConnectionAccepted");
@@ -268,7 +269,7 @@ namespace OTA.Patcher
             il.InsertBefore(ldsfld, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [ServerHookAttribute]
+        [ServerHook]
         private void OnNPCKilled()
         {
             var oca = Terraria.NPC.Methods.Single(x => x.Name == "checkDead");
@@ -284,6 +285,27 @@ namespace OTA.Patcher
             var il = oca.Body.GetILProcessor();
             il.InsertAfter(ins, il.Create(OpCodes.Ldarg_0));
             il.InsertAfter(ins, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
+        }
+
+        /// <summary>
+        /// Hooks Begin and End of Terraria.Main.[Draw/Update]
+        /// </summary>
+        [ClientHookAttribute]
+        private void HookXNAEvents()
+        {
+            foreach (var mth in new string[]{ "Draw", "Update", "UpdateClient"})
+            {
+                var method = Terraria.Main.Methods.Single(x => x.Name == mth);
+                var begin = API.MainCallback.Methods.First(m => m.Name == "On" + mth + "Begin");
+                var end = API.MainCallback.Methods.First(m => m.Name == "On" + mth + "End");
+
+                var il = method.Body.GetILProcessor();
+                var first = method.Body.Instructions.First();
+                var last = method.Body.Instructions.Last().Previous; //Previous to be before the ret
+
+                il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(begin)));
+                il.InsertAfter(last, il.Create(OpCodes.Call, _asm.MainModule.Import(end)));
+            }
         }
     }
 

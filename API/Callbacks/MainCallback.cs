@@ -340,6 +340,7 @@ namespace OTA.Callbacks
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
         }
+
         /// <summary>
         /// The call from the end of Terraria.WorldGen.generateWorld
         /// </summary>
@@ -423,6 +424,90 @@ namespace OTA.Callbacks
             
             HookPoints.InvasionWarning.Invoke(ref ctx, ref args);
             return ctx.Result == HookResult.DEFAULT; //Continue on
+        }
+
+        /// <summary>
+        /// The first call from Terraria.Main.Draw
+        /// </summary>
+        public static void OnDrawBegin()
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.Draw()
+            {
+                State = MethodState.Begin
+            };
+
+            HookPoints.Draw.Invoke(ref ctx, ref args);
+        }
+
+        /// <summary>
+        /// The ending call from Terraria.Main.Draw
+        /// </summary>
+        public static void OnDrawEnd()
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.Draw()
+            {
+                State = MethodState.End
+            };
+
+            HookPoints.Draw.Invoke(ref ctx, ref args);
+        }
+
+        /// <summary>
+        /// The first call from Terraria.Main.Update
+        /// </summary>
+        public static void OnUpdateBegin()
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.Update()
+            {
+                State = MethodState.Begin
+            };
+
+            HookPoints.Update.Invoke(ref ctx, ref args);
+        }
+
+        /// <summary>
+        /// The end call from Terraria.Main.Update
+        /// </summary>
+        public static void OnUpdateEnd()
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.Update()
+            {
+                State = MethodState.End
+            };
+
+            HookPoints.Update.Invoke(ref ctx, ref args);
+        }
+
+        /// <summary>
+        /// The first call from Terraria.Main.UpdateClient
+        /// </summary>
+        public static void OnUpdateClientBegin()
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.UpdateClient()
+            {
+                State = MethodState.Begin
+            };
+
+            HookPoints.UpdateClient.Invoke(ref ctx, ref args);
+        }
+
+        /// <summary>
+        /// The end call from Terraria.Main.UpdateClient
+        /// </summary>
+        public static void OnUpdateClientEnd()
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.UpdateClient()
+            {
+                State = MethodState.End
+            };
+
+            HookPoints.UpdateClient.Invoke(ref ctx, ref args);
         }
     }
 }

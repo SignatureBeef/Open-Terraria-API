@@ -14,6 +14,7 @@ namespace OTA.Plugin
 
     public struct HookContext
     {
+        public static readonly HookContext Empty = new HookContext();
 
         //        public RemoteClient Client { get; set; }
 

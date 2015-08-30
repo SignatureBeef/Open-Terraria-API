@@ -41,6 +41,22 @@ namespace OTA.Patcher
 
             OTAPatcher.DefaultProcess(args);
         }
+
+//        public static void Main(string[] args)
+//        {
+//            //By default we will patch a server
+//            OTAPatcher.PatchMode = OTA.Patcher.PatchMode.Client;
+//
+//            //Specifiy the official file name
+//            OTAPatcher.InputFileName = "Terraria.exe";
+//
+//            //Specify the output assembly[name]
+//            OTAPatcher.OutputName = "Terraria";
+//
+//            OTAPatcher.CopyProjectFiles = true;
+//
+//            OTAPatcher.DefaultProcess(args);
+//        }
     }
 
     /// <summary>

@@ -97,6 +97,11 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.DeathMessage> DeathMessage;
         public static readonly HookPoint<HookArgs.PlayerKilled> PlayerKilled;
 
+        //Client hooks
+        public static readonly HookPoint<HookArgs.Draw> Draw;
+        public static readonly HookPoint<HookArgs.Update> Update;
+        public static readonly HookPoint<HookArgs.UpdateClient> UpdateClient;
+
         static HookPoints()
         {
             ConsoleMessageReceived = new HookPoint<HookArgs.ConsoleMessageReceived>("console-message-received");
@@ -161,11 +166,29 @@ namespace OTA.Plugin
             ParseCommandLineArguments = new HookPoint<HookArgs.ParseCommandLineArguments>("parse-cmd-args");
             DeathMessage = new HookPoint<HookArgs.DeathMessage>("death-message");
             PlayerKilled = new HookPoint<HookArgs.PlayerKilled>("player-killed");
+
+            //Client hooks
+            Draw = new HookPoint<HookArgs.Draw>("draw");
+            Update = new HookPoint<HookArgs.Update>("update");
+            UpdateClient = new HookPoint<HookArgs.UpdateClient>("update-client");
         }
+    }
+
+    public enum MethodState : byte
+    {
+        Begin,
+        End
     }
 
     public static class HookArgs
     {
+        #region "Client Hooks"
+
+        public struct Draw { public MethodState State { get; set; } }
+        public struct Update { public MethodState State { get; set; } }
+        public struct UpdateClient { public MethodState State { get; set; } }
+        #endregion
+
         public struct PlayerKilled
         {
             public double Damage { get; set; }
