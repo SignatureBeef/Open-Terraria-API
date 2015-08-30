@@ -92,15 +92,18 @@ namespace OTA.Command
 
             foreach (var plg in PluginManager.EnumeratePlugins)
             {
-                var additional = plg.commands.GetAvailableCommands(this)
+                if (plg.IsEnabled)
+                {
+                    var additional = plg.commands.GetAvailableCommands(this)
                     .Where(x => !x.Key.StartsWith(plg.Name.ToLower() + '.'))
                     .ToArray();
-                foreach (var pair in additional)
-                {
-                    //Override defaults
-                    if (available.ContainsKey(pair.Key))
-                        available[pair.Key] = pair.Value;
-                    else available.Add(pair.Key, pair.Value);
+                    foreach (var pair in additional)
+                    {
+                        //Override defaults
+                        if (available.ContainsKey(pair.Key))
+                            available[pair.Key] = pair.Value;
+                        else available.Add(pair.Key, pair.Value);
+                    }
                 }
             }
 
