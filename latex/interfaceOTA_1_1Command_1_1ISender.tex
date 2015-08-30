@@ -1,0 +1,75 @@
+\hypertarget{interfaceOTA_1_1Command_1_1ISender}{}\section{I\+Sender}
+\label{interfaceOTA_1_1Command_1_1ISender}\index{I\+Sender@{I\+Sender}}
+
+
+The bare implementation of a sender  
+
+
+Inheritance diagram for I\+Sender\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{interfaceOTA_1_1Command_1_1ISender}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Dictionary$<$ string, \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} $>$ \hyperlink{interfaceOTA_1_1Command_1_1ISender_a815cfd7f711a32a0f3c4c8b129d08c01}{Get\+Available\+Commands} ()
+\item 
+void \hyperlink{interfaceOTA_1_1Command_1_1ISender_a061eb30c76097e9fec57819bbe379599}{Send\+Message} (string message, int sender=255, byte R=255, byte G=255, byte B=255)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{interfaceOTA_1_1Command_1_1ISender_a21ba9f1622dc7475d067844accea3cf6}{Op}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \hyperlink{interfaceOTA_1_1Command_1_1ISender_a8435cbd7a4dda595164d4ff47d4f4525}{Sender\+Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The bare implementation of a sender 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceOTA_1_1Command_1_1ISender_a815cfd7f711a32a0f3c4c8b129d08c01}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}!Get\+Available\+Commands@{Get\+Available\+Commands}}
+\index{Get\+Available\+Commands@{Get\+Available\+Commands}!O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}}
+\subsubsection[{Get\+Available\+Commands()}]{\setlength{\rightskip}{0pt plus 5cm}Dictionary$<$string, {\bf Command\+Info}$>$ Get\+Available\+Commands (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Command_1_1ISender_a815cfd7f711a32a0f3c4c8b129d08c01}
+
+
+Implemented in \hyperlink{classOTA_1_1Command_1_1Sender_a815cfd7f711a32a0f3c4c8b129d08c01}{Sender}, and \hyperlink{classOTA_1_1Command_1_1WorldSender_a815cfd7f711a32a0f3c4c8b129d08c01}{World\+Sender}.
+
+\hypertarget{interfaceOTA_1_1Command_1_1ISender_a061eb30c76097e9fec57819bbe379599}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}!Send\+Message@{Send\+Message}}
+\index{Send\+Message@{Send\+Message}!O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}}
+\subsubsection[{Send\+Message(string message, int sender=255, byte R=255, byte G=255, byte B=255)}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{message, }
+\item[{int}]{sender = {\ttfamily 255}, }
+\item[{byte}]{R = {\ttfamily 255}, }
+\item[{byte}]{G = {\ttfamily 255}, }
+\item[{byte}]{B = {\ttfamily 255}}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Command_1_1ISender_a061eb30c76097e9fec57819bbe379599}
+
+
+Implemented in \hyperlink{classOTA_1_1BasePlayer_aab351e86d2672170773b0e58782ce64c}{Base\+Player}, \hyperlink{classOTA_1_1Command_1_1Sender_a88442a754fb4b417ea6f7fcb0058b75e}{Sender}, \hyperlink{classOTA_1_1Command_1_1ConsoleSender_a39f7a740cc58640c8502e2159e5c724d}{Console\+Sender}, and \hyperlink{classOTA_1_1Command_1_1WorldSender_a061eb30c76097e9fec57819bbe379599}{World\+Sender}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{interfaceOTA_1_1Command_1_1ISender_a21ba9f1622dc7475d067844accea3cf6}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}!Op@{Op}}
+\index{Op@{Op}!O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}}
+\subsubsection[{Op}]{\setlength{\rightskip}{0pt plus 5cm}bool Op\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{interfaceOTA_1_1Command_1_1ISender_a21ba9f1622dc7475d067844accea3cf6}
+\hypertarget{interfaceOTA_1_1Command_1_1ISender_a8435cbd7a4dda595164d4ff47d4f4525}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}!Sender\+Name@{Sender\+Name}}
+\index{Sender\+Name@{Sender\+Name}!O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}}
+\subsubsection[{Sender\+Name}]{\setlength{\rightskip}{0pt plus 5cm}string Sender\+Name\hspace{0.3cm}{\ttfamily [get]}}\label{interfaceOTA_1_1Command_1_1ISender_a8435cbd7a4dda595164d4ff47d4f4525}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{ISender_8cs}{I\+Sender.\+cs}\end{DoxyCompactItemize}

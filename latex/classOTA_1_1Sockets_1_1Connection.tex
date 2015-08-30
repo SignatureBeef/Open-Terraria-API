@@ -1,0 +1,385 @@
+\hypertarget{classOTA_1_1Sockets_1_1Connection}{}\section{Connection}
+\label{classOTA_1_1Sockets_1_1Connection}\index{Connection@{Connection}}
+
+
+An asynchronous tcp client implementation  
+
+
+Inheritance diagram for Connection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOTA_1_1Sockets_1_1Connection}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classOTA_1_1Sockets_1_1Connection_1_1KickArgs}{Kick\+Args}
+\item 
+struct \hyperlink{structOTA_1_1Sockets_1_1Connection_1_1Message}{Message}
+\item 
+class \hyperlink{classOTA_1_1Sockets_1_1Connection_1_1RecvArgs}{Recv\+Args}
+\item 
+class \hyperlink{classOTA_1_1Sockets_1_1Connection_1_1SendArgs}{Send\+Args}
+\item 
+class \hyperlink{classOTA_1_1Sockets_1_1Connection_1_1SocketAsyncEventArgsExt}{Socket\+Async\+Event\+Args\+Ext}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_a7f7a3199c392465d0767c6506c1af5b4}{Close} ()
+\item 
+\hyperlink{classOTA_1_1Sockets_1_1Connection_a346f4774f29e17e14e9b39fa9e2165e3}{Connection} ()
+\item 
+\hyperlink{classOTA_1_1Sockets_1_1Connection_a8422a813eaaa5721ddecbc84c54093b1}{Connection} (Socket sock)
+\item 
+virtual void \hyperlink{classOTA_1_1Sockets_1_1Connection_a0077d74a257769f4d11cb190cb8bf923}{Copy\+And\+Send} (Array\+Segment$<$ byte $>$ segment)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_a0e2644b2df3c228e8d71a55b60723f31}{Flush} ()
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_af61bb3d5bb81c1a6af6166560bf35e70}{Kick\+After} (byte\mbox{[}$\,$\mbox{]} bytes)
+\item 
+virtual void \hyperlink{classOTA_1_1Sockets_1_1Connection_a907eb0a7ebcc2b69c7cb6c09a8788a2e}{Send} (byte\mbox{[}$\,$\mbox{]} bytes)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_ae819c98b2fd576dd8bcb8ecb9f056fda}{Start\+Receiving} (byte\mbox{[}$\,$\mbox{]} buffer)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classOTA_1_1Sockets_1_1Connection_a1c14b7182bb1d2e97ab85dc0e4b14061}{Send\+Queue\+Quota} = 1024
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+abstract void \hyperlink{classOTA_1_1Sockets_1_1Connection_a977bcd34679c9b4530e8bed4b77b1a70}{Handle\+Closure} (Socket\+Error \hyperlink{classOTA_1_1Sockets_1_1Connection_a92dad899cc7fec5f17e847448f03a8ac}{error})
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_ab573c7230b4214b5437ab337c3b105a2}{Handle\+Error} (Socket\+Error err)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_a7b08b4dd5a31ba9d162a2e299831cbf3}{Kick\+Completed} (\hyperlink{classOTA_1_1Sockets_1_1Connection_1_1SocketAsyncEventArgsExt}{Socket\+Async\+Event\+Args\+Ext} argz)
+\item 
+virtual void \hyperlink{classOTA_1_1Sockets_1_1Connection_a38120604444a7207eccc33e2bcfac3bf}{Message\+Send\+Completed} ()
+\item 
+abstract void \hyperlink{classOTA_1_1Sockets_1_1Connection_a5f0e04a5c0f403cbe4449c419a55a87b}{Process\+Read} ()
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_afbcb0bc12e2746fd7d07ab7c3d8c40e1}{Receive\+Completed} (\hyperlink{classOTA_1_1Sockets_1_1Connection_1_1SocketAsyncEventArgsExt}{Socket\+Async\+Event\+Args\+Ext} argz)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_a8521034d55fd4f45724352f024f842b3}{Send} (\hyperlink{structOTA_1_1Sockets_1_1Connection_1_1Message}{Message} message, bool flush=false)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_ad46b65f999756cb3055869fdd67a9fc9}{Send\+Completed} (\hyperlink{classOTA_1_1Sockets_1_1Connection_1_1SocketAsyncEventArgsExt}{Socket\+Async\+Event\+Args\+Ext} argz)
+\item 
+bool \hyperlink{classOTA_1_1Sockets_1_1Connection_ac423595306cd6734497a56c87e727dfa}{Send\+More} (\hyperlink{classOTA_1_1Sockets_1_1Connection_1_1SocketAsyncEventArgsExt}{Socket\+Async\+Event\+Args\+Ext} args, bool flush=false)
+\item 
+virtual Array\+Segment$<$ byte $>$ \hyperlink{classOTA_1_1Sockets_1_1Connection_a89cf4183b659a7d6e11510575468c8b2}{Serialize\+Message} (\hyperlink{structOTA_1_1Sockets_1_1Connection_1_1Message}{Message} msg)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_a73ee3b9726bca36c37f1f618715277be}{Set\+Socket} (Socket sock)
+\item 
+virtual void \hyperlink{classOTA_1_1Sockets_1_1Connection_ad43da0a928a6dc5e05311dfb797e6363}{Timeout} (object dummy)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1Connection_af61ba029b99655429c5e077e8db2123e}{Tx\+List\+Clear} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+volatile int \hyperlink{classOTA_1_1Sockets_1_1Connection_a03833fbfdec8969d68bbc2c7b8037d39}{closed} = 0
+\item 
+volatile int \hyperlink{classOTA_1_1Sockets_1_1Connection_a92dad899cc7fec5f17e847448f03a8ac}{error} = 0
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_a6b94fdf3692083a41291eec4920c62d2}{queue\+Size}
+\item 
+byte\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Sockets_1_1Connection_a102834be1b2b5b979bbec201dc44c2e3}{recv\+Buffer}
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_a4606666ebcea73230c38cd4590e8ac96}{recv\+Bytes}
+\item 
+Timer \hyperlink{classOTA_1_1Sockets_1_1Connection_ac1d97d6f72682d419b309966b2776272}{timeout}
+\item 
+byte\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Sockets_1_1Connection_ac74132c82fb149407a919ea54defeb92}{tx\+Buffer}
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_a4138727bf43a882bdb66abaeb6bc6232}{tx\+Count}
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_ad8ee620cb5b3b5e638603cc95494d33d}{tx\+Head}
+\item 
+List$<$ Array\+Segment$<$ byte $>$ $>$ \hyperlink{classOTA_1_1Sockets_1_1Connection_a93f43e13797901adb7f83908644f394e}{tx\+List} = new List$<$Array\+Segment$<$byte$>$$>$()
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_a5d22e869e5b6dcd485410fd0bf17384d}{tx\+List\+Bytes}
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_a75026c451126794ce1f3b199f4f8269d}{tx\+Prepared}
+\end{DoxyCompactItemize}
+\subsection*{Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+volatile bool \hyperlink{classOTA_1_1Sockets_1_1Connection_ac47d9786649e56b1651e9e2440997da6}{kicking} = false
+\item 
+volatile bool \hyperlink{classOTA_1_1Sockets_1_1Connection_a24cbe8e82659a6b1b70c029c05ed762c}{receiving} = false
+\item 
+volatile bool \hyperlink{classOTA_1_1Sockets_1_1Connection_a3c9c079a5769a46eb86bbac481166bab}{sending} = false
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classOTA_1_1Sockets_1_1Connection_a2b6588a22e550fe70707398645103e2e}{Active}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_a69ee1dc2d865434d38efc54332f88aa3}{Bytes\+Received}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_a785f45619f1d48bdbf4915f6d87d4572}{Bytes\+Sent}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+Socket\+Error \hyperlink{classOTA_1_1Sockets_1_1Connection_a520c92cb15dcbda21a1fa21e2d2691a0}{Error}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_a6877a4159f76ae1f48bddf93e81d8d64}{Queue\+Length}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1Connection_a11bbffcd9c01d0abd3a238c3038e1ae0}{Queue\+Size}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+string \hyperlink{classOTA_1_1Sockets_1_1Connection_a5b3fbccddb2ac7b5856c0cb3a6a6e60c}{Remote\+Address}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
+\item 
+End\+Point \hyperlink{classOTA_1_1Sockets_1_1Connection_a0b05515289b04cf1de67b7d1f8863b94}{Remote\+End\+Point}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An asynchronous tcp client implementation 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a346f4774f29e17e14e9b39fa9e2165e3}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Connection@{Connection}}
+\index{Connection@{Connection}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Connection()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Connection} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1Connection_a346f4774f29e17e14e9b39fa9e2165e3}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a8422a813eaaa5721ddecbc84c54093b1}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Connection@{Connection}}
+\index{Connection@{Connection}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Connection(\+Socket sock)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Connection} (
+\begin{DoxyParamCaption}
+\item[{Socket}]{sock}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1Connection_a8422a813eaaa5721ddecbc84c54093b1}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a7f7a3199c392465d0767c6506c1af5b4}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Close@{Close}}
+\index{Close@{Close}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Close()}]{\setlength{\rightskip}{0pt plus 5cm}void Close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1Connection_a7f7a3199c392465d0767c6506c1af5b4}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a0077d74a257769f4d11cb190cb8bf923}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Copy\+And\+Send@{Copy\+And\+Send}}
+\index{Copy\+And\+Send@{Copy\+And\+Send}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Copy\+And\+Send(\+Array\+Segment$<$ byte $>$ segment)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Copy\+And\+Send (
+\begin{DoxyParamCaption}
+\item[{Array\+Segment$<$ byte $>$}]{segment}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Sockets_1_1Connection_a0077d74a257769f4d11cb190cb8bf923}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a0e2644b2df3c228e8d71a55b60723f31}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Flush@{Flush}}
+\index{Flush@{Flush}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Flush()}]{\setlength{\rightskip}{0pt plus 5cm}void Flush (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1Connection_a0e2644b2df3c228e8d71a55b60723f31}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a977bcd34679c9b4530e8bed4b77b1a70}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Handle\+Closure@{Handle\+Closure}}
+\index{Handle\+Closure@{Handle\+Closure}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Handle\+Closure(\+Socket\+Error error)}]{\setlength{\rightskip}{0pt plus 5cm}abstract void Handle\+Closure (
+\begin{DoxyParamCaption}
+\item[{Socket\+Error}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\label{classOTA_1_1Sockets_1_1Connection_a977bcd34679c9b4530e8bed4b77b1a70}
+
+
+Implemented in \hyperlink{classOTA_1_1Sockets_1_1ClientConnection_a14be22ca5b6354ea76d836440d46d488}{Client\+Connection}.
+
+\hypertarget{classOTA_1_1Sockets_1_1Connection_ab573c7230b4214b5437ab337c3b105a2}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Handle\+Error@{Handle\+Error}}
+\index{Handle\+Error@{Handle\+Error}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Handle\+Error(\+Socket\+Error err)}]{\setlength{\rightskip}{0pt plus 5cm}void Handle\+Error (
+\begin{DoxyParamCaption}
+\item[{Socket\+Error}]{err}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_ab573c7230b4214b5437ab337c3b105a2}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_af61bb3d5bb81c1a6af6166560bf35e70}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Kick\+After@{Kick\+After}}
+\index{Kick\+After@{Kick\+After}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Kick\+After(byte[] bytes)}]{\setlength{\rightskip}{0pt plus 5cm}void Kick\+After (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{bytes}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1Connection_af61bb3d5bb81c1a6af6166560bf35e70}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a7b08b4dd5a31ba9d162a2e299831cbf3}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Kick\+Completed@{Kick\+Completed}}
+\index{Kick\+Completed@{Kick\+Completed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Kick\+Completed(\+Socket\+Async\+Event\+Args\+Ext argz)}]{\setlength{\rightskip}{0pt plus 5cm}void Kick\+Completed (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Async\+Event\+Args\+Ext}}]{argz}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a7b08b4dd5a31ba9d162a2e299831cbf3}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a38120604444a7207eccc33e2bcfac3bf}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Message\+Send\+Completed@{Message\+Send\+Completed}}
+\index{Message\+Send\+Completed@{Message\+Send\+Completed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Message\+Send\+Completed()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Message\+Send\+Completed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Sockets_1_1Connection_a38120604444a7207eccc33e2bcfac3bf}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a5f0e04a5c0f403cbe4449c419a55a87b}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Process\+Read@{Process\+Read}}
+\index{Process\+Read@{Process\+Read}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Process\+Read()}]{\setlength{\rightskip}{0pt plus 5cm}abstract void Process\+Read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\label{classOTA_1_1Sockets_1_1Connection_a5f0e04a5c0f403cbe4449c419a55a87b}
+
+
+Implemented in \hyperlink{classOTA_1_1Sockets_1_1ClientConnection_a48c83f52d881a54208a23256a9bbcce4}{Client\+Connection}.
+
+\hypertarget{classOTA_1_1Sockets_1_1Connection_afbcb0bc12e2746fd7d07ab7c3d8c40e1}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Receive\+Completed@{Receive\+Completed}}
+\index{Receive\+Completed@{Receive\+Completed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Receive\+Completed(\+Socket\+Async\+Event\+Args\+Ext argz)}]{\setlength{\rightskip}{0pt plus 5cm}void Receive\+Completed (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Async\+Event\+Args\+Ext}}]{argz}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_afbcb0bc12e2746fd7d07ab7c3d8c40e1}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a907eb0a7ebcc2b69c7cb6c09a8788a2e}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send@{Send}}
+\index{Send@{Send}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send(byte[] bytes)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Send (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{bytes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Sockets_1_1Connection_a907eb0a7ebcc2b69c7cb6c09a8788a2e}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a8521034d55fd4f45724352f024f842b3}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send@{Send}}
+\index{Send@{Send}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send(\+Message message, bool flush=false)}]{\setlength{\rightskip}{0pt plus 5cm}void Send (
+\begin{DoxyParamCaption}
+\item[{{\bf Message}}]{message, }
+\item[{bool}]{flush = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a8521034d55fd4f45724352f024f842b3}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_ad46b65f999756cb3055869fdd67a9fc9}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send\+Completed@{Send\+Completed}}
+\index{Send\+Completed@{Send\+Completed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send\+Completed(\+Socket\+Async\+Event\+Args\+Ext argz)}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+Completed (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Async\+Event\+Args\+Ext}}]{argz}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_ad46b65f999756cb3055869fdd67a9fc9}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_ac423595306cd6734497a56c87e727dfa}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send\+More@{Send\+More}}
+\index{Send\+More@{Send\+More}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send\+More(\+Socket\+Async\+Event\+Args\+Ext args, bool flush=false)}]{\setlength{\rightskip}{0pt plus 5cm}bool Send\+More (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Async\+Event\+Args\+Ext}}]{args, }
+\item[{bool}]{flush = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_ac423595306cd6734497a56c87e727dfa}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a89cf4183b659a7d6e11510575468c8b2}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Serialize\+Message@{Serialize\+Message}}
+\index{Serialize\+Message@{Serialize\+Message}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Serialize\+Message(\+Message msg)}]{\setlength{\rightskip}{0pt plus 5cm}virtual Array\+Segment$<$byte$>$ Serialize\+Message (
+\begin{DoxyParamCaption}
+\item[{{\bf Message}}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Sockets_1_1Connection_a89cf4183b659a7d6e11510575468c8b2}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a73ee3b9726bca36c37f1f618715277be}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Set\+Socket@{Set\+Socket}}
+\index{Set\+Socket@{Set\+Socket}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Set\+Socket(\+Socket sock)}]{\setlength{\rightskip}{0pt plus 5cm}void Set\+Socket (
+\begin{DoxyParamCaption}
+\item[{Socket}]{sock}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a73ee3b9726bca36c37f1f618715277be}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_ae819c98b2fd576dd8bcb8ecb9f056fda}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Start\+Receiving@{Start\+Receiving}}
+\index{Start\+Receiving@{Start\+Receiving}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Start\+Receiving(byte[] buffer)}]{\setlength{\rightskip}{0pt plus 5cm}void Start\+Receiving (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{buffer}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1Connection_ae819c98b2fd576dd8bcb8ecb9f056fda}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_ad43da0a928a6dc5e05311dfb797e6363}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Timeout@{Timeout}}
+\index{Timeout@{Timeout}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Timeout(object dummy)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Timeout (
+\begin{DoxyParamCaption}
+\item[{object}]{dummy}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Sockets_1_1Connection_ad43da0a928a6dc5e05311dfb797e6363}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_af61ba029b99655429c5e077e8db2123e}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Tx\+List\+Clear@{Tx\+List\+Clear}}
+\index{Tx\+List\+Clear@{Tx\+List\+Clear}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Tx\+List\+Clear()}]{\setlength{\rightskip}{0pt plus 5cm}void Tx\+List\+Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_af61ba029b99655429c5e077e8db2123e}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a03833fbfdec8969d68bbc2c7b8037d39}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!closed@{closed}}
+\index{closed@{closed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{closed}]{\setlength{\rightskip}{0pt plus 5cm}volatile int closed = 0\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a03833fbfdec8969d68bbc2c7b8037d39}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a92dad899cc7fec5f17e847448f03a8ac}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!error@{error}}
+\index{error@{error}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}volatile int error = 0\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a92dad899cc7fec5f17e847448f03a8ac}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_ac47d9786649e56b1651e9e2440997da6}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!kicking@{kicking}}
+\index{kicking@{kicking}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{kicking}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool kicking = false\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Sockets_1_1Connection_ac47d9786649e56b1651e9e2440997da6}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a6b94fdf3692083a41291eec4920c62d2}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!queue\+Size@{queue\+Size}}
+\index{queue\+Size@{queue\+Size}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{queue\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int queue\+Size\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a6b94fdf3692083a41291eec4920c62d2}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a24cbe8e82659a6b1b70c029c05ed762c}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!receiving@{receiving}}
+\index{receiving@{receiving}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{receiving}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool receiving = false\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Sockets_1_1Connection_a24cbe8e82659a6b1b70c029c05ed762c}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a102834be1b2b5b979bbec201dc44c2e3}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!recv\+Buffer@{recv\+Buffer}}
+\index{recv\+Buffer@{recv\+Buffer}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{recv\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}byte \mbox{[}$\,$\mbox{]} recv\+Buffer\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a102834be1b2b5b979bbec201dc44c2e3}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a4606666ebcea73230c38cd4590e8ac96}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!recv\+Bytes@{recv\+Bytes}}
+\index{recv\+Bytes@{recv\+Bytes}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{recv\+Bytes}]{\setlength{\rightskip}{0pt plus 5cm}int recv\+Bytes\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a4606666ebcea73230c38cd4590e8ac96}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a3c9c079a5769a46eb86bbac481166bab}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!sending@{sending}}
+\index{sending@{sending}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{sending}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool sending = false\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Sockets_1_1Connection_a3c9c079a5769a46eb86bbac481166bab}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a1c14b7182bb1d2e97ab85dc0e4b14061}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send\+Queue\+Quota@{Send\+Queue\+Quota}}
+\index{Send\+Queue\+Quota@{Send\+Queue\+Quota}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send\+Queue\+Quota}]{\setlength{\rightskip}{0pt plus 5cm}int Send\+Queue\+Quota = 1024\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Sockets_1_1Connection_a1c14b7182bb1d2e97ab85dc0e4b14061}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_ac1d97d6f72682d419b309966b2776272}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!timeout@{timeout}}
+\index{timeout@{timeout}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{timeout}]{\setlength{\rightskip}{0pt plus 5cm}Timer timeout\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_ac1d97d6f72682d419b309966b2776272}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_ac74132c82fb149407a919ea54defeb92}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+Buffer@{tx\+Buffer}}
+\index{tx\+Buffer@{tx\+Buffer}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}byte \mbox{[}$\,$\mbox{]} tx\+Buffer\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_ac74132c82fb149407a919ea54defeb92}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a4138727bf43a882bdb66abaeb6bc6232}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+Count@{tx\+Count}}
+\index{tx\+Count@{tx\+Count}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+Count}]{\setlength{\rightskip}{0pt plus 5cm}int tx\+Count\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a4138727bf43a882bdb66abaeb6bc6232}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_ad8ee620cb5b3b5e638603cc95494d33d}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+Head@{tx\+Head}}
+\index{tx\+Head@{tx\+Head}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+Head}]{\setlength{\rightskip}{0pt plus 5cm}int tx\+Head\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_ad8ee620cb5b3b5e638603cc95494d33d}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a93f43e13797901adb7f83908644f394e}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+List@{tx\+List}}
+\index{tx\+List@{tx\+List}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+List}]{\setlength{\rightskip}{0pt plus 5cm}List$<$Array\+Segment$<$byte$>$ $>$ tx\+List = new List$<$Array\+Segment$<$byte$>$$>$()\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a93f43e13797901adb7f83908644f394e}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a5d22e869e5b6dcd485410fd0bf17384d}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+List\+Bytes@{tx\+List\+Bytes}}
+\index{tx\+List\+Bytes@{tx\+List\+Bytes}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+List\+Bytes}]{\setlength{\rightskip}{0pt plus 5cm}int tx\+List\+Bytes\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a5d22e869e5b6dcd485410fd0bf17384d}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a75026c451126794ce1f3b199f4f8269d}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+Prepared@{tx\+Prepared}}
+\index{tx\+Prepared@{tx\+Prepared}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+Prepared}]{\setlength{\rightskip}{0pt plus 5cm}int tx\+Prepared\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Sockets_1_1Connection_a75026c451126794ce1f3b199f4f8269d}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a2b6588a22e550fe70707398645103e2e}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Active@{Active}}
+\index{Active@{Active}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Active}]{\setlength{\rightskip}{0pt plus 5cm}bool Active\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Sockets_1_1Connection_a2b6588a22e550fe70707398645103e2e}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a69ee1dc2d865434d38efc54332f88aa3}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Bytes\+Received@{Bytes\+Received}}
+\index{Bytes\+Received@{Bytes\+Received}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Bytes\+Received}]{\setlength{\rightskip}{0pt plus 5cm}int Bytes\+Received\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Sockets_1_1Connection_a69ee1dc2d865434d38efc54332f88aa3}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a785f45619f1d48bdbf4915f6d87d4572}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Bytes\+Sent@{Bytes\+Sent}}
+\index{Bytes\+Sent@{Bytes\+Sent}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Bytes\+Sent}]{\setlength{\rightskip}{0pt plus 5cm}int Bytes\+Sent\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Sockets_1_1Connection_a785f45619f1d48bdbf4915f6d87d4572}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a520c92cb15dcbda21a1fa21e2d2691a0}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Error@{Error}}
+\index{Error@{Error}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Error}]{\setlength{\rightskip}{0pt plus 5cm}Socket\+Error Error\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Sockets_1_1Connection_a520c92cb15dcbda21a1fa21e2d2691a0}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a6877a4159f76ae1f48bddf93e81d8d64}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Queue\+Length@{Queue\+Length}}
+\index{Queue\+Length@{Queue\+Length}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Queue\+Length}]{\setlength{\rightskip}{0pt plus 5cm}int Queue\+Length\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Sockets_1_1Connection_a6877a4159f76ae1f48bddf93e81d8d64}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a11bbffcd9c01d0abd3a238c3038e1ae0}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Queue\+Size@{Queue\+Size}}
+\index{Queue\+Size@{Queue\+Size}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Queue\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int Queue\+Size\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Sockets_1_1Connection_a11bbffcd9c01d0abd3a238c3038e1ae0}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a5b3fbccddb2ac7b5856c0cb3a6a6e60c}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Remote\+Address@{Remote\+Address}}
+\index{Remote\+Address@{Remote\+Address}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Remote\+Address}]{\setlength{\rightskip}{0pt plus 5cm}string Remote\+Address\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [protected set]}}\label{classOTA_1_1Sockets_1_1Connection_a5b3fbccddb2ac7b5856c0cb3a6a6e60c}
+\hypertarget{classOTA_1_1Sockets_1_1Connection_a0b05515289b04cf1de67b7d1f8863b94}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Remote\+End\+Point@{Remote\+End\+Point}}
+\index{Remote\+End\+Point@{Remote\+End\+Point}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Remote\+End\+Point}]{\setlength{\rightskip}{0pt plus 5cm}End\+Point Remote\+End\+Point\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [protected set]}}\label{classOTA_1_1Sockets_1_1Connection_a0b05515289b04cf1de67b7d1f8863b94}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Sockets/\hyperlink{Connection_8cs}{Connection.\+cs}\end{DoxyCompactItemize}

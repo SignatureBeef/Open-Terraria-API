@@ -1,0 +1,147 @@
+\hypertarget{structOTA_1_1Command_1_1WorldTime}{}\section{World\+Time}
+\label{structOTA_1_1Command_1_1WorldTime}\index{World\+Time@{World\+Time}}
+
+
+12 hour world time for use with plugins. It provides easy modifications of game time.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override string \hyperlink{structOTA_1_1Command_1_1WorldTime_aa73e7c4dd1df5fd5fbf81c7764ee1533}{To\+String} ()
+\begin{DoxyCompactList}\small\item\em Formats to 12-\/hour time \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{structOTA_1_1Command_1_1WorldTime}{World\+Time} \hyperlink{structOTA_1_1Command_1_1WorldTime_a65406242fe37b8d17383f657582df369}{Parse} (string input)
+\begin{DoxyCompactList}\small\item\em Parses time in the format of H\+H\+:mm\mbox{[}am$\vert$pm\mbox{]} \end{DoxyCompactList}\item 
+static \hyperlink{structOTA_1_1Command_1_1WorldTime}{World\+Time} \hyperlink{structOTA_1_1Command_1_1WorldTime_a41e751068ab07a228cb148f9414e599b}{Parse} (double time)
+\begin{DoxyCompactList}\small\item\em Parses game time to a \hyperlink{structOTA_1_1Command_1_1WorldTime}{World\+Time} instance \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const double \hyperlink{structOTA_1_1Command_1_1WorldTime_a0b4313f710d865ae9faf23e7ba3b6a95}{Time\+Max} = 86400
+\begin{DoxyCompactList}\small\item\em The maximum time possible. \end{DoxyCompactList}\item 
+const double \hyperlink{structOTA_1_1Command_1_1WorldTime_a9e4a84053d1c6c3760964fdbd19fc28c}{Time\+Min} = 0
+\begin{DoxyCompactList}\small\item\em The minimum time \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{structOTA_1_1Command_1_1WorldTime_a73feb466eb3d31450be8df9849a6ff3f}{A\+M}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The period flag for a 12-\/hour clock \end{DoxyCompactList}\item 
+double \hyperlink{structOTA_1_1Command_1_1WorldTime_a42cec171058685931def95994647cf1f}{Game\+Time}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Translated game time version of the current instance time \end{DoxyCompactList}\item 
+byte \hyperlink{structOTA_1_1Command_1_1WorldTime_aa3de14e3a386da7f7f588a6e0185e0d0}{Hour}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the hour. \end{DoxyCompactList}\item 
+byte \hyperlink{structOTA_1_1Command_1_1WorldTime_a0cdef82fcabb2fea404ae99c50eec8ec}{Minute}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the minute. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+12 hour world time for use with plugins. It provides easy modifications of game time. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structOTA_1_1Command_1_1WorldTime_a65406242fe37b8d17383f657582df369}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Parse@{Parse}}
+\index{Parse@{Parse}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Parse(string input)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf World\+Time} Parse (
+\begin{DoxyParamCaption}
+\item[{string}]{input}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structOTA_1_1Command_1_1WorldTime_a65406242fe37b8d17383f657582df369}
+
+
+Parses time in the format of H\+H\+:mm\mbox{[}am$\vert$pm\mbox{]} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{structOTA_1_1Command_1_1WorldTime_a41e751068ab07a228cb148f9414e599b}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Parse@{Parse}}
+\index{Parse@{Parse}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Parse(double time)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf World\+Time} Parse (
+\begin{DoxyParamCaption}
+\item[{double}]{time}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structOTA_1_1Command_1_1WorldTime_a41e751068ab07a228cb148f9414e599b}
+
+
+Parses game time to a \hyperlink{structOTA_1_1Command_1_1WorldTime}{World\+Time} instance 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & Time.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structOTA_1_1Command_1_1WorldTime_aa73e7c4dd1df5fd5fbf81c7764ee1533}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{To\+String()}]{\setlength{\rightskip}{0pt plus 5cm}override string To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structOTA_1_1Command_1_1WorldTime_aa73e7c4dd1df5fd5fbf81c7764ee1533}
+
+
+Formats to 12-\/hour time 
+
+\begin{DoxyReturn}{Returns}
+A System.\+String that represents the current \hyperlink{structOTA_1_1Command_1_1WorldTime}{O\+T\+A.\+Command.\+World\+Time}.
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structOTA_1_1Command_1_1WorldTime_a0b4313f710d865ae9faf23e7ba3b6a95}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Time\+Max@{Time\+Max}}
+\index{Time\+Max@{Time\+Max}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Time\+Max}]{\setlength{\rightskip}{0pt plus 5cm}const double Time\+Max = 86400}\label{structOTA_1_1Command_1_1WorldTime_a0b4313f710d865ae9faf23e7ba3b6a95}
+
+
+The maximum time possible. 
+
+\hypertarget{structOTA_1_1Command_1_1WorldTime_a9e4a84053d1c6c3760964fdbd19fc28c}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Time\+Min@{Time\+Min}}
+\index{Time\+Min@{Time\+Min}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Time\+Min}]{\setlength{\rightskip}{0pt plus 5cm}const double Time\+Min = 0}\label{structOTA_1_1Command_1_1WorldTime_a9e4a84053d1c6c3760964fdbd19fc28c}
+
+
+The minimum time 
+
+
+
+\subsection{Property Documentation}
+\hypertarget{structOTA_1_1Command_1_1WorldTime_a73feb466eb3d31450be8df9849a6ff3f}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!A\+M@{A\+M}}
+\index{A\+M@{A\+M}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{A\+M}]{\setlength{\rightskip}{0pt plus 5cm}bool A\+M\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{structOTA_1_1Command_1_1WorldTime_a73feb466eb3d31450be8df9849a6ff3f}
+
+
+The period flag for a 12-\/hour clock 
+
+{\ttfamily true} if A; otherwise, {\ttfamily false}.\hypertarget{structOTA_1_1Command_1_1WorldTime_a42cec171058685931def95994647cf1f}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Game\+Time@{Game\+Time}}
+\index{Game\+Time@{Game\+Time}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Game\+Time}]{\setlength{\rightskip}{0pt plus 5cm}double Game\+Time\hspace{0.3cm}{\ttfamily [get]}}\label{structOTA_1_1Command_1_1WorldTime_a42cec171058685931def95994647cf1f}
+
+
+Translated game time version of the current instance time 
+
+The game time.\hypertarget{structOTA_1_1Command_1_1WorldTime_aa3de14e3a386da7f7f588a6e0185e0d0}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Hour@{Hour}}
+\index{Hour@{Hour}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Hour}]{\setlength{\rightskip}{0pt plus 5cm}byte Hour\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{structOTA_1_1Command_1_1WorldTime_aa3de14e3a386da7f7f588a6e0185e0d0}
+
+
+Gets or sets the hour. 
+
+The hour.\hypertarget{structOTA_1_1Command_1_1WorldTime_a0cdef82fcabb2fea404ae99c50eec8ec}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Minute@{Minute}}
+\index{Minute@{Minute}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Minute}]{\setlength{\rightskip}{0pt plus 5cm}byte Minute\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{structOTA_1_1Command_1_1WorldTime_a0cdef82fcabb2fea404ae99c50eec8ec}
+
+
+Gets or sets the minute. 
+
+The minute.
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{ArgumentList_8cs}{Argument\+List.\+cs}\end{DoxyCompactItemize}

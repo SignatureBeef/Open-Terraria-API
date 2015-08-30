@@ -1,0 +1,522 @@
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin}{}\section{Base\+Plugin}
+\label{classOTA_1_1Plugin_1_1BasePlugin}\index{Base\+Plugin@{Base\+Plugin}}
+
+
+\hyperlink{namespaceOTA_1_1Plugin}{Plugin} class, used as base for plugin extensions  
+
+
+Inheritance diagram for Base\+Plugin\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOTA_1_1Plugin_1_1BasePlugin}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structOTA_1_1Plugin_1_1BasePlugin_1_1HookEntry}{Hook\+Entry}
+\item 
+class \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_1_1PauseContext}{Pause\+Context}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a3b0a443be6dc5b167737e5803520ac2a}{Hook$<$ T $>$} (\hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point}$<$ T $>$ hook\+Point, Hook\+Action$<$ T $>$ callback)
+\item 
+void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a4602d6d71d715b8e9fce9f9b2dd32747}{Hook$<$ T $>$} (\hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point}$<$ T $>$ hook\+Point, \hyperlink{namespaceOTA_1_1Plugin_a7c65b8c7c155fec0b559afbe2da809c0}{Hook\+Order} order, Hook\+Action$<$ T $>$ callback)
+\item 
+void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a4b27e54ae9b6d403badbf1ae0acd6869}{Hook\+Base} (\hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point} hook\+Point, \hyperlink{namespaceOTA_1_1Plugin_a7c65b8c7c155fec0b559afbe2da809c0}{Hook\+Order} order, Delegate callback)
+\item 
+void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a1cd07dde95d34b0b6766c37a3a900738}{Unhook} (\hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point} hook\+Point)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a4f074493e57030ed27c34add3d0734ec}{Add\+Command} (string prefix)
+\begin{DoxyCompactList}\small\item\em Adds new command to the server\textquotesingle{}s command list \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a995c9e3e16ac6a9aa30f6f23dfc880cd}{Base\+Plugin} ()
+\item 
+virtual void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aa8de5b30178e6476d98c2e1e0056dbb4}{Disabled} ()
+\begin{DoxyCompactList}\small\item\em Disabling the plugin, usually announcement \end{DoxyCompactList}\item 
+virtual void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a4927d6c4b5044757bbab734c25e51f4b}{Disposed} (object state)
+\begin{DoxyCompactList}\small\item\em A callback for disposing of any resources held by the plugin. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aa2f0b266439d709ec85c0b848a25fd2c}{Enabled} ()
+\begin{DoxyCompactList}\small\item\em Enable routines, usually no more than enabled announcement and registering hooks \end{DoxyCompactList}\item 
+virtual void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a0f5be39a01c19564ffd7abf3ac9f329a}{Initialized} (object state)
+\begin{DoxyCompactList}\small\item\em A callback for initializing the plugin\textquotesingle{}s resources and subscribing to hooks. 
+\begin{DoxyParams}{Parameters}
+{\em state} & A state object returned from On\+Dispose by a previous instance of the plugin, or null otherwise. \\
+\hline
+\end{DoxyParams}
+\end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Plugin_1_1BasePlugin_1_1PauseContext}{Pause\+Context} \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_afc6175023c63a7ea987f94c4ce96ad0c}{Pause} ()
+\begin{DoxyCompactList}\small\item\em Pause all hook and command invocations of this plugin. This method should only be called by the plugin itself and should always be used in a using statement. 
+
+using (this.\+Pause ()) \{ // code \} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a301511e40e501f5408919bad0dad8695}{Resumed} (object state)
+\item 
+virtual object \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a250b8acc3348f42b30077ef17c39e750}{Suspended\+And\+Saved} ()
+\item 
+virtual void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a756fe44dfeb738b144ad91ef76ae2e7f}{World\+Loaded} ()
+\end{DoxyCompactItemize}
+\subsection*{Package Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_ac710f234371d170bd24330dd37a94975}{Disable} ()
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a8796a88bde9d151a6d2a6a3b73eb6a46}{Dispose} (object state=null)
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_ac811d17a0f3a1d7c2a01865e35de31d5}{Enable} ()
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aff4a32cf41e174ee40e486cffb941da4}{Initialize} (object state=null)
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a534c4fa3341023f4ba6f8d8d36cc5c0e}{Initialize\+And\+Hook\+Up} (object state=null)
+\item 
+void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a0dbd9fc841e39de924f74d6f78f0a391}{Notify\+After\+Command} (\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} cmd)
+\item 
+void \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_ac2a40443dd8cda49928e391c8ef68429}{Notify\+Before\+Command} (\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} cmd)
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a8ee57ccbf7bc0d892fe97b9b121368c7}{Notify\+World\+Loaded} ()
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a49cc7f2b3bab579cbb9dd70461f077c5}{Replace\+With} (\hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} new\+Plugin, bool save\+State=true)
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a835ee20f7494f8435b4e9bf49a85b6ac}{Resume} (object state)
+\item 
+object \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_ac4134883489a7722836a2f7fceeaa540}{Suspend} ()
+\end{DoxyCompactItemize}
+\subsection*{Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Manual\+Reset\+Event \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a76875f7956f0cf1e003ed7dc7520fd68}{command\+Pause\+Signal}
+\item 
+Dictionary$<$ string, \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} $>$ \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_ab09400b1ed6abd9b91bde13ab1f22110}{commands} = new Dictionary$<$string, \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info}$>$()
+\item 
+List$<$ \hyperlink{structOTA_1_1Plugin_1_1BasePlugin_1_1HookEntry}{Hook\+Entry} $>$ \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_ad2df02a30b1336c533f72bd58100f994}{desired\+Hooks} = new List$<$\hyperlink{structOTA_1_1Plugin_1_1BasePlugin_1_1HookEntry}{Hook\+Entry}$>$()
+\item 
+int \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a0bc82230260cac458c405151f3b2817a}{disposed}
+\item 
+int \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a03e6cca0c879c0443efb431c30c14f76}{enabled}
+\item 
+Hash\+Set$<$ \hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point} $>$ \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aadf3902b544e8b426ad3b173942ca59d}{hooks} = new Hash\+Set$<$\hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point}$>$()
+\item 
+int \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aa6641a8d5e6fa2f2b1428f568702f34f}{informed\+Of\+World}
+\item 
+volatile bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a4d487bbbc49439c978130e88830836f1}{initialized}
+\item 
+int \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a6969992866a91f2f2fd8525f89d30672}{paused\+Commands}
+\item 
+int \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a7757944434207e32537d2486e00393e2}{running\+Commands}
+\end{DoxyCompactItemize}
+\subsection*{Static Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a8b9ce8ac0dec366381a756a0760ff8ef}{thread\+In\+Command}
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+Assembly \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aeee0920fba5ccfdf0f5e9d349143f4c1}{Assembly}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a13cf46aff4dea87a8f5285a09efece69}{Author}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Plugin}{Plugin} author \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a34409fed9d39281ada2d7ec172a52f9b}{Description}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Plugin}{Plugin} description \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aaa3aa1c9f18769d26ca456053b1134a8}{Enable\+Early}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Whether to enable the plugin right after loading, so it could intercept the Plugin\+Load\+Request hook for other plugins \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aeba0d1037b23829a0e92ff7846cc745f}{Has\+Running\+Commands}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_ab96a71c70205ed1aa4af692ee7f35403}{Is\+Disposed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a45f8df3acbb2721c2df8462f1cd8f14b}{Is\+Enabled}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Whether this plugin is enabled or not \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a7ee9065718e6628dc7791b756fa6c0f9}{Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Name of the plugin \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_af331ba015acf9191899985a835008b9d}{Path}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+Date\+Time \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aae8064b3bcbaaf579fe3aca7541a4b8f}{Path\+Timestamp}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_afdaa27edb811d806bc72f1d53c7334cc}{Status}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Status text displayed by some of the /plugin commands \end{DoxyCompactList}\item 
+int \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_ad339cda6744dc995542dc552ec525a6e}{T\+D\+S\+M\+Build}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Latest compatible T\+D\+S\+M build \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a8ca1a1a001dc102637530f1a11a83224}{Version}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Plugin}{Plugin} version \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{namespaceOTA_1_1Plugin}{Plugin} class, used as base for plugin extensions 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a995c9e3e16ac6a9aa30f6f23dfc880cd}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Base\+Plugin@{Base\+Plugin}}
+\index{Base\+Plugin@{Base\+Plugin}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Base\+Plugin()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Base\+Plugin} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a995c9e3e16ac6a9aa30f6f23dfc880cd}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a4f074493e57030ed27c34add3d0734ec}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Add\+Command@{Add\+Command}}
+\index{Add\+Command@{Add\+Command}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Add\+Command(string prefix)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} Add\+Command (
+\begin{DoxyParamCaption}
+\item[{string}]{prefix}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a4f074493e57030ed27c34add3d0734ec}
+
+
+Adds new command to the server\textquotesingle{}s command list 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prefix} & \hyperlink{namespaceOTA_1_1Command}{Command} text\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New \hyperlink{namespaceOTA_1_1Command}{Command}
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_ac710f234371d170bd24330dd37a94975}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Disable@{Disable}}
+\index{Disable@{Disable}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Disable()}]{\setlength{\rightskip}{0pt plus 5cm}bool Disable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_ac710f234371d170bd24330dd37a94975}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_aa8de5b30178e6476d98c2e1e0056dbb4}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Disabled@{Disabled}}
+\index{Disabled@{Disabled}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Disabled()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Disabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1BasePlugin_aa8de5b30178e6476d98c2e1e0056dbb4}
+
+
+Disabling the plugin, usually announcement 
+
+
+
+Reimplemented in \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a98613409d641a4dca656a332b014dbfe}{L\+U\+A\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a8796a88bde9d151a6d2a6a3b73eb6a46}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Dispose(object state=null)}]{\setlength{\rightskip}{0pt plus 5cm}bool Dispose (
+\begin{DoxyParamCaption}
+\item[{object}]{state = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a8796a88bde9d151a6d2a6a3b73eb6a46}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a4927d6c4b5044757bbab734c25e51f4b}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Disposed@{Disposed}}
+\index{Disposed@{Disposed}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Disposed(object state)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Disposed (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a4927d6c4b5044757bbab734c25e51f4b}
+
+
+A callback for disposing of any resources held by the plugin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & A state object previously returned from Save\+State to be disposed of as well. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_ab16fc36a69cb5852555d75ae2e2c4cda}{L\+U\+A\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_ac811d17a0f3a1d7c2a01865e35de31d5}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Enable@{Enable}}
+\index{Enable@{Enable}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Enable()}]{\setlength{\rightskip}{0pt plus 5cm}bool Enable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_ac811d17a0f3a1d7c2a01865e35de31d5}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_aa2f0b266439d709ec85c0b848a25fd2c}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Enabled@{Enabled}}
+\index{Enabled@{Enabled}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Enabled()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1BasePlugin_aa2f0b266439d709ec85c0b848a25fd2c}
+
+
+Enable routines, usually no more than enabled announcement and registering hooks 
+
+
+
+Reimplemented in \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a9a0442ca7538da671562ad2683aaf42b}{L\+U\+A\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a3b0a443be6dc5b167737e5803520ac2a}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Hook$<$ T $>$@{Hook$<$ T $>$}}
+\index{Hook$<$ T $>$@{Hook$<$ T $>$}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Hook$<$ T $>$(\+Hook\+Point$<$ T $>$ hook\+Point, Hook\+Action$<$ T $>$ callback)}]{\setlength{\rightskip}{0pt plus 5cm}void Hook$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Hook\+Point}$<$ T $>$}]{hook\+Point, }
+\item[{Hook\+Action$<$ T $>$}]{callback}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Plugin_1_1BasePlugin_a3b0a443be6dc5b167737e5803520ac2a}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a4602d6d71d715b8e9fce9f9b2dd32747}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Hook$<$ T $>$@{Hook$<$ T $>$}}
+\index{Hook$<$ T $>$@{Hook$<$ T $>$}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Hook$<$ T $>$(\+Hook\+Point$<$ T $>$ hook\+Point, Hook\+Order order, Hook\+Action$<$ T $>$ callback)}]{\setlength{\rightskip}{0pt plus 5cm}void Hook$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Hook\+Point}$<$ T $>$}]{hook\+Point, }
+\item[{{\bf Hook\+Order}}]{order, }
+\item[{Hook\+Action$<$ T $>$}]{callback}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Plugin_1_1BasePlugin_a4602d6d71d715b8e9fce9f9b2dd32747}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a4b27e54ae9b6d403badbf1ae0acd6869}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Hook\+Base@{Hook\+Base}}
+\index{Hook\+Base@{Hook\+Base}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Hook\+Base(\+Hook\+Point hook\+Point, Hook\+Order order, Delegate callback)}]{\setlength{\rightskip}{0pt plus 5cm}void Hook\+Base (
+\begin{DoxyParamCaption}
+\item[{{\bf Hook\+Point}}]{hook\+Point, }
+\item[{{\bf Hook\+Order}}]{order, }
+\item[{Delegate}]{callback}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Plugin_1_1BasePlugin_a4b27e54ae9b6d403badbf1ae0acd6869}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_aff4a32cf41e174ee40e486cffb941da4}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Initialize(object state=null)}]{\setlength{\rightskip}{0pt plus 5cm}bool Initialize (
+\begin{DoxyParamCaption}
+\item[{object}]{state = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_aff4a32cf41e174ee40e486cffb941da4}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a534c4fa3341023f4ba6f8d8d36cc5c0e}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Initialize\+And\+Hook\+Up@{Initialize\+And\+Hook\+Up}}
+\index{Initialize\+And\+Hook\+Up@{Initialize\+And\+Hook\+Up}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Initialize\+And\+Hook\+Up(object state=null)}]{\setlength{\rightskip}{0pt plus 5cm}bool Initialize\+And\+Hook\+Up (
+\begin{DoxyParamCaption}
+\item[{object}]{state = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a534c4fa3341023f4ba6f8d8d36cc5c0e}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a0f5be39a01c19564ffd7abf3ac9f329a}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Initialized@{Initialized}}
+\index{Initialized@{Initialized}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Initialized(object state)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Initialized (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a0f5be39a01c19564ffd7abf3ac9f329a}
+
+
+A callback for initializing the plugin\textquotesingle{}s resources and subscribing to hooks. 
+\begin{DoxyParams}{Parameters}
+{\em state} & A state object returned from On\+Dispose by a previous instance of the plugin, or null otherwise. \\
+\hline
+\end{DoxyParams}
+
+
+
+
+Reimplemented in \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a08973abba6331ff88e59d563aa89f2c5}{L\+U\+A\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a0dbd9fc841e39de924f74d6f78f0a391}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Notify\+After\+Command@{Notify\+After\+Command}}
+\index{Notify\+After\+Command@{Notify\+After\+Command}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Notify\+After\+Command(\+Command\+Info cmd)}]{\setlength{\rightskip}{0pt plus 5cm}void Notify\+After\+Command (
+\begin{DoxyParamCaption}
+\item[{{\bf Command\+Info}}]{cmd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a0dbd9fc841e39de924f74d6f78f0a391}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_ac2a40443dd8cda49928e391c8ef68429}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Notify\+Before\+Command@{Notify\+Before\+Command}}
+\index{Notify\+Before\+Command@{Notify\+Before\+Command}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Notify\+Before\+Command(\+Command\+Info cmd)}]{\setlength{\rightskip}{0pt plus 5cm}void Notify\+Before\+Command (
+\begin{DoxyParamCaption}
+\item[{{\bf Command\+Info}}]{cmd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_ac2a40443dd8cda49928e391c8ef68429}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a8ee57ccbf7bc0d892fe97b9b121368c7}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Notify\+World\+Loaded@{Notify\+World\+Loaded}}
+\index{Notify\+World\+Loaded@{Notify\+World\+Loaded}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Notify\+World\+Loaded()}]{\setlength{\rightskip}{0pt plus 5cm}bool Notify\+World\+Loaded (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a8ee57ccbf7bc0d892fe97b9b121368c7}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_afc6175023c63a7ea987f94c4ce96ad0c}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Pause@{Pause}}
+\index{Pause@{Pause}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Pause()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pause\+Context} Pause (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Plugin_1_1BasePlugin_afc6175023c63a7ea987f94c4ce96ad0c}
+
+
+Pause all hook and command invocations of this plugin. This method should only be called by the plugin itself and should always be used in a using statement. 
+
+using (this.\+Pause ()) \{ // code \} 
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a49cc7f2b3bab579cbb9dd70461f077c5}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Replace\+With@{Replace\+With}}
+\index{Replace\+With@{Replace\+With}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Replace\+With(\+Base\+Plugin new\+Plugin, bool save\+State=true)}]{\setlength{\rightskip}{0pt plus 5cm}bool Replace\+With (
+\begin{DoxyParamCaption}
+\item[{{\bf Base\+Plugin}}]{new\+Plugin, }
+\item[{bool}]{save\+State = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a49cc7f2b3bab579cbb9dd70461f077c5}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a835ee20f7494f8435b4e9bf49a85b6ac}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Resume@{Resume}}
+\index{Resume@{Resume}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Resume(object state)}]{\setlength{\rightskip}{0pt plus 5cm}bool Resume (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a835ee20f7494f8435b4e9bf49a85b6ac}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a301511e40e501f5408919bad0dad8695}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Resumed@{Resumed}}
+\index{Resumed@{Resumed}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Resumed(object state)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Resumed (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a301511e40e501f5408919bad0dad8695}
+
+
+Reimplemented in \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a33e9c25e6ab86fff5e6eb4e9d103eda4}{L\+U\+A\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_ac4134883489a7722836a2f7fceeaa540}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Suspend@{Suspend}}
+\index{Suspend@{Suspend}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Suspend()}]{\setlength{\rightskip}{0pt plus 5cm}object Suspend (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_ac4134883489a7722836a2f7fceeaa540}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a250b8acc3348f42b30077ef17c39e750}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Suspended\+And\+Saved@{Suspended\+And\+Saved}}
+\index{Suspended\+And\+Saved@{Suspended\+And\+Saved}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Suspended\+And\+Saved()}]{\setlength{\rightskip}{0pt plus 5cm}virtual object Suspended\+And\+Saved (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a250b8acc3348f42b30077ef17c39e750}
+
+
+Reimplemented in \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a7a0f88ea7197b7c72cff81a708c26d21}{L\+U\+A\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a1cd07dde95d34b0b6766c37a3a900738}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Unhook@{Unhook}}
+\index{Unhook@{Unhook}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Unhook(\+Hook\+Point hook\+Point)}]{\setlength{\rightskip}{0pt plus 5cm}void Unhook (
+\begin{DoxyParamCaption}
+\item[{{\bf Hook\+Point}}]{hook\+Point}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Plugin_1_1BasePlugin_a1cd07dde95d34b0b6766c37a3a900738}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a756fe44dfeb738b144ad91ef76ae2e7f}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!World\+Loaded@{World\+Loaded}}
+\index{World\+Loaded@{World\+Loaded}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{World\+Loaded()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void World\+Loaded (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a756fe44dfeb738b144ad91ef76ae2e7f}
+
+
+Reimplemented in \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a3d93a5293d74c61a3789ff92b8de47d9}{L\+U\+A\+Plugin}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a76875f7956f0cf1e003ed7dc7520fd68}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!command\+Pause\+Signal@{command\+Pause\+Signal}}
+\index{command\+Pause\+Signal@{command\+Pause\+Signal}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{command\+Pause\+Signal}]{\setlength{\rightskip}{0pt plus 5cm}Manual\+Reset\+Event command\+Pause\+Signal\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a76875f7956f0cf1e003ed7dc7520fd68}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_ab09400b1ed6abd9b91bde13ab1f22110}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!commands@{commands}}
+\index{commands@{commands}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{commands}]{\setlength{\rightskip}{0pt plus 5cm}Dictionary$<$string, {\bf Command\+Info}$>$ commands = new Dictionary$<$string, {\bf Command\+Info}$>$()\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_ab09400b1ed6abd9b91bde13ab1f22110}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_ad2df02a30b1336c533f72bd58100f994}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!desired\+Hooks@{desired\+Hooks}}
+\index{desired\+Hooks@{desired\+Hooks}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{desired\+Hooks}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Hook\+Entry}$>$ desired\+Hooks = new List$<${\bf Hook\+Entry}$>$()\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_ad2df02a30b1336c533f72bd58100f994}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a0bc82230260cac458c405151f3b2817a}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!disposed@{disposed}}
+\index{disposed@{disposed}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{disposed}]{\setlength{\rightskip}{0pt plus 5cm}int disposed\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a0bc82230260cac458c405151f3b2817a}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a03e6cca0c879c0443efb431c30c14f76}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!enabled@{enabled}}
+\index{enabled@{enabled}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{enabled}]{\setlength{\rightskip}{0pt plus 5cm}int enabled\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a03e6cca0c879c0443efb431c30c14f76}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_aadf3902b544e8b426ad3b173942ca59d}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!hooks@{hooks}}
+\index{hooks@{hooks}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{hooks}]{\setlength{\rightskip}{0pt plus 5cm}Hash\+Set$<${\bf Hook\+Point}$>$ hooks = new Hash\+Set$<${\bf Hook\+Point}$>$()\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_aadf3902b544e8b426ad3b173942ca59d}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_aa6641a8d5e6fa2f2b1428f568702f34f}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!informed\+Of\+World@{informed\+Of\+World}}
+\index{informed\+Of\+World@{informed\+Of\+World}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{informed\+Of\+World}]{\setlength{\rightskip}{0pt plus 5cm}int informed\+Of\+World\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_aa6641a8d5e6fa2f2b1428f568702f34f}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a4d487bbbc49439c978130e88830836f1}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!initialized@{initialized}}
+\index{initialized@{initialized}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{initialized}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool initialized\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a4d487bbbc49439c978130e88830836f1}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a6969992866a91f2f2fd8525f89d30672}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!paused\+Commands@{paused\+Commands}}
+\index{paused\+Commands@{paused\+Commands}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{paused\+Commands}]{\setlength{\rightskip}{0pt plus 5cm}int paused\+Commands\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a6969992866a91f2f2fd8525f89d30672}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a7757944434207e32537d2486e00393e2}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!running\+Commands@{running\+Commands}}
+\index{running\+Commands@{running\+Commands}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{running\+Commands}]{\setlength{\rightskip}{0pt plus 5cm}int running\+Commands\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a7757944434207e32537d2486e00393e2}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a8b9ce8ac0dec366381a756a0760ff8ef}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!thread\+In\+Command@{thread\+In\+Command}}
+\index{thread\+In\+Command@{thread\+In\+Command}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{thread\+In\+Command}]{\setlength{\rightskip}{0pt plus 5cm}int thread\+In\+Command\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a8b9ce8ac0dec366381a756a0760ff8ef}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_aeee0920fba5ccfdf0f5e9d349143f4c1}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Assembly@{Assembly}}
+\index{Assembly@{Assembly}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Assembly}]{\setlength{\rightskip}{0pt plus 5cm}Assembly Assembly\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_aeee0920fba5ccfdf0f5e9d349143f4c1}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a13cf46aff4dea87a8f5285a09efece69}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Author@{Author}}
+\index{Author@{Author}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Author}]{\setlength{\rightskip}{0pt plus 5cm}string Author\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a13cf46aff4dea87a8f5285a09efece69}
+
+
+\hyperlink{namespaceOTA_1_1Plugin}{Plugin} author 
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a34409fed9d39281ada2d7ec172a52f9b}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Description@{Description}}
+\index{Description@{Description}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Description}]{\setlength{\rightskip}{0pt plus 5cm}string Description\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a34409fed9d39281ada2d7ec172a52f9b}
+
+
+\hyperlink{namespaceOTA_1_1Plugin}{Plugin} description 
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_aaa3aa1c9f18769d26ca456053b1134a8}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Enable\+Early@{Enable\+Early}}
+\index{Enable\+Early@{Enable\+Early}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Enable\+Early}]{\setlength{\rightskip}{0pt plus 5cm}bool Enable\+Early\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Plugin_1_1BasePlugin_aaa3aa1c9f18769d26ca456053b1134a8}
+
+
+Whether to enable the plugin right after loading, so it could intercept the Plugin\+Load\+Request hook for other plugins 
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_aeba0d1037b23829a0e92ff7846cc745f}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Has\+Running\+Commands@{Has\+Running\+Commands}}
+\index{Has\+Running\+Commands@{Has\+Running\+Commands}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Has\+Running\+Commands}]{\setlength{\rightskip}{0pt plus 5cm}bool Has\+Running\+Commands\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_aeba0d1037b23829a0e92ff7846cc745f}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_ab96a71c70205ed1aa4af692ee7f35403}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Is\+Disposed@{Is\+Disposed}}
+\index{Is\+Disposed@{Is\+Disposed}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Is\+Disposed}]{\setlength{\rightskip}{0pt plus 5cm}bool Is\+Disposed\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Plugin_1_1BasePlugin_ab96a71c70205ed1aa4af692ee7f35403}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a45f8df3acbb2721c2df8462f1cd8f14b}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Is\+Enabled@{Is\+Enabled}}
+\index{Is\+Enabled@{Is\+Enabled}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Is\+Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool Is\+Enabled\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a45f8df3acbb2721c2df8462f1cd8f14b}
+
+
+Whether this plugin is enabled or not 
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a7ee9065718e6628dc7791b756fa6c0f9}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Name@{Name}}
+\index{Name@{Name}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Name}]{\setlength{\rightskip}{0pt plus 5cm}string Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a7ee9065718e6628dc7791b756fa6c0f9}
+
+
+Name of the plugin 
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_af331ba015acf9191899985a835008b9d}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Path@{Path}}
+\index{Path@{Path}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Path}]{\setlength{\rightskip}{0pt plus 5cm}string Path\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_af331ba015acf9191899985a835008b9d}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_aae8064b3bcbaaf579fe3aca7541a4b8f}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Path\+Timestamp@{Path\+Timestamp}}
+\index{Path\+Timestamp@{Path\+Timestamp}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Path\+Timestamp}]{\setlength{\rightskip}{0pt plus 5cm}Date\+Time Path\+Timestamp\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1BasePlugin_aae8064b3bcbaaf579fe3aca7541a4b8f}
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_afdaa27edb811d806bc72f1d53c7334cc}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Status@{Status}}
+\index{Status@{Status}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Status}]{\setlength{\rightskip}{0pt plus 5cm}string Status\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Plugin_1_1BasePlugin_afdaa27edb811d806bc72f1d53c7334cc}
+
+
+Status text displayed by some of the /plugin commands 
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_ad339cda6744dc995542dc552ec525a6e}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!T\+D\+S\+M\+Build@{T\+D\+S\+M\+Build}}
+\index{T\+D\+S\+M\+Build@{T\+D\+S\+M\+Build}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{T\+D\+S\+M\+Build}]{\setlength{\rightskip}{0pt plus 5cm}int T\+D\+S\+M\+Build\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Plugin_1_1BasePlugin_ad339cda6744dc995542dc552ec525a6e}
+
+
+Latest compatible T\+D\+S\+M build 
+
+\hypertarget{classOTA_1_1Plugin_1_1BasePlugin_a8ca1a1a001dc102637530f1a11a83224}{}\index{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}!Version@{Version}}
+\index{Version@{Version}!O\+T\+A\+::\+Plugin\+::\+Base\+Plugin@{O\+T\+A\+::\+Plugin\+::\+Base\+Plugin}}
+\subsubsection[{Version}]{\setlength{\rightskip}{0pt plus 5cm}string Version\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Plugin_1_1BasePlugin_a8ca1a1a001dc102637530f1a11a83224}
+
+
+\hyperlink{namespaceOTA_1_1Plugin}{Plugin} version 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Plugin/\hyperlink{BasePlugin_8cs}{Base\+Plugin.\+cs}\end{DoxyCompactItemize}

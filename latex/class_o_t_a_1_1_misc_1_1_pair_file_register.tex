@@ -1,0 +1,154 @@
+\hypertarget{class_o_t_a_1_1_misc_1_1_pair_file_register}{}\section{O\+T\+A.\+Misc.\+Pair\+File\+Register Class Reference}
+\label{class_o_t_a_1_1_misc_1_1_pair_file_register}\index{O\+T\+A.\+Misc.\+Pair\+File\+Register@{O\+T\+A.\+Misc.\+Pair\+File\+Register}}
+
+
+Key value register.  
+
+
+Inheritance diagram for O\+T\+A.\+Misc.\+Pair\+File\+Register\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_o_t_a_1_1_misc_1_1_pair_file_register}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_o_t_a_1_1_misc_1_1_pair_file_register_af76a03c418e80ba7f737465bb4c23954}{Pair\+File\+Register} (string path, bool lower\+Keys=true, bool auto\+Load=true)
+\item 
+override void \hyperlink{class_o_t_a_1_1_misc_1_1_pair_file_register_add3bcbb3452b1a803e32169fa82a3ccf}{Load} ()
+\begin{DoxyCompactList}\small\item\em Loads lines from the file \end{DoxyCompactList}\item 
+bool \hyperlink{class_o_t_a_1_1_misc_1_1_pair_file_register_ab5fa823b5556eba432ea58557b33e64a}{Add} (string key, string value, bool auto\+Save=true)
+\begin{DoxyCompactList}\small\item\em Add the specified key and value. \end{DoxyCompactList}\item 
+bool \hyperlink{class_o_t_a_1_1_misc_1_1_pair_file_register_a3bc224aa33de00d534625c1618983bad}{Update} (string key, string value, bool auto\+Save=true)
+\begin{DoxyCompactList}\small\item\em Update a keys value \end{DoxyCompactList}\item 
+string \hyperlink{class_o_t_a_1_1_misc_1_1_pair_file_register_ac52adeb08cf8f98d6aa57c21f36e9984}{Find} (string key)
+\begin{DoxyCompactList}\small\item\em Retreives a listing by the key \end{DoxyCompactList}\item 
+bool \hyperlink{class_o_t_a_1_1_misc_1_1_pair_file_register_aba3c97d01de0bcf7cd62247f3789bddc}{Contains} (string key, string value, bool compare\+As\+Lowered=false)
+\begin{DoxyCompactList}\small\item\em Determine if a key and value exist \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Key value register. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_o_t_a_1_1_misc_1_1_pair_file_register_af76a03c418e80ba7f737465bb4c23954}{}\index{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}!Pair\+File\+Register@{Pair\+File\+Register}}
+\index{Pair\+File\+Register@{Pair\+File\+Register}!O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}}
+\subsubsection[{Pair\+File\+Register(string path, bool lower\+Keys=true, bool auto\+Load=true)}]{\setlength{\rightskip}{0pt plus 5cm}O\+T\+A.\+Misc.\+Pair\+File\+Register.\+Pair\+File\+Register (
+\begin{DoxyParamCaption}
+\item[{string}]{path, }
+\item[{bool}]{lower\+Keys = {\ttfamily true}, }
+\item[{bool}]{auto\+Load = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_misc_1_1_pair_file_register_af76a03c418e80ba7f737465bb4c23954}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_o_t_a_1_1_misc_1_1_pair_file_register_ab5fa823b5556eba432ea58557b33e64a}{}\index{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}!Add@{Add}}
+\index{Add@{Add}!O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}}
+\subsubsection[{Add(string key, string value, bool auto\+Save=true)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Misc.\+Pair\+File\+Register.\+Add (
+\begin{DoxyParamCaption}
+\item[{string}]{key, }
+\item[{string}]{value, }
+\item[{bool}]{auto\+Save = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_misc_1_1_pair_file_register_ab5fa823b5556eba432ea58557b33e64a}
+
+
+Add the specified key and value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Key.\\
+\hline
+{\em value} & Value.\\
+\hline
+{\em auto\+Save} & If set to {\ttfamily true} auto save.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_misc_1_1_pair_file_register_aba3c97d01de0bcf7cd62247f3789bddc}{}\index{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}!Contains@{Contains}}
+\index{Contains@{Contains}!O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}}
+\subsubsection[{Contains(string key, string value, bool compare\+As\+Lowered=false)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Misc.\+Pair\+File\+Register.\+Contains (
+\begin{DoxyParamCaption}
+\item[{string}]{key, }
+\item[{string}]{value, }
+\item[{bool}]{compare\+As\+Lowered = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_misc_1_1_pair_file_register_aba3c97d01de0bcf7cd62247f3789bddc}
+
+
+Determine if a key and value exist 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Key.\\
+\hline
+{\em value} & Value.\\
+\hline
+{\em compare\+As\+Lowered} & If set to {\ttfamily true} compare as lowered.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_misc_1_1_pair_file_register_ac52adeb08cf8f98d6aa57c21f36e9984}{}\index{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}!Find@{Find}}
+\index{Find@{Find}!O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}}
+\subsubsection[{Find(string key)}]{\setlength{\rightskip}{0pt plus 5cm}string O\+T\+A.\+Misc.\+Pair\+File\+Register.\+Find (
+\begin{DoxyParamCaption}
+\item[{string}]{key}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_misc_1_1_pair_file_register_ac52adeb08cf8f98d6aa57c21f36e9984}
+
+
+Retreives a listing by the key 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_o_t_a_1_1_misc_1_1_pair_file_register_add3bcbb3452b1a803e32169fa82a3ccf}{}\index{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}!Load@{Load}}
+\index{Load@{Load}!O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}}
+\subsubsection[{Load()}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Misc.\+Pair\+File\+Register.\+Load (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_o_t_a_1_1_misc_1_1_pair_file_register_add3bcbb3452b1a803e32169fa82a3ccf}
+
+
+Loads lines from the file 
+
+
+
+Reimplemented from \hyperlink{class_o_t_a_1_1_misc_1_1_data_register_ac7c1c53a6f260e6fff4607dc7fe70e0d}{O\+T\+A.\+Misc.\+Data\+Register}.
+
+\hypertarget{class_o_t_a_1_1_misc_1_1_pair_file_register_a3bc224aa33de00d534625c1618983bad}{}\index{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}!Update@{Update}}
+\index{Update@{Update}!O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register@{O\+T\+A\+::\+Misc\+::\+Pair\+File\+Register}}
+\subsubsection[{Update(string key, string value, bool auto\+Save=true)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Misc.\+Pair\+File\+Register.\+Update (
+\begin{DoxyParamCaption}
+\item[{string}]{key, }
+\item[{string}]{value, }
+\item[{bool}]{auto\+Save = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_misc_1_1_pair_file_register_a3bc224aa33de00d534625c1618983bad}
+
+
+Update a keys value 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Key.\\
+\hline
+{\em value} & Value.\\
+\hline
+{\em auto\+Save} & If set to {\ttfamily true} auto save.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Misc/\hyperlink{_data_register_8cs}{Data\+Register.\+cs}\end{DoxyCompactItemize}

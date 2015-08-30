@@ -1,0 +1,1793 @@
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{}\section{Color}
+\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color}\index{Color@{Color}}
+
+
+Represents a four-\/component color using red, green, blue, and alpha data. 
+
+
+Inheritance diagram for Color\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{structMicrosoft_1_1Xna_1_1Framework_1_1Color}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab9b35f296de77e93a8f42750c70db93a}{Color} (uint packed\+Value)
+\item 
+\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a98402a95bcb5cc6ee933cf3213971ad2}{Color} (int r, int g, int b)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of the class.\end{DoxyCompactList}\item 
+\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a08859a7e176d0a35ce672b190a18da00}{Color} (int r, int g, int b, int a)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of the class.\end{DoxyCompactList}\item 
+\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a83b0cedfb6ce76cc35b79da9fdcbefe1}{Color} (float r, float g, float b)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of the class.\end{DoxyCompactList}\item 
+\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3a16ce43c0187e22831a1b768002fd73}{Color} (float r, float g, float b, float a)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of the class.\end{DoxyCompactList}\item 
+\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a4a4f4799d324217ae264a0470dd6dda8}{Color} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Vector3}{Vector3} vector)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of the class.\end{DoxyCompactList}\item 
+\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac545262a3d7de77a99a7c158fa356e91}{Color} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Vector4}{Vector4} vector)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of the class.\end{DoxyCompactList}\item 
+override bool \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aadf763f0213fc2f3875230b06bb0b6cf}{Equals} (object obj)
+\begin{DoxyCompactList}\small\item\em Test an instance of a color object to see if it is equal to this object.\end{DoxyCompactList}\item 
+bool \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9052d75b1b8d88b1c008792a0f9ed450}{Equals} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} other)
+\begin{DoxyCompactList}\small\item\em Test a color to see if it is equal to the color in this instance.\end{DoxyCompactList}\item 
+override int \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a77e1afa2b6dee1ed3640da81d7407b42}{Get\+Hash\+Code} ()
+\begin{DoxyCompactList}\small\item\em Serves as a hash function for a particular type.\end{DoxyCompactList}\item 
+void I\+Packed\+Vector. \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afa02420fa8219ae80a0d93b42d7f41d3}{Pack\+From\+Vector4} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Vector4}{Vector4} vector)
+\begin{DoxyCompactList}\small\item\em Pack a four-\/component color from a vector format into the format of a color object.\end{DoxyCompactList}\item 
+override string \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa73e7c4dd1df5fd5fbf81c7764ee1533}{To\+String} ()
+\begin{DoxyCompactList}\small\item\em Gets a string representation of this object.\end{DoxyCompactList}\item 
+\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Vector3}{Vector3} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad4d650fa1888777702f3e23a7a556b78}{To\+Vector3} ()
+\begin{DoxyCompactList}\small\item\em Gets a three-\/component vector representation for this object.\end{DoxyCompactList}\item 
+\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Vector4}{Vector4} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a14cbe31136980519eb62abfc500c3f1b}{To\+Vector4} ()
+\begin{DoxyCompactList}\small\item\em Gets a four-\/component vector representation for this object.\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a08860aabc688978b0da44aaf6cdc2a68}{From\+Non\+Premultiplied} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Vector4}{Vector4} vector)
+\begin{DoxyCompactList}\small\item\em Convert a non premultipled color into color data that contains alpha.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa78a0bccbc458e1edb4cf41353f22f46}{From\+Non\+Premultiplied} (int r, int g, int b, int a)
+\begin{DoxyCompactList}\small\item\em Converts a non-\/premultipled alpha color to a color that contains premultiplied alpha.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a93bb23f71e8900fe2b226d8bafe214b7}{Lerp} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} value1, \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} value2, float amount)
+\begin{DoxyCompactList}\small\item\em Linearly interpolate a color.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae9f74bf433cc02633ae12fcd45d22808}{Multiply} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} value, float scale)
+\begin{DoxyCompactList}\small\item\em Multiply each color component by the scale factor.\end{DoxyCompactList}\item 
+static bool \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a076cf9a4d2e1aa55976bb84b59f425cb}{operator!=} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} a, \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} b)
+\begin{DoxyCompactList}\small\item\em Equality operator for Testing two color objects to see if they are equal.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7aa0885c3c0519fff9f37494f472fe93}{operator$\ast$} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} value, float scale)
+\begin{DoxyCompactList}\small\item\em Multiply operator.\end{DoxyCompactList}\item 
+static bool \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3a1b56f8fe6a3ef9d79d50d5b269e754}{operator==} (\hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} a, \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} b)
+\begin{DoxyCompactList}\small\item\em Equality operator.\end{DoxyCompactList}\item 
+static uint \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a03947c74d601e5fb27b78c17ce49982a}{Pack\+Helper} (float vector\+X, float vector\+Y, float vector\+Z, float vector\+W)
+\item 
+static uint \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab833acacef2ae23afbcc79a79ef59def}{Pack\+U\+Norm} (float bitmask, float value)
+\item 
+static float \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a43f0776c26475564970bd13ac1e734c5}{Unpack\+U\+Norm} (uint bitmask, uint value)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+byte \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a851238b137a20edbf656ad0b227c7657}{A}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the alpha component value.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac94287beea99da920d21f1abc87424c7}{Alice\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:240 G\+:248 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2061dfd6cbab3b2e74ae12d4a7bae4f5}{Antique\+White}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:250 G\+:235 B\+:215 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a0513bb5c88733f3c4a46e7d171e5818d}{Aqua}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:255 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a541991157a9af348f5eec8f51810d6eb}{Aquamarine}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:127 G\+:255 B\+:212 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac41ebd9c2b2a6b82e2c489c4b2738362}{Azure}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:240 G\+:255 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+byte \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af20775d9682d3bc9365ca7b2a6792298}{B}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the blue component value of this \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color}.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2fb95d3e28de67182b1205dec8a0b657}{Beige}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:245 G\+:245 B\+:220 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a27f39ca0f86138a9978d54ba8d59768f}{Bisque}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:228 B\+:196 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a490360be3af8e93c455d892cb7a05dd9}{Black}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a605c9878e0f8b2f5f510c993b7b249f7}{Blanched\+Almond}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:235 B\+:205 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aadbb3342531fbefd6e7ae00143f743eb}{Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7b411efb5c5ec2f2660ba2d5cda346db}{Blue\+Violet}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:138 G\+:43 B\+:226 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad8b56c943b8231708ed7090575586d39}{Brown}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:165 G\+:42 B\+:42 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a74f360bf9e9fc4e425ba3e357d2391e8}{Burly\+Wood}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:222 G\+:184 B\+:135 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2db4a95aaa374a93dc04dcd80abbb829}{Cadet\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:95 G\+:158 B\+:160 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3a38f15c273b34ece6cd53740a69adaa}{Chartreuse}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:127 G\+:255 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aef6aca8c50909cac60a9509a31d4cf31}{Chocolate}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:210 G\+:105 B\+:30 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7ed2d6db43798975ecb31d89024d02c7}{Coral}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:127 B\+:80 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abd16398ca99ec33233fc4ed536bf8037}{Cornflower\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:100 G\+:149 B\+:237 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2ab29812e2c4665077e92c44baf87ea0}{Cornsilk}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:248 B\+:220 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa4b9f94ce29d3647955af723a988237b}{Crimson}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:220 G\+:20 B\+:60 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a82ef18cd26a9f6281afd5fa9386ea86d}{Cyan}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:255 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a590225d19e29526848b8165fff44b7b0}{Dark\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:139 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5340a7e3a9c1ccbd9982a35e6439c465}{Dark\+Cyan}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:139 B\+:139 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a01f7b42070288061fd2f676d1c2239e4}{Dark\+Goldenrod}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:184 G\+:134 B\+:11 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a0fa98db8de4f25fad389e3229e766b33}{Dark\+Gray}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:169 G\+:169 B\+:169 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af9cecdf4f2189411cbebdd93554db248}{Dark\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:100 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a15e4b1698c04e3782733418c6b93d00d}{Dark\+Khaki}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:189 G\+:183 B\+:107 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9b99e13875699aa78d7c81e023f94c23}{Dark\+Magenta}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:139 G\+:0 B\+:139 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a47a7708284bbf5a7922dfe2c95257025}{Dark\+Olive\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:85 G\+:107 B\+:47 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa393145d85a06647f89b1c6b4ec80da8}{Dark\+Orange}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:140 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a74f6f72dadaf4e2fe0b18f6d6fd2dc89}{Dark\+Orchid}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:153 G\+:50 B\+:204 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a97617da30d2d878b9772b2272657164c}{Dark\+Red}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:139 G\+:0 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8d407cb14c2f02b24a29ab1f7e1b90f0}{Dark\+Salmon}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:233 G\+:150 B\+:122 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a227ffaed17fc3f97b938b1fd73243cac}{Dark\+Sea\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:143 G\+:188 B\+:139 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa104c1a7f64332c5564745b505685363}{Dark\+Slate\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:72 G\+:61 B\+:139 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3147c7a5bc8591e985ede57baa96c016}{Dark\+Slate\+Gray}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:47 G\+:79 B\+:79 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae09720166ade88f2f82c0f2f9a067130}{Dark\+Turquoise}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:206 B\+:209 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af9eb01b5178718d53d8664c358b6e91d}{Dark\+Violet}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:148 G\+:0 B\+:211 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ace4c7b4fcf9e1ad4ff74b9b1e166eb2a}{Deep\+Pink}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:20 B\+:147 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a27bbd85b7873d4dfc82f2047ee3e323e}{Deep\+Sky\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:191 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7b14678cca6c42f642b87382dd7a4a0f}{Dim\+Gray}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:105 G\+:105 B\+:105 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8ed776fe1463ae8ce1c4962d8fbb70b6}{Dodger\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:30 G\+:144 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab0875aabc210eb8f9a0c3714ac0d5ca3}{Firebrick}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:178 G\+:34 B\+:34 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a971eba50d5756242cd07c54c6ff5cb89}{Floral\+White}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:250 B\+:240 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a61f5d4fc4b86bf1071dd413d8cec0810}{Forest\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:34 G\+:139 B\+:34 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a747de302c829d0e557d262945474d126}{Fuchsia}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:0 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+byte \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad42e5b4daa26324d6319b4b360dd9afb}{G}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the green component value of this \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color}.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aea07c873be1d8107ef6186af9a3f92ba}{Gainsboro}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:220 G\+:220 B\+:220 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7e7f36952fc2c630bb0cef197a348e54}{Ghost\+White}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:248 G\+:248 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a76ff7ba14dac650100e7443037c66759}{Gold}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:215 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afd5a04aefaec58f43dcbe2cddd08bf01}{Goldenrod}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:218 G\+:165 B\+:32 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9983e26e9f29a51ed8ebdc3625aefcb0}{Gray}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:128 G\+:128 B\+:128 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_affd8ef719199de55ed9af635dd8eb209}{Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:128 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a27371c3038e58b3541429413089d90f2}{Green\+Yellow}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:173 G\+:255 B\+:47 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a046d4bed6a500f5322d1d9c791f0f703}{Honeydew}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:240 G\+:255 B\+:240 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7ea3ebc430cda6473c6099d11bd91783}{Hot\+Pink}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:105 B\+:180 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac255c4c0e21eda9a7c7880fcaea4050f}{Indian\+Red}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:205 G\+:92 B\+:92 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3ffccddba75991c15ba0c0e062548f2b}{Indigo}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:75 G\+:0 B\+:130 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a022d2aa712eea8feb51479b13d63b171}{Ivory}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:255 B\+:240 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2bf6d2259705f4c708f15c9665ce4475}{Khaki}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:240 G\+:230 B\+:140 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abae8947ec0f84c73eb5efd0e960e590a}{Lavender}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:230 G\+:230 B\+:250 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a687b15806e8ae291e6743de27841b7b6}{Lavender\+Blush}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:240 B\+:245 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a15de0e383f225ec93280545331558ba9}{Lawn\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:124 G\+:252 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abe9046dd36610ee0b22efdb725e3c7e7}{Lemon\+Chiffon}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:250 B\+:205 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a30da650b32f5eb1996e4413609a7dc7d}{Light\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:173 G\+:216 B\+:230 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1bdfe7f6958a1a3944620845d21c5b51}{Light\+Coral}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:240 G\+:128 B\+:128 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af1c88073071576bdd88bada695c2723d}{Light\+Cyan}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:224 G\+:255 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a46118860269125b52e5e8354fa6dc886}{Light\+Goldenrod\+Yellow}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:250 G\+:250 B\+:210 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6ba6cf04da4bd4f9296afa5ade02ca12}{Light\+Gray}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:211 G\+:211 B\+:211 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6391f3062b560628b1fc1cbcf6a60229}{Light\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:144 G\+:238 B\+:144 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af9cb1b8803753191cbe22f4f8744627a}{Light\+Pink}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:182 B\+:193 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aeed458990c50db439c0685772ed98a9b}{Light\+Salmon}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:160 B\+:122 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aaeb92f9e9df177ff74fd591820828f20}{Light\+Sea\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:32 G\+:178 B\+:170 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab9227c6825361244e29d04306cc0c1aa}{Light\+Sky\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:135 G\+:206 B\+:250 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab3f9fd80145e61e5406d709c93357868}{Light\+Slate\+Gray}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:119 G\+:136 B\+:153 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1b1d72dc66dcf084723af79f17179049}{Light\+Steel\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:176 G\+:196 B\+:222 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa353ae3271496f961552cbe2f2e02f81}{Light\+Yellow}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:255 B\+:224 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a40ec9a7fb0a078cf351f9f49ae863605}{Lime}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:255 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afdab54a255b406dff26d54b848967986}{Lime\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:50 G\+:205 B\+:50 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af559c4940b4b1a3e96ef1c48bfbd3f69}{Linen}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:250 G\+:240 B\+:230 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6524b76acd2596d1e2472551b34afe4e}{Magenta}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:0 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a07a8b867df079db25092fa3802209921}{Maroon}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:128 G\+:0 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a624b916afc6757d970cf964e5a9649bf}{Medium\+Aquamarine}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:102 G\+:205 B\+:170 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af1d6d462b2b790c1db7fa4eea1c2192e}{Medium\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:205 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8988833e0d78a5f1c388744b435bfa93}{Medium\+Orchid}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:186 G\+:85 B\+:211 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a284eb3cb1887086dff3503f0055d378b}{Medium\+Purple}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:147 G\+:112 B\+:219 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8ff4f49c2f2f79dc6f3df8a13b26429d}{Medium\+Sea\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:60 G\+:179 B\+:113 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac03d200c812e52a0eac9b8fcfb426040}{Medium\+Slate\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:123 G\+:104 B\+:238 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a4f7c658d76ba48658592cef21be13166}{Medium\+Spring\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:250 B\+:154 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a225190952641e4b27e5ac21e00f5c496}{Medium\+Turquoise}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:72 G\+:209 B\+:204 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a62798e2b9d8927ded7477b48f7c1d66f}{Medium\+Violet\+Red}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:199 G\+:21 B\+:133 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a34eaca4b78132534877c32071773de19}{Midnight\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:25 G\+:25 B\+:112 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7805572bd3502b4963330067d014b1de}{Mint\+Cream}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:245 G\+:255 B\+:250 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa47d4468d0d81bca05727d0f38a2c94e}{Misty\+Rose}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:228 B\+:225 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a62f7f3a40f5204f089568b8bd89dd0cd}{Moccasin}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:228 B\+:181 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a11c5534d2855eb0092ae14e8c789b0d4}{Navajo\+White}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:222 B\+:173 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a336d4fbe59ef1896b8e941ade97a009e}{Navy}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color R\+:0 G\+:0 B\+:128 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6fa78cc65c7ea6c0d7ed6535976f6a3e}{Old\+Lace}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:253 G\+:245 B\+:230 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a20fa8b0eab53cc7fb93ec30c019624fe}{Olive}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:128 G\+:128 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af809aa015c1b6e2e4715aece8b00f532}{Olive\+Drab}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:107 G\+:142 B\+:35 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad18a56cc64968052ba629f56402ea94e}{Orange}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:165 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1c07e6afd0554a2aab685a1643af7993}{Orange\+Red}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:69 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aaf94327edc65148eeedf66f3ac0945f4}{Orchid}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:218 G\+:112 B\+:214 A\+:255.\end{DoxyCompactList}\item 
+uint \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8474542fe5942f2aa19cbd6ff421f065}{Packed\+Value}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the current color as a packed value.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a03b8be214eb4552cb12d09e48c94727a}{Pale\+Goldenrod}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:238 G\+:232 B\+:170 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a57f99b43eb3f57bfed79627f6bdd0692}{Pale\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:152 G\+:251 B\+:152 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9e94ed3f389e702f44427b210ff186ce}{Pale\+Turquoise}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:175 G\+:238 B\+:238 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a447a14b398611a08b6d15ed4b1b9350a}{Pale\+Violet\+Red}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:219 G\+:112 B\+:147 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa02776ad5ff7fcb6877f48dfecc83d1a}{Papaya\+Whip}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:239 B\+:213 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_adb9b6b6cd4cb596511b686cee3b006f3}{Peach\+Puff}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:218 B\+:185 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a36e5c7e5c45475fd4b0ef0d24c5a6a72}{Peru}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:205 G\+:133 B\+:63 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae30ac30d637ea4e65a888acc784667a4}{Pink}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:192 B\+:203 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9a657ba240cf4d7bc20b7dcf9e40b6f4}{Plum}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:221 G\+:160 B\+:221 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9291f40f2de88d671a1d2d24804376e4}{Powder\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:176 G\+:224 B\+:230 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5b1970e101009b75c1a49383f01c9672}{Purple}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:128 G\+:0 B\+:128 A\+:255.\end{DoxyCompactList}\item 
+byte \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9899281d9638e30c6a5ed7ec4e6af4f4}{R}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the red component value of this \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color}.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a87a605a75f99f27ebe26ae418abc548f}{Red}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:0 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af611d84fcfced58f4507f5fca5e63dd5}{Rosy\+Brown}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:188 G\+:143 B\+:143 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af57939749aee65d23cd0827f841c6aa6}{Royal\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:65 G\+:105 B\+:225 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1afcc3741dd8cfdcaa6e5eed72b37eb4}{Saddle\+Brown}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:139 G\+:69 B\+:19 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a28950cae146758579e14171090d36462}{Salmon}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:250 G\+:128 B\+:114 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1c7bec384c796341d16d863d301d7679}{Sandy\+Brown}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:244 G\+:164 B\+:96 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a627c960778761dfe508642cb453b2bce}{Sea\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:46 G\+:139 B\+:87 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af4680dab307b3f90e2547e23f5ad1fa3}{Sea\+Shell}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:245 B\+:238 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a37a261d1a024bbc8fd49fdbe36ddd384}{Sienna}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:160 G\+:82 B\+:45 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a14d21c030d1e5a6cab3b87b34e035f73}{Silver}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:192 G\+:192 B\+:192 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac3790779955b5c2931d801e40544c3c5}{Sky\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:135 G\+:206 B\+:235 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5c0c65acec90aac1948898b030dc211e}{Slate\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:106 G\+:90 B\+:205 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a66808c67c15816890404de88552761d7}{Slate\+Gray}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:112 G\+:128 B\+:144 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1d6e122b3cf6f2f9f0a938d7cca90b35}{Snow}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:250 B\+:250 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_acffb92f90662fbdbda991d007007e3b9}{Spring\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:255 B\+:127 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a305f27f14c294ea48e4f96c66c3b4505}{Steel\+Blue}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:70 G\+:130 B\+:180 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae2cc25b26cf45fc36820fd18b74b8ecd}{Tan}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:210 G\+:180 B\+:140 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9656144912b60001f94a6b7ddfa99b3f}{Teal}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:128 B\+:128 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afeba7da96a1ce1728a5a82ea2f3048b0}{Thistle}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:216 G\+:191 B\+:216 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae54db898acfaad8489704b5c3cb9df05}{Tomato}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:99 B\+:71 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a931d4f2dd78c6c26a3f6e02ba2cee7a0}{Transparent}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:0 A\+:0.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5e34586bde96349194d4378740ef6652}{Turquoise}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:64 G\+:224 B\+:208 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abaf62a768000d22346bfca589db91189}{Violet}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:238 G\+:130 B\+:238 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a78d7d69e5ea955359ccda6a975481df3}{Wheat}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:245 G\+:222 B\+:179 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac586768e5306fcce5ef5a07fcb012e0d}{White}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:255 B\+:255 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a00333695959a7d43d1f0869826182f30}{White\+Smoke}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:245 G\+:245 B\+:245 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8317b63f8d153c779ba55709ade6f0b1}{Yellow}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:255 G\+:255 B\+:0 A\+:255.\end{DoxyCompactList}\item 
+static \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7f026027fb2931b7062ae964998591ec}{Yellow\+Green}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a system-\/defined color with the value R\+:154 G\+:205 B\+:50 A\+:255.\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a four-\/component color using red, green, blue, and alpha data.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab9b35f296de77e93a8f42750c70db93a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Color@{Color}}
+\index{Color@{Color}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Color(uint packed\+Value)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} (
+\begin{DoxyParamCaption}
+\item[{uint}]{packed\+Value}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab9b35f296de77e93a8f42750c70db93a}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a98402a95bcb5cc6ee933cf3213971ad2}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Color@{Color}}
+\index{Color@{Color}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Color(int r, int g, int b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} (
+\begin{DoxyParamCaption}
+\item[{int}]{r, }
+\item[{int}]{g, }
+\item[{int}]{b}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a98402a95bcb5cc6ee933cf3213971ad2}
+
+
+Creates a new instance of the class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & Red component.\\
+\hline
+{\em g} & Green component.\\
+\hline
+{\em b} & Blue component.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a08859a7e176d0a35ce672b190a18da00}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Color@{Color}}
+\index{Color@{Color}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Color(int r, int g, int b, int a)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} (
+\begin{DoxyParamCaption}
+\item[{int}]{r, }
+\item[{int}]{g, }
+\item[{int}]{b, }
+\item[{int}]{a}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a08859a7e176d0a35ce672b190a18da00}
+
+
+Creates a new instance of the class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & Red component.\\
+\hline
+{\em g} & Green component.\\
+\hline
+{\em b} & Blue component.\\
+\hline
+{\em a} & Alpha component.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a83b0cedfb6ce76cc35b79da9fdcbefe1}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Color@{Color}}
+\index{Color@{Color}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Color(float r, float g, float b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} (
+\begin{DoxyParamCaption}
+\item[{float}]{r, }
+\item[{float}]{g, }
+\item[{float}]{b}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a83b0cedfb6ce76cc35b79da9fdcbefe1}
+
+
+Creates a new instance of the class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & Red component.\\
+\hline
+{\em g} & Green component.\\
+\hline
+{\em b} & Blue component.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3a16ce43c0187e22831a1b768002fd73}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Color@{Color}}
+\index{Color@{Color}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Color(float r, float g, float b, float a)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} (
+\begin{DoxyParamCaption}
+\item[{float}]{r, }
+\item[{float}]{g, }
+\item[{float}]{b, }
+\item[{float}]{a}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3a16ce43c0187e22831a1b768002fd73}
+
+
+Creates a new instance of the class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & Red component.\\
+\hline
+{\em g} & Green component.\\
+\hline
+{\em b} & Blue component.\\
+\hline
+{\em a} & Alpha component.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a4a4f4799d324217ae264a0470dd6dda8}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Color@{Color}}
+\index{Color@{Color}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Color(\+Vector3 vector)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector3}}]{vector}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a4a4f4799d324217ae264a0470dd6dda8}
+
+
+Creates a new instance of the class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em vector} & A three-\/component color.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac545262a3d7de77a99a7c158fa356e91}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Color@{Color}}
+\index{Color@{Color}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Color(\+Vector4 vector)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector4}}]{vector}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac545262a3d7de77a99a7c158fa356e91}
+
+
+Creates a new instance of the class.
+
+
+\begin{DoxyParams}{Parameters}
+{\em vector} & A four-\/component color.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aadf763f0213fc2f3875230b06bb0b6cf}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Equals@{Equals}}
+\index{Equals@{Equals}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Equals(object obj)}]{\setlength{\rightskip}{0pt plus 5cm}override bool Equals (
+\begin{DoxyParamCaption}
+\item[{object}]{obj}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aadf763f0213fc2f3875230b06bb0b6cf}
+
+
+Test an instance of a color object to see if it is equal to this object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & A color object.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9052d75b1b8d88b1c008792a0f9ed450}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Equals@{Equals}}
+\index{Equals@{Equals}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Equals(\+Color other)}]{\setlength{\rightskip}{0pt plus 5cm}bool Equals (
+\begin{DoxyParamCaption}
+\item[{{\bf Color}}]{other}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9052d75b1b8d88b1c008792a0f9ed450}
+
+
+Test a color to see if it is equal to the color in this instance.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & A four-\/component color.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a08860aabc688978b0da44aaf6cdc2a68}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!From\+Non\+Premultiplied@{From\+Non\+Premultiplied}}
+\index{From\+Non\+Premultiplied@{From\+Non\+Premultiplied}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{From\+Non\+Premultiplied(\+Vector4 vector)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Color} From\+Non\+Premultiplied (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector4}}]{vector}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a08860aabc688978b0da44aaf6cdc2a68}
+
+
+Convert a non premultipled color into color data that contains alpha.
+
+
+\begin{DoxyParams}{Parameters}
+{\em vector} & A four-\/component color.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa78a0bccbc458e1edb4cf41353f22f46}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!From\+Non\+Premultiplied@{From\+Non\+Premultiplied}}
+\index{From\+Non\+Premultiplied@{From\+Non\+Premultiplied}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{From\+Non\+Premultiplied(int r, int g, int b, int a)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Color} From\+Non\+Premultiplied (
+\begin{DoxyParamCaption}
+\item[{int}]{r, }
+\item[{int}]{g, }
+\item[{int}]{b, }
+\item[{int}]{a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa78a0bccbc458e1edb4cf41353f22f46}
+
+
+Converts a non-\/premultipled alpha color to a color that contains premultiplied alpha.
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & Red component.\\
+\hline
+{\em g} & Green component.\\
+\hline
+{\em b} & Blue component.\\
+\hline
+{\em a} & Alpha component.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a77e1afa2b6dee1ed3640da81d7407b42}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Get\+Hash\+Code@{Get\+Hash\+Code}}
+\index{Get\+Hash\+Code@{Get\+Hash\+Code}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Get\+Hash\+Code()}]{\setlength{\rightskip}{0pt plus 5cm}override int Get\+Hash\+Code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a77e1afa2b6dee1ed3640da81d7407b42}
+
+
+Serves as a hash function for a particular type.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a93bb23f71e8900fe2b226d8bafe214b7}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Lerp@{Lerp}}
+\index{Lerp@{Lerp}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Lerp(\+Color value1, Color value2, float amount)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Color} Lerp (
+\begin{DoxyParamCaption}
+\item[{{\bf Color}}]{value1, }
+\item[{{\bf Color}}]{value2, }
+\item[{float}]{amount}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a93bb23f71e8900fe2b226d8bafe214b7}
+
+
+Linearly interpolate a color.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & A four-\/component color.\\
+\hline
+{\em value2} & A four-\/component color.\\
+\hline
+{\em amount} & Interpolation factor.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae9f74bf433cc02633ae12fcd45d22808}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Multiply@{Multiply}}
+\index{Multiply@{Multiply}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Multiply(\+Color value, float scale)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Color} Multiply (
+\begin{DoxyParamCaption}
+\item[{{\bf Color}}]{value, }
+\item[{float}]{scale}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae9f74bf433cc02633ae12fcd45d22808}
+
+
+Multiply each color component by the scale factor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The source, four-\/component color.\\
+\hline
+{\em scale} & The scale factor.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a076cf9a4d2e1aa55976bb84b59f425cb}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{operator"!=(\+Color a, Color b)}]{\setlength{\rightskip}{0pt plus 5cm}static bool operator!= (
+\begin{DoxyParamCaption}
+\item[{{\bf Color}}]{a, }
+\item[{{\bf Color}}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a076cf9a4d2e1aa55976bb84b59f425cb}
+
+
+Equality operator for Testing two color objects to see if they are equal.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & A four-\/component color.\\
+\hline
+{\em b} & A four-\/component color.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7aa0885c3c0519fff9f37494f472fe93}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{operator$\ast$(\+Color value, float scale)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Color} operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Color}}]{value, }
+\item[{float}]{scale}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7aa0885c3c0519fff9f37494f472fe93}
+
+
+Multiply operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & A four-\/component color\\
+\hline
+{\em scale} & Scale factor.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3a1b56f8fe6a3ef9d79d50d5b269e754}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!operator==@{operator==}}
+\index{operator==@{operator==}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{operator==(\+Color a, Color b)}]{\setlength{\rightskip}{0pt plus 5cm}static bool operator== (
+\begin{DoxyParamCaption}
+\item[{{\bf Color}}]{a, }
+\item[{{\bf Color}}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3a1b56f8fe6a3ef9d79d50d5b269e754}
+
+
+Equality operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & A four-\/component color.\\
+\hline
+{\em b} & A four-\/component color.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afa02420fa8219ae80a0d93b42d7f41d3}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Pack\+From\+Vector4@{Pack\+From\+Vector4}}
+\index{Pack\+From\+Vector4@{Pack\+From\+Vector4}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Pack\+From\+Vector4(\+Vector4 vector)}]{\setlength{\rightskip}{0pt plus 5cm}void I\+Packed\+Vector. Pack\+From\+Vector4 (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector4}}]{vector}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afa02420fa8219ae80a0d93b42d7f41d3}
+
+
+Pack a four-\/component color from a vector format into the format of a color object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em vector} & A four-\/component color.\\
+\hline
+\end{DoxyParams}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a03947c74d601e5fb27b78c17ce49982a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Pack\+Helper@{Pack\+Helper}}
+\index{Pack\+Helper@{Pack\+Helper}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Pack\+Helper(float vector\+X, float vector\+Y, float vector\+Z, float vector\+W)}]{\setlength{\rightskip}{0pt plus 5cm}static uint Pack\+Helper (
+\begin{DoxyParamCaption}
+\item[{float}]{vector\+X, }
+\item[{float}]{vector\+Y, }
+\item[{float}]{vector\+Z, }
+\item[{float}]{vector\+W}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a03947c74d601e5fb27b78c17ce49982a}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab833acacef2ae23afbcc79a79ef59def}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Pack\+U\+Norm@{Pack\+U\+Norm}}
+\index{Pack\+U\+Norm@{Pack\+U\+Norm}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Pack\+U\+Norm(float bitmask, float value)}]{\setlength{\rightskip}{0pt plus 5cm}static uint Pack\+U\+Norm (
+\begin{DoxyParamCaption}
+\item[{float}]{bitmask, }
+\item[{float}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab833acacef2ae23afbcc79a79ef59def}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa73e7c4dd1df5fd5fbf81c7764ee1533}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{To\+String()}]{\setlength{\rightskip}{0pt plus 5cm}override string To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa73e7c4dd1df5fd5fbf81c7764ee1533}
+
+
+Gets a string representation of this object.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad4d650fa1888777702f3e23a7a556b78}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!To\+Vector3@{To\+Vector3}}
+\index{To\+Vector3@{To\+Vector3}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{To\+Vector3()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector3} To\+Vector3 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad4d650fa1888777702f3e23a7a556b78}
+
+
+Gets a three-\/component vector representation for this object.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a14cbe31136980519eb62abfc500c3f1b}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!To\+Vector4@{To\+Vector4}}
+\index{To\+Vector4@{To\+Vector4}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{To\+Vector4()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector4} To\+Vector4 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a14cbe31136980519eb62abfc500c3f1b}
+
+
+Gets a four-\/component vector representation for this object.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a43f0776c26475564970bd13ac1e734c5}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Unpack\+U\+Norm@{Unpack\+U\+Norm}}
+\index{Unpack\+U\+Norm@{Unpack\+U\+Norm}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Unpack\+U\+Norm(uint bitmask, uint value)}]{\setlength{\rightskip}{0pt plus 5cm}static float Unpack\+U\+Norm (
+\begin{DoxyParamCaption}
+\item[{uint}]{bitmask, }
+\item[{uint}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a43f0776c26475564970bd13ac1e734c5}
+
+
+\subsection{Property Documentation}
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a851238b137a20edbf656ad0b227c7657}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!A@{A}}
+\index{A@{A}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{A}]{\setlength{\rightskip}{0pt plus 5cm}byte A\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a851238b137a20edbf656ad0b227c7657}
+
+
+Gets or sets the alpha component value.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac94287beea99da920d21f1abc87424c7}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Alice\+Blue@{Alice\+Blue}}
+\index{Alice\+Blue@{Alice\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Alice\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Alice\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac94287beea99da920d21f1abc87424c7}
+
+
+Gets a system-\/defined color with the value R\+:240 G\+:248 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2061dfd6cbab3b2e74ae12d4a7bae4f5}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Antique\+White@{Antique\+White}}
+\index{Antique\+White@{Antique\+White}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Antique\+White}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Antique\+White\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2061dfd6cbab3b2e74ae12d4a7bae4f5}
+
+
+Gets a system-\/defined color with the value R\+:250 G\+:235 B\+:215 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a0513bb5c88733f3c4a46e7d171e5818d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Aqua@{Aqua}}
+\index{Aqua@{Aqua}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Aqua}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Aqua\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a0513bb5c88733f3c4a46e7d171e5818d}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:255 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a541991157a9af348f5eec8f51810d6eb}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Aquamarine@{Aquamarine}}
+\index{Aquamarine@{Aquamarine}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Aquamarine}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Aquamarine\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a541991157a9af348f5eec8f51810d6eb}
+
+
+Gets a system-\/defined color with the value R\+:127 G\+:255 B\+:212 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac41ebd9c2b2a6b82e2c489c4b2738362}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Azure@{Azure}}
+\index{Azure@{Azure}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Azure}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Azure\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac41ebd9c2b2a6b82e2c489c4b2738362}
+
+
+Gets a system-\/defined color with the value R\+:240 G\+:255 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af20775d9682d3bc9365ca7b2a6792298}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!B@{B}}
+\index{B@{B}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{B}]{\setlength{\rightskip}{0pt plus 5cm}byte B\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af20775d9682d3bc9365ca7b2a6792298}
+
+
+Gets or sets the blue component value of this \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color}.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2fb95d3e28de67182b1205dec8a0b657}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Beige@{Beige}}
+\index{Beige@{Beige}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Beige}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Beige\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2fb95d3e28de67182b1205dec8a0b657}
+
+
+Gets a system-\/defined color with the value R\+:245 G\+:245 B\+:220 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a27f39ca0f86138a9978d54ba8d59768f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Bisque@{Bisque}}
+\index{Bisque@{Bisque}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Bisque}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Bisque\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a27f39ca0f86138a9978d54ba8d59768f}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:228 B\+:196 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a490360be3af8e93c455d892cb7a05dd9}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Black@{Black}}
+\index{Black@{Black}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Black}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Black\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a490360be3af8e93c455d892cb7a05dd9}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a605c9878e0f8b2f5f510c993b7b249f7}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Blanched\+Almond@{Blanched\+Almond}}
+\index{Blanched\+Almond@{Blanched\+Almond}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Blanched\+Almond}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Blanched\+Almond\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a605c9878e0f8b2f5f510c993b7b249f7}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:235 B\+:205 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aadbb3342531fbefd6e7ae00143f743eb}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Blue@{Blue}}
+\index{Blue@{Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aadbb3342531fbefd6e7ae00143f743eb}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7b411efb5c5ec2f2660ba2d5cda346db}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Blue\+Violet@{Blue\+Violet}}
+\index{Blue\+Violet@{Blue\+Violet}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Blue\+Violet}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Blue\+Violet\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7b411efb5c5ec2f2660ba2d5cda346db}
+
+
+Gets a system-\/defined color with the value R\+:138 G\+:43 B\+:226 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad8b56c943b8231708ed7090575586d39}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Brown@{Brown}}
+\index{Brown@{Brown}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Brown}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Brown\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad8b56c943b8231708ed7090575586d39}
+
+
+Gets a system-\/defined color with the value R\+:165 G\+:42 B\+:42 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a74f360bf9e9fc4e425ba3e357d2391e8}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Burly\+Wood@{Burly\+Wood}}
+\index{Burly\+Wood@{Burly\+Wood}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Burly\+Wood}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Burly\+Wood\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a74f360bf9e9fc4e425ba3e357d2391e8}
+
+
+Gets a system-\/defined color with the value R\+:222 G\+:184 B\+:135 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2db4a95aaa374a93dc04dcd80abbb829}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Cadet\+Blue@{Cadet\+Blue}}
+\index{Cadet\+Blue@{Cadet\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Cadet\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Cadet\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2db4a95aaa374a93dc04dcd80abbb829}
+
+
+Gets a system-\/defined color with the value R\+:95 G\+:158 B\+:160 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3a38f15c273b34ece6cd53740a69adaa}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Chartreuse@{Chartreuse}}
+\index{Chartreuse@{Chartreuse}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Chartreuse}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Chartreuse\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3a38f15c273b34ece6cd53740a69adaa}
+
+
+Gets a system-\/defined color with the value R\+:127 G\+:255 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aef6aca8c50909cac60a9509a31d4cf31}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Chocolate@{Chocolate}}
+\index{Chocolate@{Chocolate}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Chocolate}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Chocolate\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aef6aca8c50909cac60a9509a31d4cf31}
+
+
+Gets a system-\/defined color with the value R\+:210 G\+:105 B\+:30 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7ed2d6db43798975ecb31d89024d02c7}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Coral@{Coral}}
+\index{Coral@{Coral}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Coral}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Coral\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7ed2d6db43798975ecb31d89024d02c7}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:127 B\+:80 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abd16398ca99ec33233fc4ed536bf8037}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Cornflower\+Blue@{Cornflower\+Blue}}
+\index{Cornflower\+Blue@{Cornflower\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Cornflower\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Cornflower\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abd16398ca99ec33233fc4ed536bf8037}
+
+
+Gets a system-\/defined color with the value R\+:100 G\+:149 B\+:237 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2ab29812e2c4665077e92c44baf87ea0}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Cornsilk@{Cornsilk}}
+\index{Cornsilk@{Cornsilk}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Cornsilk}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Cornsilk\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2ab29812e2c4665077e92c44baf87ea0}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:248 B\+:220 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa4b9f94ce29d3647955af723a988237b}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Crimson@{Crimson}}
+\index{Crimson@{Crimson}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Crimson}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Crimson\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa4b9f94ce29d3647955af723a988237b}
+
+
+Gets a system-\/defined color with the value R\+:220 G\+:20 B\+:60 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a82ef18cd26a9f6281afd5fa9386ea86d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Cyan@{Cyan}}
+\index{Cyan@{Cyan}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Cyan}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Cyan\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a82ef18cd26a9f6281afd5fa9386ea86d}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:255 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a590225d19e29526848b8165fff44b7b0}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Blue@{Dark\+Blue}}
+\index{Dark\+Blue@{Dark\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a590225d19e29526848b8165fff44b7b0}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:139 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5340a7e3a9c1ccbd9982a35e6439c465}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Cyan@{Dark\+Cyan}}
+\index{Dark\+Cyan@{Dark\+Cyan}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Cyan}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Cyan\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5340a7e3a9c1ccbd9982a35e6439c465}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:139 B\+:139 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a01f7b42070288061fd2f676d1c2239e4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Goldenrod@{Dark\+Goldenrod}}
+\index{Dark\+Goldenrod@{Dark\+Goldenrod}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Goldenrod}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Goldenrod\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a01f7b42070288061fd2f676d1c2239e4}
+
+
+Gets a system-\/defined color with the value R\+:184 G\+:134 B\+:11 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a0fa98db8de4f25fad389e3229e766b33}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Gray@{Dark\+Gray}}
+\index{Dark\+Gray@{Dark\+Gray}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Gray}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Gray\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a0fa98db8de4f25fad389e3229e766b33}
+
+
+Gets a system-\/defined color with the value R\+:169 G\+:169 B\+:169 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af9cecdf4f2189411cbebdd93554db248}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Green@{Dark\+Green}}
+\index{Dark\+Green@{Dark\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af9cecdf4f2189411cbebdd93554db248}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:100 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a15e4b1698c04e3782733418c6b93d00d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Khaki@{Dark\+Khaki}}
+\index{Dark\+Khaki@{Dark\+Khaki}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Khaki}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Khaki\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a15e4b1698c04e3782733418c6b93d00d}
+
+
+Gets a system-\/defined color with the value R\+:189 G\+:183 B\+:107 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9b99e13875699aa78d7c81e023f94c23}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Magenta@{Dark\+Magenta}}
+\index{Dark\+Magenta@{Dark\+Magenta}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Magenta}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Magenta\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9b99e13875699aa78d7c81e023f94c23}
+
+
+Gets a system-\/defined color with the value R\+:139 G\+:0 B\+:139 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a47a7708284bbf5a7922dfe2c95257025}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Olive\+Green@{Dark\+Olive\+Green}}
+\index{Dark\+Olive\+Green@{Dark\+Olive\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Olive\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Olive\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a47a7708284bbf5a7922dfe2c95257025}
+
+
+Gets a system-\/defined color with the value R\+:85 G\+:107 B\+:47 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa393145d85a06647f89b1c6b4ec80da8}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Orange@{Dark\+Orange}}
+\index{Dark\+Orange@{Dark\+Orange}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Orange}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Orange\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa393145d85a06647f89b1c6b4ec80da8}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:140 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a74f6f72dadaf4e2fe0b18f6d6fd2dc89}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Orchid@{Dark\+Orchid}}
+\index{Dark\+Orchid@{Dark\+Orchid}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Orchid}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Orchid\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a74f6f72dadaf4e2fe0b18f6d6fd2dc89}
+
+
+Gets a system-\/defined color with the value R\+:153 G\+:50 B\+:204 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a97617da30d2d878b9772b2272657164c}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Red@{Dark\+Red}}
+\index{Dark\+Red@{Dark\+Red}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Red}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Red\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a97617da30d2d878b9772b2272657164c}
+
+
+Gets a system-\/defined color with the value R\+:139 G\+:0 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8d407cb14c2f02b24a29ab1f7e1b90f0}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Salmon@{Dark\+Salmon}}
+\index{Dark\+Salmon@{Dark\+Salmon}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Salmon}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Salmon\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8d407cb14c2f02b24a29ab1f7e1b90f0}
+
+
+Gets a system-\/defined color with the value R\+:233 G\+:150 B\+:122 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a227ffaed17fc3f97b938b1fd73243cac}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Sea\+Green@{Dark\+Sea\+Green}}
+\index{Dark\+Sea\+Green@{Dark\+Sea\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Sea\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Sea\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a227ffaed17fc3f97b938b1fd73243cac}
+
+
+Gets a system-\/defined color with the value R\+:143 G\+:188 B\+:139 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa104c1a7f64332c5564745b505685363}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Slate\+Blue@{Dark\+Slate\+Blue}}
+\index{Dark\+Slate\+Blue@{Dark\+Slate\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Slate\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Slate\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa104c1a7f64332c5564745b505685363}
+
+
+Gets a system-\/defined color with the value R\+:72 G\+:61 B\+:139 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3147c7a5bc8591e985ede57baa96c016}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Slate\+Gray@{Dark\+Slate\+Gray}}
+\index{Dark\+Slate\+Gray@{Dark\+Slate\+Gray}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Slate\+Gray}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Slate\+Gray\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3147c7a5bc8591e985ede57baa96c016}
+
+
+Gets a system-\/defined color with the value R\+:47 G\+:79 B\+:79 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae09720166ade88f2f82c0f2f9a067130}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Turquoise@{Dark\+Turquoise}}
+\index{Dark\+Turquoise@{Dark\+Turquoise}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Turquoise}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Turquoise\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae09720166ade88f2f82c0f2f9a067130}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:206 B\+:209 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af9eb01b5178718d53d8664c358b6e91d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dark\+Violet@{Dark\+Violet}}
+\index{Dark\+Violet@{Dark\+Violet}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dark\+Violet}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dark\+Violet\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af9eb01b5178718d53d8664c358b6e91d}
+
+
+Gets a system-\/defined color with the value R\+:148 G\+:0 B\+:211 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ace4c7b4fcf9e1ad4ff74b9b1e166eb2a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Deep\+Pink@{Deep\+Pink}}
+\index{Deep\+Pink@{Deep\+Pink}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Deep\+Pink}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Deep\+Pink\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ace4c7b4fcf9e1ad4ff74b9b1e166eb2a}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:20 B\+:147 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a27bbd85b7873d4dfc82f2047ee3e323e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Deep\+Sky\+Blue@{Deep\+Sky\+Blue}}
+\index{Deep\+Sky\+Blue@{Deep\+Sky\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Deep\+Sky\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Deep\+Sky\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a27bbd85b7873d4dfc82f2047ee3e323e}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:191 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7b14678cca6c42f642b87382dd7a4a0f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dim\+Gray@{Dim\+Gray}}
+\index{Dim\+Gray@{Dim\+Gray}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dim\+Gray}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dim\+Gray\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7b14678cca6c42f642b87382dd7a4a0f}
+
+
+Gets a system-\/defined color with the value R\+:105 G\+:105 B\+:105 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8ed776fe1463ae8ce1c4962d8fbb70b6}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Dodger\+Blue@{Dodger\+Blue}}
+\index{Dodger\+Blue@{Dodger\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Dodger\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Dodger\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8ed776fe1463ae8ce1c4962d8fbb70b6}
+
+
+Gets a system-\/defined color with the value R\+:30 G\+:144 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab0875aabc210eb8f9a0c3714ac0d5ca3}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Firebrick@{Firebrick}}
+\index{Firebrick@{Firebrick}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Firebrick}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Firebrick\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab0875aabc210eb8f9a0c3714ac0d5ca3}
+
+
+Gets a system-\/defined color with the value R\+:178 G\+:34 B\+:34 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a971eba50d5756242cd07c54c6ff5cb89}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Floral\+White@{Floral\+White}}
+\index{Floral\+White@{Floral\+White}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Floral\+White}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Floral\+White\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a971eba50d5756242cd07c54c6ff5cb89}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:250 B\+:240 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a61f5d4fc4b86bf1071dd413d8cec0810}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Forest\+Green@{Forest\+Green}}
+\index{Forest\+Green@{Forest\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Forest\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Forest\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a61f5d4fc4b86bf1071dd413d8cec0810}
+
+
+Gets a system-\/defined color with the value R\+:34 G\+:139 B\+:34 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a747de302c829d0e557d262945474d126}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Fuchsia@{Fuchsia}}
+\index{Fuchsia@{Fuchsia}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Fuchsia}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Fuchsia\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a747de302c829d0e557d262945474d126}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:0 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad42e5b4daa26324d6319b4b360dd9afb}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!G@{G}}
+\index{G@{G}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{G}]{\setlength{\rightskip}{0pt plus 5cm}byte G\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad42e5b4daa26324d6319b4b360dd9afb}
+
+
+Gets or sets the green component value of this \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color}.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aea07c873be1d8107ef6186af9a3f92ba}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Gainsboro@{Gainsboro}}
+\index{Gainsboro@{Gainsboro}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Gainsboro}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Gainsboro\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aea07c873be1d8107ef6186af9a3f92ba}
+
+
+Gets a system-\/defined color with the value R\+:220 G\+:220 B\+:220 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7e7f36952fc2c630bb0cef197a348e54}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Ghost\+White@{Ghost\+White}}
+\index{Ghost\+White@{Ghost\+White}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Ghost\+White}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Ghost\+White\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7e7f36952fc2c630bb0cef197a348e54}
+
+
+Gets a system-\/defined color with the value R\+:248 G\+:248 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a76ff7ba14dac650100e7443037c66759}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Gold@{Gold}}
+\index{Gold@{Gold}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Gold}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Gold\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a76ff7ba14dac650100e7443037c66759}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:215 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afd5a04aefaec58f43dcbe2cddd08bf01}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Goldenrod@{Goldenrod}}
+\index{Goldenrod@{Goldenrod}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Goldenrod}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Goldenrod\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afd5a04aefaec58f43dcbe2cddd08bf01}
+
+
+Gets a system-\/defined color with the value R\+:218 G\+:165 B\+:32 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9983e26e9f29a51ed8ebdc3625aefcb0}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Gray@{Gray}}
+\index{Gray@{Gray}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Gray}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Gray\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9983e26e9f29a51ed8ebdc3625aefcb0}
+
+
+Gets a system-\/defined color with the value R\+:128 G\+:128 B\+:128 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_affd8ef719199de55ed9af635dd8eb209}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Green@{Green}}
+\index{Green@{Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_affd8ef719199de55ed9af635dd8eb209}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:128 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a27371c3038e58b3541429413089d90f2}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Green\+Yellow@{Green\+Yellow}}
+\index{Green\+Yellow@{Green\+Yellow}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Green\+Yellow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Green\+Yellow\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a27371c3038e58b3541429413089d90f2}
+
+
+Gets a system-\/defined color with the value R\+:173 G\+:255 B\+:47 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a046d4bed6a500f5322d1d9c791f0f703}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Honeydew@{Honeydew}}
+\index{Honeydew@{Honeydew}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Honeydew}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Honeydew\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a046d4bed6a500f5322d1d9c791f0f703}
+
+
+Gets a system-\/defined color with the value R\+:240 G\+:255 B\+:240 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7ea3ebc430cda6473c6099d11bd91783}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Hot\+Pink@{Hot\+Pink}}
+\index{Hot\+Pink@{Hot\+Pink}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Hot\+Pink}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Hot\+Pink\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7ea3ebc430cda6473c6099d11bd91783}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:105 B\+:180 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac255c4c0e21eda9a7c7880fcaea4050f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Indian\+Red@{Indian\+Red}}
+\index{Indian\+Red@{Indian\+Red}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Indian\+Red}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Indian\+Red\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac255c4c0e21eda9a7c7880fcaea4050f}
+
+
+Gets a system-\/defined color with the value R\+:205 G\+:92 B\+:92 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3ffccddba75991c15ba0c0e062548f2b}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Indigo@{Indigo}}
+\index{Indigo@{Indigo}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Indigo}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Indigo\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a3ffccddba75991c15ba0c0e062548f2b}
+
+
+Gets a system-\/defined color with the value R\+:75 G\+:0 B\+:130 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a022d2aa712eea8feb51479b13d63b171}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Ivory@{Ivory}}
+\index{Ivory@{Ivory}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Ivory}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Ivory\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a022d2aa712eea8feb51479b13d63b171}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:255 B\+:240 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2bf6d2259705f4c708f15c9665ce4475}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Khaki@{Khaki}}
+\index{Khaki@{Khaki}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Khaki}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Khaki\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a2bf6d2259705f4c708f15c9665ce4475}
+
+
+Gets a system-\/defined color with the value R\+:240 G\+:230 B\+:140 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abae8947ec0f84c73eb5efd0e960e590a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Lavender@{Lavender}}
+\index{Lavender@{Lavender}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Lavender}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Lavender\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abae8947ec0f84c73eb5efd0e960e590a}
+
+
+Gets a system-\/defined color with the value R\+:230 G\+:230 B\+:250 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a687b15806e8ae291e6743de27841b7b6}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Lavender\+Blush@{Lavender\+Blush}}
+\index{Lavender\+Blush@{Lavender\+Blush}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Lavender\+Blush}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Lavender\+Blush\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a687b15806e8ae291e6743de27841b7b6}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:240 B\+:245 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a15de0e383f225ec93280545331558ba9}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Lawn\+Green@{Lawn\+Green}}
+\index{Lawn\+Green@{Lawn\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Lawn\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Lawn\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a15de0e383f225ec93280545331558ba9}
+
+
+Gets a system-\/defined color with the value R\+:124 G\+:252 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abe9046dd36610ee0b22efdb725e3c7e7}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Lemon\+Chiffon@{Lemon\+Chiffon}}
+\index{Lemon\+Chiffon@{Lemon\+Chiffon}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Lemon\+Chiffon}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Lemon\+Chiffon\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abe9046dd36610ee0b22efdb725e3c7e7}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:250 B\+:205 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a30da650b32f5eb1996e4413609a7dc7d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Blue@{Light\+Blue}}
+\index{Light\+Blue@{Light\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a30da650b32f5eb1996e4413609a7dc7d}
+
+
+Gets a system-\/defined color with the value R\+:173 G\+:216 B\+:230 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1bdfe7f6958a1a3944620845d21c5b51}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Coral@{Light\+Coral}}
+\index{Light\+Coral@{Light\+Coral}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Coral}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Coral\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1bdfe7f6958a1a3944620845d21c5b51}
+
+
+Gets a system-\/defined color with the value R\+:240 G\+:128 B\+:128 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af1c88073071576bdd88bada695c2723d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Cyan@{Light\+Cyan}}
+\index{Light\+Cyan@{Light\+Cyan}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Cyan}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Cyan\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af1c88073071576bdd88bada695c2723d}
+
+
+Gets a system-\/defined color with the value R\+:224 G\+:255 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a46118860269125b52e5e8354fa6dc886}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Goldenrod\+Yellow@{Light\+Goldenrod\+Yellow}}
+\index{Light\+Goldenrod\+Yellow@{Light\+Goldenrod\+Yellow}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Goldenrod\+Yellow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Goldenrod\+Yellow\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a46118860269125b52e5e8354fa6dc886}
+
+
+Gets a system-\/defined color with the value R\+:250 G\+:250 B\+:210 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6ba6cf04da4bd4f9296afa5ade02ca12}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Gray@{Light\+Gray}}
+\index{Light\+Gray@{Light\+Gray}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Gray}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Gray\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6ba6cf04da4bd4f9296afa5ade02ca12}
+
+
+Gets a system-\/defined color with the value R\+:211 G\+:211 B\+:211 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6391f3062b560628b1fc1cbcf6a60229}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Green@{Light\+Green}}
+\index{Light\+Green@{Light\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6391f3062b560628b1fc1cbcf6a60229}
+
+
+Gets a system-\/defined color with the value R\+:144 G\+:238 B\+:144 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af9cb1b8803753191cbe22f4f8744627a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Pink@{Light\+Pink}}
+\index{Light\+Pink@{Light\+Pink}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Pink}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Pink\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af9cb1b8803753191cbe22f4f8744627a}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:182 B\+:193 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aeed458990c50db439c0685772ed98a9b}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Salmon@{Light\+Salmon}}
+\index{Light\+Salmon@{Light\+Salmon}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Salmon}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Salmon\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aeed458990c50db439c0685772ed98a9b}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:160 B\+:122 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aaeb92f9e9df177ff74fd591820828f20}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Sea\+Green@{Light\+Sea\+Green}}
+\index{Light\+Sea\+Green@{Light\+Sea\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Sea\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Sea\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aaeb92f9e9df177ff74fd591820828f20}
+
+
+Gets a system-\/defined color with the value R\+:32 G\+:178 B\+:170 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab9227c6825361244e29d04306cc0c1aa}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Sky\+Blue@{Light\+Sky\+Blue}}
+\index{Light\+Sky\+Blue@{Light\+Sky\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Sky\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Sky\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab9227c6825361244e29d04306cc0c1aa}
+
+
+Gets a system-\/defined color with the value R\+:135 G\+:206 B\+:250 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab3f9fd80145e61e5406d709c93357868}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Slate\+Gray@{Light\+Slate\+Gray}}
+\index{Light\+Slate\+Gray@{Light\+Slate\+Gray}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Slate\+Gray}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Slate\+Gray\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ab3f9fd80145e61e5406d709c93357868}
+
+
+Gets a system-\/defined color with the value R\+:119 G\+:136 B\+:153 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1b1d72dc66dcf084723af79f17179049}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Steel\+Blue@{Light\+Steel\+Blue}}
+\index{Light\+Steel\+Blue@{Light\+Steel\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Steel\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Steel\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1b1d72dc66dcf084723af79f17179049}
+
+
+Gets a system-\/defined color with the value R\+:176 G\+:196 B\+:222 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa353ae3271496f961552cbe2f2e02f81}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Light\+Yellow@{Light\+Yellow}}
+\index{Light\+Yellow@{Light\+Yellow}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Light\+Yellow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Light\+Yellow\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa353ae3271496f961552cbe2f2e02f81}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:255 B\+:224 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a40ec9a7fb0a078cf351f9f49ae863605}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Lime@{Lime}}
+\index{Lime@{Lime}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Lime}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Lime\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a40ec9a7fb0a078cf351f9f49ae863605}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:255 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afdab54a255b406dff26d54b848967986}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Lime\+Green@{Lime\+Green}}
+\index{Lime\+Green@{Lime\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Lime\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Lime\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afdab54a255b406dff26d54b848967986}
+
+
+Gets a system-\/defined color with the value R\+:50 G\+:205 B\+:50 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af559c4940b4b1a3e96ef1c48bfbd3f69}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Linen@{Linen}}
+\index{Linen@{Linen}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Linen}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Linen\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af559c4940b4b1a3e96ef1c48bfbd3f69}
+
+
+Gets a system-\/defined color with the value R\+:250 G\+:240 B\+:230 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6524b76acd2596d1e2472551b34afe4e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Magenta@{Magenta}}
+\index{Magenta@{Magenta}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Magenta}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Magenta\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6524b76acd2596d1e2472551b34afe4e}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:0 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a07a8b867df079db25092fa3802209921}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Maroon@{Maroon}}
+\index{Maroon@{Maroon}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Maroon}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Maroon\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a07a8b867df079db25092fa3802209921}
+
+
+Gets a system-\/defined color with the value R\+:128 G\+:0 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a624b916afc6757d970cf964e5a9649bf}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Medium\+Aquamarine@{Medium\+Aquamarine}}
+\index{Medium\+Aquamarine@{Medium\+Aquamarine}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Medium\+Aquamarine}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Medium\+Aquamarine\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a624b916afc6757d970cf964e5a9649bf}
+
+
+Gets a system-\/defined color with the value R\+:102 G\+:205 B\+:170 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af1d6d462b2b790c1db7fa4eea1c2192e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Medium\+Blue@{Medium\+Blue}}
+\index{Medium\+Blue@{Medium\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Medium\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Medium\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af1d6d462b2b790c1db7fa4eea1c2192e}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:205 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8988833e0d78a5f1c388744b435bfa93}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Medium\+Orchid@{Medium\+Orchid}}
+\index{Medium\+Orchid@{Medium\+Orchid}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Medium\+Orchid}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Medium\+Orchid\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8988833e0d78a5f1c388744b435bfa93}
+
+
+Gets a system-\/defined color with the value R\+:186 G\+:85 B\+:211 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a284eb3cb1887086dff3503f0055d378b}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Medium\+Purple@{Medium\+Purple}}
+\index{Medium\+Purple@{Medium\+Purple}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Medium\+Purple}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Medium\+Purple\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a284eb3cb1887086dff3503f0055d378b}
+
+
+Gets a system-\/defined color with the value R\+:147 G\+:112 B\+:219 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8ff4f49c2f2f79dc6f3df8a13b26429d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Medium\+Sea\+Green@{Medium\+Sea\+Green}}
+\index{Medium\+Sea\+Green@{Medium\+Sea\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Medium\+Sea\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Medium\+Sea\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8ff4f49c2f2f79dc6f3df8a13b26429d}
+
+
+Gets a system-\/defined color with the value R\+:60 G\+:179 B\+:113 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac03d200c812e52a0eac9b8fcfb426040}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Medium\+Slate\+Blue@{Medium\+Slate\+Blue}}
+\index{Medium\+Slate\+Blue@{Medium\+Slate\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Medium\+Slate\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Medium\+Slate\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac03d200c812e52a0eac9b8fcfb426040}
+
+
+Gets a system-\/defined color with the value R\+:123 G\+:104 B\+:238 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a4f7c658d76ba48658592cef21be13166}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Medium\+Spring\+Green@{Medium\+Spring\+Green}}
+\index{Medium\+Spring\+Green@{Medium\+Spring\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Medium\+Spring\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Medium\+Spring\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a4f7c658d76ba48658592cef21be13166}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:250 B\+:154 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a225190952641e4b27e5ac21e00f5c496}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Medium\+Turquoise@{Medium\+Turquoise}}
+\index{Medium\+Turquoise@{Medium\+Turquoise}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Medium\+Turquoise}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Medium\+Turquoise\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a225190952641e4b27e5ac21e00f5c496}
+
+
+Gets a system-\/defined color with the value R\+:72 G\+:209 B\+:204 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a62798e2b9d8927ded7477b48f7c1d66f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Medium\+Violet\+Red@{Medium\+Violet\+Red}}
+\index{Medium\+Violet\+Red@{Medium\+Violet\+Red}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Medium\+Violet\+Red}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Medium\+Violet\+Red\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a62798e2b9d8927ded7477b48f7c1d66f}
+
+
+Gets a system-\/defined color with the value R\+:199 G\+:21 B\+:133 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a34eaca4b78132534877c32071773de19}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Midnight\+Blue@{Midnight\+Blue}}
+\index{Midnight\+Blue@{Midnight\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Midnight\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Midnight\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a34eaca4b78132534877c32071773de19}
+
+
+Gets a system-\/defined color with the value R\+:25 G\+:25 B\+:112 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7805572bd3502b4963330067d014b1de}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Mint\+Cream@{Mint\+Cream}}
+\index{Mint\+Cream@{Mint\+Cream}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Mint\+Cream}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Mint\+Cream\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7805572bd3502b4963330067d014b1de}
+
+
+Gets a system-\/defined color with the value R\+:245 G\+:255 B\+:250 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa47d4468d0d81bca05727d0f38a2c94e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Misty\+Rose@{Misty\+Rose}}
+\index{Misty\+Rose@{Misty\+Rose}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Misty\+Rose}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Misty\+Rose\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa47d4468d0d81bca05727d0f38a2c94e}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:228 B\+:225 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a62f7f3a40f5204f089568b8bd89dd0cd}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Moccasin@{Moccasin}}
+\index{Moccasin@{Moccasin}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Moccasin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Moccasin\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a62f7f3a40f5204f089568b8bd89dd0cd}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:228 B\+:181 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a11c5534d2855eb0092ae14e8c789b0d4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Navajo\+White@{Navajo\+White}}
+\index{Navajo\+White@{Navajo\+White}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Navajo\+White}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Navajo\+White\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a11c5534d2855eb0092ae14e8c789b0d4}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:222 B\+:173 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a336d4fbe59ef1896b8e941ade97a009e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Navy@{Navy}}
+\index{Navy@{Navy}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Navy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Navy\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a336d4fbe59ef1896b8e941ade97a009e}
+
+
+Gets a system-\/defined color R\+:0 G\+:0 B\+:128 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6fa78cc65c7ea6c0d7ed6535976f6a3e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Old\+Lace@{Old\+Lace}}
+\index{Old\+Lace@{Old\+Lace}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Old\+Lace}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Old\+Lace\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a6fa78cc65c7ea6c0d7ed6535976f6a3e}
+
+
+Gets a system-\/defined color with the value R\+:253 G\+:245 B\+:230 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a20fa8b0eab53cc7fb93ec30c019624fe}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Olive@{Olive}}
+\index{Olive@{Olive}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Olive}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Olive\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a20fa8b0eab53cc7fb93ec30c019624fe}
+
+
+Gets a system-\/defined color with the value R\+:128 G\+:128 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af809aa015c1b6e2e4715aece8b00f532}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Olive\+Drab@{Olive\+Drab}}
+\index{Olive\+Drab@{Olive\+Drab}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Olive\+Drab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Olive\+Drab\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af809aa015c1b6e2e4715aece8b00f532}
+
+
+Gets a system-\/defined color with the value R\+:107 G\+:142 B\+:35 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad18a56cc64968052ba629f56402ea94e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Orange@{Orange}}
+\index{Orange@{Orange}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Orange}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Orange\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ad18a56cc64968052ba629f56402ea94e}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:165 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1c07e6afd0554a2aab685a1643af7993}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Orange\+Red@{Orange\+Red}}
+\index{Orange\+Red@{Orange\+Red}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Orange\+Red}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Orange\+Red\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1c07e6afd0554a2aab685a1643af7993}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:69 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aaf94327edc65148eeedf66f3ac0945f4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Orchid@{Orchid}}
+\index{Orchid@{Orchid}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Orchid}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Orchid\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aaf94327edc65148eeedf66f3ac0945f4}
+
+
+Gets a system-\/defined color with the value R\+:218 G\+:112 B\+:214 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8474542fe5942f2aa19cbd6ff421f065}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Packed\+Value@{Packed\+Value}}
+\index{Packed\+Value@{Packed\+Value}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Packed\+Value}]{\setlength{\rightskip}{0pt plus 5cm}uint Packed\+Value\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8474542fe5942f2aa19cbd6ff421f065}
+
+
+Gets the current color as a packed value.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a03b8be214eb4552cb12d09e48c94727a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Pale\+Goldenrod@{Pale\+Goldenrod}}
+\index{Pale\+Goldenrod@{Pale\+Goldenrod}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Pale\+Goldenrod}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Pale\+Goldenrod\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a03b8be214eb4552cb12d09e48c94727a}
+
+
+Gets a system-\/defined color with the value R\+:238 G\+:232 B\+:170 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a57f99b43eb3f57bfed79627f6bdd0692}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Pale\+Green@{Pale\+Green}}
+\index{Pale\+Green@{Pale\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Pale\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Pale\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a57f99b43eb3f57bfed79627f6bdd0692}
+
+
+Gets a system-\/defined color with the value R\+:152 G\+:251 B\+:152 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9e94ed3f389e702f44427b210ff186ce}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Pale\+Turquoise@{Pale\+Turquoise}}
+\index{Pale\+Turquoise@{Pale\+Turquoise}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Pale\+Turquoise}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Pale\+Turquoise\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9e94ed3f389e702f44427b210ff186ce}
+
+
+Gets a system-\/defined color with the value R\+:175 G\+:238 B\+:238 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a447a14b398611a08b6d15ed4b1b9350a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Pale\+Violet\+Red@{Pale\+Violet\+Red}}
+\index{Pale\+Violet\+Red@{Pale\+Violet\+Red}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Pale\+Violet\+Red}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Pale\+Violet\+Red\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a447a14b398611a08b6d15ed4b1b9350a}
+
+
+Gets a system-\/defined color with the value R\+:219 G\+:112 B\+:147 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa02776ad5ff7fcb6877f48dfecc83d1a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Papaya\+Whip@{Papaya\+Whip}}
+\index{Papaya\+Whip@{Papaya\+Whip}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Papaya\+Whip}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Papaya\+Whip\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_aa02776ad5ff7fcb6877f48dfecc83d1a}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:239 B\+:213 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_adb9b6b6cd4cb596511b686cee3b006f3}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Peach\+Puff@{Peach\+Puff}}
+\index{Peach\+Puff@{Peach\+Puff}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Peach\+Puff}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Peach\+Puff\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_adb9b6b6cd4cb596511b686cee3b006f3}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:218 B\+:185 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a36e5c7e5c45475fd4b0ef0d24c5a6a72}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Peru@{Peru}}
+\index{Peru@{Peru}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Peru}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Peru\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a36e5c7e5c45475fd4b0ef0d24c5a6a72}
+
+
+Gets a system-\/defined color with the value R\+:205 G\+:133 B\+:63 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae30ac30d637ea4e65a888acc784667a4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Pink@{Pink}}
+\index{Pink@{Pink}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Pink}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Pink\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae30ac30d637ea4e65a888acc784667a4}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:192 B\+:203 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9a657ba240cf4d7bc20b7dcf9e40b6f4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Plum@{Plum}}
+\index{Plum@{Plum}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Plum}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Plum\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9a657ba240cf4d7bc20b7dcf9e40b6f4}
+
+
+Gets a system-\/defined color with the value R\+:221 G\+:160 B\+:221 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9291f40f2de88d671a1d2d24804376e4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Powder\+Blue@{Powder\+Blue}}
+\index{Powder\+Blue@{Powder\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Powder\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Powder\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9291f40f2de88d671a1d2d24804376e4}
+
+
+Gets a system-\/defined color with the value R\+:176 G\+:224 B\+:230 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5b1970e101009b75c1a49383f01c9672}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Purple@{Purple}}
+\index{Purple@{Purple}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Purple}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Purple\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5b1970e101009b75c1a49383f01c9672}
+
+
+Gets a system-\/defined color with the value R\+:128 G\+:0 B\+:128 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9899281d9638e30c6a5ed7ec4e6af4f4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!R@{R}}
+\index{R@{R}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{R}]{\setlength{\rightskip}{0pt plus 5cm}byte R\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9899281d9638e30c6a5ed7ec4e6af4f4}
+
+
+Gets or sets the red component value of this \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color}.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a87a605a75f99f27ebe26ae418abc548f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Red@{Red}}
+\index{Red@{Red}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Red}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Red\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a87a605a75f99f27ebe26ae418abc548f}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:0 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af611d84fcfced58f4507f5fca5e63dd5}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Rosy\+Brown@{Rosy\+Brown}}
+\index{Rosy\+Brown@{Rosy\+Brown}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Rosy\+Brown}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Rosy\+Brown\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af611d84fcfced58f4507f5fca5e63dd5}
+
+
+Gets a system-\/defined color with the value R\+:188 G\+:143 B\+:143 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af57939749aee65d23cd0827f841c6aa6}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Royal\+Blue@{Royal\+Blue}}
+\index{Royal\+Blue@{Royal\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Royal\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Royal\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af57939749aee65d23cd0827f841c6aa6}
+
+
+Gets a system-\/defined color with the value R\+:65 G\+:105 B\+:225 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1afcc3741dd8cfdcaa6e5eed72b37eb4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Saddle\+Brown@{Saddle\+Brown}}
+\index{Saddle\+Brown@{Saddle\+Brown}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Saddle\+Brown}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Saddle\+Brown\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1afcc3741dd8cfdcaa6e5eed72b37eb4}
+
+
+Gets a system-\/defined color with the value R\+:139 G\+:69 B\+:19 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a28950cae146758579e14171090d36462}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Salmon@{Salmon}}
+\index{Salmon@{Salmon}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Salmon}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Salmon\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a28950cae146758579e14171090d36462}
+
+
+Gets a system-\/defined color with the value R\+:250 G\+:128 B\+:114 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1c7bec384c796341d16d863d301d7679}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Sandy\+Brown@{Sandy\+Brown}}
+\index{Sandy\+Brown@{Sandy\+Brown}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Sandy\+Brown}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Sandy\+Brown\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1c7bec384c796341d16d863d301d7679}
+
+
+Gets a system-\/defined color with the value R\+:244 G\+:164 B\+:96 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a627c960778761dfe508642cb453b2bce}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Sea\+Green@{Sea\+Green}}
+\index{Sea\+Green@{Sea\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Sea\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Sea\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a627c960778761dfe508642cb453b2bce}
+
+
+Gets a system-\/defined color with the value R\+:46 G\+:139 B\+:87 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af4680dab307b3f90e2547e23f5ad1fa3}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Sea\+Shell@{Sea\+Shell}}
+\index{Sea\+Shell@{Sea\+Shell}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Sea\+Shell}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Sea\+Shell\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_af4680dab307b3f90e2547e23f5ad1fa3}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:245 B\+:238 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a37a261d1a024bbc8fd49fdbe36ddd384}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Sienna@{Sienna}}
+\index{Sienna@{Sienna}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Sienna}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Sienna\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a37a261d1a024bbc8fd49fdbe36ddd384}
+
+
+Gets a system-\/defined color with the value R\+:160 G\+:82 B\+:45 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a14d21c030d1e5a6cab3b87b34e035f73}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Silver@{Silver}}
+\index{Silver@{Silver}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Silver}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Silver\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a14d21c030d1e5a6cab3b87b34e035f73}
+
+
+Gets a system-\/defined color with the value R\+:192 G\+:192 B\+:192 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac3790779955b5c2931d801e40544c3c5}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Sky\+Blue@{Sky\+Blue}}
+\index{Sky\+Blue@{Sky\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Sky\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Sky\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac3790779955b5c2931d801e40544c3c5}
+
+
+Gets a system-\/defined color with the value R\+:135 G\+:206 B\+:235 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5c0c65acec90aac1948898b030dc211e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Slate\+Blue@{Slate\+Blue}}
+\index{Slate\+Blue@{Slate\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Slate\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Slate\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5c0c65acec90aac1948898b030dc211e}
+
+
+Gets a system-\/defined color with the value R\+:106 G\+:90 B\+:205 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a66808c67c15816890404de88552761d7}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Slate\+Gray@{Slate\+Gray}}
+\index{Slate\+Gray@{Slate\+Gray}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Slate\+Gray}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Slate\+Gray\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a66808c67c15816890404de88552761d7}
+
+
+Gets a system-\/defined color with the value R\+:112 G\+:128 B\+:144 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1d6e122b3cf6f2f9f0a938d7cca90b35}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Snow@{Snow}}
+\index{Snow@{Snow}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Snow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Snow\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a1d6e122b3cf6f2f9f0a938d7cca90b35}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:250 B\+:250 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_acffb92f90662fbdbda991d007007e3b9}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Spring\+Green@{Spring\+Green}}
+\index{Spring\+Green@{Spring\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Spring\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Spring\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_acffb92f90662fbdbda991d007007e3b9}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:255 B\+:127 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a305f27f14c294ea48e4f96c66c3b4505}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Steel\+Blue@{Steel\+Blue}}
+\index{Steel\+Blue@{Steel\+Blue}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Steel\+Blue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Steel\+Blue\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a305f27f14c294ea48e4f96c66c3b4505}
+
+
+Gets a system-\/defined color with the value R\+:70 G\+:130 B\+:180 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae2cc25b26cf45fc36820fd18b74b8ecd}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Tan@{Tan}}
+\index{Tan@{Tan}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Tan}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Tan\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae2cc25b26cf45fc36820fd18b74b8ecd}
+
+
+Gets a system-\/defined color with the value R\+:210 G\+:180 B\+:140 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9656144912b60001f94a6b7ddfa99b3f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Teal@{Teal}}
+\index{Teal@{Teal}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Teal}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Teal\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a9656144912b60001f94a6b7ddfa99b3f}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:128 B\+:128 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afeba7da96a1ce1728a5a82ea2f3048b0}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Thistle@{Thistle}}
+\index{Thistle@{Thistle}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Thistle}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Thistle\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_afeba7da96a1ce1728a5a82ea2f3048b0}
+
+
+Gets a system-\/defined color with the value R\+:216 G\+:191 B\+:216 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae54db898acfaad8489704b5c3cb9df05}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Tomato@{Tomato}}
+\index{Tomato@{Tomato}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Tomato}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Tomato\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ae54db898acfaad8489704b5c3cb9df05}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:99 B\+:71 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a931d4f2dd78c6c26a3f6e02ba2cee7a0}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Transparent@{Transparent}}
+\index{Transparent@{Transparent}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Transparent}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Transparent\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a931d4f2dd78c6c26a3f6e02ba2cee7a0}
+
+
+Gets a system-\/defined color with the value R\+:0 G\+:0 B\+:0 A\+:0.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5e34586bde96349194d4378740ef6652}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Turquoise@{Turquoise}}
+\index{Turquoise@{Turquoise}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Turquoise}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Turquoise\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a5e34586bde96349194d4378740ef6652}
+
+
+Gets a system-\/defined color with the value R\+:64 G\+:224 B\+:208 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abaf62a768000d22346bfca589db91189}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Violet@{Violet}}
+\index{Violet@{Violet}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Violet}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Violet\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_abaf62a768000d22346bfca589db91189}
+
+
+Gets a system-\/defined color with the value R\+:238 G\+:130 B\+:238 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a78d7d69e5ea955359ccda6a975481df3}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Wheat@{Wheat}}
+\index{Wheat@{Wheat}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Wheat}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Wheat\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a78d7d69e5ea955359ccda6a975481df3}
+
+
+Gets a system-\/defined color with the value R\+:245 G\+:222 B\+:179 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac586768e5306fcce5ef5a07fcb012e0d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!White@{White}}
+\index{White@{White}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{White}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} White\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_ac586768e5306fcce5ef5a07fcb012e0d}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:255 B\+:255 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a00333695959a7d43d1f0869826182f30}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!White\+Smoke@{White\+Smoke}}
+\index{White\+Smoke@{White\+Smoke}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{White\+Smoke}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} White\+Smoke\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a00333695959a7d43d1f0869826182f30}
+
+
+Gets a system-\/defined color with the value R\+:245 G\+:245 B\+:245 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8317b63f8d153c779ba55709ade6f0b1}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Yellow@{Yellow}}
+\index{Yellow@{Yellow}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Yellow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Yellow\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a8317b63f8d153c779ba55709ade6f0b1}
+
+
+Gets a system-\/defined color with the value R\+:255 G\+:255 B\+:0 A\+:255.
+
+\hypertarget{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7f026027fb2931b7062ae964998591ec}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}!Yellow\+Green@{Yellow\+Green}}
+\index{Yellow\+Green@{Yellow\+Green}!Microsoft\+::\+Xna\+::\+Framework\+::\+Color@{Microsoft\+::\+Xna\+::\+Framework\+::\+Color}}
+\subsubsection[{Yellow\+Green}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color} Yellow\+Green\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{structMicrosoft_1_1Xna_1_1Framework_1_1Color_a7f026027fb2931b7062ae964998591ec}
+
+
+Gets a system-\/defined color with the value R\+:154 G\+:205 B\+:50 A\+:255.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Xna/\hyperlink{Color_8cs}{Color.\+cs}\end{DoxyCompactItemize}

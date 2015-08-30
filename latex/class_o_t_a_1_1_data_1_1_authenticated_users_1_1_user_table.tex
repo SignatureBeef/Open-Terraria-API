@@ -1,0 +1,84 @@
+\hypertarget{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table}{}\section{O\+T\+A.\+Data.\+Authenticated\+Users.\+User\+Table Class Reference}
+\label{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table}\index{O\+T\+A.\+Data.\+Authenticated\+Users.\+User\+Table@{O\+T\+A.\+Data.\+Authenticated\+Users.\+User\+Table}}
+
+
+The default user table  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries Column\+Names}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_a874e72fd8ce210e46effd0e356b80223}{Exists} ()
+\begin{DoxyCompactList}\small\item\em Checks if the table exists \end{DoxyCompactList}\item 
+static bool \hyperlink{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_aed814a70dbb4019636f7dfd6bc5a076d}{Create} ()
+\begin{DoxyCompactList}\small\item\em Creates the table \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const String \hyperlink{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_ab82259a205e6bf47e648017ae4d3f7ba}{Table\+Name} = \char`\"{}users\char`\"{}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static readonly \hyperlink{struct_o_t_a_1_1_data_1_1_table_column}{Table\+Column}\mbox{[}$\,$\mbox{]} \hyperlink{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_ad295618f862ae6afbd4a8bab0d9c1260}{Columns}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The default user table 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_aed814a70dbb4019636f7dfd6bc5a076d}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table}!Create@{Create}}
+\index{Create@{Create}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table}}
+\subsubsection[{Create()}]{\setlength{\rightskip}{0pt plus 5cm}static bool O\+T\+A.\+Data.\+Authenticated\+Users.\+User\+Table.\+Create (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_aed814a70dbb4019636f7dfd6bc5a076d}
+
+
+Creates the table 
+
+\hypertarget{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_a874e72fd8ce210e46effd0e356b80223}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table}!Exists@{Exists}}
+\index{Exists@{Exists}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table}}
+\subsubsection[{Exists()}]{\setlength{\rightskip}{0pt plus 5cm}static bool O\+T\+A.\+Data.\+Authenticated\+Users.\+User\+Table.\+Exists (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_a874e72fd8ce210e46effd0e356b80223}
+
+
+Checks if the table exists 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_ad295618f862ae6afbd4a8bab0d9c1260}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table}!Columns@{Columns}}
+\index{Columns@{Columns}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table}}
+\subsubsection[{Columns}]{\setlength{\rightskip}{0pt plus 5cm}readonly {\bf Table\+Column} \mbox{[}$\,$\mbox{]} O\+T\+A.\+Data.\+Authenticated\+Users.\+User\+Table.\+Columns\hspace{0.3cm}{\ttfamily [static]}}\label{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_ad295618f862ae6afbd4a8bab0d9c1260}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \textcolor{keyword}{new} TableColumn[]
+            \{
+                \textcolor{keyword}{new} TableColumn(ColumnNames.Id, typeof(Int32), \textcolor{keyword}{true}, \textcolor{keyword}{true}),
+                \textcolor{keyword}{new} TableColumn(ColumnNames.Username, typeof(String), 255),
+                \textcolor{keyword}{new} TableColumn(ColumnNames.Password, typeof(String), 255),
+                \textcolor{keyword}{new} TableColumn(ColumnNames.Operator, typeof(Boolean)),
+                \textcolor{keyword}{new} TableColumn(ColumnNames.DateAdded, typeof(DateTime))
+            \}
+\end{DoxyCode}
+\hypertarget{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_ab82259a205e6bf47e648017ae4d3f7ba}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table}!Table\+Name@{Table\+Name}}
+\index{Table\+Name@{Table\+Name}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users\+::\+User\+Table}}
+\subsubsection[{Table\+Name}]{\setlength{\rightskip}{0pt plus 5cm}const String O\+T\+A.\+Data.\+Authenticated\+Users.\+User\+Table.\+Table\+Name = \char`\"{}users\char`\"{}}\label{class_o_t_a_1_1_data_1_1_authenticated_users_1_1_user_table_ab82259a205e6bf47e648017ae4d3f7ba}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Data/\hyperlink{_authenticated_users_8cs}{Authenticated\+Users.\+cs}\end{DoxyCompactItemize}

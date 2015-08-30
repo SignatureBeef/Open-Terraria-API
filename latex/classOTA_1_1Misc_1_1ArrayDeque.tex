@@ -1,0 +1,204 @@
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque}{}\section{Array\+Deque$<$ T $>$}
+\label{classOTA_1_1Misc_1_1ArrayDeque}\index{Array\+Deque$<$ T $>$@{Array\+Deque$<$ T $>$}}
+Inheritance diagram for Array\+Deque$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOTA_1_1Misc_1_1ArrayDeque}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structOTA_1_1Misc_1_1ArrayDeque_1_1DequeEnumerator}{Deque\+Enumerator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classOTA_1_1Misc_1_1ArrayDeque_aae49a37f3c0334d54d689d43ed12b140}{Array\+Deque} (int size=16)
+\item 
+void \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_aa71d36872f416feaa853788a7a7a7ef8}{Clear} ()
+\item 
+\hyperlink{structOTA_1_1Misc_1_1ArrayDeque_1_1DequeEnumerator}{Deque\+Enumerator} \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a286efa93125c0b3d12d3f0efe2461cef}{Get\+Enumerator} ()
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_aac49f4e015ac8b35fb857f0608cf57b3}{Peek\+Back} ()
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_ab632cf9800b663936caed6e780de5b35}{Peek\+Back} (T default\+Value)
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a71e5b95ff353a721913e917e4e196511}{Peek\+Front} ()
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a17db8ba7f85c73fc56636e54426bc915}{Peek\+Front} (T default\+Value)
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_af811d706b0a93962687c58fd711c566f}{Pop\+Back} ()
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_ac221a414b23c26a3ea0527c875a52c41}{Pop\+Back} (T default\+Value)
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a6f0c329a08b404a69b5f10beb143be91}{Pop\+Front} ()
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a2f068bb40c40c56a9b960ede42ad3410}{Pop\+Front} (T default\+Value)
+\item 
+void \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_aa3515b9bc2e7e420420c2a66ecc97dfc}{Push\+Back} (T item)
+\item 
+void \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a2e9077337b78b4f2ef018efa7653ac12}{Push\+Front} (T item)
+\item 
+void \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_aa7e48f00b7e104dd79d9b4ecec52a773}{Replace\+Back} (T item)
+\item 
+void \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a04ce15843ce064ad6236593ee168e704}{Replace\+Front} (T item)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+T\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a636da4361996c1f0f59ab56fb6458d54}{array}
+\item 
+int \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_ad43c3812e6d13e0518d9f8b8f463ffcf}{count}
+\item 
+int \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a20358970b1abaf992eb85e071e454653}{head}
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a5ad7f82470f145a0d6ae871ff7b623f3}{Capacity}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_aad462966ed963f892117056de1eba502}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1ArrayDeque_a4da03330824868fcb5ca5aad6031b3e3}{this\mbox{[}int index\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_aae49a37f3c0334d54d689d43ed12b140}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Array\+Deque@{Array\+Deque}}
+\index{Array\+Deque@{Array\+Deque}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Array\+Deque(int size=16)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Array\+Deque} (
+\begin{DoxyParamCaption}
+\item[{int}]{size = {\ttfamily 16}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_aae49a37f3c0334d54d689d43ed12b140}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_aa71d36872f416feaa853788a7a7a7ef8}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Clear@{Clear}}
+\index{Clear@{Clear}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Clear()}]{\setlength{\rightskip}{0pt plus 5cm}void Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_aa71d36872f416feaa853788a7a7a7ef8}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a286efa93125c0b3d12d3f0efe2461cef}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Deque\+Enumerator} Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_a286efa93125c0b3d12d3f0efe2461cef}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_aac49f4e015ac8b35fb857f0608cf57b3}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Peek\+Back@{Peek\+Back}}
+\index{Peek\+Back@{Peek\+Back}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Peek\+Back()}]{\setlength{\rightskip}{0pt plus 5cm}T Peek\+Back (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_aac49f4e015ac8b35fb857f0608cf57b3}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_ab632cf9800b663936caed6e780de5b35}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Peek\+Back@{Peek\+Back}}
+\index{Peek\+Back@{Peek\+Back}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Peek\+Back(\+T default\+Value)}]{\setlength{\rightskip}{0pt plus 5cm}T Peek\+Back (
+\begin{DoxyParamCaption}
+\item[{T}]{default\+Value}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_ab632cf9800b663936caed6e780de5b35}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a71e5b95ff353a721913e917e4e196511}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Peek\+Front@{Peek\+Front}}
+\index{Peek\+Front@{Peek\+Front}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Peek\+Front()}]{\setlength{\rightskip}{0pt plus 5cm}T Peek\+Front (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_a71e5b95ff353a721913e917e4e196511}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a17db8ba7f85c73fc56636e54426bc915}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Peek\+Front@{Peek\+Front}}
+\index{Peek\+Front@{Peek\+Front}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Peek\+Front(\+T default\+Value)}]{\setlength{\rightskip}{0pt plus 5cm}T Peek\+Front (
+\begin{DoxyParamCaption}
+\item[{T}]{default\+Value}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_a17db8ba7f85c73fc56636e54426bc915}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_af811d706b0a93962687c58fd711c566f}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Pop\+Back@{Pop\+Back}}
+\index{Pop\+Back@{Pop\+Back}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Pop\+Back()}]{\setlength{\rightskip}{0pt plus 5cm}T Pop\+Back (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_af811d706b0a93962687c58fd711c566f}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_ac221a414b23c26a3ea0527c875a52c41}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Pop\+Back@{Pop\+Back}}
+\index{Pop\+Back@{Pop\+Back}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Pop\+Back(\+T default\+Value)}]{\setlength{\rightskip}{0pt plus 5cm}T Pop\+Back (
+\begin{DoxyParamCaption}
+\item[{T}]{default\+Value}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_ac221a414b23c26a3ea0527c875a52c41}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a6f0c329a08b404a69b5f10beb143be91}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Pop\+Front@{Pop\+Front}}
+\index{Pop\+Front@{Pop\+Front}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Pop\+Front()}]{\setlength{\rightskip}{0pt plus 5cm}T Pop\+Front (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_a6f0c329a08b404a69b5f10beb143be91}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a2f068bb40c40c56a9b960ede42ad3410}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Pop\+Front@{Pop\+Front}}
+\index{Pop\+Front@{Pop\+Front}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Pop\+Front(\+T default\+Value)}]{\setlength{\rightskip}{0pt plus 5cm}T Pop\+Front (
+\begin{DoxyParamCaption}
+\item[{T}]{default\+Value}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_a2f068bb40c40c56a9b960ede42ad3410}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_aa3515b9bc2e7e420420c2a66ecc97dfc}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Push\+Back@{Push\+Back}}
+\index{Push\+Back@{Push\+Back}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Push\+Back(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void Push\+Back (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_aa3515b9bc2e7e420420c2a66ecc97dfc}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a2e9077337b78b4f2ef018efa7653ac12}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Push\+Front@{Push\+Front}}
+\index{Push\+Front@{Push\+Front}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Push\+Front(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void Push\+Front (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_a2e9077337b78b4f2ef018efa7653ac12}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_aa7e48f00b7e104dd79d9b4ecec52a773}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Replace\+Back@{Replace\+Back}}
+\index{Replace\+Back@{Replace\+Back}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Replace\+Back(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void Replace\+Back (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_aa7e48f00b7e104dd79d9b4ecec52a773}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a04ce15843ce064ad6236593ee168e704}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Replace\+Front@{Replace\+Front}}
+\index{Replace\+Front@{Replace\+Front}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Replace\+Front(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void Replace\+Front (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1ArrayDeque_a04ce15843ce064ad6236593ee168e704}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a636da4361996c1f0f59ab56fb6458d54}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!array@{array}}
+\index{array@{array}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{array}]{\setlength{\rightskip}{0pt plus 5cm}T \mbox{[}$\,$\mbox{]} array\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Misc_1_1ArrayDeque_a636da4361996c1f0f59ab56fb6458d54}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_ad43c3812e6d13e0518d9f8b8f463ffcf}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!count@{count}}
+\index{count@{count}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{count}]{\setlength{\rightskip}{0pt plus 5cm}int count\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Misc_1_1ArrayDeque_ad43c3812e6d13e0518d9f8b8f463ffcf}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a20358970b1abaf992eb85e071e454653}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!head@{head}}
+\index{head@{head}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{head}]{\setlength{\rightskip}{0pt plus 5cm}int head\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Misc_1_1ArrayDeque_a20358970b1abaf992eb85e071e454653}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a5ad7f82470f145a0d6ae871ff7b623f3}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Capacity@{Capacity}}
+\index{Capacity@{Capacity}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Capacity}]{\setlength{\rightskip}{0pt plus 5cm}int Capacity\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Misc_1_1ArrayDeque_a5ad7f82470f145a0d6ae871ff7b623f3}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_aad462966ed963f892117056de1eba502}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!Count@{Count}}
+\index{Count@{Count}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{Count}]{\setlength{\rightskip}{0pt plus 5cm}int Count\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Misc_1_1ArrayDeque_aad462966ed963f892117056de1eba502}
+\hypertarget{classOTA_1_1Misc_1_1ArrayDeque_a4da03330824868fcb5ca5aad6031b3e3}{}\index{O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}!this\mbox{[}int index\mbox{]}@{this[int index]}}
+\index{this\mbox{[}int index\mbox{]}@{this[int index]}!O\+T\+A\+::\+Misc\+::\+Array\+Deque@{O\+T\+A\+::\+Misc\+::\+Array\+Deque}}
+\subsubsection[{this[int index]}]{\setlength{\rightskip}{0pt plus 5cm}T this\mbox{[}int index\mbox{]}\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Misc_1_1ArrayDeque_a4da03330824868fcb5ca5aad6031b3e3}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Misc/\hyperlink{ArrayDequeue_8cs}{Array\+Dequeue.\+cs}\end{DoxyCompactItemize}

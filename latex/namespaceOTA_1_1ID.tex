@@ -1,0 +1,86 @@
+\hypertarget{namespaceOTA_1_1ID}{}\section{O\+T\+A.\+I\+D Namespace Reference}
+\label{namespaceOTA_1_1ID}\index{O\+T\+A.\+I\+D@{O\+T\+A.\+I\+D}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classOTA_1_1ID_1_1Lookup}{Lookup}
+\begin{DoxyCompactList}\small\item\em Generic lookup for tiles, items, buffs etc \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271ed}{Action\+Type} \+: byte \{ \\*
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda8b520b6574873fb1a4f5b566eac9597a}{Kill\+Tile} = 0, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda3e8d8d0f0e9aba98ad7ef76c7abd90a2}{Place\+Tile} = 1, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda4541e1c8c5d3e90b260b2347cf53c99e}{Kill\+Wall} = 2, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edadfc0c08f6edbf511bf70fd870bb6f522}{Place\+Wall} = 3, 
+\\*
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edacc7021cf7041b96ffd41006d306d5637}{Kill\+Tile1} = 4, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda68f6de8c575e537e588797b61da87613}{Place\+Wire} = 5, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda6d9561bf394989161179bf9838d757f1}{Kill\+Wire} = 6, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edaa42dcb46da07d9bbd2643675862934b3}{Pound\+Tile} = 7, 
+\\*
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda2992d2f3e56e90f98e15bf7da3fbe8cf}{Place\+Actuator} = 8, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edab95017d89cf3130e60cd51ad9488dd4c}{Kill\+Actuator} = 9, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda00560ab1a14c21293a0593fc64455276}{Place\+Wire2} = 10, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edaa7721d397f066c458fb4124617145aff}{Kill\+Wire2} = 11, 
+\\*
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edad4a60a066c79029da8e8f2dac831fab3}{Place\+Wire3} = 12, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda02e031a491baccdd6b1571cf5755ebe7}{Kill\+Wire3} = 13, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda27c6287cec7822e96fdc763a14c4c223}{Slope\+Tile} = 14, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edac55fb5bc02692cb77b1b4b144480e251}{Frame\+Track} = 15, 
+\\*
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda36bc3a08d1039521174dc924c02a3999}{U\+N\+K\+N\+O\+W\+N\+\_\+1} = 100, 
+\hyperlink{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda6348f945cf9021cafc37dfe5af2296d8}{U\+N\+K\+N\+O\+W\+N\+\_\+2} = 101
+ \}\begin{DoxyCompactList}\small\item\em Action type. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271ed}{}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Action\+Type@{Action\+Type}}
+\index{Action\+Type@{Action\+Type}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}
+\subsubsection[{Action\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Action\+Type} \+: byte\hspace{0.3cm}{\ttfamily [strong]}}\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271ed}
+
+
+Action type. 
+
+Typically used in tile actions. For example when reading the messages from a client.\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Kill\+Tile@{Kill\+Tile}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Tile@{Kill\+Tile}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda8b520b6574873fb1a4f5b566eac9597a}{}Kill\+Tile\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda8b520b6574873fb1a4f5b566eac9597a}
+}]\index{Place\+Tile@{Place\+Tile}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Tile@{Place\+Tile}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda3e8d8d0f0e9aba98ad7ef76c7abd90a2}{}Place\+Tile\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda3e8d8d0f0e9aba98ad7ef76c7abd90a2}
+}]\index{Kill\+Wall@{Kill\+Wall}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Wall@{Kill\+Wall}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda4541e1c8c5d3e90b260b2347cf53c99e}{}Kill\+Wall\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda4541e1c8c5d3e90b260b2347cf53c99e}
+}]\index{Place\+Wall@{Place\+Wall}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Wall@{Place\+Wall}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edadfc0c08f6edbf511bf70fd870bb6f522}{}Place\+Wall\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edadfc0c08f6edbf511bf70fd870bb6f522}
+}]\index{Kill\+Tile1@{Kill\+Tile1}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Tile1@{Kill\+Tile1}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edacc7021cf7041b96ffd41006d306d5637}{}Kill\+Tile1\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edacc7021cf7041b96ffd41006d306d5637}
+}]\index{Place\+Wire@{Place\+Wire}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Wire@{Place\+Wire}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda68f6de8c575e537e588797b61da87613}{}Place\+Wire\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda68f6de8c575e537e588797b61da87613}
+}]\index{Kill\+Wire@{Kill\+Wire}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Wire@{Kill\+Wire}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda6d9561bf394989161179bf9838d757f1}{}Kill\+Wire\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda6d9561bf394989161179bf9838d757f1}
+}]\index{Pound\+Tile@{Pound\+Tile}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Pound\+Tile@{Pound\+Tile}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edaa42dcb46da07d9bbd2643675862934b3}{}Pound\+Tile\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edaa42dcb46da07d9bbd2643675862934b3}
+}]\index{Place\+Actuator@{Place\+Actuator}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Actuator@{Place\+Actuator}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda2992d2f3e56e90f98e15bf7da3fbe8cf}{}Place\+Actuator\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda2992d2f3e56e90f98e15bf7da3fbe8cf}
+}]\index{Kill\+Actuator@{Kill\+Actuator}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Actuator@{Kill\+Actuator}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edab95017d89cf3130e60cd51ad9488dd4c}{}Kill\+Actuator\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edab95017d89cf3130e60cd51ad9488dd4c}
+}]\index{Place\+Wire2@{Place\+Wire2}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Wire2@{Place\+Wire2}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda00560ab1a14c21293a0593fc64455276}{}Place\+Wire2\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda00560ab1a14c21293a0593fc64455276}
+}]\index{Kill\+Wire2@{Kill\+Wire2}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Wire2@{Kill\+Wire2}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edaa7721d397f066c458fb4124617145aff}{}Kill\+Wire2\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edaa7721d397f066c458fb4124617145aff}
+}]\index{Place\+Wire3@{Place\+Wire3}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Wire3@{Place\+Wire3}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edad4a60a066c79029da8e8f2dac831fab3}{}Place\+Wire3\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edad4a60a066c79029da8e8f2dac831fab3}
+}]\index{Kill\+Wire3@{Kill\+Wire3}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Wire3@{Kill\+Wire3}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda02e031a491baccdd6b1571cf5755ebe7}{}Kill\+Wire3\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda02e031a491baccdd6b1571cf5755ebe7}
+}]\index{Slope\+Tile@{Slope\+Tile}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Slope\+Tile@{Slope\+Tile}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda27c6287cec7822e96fdc763a14c4c223}{}Slope\+Tile\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda27c6287cec7822e96fdc763a14c4c223}
+}]\index{Frame\+Track@{Frame\+Track}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Frame\+Track@{Frame\+Track}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edac55fb5bc02692cb77b1b4b144480e251}{}Frame\+Track\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271edac55fb5bc02692cb77b1b4b144480e251}
+}]\index{U\+N\+K\+N\+O\+W\+N\+\_\+1@{U\+N\+K\+N\+O\+W\+N\+\_\+1}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!U\+N\+K\+N\+O\+W\+N\+\_\+1@{U\+N\+K\+N\+O\+W\+N\+\_\+1}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda36bc3a08d1039521174dc924c02a3999}{}U\+N\+K\+N\+O\+W\+N\+\_\+1\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda36bc3a08d1039521174dc924c02a3999}
+}]\index{U\+N\+K\+N\+O\+W\+N\+\_\+2@{U\+N\+K\+N\+O\+W\+N\+\_\+2}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!U\+N\+K\+N\+O\+W\+N\+\_\+2@{U\+N\+K\+N\+O\+W\+N\+\_\+2}}\item[{\em 
+\hypertarget{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda6348f945cf9021cafc37dfe5af2296d8}{}U\+N\+K\+N\+O\+W\+N\+\_\+2\label{namespaceOTA_1_1ID_a1f5264d1d5ca29e0f8e2eb23fc7271eda6348f945cf9021cafc37dfe5af2296d8}
+}]\end{description}
+\end{Desc}

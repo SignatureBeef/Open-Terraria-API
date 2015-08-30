@@ -1,0 +1,276 @@
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin}{}\section{L\+U\+A\+Plugin}
+\label{classOTA_1_1Plugin_1_1LUAPlugin}\index{L\+U\+A\+Plugin@{L\+U\+A\+Plugin}}
+
+
+The implementation to get L\+U\+A plugins working as an \hyperlink{namespaceOTA}{O\+T\+A} plugin  
+
+
+Inheritance diagram for L\+U\+A\+Plugin\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOTA_1_1Plugin_1_1LUAPlugin}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+new \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command.\+Command\+Info} \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a74547444192b65a50fe76a521588331a}{Add\+Command} (string prefix)
+\begin{DoxyCompactList}\small\item\em Adds a command into the server \end{DoxyCompactList}\item 
+Array \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a0e0b343be27b612bdbaa7c79b684962c}{Array\+Sort} (Array arr, N\+Lua.\+Lua\+Function callback)
+\begin{DoxyCompactList}\small\item\em Sorts an array using a L\+U\+A callback \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a9fc6b6db6fe2d5d681c11009d8d3c2a1}{Call} (ref \hyperlink{structOTA_1_1Plugin_1_1HookContext}{Hook\+Context} ctx, ref object args, string function)
+\begin{DoxyCompactList}\small\item\em Calls a L\+U\+A command \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a4e658328a346895859779815d61fce9c}{Hook\+Base} (\hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point} hook\+Point, \hyperlink{namespaceOTA_1_1Plugin_a7c65b8c7c155fec0b559afbe2da809c0}{Hook\+Order} order, N\+Lua.\+Lua\+Function callback)
+\item 
+void \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_aed294407ecd564699fb18ca0b1121b4f}{Internal\+Call$<$ T $>$} (ref \hyperlink{structOTA_1_1Plugin_1_1HookContext}{Hook\+Context} ctx, ref T args)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a98613409d641a4dca656a332b014dbfe}{Disabled} ()
+\begin{DoxyCompactList}\small\item\em When the plugin is disabled \end{DoxyCompactList}\item 
+override void \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_ab16fc36a69cb5852555d75ae2e2c4cda}{Disposed} (object state)
+\begin{DoxyCompactList}\small\item\em Called when the plugin is disposing \end{DoxyCompactList}\item 
+override void \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a9a0442ca7538da671562ad2683aaf42b}{Enabled} ()
+\begin{DoxyCompactList}\small\item\em When the plugin is enabled \end{DoxyCompactList}\item 
+override void \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a08973abba6331ff88e59d563aa89f2c5}{Initialized} (object state)
+\begin{DoxyCompactList}\small\item\em A callback for initializing the plugin\textquotesingle{}s resources and subscribing to hooks. 
+\begin{DoxyParams}{Parameters}
+{\em state} & A state object returned from On\+Dispose by a previous instance of the plugin, or null otherwise. \\
+\hline
+\end{DoxyParams}
+\end{DoxyCompactList}\item 
+override void \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a33e9c25e6ab86fff5e6eb4e9d103eda4}{Resumed} (object state)
+\begin{DoxyCompactList}\small\item\em When the plugin is resumed \end{DoxyCompactList}\item 
+override object \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a7a0f88ea7197b7c72cff81a708c26d21}{Suspended\+And\+Saved} ()
+\begin{DoxyCompactList}\small\item\em When the plugin is suspended \end{DoxyCompactList}\item 
+override void \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a3d93a5293d74c61a3789ff92b8de47d9}{World\+Loaded} ()
+\begin{DoxyCompactList}\small\item\em When the world is loaded \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classOTA_1_1Plugin_1_1LUAPlugin_a62885a2911b2c21274564c3d9e407c2c}{Is\+Valid}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The implementation to get L\+U\+A plugins working as an \hyperlink{namespaceOTA}{O\+T\+A} plugin 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a74547444192b65a50fe76a521588331a}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Add\+Command@{Add\+Command}}
+\index{Add\+Command@{Add\+Command}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Add\+Command(string prefix)}]{\setlength{\rightskip}{0pt plus 5cm}new {\bf Command.\+Command\+Info} Add\+Command (
+\begin{DoxyParamCaption}
+\item[{string}]{prefix}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Plugin_1_1LUAPlugin_a74547444192b65a50fe76a521588331a}
+
+
+Adds a command into the server 
+
+\begin{DoxyReturn}{Returns}
+The command.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em prefix} & Prefix.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a0e0b343be27b612bdbaa7c79b684962c}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Array\+Sort@{Array\+Sort}}
+\index{Array\+Sort@{Array\+Sort}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Array\+Sort(\+Array arr, N\+Lua.\+Lua\+Function callback)}]{\setlength{\rightskip}{0pt plus 5cm}Array Array\+Sort (
+\begin{DoxyParamCaption}
+\item[{Array}]{arr, }
+\item[{N\+Lua.\+Lua\+Function}]{callback}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Plugin_1_1LUAPlugin_a0e0b343be27b612bdbaa7c79b684962c}
+
+
+Sorts an array using a L\+U\+A callback 
+
+\begin{DoxyReturn}{Returns}
+The sort.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em arr} & Arr.\\
+\hline
+{\em callback} & Callback.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a9fc6b6db6fe2d5d681c11009d8d3c2a1}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Call@{Call}}
+\index{Call@{Call}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Call(ref Hook\+Context ctx, ref object args, string function)}]{\setlength{\rightskip}{0pt plus 5cm}void Call (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Hook\+Context}}]{ctx, }
+\item[{ref object}]{args, }
+\item[{string}]{function}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Plugin_1_1LUAPlugin_a9fc6b6db6fe2d5d681c11009d8d3c2a1}
+
+
+Calls a L\+U\+A command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & Context.\\
+\hline
+{\em args} & Arguments.\\
+\hline
+{\em function} & Function.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a98613409d641a4dca656a332b014dbfe}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Disabled@{Disabled}}
+\index{Disabled@{Disabled}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Disabled()}]{\setlength{\rightskip}{0pt plus 5cm}override void Disabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1LUAPlugin_a98613409d641a4dca656a332b014dbfe}
+
+
+When the plugin is disabled 
+
+
+
+Reimplemented from \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aa8de5b30178e6476d98c2e1e0056dbb4}{Base\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_ab16fc36a69cb5852555d75ae2e2c4cda}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Disposed@{Disposed}}
+\index{Disposed@{Disposed}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Disposed(object state)}]{\setlength{\rightskip}{0pt plus 5cm}override void Disposed (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1LUAPlugin_ab16fc36a69cb5852555d75ae2e2c4cda}
+
+
+Called when the plugin is disposing 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & A state object previously returned from Save\+State to be disposed of as well.\\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a4927d6c4b5044757bbab734c25e51f4b}{Base\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a9a0442ca7538da671562ad2683aaf42b}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Enabled@{Enabled}}
+\index{Enabled@{Enabled}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Enabled()}]{\setlength{\rightskip}{0pt plus 5cm}override void Enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1LUAPlugin_a9a0442ca7538da671562ad2683aaf42b}
+
+
+When the plugin is enabled 
+
+
+
+Reimplemented from \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_aa2f0b266439d709ec85c0b848a25fd2c}{Base\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a4e658328a346895859779815d61fce9c}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Hook\+Base@{Hook\+Base}}
+\index{Hook\+Base@{Hook\+Base}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Hook\+Base(\+Hook\+Point hook\+Point, Hook\+Order order, N\+Lua.\+Lua\+Function callback)}]{\setlength{\rightskip}{0pt plus 5cm}void Hook\+Base (
+\begin{DoxyParamCaption}
+\item[{{\bf Hook\+Point}}]{hook\+Point, }
+\item[{{\bf Hook\+Order}}]{order, }
+\item[{N\+Lua.\+Lua\+Function}]{callback}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Plugin_1_1LUAPlugin_a4e658328a346895859779815d61fce9c}
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a08973abba6331ff88e59d563aa89f2c5}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Initialized@{Initialized}}
+\index{Initialized@{Initialized}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Initialized(object state)}]{\setlength{\rightskip}{0pt plus 5cm}override void Initialized (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1LUAPlugin_a08973abba6331ff88e59d563aa89f2c5}
+
+
+A callback for initializing the plugin\textquotesingle{}s resources and subscribing to hooks. 
+\begin{DoxyParams}{Parameters}
+{\em state} & A state object returned from On\+Dispose by a previous instance of the plugin, or null otherwise. \\
+\hline
+\end{DoxyParams}
+
+
+
+
+Reimplemented from \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a0f5be39a01c19564ffd7abf3ac9f329a}{Base\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_aed294407ecd564699fb18ca0b1121b4f}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Internal\+Call$<$ T $>$@{Internal\+Call$<$ T $>$}}
+\index{Internal\+Call$<$ T $>$@{Internal\+Call$<$ T $>$}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Internal\+Call$<$ T $>$(ref Hook\+Context ctx, ref T args)}]{\setlength{\rightskip}{0pt plus 5cm}void Internal\+Call$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Hook\+Context}}]{ctx, }
+\item[{ref T}]{args}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Plugin_1_1LUAPlugin_aed294407ecd564699fb18ca0b1121b4f}
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a33e9c25e6ab86fff5e6eb4e9d103eda4}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Resumed@{Resumed}}
+\index{Resumed@{Resumed}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Resumed(object state)}]{\setlength{\rightskip}{0pt plus 5cm}override void Resumed (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1LUAPlugin_a33e9c25e6ab86fff5e6eb4e9d103eda4}
+
+
+When the plugin is resumed 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & State.\\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a301511e40e501f5408919bad0dad8695}{Base\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a7a0f88ea7197b7c72cff81a708c26d21}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Suspended\+And\+Saved@{Suspended\+And\+Saved}}
+\index{Suspended\+And\+Saved@{Suspended\+And\+Saved}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Suspended\+And\+Saved()}]{\setlength{\rightskip}{0pt plus 5cm}override object Suspended\+And\+Saved (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1LUAPlugin_a7a0f88ea7197b7c72cff81a708c26d21}
+
+
+When the plugin is suspended 
+
+\begin{DoxyReturn}{Returns}
+The and saved.
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a250b8acc3348f42b30077ef17c39e750}{Base\+Plugin}.
+
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a3d93a5293d74c61a3789ff92b8de47d9}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!World\+Loaded@{World\+Loaded}}
+\index{World\+Loaded@{World\+Loaded}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{World\+Loaded()}]{\setlength{\rightskip}{0pt plus 5cm}override void World\+Loaded (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Plugin_1_1LUAPlugin_a3d93a5293d74c61a3789ff92b8de47d9}
+
+
+When the world is loaded 
+
+
+
+Reimplemented from \hyperlink{classOTA_1_1Plugin_1_1BasePlugin_a756fe44dfeb738b144ad91ef76ae2e7f}{Base\+Plugin}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Plugin_1_1LUAPlugin_a62885a2911b2c21274564c3d9e407c2c}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Is\+Valid@{Is\+Valid}}
+\index{Is\+Valid@{Is\+Valid}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Is\+Valid}]{\setlength{\rightskip}{0pt plus 5cm}bool Is\+Valid\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Plugin_1_1LUAPlugin_a62885a2911b2c21274564c3d9e407c2c}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Plugin/\hyperlink{LUAManager_8cs}{L\+U\+A\+Manager.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,112 @@
+\hypertarget{classOTA_1_1Callbacks_1_1NPCCallback}{}\section{N\+P\+C\+Callback}
+\label{classOTA_1_1Callbacks_1_1NPCCallback}\index{N\+P\+C\+Callback@{N\+P\+C\+Callback}}
+
+
+\hyperlink{namespaceOTA_1_1Callbacks}{Callbacks} from Terraria.\+N\+P\+C  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classOTA_1_1Callbacks_1_1NPCCallback_a4e28a06fc52f876963bbcbe5fd3c05cb}{Assign\+Invasion\+Type} ()
+\begin{DoxyCompactList}\small\item\em Returns a new invasion type that is dedicated for the callee \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Callbacks_1_1NPCCallback_a91e5759f1b696acfcd3517e08e2065eb}{Can\+Spawn\+N\+P\+C} (int x, int y, int type, int start=0)
+\begin{DoxyCompactList}\small\item\em Determines if can spawn N\+P\+C at the specified x y type start. \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1NPCCallback_a618416750b92cfc4cdf8cda1f605e512}{On\+Invasion\+N\+P\+C\+Spawn} (int x, int y)
+\begin{DoxyCompactList}\small\item\em Called when vanilla code successfully summons an Invasion N\+P\+C \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1NPCCallback_af30b6bb1af4e726827f2051fd689513f}{On\+N\+P\+C\+Killed} (object npc)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classOTA_1_1Callbacks_1_1Rand}{Rand} \hyperlink{classOTA_1_1Callbacks_1_1NPCCallback_a568e883e75847455390b76742a3c6ad0}{Checked\+Rand} = new \hyperlink{classOTA_1_1Callbacks_1_1Rand}{Rand}()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{namespaceOTA_1_1Callbacks}{Callbacks} from Terraria.\+N\+P\+C 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Callbacks_1_1NPCCallback_a4e28a06fc52f876963bbcbe5fd3c05cb}{}\index{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}!Assign\+Invasion\+Type@{Assign\+Invasion\+Type}}
+\index{Assign\+Invasion\+Type@{Assign\+Invasion\+Type}!O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}}
+\subsubsection[{Assign\+Invasion\+Type()}]{\setlength{\rightskip}{0pt plus 5cm}static int Assign\+Invasion\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1NPCCallback_a4e28a06fc52f876963bbcbe5fd3c05cb}
+
+
+Returns a new invasion type that is dedicated for the callee 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Callbacks_1_1NPCCallback_a91e5759f1b696acfcd3517e08e2065eb}{}\index{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}!Can\+Spawn\+N\+P\+C@{Can\+Spawn\+N\+P\+C}}
+\index{Can\+Spawn\+N\+P\+C@{Can\+Spawn\+N\+P\+C}!O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}}
+\subsubsection[{Can\+Spawn\+N\+P\+C(int x, int y, int type, int start=0)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Can\+Spawn\+N\+P\+C (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{type, }
+\item[{int}]{start = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1NPCCallback_a91e5759f1b696acfcd3517e08e2065eb}
+
+
+Determines if can spawn N\+P\+C at the specified x y type start. 
+
+Called as part of Terraria.\+N\+P\+C.\+New\+N\+P\+C
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if can spawn N\+P the specified x y type start; otherwise, {\ttfamily false}.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate.\\
+\hline
+{\em y} & The y coordinate.\\
+\hline
+{\em type} & Type.\\
+\hline
+{\em start} & Start.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Callbacks_1_1NPCCallback_a618416750b92cfc4cdf8cda1f605e512}{}\index{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}!On\+Invasion\+N\+P\+C\+Spawn@{On\+Invasion\+N\+P\+C\+Spawn}}
+\index{On\+Invasion\+N\+P\+C\+Spawn@{On\+Invasion\+N\+P\+C\+Spawn}!O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}}
+\subsubsection[{On\+Invasion\+N\+P\+C\+Spawn(int x, int y)}]{\setlength{\rightskip}{0pt plus 5cm}static void On\+Invasion\+N\+P\+C\+Spawn (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1NPCCallback_a618416750b92cfc4cdf8cda1f605e512}
+
+
+Called when vanilla code successfully summons an Invasion N\+P\+C 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate.\\
+\hline
+{\em y} & The y coordinate.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Callbacks_1_1NPCCallback_af30b6bb1af4e726827f2051fd689513f}{}\index{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}!On\+N\+P\+C\+Killed@{On\+N\+P\+C\+Killed}}
+\index{On\+N\+P\+C\+Killed@{On\+N\+P\+C\+Killed}!O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}}
+\subsubsection[{On\+N\+P\+C\+Killed(object npc)}]{\setlength{\rightskip}{0pt plus 5cm}static void On\+N\+P\+C\+Killed (
+\begin{DoxyParamCaption}
+\item[{object}]{npc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1NPCCallback_af30b6bb1af4e726827f2051fd689513f}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Callbacks_1_1NPCCallback_a568e883e75847455390b76742a3c6ad0}{}\index{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}!Checked\+Rand@{Checked\+Rand}}
+\index{Checked\+Rand@{Checked\+Rand}!O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback@{O\+T\+A\+::\+Callbacks\+::\+N\+P\+C\+Callback}}
+\subsubsection[{Checked\+Rand}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Rand} Checked\+Rand = new {\bf Rand}()\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1NPCCallback_a568e883e75847455390b76742a3c6ad0}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Callbacks/\hyperlink{NPCCallback_8cs}{N\+P\+C\+Callback.\+cs}\end{DoxyCompactItemize}

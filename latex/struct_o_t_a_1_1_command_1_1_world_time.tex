@@ -1,0 +1,147 @@
+\hypertarget{struct_o_t_a_1_1_command_1_1_world_time}{}\section{O\+T\+A.\+Command.\+World\+Time Struct Reference}
+\label{struct_o_t_a_1_1_command_1_1_world_time}\index{O\+T\+A.\+Command.\+World\+Time@{O\+T\+A.\+Command.\+World\+Time}}
+
+
+12 hour world time for use with plugins. It provides easy modifications of game time.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override string \hyperlink{struct_o_t_a_1_1_command_1_1_world_time_a986d040248187f3ed1b225b1b6ba134e}{To\+String} ()
+\begin{DoxyCompactList}\small\item\em Formats to 12-\/hour time \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{struct_o_t_a_1_1_command_1_1_world_time}{World\+Time} \hyperlink{struct_o_t_a_1_1_command_1_1_world_time_a498df5c3d6519bc10c7450f81a107539}{Parse} (string input)
+\begin{DoxyCompactList}\small\item\em Parses time in the format of H\+H\+:mm\mbox{[}am$\vert$pm\mbox{]} \end{DoxyCompactList}\item 
+static \hyperlink{struct_o_t_a_1_1_command_1_1_world_time}{World\+Time} \hyperlink{struct_o_t_a_1_1_command_1_1_world_time_a9f1c8b194eb9c8ae00a52af13d7d69b1}{Parse} (double time)
+\begin{DoxyCompactList}\small\item\em Parses game time to a \hyperlink{struct_o_t_a_1_1_command_1_1_world_time}{World\+Time} instance \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const double \hyperlink{struct_o_t_a_1_1_command_1_1_world_time_a313c8ab82be9442238de88cd276a3376}{Time\+Max} = 86400
+\begin{DoxyCompactList}\small\item\em The maximum time possible. \end{DoxyCompactList}\item 
+const double \hyperlink{struct_o_t_a_1_1_command_1_1_world_time_a9e80e88421ce390cbb2e432022affc14}{Time\+Min} = 0
+\begin{DoxyCompactList}\small\item\em The minimum time \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+byte \hyperlink{struct_o_t_a_1_1_command_1_1_world_time_a5b31766a1acd5d3f7f6deb12883cd1a9}{Hour}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the hour. \end{DoxyCompactList}\item 
+byte \hyperlink{struct_o_t_a_1_1_command_1_1_world_time_a7deec67732fa18d400ee5e78627721e2}{Minute}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the minute. \end{DoxyCompactList}\item 
+bool \hyperlink{struct_o_t_a_1_1_command_1_1_world_time_ae17654fb336d0a2dd8a930a4d93733db}{A\+M}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The period flag for a 12-\/hour clock \end{DoxyCompactList}\item 
+double \hyperlink{struct_o_t_a_1_1_command_1_1_world_time_a0344e73e9fe07b1bc486b4f82ccd1621}{Game\+Time}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Translated game time version of the current instance time \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+12 hour world time for use with plugins. It provides easy modifications of game time. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_o_t_a_1_1_command_1_1_world_time_a498df5c3d6519bc10c7450f81a107539}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Parse@{Parse}}
+\index{Parse@{Parse}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Parse(string input)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf World\+Time} O\+T\+A.\+Command.\+World\+Time.\+Parse (
+\begin{DoxyParamCaption}
+\item[{string}]{input}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_o_t_a_1_1_command_1_1_world_time_a498df5c3d6519bc10c7450f81a107539}
+
+
+Parses time in the format of H\+H\+:mm\mbox{[}am$\vert$pm\mbox{]} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{struct_o_t_a_1_1_command_1_1_world_time_a9f1c8b194eb9c8ae00a52af13d7d69b1}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Parse@{Parse}}
+\index{Parse@{Parse}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Parse(double time)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf World\+Time} O\+T\+A.\+Command.\+World\+Time.\+Parse (
+\begin{DoxyParamCaption}
+\item[{double}]{time}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_o_t_a_1_1_command_1_1_world_time_a9f1c8b194eb9c8ae00a52af13d7d69b1}
+
+
+Parses game time to a \hyperlink{struct_o_t_a_1_1_command_1_1_world_time}{World\+Time} instance 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & Time.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_o_t_a_1_1_command_1_1_world_time_a986d040248187f3ed1b225b1b6ba134e}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{To\+String()}]{\setlength{\rightskip}{0pt plus 5cm}override string O\+T\+A.\+Command.\+World\+Time.\+To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{struct_o_t_a_1_1_command_1_1_world_time_a986d040248187f3ed1b225b1b6ba134e}
+
+
+Formats to 12-\/hour time 
+
+\begin{DoxyReturn}{Returns}
+A System.\+String that represents the current \hyperlink{struct_o_t_a_1_1_command_1_1_world_time}{O\+T\+A.\+Command.\+World\+Time}.
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{struct_o_t_a_1_1_command_1_1_world_time_a313c8ab82be9442238de88cd276a3376}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Time\+Max@{Time\+Max}}
+\index{Time\+Max@{Time\+Max}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Time\+Max}]{\setlength{\rightskip}{0pt plus 5cm}const double O\+T\+A.\+Command.\+World\+Time.\+Time\+Max = 86400}\label{struct_o_t_a_1_1_command_1_1_world_time_a313c8ab82be9442238de88cd276a3376}
+
+
+The maximum time possible. 
+
+\hypertarget{struct_o_t_a_1_1_command_1_1_world_time_a9e80e88421ce390cbb2e432022affc14}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Time\+Min@{Time\+Min}}
+\index{Time\+Min@{Time\+Min}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Time\+Min}]{\setlength{\rightskip}{0pt plus 5cm}const double O\+T\+A.\+Command.\+World\+Time.\+Time\+Min = 0}\label{struct_o_t_a_1_1_command_1_1_world_time_a9e80e88421ce390cbb2e432022affc14}
+
+
+The minimum time 
+
+
+
+\subsection{Property Documentation}
+\hypertarget{struct_o_t_a_1_1_command_1_1_world_time_ae17654fb336d0a2dd8a930a4d93733db}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!A\+M@{A\+M}}
+\index{A\+M@{A\+M}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{A\+M}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Command.\+World\+Time.\+A\+M\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{struct_o_t_a_1_1_command_1_1_world_time_ae17654fb336d0a2dd8a930a4d93733db}
+
+
+The period flag for a 12-\/hour clock 
+
+{\ttfamily true} if A; otherwise, {\ttfamily false}.\hypertarget{struct_o_t_a_1_1_command_1_1_world_time_a0344e73e9fe07b1bc486b4f82ccd1621}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Game\+Time@{Game\+Time}}
+\index{Game\+Time@{Game\+Time}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Game\+Time}]{\setlength{\rightskip}{0pt plus 5cm}double O\+T\+A.\+Command.\+World\+Time.\+Game\+Time\hspace{0.3cm}{\ttfamily [get]}}\label{struct_o_t_a_1_1_command_1_1_world_time_a0344e73e9fe07b1bc486b4f82ccd1621}
+
+
+Translated game time version of the current instance time 
+
+The game time.\hypertarget{struct_o_t_a_1_1_command_1_1_world_time_a5b31766a1acd5d3f7f6deb12883cd1a9}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Hour@{Hour}}
+\index{Hour@{Hour}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Hour}]{\setlength{\rightskip}{0pt plus 5cm}byte O\+T\+A.\+Command.\+World\+Time.\+Hour\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{struct_o_t_a_1_1_command_1_1_world_time_a5b31766a1acd5d3f7f6deb12883cd1a9}
+
+
+Gets or sets the hour. 
+
+The hour.\hypertarget{struct_o_t_a_1_1_command_1_1_world_time_a7deec67732fa18d400ee5e78627721e2}{}\index{O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}!Minute@{Minute}}
+\index{Minute@{Minute}!O\+T\+A\+::\+Command\+::\+World\+Time@{O\+T\+A\+::\+Command\+::\+World\+Time}}
+\subsubsection[{Minute}]{\setlength{\rightskip}{0pt plus 5cm}byte O\+T\+A.\+Command.\+World\+Time.\+Minute\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{struct_o_t_a_1_1_command_1_1_world_time_a7deec67732fa18d400ee5e78627721e2}
+
+
+Gets or sets the minute. 
+
+The minute.
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{_argument_list_8cs}{Argument\+List.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,222 @@
+\hypertarget{classOTA_1_1Misc_1_1DataRegister}{}\section{Data\+Register}
+\label{classOTA_1_1Misc_1_1DataRegister}\index{Data\+Register@{Data\+Register}}
+
+
+Low use data storage  
+
+
+Inheritance diagram for Data\+Register\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classOTA_1_1Misc_1_1DataRegister}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classOTA_1_1Misc_1_1DataRegister_aae585a0a0da16c15edeeea48bdf46575}{Add} (string item, bool auto\+Save=true)
+\begin{DoxyCompactList}\small\item\em Adds a new line into this instance \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classOTA_1_1Misc_1_1DataRegister_a4a635888348e0c92fd134854947f3022}{Clear} (bool auto\+Save=true)
+\begin{DoxyCompactList}\small\item\em Clear out this instance \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classOTA_1_1Misc_1_1DataRegister_a82ff1cfa0eac744d1981667f530a5a34}{Contains} (string item, bool compare\+As\+Lowered=false)
+\begin{DoxyCompactList}\small\item\em Checks to see if this instance contains a line \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Misc_1_1DataRegister_a9c5281ecdfbadc5af6dfa323f1d4d7eb}{Data\+Register} (string path, bool lower\+Keys=true, bool auto\+Load=true)
+\item 
+void \hyperlink{classOTA_1_1Misc_1_1DataRegister_a6e2d745cdb7a7b983f861ed6a9a541a7}{Dispose} ()
+\item 
+virtual void \hyperlink{classOTA_1_1Misc_1_1DataRegister_a64cc1ba6b9c12fa65ad7f4dcf402f59f}{Load} ()
+\begin{DoxyCompactList}\small\item\em Loads lines from the file \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Misc_1_1DataRegister_ad5316c283894d57be1450edab878aed0}{Move\+Next} ()
+\item 
+virtual bool \hyperlink{classOTA_1_1Misc_1_1DataRegister_a7b0f6ae2194973fc320202841b5ec828}{Remove} (string item, bool auto\+Save=true)
+\begin{DoxyCompactList}\small\item\em Removes a line from this instance \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Misc_1_1DataRegister_a372de693ad40b3f42839c8ec6ac845f4}{Reset} ()
+\item 
+virtual bool \hyperlink{classOTA_1_1Misc_1_1DataRegister_a2cb804d48eec8fd6e00a1ebb043333a9}{Save} ()
+\begin{DoxyCompactList}\small\item\em Saves this instance into a file \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Misc_1_1DataRegister_afccbfd13199ec11b98c50cdfe1845723}{\+\_\+data}
+\item 
+string \hyperlink{classOTA_1_1Misc_1_1DataRegister_a301dbb9913055444022b6d007e61871d}{\+\_\+path}
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classOTA_1_1Misc_1_1DataRegister_aad462966ed963f892117056de1eba502}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Total registered items \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1Misc_1_1DataRegister_ac1ecbacad011388594d776ae8043553d}{Current}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+string \hyperlink{classOTA_1_1Misc_1_1DataRegister_ac296626b7fb007c1d6674f5ddce5b3c6}{this\mbox{[}int index\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Low use data storage 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_a9c5281ecdfbadc5af6dfa323f1d4d7eb}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Data\+Register@{Data\+Register}}
+\index{Data\+Register@{Data\+Register}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Data\+Register(string path, bool lower\+Keys=true, bool auto\+Load=true)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Data\+Register} (
+\begin{DoxyParamCaption}
+\item[{string}]{path, }
+\item[{bool}]{lower\+Keys = {\ttfamily true}, }
+\item[{bool}]{auto\+Load = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1DataRegister_a9c5281ecdfbadc5af6dfa323f1d4d7eb}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_aae585a0a0da16c15edeeea48bdf46575}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Add@{Add}}
+\index{Add@{Add}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Add(string item, bool auto\+Save=true)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Add (
+\begin{DoxyParamCaption}
+\item[{string}]{item, }
+\item[{bool}]{auto\+Save = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Misc_1_1DataRegister_aae585a0a0da16c15edeeea48bdf46575}
+
+
+Adds a new line into this instance 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Item.\\
+\hline
+{\em auto\+Save} & If set to {\ttfamily true} auto save.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_a4a635888348e0c92fd134854947f3022}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Clear@{Clear}}
+\index{Clear@{Clear}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Clear(bool auto\+Save=true)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Clear (
+\begin{DoxyParamCaption}
+\item[{bool}]{auto\+Save = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Misc_1_1DataRegister_a4a635888348e0c92fd134854947f3022}
+
+
+Clear out this instance 
+
+
+\begin{DoxyParams}{Parameters}
+{\em auto\+Save} & If set to {\ttfamily true} auto save.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_a82ff1cfa0eac744d1981667f530a5a34}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Contains@{Contains}}
+\index{Contains@{Contains}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Contains(string item, bool compare\+As\+Lowered=false)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Contains (
+\begin{DoxyParamCaption}
+\item[{string}]{item, }
+\item[{bool}]{compare\+As\+Lowered = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Misc_1_1DataRegister_a82ff1cfa0eac744d1981667f530a5a34}
+
+
+Checks to see if this instance contains a line 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Item.\\
+\hline
+{\em compare\+As\+Lowered} & If set to {\ttfamily true} compare as lowered.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_a6e2d745cdb7a7b983f861ed6a9a541a7}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Dispose()}]{\setlength{\rightskip}{0pt plus 5cm}void Dispose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1DataRegister_a6e2d745cdb7a7b983f861ed6a9a541a7}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_a64cc1ba6b9c12fa65ad7f4dcf402f59f}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Load@{Load}}
+\index{Load@{Load}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Load()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Load (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Misc_1_1DataRegister_a64cc1ba6b9c12fa65ad7f4dcf402f59f}
+
+
+Loads lines from the file 
+
+
+
+Reimplemented in \hyperlink{classOTA_1_1Misc_1_1PairFileRegister_a7169855eea6c71131eee16f9bf3937c3}{Pair\+File\+Register}.
+
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_ad5316c283894d57be1450edab878aed0}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Move\+Next@{Move\+Next}}
+\index{Move\+Next@{Move\+Next}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Move\+Next()}]{\setlength{\rightskip}{0pt plus 5cm}bool Move\+Next (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1DataRegister_ad5316c283894d57be1450edab878aed0}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_a7b0f6ae2194973fc320202841b5ec828}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Remove@{Remove}}
+\index{Remove@{Remove}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Remove(string item, bool auto\+Save=true)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Remove (
+\begin{DoxyParamCaption}
+\item[{string}]{item, }
+\item[{bool}]{auto\+Save = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Misc_1_1DataRegister_a7b0f6ae2194973fc320202841b5ec828}
+
+
+Removes a line from this instance 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Item.\\
+\hline
+{\em auto\+Save} & If set to {\ttfamily true} auto save.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_a372de693ad40b3f42839c8ec6ac845f4}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Reset@{Reset}}
+\index{Reset@{Reset}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Reset()}]{\setlength{\rightskip}{0pt plus 5cm}void Reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1DataRegister_a372de693ad40b3f42839c8ec6ac845f4}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_a2cb804d48eec8fd6e00a1ebb043333a9}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Save@{Save}}
+\index{Save@{Save}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Save()}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Save (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Misc_1_1DataRegister_a2cb804d48eec8fd6e00a1ebb043333a9}
+
+
+Saves this instance into a file 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_afccbfd13199ec11b98c50cdfe1845723}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!\+\_\+data@{\+\_\+data}}
+\index{\+\_\+data@{\+\_\+data}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}string \mbox{[}$\,$\mbox{]} \+\_\+data\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Misc_1_1DataRegister_afccbfd13199ec11b98c50cdfe1845723}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_a301dbb9913055444022b6d007e61871d}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!\+\_\+path@{\+\_\+path}}
+\index{\+\_\+path@{\+\_\+path}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{\+\_\+path}]{\setlength{\rightskip}{0pt plus 5cm}string \+\_\+path\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Misc_1_1DataRegister_a301dbb9913055444022b6d007e61871d}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_aad462966ed963f892117056de1eba502}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Count@{Count}}
+\index{Count@{Count}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Count}]{\setlength{\rightskip}{0pt plus 5cm}int Count\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Misc_1_1DataRegister_aad462966ed963f892117056de1eba502}
+
+
+Total registered items 
+
+The count.\hypertarget{classOTA_1_1Misc_1_1DataRegister_ac1ecbacad011388594d776ae8043553d}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!Current@{Current}}
+\index{Current@{Current}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{Current}]{\setlength{\rightskip}{0pt plus 5cm}string Current\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Misc_1_1DataRegister_ac1ecbacad011388594d776ae8043553d}
+\hypertarget{classOTA_1_1Misc_1_1DataRegister_ac296626b7fb007c1d6674f5ddce5b3c6}{}\index{O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}!this\mbox{[}int index\mbox{]}@{this[int index]}}
+\index{this\mbox{[}int index\mbox{]}@{this[int index]}!O\+T\+A\+::\+Misc\+::\+Data\+Register@{O\+T\+A\+::\+Misc\+::\+Data\+Register}}
+\subsubsection[{this[int index]}]{\setlength{\rightskip}{0pt plus 5cm}string this\mbox{[}int index\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Misc_1_1DataRegister_ac296626b7fb007c1d6674f5ddce5b3c6}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Misc/\hyperlink{DataRegister_8cs}{Data\+Register.\+cs}\end{DoxyCompactItemize}

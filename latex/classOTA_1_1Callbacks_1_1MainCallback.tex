@@ -1,0 +1,190 @@
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback}{}\section{Main\+Callback}
+\label{classOTA_1_1Callbacks_1_1MainCallback}\index{Main\+Callback@{Main\+Callback}}
+
+
+The Terraia.\+Main (vanilla) class callbacks  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a313d283897b7cb30f0890a56ce2a505d}{Initialise} ()
+\begin{DoxyCompactList}\small\item\em The call from the X\+N\+A Game initialise \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a9943d5d38ba7f3dd3c86680a62febc0c}{On\+Invasion\+Warning} ()
+\begin{DoxyCompactList}\small\item\em The call from Terraria.\+Main.\+Invasion\+Warning \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_ad95b43f9b36ad3484cb24d4f7b2eaa5b}{On\+Program\+Finished} ()
+\begin{DoxyCompactList}\small\item\em The callback from vanilla code to start shutting down \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a19ba43e4cbc51f971a0448c5c7140bb0}{On\+Program\+Started} (string\mbox{[}$\,$\mbox{]} cmd)
+\begin{DoxyCompactList}\small\item\em The first ever call from vanilla code \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_ac209dd42ae36094c020228b057df951d}{On\+Status\+Text\+Change} ()
+\begin{DoxyCompactList}\small\item\em Callback from Terraria.\+Main.\+Ded\+Serv \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a489a876181d41083bf400f5921fed1f7}{Update\+Server\+End} ()
+\begin{DoxyCompactList}\small\item\em The call from the end of Terraria.\+Main.\+Update\+Server \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a84b46c587a13e79241a8fb22ccec7a7e}{World\+Generate\+Begin} ()
+\begin{DoxyCompactList}\small\item\em The call from the start of Terraria.\+World\+Gen.\+generate\+World \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a0c1a35d8f54e7ecaa873fc298db4ffd8}{World\+Generate\+End} ()
+\begin{DoxyCompactList}\small\item\em The call from the end of Terraria.\+World\+Gen.\+generate\+World \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a36c2fa93fcb892f8e28253f023c22bc1}{World\+Load\+Begin} ()
+\begin{DoxyCompactList}\small\item\em The call from the start of Terraria.\+World\+File.\+load\+World \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a6bcd77c3f8ea68bc3339834a41b94604}{World\+Load\+End} ()
+\begin{DoxyCompactList}\small\item\em The call from the end of Terraria.\+World\+File.\+load\+World \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static Action \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a79fc2cb20f6182173dd53724237d882d}{Status\+Text\+Change}
+\begin{DoxyCompactList}\small\item\em The callback to update the console with Terraria.\+Main.\+status\+Text \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Events}
+\begin{DoxyCompactItemize}
+\item 
+static Event\+Handler \hyperlink{classOTA_1_1Callbacks_1_1MainCallback_a3ac2eae7803b98d481dfa6cd0105a238}{Update\+Server}
+\begin{DoxyCompactList}\small\item\em Game Update\+Server event \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The Terraia.\+Main (vanilla) class callbacks 
+
+This needs to be split out into other files, as this was the first ever A\+P\+I file. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a313d283897b7cb30f0890a56ce2a505d}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!Initialise@{Initialise}}
+\index{Initialise@{Initialise}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{Initialise()}]{\setlength{\rightskip}{0pt plus 5cm}static void Initialise (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a313d283897b7cb30f0890a56ce2a505d}
+
+
+The call from the X\+N\+A Game initialise 
+
+This could have been in the X\+N\+A shims, but the client uses F\+N\+A/\+X\+N\+A and if our client is to work they require C\+I\+L modifications\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a9943d5d38ba7f3dd3c86680a62febc0c}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!On\+Invasion\+Warning@{On\+Invasion\+Warning}}
+\index{On\+Invasion\+Warning@{On\+Invasion\+Warning}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{On\+Invasion\+Warning()}]{\setlength{\rightskip}{0pt plus 5cm}static bool On\+Invasion\+Warning (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a9943d5d38ba7f3dd3c86680a62febc0c}
+
+
+The call from Terraria.\+Main.\+Invasion\+Warning 
+
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_ad95b43f9b36ad3484cb24d4f7b2eaa5b}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!On\+Program\+Finished@{On\+Program\+Finished}}
+\index{On\+Program\+Finished@{On\+Program\+Finished}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{On\+Program\+Finished()}]{\setlength{\rightskip}{0pt plus 5cm}static void On\+Program\+Finished (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_ad95b43f9b36ad3484cb24d4f7b2eaa5b}
+
+
+The callback from vanilla code to start shutting down 
+
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a19ba43e4cbc51f971a0448c5c7140bb0}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!On\+Program\+Started@{On\+Program\+Started}}
+\index{On\+Program\+Started@{On\+Program\+Started}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{On\+Program\+Started(string[] cmd)}]{\setlength{\rightskip}{0pt plus 5cm}static bool On\+Program\+Started (
+\begin{DoxyParamCaption}
+\item[{string\mbox{[}$\,$\mbox{]}}]{cmd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a19ba43e4cbc51f971a0448c5c7140bb0}
+
+
+The first ever call from vanilla code 
+
+The callback from Terraria.\+Program.\+Launch\+Game
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & Cmd.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_ac209dd42ae36094c020228b057df951d}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!On\+Status\+Text\+Change@{On\+Status\+Text\+Change}}
+\index{On\+Status\+Text\+Change@{On\+Status\+Text\+Change}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{On\+Status\+Text\+Change()}]{\setlength{\rightskip}{0pt plus 5cm}static void On\+Status\+Text\+Change (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_ac209dd42ae36094c020228b057df951d}
+
+
+Callback from Terraria.\+Main.\+Ded\+Serv 
+
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a489a876181d41083bf400f5921fed1f7}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!Update\+Server\+End@{Update\+Server\+End}}
+\index{Update\+Server\+End@{Update\+Server\+End}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{Update\+Server\+End()}]{\setlength{\rightskip}{0pt plus 5cm}static void Update\+Server\+End (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a489a876181d41083bf400f5921fed1f7}
+
+
+The call from the end of Terraria.\+Main.\+Update\+Server 
+
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a84b46c587a13e79241a8fb22ccec7a7e}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!World\+Generate\+Begin@{World\+Generate\+Begin}}
+\index{World\+Generate\+Begin@{World\+Generate\+Begin}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{World\+Generate\+Begin()}]{\setlength{\rightskip}{0pt plus 5cm}static void World\+Generate\+Begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a84b46c587a13e79241a8fb22ccec7a7e}
+
+
+The call from the start of Terraria.\+World\+Gen.\+generate\+World 
+
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a0c1a35d8f54e7ecaa873fc298db4ffd8}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!World\+Generate\+End@{World\+Generate\+End}}
+\index{World\+Generate\+End@{World\+Generate\+End}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{World\+Generate\+End()}]{\setlength{\rightskip}{0pt plus 5cm}static void World\+Generate\+End (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a0c1a35d8f54e7ecaa873fc298db4ffd8}
+
+
+The call from the end of Terraria.\+World\+Gen.\+generate\+World 
+
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a36c2fa93fcb892f8e28253f023c22bc1}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!World\+Load\+Begin@{World\+Load\+Begin}}
+\index{World\+Load\+Begin@{World\+Load\+Begin}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{World\+Load\+Begin()}]{\setlength{\rightskip}{0pt plus 5cm}static void World\+Load\+Begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a36c2fa93fcb892f8e28253f023c22bc1}
+
+
+The call from the start of Terraria.\+World\+File.\+load\+World 
+
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a6bcd77c3f8ea68bc3339834a41b94604}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!World\+Load\+End@{World\+Load\+End}}
+\index{World\+Load\+End@{World\+Load\+End}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{World\+Load\+End()}]{\setlength{\rightskip}{0pt plus 5cm}static void World\+Load\+End (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a6bcd77c3f8ea68bc3339834a41b94604}
+
+
+The call from the end of Terraria.\+World\+File.\+load\+World 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a79fc2cb20f6182173dd53724237d882d}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!Status\+Text\+Change@{Status\+Text\+Change}}
+\index{Status\+Text\+Change@{Status\+Text\+Change}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{Status\+Text\+Change}]{\setlength{\rightskip}{0pt plus 5cm}Action Status\+Text\+Change\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a79fc2cb20f6182173dd53724237d882d}
+
+
+The callback to update the console with Terraria.\+Main.\+status\+Text 
+
+
+
+\subsection{Event Documentation}
+\hypertarget{classOTA_1_1Callbacks_1_1MainCallback_a3ac2eae7803b98d481dfa6cd0105a238}{}\index{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}!Update\+Server@{Update\+Server}}
+\index{Update\+Server@{Update\+Server}!O\+T\+A\+::\+Callbacks\+::\+Main\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Main\+Callback}}
+\subsubsection[{Update\+Server}]{\setlength{\rightskip}{0pt plus 5cm}Event\+Handler Update\+Server\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MainCallback_a3ac2eae7803b98d481dfa6cd0105a238}
+
+
+Game Update\+Server event 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Callbacks/\hyperlink{MainCallback_8cs}{Main\+Callback.\+cs}\end{DoxyCompactItemize}

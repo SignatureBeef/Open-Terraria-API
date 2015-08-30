@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['savepath',['SavePath',['../classOTA_1_1Globals.html#afa83db25fd4b8853aafbb2625786d4a8',1,'OTA::Globals']]],
+  ['segment',['SEGMENT',['../structOTA_1_1Sockets_1_1Connection_1_1Message.html#a065b15c143ddeb22ce42ab60c7021bee',1,'OTA::Sockets::Connection::Message']]],
+  ['sending',['sending',['../classOTA_1_1Sockets_1_1Connection.html#a3c9c079a5769a46eb86bbac481166bab',1,'OTA::Sockets::Connection']]],
+  ['sendnetmessage',['SendNetMessage',['../classOTA_1_1Plugin_1_1HookPoints.html#ab0ce2a0f1563c6d98a53fca9c01d361a',1,'OTA::Plugin::HookPoints']]],
+  ['sendqueuequota',['SendQueueQuota',['../classOTA_1_1Sockets_1_1Connection.html#a1c14b7182bb1d2e97ab85dc0e4b14061',1,'OTA::Sockets::Connection']]],
+  ['servercommands',['serverCommands',['../classOTA_1_1Command_1_1CommandParser.html#a6b1a0845c0af065839766e04cb403502',1,'OTA::Command::CommandParser']]],
+  ['serverpassreceived',['ServerPassReceived',['../classOTA_1_1Plugin_1_1HookPoints.html#a1c41810f09ed8dcb8ad52f229ebb4907',1,'OTA::Plugin::HookPoints']]],
+  ['serverstatechange',['ServerStateChange',['../classOTA_1_1Plugin_1_1HookPoints.html#a3e6b4c9b9dc823d717f738504eaae6db',1,'OTA::Plugin::HookPoints']]],
+  ['signal',['signal',['../classOTA_1_1Logging_1_1LogTarget.html#a72183e3b2c008e99f2b0ed66fe527ab5',1,'OTA::Logging::LogTarget']]],
+  ['signtextget',['SignTextGet',['../classOTA_1_1Plugin_1_1HookPoints.html#a042831a883cab3bd551048bce7c6c835',1,'OTA::Plugin::HookPoints']]],
+  ['signtextset',['SignTextSet',['../classOTA_1_1Plugin_1_1HookPoints.html#af513e0abacbebbdb8b43033421b20d2c',1,'OTA::Plugin::HookPoints']]],
+  ['slotid',['SlotId',['../classOTA_1_1Sockets_1_1ClientConnection.html#a635112a22f99c54b0fad66a41fae1c6e',1,'OTA::Sockets::ClientConnection']]],
+  ['sqlsafename',['SQLSafeName',['../classOTA_1_1Data_1_1AuthenticatedUsers.html#a5f7b801a55ee829062b5878a70c905b4',1,'OTA.Data.AuthenticatedUsers.SQLSafeName()'],['../classOTA_1_1Data_1_1SettingsStore.html#a5f7b801a55ee829062b5878a70c905b4',1,'OTA.Data.SettingsStore.SQLSafeName()']]],
+  ['start',['start',['../structOTA_1_1Plugin_1_1HookArgs_1_1TileSquareReceived.html#a37722a150250e2a5a98e5e0d11e53449',1,'OTA::Plugin::HookArgs::TileSquareReceived']]],
+  ['startcommandprocessing',['StartCommandProcessing',['../classOTA_1_1Plugin_1_1HookPoints.html#a83400cd0a9f26866c7e5b9acbaf1536f',1,'OTA::Plugin::HookPoints']]],
+  ['startdefaultserver',['StartDefaultServer',['../classOTA_1_1Plugin_1_1HookPoints.html#a9c2e8dbae17dc3798934e8cdd40cb1db',1,'OTA::Plugin::HookPoints']]],
+  ['stateupdatereceived',['StateUpdateReceived',['../classOTA_1_1Plugin_1_1HookPoints.html#a62abf7a39a0fd348b58d2546b5646f21',1,'OTA::Plugin::HookPoints']]],
+  ['statustextchange',['StatusTextChange',['../classOTA_1_1Callbacks_1_1MainCallback.html#a79fc2cb20f6182173dd53724237d882d',1,'OTA::Callbacks::MainCallback']]],
+  ['stringcallback',['stringCallback',['../classOTA_1_1Command_1_1CommandInfo.html#a6d7bacc1b2cfbddf1148a21772022aca',1,'OTA::Command::CommandInfo']]]
+];

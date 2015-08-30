@@ -1,0 +1,44 @@
+\hypertarget{HookPoint_8cs}{}\section{Plugin/\+Hook\+Point.cs File Reference}
+\label{HookPoint_8cs}\index{Plugin/\+Hook\+Point.\+cs@{Plugin/\+Hook\+Point.\+cs}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structOTA_1_1Plugin_1_1HookContext}{Hook\+Context}
+\item 
+class \hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point$<$ T $>$}
+\item 
+class \hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespaceOTA_1_1Plugin}{O\+T\+A.\+Plugin}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespaceOTA_1_1Plugin_a7c65b8c7c155fec0b559afbe2da809c0}{Hook\+Order} \{ \\*
+\hyperlink{namespaceOTA_1_1Plugin_a7c65b8c7c155fec0b559afbe2da809c0a2c2624a5059934a947d6e25fe8332ade}{F\+I\+R\+S\+T} = 0, 
+\hyperlink{namespaceOTA_1_1Plugin_a7c65b8c7c155fec0b559afbe2da809c0aa79b9a2a9a393db21d39924677c583fc}{E\+A\+R\+L\+Y}, 
+\hyperlink{namespaceOTA_1_1Plugin_a7c65b8c7c155fec0b559afbe2da809c0a1e23852820b9154316c7c06e2b7ba051}{N\+O\+R\+M\+A\+L}, 
+\hyperlink{namespaceOTA_1_1Plugin_a7c65b8c7c155fec0b559afbe2da809c0a7f02e16a4a58bd05e37735a3c763cf81}{L\+A\+T\+E}, 
+\\*
+\hyperlink{namespaceOTA_1_1Plugin_a7c65b8c7c155fec0b559afbe2da809c0a6c7748bd0ad3fbdff996e81581ad64d6}{T\+E\+R\+M\+I\+N\+A\+L}
+ \}
+\item 
+enum \hyperlink{namespaceOTA_1_1Plugin_a22f5f3f4da022b4336138cb37a5e4dfc}{Hook\+Result} \{ \\*
+\hyperlink{namespaceOTA_1_1Plugin_a22f5f3f4da022b4336138cb37a5e4dfca5b39c8b553c821e7cddc6da64b5bd2ee}{D\+E\+F\+A\+U\+L\+T} = 0, 
+\hyperlink{namespaceOTA_1_1Plugin_a22f5f3f4da022b4336138cb37a5e4dfca2f453cfe638e57e27bb0c9512436111e}{C\+O\+N\+T\+I\+N\+U\+E}, 
+\hyperlink{namespaceOTA_1_1Plugin_a22f5f3f4da022b4336138cb37a5e4dfca959a795d5524bd9054026703a33afb87}{K\+I\+C\+K}, 
+\hyperlink{namespaceOTA_1_1Plugin_a22f5f3f4da022b4336138cb37a5e4dfca3d0365d138cbf5de714da9272f55d613}{A\+S\+K\+\_\+\+P\+A\+S\+S}, 
+\\*
+\hyperlink{namespaceOTA_1_1Plugin_a22f5f3f4da022b4336138cb37a5e4dfcaa2e843feab94ef623fea888f07c28696}{I\+G\+N\+O\+R\+E}, 
+\hyperlink{namespaceOTA_1_1Plugin_a22f5f3f4da022b4336138cb37a5e4dfca356ebd893493576cffb5c23e39866518}{R\+E\+C\+T\+I\+F\+Y}, 
+\hyperlink{namespaceOTA_1_1Plugin_a22f5f3f4da022b4336138cb37a5e4dfcab6e3cc3e31aee770c3fb88b25fc68b6e}{E\+R\+A\+S\+E}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+delegate void \hyperlink{namespaceOTA_1_1Plugin_a59f6f7fde9e7d8a453fbd75f0f86f880}{Hook\+Action$<$ T $>$} (ref Hook\+Context context, ref T argument)
+\end{DoxyCompactItemize}

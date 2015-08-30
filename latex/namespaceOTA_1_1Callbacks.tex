@@ -1,0 +1,77 @@
+\hypertarget{namespaceOTA_1_1Callbacks}{}\section{O\+T\+A.\+Callbacks Namespace Reference}
+\label{namespaceOTA_1_1Callbacks}\index{O\+T\+A.\+Callbacks@{O\+T\+A.\+Callbacks}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1Configuration}{Configuration}
+\begin{DoxyCompactList}\small\item\em The configuration callback from vanilla code \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket}{I\+Socket}
+\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1MainCallback}{Main\+Callback}
+\begin{DoxyCompactList}\small\item\em The Terraia.\+Main (vanilla) class callbacks \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1MessageBufferCallback}{Message\+Buffer\+Callback}
+\begin{DoxyCompactList}\small\item\em The callbacks from the terrarian tcp clients\textquotesingle{} stream reader \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1NAT}{N\+A\+T}
+\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1NetMessageCallback}{Net\+Message\+Callback}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Callbacks}{Callbacks} for sending net messages \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1NetplayCallback}{Netplay\+Callback}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Callbacks}{Callbacks} from Terraria.\+Netplay \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1NPCCallback}{N\+P\+C\+Callback}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Callbacks}{Callbacks} from Terraria.\+N\+P\+C \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1Patches}{Patches}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Callbacks}{Callbacks} from vanilla code for miscellaneous patches \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1Player}{Player}
+\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1PlayerCallback}{Player\+Callback}
+\begin{DoxyCompactList}\small\item\em Calls from vanilla code in Terraria.\+Player \end{DoxyCompactList}\item 
+struct \hyperlink{structOTA_1_1Callbacks_1_1PlayerCommandReceived}{Player\+Command\+Received}
+\begin{DoxyCompactList}\small\item\em A player command \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1Rand}{Rand}
+\begin{DoxyCompactList}\small\item\em A checked random instance \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1RemoteAddress}{Remote\+Address}
+\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1TcpAddress}{Tcp\+Address}
+\item 
+struct \hyperlink{structOTA_1_1Callbacks_1_1TileData}{Tile\+Data}
+\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1UserInput}{User\+Input}
+\begin{DoxyCompactList}\small\item\em Input specific callbacks from Terraria.\+Main \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1Utilities}{Utilities}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Callbacks}{Callbacks} from vanilla code for Terraria.\+Utilities \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Callbacks_1_1VanillaHooks}{Vanilla\+Hooks}
+\begin{DoxyCompactList}\small\item\em A collection of callbacks from vanilla code \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+delegate void \hyperlink{namespaceOTA_1_1Callbacks_afb9741507c3efff20f6f9a86dc42af20}{Socket\+Connection\+Accepted} (\hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket}{I\+Socket} client)
+\item 
+delegate void \hyperlink{namespaceOTA_1_1Callbacks_ae072013cce199869fb359bea97dbdb17}{Socket\+Receive\+Callback} (object state, int size)
+\item 
+delegate void \hyperlink{namespaceOTA_1_1Callbacks_a23847c8d354ca8b53cfd6a3f466e0099}{Socket\+Send\+Callback} (object state)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{namespaceOTA_1_1Callbacks_afb9741507c3efff20f6f9a86dc42af20}{}\index{O\+T\+A\+::\+Callbacks@{O\+T\+A\+::\+Callbacks}!Socket\+Connection\+Accepted@{Socket\+Connection\+Accepted}}
+\index{Socket\+Connection\+Accepted@{Socket\+Connection\+Accepted}!O\+T\+A\+::\+Callbacks@{O\+T\+A\+::\+Callbacks}}
+\subsubsection[{Socket\+Connection\+Accepted(\+I\+Socket client)}]{\setlength{\rightskip}{0pt plus 5cm}delegate void O\+T\+A.\+Callbacks.\+Socket\+Connection\+Accepted (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Socket}}]{client}
+\end{DoxyParamCaption}
+)}\label{namespaceOTA_1_1Callbacks_afb9741507c3efff20f6f9a86dc42af20}
+\hypertarget{namespaceOTA_1_1Callbacks_ae072013cce199869fb359bea97dbdb17}{}\index{O\+T\+A\+::\+Callbacks@{O\+T\+A\+::\+Callbacks}!Socket\+Receive\+Callback@{Socket\+Receive\+Callback}}
+\index{Socket\+Receive\+Callback@{Socket\+Receive\+Callback}!O\+T\+A\+::\+Callbacks@{O\+T\+A\+::\+Callbacks}}
+\subsubsection[{Socket\+Receive\+Callback(object state, int size)}]{\setlength{\rightskip}{0pt plus 5cm}delegate void O\+T\+A.\+Callbacks.\+Socket\+Receive\+Callback (
+\begin{DoxyParamCaption}
+\item[{object}]{state, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}\label{namespaceOTA_1_1Callbacks_ae072013cce199869fb359bea97dbdb17}
+\hypertarget{namespaceOTA_1_1Callbacks_a23847c8d354ca8b53cfd6a3f466e0099}{}\index{O\+T\+A\+::\+Callbacks@{O\+T\+A\+::\+Callbacks}!Socket\+Send\+Callback@{Socket\+Send\+Callback}}
+\index{Socket\+Send\+Callback@{Socket\+Send\+Callback}!O\+T\+A\+::\+Callbacks@{O\+T\+A\+::\+Callbacks}}
+\subsubsection[{Socket\+Send\+Callback(object state)}]{\setlength{\rightskip}{0pt plus 5cm}delegate void O\+T\+A.\+Callbacks.\+Socket\+Send\+Callback (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)}\label{namespaceOTA_1_1Callbacks_a23847c8d354ca8b53cfd6a3f466e0099}

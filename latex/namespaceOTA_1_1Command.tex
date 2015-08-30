@@ -1,0 +1,85 @@
+\hypertarget{namespaceOTA_1_1Command}{}\section{O\+T\+A.\+Command Namespace Reference}
+\label{namespaceOTA_1_1Command}\index{O\+T\+A.\+Command@{O\+T\+A.\+Command}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classOTA_1_1Command_1_1ArgumentList}{Argument\+List}
+\begin{DoxyCompactList}\small\item\em The list of arguments received from a command sender \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Command_1_1CommandError}{Command\+Error}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{namespaceOTA}{O\+T\+A} exception for throwing a command error to the sender with the help usage + message \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info}
+\begin{DoxyCompactList}\small\item\em An \hyperlink{namespaceOTA}{O\+T\+A} command definition/builder \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Command_1_1CommandMapExtensions}{Command\+Map\+Extensions}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Command}{Command} map extensions \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Command_1_1CommandParser}{Command\+Parser}
+\begin{DoxyCompactList}\small\item\em Functionality to process sender commands, and the default vanilla commands as an \hyperlink{namespaceOTA}{O\+T\+A} version. \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Command_1_1ConsoleSender}{Console\+Sender}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classOTA_1_1Command_1_1ConsoleSender}{Console\+Sender} extension of \hyperlink{classOTA_1_1Command_1_1Sender}{Sender}. Allows for new Console\+Command\+Events \end{DoxyCompactList}\item 
+interface \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender}
+\begin{DoxyCompactList}\small\item\em The bare implementation of a sender \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Command_1_1ISenderExtensions}{I\+Sender\+Extensions}
+\begin{DoxyCompactList}\small\item\em \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} extensions \end{DoxyCompactList}\item 
+class \hyperlink{classOTA_1_1Command_1_1Sender}{Sender}
+\item 
+class \hyperlink{classOTA_1_1Command_1_1WorldSender}{World\+Sender}
+\item 
+struct \hyperlink{structOTA_1_1Command_1_1WorldTime}{World\+Time}
+\begin{DoxyCompactList}\small\item\em 12 hour world time for use with plugins. It provides easy modifications of game time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdc}{Access\+Level} \+: int \{ \hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca07c80e2a355d91402a00d82b1fa13855}{P\+L\+A\+Y\+E\+R} = 1, 
+\hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca7457cdd15d09bfc6c4dbb5d2b6f87390}{O\+P}, 
+\hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca2f76a17583676d1e769f74885a5bd411}{R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E}, 
+\hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca4695859f52d337ca3d7020b2c8f7882a}{C\+O\+N\+S\+O\+L\+E}
+ \}\begin{DoxyCompactList}\small\item\em Default access privileges. \end{DoxyCompactList}
+\item 
+enum \hyperlink{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342}{Sender\+Type} \{ \hyperlink{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342a4695859f52d337ca3d7020b2c8f7882a}{C\+O\+N\+S\+O\+L\+E}, 
+\hyperlink{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342a07c80e2a355d91402a00d82b1fa13855}{P\+L\+A\+Y\+E\+R}, 
+\hyperlink{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342af2d3ec013c88e111064483739a50a7f4}{R\+C\+O\+N}, 
+\hyperlink{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342a696b031073e74bf2cb98e5ef201d4aa3}{U\+N\+K\+N\+O\+W\+N}
+ \}\begin{DoxyCompactList}\small\item\em Default expected Sender Types. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdc}{}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!Access\+Level@{Access\+Level}}
+\index{Access\+Level@{Access\+Level}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}
+\subsubsection[{Access\+Level}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Access\+Level} \+: int\hspace{0.3cm}{\ttfamily [strong]}}\label{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdc}
+
+
+Default access privileges. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+L\+A\+Y\+E\+R@{P\+L\+A\+Y\+E\+R}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!P\+L\+A\+Y\+E\+R@{P\+L\+A\+Y\+E\+R}}\item[{\em 
+\hypertarget{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca07c80e2a355d91402a00d82b1fa13855}{}P\+L\+A\+Y\+E\+R\label{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca07c80e2a355d91402a00d82b1fa13855}
+}]\index{O\+P@{O\+P}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!O\+P@{O\+P}}\item[{\em 
+\hypertarget{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca7457cdd15d09bfc6c4dbb5d2b6f87390}{}O\+P\label{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca7457cdd15d09bfc6c4dbb5d2b6f87390}
+}]\index{R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E@{R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E@{R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E}}\item[{\em 
+\hypertarget{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca2f76a17583676d1e769f74885a5bd411}{}R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E\label{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca2f76a17583676d1e769f74885a5bd411}
+}]\index{C\+O\+N\+S\+O\+L\+E@{C\+O\+N\+S\+O\+L\+E}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!C\+O\+N\+S\+O\+L\+E@{C\+O\+N\+S\+O\+L\+E}}\item[{\em 
+\hypertarget{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca4695859f52d337ca3d7020b2c8f7882a}{}C\+O\+N\+S\+O\+L\+E\label{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca4695859f52d337ca3d7020b2c8f7882a}
+}]\end{description}
+\end{Desc}
+\hypertarget{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342}{}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!Sender\+Type@{Sender\+Type}}
+\index{Sender\+Type@{Sender\+Type}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}
+\subsubsection[{Sender\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Sender\+Type}\hspace{0.3cm}{\ttfamily [strong]}}\label{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342}
+
+
+Default expected \hyperlink{classOTA_1_1Command_1_1Sender}{Sender} Types. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{C\+O\+N\+S\+O\+L\+E@{C\+O\+N\+S\+O\+L\+E}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!C\+O\+N\+S\+O\+L\+E@{C\+O\+N\+S\+O\+L\+E}}\item[{\em 
+\hypertarget{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342a4695859f52d337ca3d7020b2c8f7882a}{}C\+O\+N\+S\+O\+L\+E\label{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342a4695859f52d337ca3d7020b2c8f7882a}
+}]\index{P\+L\+A\+Y\+E\+R@{P\+L\+A\+Y\+E\+R}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!P\+L\+A\+Y\+E\+R@{P\+L\+A\+Y\+E\+R}}\item[{\em 
+\hypertarget{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342a07c80e2a355d91402a00d82b1fa13855}{}P\+L\+A\+Y\+E\+R\label{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342a07c80e2a355d91402a00d82b1fa13855}
+}]\index{R\+C\+O\+N@{R\+C\+O\+N}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!R\+C\+O\+N@{R\+C\+O\+N}}\item[{\em 
+\hypertarget{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342af2d3ec013c88e111064483739a50a7f4}{}R\+C\+O\+N\label{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342af2d3ec013c88e111064483739a50a7f4}
+}]\index{U\+N\+K\+N\+O\+W\+N@{U\+N\+K\+N\+O\+W\+N}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!U\+N\+K\+N\+O\+W\+N@{U\+N\+K\+N\+O\+W\+N}}\item[{\em 
+\hypertarget{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342a696b031073e74bf2cb98e5ef201d4aa3}{}U\+N\+K\+N\+O\+W\+N\label{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342a696b031073e74bf2cb98e5ef201d4aa3}
+}]\end{description}
+\end{Desc}

@@ -1,0 +1,123 @@
+\hypertarget{classOTA_1_1Permissions_1_1PermissionsManager}{}\section{Permissions\+Manager}
+\label{classOTA_1_1Permissions_1_1PermissionsManager}\index{Permissions\+Manager@{Permissions\+Manager}}
+
+
+The old X\+M\+L permission system  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classOTA_1_1Permissions_1_1PermissionsManager_af749447d403d2a6cacbcd23e30e31f1a}{Attatch\+On\+Parse} (Event\+Handler$<$ \hyperlink{classOTA_1_1Permissions_1_1XmlNodeEventArgs}{Xml\+Node\+Event\+Args} $>$ callback)
+\item 
+static \hyperlink{namespaceOTA_1_1Permissions_a5335d23d62bc219ccbf40b018c002e8d}{Permission} \hyperlink{classOTA_1_1Permissions_1_1PermissionsManager_aea6304b830384f0be104f169632a0fa1}{Is\+Permitted} (string node, \hyperlink{classOTA_1_1BasePlayer}{Base\+Player} player)
+\begin{DoxyCompactList}\small\item\em Used to determine if a player has access to a particular node. Generally used by plugins. \end{DoxyCompactList}\item 
+static \hyperlink{namespaceOTA_1_1Permissions_a5335d23d62bc219ccbf40b018c002e8d}{Permission} \hyperlink{classOTA_1_1Permissions_1_1PermissionsManager_a7ace4e1d68e8ae76efda600c9ec5c528}{Is\+Permitted\+For\+Group} (string node, Func$<$ System.\+Collections.\+Generic.\+Dictionary$<$ String, String $>$, Boolean $>$ include\+Groups\+With)
+\begin{DoxyCompactList}\small\item\em Used to determine if a player has access to a particular node. Generally used by plugins. \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Permissions_1_1PermissionsManager_a8e67f861cd76e9a30a9f443a3fef7c74}{Request\+Parse} (\hyperlink{interfaceOTA_1_1Permissions_1_1IPermissionHandler}{I\+Permission\+Handler} handler, \hyperlink{classOTA_1_1Permissions_1_1XmlNodeEventArgs}{Xml\+Node\+Event\+Args} args)
+\item 
+static void \hyperlink{classOTA_1_1Permissions_1_1PermissionsManager_a7a58e36f8fdcb2e8737f860bd7277d86}{Set\+Handler} (\hyperlink{interfaceOTA_1_1Permissions_1_1IPermissionHandler}{I\+Permission\+Handler} handler)
+\begin{DoxyCompactList}\small\item\em Sets the permission handler \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classOTA_1_1Permissions_1_1PermissionsManager_af3b42c102ec72dee63cf76a4e02e740a}{Is\+Set}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Used to detect if there is an existing handler set \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The old X\+M\+L permission system 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Permissions_1_1PermissionsManager_af749447d403d2a6cacbcd23e30e31f1a}{}\index{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}!Attatch\+On\+Parse@{Attatch\+On\+Parse}}
+\index{Attatch\+On\+Parse@{Attatch\+On\+Parse}!O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}}
+\subsubsection[{Attatch\+On\+Parse(\+Event\+Handler$<$ Xml\+Node\+Event\+Args $>$ callback)}]{\setlength{\rightskip}{0pt plus 5cm}static void Attatch\+On\+Parse (
+\begin{DoxyParamCaption}
+\item[{Event\+Handler$<$ {\bf Xml\+Node\+Event\+Args} $>$}]{callback}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Permissions_1_1PermissionsManager_af749447d403d2a6cacbcd23e30e31f1a}
+\hypertarget{classOTA_1_1Permissions_1_1PermissionsManager_aea6304b830384f0be104f169632a0fa1}{}\index{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}!Is\+Permitted@{Is\+Permitted}}
+\index{Is\+Permitted@{Is\+Permitted}!O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}}
+\subsubsection[{Is\+Permitted(string node, Base\+Player player)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Permission} Is\+Permitted (
+\begin{DoxyParamCaption}
+\item[{string}]{node, }
+\item[{{\bf Base\+Player}}]{player}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Permissions_1_1PermissionsManager_aea6304b830384f0be104f169632a0fa1}
+
+
+Used to determine if a player has access to a particular node. Generally used by plugins. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & \\
+\hline
+{\em player} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Permissions_1_1PermissionsManager_a7ace4e1d68e8ae76efda600c9ec5c528}{}\index{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}!Is\+Permitted\+For\+Group@{Is\+Permitted\+For\+Group}}
+\index{Is\+Permitted\+For\+Group@{Is\+Permitted\+For\+Group}!O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}}
+\subsubsection[{Is\+Permitted\+For\+Group(string node, Func$<$ System.\+Collections.\+Generic.\+Dictionary$<$ String, String $>$, Boolean $>$ include\+Groups\+With)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Permission} Is\+Permitted\+For\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{node, }
+\item[{Func$<$ System.\+Collections.\+Generic.\+Dictionary$<$ String, String $>$, Boolean $>$}]{include\+Groups\+With}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Permissions_1_1PermissionsManager_a7ace4e1d68e8ae76efda600c9ec5c528}
+
+
+Used to determine if a player has access to a particular node. Generally used by plugins. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & \\
+\hline
+{\em player} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Permissions_1_1PermissionsManager_a8e67f861cd76e9a30a9f443a3fef7c74}{}\index{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}!Request\+Parse@{Request\+Parse}}
+\index{Request\+Parse@{Request\+Parse}!O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}}
+\subsubsection[{Request\+Parse(\+I\+Permission\+Handler handler, Xml\+Node\+Event\+Args args)}]{\setlength{\rightskip}{0pt plus 5cm}static void Request\+Parse (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Permission\+Handler}}]{handler, }
+\item[{{\bf Xml\+Node\+Event\+Args}}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Permissions_1_1PermissionsManager_a8e67f861cd76e9a30a9f443a3fef7c74}
+\hypertarget{classOTA_1_1Permissions_1_1PermissionsManager_a7a58e36f8fdcb2e8737f860bd7277d86}{}\index{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}!Set\+Handler@{Set\+Handler}}
+\index{Set\+Handler@{Set\+Handler}!O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}}
+\subsubsection[{Set\+Handler(\+I\+Permission\+Handler handler)}]{\setlength{\rightskip}{0pt plus 5cm}static void Set\+Handler (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Permission\+Handler}}]{handler}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Permissions_1_1PermissionsManager_a7a58e36f8fdcb2e8737f860bd7277d86}
+
+
+Sets the permission handler 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handler} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Permissions_1_1PermissionsManager_af3b42c102ec72dee63cf76a4e02e740a}{}\index{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}!Is\+Set@{Is\+Set}}
+\index{Is\+Set@{Is\+Set}!O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager@{O\+T\+A\+::\+Permissions\+::\+Permissions\+Manager}}
+\subsubsection[{Is\+Set}]{\setlength{\rightskip}{0pt plus 5cm}bool Is\+Set\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{classOTA_1_1Permissions_1_1PermissionsManager_af3b42c102ec72dee63cf76a4e02e740a}
+
+
+Used to detect if there is an existing handler set 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Permissions/\hyperlink{PermissionsManager_8cs}{Permissions\+Manager.\+cs}\end{DoxyCompactItemize}

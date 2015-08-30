@@ -1,0 +1,367 @@
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection}{}\section{O\+T\+A.\+Sockets.\+Connection Class Reference}
+\label{class_o_t_a_1_1_sockets_1_1_connection}\index{O\+T\+A.\+Sockets.\+Connection@{O\+T\+A.\+Sockets.\+Connection}}
+
+
+An asynchronous tcp client implementation  
+
+
+Inheritance diagram for O\+T\+A.\+Sockets.\+Connection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_o_t_a_1_1_sockets_1_1_connection}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_1_1_kick_args}{Kick\+Args}
+\item 
+struct \hyperlink{struct_o_t_a_1_1_sockets_1_1_connection_1_1_message}{Message}
+\item 
+class \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_1_1_recv_args}{Recv\+Args}
+\item 
+class \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_1_1_send_args}{Send\+Args}
+\item 
+class \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_1_1_socket_async_event_args_ext}{Socket\+Async\+Event\+Args\+Ext}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a65a4d3be6c7306312274d09df54b12c6}{Connection} ()
+\item 
+\hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a92571651b07acb0a0a40790a0ce9b42d}{Connection} (Socket sock)
+\item 
+virtual void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ad9d946716d3b5d1c34b53f75b30d06cd}{Send} (byte\mbox{[}$\,$\mbox{]} bytes)
+\item 
+virtual void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_abfb481ac75c16936ce9dfd7805ecb121}{Copy\+And\+Send} (Array\+Segment$<$ byte $>$ segment)
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a982f31b082835b57e0ab783a481f5cb8}{Kick\+After} (byte\mbox{[}$\,$\mbox{]} bytes)
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a4dc9077f7652b898bc8dc64bd6191690}{Close} ()
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_af631cf1a0e801516e2fb5f4af2c9cc0e}{Flush} ()
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a2ffd866e13e97c37184f653381e359c4}{Start\+Receiving} (byte\mbox{[}$\,$\mbox{]} buffer)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a13a2c9c2e308c32b4b42f0efa4874ec8}{Send\+Queue\+Quota} = 1024
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a7cfdcd33cfd7020e550285069b28446f}{Set\+Socket} (Socket sock)
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_abd0624cd5b4fdb2a50ecb2cedff68cdf}{Send} (\hyperlink{struct_o_t_a_1_1_sockets_1_1_connection_1_1_message}{Message} message, bool flush=false)
+\item 
+bool \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ae9e35e9edef1cb5528bc66c301ce89b7}{Send\+More} (\hyperlink{class_o_t_a_1_1_sockets_1_1_connection_1_1_socket_async_event_args_ext}{Socket\+Async\+Event\+Args\+Ext} args, bool flush=false)
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_adba268b347ea98895900fa53605550f4}{Tx\+List\+Clear} ()
+\item 
+virtual void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a4d49bb3b176bcbaedc0457d17df33462}{Message\+Send\+Completed} ()
+\item 
+virtual Array\+Segment$<$ byte $>$ \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ad10d077d13dbd4c72beec8e3fc6d2f05}{Serialize\+Message} (\hyperlink{struct_o_t_a_1_1_sockets_1_1_connection_1_1_message}{Message} msg)
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_aa614173501e8e546d56cfabdb6482b85}{Send\+Completed} (\hyperlink{class_o_t_a_1_1_sockets_1_1_connection_1_1_socket_async_event_args_ext}{Socket\+Async\+Event\+Args\+Ext} argz)
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a7302dadcbaa0d851dcb9af63ad3fb3ed}{Receive\+Completed} (\hyperlink{class_o_t_a_1_1_sockets_1_1_connection_1_1_socket_async_event_args_ext}{Socket\+Async\+Event\+Args\+Ext} argz)
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a365d3aba74d0624675df2b23867bd05a}{Kick\+Completed} (\hyperlink{class_o_t_a_1_1_sockets_1_1_connection_1_1_socket_async_event_args_ext}{Socket\+Async\+Event\+Args\+Ext} argz)
+\item 
+virtual void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_aae5d97c14b2f9859157f53e57d64ca83}{Timeout} (object dummy)
+\item 
+abstract void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a3b33673044f6e18c1e2364d86846c107}{Process\+Read} ()
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a51af7f160ba2aa66fb16ad17ea1c53f0}{Handle\+Error} (Socket\+Error err)
+\item 
+abstract void \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ae3319eefe2319d9ef50926f156432ac0}{Handle\+Closure} (Socket\+Error \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a8bc7bc51def4a9f6ad9ff3854dbea338}{error})
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+byte\mbox{[}$\,$\mbox{]} \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a1d8a2ef19b8f7545c3f48808ea47f129}{recv\+Buffer}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ab7194fd3640d065f7f58629c816b8933}{recv\+Bytes}
+\item 
+Timer \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a77272930f5d4861753aa7b80948a7587}{timeout}
+\item 
+volatile int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_acd39fb30f5bb6ef8ea78584a320fc70b}{closed} = 0
+\item 
+volatile int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a8bc7bc51def4a9f6ad9ff3854dbea338}{error} = 0
+\item 
+byte\mbox{[}$\,$\mbox{]} \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a119ffb5f067a2a64fe3e54c9202f1f67}{tx\+Buffer}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a4fa34e1ea9b32dee651250875bcc57bf}{tx\+Head}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a905722639521f33000b64b4e472bf9c6}{tx\+Count}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a02b73236cfb9c37eb67eeeff2a23d09a}{tx\+Prepared}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_aa086b05edec99fcdbd485c8fdd2828ad}{tx\+List\+Bytes}
+\item 
+List$<$ Array\+Segment$<$ byte $>$ $>$ \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ac9aec243ec974c9fad47197cf922b90f}{tx\+List} = new List$<$Array\+Segment$<$byte$>$$>$()
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ac8d2b143d53419b8692eb2369f253c8d}{queue\+Size}
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ad91a85098c362234931489d5a439d021}{Queue\+Length}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_aa8f20a081019f400ebe3bdc6512b8765}{Active}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+Socket\+Error \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a4737ffa827c4702fba0a668103765f15}{Error}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+End\+Point \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a20d5faf4c61da54dbfa6ccf481793e3b}{Remote\+End\+Point}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
+\item 
+string \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ad04c77be17cdf93adbd82d15686361ad}{Remote\+Address}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_aff1a228fe891eb1e2d5add67cd07cc91}{Bytes\+Sent}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_af0ddc6a7e2b6c1cefce62c7745a99f84}{Bytes\+Received}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a86342af0986b26df6cb33ed056b953b8}{Queue\+Size}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An asynchronous tcp client implementation 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a65a4d3be6c7306312274d09df54b12c6}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Connection@{Connection}}
+\index{Connection@{Connection}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Connection()}]{\setlength{\rightskip}{0pt plus 5cm}O\+T\+A.\+Sockets.\+Connection.\+Connection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_connection_a65a4d3be6c7306312274d09df54b12c6}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a92571651b07acb0a0a40790a0ce9b42d}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Connection@{Connection}}
+\index{Connection@{Connection}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Connection(\+Socket sock)}]{\setlength{\rightskip}{0pt plus 5cm}O\+T\+A.\+Sockets.\+Connection.\+Connection (
+\begin{DoxyParamCaption}
+\item[{Socket}]{sock}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_connection_a92571651b07acb0a0a40790a0ce9b42d}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a4dc9077f7652b898bc8dc64bd6191690}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Close@{Close}}
+\index{Close@{Close}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Close()}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_connection_a4dc9077f7652b898bc8dc64bd6191690}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_abfb481ac75c16936ce9dfd7805ecb121}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Copy\+And\+Send@{Copy\+And\+Send}}
+\index{Copy\+And\+Send@{Copy\+And\+Send}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Copy\+And\+Send(\+Array\+Segment$<$ byte $>$ segment)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void O\+T\+A.\+Sockets.\+Connection.\+Copy\+And\+Send (
+\begin{DoxyParamCaption}
+\item[{Array\+Segment$<$ byte $>$}]{segment}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_o_t_a_1_1_sockets_1_1_connection_abfb481ac75c16936ce9dfd7805ecb121}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_af631cf1a0e801516e2fb5f4af2c9cc0e}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Flush@{Flush}}
+\index{Flush@{Flush}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Flush()}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Flush (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_connection_af631cf1a0e801516e2fb5f4af2c9cc0e}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_ae3319eefe2319d9ef50926f156432ac0}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Handle\+Closure@{Handle\+Closure}}
+\index{Handle\+Closure@{Handle\+Closure}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Handle\+Closure(\+Socket\+Error error)}]{\setlength{\rightskip}{0pt plus 5cm}abstract void O\+T\+A.\+Sockets.\+Connection.\+Handle\+Closure (
+\begin{DoxyParamCaption}
+\item[{Socket\+Error}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\label{class_o_t_a_1_1_sockets_1_1_connection_ae3319eefe2319d9ef50926f156432ac0}
+
+
+Implemented in \hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_a2d086f3d3b8e0f59b405b71250d80e01}{O\+T\+A.\+Sockets.\+Client\+Connection}.
+
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a51af7f160ba2aa66fb16ad17ea1c53f0}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Handle\+Error@{Handle\+Error}}
+\index{Handle\+Error@{Handle\+Error}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Handle\+Error(\+Socket\+Error err)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Handle\+Error (
+\begin{DoxyParamCaption}
+\item[{Socket\+Error}]{err}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a51af7f160ba2aa66fb16ad17ea1c53f0}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a982f31b082835b57e0ab783a481f5cb8}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Kick\+After@{Kick\+After}}
+\index{Kick\+After@{Kick\+After}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Kick\+After(byte[] bytes)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Kick\+After (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{bytes}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_connection_a982f31b082835b57e0ab783a481f5cb8}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a365d3aba74d0624675df2b23867bd05a}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Kick\+Completed@{Kick\+Completed}}
+\index{Kick\+Completed@{Kick\+Completed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Kick\+Completed(\+Socket\+Async\+Event\+Args\+Ext argz)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Kick\+Completed (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Async\+Event\+Args\+Ext}}]{argz}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a365d3aba74d0624675df2b23867bd05a}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a4d49bb3b176bcbaedc0457d17df33462}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Message\+Send\+Completed@{Message\+Send\+Completed}}
+\index{Message\+Send\+Completed@{Message\+Send\+Completed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Message\+Send\+Completed()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void O\+T\+A.\+Sockets.\+Connection.\+Message\+Send\+Completed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a4d49bb3b176bcbaedc0457d17df33462}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a3b33673044f6e18c1e2364d86846c107}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Process\+Read@{Process\+Read}}
+\index{Process\+Read@{Process\+Read}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Process\+Read()}]{\setlength{\rightskip}{0pt plus 5cm}abstract void O\+T\+A.\+Sockets.\+Connection.\+Process\+Read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a3b33673044f6e18c1e2364d86846c107}
+
+
+Implemented in \hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_a982200f63ad773cd34841283b0a1ad0b}{O\+T\+A.\+Sockets.\+Client\+Connection}.
+
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a7302dadcbaa0d851dcb9af63ad3fb3ed}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Receive\+Completed@{Receive\+Completed}}
+\index{Receive\+Completed@{Receive\+Completed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Receive\+Completed(\+Socket\+Async\+Event\+Args\+Ext argz)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Receive\+Completed (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Async\+Event\+Args\+Ext}}]{argz}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a7302dadcbaa0d851dcb9af63ad3fb3ed}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_ad9d946716d3b5d1c34b53f75b30d06cd}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send@{Send}}
+\index{Send@{Send}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send(byte[] bytes)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void O\+T\+A.\+Sockets.\+Connection.\+Send (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{bytes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_o_t_a_1_1_sockets_1_1_connection_ad9d946716d3b5d1c34b53f75b30d06cd}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_abd0624cd5b4fdb2a50ecb2cedff68cdf}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send@{Send}}
+\index{Send@{Send}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send(\+Message message, bool flush=false)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Send (
+\begin{DoxyParamCaption}
+\item[{{\bf Message}}]{message, }
+\item[{bool}]{flush = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_abd0624cd5b4fdb2a50ecb2cedff68cdf}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_aa614173501e8e546d56cfabdb6482b85}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send\+Completed@{Send\+Completed}}
+\index{Send\+Completed@{Send\+Completed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send\+Completed(\+Socket\+Async\+Event\+Args\+Ext argz)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Send\+Completed (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Async\+Event\+Args\+Ext}}]{argz}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_aa614173501e8e546d56cfabdb6482b85}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_ae9e35e9edef1cb5528bc66c301ce89b7}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send\+More@{Send\+More}}
+\index{Send\+More@{Send\+More}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send\+More(\+Socket\+Async\+Event\+Args\+Ext args, bool flush=false)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Sockets.\+Connection.\+Send\+More (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Async\+Event\+Args\+Ext}}]{args, }
+\item[{bool}]{flush = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_ae9e35e9edef1cb5528bc66c301ce89b7}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_ad10d077d13dbd4c72beec8e3fc6d2f05}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Serialize\+Message@{Serialize\+Message}}
+\index{Serialize\+Message@{Serialize\+Message}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Serialize\+Message(\+Message msg)}]{\setlength{\rightskip}{0pt plus 5cm}virtual Array\+Segment$<$byte$>$ O\+T\+A.\+Sockets.\+Connection.\+Serialize\+Message (
+\begin{DoxyParamCaption}
+\item[{{\bf Message}}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_sockets_1_1_connection_ad10d077d13dbd4c72beec8e3fc6d2f05}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a7cfdcd33cfd7020e550285069b28446f}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Set\+Socket@{Set\+Socket}}
+\index{Set\+Socket@{Set\+Socket}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Set\+Socket(\+Socket sock)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Set\+Socket (
+\begin{DoxyParamCaption}
+\item[{Socket}]{sock}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a7cfdcd33cfd7020e550285069b28446f}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a2ffd866e13e97c37184f653381e359c4}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Start\+Receiving@{Start\+Receiving}}
+\index{Start\+Receiving@{Start\+Receiving}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Start\+Receiving(byte[] buffer)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Start\+Receiving (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{buffer}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_connection_a2ffd866e13e97c37184f653381e359c4}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_aae5d97c14b2f9859157f53e57d64ca83}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Timeout@{Timeout}}
+\index{Timeout@{Timeout}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Timeout(object dummy)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void O\+T\+A.\+Sockets.\+Connection.\+Timeout (
+\begin{DoxyParamCaption}
+\item[{object}]{dummy}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_sockets_1_1_connection_aae5d97c14b2f9859157f53e57d64ca83}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_adba268b347ea98895900fa53605550f4}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Tx\+List\+Clear@{Tx\+List\+Clear}}
+\index{Tx\+List\+Clear@{Tx\+List\+Clear}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Tx\+List\+Clear()}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Connection.\+Tx\+List\+Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_adba268b347ea98895900fa53605550f4}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_acd39fb30f5bb6ef8ea78584a320fc70b}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!closed@{closed}}
+\index{closed@{closed}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{closed}]{\setlength{\rightskip}{0pt plus 5cm}volatile int O\+T\+A.\+Sockets.\+Connection.\+closed = 0\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_acd39fb30f5bb6ef8ea78584a320fc70b}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a8bc7bc51def4a9f6ad9ff3854dbea338}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!error@{error}}
+\index{error@{error}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}volatile int O\+T\+A.\+Sockets.\+Connection.\+error = 0\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a8bc7bc51def4a9f6ad9ff3854dbea338}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_ac8d2b143d53419b8692eb2369f253c8d}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!queue\+Size@{queue\+Size}}
+\index{queue\+Size@{queue\+Size}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{queue\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+queue\+Size\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_ac8d2b143d53419b8692eb2369f253c8d}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a1d8a2ef19b8f7545c3f48808ea47f129}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!recv\+Buffer@{recv\+Buffer}}
+\index{recv\+Buffer@{recv\+Buffer}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{recv\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}byte \mbox{[}$\,$\mbox{]} O\+T\+A.\+Sockets.\+Connection.\+recv\+Buffer\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a1d8a2ef19b8f7545c3f48808ea47f129}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_ab7194fd3640d065f7f58629c816b8933}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!recv\+Bytes@{recv\+Bytes}}
+\index{recv\+Bytes@{recv\+Bytes}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{recv\+Bytes}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+recv\+Bytes\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_ab7194fd3640d065f7f58629c816b8933}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a13a2c9c2e308c32b4b42f0efa4874ec8}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Send\+Queue\+Quota@{Send\+Queue\+Quota}}
+\index{Send\+Queue\+Quota@{Send\+Queue\+Quota}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Send\+Queue\+Quota}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+Send\+Queue\+Quota = 1024\hspace{0.3cm}{\ttfamily [static]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a13a2c9c2e308c32b4b42f0efa4874ec8}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a77272930f5d4861753aa7b80948a7587}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!timeout@{timeout}}
+\index{timeout@{timeout}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{timeout}]{\setlength{\rightskip}{0pt plus 5cm}Timer O\+T\+A.\+Sockets.\+Connection.\+timeout\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a77272930f5d4861753aa7b80948a7587}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a119ffb5f067a2a64fe3e54c9202f1f67}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+Buffer@{tx\+Buffer}}
+\index{tx\+Buffer@{tx\+Buffer}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}byte \mbox{[}$\,$\mbox{]} O\+T\+A.\+Sockets.\+Connection.\+tx\+Buffer\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a119ffb5f067a2a64fe3e54c9202f1f67}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a905722639521f33000b64b4e472bf9c6}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+Count@{tx\+Count}}
+\index{tx\+Count@{tx\+Count}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+Count}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+tx\+Count\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a905722639521f33000b64b4e472bf9c6}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a4fa34e1ea9b32dee651250875bcc57bf}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+Head@{tx\+Head}}
+\index{tx\+Head@{tx\+Head}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+Head}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+tx\+Head\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a4fa34e1ea9b32dee651250875bcc57bf}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_ac9aec243ec974c9fad47197cf922b90f}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+List@{tx\+List}}
+\index{tx\+List@{tx\+List}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+List}]{\setlength{\rightskip}{0pt plus 5cm}List$<$Array\+Segment$<$byte$>$ $>$ O\+T\+A.\+Sockets.\+Connection.\+tx\+List = new List$<$Array\+Segment$<$byte$>$$>$()\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_ac9aec243ec974c9fad47197cf922b90f}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_aa086b05edec99fcdbd485c8fdd2828ad}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+List\+Bytes@{tx\+List\+Bytes}}
+\index{tx\+List\+Bytes@{tx\+List\+Bytes}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+List\+Bytes}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+tx\+List\+Bytes\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_aa086b05edec99fcdbd485c8fdd2828ad}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a02b73236cfb9c37eb67eeeff2a23d09a}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!tx\+Prepared@{tx\+Prepared}}
+\index{tx\+Prepared@{tx\+Prepared}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{tx\+Prepared}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+tx\+Prepared\hspace{0.3cm}{\ttfamily [protected]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a02b73236cfb9c37eb67eeeff2a23d09a}
+
+
+\subsection{Property Documentation}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_aa8f20a081019f400ebe3bdc6512b8765}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Active@{Active}}
+\index{Active@{Active}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Active}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Sockets.\+Connection.\+Active\hspace{0.3cm}{\ttfamily [get]}}\label{class_o_t_a_1_1_sockets_1_1_connection_aa8f20a081019f400ebe3bdc6512b8765}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_af0ddc6a7e2b6c1cefce62c7745a99f84}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Bytes\+Received@{Bytes\+Received}}
+\index{Bytes\+Received@{Bytes\+Received}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Bytes\+Received}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+Bytes\+Received\hspace{0.3cm}{\ttfamily [get]}}\label{class_o_t_a_1_1_sockets_1_1_connection_af0ddc6a7e2b6c1cefce62c7745a99f84}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_aff1a228fe891eb1e2d5add67cd07cc91}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Bytes\+Sent@{Bytes\+Sent}}
+\index{Bytes\+Sent@{Bytes\+Sent}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Bytes\+Sent}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+Bytes\+Sent\hspace{0.3cm}{\ttfamily [get]}}\label{class_o_t_a_1_1_sockets_1_1_connection_aff1a228fe891eb1e2d5add67cd07cc91}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a4737ffa827c4702fba0a668103765f15}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Error@{Error}}
+\index{Error@{Error}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Error}]{\setlength{\rightskip}{0pt plus 5cm}Socket\+Error O\+T\+A.\+Sockets.\+Connection.\+Error\hspace{0.3cm}{\ttfamily [get]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a4737ffa827c4702fba0a668103765f15}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_ad91a85098c362234931489d5a439d021}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Queue\+Length@{Queue\+Length}}
+\index{Queue\+Length@{Queue\+Length}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Queue\+Length}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+Queue\+Length\hspace{0.3cm}{\ttfamily [get]}}\label{class_o_t_a_1_1_sockets_1_1_connection_ad91a85098c362234931489d5a439d021}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a86342af0986b26df6cb33ed056b953b8}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Queue\+Size@{Queue\+Size}}
+\index{Queue\+Size@{Queue\+Size}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Queue\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Connection.\+Queue\+Size\hspace{0.3cm}{\ttfamily [get]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a86342af0986b26df6cb33ed056b953b8}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_ad04c77be17cdf93adbd82d15686361ad}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Remote\+Address@{Remote\+Address}}
+\index{Remote\+Address@{Remote\+Address}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Remote\+Address}]{\setlength{\rightskip}{0pt plus 5cm}string O\+T\+A.\+Sockets.\+Connection.\+Remote\+Address\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [protected set]}}\label{class_o_t_a_1_1_sockets_1_1_connection_ad04c77be17cdf93adbd82d15686361ad}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_connection_a20d5faf4c61da54dbfa6ccf481793e3b}{}\index{O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}!Remote\+End\+Point@{Remote\+End\+Point}}
+\index{Remote\+End\+Point@{Remote\+End\+Point}!O\+T\+A\+::\+Sockets\+::\+Connection@{O\+T\+A\+::\+Sockets\+::\+Connection}}
+\subsubsection[{Remote\+End\+Point}]{\setlength{\rightskip}{0pt plus 5cm}End\+Point O\+T\+A.\+Sockets.\+Connection.\+Remote\+End\+Point\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [protected set]}}\label{class_o_t_a_1_1_sockets_1_1_connection_a20d5faf4c61da54dbfa6ccf481793e3b}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Sockets/\hyperlink{_connection_8cs}{Connection.\+cs}\end{DoxyCompactItemize}

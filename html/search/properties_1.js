@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['b',['B',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#af20775d9682d3bc9365ca7b2a6792298',1,'Microsoft::Xna::Framework::Color']]],
+  ['backbufferformat',['BackBufferFormat',['../classMicrosoft_1_1Xna_1_1Framework_1_1Graphics_1_1PresentationParameters.html#af6648715472a12718a0a14d2dd341afc',1,'Microsoft::Xna::Framework::Graphics::PresentationParameters']]],
+  ['backbufferheight',['BackBufferHeight',['../classMicrosoft_1_1Xna_1_1Framework_1_1Graphics_1_1PresentationParameters.html#a67ec49a7a6b6f849277857aa515a2b23',1,'Microsoft::Xna::Framework::Graphics::PresentationParameters']]],
+  ['backbufferwidth',['BackBufferWidth',['../classMicrosoft_1_1Xna_1_1Framework_1_1Graphics_1_1PresentationParameters.html#aedf9ad4b2680dd9d64d419b54c869434',1,'Microsoft::Xna::Framework::Graphics::PresentationParameters']]],
+  ['backward',['Backward',['../structMicrosoft_1_1Xna_1_1Framework_1_1Vector3.html#ad1bf787a5527606ce5617329cae35edc',1,'Microsoft::Xna::Framework::Vector3']]],
+  ['banschecked',['BansChecked',['../structOTA_1_1Plugin_1_1HookArgs_1_1PlayerDataReceived.html#af82ce5b74771b25f9cc1c3b6fdb6f9a6',1,'OTA::Plugin::HookArgs::PlayerDataReceived']]],
+  ['beige',['Beige',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a2fb95d3e28de67182b1205dec8a0b657',1,'Microsoft::Xna::Framework::Color']]],
+  ['bisque',['Bisque',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a27f39ca0f86138a9978d54ba8d59768f',1,'Microsoft::Xna::Framework::Color']]],
+  ['black',['Black',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a490360be3af8e93c455d892cb7a05dd9',1,'Microsoft::Xna::Framework::Color']]],
+  ['blanchedalmond',['BlanchedAlmond',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a605c9878e0f8b2f5f510c993b7b249f7',1,'Microsoft::Xna::Framework::Color']]],
+  ['blue',['Blue',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#aadbb3342531fbefd6e7ae00143f743eb',1,'Microsoft::Xna::Framework::Color']]],
+  ['blueviolet',['BlueViolet',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a7b411efb5c5ec2f2660ba2d5cda346db',1,'Microsoft::Xna::Framework::Color']]],
+  ['bottom',['Bottom',['../structMicrosoft_1_1Xna_1_1Framework_1_1Rectangle.html#a48ff243e9604de98f95ce6a3553ce350',1,'Microsoft::Xna::Framework::Rectangle']]],
+  ['brown',['Brown',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#ad8b56c943b8231708ed7090575586d39',1,'Microsoft::Xna::Framework::Color']]],
+  ['btileheader',['bTileHeader',['../classOTA_1_1Memory_1_1MemTile.html#aee0c68081277260b581b80b76a7f7f38',1,'OTA::Memory::MemTile']]],
+  ['btileheader2',['bTileHeader2',['../classOTA_1_1Memory_1_1MemTile.html#a97f492c02d1e00b0605fbd21409d14bb',1,'OTA::Memory::MemTile']]],
+  ['btileheader3',['bTileHeader3',['../classOTA_1_1Memory_1_1MemTile.html#a8ecc61a684451acc5906bf3ef999d9b4',1,'OTA::Memory::MemTile']]],
+  ['bufferid',['BufferId',['../structOTA_1_1Plugin_1_1HookArgs_1_1ReceiveNetMessage.html#a40875775d70fb4be60823b9834f4ea82',1,'OTA.Plugin.HookArgs.ReceiveNetMessage.BufferId()'],['../structOTA_1_1Plugin_1_1HookArgs_1_1SendNetMessage.html#a40875775d70fb4be60823b9834f4ea82',1,'OTA.Plugin.HookArgs.SendNetMessage.BufferId()']]],
+  ['burlywood',['BurlyWood',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a74f360bf9e9fc4e425ba3e357d2391e8',1,'Microsoft::Xna::Framework::Color']]],
+  ['bytesreceived',['BytesReceived',['../classOTA_1_1Sockets_1_1Connection.html#a69ee1dc2d865434d38efc54332f88aa3',1,'OTA::Sockets::Connection']]],
+  ['bytessent',['BytesSent',['../classOTA_1_1Sockets_1_1Connection.html#a785f45619f1d48bdbf4915f6d87d4572',1,'OTA::Sockets::Connection']]]
+];

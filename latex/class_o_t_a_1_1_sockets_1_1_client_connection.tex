@@ -1,0 +1,118 @@
+\hypertarget{class_o_t_a_1_1_sockets_1_1_client_connection}{}\section{O\+T\+A.\+Sockets.\+Client\+Connection Class Reference}
+\label{class_o_t_a_1_1_sockets_1_1_client_connection}\index{O\+T\+A.\+Sockets.\+Client\+Connection@{O\+T\+A.\+Sockets.\+Client\+Connection}}
+
+
+A tcp client implementation that directly bolts into the Terrarian socket implementation  
+
+
+Inheritance diagram for O\+T\+A.\+Sockets.\+Client\+Connection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_o_t_a_1_1_sockets_1_1_client_connection}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_a770766c35a3ead39c9bcb0798bc5dcdc}{Set} (int value)
+\item 
+\hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_a65f8996d009af59680de5f45b9084a67}{Client\+Connection} ()
+\item 
+\hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_ac49558634e78478cdf3151ca6bb931e0}{Client\+Connection} (Socket sock)
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_af385791e5187389d51274855d23f50a4}{Start\+Reading} ()
+\item 
+void \hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_aa50626295d0b996e369d7e8f42bd0edb}{Kick} (string reason)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_ad4c258a26c87be978e43c5f376322210}{Slot\+Id}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_a982200f63ad773cd34841283b0a1ad0b}{Process\+Read} ()
+\item 
+override void \hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection_a2d086f3d3b8e0f59b405b71250d80e01}{Handle\+Closure} (Socket\+Error err)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A tcp client implementation that directly bolts into the Terrarian socket implementation 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_client_connection_a65f8996d009af59680de5f45b9084a67}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Client\+Connection@{Client\+Connection}}
+\index{Client\+Connection@{Client\+Connection}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Client\+Connection()}]{\setlength{\rightskip}{0pt plus 5cm}O\+T\+A.\+Sockets.\+Client\+Connection.\+Client\+Connection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_client_connection_a65f8996d009af59680de5f45b9084a67}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_client_connection_ac49558634e78478cdf3151ca6bb931e0}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Client\+Connection@{Client\+Connection}}
+\index{Client\+Connection@{Client\+Connection}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Client\+Connection(\+Socket sock)}]{\setlength{\rightskip}{0pt plus 5cm}O\+T\+A.\+Sockets.\+Client\+Connection.\+Client\+Connection (
+\begin{DoxyParamCaption}
+\item[{Socket}]{sock}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_client_connection_ac49558634e78478cdf3151ca6bb931e0}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_client_connection_a2d086f3d3b8e0f59b405b71250d80e01}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Handle\+Closure@{Handle\+Closure}}
+\index{Handle\+Closure@{Handle\+Closure}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Handle\+Closure(\+Socket\+Error err)}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Sockets.\+Client\+Connection.\+Handle\+Closure (
+\begin{DoxyParamCaption}
+\item[{Socket\+Error}]{err}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_sockets_1_1_client_connection_a2d086f3d3b8e0f59b405b71250d80e01}
+
+
+Implements \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_ae3319eefe2319d9ef50926f156432ac0}{O\+T\+A.\+Sockets.\+Connection}.
+
+\hypertarget{class_o_t_a_1_1_sockets_1_1_client_connection_aa50626295d0b996e369d7e8f42bd0edb}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Kick@{Kick}}
+\index{Kick@{Kick}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Kick(string reason)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Client\+Connection.\+Kick (
+\begin{DoxyParamCaption}
+\item[{string}]{reason}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_client_connection_aa50626295d0b996e369d7e8f42bd0edb}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_client_connection_a982200f63ad773cd34841283b0a1ad0b}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Process\+Read@{Process\+Read}}
+\index{Process\+Read@{Process\+Read}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Process\+Read()}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Sockets.\+Client\+Connection.\+Process\+Read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_sockets_1_1_client_connection_a982200f63ad773cd34841283b0a1ad0b}
+
+
+Implements \hyperlink{class_o_t_a_1_1_sockets_1_1_connection_a3b33673044f6e18c1e2364d86846c107}{O\+T\+A.\+Sockets.\+Connection}.
+
+\hypertarget{class_o_t_a_1_1_sockets_1_1_client_connection_a770766c35a3ead39c9bcb0798bc5dcdc}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Set@{Set}}
+\index{Set@{Set}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Set(int value)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Client\+Connection.\+Set (
+\begin{DoxyParamCaption}
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_client_connection_a770766c35a3ead39c9bcb0798bc5dcdc}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_client_connection_af385791e5187389d51274855d23f50a4}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Start\+Reading@{Start\+Reading}}
+\index{Start\+Reading@{Start\+Reading}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Start\+Reading()}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Sockets.\+Client\+Connection.\+Start\+Reading (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_sockets_1_1_client_connection_af385791e5187389d51274855d23f50a4}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_o_t_a_1_1_sockets_1_1_client_connection_ad4c258a26c87be978e43c5f376322210}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Slot\+Id@{Slot\+Id}}
+\index{Slot\+Id@{Slot\+Id}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Slot\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int O\+T\+A.\+Sockets.\+Client\+Connection.\+Slot\+Id}\label{class_o_t_a_1_1_sockets_1_1_client_connection_ad4c258a26c87be978e43c5f376322210}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Sockets/\hyperlink{_client_connection_8cs}{Client\+Connection.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,283 @@
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers}{}\section{Authenticated\+Users}
+\label{classOTA_1_1Data_1_1AuthenticatedUsers}\index{Authenticated\+Users@{Authenticated\+Users}}
+
+
+Authenticated users.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_1_1UserTable}{User\+Table}
+\begin{DoxyCompactList}\small\item\em The default user table \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_aea3a1899697ab77fa32d5fa7bffdae7a}{Create\+User} (string username, string password, bool op=false)
+\begin{DoxyCompactList}\small\item\em Creates a user. \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_a1cea5a0e7137a60a0fa4a75dc58d93a2}{Delete\+User} (string username)
+\begin{DoxyCompactList}\small\item\em Removes a user from the database by name \end{DoxyCompactList}\item 
+static string\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_ad1cb6c1e7e101243cf1aef7f334048e4}{Find\+Users\+By\+Prefix} (string search)
+\begin{DoxyCompactList}\small\item\em Finds a list of users matching a prefix \end{DoxyCompactList}\item 
+static \hyperlink{structOTA_1_1Data_1_1UserDetails}{User\+Details} \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_affa1cab8b0a215d5941b5aeecb7de46f}{Get\+User} (string username)
+\begin{DoxyCompactList}\small\item\em Gets the user from the database by name \end{DoxyCompactList}\item 
+static string \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_a30b3c7fd6e354116a5f28d2562a16650}{Get\+User\+Password} (string username)
+\begin{DoxyCompactList}\small\item\em Gets the user password. \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_a53339a4f1f63724a5744f03867b94d4d}{Update\+User} (string username, string password, bool op=false)
+\begin{DoxyCompactList}\small\item\em Updates a user in the database. \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_a8daa0f5fae480dc1204ccdbdf1f8f69c}{Update\+User} (string username, string password)
+\begin{DoxyCompactList}\small\item\em Updates a user in the database. \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_a346321073b07beb37d20b56431430243}{Update\+User} (string username, bool op=false)
+\begin{DoxyCompactList}\small\item\em Updates a user in the database. \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_ae8fc38c260677286cd40298aa4c6e0bd}{User\+Exists} (string username)
+\begin{DoxyCompactList}\small\item\em Checks if a user exists \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const String \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_a5f7b801a55ee829062b5878a70c905b4}{S\+Q\+L\+Safe\+Name} = \char`\"{}tdsm\char`\"{}
+\end{DoxyCompactItemize}
+\subsection*{Static Package Functions}
+\begin{DoxyCompactItemize}
+\item 
+static string \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_a2057234b02c94f3b139dd20654e3d789}{Hash} (string username, string password)
+\item 
+static void \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_a313d283897b7cb30f0890a56ce2a505d}{Initialise} ()
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classOTA_1_1Data_1_1AuthenticatedUsers_a64d91039c6988ac6df2413447a5caa6b}{User\+Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the user count. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Authenticated users. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_aea3a1899697ab77fa32d5fa7bffdae7a}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Create\+User@{Create\+User}}
+\index{Create\+User@{Create\+User}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Create\+User(string username, string password, bool op=false)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Create\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{password, }
+\item[{bool}]{op = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_aea3a1899697ab77fa32d5fa7bffdae7a}
+
+
+Creates a user. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if user was created, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+{\em password} & Password.\\
+\hline
+{\em op} & If set to {\ttfamily true} op.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_a1cea5a0e7137a60a0fa4a75dc58d93a2}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Delete\+User@{Delete\+User}}
+\index{Delete\+User@{Delete\+User}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Delete\+User(string username)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Delete\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_a1cea5a0e7137a60a0fa4a75dc58d93a2}
+
+
+Removes a user from the database by name 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if user was deleted, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_ad1cb6c1e7e101243cf1aef7f334048e4}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Find\+Users\+By\+Prefix@{Find\+Users\+By\+Prefix}}
+\index{Find\+Users\+By\+Prefix@{Find\+Users\+By\+Prefix}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Find\+Users\+By\+Prefix(string search)}]{\setlength{\rightskip}{0pt plus 5cm}static string \mbox{[}$\,$\mbox{]} Find\+Users\+By\+Prefix (
+\begin{DoxyParamCaption}
+\item[{string}]{search}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_ad1cb6c1e7e101243cf1aef7f334048e4}
+
+
+Finds a list of users matching a prefix 
+
+\begin{DoxyReturn}{Returns}
+The users by prefix.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em search} & Search.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_affa1cab8b0a215d5941b5aeecb7de46f}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Get\+User@{Get\+User}}
+\index{Get\+User@{Get\+User}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Get\+User(string username)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf User\+Details} Get\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_affa1cab8b0a215d5941b5aeecb7de46f}
+
+
+Gets the user from the database by name 
+
+\begin{DoxyReturn}{Returns}
+The user.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_a30b3c7fd6e354116a5f28d2562a16650}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Get\+User\+Password@{Get\+User\+Password}}
+\index{Get\+User\+Password@{Get\+User\+Password}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Get\+User\+Password(string username)}]{\setlength{\rightskip}{0pt plus 5cm}static string Get\+User\+Password (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_a30b3c7fd6e354116a5f28d2562a16650}
+
+
+Gets the user password. 
+
+\begin{DoxyReturn}{Returns}
+The user password.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_a2057234b02c94f3b139dd20654e3d789}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Hash@{Hash}}
+\index{Hash@{Hash}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Hash(string username, string password)}]{\setlength{\rightskip}{0pt plus 5cm}static string Hash (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{password}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_a2057234b02c94f3b139dd20654e3d789}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_a313d283897b7cb30f0890a56ce2a505d}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Initialise@{Initialise}}
+\index{Initialise@{Initialise}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Initialise()}]{\setlength{\rightskip}{0pt plus 5cm}static void Initialise (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_a313d283897b7cb30f0890a56ce2a505d}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_a53339a4f1f63724a5744f03867b94d4d}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Update\+User@{Update\+User}}
+\index{Update\+User@{Update\+User}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Update\+User(string username, string password, bool op=false)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Update\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{password, }
+\item[{bool}]{op = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_a53339a4f1f63724a5744f03867b94d4d}
+
+
+Updates a user in the database. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if user was updated, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+{\em password} & Password.\\
+\hline
+{\em op} & If set to {\ttfamily true} op.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_a8daa0f5fae480dc1204ccdbdf1f8f69c}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Update\+User@{Update\+User}}
+\index{Update\+User@{Update\+User}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Update\+User(string username, string password)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Update\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{password}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_a8daa0f5fae480dc1204ccdbdf1f8f69c}
+
+
+Updates a user in the database. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if user was updated, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+{\em password} & Password.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_a346321073b07beb37d20b56431430243}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!Update\+User@{Update\+User}}
+\index{Update\+User@{Update\+User}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{Update\+User(string username, bool op=false)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Update\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{bool}]{op = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_a346321073b07beb37d20b56431430243}
+
+
+Updates a user in the database. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if user was updated, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+{\em op} & If set to {\ttfamily true} op.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_ae8fc38c260677286cd40298aa4c6e0bd}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!User\+Exists@{User\+Exists}}
+\index{User\+Exists@{User\+Exists}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{User\+Exists(string username)}]{\setlength{\rightskip}{0pt plus 5cm}static bool User\+Exists (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_ae8fc38c260677286cd40298aa4c6e0bd}
+
+
+Checks if a user exists 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if exists was usered, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_a5f7b801a55ee829062b5878a70c905b4}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!S\+Q\+L\+Safe\+Name@{S\+Q\+L\+Safe\+Name}}
+\index{S\+Q\+L\+Safe\+Name@{S\+Q\+L\+Safe\+Name}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{S\+Q\+L\+Safe\+Name}]{\setlength{\rightskip}{0pt plus 5cm}const String S\+Q\+L\+Safe\+Name = \char`\"{}tdsm\char`\"{}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_a5f7b801a55ee829062b5878a70c905b4}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Data_1_1AuthenticatedUsers_a64d91039c6988ac6df2413447a5caa6b}{}\index{O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}!User\+Count@{User\+Count}}
+\index{User\+Count@{User\+Count}!O\+T\+A\+::\+Data\+::\+Authenticated\+Users@{O\+T\+A\+::\+Data\+::\+Authenticated\+Users}}
+\subsubsection[{User\+Count}]{\setlength{\rightskip}{0pt plus 5cm}int User\+Count\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{classOTA_1_1Data_1_1AuthenticatedUsers_a64d91039c6988ac6df2413447a5caa6b}
+
+
+Gets the user count. 
+
+The user count.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Data/\hyperlink{AuthenticatedUsers_8cs}{Authenticated\+Users.\+cs}\end{DoxyCompactItemize}

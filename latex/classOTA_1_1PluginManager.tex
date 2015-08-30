@@ -1,0 +1,457 @@
+\hypertarget{classOTA_1_1PluginManager}{}\section{Plugin\+Manager}
+\label{classOTA_1_1PluginManager}\index{Plugin\+Manager@{Plugin\+Manager}}
+
+
+\hyperlink{classOTA_1_1PluginManager}{Plugin\+Manager} class. Handles all input/output, loading, enabling, disabling, and hook processing for plugins \mbox{[}T\+O\+D\+O\mbox{]} Reload plugin assembly, Not enable/disable.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structOTA_1_1PluginManager_1_1PluginEnumerator}{Plugin\+Enumerator}
+\item 
+struct \hyperlink{structOTA_1_1PluginManager_1_1PluginRecordEnumerator}{Plugin\+Record\+Enumerator}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classOTA_1_1PluginManager_a0f100a492a49bd01404c15ed69c918d7}{Check\+Plugins} ()
+\item 
+static bool \hyperlink{classOTA_1_1PluginManager_a4e4518be230f963f269666769eb8d2ae}{Disable\+Plugin} (\hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} plugin)
+\begin{DoxyCompactList}\small\item\em Enables a plugin. \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1PluginManager_adf1d72881b99fb5f7fbea6222bd42347}{Disable\+Plugin} (string name)
+\begin{DoxyCompactList}\small\item\em Disables a plugin by name. Currently unused in core \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1PluginManager_a3103a6c0625da2664799c5dd9732f286}{Disable\+Plugins} ()
+\begin{DoxyCompactList}\small\item\em Disables all plugins currently running on the server \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1PluginManager_a29f358bb304f4f908bacf5b94e5f5bf9}{Enable\+Plugin} (string name)
+\begin{DoxyCompactList}\small\item\em Enables a plugin by name. Currently unused in core \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1PluginManager_af95160b00bc6e8aa711d95ea0ba12050}{Enable\+Plugin} (\hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} plugin)
+\begin{DoxyCompactList}\small\item\em Enables a plugin. \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1PluginManager_ad1e4d07d81e302b378d5e38c106e4e0a}{Enable\+Plugins} ()
+\begin{DoxyCompactList}\small\item\em Enables all plugins available to the server \end{DoxyCompactList}\item 
+static \hyperlink{classOTA_1_1Plugin_1_1HookPoint}{Hook\+Point} \hyperlink{classOTA_1_1PluginManager_a55be5e38710ba54d5ec5af64aa2e47b9}{Get\+Hook\+Point} (string name)
+\item 
+static \hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} \hyperlink{classOTA_1_1PluginManager_a01989b4ab7e0ae71af29431ff7850a2f}{Get\+Plugin} (string name)
+\begin{DoxyCompactList}\small\item\em Gets plugin instance by name. \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1PluginManager_ac59f0de8b4d982ff5060819fc081291e}{Initialize} (string plugin\+Path)
+\begin{DoxyCompactList}\small\item\em \hyperlink{classOTA_1_1PluginManager}{Plugin\+Manager} class constructor \end{DoxyCompactList}\item 
+static \hyperlink{namespaceOTA_a6a85498d6b4013ed2e9221168ed1d999}{Plugin\+Load\+Status} \hyperlink{classOTA_1_1PluginManager_a3d382380ed135df5bdd0f82cbde6a0fd}{Load\+And\+Init\+Plugin} (string Path)
+\begin{DoxyCompactList}\small\item\em Loads and initialoses a plugin \end{DoxyCompactList}\item 
+static \hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} \hyperlink{classOTA_1_1PluginManager_abf01ebb1fe63d1728a6d712461ce8d54}{Load\+Plugin\+From\+D\+L\+L} (string Plugin\+Path)
+\begin{DoxyCompactList}\small\item\em Load the plugin located at the specified path. This only loads one plugin. \end{DoxyCompactList}\item 
+static \hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} \hyperlink{classOTA_1_1PluginManager_a50d4880df97a1ae201876ca993706547}{Load\+Plugin\+From\+Path} (string file)
+\begin{DoxyCompactList}\small\item\em Loads the plugin from a file path. \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1PluginManager_aa3801d10253437b0535bb9ccc08497ae}{Load\+Plugins} ()
+\begin{DoxyCompactList}\small\item\em Initializes \hyperlink{namespaceOTA_1_1Plugin}{Plugin} (Loads) and Checks for Out of Date Plugins. \end{DoxyCompactList}\item 
+static \hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} \hyperlink{classOTA_1_1PluginManager_a2e43f333f61e81e1d4d3d1e1a06db415}{Load\+Source\+Plugin} (string path)
+\item 
+static void \hyperlink{classOTA_1_1PluginManager_a1c4f61cb3323a6bf9cb8e313d5fdb8fb}{Plugin\+Command} (\hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender, \hyperlink{classOTA_1_1Command_1_1ArgumentList}{Argument\+List} args)
+\item 
+static void \hyperlink{classOTA_1_1PluginManager_a66086313a6848fbdc018dbe5a2873c55}{Register\+Plugin} (\hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} plugin)
+\begin{DoxyCompactList}\small\item\em Registers a loaded plugin \end{DoxyCompactList}\item 
+static \hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} \hyperlink{classOTA_1_1PluginManager_afe24a86d7a7d903d3e72861404d7bce5}{Reload\+Plugin} (\hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} old\+Plugin, bool save\+State=true)
+\begin{DoxyCompactList}\small\item\em Reloads a plugin \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1PluginManager_ad33a4455e3dd481611d1a75e723067cd}{Reload\+Plugins} (bool save\+State=true)
+\begin{DoxyCompactList}\small\item\em Reloads all plugins currently running on the server \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1PluginManager_ad4471e30149a441088ad15c908625116}{Replace\+Plugin} (\hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} old\+Plugin, \hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} new\+Plugin, bool save\+State=true)
+\begin{DoxyCompactList}\small\item\em Replaces a plugin \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1PluginManager_a04bc5c491d3a4d2225317b73027ea46c}{Set\+Hook\+Source} (Type hpt)
+\item 
+static bool \hyperlink{classOTA_1_1PluginManager_a86478a917f0af4d0e3825d763651a784}{Unload\+Plugin} (\hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} plugin)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static Dictionary$<$ String, \hyperlink{classOTA_1_1Plugin_1_1BasePlugin}{Base\+Plugin} $>$ \hyperlink{classOTA_1_1PluginManager_a4002719aac236b2ec7f902c0873ea9d3}{\+\_\+plugins}
+\end{DoxyCompactItemize}
+\subsection*{Static Package Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classOTA_1_1PluginManager_a53bee64266f90bb5b551527c0a5dba69}{Load\+Plugins\+Internal} ()
+\item 
+static void \hyperlink{classOTA_1_1PluginManager_a7c4d2bc2cf63bd1bfaac1e179fdeb5ea}{Notify\+World\+Loaded} ()
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{structOTA_1_1PluginManager_1_1PluginEnumerator}{Plugin\+Enumerator} \hyperlink{classOTA_1_1PluginManager_abae2c31019ccb9a5dd365028bf2efd30}{Enumerate\+Plugins}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the enumeration used to enumerate over plugins \end{DoxyCompactList}\item 
+static \hyperlink{structOTA_1_1PluginManager_1_1PluginRecordEnumerator}{Plugin\+Record\+Enumerator} \hyperlink{classOTA_1_1PluginManager_a1c871ff4915f084fb918eab859297e0a}{Enumerate\+Plugins\+Records}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Server\textquotesingle{}s plugin list \end{DoxyCompactList}\item 
+static int \hyperlink{classOTA_1_1PluginManager_a676977726f3e4e7364b93bb3b278a027}{Plugin\+Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the plugin count. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classOTA_1_1PluginManager}{Plugin\+Manager} class. Handles all input/output, loading, enabling, disabling, and hook processing for plugins \mbox{[}T\+O\+D\+O\mbox{]} Reload plugin assembly, Not enable/disable. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1PluginManager_a0f100a492a49bd01404c15ed69c918d7}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Check\+Plugins@{Check\+Plugins}}
+\index{Check\+Plugins@{Check\+Plugins}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Check\+Plugins()}]{\setlength{\rightskip}{0pt plus 5cm}static void Check\+Plugins (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a0f100a492a49bd01404c15ed69c918d7}
+\hypertarget{classOTA_1_1PluginManager_a4e4518be230f963f269666769eb8d2ae}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Disable\+Plugin@{Disable\+Plugin}}
+\index{Disable\+Plugin@{Disable\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Disable\+Plugin(\+Base\+Plugin plugin)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Disable\+Plugin (
+\begin{DoxyParamCaption}
+\item[{{\bf Base\+Plugin}}]{plugin}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a4e4518be230f963f269666769eb8d2ae}
+
+
+Enables a plugin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \hyperlink{namespaceOTA_1_1Plugin}{Plugin} name\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on plugin successfully Enabling
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1PluginManager_adf1d72881b99fb5f7fbea6222bd42347}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Disable\+Plugin@{Disable\+Plugin}}
+\index{Disable\+Plugin@{Disable\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Disable\+Plugin(string name)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Disable\+Plugin (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_adf1d72881b99fb5f7fbea6222bd42347}
+
+
+Disables a plugin by name. Currently unused in core 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name of plugin\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on plugin successfully Disabling
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1PluginManager_a3103a6c0625da2664799c5dd9732f286}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Disable\+Plugins@{Disable\+Plugins}}
+\index{Disable\+Plugins@{Disable\+Plugins}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Disable\+Plugins()}]{\setlength{\rightskip}{0pt plus 5cm}static void Disable\+Plugins (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a3103a6c0625da2664799c5dd9732f286}
+
+
+Disables all plugins currently running on the server 
+
+\hypertarget{classOTA_1_1PluginManager_a29f358bb304f4f908bacf5b94e5f5bf9}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Enable\+Plugin@{Enable\+Plugin}}
+\index{Enable\+Plugin@{Enable\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Enable\+Plugin(string name)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Enable\+Plugin (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a29f358bb304f4f908bacf5b94e5f5bf9}
+
+
+Enables a plugin by name. Currently unused in core 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \hyperlink{namespaceOTA_1_1Plugin}{Plugin} name\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on plugin successfully Enabling
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1PluginManager_af95160b00bc6e8aa711d95ea0ba12050}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Enable\+Plugin@{Enable\+Plugin}}
+\index{Enable\+Plugin@{Enable\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Enable\+Plugin(\+Base\+Plugin plugin)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Enable\+Plugin (
+\begin{DoxyParamCaption}
+\item[{{\bf Base\+Plugin}}]{plugin}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_af95160b00bc6e8aa711d95ea0ba12050}
+
+
+Enables a plugin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \hyperlink{namespaceOTA_1_1Plugin}{Plugin} name\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on plugin successfully Enabling
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1PluginManager_ad1e4d07d81e302b378d5e38c106e4e0a}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Enable\+Plugins@{Enable\+Plugins}}
+\index{Enable\+Plugins@{Enable\+Plugins}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Enable\+Plugins()}]{\setlength{\rightskip}{0pt plus 5cm}static void Enable\+Plugins (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_ad1e4d07d81e302b378d5e38c106e4e0a}
+
+
+Enables all plugins available to the server 
+
+\hypertarget{classOTA_1_1PluginManager_a55be5e38710ba54d5ec5af64aa2e47b9}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Get\+Hook\+Point@{Get\+Hook\+Point}}
+\index{Get\+Hook\+Point@{Get\+Hook\+Point}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Get\+Hook\+Point(string name)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Hook\+Point} Get\+Hook\+Point (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a55be5e38710ba54d5ec5af64aa2e47b9}
+\hypertarget{classOTA_1_1PluginManager_a01989b4ab7e0ae71af29431ff7850a2f}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Get\+Plugin@{Get\+Plugin}}
+\index{Get\+Plugin@{Get\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Get\+Plugin(string name)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Base\+Plugin} Get\+Plugin (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a01989b4ab7e0ae71af29431ff7850a2f}
+
+
+Gets plugin instance by name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \hyperlink{namespaceOTA_1_1Plugin}{Plugin} name\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns found plugin if successful, otherwise returns null
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1PluginManager_ac59f0de8b4d982ff5060819fc081291e}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Initialize(string plugin\+Path)}]{\setlength{\rightskip}{0pt plus 5cm}static void Initialize (
+\begin{DoxyParamCaption}
+\item[{string}]{plugin\+Path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_ac59f0de8b4d982ff5060819fc081291e}
+
+
+\hyperlink{classOTA_1_1PluginManager}{Plugin\+Manager} class constructor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+plugin\+Path} & Path to plugin directory\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1PluginManager_a3d382380ed135df5bdd0f82cbde6a0fd}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Load\+And\+Init\+Plugin@{Load\+And\+Init\+Plugin}}
+\index{Load\+And\+Init\+Plugin@{Load\+And\+Init\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Load\+And\+Init\+Plugin(string Path)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Plugin\+Load\+Status} Load\+And\+Init\+Plugin (
+\begin{DoxyParamCaption}
+\item[{string}]{Path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a3d382380ed135df5bdd0f82cbde6a0fd}
+
+
+Loads and initialoses a plugin 
+
+\begin{DoxyReturn}{Returns}
+The and init plugin.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em Path} & Path.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1PluginManager_abf01ebb1fe63d1728a6d712461ce8d54}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Load\+Plugin\+From\+D\+L\+L@{Load\+Plugin\+From\+D\+L\+L}}
+\index{Load\+Plugin\+From\+D\+L\+L@{Load\+Plugin\+From\+D\+L\+L}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Load\+Plugin\+From\+D\+L\+L(string Plugin\+Path)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Base\+Plugin} Load\+Plugin\+From\+D\+L\+L (
+\begin{DoxyParamCaption}
+\item[{string}]{Plugin\+Path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_abf01ebb1fe63d1728a6d712461ce8d54}
+
+
+Load the plugin located at the specified path. This only loads one plugin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Plugin\+Path} & Path to plugin\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Instance of the successfully loaded plugin, otherwise null
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1PluginManager_a50d4880df97a1ae201876ca993706547}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Load\+Plugin\+From\+Path@{Load\+Plugin\+From\+Path}}
+\index{Load\+Plugin\+From\+Path@{Load\+Plugin\+From\+Path}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Load\+Plugin\+From\+Path(string file)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Base\+Plugin} Load\+Plugin\+From\+Path (
+\begin{DoxyParamCaption}
+\item[{string}]{file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a50d4880df97a1ae201876ca993706547}
+
+
+Loads the plugin from a file path. 
+
+\begin{DoxyReturn}{Returns}
+The plugin from path.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em file} & File.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1PluginManager_aa3801d10253437b0535bb9ccc08497ae}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Load\+Plugins@{Load\+Plugins}}
+\index{Load\+Plugins@{Load\+Plugins}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Load\+Plugins()}]{\setlength{\rightskip}{0pt plus 5cm}static void Load\+Plugins (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_aa3801d10253437b0535bb9ccc08497ae}
+
+
+Initializes \hyperlink{namespaceOTA_1_1Plugin}{Plugin} (Loads) and Checks for Out of Date Plugins. 
+
+\hypertarget{classOTA_1_1PluginManager_a53bee64266f90bb5b551527c0a5dba69}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Load\+Plugins\+Internal@{Load\+Plugins\+Internal}}
+\index{Load\+Plugins\+Internal@{Load\+Plugins\+Internal}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Load\+Plugins\+Internal()}]{\setlength{\rightskip}{0pt plus 5cm}static void Load\+Plugins\+Internal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}\label{classOTA_1_1PluginManager_a53bee64266f90bb5b551527c0a5dba69}
+\hypertarget{classOTA_1_1PluginManager_a2e43f333f61e81e1d4d3d1e1a06db415}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Load\+Source\+Plugin@{Load\+Source\+Plugin}}
+\index{Load\+Source\+Plugin@{Load\+Source\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Load\+Source\+Plugin(string path)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Base\+Plugin} Load\+Source\+Plugin (
+\begin{DoxyParamCaption}
+\item[{string}]{path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a2e43f333f61e81e1d4d3d1e1a06db415}
+\hypertarget{classOTA_1_1PluginManager_a7c4d2bc2cf63bd1bfaac1e179fdeb5ea}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Notify\+World\+Loaded@{Notify\+World\+Loaded}}
+\index{Notify\+World\+Loaded@{Notify\+World\+Loaded}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Notify\+World\+Loaded()}]{\setlength{\rightskip}{0pt plus 5cm}static void Notify\+World\+Loaded (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [package]}}\label{classOTA_1_1PluginManager_a7c4d2bc2cf63bd1bfaac1e179fdeb5ea}
+\hypertarget{classOTA_1_1PluginManager_a1c4f61cb3323a6bf9cb8e313d5fdb8fb}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Plugin\+Command@{Plugin\+Command}}
+\index{Plugin\+Command@{Plugin\+Command}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Plugin\+Command(\+I\+Sender sender, Argument\+List args)}]{\setlength{\rightskip}{0pt plus 5cm}static void Plugin\+Command (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sender}}]{sender, }
+\item[{{\bf Argument\+List}}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a1c4f61cb3323a6bf9cb8e313d5fdb8fb}
+\hypertarget{classOTA_1_1PluginManager_a66086313a6848fbdc018dbe5a2873c55}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Register\+Plugin@{Register\+Plugin}}
+\index{Register\+Plugin@{Register\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Register\+Plugin(\+Base\+Plugin plugin)}]{\setlength{\rightskip}{0pt plus 5cm}static void Register\+Plugin (
+\begin{DoxyParamCaption}
+\item[{{\bf Base\+Plugin}}]{plugin}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a66086313a6848fbdc018dbe5a2873c55}
+
+
+Registers a loaded plugin 
+
+
+\begin{DoxyParams}{Parameters}
+{\em plugin} & \hyperlink{namespaceOTA_1_1Plugin}{Plugin}.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1PluginManager_afe24a86d7a7d903d3e72861404d7bce5}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Reload\+Plugin@{Reload\+Plugin}}
+\index{Reload\+Plugin@{Reload\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Reload\+Plugin(\+Base\+Plugin old\+Plugin, bool save\+State=true)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Base\+Plugin} Reload\+Plugin (
+\begin{DoxyParamCaption}
+\item[{{\bf Base\+Plugin}}]{old\+Plugin, }
+\item[{bool}]{save\+State = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_afe24a86d7a7d903d3e72861404d7bce5}
+
+
+Reloads a plugin 
+
+\begin{DoxyReturn}{Returns}
+The plugin.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em old\+Plugin} & Old plugin.\\
+\hline
+{\em save\+State} & If set to {\ttfamily true} save state.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1PluginManager_ad33a4455e3dd481611d1a75e723067cd}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Reload\+Plugins@{Reload\+Plugins}}
+\index{Reload\+Plugins@{Reload\+Plugins}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Reload\+Plugins(bool save\+State=true)}]{\setlength{\rightskip}{0pt plus 5cm}static void Reload\+Plugins (
+\begin{DoxyParamCaption}
+\item[{bool}]{save\+State = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_ad33a4455e3dd481611d1a75e723067cd}
+
+
+Reloads all plugins currently running on the server 
+
+\hypertarget{classOTA_1_1PluginManager_ad4471e30149a441088ad15c908625116}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Replace\+Plugin@{Replace\+Plugin}}
+\index{Replace\+Plugin@{Replace\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Replace\+Plugin(\+Base\+Plugin old\+Plugin, Base\+Plugin new\+Plugin, bool save\+State=true)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Replace\+Plugin (
+\begin{DoxyParamCaption}
+\item[{{\bf Base\+Plugin}}]{old\+Plugin, }
+\item[{{\bf Base\+Plugin}}]{new\+Plugin, }
+\item[{bool}]{save\+State = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_ad4471e30149a441088ad15c908625116}
+
+
+Replaces a plugin 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if plugin was replaced, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em old\+Plugin} & Old plugin.\\
+\hline
+{\em new\+Plugin} & New plugin.\\
+\hline
+{\em save\+State} & If set to {\ttfamily true} save state.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1PluginManager_a04bc5c491d3a4d2225317b73027ea46c}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Set\+Hook\+Source@{Set\+Hook\+Source}}
+\index{Set\+Hook\+Source@{Set\+Hook\+Source}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Set\+Hook\+Source(\+Type hpt)}]{\setlength{\rightskip}{0pt plus 5cm}static void Set\+Hook\+Source (
+\begin{DoxyParamCaption}
+\item[{Type}]{hpt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a04bc5c491d3a4d2225317b73027ea46c}
+\hypertarget{classOTA_1_1PluginManager_a86478a917f0af4d0e3825d763651a784}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Unload\+Plugin@{Unload\+Plugin}}
+\index{Unload\+Plugin@{Unload\+Plugin}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Unload\+Plugin(\+Base\+Plugin plugin)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Unload\+Plugin (
+\begin{DoxyParamCaption}
+\item[{{\bf Base\+Plugin}}]{plugin}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a86478a917f0af4d0e3825d763651a784}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1PluginManager_a4002719aac236b2ec7f902c0873ea9d3}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!\+\_\+plugins@{\+\_\+plugins}}
+\index{\+\_\+plugins@{\+\_\+plugins}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{\+\_\+plugins}]{\setlength{\rightskip}{0pt plus 5cm}Dictionary$<$String, {\bf Base\+Plugin}$>$ \+\_\+plugins\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1PluginManager_a4002719aac236b2ec7f902c0873ea9d3}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1PluginManager_abae2c31019ccb9a5dd365028bf2efd30}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Enumerate\+Plugins@{Enumerate\+Plugins}}
+\index{Enumerate\+Plugins@{Enumerate\+Plugins}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Enumerate\+Plugins}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Plugin\+Enumerator} Enumerate\+Plugins\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{classOTA_1_1PluginManager_abae2c31019ccb9a5dd365028bf2efd30}
+
+
+Gets the enumeration used to enumerate over plugins 
+
+The enumerate plugins.\hypertarget{classOTA_1_1PluginManager_a1c871ff4915f084fb918eab859297e0a}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Enumerate\+Plugins\+Records@{Enumerate\+Plugins\+Records}}
+\index{Enumerate\+Plugins\+Records@{Enumerate\+Plugins\+Records}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Enumerate\+Plugins\+Records}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Plugin\+Record\+Enumerator} Enumerate\+Plugins\+Records\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{classOTA_1_1PluginManager_a1c871ff4915f084fb918eab859297e0a}
+
+
+Server\textquotesingle{}s plugin list 
+
+\hypertarget{classOTA_1_1PluginManager_a676977726f3e4e7364b93bb3b278a027}{}\index{O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}!Plugin\+Count@{Plugin\+Count}}
+\index{Plugin\+Count@{Plugin\+Count}!O\+T\+A\+::\+Plugin\+Manager@{O\+T\+A\+::\+Plugin\+Manager}}
+\subsubsection[{Plugin\+Count}]{\setlength{\rightskip}{0pt plus 5cm}int Plugin\+Count\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{classOTA_1_1PluginManager_a676977726f3e4e7364b93bb3b278a027}
+
+
+Gets the plugin count. 
+
+The plugin count.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Plugin/\hyperlink{PluginManager_8cs}{Plugin\+Manager.\+cs}\end{DoxyCompactItemize}

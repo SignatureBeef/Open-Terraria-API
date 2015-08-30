@@ -1,0 +1,200 @@
+\hypertarget{interfaceOTA_1_1Data_1_1IDataConnector}{}\section{I\+Data\+Connector}
+\label{interfaceOTA_1_1Data_1_1IDataConnector}\index{I\+Data\+Connector@{I\+Data\+Connector}}
+
+
+Bare implementation for the required needs of a \hyperlink{namespaceOTA_1_1Data}{Data} Connector  
+
+
+Inheritance diagram for I\+Data\+Connector\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interfaceOTA_1_1Data_1_1IDataConnector}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{interfaceOTA_1_1Data_1_1IDataConnector_a40f49c9c93757850666f7dc6691f0b5c}{Execute} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Execute the specified builder. \end{DoxyCompactList}\item 
+T\mbox{[}$\,$\mbox{]} \hyperlink{interfaceOTA_1_1Data_1_1IDataConnector_aa59bf992fbdf8ce9516c57f7345afa32}{Execute\+Array$<$ T $>$} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes the buidler and returns an array of reflected rows \end{DoxyCompactList}\item 
+Data\+Set \hyperlink{interfaceOTA_1_1Data_1_1IDataConnector_ae8c082203afd91807bb03b3802896b38}{Execute\+Data\+Set} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes the builder and returns the data set. \end{DoxyCompactList}\item 
+long \hyperlink{interfaceOTA_1_1Data_1_1IDataConnector_a78c36ece8f633cd2d122480ac571feef}{Execute\+Insert} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes the builder and returns the insert id. \end{DoxyCompactList}\item 
+int \hyperlink{interfaceOTA_1_1Data_1_1IDataConnector_ac195342fa4723a84f1fd5da60dd6edcc}{Execute\+Non\+Query} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes the non query as specified in the builder \end{DoxyCompactList}\item 
+T \hyperlink{interfaceOTA_1_1Data_1_1IDataConnector_a8f82e10c42565976b2633e9d144e71a3}{Execute\+Scalar$<$ T $>$} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes the a scalar query via the builder \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{interfaceOTA_1_1Data_1_1IDataConnector_a2a7d66b3bc90c94c9916745935c86b67}{Get\+Builder} (string plugin\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the builder. \end{DoxyCompactList}\item 
+void \hyperlink{interfaceOTA_1_1Data_1_1IDataConnector_a5e53001785ff30ae485a113b9b8a0ddc}{Open} ()
+\begin{DoxyCompactList}\small\item\em Opens the connection to the data store \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Bare implementation for the required needs of a \hyperlink{namespaceOTA_1_1Data}{Data} Connector 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceOTA_1_1Data_1_1IDataConnector_a40f49c9c93757850666f7dc6691f0b5c}{}\index{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}!Execute@{Execute}}
+\index{Execute@{Execute}!O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}}
+\subsubsection[{Execute(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}bool Execute (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Data_1_1IDataConnector_a40f49c9c93757850666f7dc6691f0b5c}
+
+
+Execute the specified builder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+\hypertarget{interfaceOTA_1_1Data_1_1IDataConnector_aa59bf992fbdf8ce9516c57f7345afa32}{}\index{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}!Execute\+Array$<$ T $>$@{Execute\+Array$<$ T $>$}}
+\index{Execute\+Array$<$ T $>$@{Execute\+Array$<$ T $>$}!O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}}
+\subsubsection[{Execute\+Array$<$ T $>$(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}T \mbox{[}$\,$\mbox{]} Execute\+Array$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Data_1_1IDataConnector_aa59bf992fbdf8ce9516c57f7345afa32}
+
+
+Executes the buidler and returns an array of reflected rows 
+
+\begin{DoxyReturn}{Returns}
+The array.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The 1st type parameter.\\
+\hline
+\end{DoxyTemplParams}
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em T} : {\em new()}]\end{description}
+\end{Desc}
+\hypertarget{interfaceOTA_1_1Data_1_1IDataConnector_ae8c082203afd91807bb03b3802896b38}{}\index{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}!Execute\+Data\+Set@{Execute\+Data\+Set}}
+\index{Execute\+Data\+Set@{Execute\+Data\+Set}!O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}}
+\subsubsection[{Execute\+Data\+Set(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}Data\+Set Execute\+Data\+Set (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Data_1_1IDataConnector_ae8c082203afd91807bb03b3802896b38}
+
+
+Executes the builder and returns the data set. 
+
+\begin{DoxyReturn}{Returns}
+The data set.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+\hypertarget{interfaceOTA_1_1Data_1_1IDataConnector_a78c36ece8f633cd2d122480ac571feef}{}\index{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}!Execute\+Insert@{Execute\+Insert}}
+\index{Execute\+Insert@{Execute\+Insert}!O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}}
+\subsubsection[{Execute\+Insert(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}long Execute\+Insert (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Data_1_1IDataConnector_a78c36ece8f633cd2d122480ac571feef}
+
+
+Executes the builder and returns the insert id. 
+
+\begin{DoxyReturn}{Returns}
+The insert.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+\hypertarget{interfaceOTA_1_1Data_1_1IDataConnector_ac195342fa4723a84f1fd5da60dd6edcc}{}\index{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}!Execute\+Non\+Query@{Execute\+Non\+Query}}
+\index{Execute\+Non\+Query@{Execute\+Non\+Query}!O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}}
+\subsubsection[{Execute\+Non\+Query(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}int Execute\+Non\+Query (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Data_1_1IDataConnector_ac195342fa4723a84f1fd5da60dd6edcc}
+
+
+Executes the non query as specified in the builder 
+
+\begin{DoxyReturn}{Returns}
+The non query.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+\hypertarget{interfaceOTA_1_1Data_1_1IDataConnector_a8f82e10c42565976b2633e9d144e71a3}{}\index{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}!Execute\+Scalar$<$ T $>$@{Execute\+Scalar$<$ T $>$}}
+\index{Execute\+Scalar$<$ T $>$@{Execute\+Scalar$<$ T $>$}!O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}}
+\subsubsection[{Execute\+Scalar$<$ T $>$(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}T Execute\+Scalar$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Data_1_1IDataConnector_a8f82e10c42565976b2633e9d144e71a3}
+
+
+Executes the a scalar query via the builder 
+
+\begin{DoxyReturn}{Returns}
+The scalar.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The 1st type parameter.\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{interfaceOTA_1_1Data_1_1IDataConnector_a2a7d66b3bc90c94c9916745935c86b67}{}\index{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}!Get\+Builder@{Get\+Builder}}
+\index{Get\+Builder@{Get\+Builder}!O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}}
+\subsubsection[{Get\+Builder(string plugin\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Query\+Builder} Get\+Builder (
+\begin{DoxyParamCaption}
+\item[{string}]{plugin\+Name}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Data_1_1IDataConnector_a2a7d66b3bc90c94c9916745935c86b67}
+
+
+Gets the builder. 
+
+\begin{DoxyReturn}{Returns}
+The builder.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em plugin\+Name} & \hyperlink{namespaceOTA_1_1Plugin}{Plugin} name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{interfaceOTA_1_1Data_1_1IDataConnector_a5e53001785ff30ae485a113b9b8a0ddc}{}\index{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}!Open@{Open}}
+\index{Open@{Open}!O\+T\+A\+::\+Data\+::\+I\+Data\+Connector@{O\+T\+A\+::\+Data\+::\+I\+Data\+Connector}}
+\subsubsection[{Open()}]{\setlength{\rightskip}{0pt plus 5cm}void Open (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Data_1_1IDataConnector_a5e53001785ff30ae485a113b9b8a0ddc}
+
+
+Opens the connection to the data store 
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Data/\hyperlink{IDataConnector_8cs}{I\+Data\+Connector.\+cs}\end{DoxyCompactItemize}

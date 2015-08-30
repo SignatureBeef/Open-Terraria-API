@@ -1,0 +1,75 @@
+\hypertarget{interface_o_t_a_1_1_command_1_1_i_sender}{}\section{O\+T\+A.\+Command.\+I\+Sender Interface Reference}
+\label{interface_o_t_a_1_1_command_1_1_i_sender}\index{O\+T\+A.\+Command.\+I\+Sender@{O\+T\+A.\+Command.\+I\+Sender}}
+
+
+The bare implementation of a sender  
+
+
+Inheritance diagram for O\+T\+A.\+Command.\+I\+Sender\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.857143cm]{interface_o_t_a_1_1_command_1_1_i_sender}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender_a7e323ee3ab2f55876bc92a9d681d2bdf}{Send\+Message} (string message, int sender=255, byte R=255, byte G=255, byte B=255)
+\item 
+Dictionary$<$ string, \hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} $>$ \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender_acc469381ec0e6f18ccf50c213d5095a4}{Get\+Available\+Commands} ()
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender_a0f976299ffb288c46449ffb1bf61308b}{Op}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender_a27b05ff3ef4c1a9aac594e3e60d768f8}{Sender\+Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The bare implementation of a sender 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interface_o_t_a_1_1_command_1_1_i_sender_acc469381ec0e6f18ccf50c213d5095a4}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}!Get\+Available\+Commands@{Get\+Available\+Commands}}
+\index{Get\+Available\+Commands@{Get\+Available\+Commands}!O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}}
+\subsubsection[{Get\+Available\+Commands()}]{\setlength{\rightskip}{0pt plus 5cm}Dictionary$<$string, {\bf Command\+Info}$>$ O\+T\+A.\+Command.\+I\+Sender.\+Get\+Available\+Commands (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_command_1_1_i_sender_acc469381ec0e6f18ccf50c213d5095a4}
+
+
+Implemented in \hyperlink{class_o_t_a_1_1_command_1_1_sender_ab84377a94881af48dc7d787ec44290de}{O\+T\+A.\+Command.\+Sender}, and \hyperlink{class_o_t_a_1_1_command_1_1_world_sender_ac9f06672fb86ae270489f93caaa116c8}{O\+T\+A.\+Command.\+World\+Sender}.
+
+\hypertarget{interface_o_t_a_1_1_command_1_1_i_sender_a7e323ee3ab2f55876bc92a9d681d2bdf}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}!Send\+Message@{Send\+Message}}
+\index{Send\+Message@{Send\+Message}!O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}}
+\subsubsection[{Send\+Message(string message, int sender=255, byte R=255, byte G=255, byte B=255)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Command.\+I\+Sender.\+Send\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{message, }
+\item[{int}]{sender = {\ttfamily 255}, }
+\item[{byte}]{R = {\ttfamily 255}, }
+\item[{byte}]{G = {\ttfamily 255}, }
+\item[{byte}]{B = {\ttfamily 255}}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_command_1_1_i_sender_a7e323ee3ab2f55876bc92a9d681d2bdf}
+
+
+Implemented in \hyperlink{class_o_t_a_1_1_base_player_a59a949bff7e0cb3588079ae55edf1e74}{O\+T\+A.\+Base\+Player}, \hyperlink{class_o_t_a_1_1_command_1_1_sender_ab4cea2690d2299d322ec51cce16ec7a4}{O\+T\+A.\+Command.\+Sender}, \hyperlink{class_o_t_a_1_1_command_1_1_console_sender_ab1569d02090c217a52d8e25f6846504c}{O\+T\+A.\+Command.\+Console\+Sender}, and \hyperlink{class_o_t_a_1_1_command_1_1_world_sender_ae9a43321b90fd540c6b19cfa04babffa}{O\+T\+A.\+Command.\+World\+Sender}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{interface_o_t_a_1_1_command_1_1_i_sender_a0f976299ffb288c46449ffb1bf61308b}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}!Op@{Op}}
+\index{Op@{Op}!O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}}
+\subsubsection[{Op}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Command.\+I\+Sender.\+Op\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{interface_o_t_a_1_1_command_1_1_i_sender_a0f976299ffb288c46449ffb1bf61308b}
+\hypertarget{interface_o_t_a_1_1_command_1_1_i_sender_a27b05ff3ef4c1a9aac594e3e60d768f8}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}!Sender\+Name@{Sender\+Name}}
+\index{Sender\+Name@{Sender\+Name}!O\+T\+A\+::\+Command\+::\+I\+Sender@{O\+T\+A\+::\+Command\+::\+I\+Sender}}
+\subsubsection[{Sender\+Name}]{\setlength{\rightskip}{0pt plus 5cm}string O\+T\+A.\+Command.\+I\+Sender.\+Sender\+Name\hspace{0.3cm}{\ttfamily [get]}}\label{interface_o_t_a_1_1_command_1_1_i_sender_a27b05ff3ef4c1a9aac594e3e60d768f8}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{_i_sender_8cs}{I\+Sender.\+cs}\end{DoxyCompactItemize}

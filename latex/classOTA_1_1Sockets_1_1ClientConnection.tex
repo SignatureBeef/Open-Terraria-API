@@ -1,0 +1,118 @@
+\hypertarget{classOTA_1_1Sockets_1_1ClientConnection}{}\section{Client\+Connection}
+\label{classOTA_1_1Sockets_1_1ClientConnection}\index{Client\+Connection@{Client\+Connection}}
+
+
+A tcp client implementation that directly bolts into the Terrarian socket implementation  
+
+
+Inheritance diagram for Client\+Connection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOTA_1_1Sockets_1_1ClientConnection}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classOTA_1_1Sockets_1_1ClientConnection_ab85319c2bae079de4a02e80406de2b23}{Client\+Connection} ()
+\item 
+\hyperlink{classOTA_1_1Sockets_1_1ClientConnection_ae2e14437631840d632d266c1d38a218c}{Client\+Connection} (Socket sock)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1ClientConnection_a32f7881210dab5b3e54ea15043642953}{Kick} (string reason)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1ClientConnection_a8ed097593986737546a55270b67ad52a}{Set} (int value)
+\item 
+void \hyperlink{classOTA_1_1Sockets_1_1ClientConnection_a8a2fd16e72e1ae76dbeea19e5a5c07c9}{Start\+Reading} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classOTA_1_1Sockets_1_1ClientConnection_a635112a22f99c54b0fad66a41fae1c6e}{Slot\+Id}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \hyperlink{classOTA_1_1Sockets_1_1ClientConnection_a14be22ca5b6354ea76d836440d46d488}{Handle\+Closure} (Socket\+Error err)
+\item 
+override void \hyperlink{classOTA_1_1Sockets_1_1ClientConnection_a48c83f52d881a54208a23256a9bbcce4}{Process\+Read} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A tcp client implementation that directly bolts into the Terrarian socket implementation 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Sockets_1_1ClientConnection_ab85319c2bae079de4a02e80406de2b23}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Client\+Connection@{Client\+Connection}}
+\index{Client\+Connection@{Client\+Connection}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Client\+Connection()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Client\+Connection} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1ClientConnection_ab85319c2bae079de4a02e80406de2b23}
+\hypertarget{classOTA_1_1Sockets_1_1ClientConnection_ae2e14437631840d632d266c1d38a218c}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Client\+Connection@{Client\+Connection}}
+\index{Client\+Connection@{Client\+Connection}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Client\+Connection(\+Socket sock)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Client\+Connection} (
+\begin{DoxyParamCaption}
+\item[{Socket}]{sock}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1ClientConnection_ae2e14437631840d632d266c1d38a218c}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Sockets_1_1ClientConnection_a14be22ca5b6354ea76d836440d46d488}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Handle\+Closure@{Handle\+Closure}}
+\index{Handle\+Closure@{Handle\+Closure}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Handle\+Closure(\+Socket\+Error err)}]{\setlength{\rightskip}{0pt plus 5cm}override void Handle\+Closure (
+\begin{DoxyParamCaption}
+\item[{Socket\+Error}]{err}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Sockets_1_1ClientConnection_a14be22ca5b6354ea76d836440d46d488}
+
+
+Implements \hyperlink{classOTA_1_1Sockets_1_1Connection_a977bcd34679c9b4530e8bed4b77b1a70}{Connection}.
+
+\hypertarget{classOTA_1_1Sockets_1_1ClientConnection_a32f7881210dab5b3e54ea15043642953}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Kick@{Kick}}
+\index{Kick@{Kick}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Kick(string reason)}]{\setlength{\rightskip}{0pt plus 5cm}void Kick (
+\begin{DoxyParamCaption}
+\item[{string}]{reason}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1ClientConnection_a32f7881210dab5b3e54ea15043642953}
+\hypertarget{classOTA_1_1Sockets_1_1ClientConnection_a48c83f52d881a54208a23256a9bbcce4}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Process\+Read@{Process\+Read}}
+\index{Process\+Read@{Process\+Read}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Process\+Read()}]{\setlength{\rightskip}{0pt plus 5cm}override void Process\+Read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Sockets_1_1ClientConnection_a48c83f52d881a54208a23256a9bbcce4}
+
+
+Implements \hyperlink{classOTA_1_1Sockets_1_1Connection_a5f0e04a5c0f403cbe4449c419a55a87b}{Connection}.
+
+\hypertarget{classOTA_1_1Sockets_1_1ClientConnection_a8ed097593986737546a55270b67ad52a}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Set@{Set}}
+\index{Set@{Set}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Set(int value)}]{\setlength{\rightskip}{0pt plus 5cm}void Set (
+\begin{DoxyParamCaption}
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1ClientConnection_a8ed097593986737546a55270b67ad52a}
+\hypertarget{classOTA_1_1Sockets_1_1ClientConnection_a8a2fd16e72e1ae76dbeea19e5a5c07c9}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Start\+Reading@{Start\+Reading}}
+\index{Start\+Reading@{Start\+Reading}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Start\+Reading()}]{\setlength{\rightskip}{0pt plus 5cm}void Start\+Reading (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Sockets_1_1ClientConnection_a8a2fd16e72e1ae76dbeea19e5a5c07c9}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Sockets_1_1ClientConnection_a635112a22f99c54b0fad66a41fae1c6e}{}\index{O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}!Slot\+Id@{Slot\+Id}}
+\index{Slot\+Id@{Slot\+Id}!O\+T\+A\+::\+Sockets\+::\+Client\+Connection@{O\+T\+A\+::\+Sockets\+::\+Client\+Connection}}
+\subsubsection[{Slot\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int Slot\+Id}\label{classOTA_1_1Sockets_1_1ClientConnection_a635112a22f99c54b0fad66a41fae1c6e}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Sockets/\hyperlink{ClientConnection_8cs}{Client\+Connection.\+cs}\end{DoxyCompactItemize}

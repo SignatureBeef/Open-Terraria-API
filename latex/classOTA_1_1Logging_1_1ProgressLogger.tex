@@ -1,0 +1,107 @@
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger}{}\section{Progress\+Logger}
+\label{classOTA_1_1Logging_1_1ProgressLogger}\index{Progress\+Logger@{Progress\+Logger}}
+Inheritance diagram for Progress\+Logger\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOTA_1_1Logging_1_1ProgressLogger}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_a6e2d745cdb7a7b983f861ed6a9a541a7}{Dispose} ()
+\item 
+string \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_af2c94c62fe9842db63e3496d80d793b0}{Format} (bool verbose=false, int value=-\/1)
+\item 
+string \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_ae0108bf6c4adff1618f92fea497eadf5}{Pretty\+Time\+Span} (Time\+Span ts)
+\item 
+\hyperlink{classOTA_1_1Logging_1_1ProgressLogger_ad70334a99d2ee602e759d39be99e6344}{Progress\+Logger} (int max, string message)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Stopwatch \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_a8234ad7d375d8f81ae094686ec3b2fae}{timer}
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_ac3fdeca3b63101bb46822fca80eacc18}{Done}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+int \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_a2c6a422f799e2d05c6c0df52afc04796}{Max}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_a40e8debace0cc6f4f7baa0fdd309c103}{Message}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+Time\+Span \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_abbeaf7ccbf2f397ea4a63c0709b39244}{Running\+Time}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+Thread \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_a2f30b4dbbf82ba9ab1c3d2d25414ffd0}{Thread}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{classOTA_1_1Logging_1_1ProgressLogger_aca5c8bf6cfb5ea8d150d4b2f394fd552}{Value}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_ad70334a99d2ee602e759d39be99e6344}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Progress\+Logger@{Progress\+Logger}}
+\index{Progress\+Logger@{Progress\+Logger}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Progress\+Logger(int max, string message)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Progress\+Logger} (
+\begin{DoxyParamCaption}
+\item[{int}]{max, }
+\item[{string}]{message}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Logging_1_1ProgressLogger_ad70334a99d2ee602e759d39be99e6344}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_a6e2d745cdb7a7b983f861ed6a9a541a7}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Dispose()}]{\setlength{\rightskip}{0pt plus 5cm}void Dispose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Logging_1_1ProgressLogger_a6e2d745cdb7a7b983f861ed6a9a541a7}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_af2c94c62fe9842db63e3496d80d793b0}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Format@{Format}}
+\index{Format@{Format}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Format(bool verbose=false, int value=-\/1)}]{\setlength{\rightskip}{0pt plus 5cm}string Format (
+\begin{DoxyParamCaption}
+\item[{bool}]{verbose = {\ttfamily false}, }
+\item[{int}]{value = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Logging_1_1ProgressLogger_af2c94c62fe9842db63e3496d80d793b0}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_ae0108bf6c4adff1618f92fea497eadf5}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Pretty\+Time\+Span@{Pretty\+Time\+Span}}
+\index{Pretty\+Time\+Span@{Pretty\+Time\+Span}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Pretty\+Time\+Span(\+Time\+Span ts)}]{\setlength{\rightskip}{0pt plus 5cm}string Pretty\+Time\+Span (
+\begin{DoxyParamCaption}
+\item[{Time\+Span}]{ts}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Logging_1_1ProgressLogger_ae0108bf6c4adff1618f92fea497eadf5}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_a8234ad7d375d8f81ae094686ec3b2fae}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!timer@{timer}}
+\index{timer@{timer}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{timer}]{\setlength{\rightskip}{0pt plus 5cm}Stopwatch timer\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Logging_1_1ProgressLogger_a8234ad7d375d8f81ae094686ec3b2fae}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_ac3fdeca3b63101bb46822fca80eacc18}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Done@{Done}}
+\index{Done@{Done}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Done}]{\setlength{\rightskip}{0pt plus 5cm}bool Done\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Logging_1_1ProgressLogger_ac3fdeca3b63101bb46822fca80eacc18}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_a2c6a422f799e2d05c6c0df52afc04796}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Max@{Max}}
+\index{Max@{Max}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Max}]{\setlength{\rightskip}{0pt plus 5cm}int Max\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Logging_1_1ProgressLogger_a2c6a422f799e2d05c6c0df52afc04796}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_a40e8debace0cc6f4f7baa0fdd309c103}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Message@{Message}}
+\index{Message@{Message}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Message}]{\setlength{\rightskip}{0pt plus 5cm}string Message\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Logging_1_1ProgressLogger_a40e8debace0cc6f4f7baa0fdd309c103}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_abbeaf7ccbf2f397ea4a63c0709b39244}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Running\+Time@{Running\+Time}}
+\index{Running\+Time@{Running\+Time}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Running\+Time}]{\setlength{\rightskip}{0pt plus 5cm}Time\+Span Running\+Time\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Logging_1_1ProgressLogger_abbeaf7ccbf2f397ea4a63c0709b39244}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_a2f30b4dbbf82ba9ab1c3d2d25414ffd0}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Thread@{Thread}}
+\index{Thread@{Thread}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Thread}]{\setlength{\rightskip}{0pt plus 5cm}Thread Thread\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Logging_1_1ProgressLogger_a2f30b4dbbf82ba9ab1c3d2d25414ffd0}
+\hypertarget{classOTA_1_1Logging_1_1ProgressLogger_aca5c8bf6cfb5ea8d150d4b2f394fd552}{}\index{O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}!Value@{Value}}
+\index{Value@{Value}!O\+T\+A\+::\+Logging\+::\+Progress\+Logger@{O\+T\+A\+::\+Logging\+::\+Progress\+Logger}}
+\subsubsection[{Value}]{\setlength{\rightskip}{0pt plus 5cm}int Value\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Logging_1_1ProgressLogger_aca5c8bf6cfb5ea8d150d4b2f394fd552}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Logging/\hyperlink{ProgressLogger_8cs}{Progress\+Logger.\+cs}\end{DoxyCompactItemize}

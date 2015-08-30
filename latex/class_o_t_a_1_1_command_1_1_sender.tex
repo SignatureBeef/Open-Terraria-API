@@ -1,0 +1,109 @@
+\hypertarget{class_o_t_a_1_1_command_1_1_sender}{}\section{O\+T\+A.\+Command.\+Sender Class Reference}
+\label{class_o_t_a_1_1_command_1_1_sender}\index{O\+T\+A.\+Command.\+Sender@{O\+T\+A.\+Command.\+Sender}}
+Inheritance diagram for O\+T\+A.\+Command.\+Sender\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_o_t_a_1_1_command_1_1_sender}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+abstract void \hyperlink{class_o_t_a_1_1_command_1_1_sender_ab4cea2690d2299d322ec51cce16ec7a4}{Send\+Message} (string message, int sender=255, byte R=255, byte G=255, byte B=255)
+\begin{DoxyCompactList}\small\item\em Writes a message to the server console \end{DoxyCompactList}\item 
+Dictionary$<$ string, \hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} $>$ \hyperlink{class_o_t_a_1_1_command_1_1_sender_ab84377a94881af48dc7d787ec44290de}{Get\+Available\+Commands} ()
+\begin{DoxyCompactList}\small\item\em Gets the available commands for the sender \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_o_t_a_1_1_command_1_1_sender_a5c64601f60a1329fa849a391fa7f02b8}{Op}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get/set method for \hyperlink{class_o_t_a_1_1_command_1_1_sender}{Sender}\textquotesingle{}s Op status \end{DoxyCompactList}\item 
+virtual string \hyperlink{class_o_t_a_1_1_command_1_1_sender_a01e7bc91f3e89c2cda1d98301c97e56c}{Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the name of the sending entity; defaults to Console \end{DoxyCompactList}\item 
+string \hyperlink{class_o_t_a_1_1_command_1_1_sender_a37505848a1ead3678bd828309ae91a75}{Sender\+Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_o_t_a_1_1_command_1_1_sender_ab84377a94881af48dc7d787ec44290de}{}\index{O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}!Get\+Available\+Commands@{Get\+Available\+Commands}}
+\index{Get\+Available\+Commands@{Get\+Available\+Commands}!O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}}
+\subsubsection[{Get\+Available\+Commands()}]{\setlength{\rightskip}{0pt plus 5cm}Dictionary$<$string, {\bf Command\+Info}$>$ O\+T\+A.\+Command.\+Sender.\+Get\+Available\+Commands (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_sender_ab84377a94881af48dc7d787ec44290de}
+
+
+Gets the available commands for the sender 
+
+\begin{DoxyReturn}{Returns}
+The available commands.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender_acc469381ec0e6f18ccf50c213d5095a4}{O\+T\+A.\+Command.\+I\+Sender}.
+
+\hypertarget{class_o_t_a_1_1_command_1_1_sender_ab4cea2690d2299d322ec51cce16ec7a4}{}\index{O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}!Send\+Message@{Send\+Message}}
+\index{Send\+Message@{Send\+Message}!O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}}
+\subsubsection[{Send\+Message(string message, int sender=255, byte R=255, byte G=255, byte B=255)}]{\setlength{\rightskip}{0pt plus 5cm}abstract void O\+T\+A.\+Command.\+Sender.\+Send\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{message, }
+\item[{int}]{sender = {\ttfamily 255}, }
+\item[{byte}]{R = {\ttfamily 255}, }
+\item[{byte}]{G = {\ttfamily 255}, }
+\item[{byte}]{B = {\ttfamily 255}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{class_o_t_a_1_1_command_1_1_sender_ab4cea2690d2299d322ec51cce16ec7a4}
+
+
+Writes a message to the server console 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Message} & Message to write to the console\\
+\hline
+{\em A} & \\
+\hline
+{\em R} & Red text color value\\
+\hline
+{\em G} & Green text color value\\
+\hline
+{\em B} & Blue text color value\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender_a7e323ee3ab2f55876bc92a9d681d2bdf}{O\+T\+A.\+Command.\+I\+Sender}.
+
+
+
+Implemented in \hyperlink{class_o_t_a_1_1_base_player_a59a949bff7e0cb3588079ae55edf1e74}{O\+T\+A.\+Base\+Player}, and \hyperlink{class_o_t_a_1_1_command_1_1_console_sender_ab1569d02090c217a52d8e25f6846504c}{O\+T\+A.\+Command.\+Console\+Sender}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_o_t_a_1_1_command_1_1_sender_a01e7bc91f3e89c2cda1d98301c97e56c}{}\index{O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}!Name@{Name}}
+\index{Name@{Name}!O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}}
+\subsubsection[{Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual string O\+T\+A.\+Command.\+Sender.\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [protected set]}}\label{class_o_t_a_1_1_command_1_1_sender_a01e7bc91f3e89c2cda1d98301c97e56c}
+
+
+Gets the name of the sending entity; defaults to Console 
+
+\begin{DoxyReturn}{Returns}
+Sending entity name
+\end{DoxyReturn}
+\hypertarget{class_o_t_a_1_1_command_1_1_sender_a5c64601f60a1329fa849a391fa7f02b8}{}\index{O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}!Op@{Op}}
+\index{Op@{Op}!O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}}
+\subsubsection[{Op}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Command.\+Sender.\+Op\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{class_o_t_a_1_1_command_1_1_sender_a5c64601f60a1329fa849a391fa7f02b8}
+
+
+Get/set method for \hyperlink{class_o_t_a_1_1_command_1_1_sender}{Sender}\textquotesingle{}s Op status 
+
+\hypertarget{class_o_t_a_1_1_command_1_1_sender_a37505848a1ead3678bd828309ae91a75}{}\index{O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}!Sender\+Name@{Sender\+Name}}
+\index{Sender\+Name@{Sender\+Name}!O\+T\+A\+::\+Command\+::\+Sender@{O\+T\+A\+::\+Command\+::\+Sender}}
+\subsubsection[{Sender\+Name}]{\setlength{\rightskip}{0pt plus 5cm}string O\+T\+A.\+Command.\+Sender.\+Sender\+Name\hspace{0.3cm}{\ttfamily [get]}}\label{class_o_t_a_1_1_command_1_1_sender_a37505848a1ead3678bd828309ae91a75}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{_sender_8cs}{Sender.\+cs}\end{DoxyCompactItemize}

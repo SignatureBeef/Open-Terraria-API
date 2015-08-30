@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['r',['R',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a9899281d9638e30c6a5ed7ec4e6af4f4',1,'Microsoft::Xna::Framework::Color']]],
+  ['rasterizerstate',['RasterizerState',['../classMicrosoft_1_1Xna_1_1Framework_1_1Graphics_1_1GraphicsDevice.html#a2e913c37340b4b06097cb0389823adcd',1,'Microsoft::Xna::Framework::Graphics::GraphicsDevice']]],
+  ['readbuffer',['ReadBuffer',['../structOTA_1_1Plugin_1_1HookArgs_1_1UnkownReceivedPacket.html#a5d469dd98be6477953e8b709e687f37b',1,'OTA::Plugin::HookArgs::UnkownReceivedPacket']]],
+  ['red',['Red',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a87a605a75f99f27ebe26ae418abc548f',1,'Microsoft::Xna::Framework::Color']]],
+  ['remoteaddress',['RemoteAddress',['../structOTA_1_1Plugin_1_1HookArgs_1_1AddBan.html#a5b3fbccddb2ac7b5856c0cb3a6a6e60c',1,'OTA.Plugin.HookArgs.AddBan.RemoteAddress()'],['../classOTA_1_1Sockets_1_1Connection.html#a5b3fbccddb2ac7b5856c0cb3a6a6e60c',1,'OTA.Sockets.Connection.RemoteAddress()']]],
+  ['remoteclient',['RemoteClient',['../structOTA_1_1Plugin_1_1HookArgs_1_1SendNetMessage.html#a40759627b2a827508158b451d3b720e1',1,'OTA.Plugin.HookArgs.SendNetMessage.RemoteClient()'],['../structOTA_1_1Plugin_1_1HookArgs_1_1UnkownSendPacket.html#a40759627b2a827508158b451d3b720e1',1,'OTA.Plugin.HookArgs.UnkownSendPacket.RemoteClient()']]],
+  ['remoteendpoint',['RemoteEndPoint',['../classOTA_1_1Sockets_1_1Connection.html#a0b05515289b04cf1de67b7d1f8863b94',1,'OTA::Sockets::Connection']]],
+  ['removalfailed',['RemovalFailed',['../structOTA_1_1Plugin_1_1HookArgs_1_1PlayerWorldAlteration.html#a975468ac3ad856faae77087388f9f85d',1,'OTA::Plugin::HookArgs::PlayerWorldAlteration']]],
+  ['result',['Result',['../structOTA_1_1Plugin_1_1HookContext.html#a0054a9bdf7bd61b054ab6917d8242514',1,'OTA::Plugin::HookContext']]],
+  ['resultparam',['ResultParam',['../structOTA_1_1Plugin_1_1HookContext.html#af454c4dfe355a944d59be5d8dbd0c37e',1,'OTA::Plugin::HookContext']]],
+  ['right',['Right',['../structMicrosoft_1_1Xna_1_1Framework_1_1Input_1_1GamePadDPad.html#a9a8700b2e11f8dfd20b0b86b4d9e500f',1,'Microsoft.Xna.Framework.Input.GamePadDPad.Right()'],['../structMicrosoft_1_1Xna_1_1Framework_1_1Input_1_1GamePadThumbSticks.html#a2ae7939e5be5847d0103c617395fa0ab',1,'Microsoft.Xna.Framework.Input.GamePadThumbSticks.Right()'],['../structMicrosoft_1_1Xna_1_1Framework_1_1Input_1_1GamePadTriggers.html#acded93a6693eeeef3f5e24262d89c049',1,'Microsoft.Xna.Framework.Input.GamePadTriggers.Right()'],['../structMicrosoft_1_1Xna_1_1Framework_1_1Rectangle.html#ace4946ecd4a66e40705cc19b4bd69723',1,'Microsoft.Xna.Framework.Rectangle.Right()'],['../structMicrosoft_1_1Xna_1_1Framework_1_1Vector3.html#ae91aafa99b8ec61d69c068639013c21d',1,'Microsoft.Xna.Framework.Vector3.Right()']]],
+  ['rightbutton',['RightButton',['../structMicrosoft_1_1Xna_1_1Framework_1_1Input_1_1MouseState.html#aac8618471557dfd68e27f37c142481f6',1,'Microsoft::Xna::Framework::Input::MouseState']]],
+  ['rootdirectory',['RootDirectory',['../classMicrosoft_1_1Xna_1_1Framework_1_1Content_1_1ContentManager.html#a77f60ce89542b3ff7b9790da502c166a',1,'Microsoft::Xna::Framework::Content::ContentManager']]],
+  ['rosybrown',['RosyBrown',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#af611d84fcfced58f4507f5fca5e63dd5',1,'Microsoft::Xna::Framework::Color']]],
+  ['royalblue',['RoyalBlue',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#af57939749aee65d23cd0827f841c6aa6',1,'Microsoft::Xna::Framework::Color']]],
+  ['runningtime',['RunningTime',['../classOTA_1_1Logging_1_1ProgressLogger.html#abbeaf7ccbf2f397ea4a63c0709b39244',1,'OTA::Logging::ProgressLogger']]],
+  ['runtimeplatform',['RuntimePlatform',['../classOTA_1_1Tools.html#a467129bb7e940725811f8b7ef5fff16b',1,'OTA::Tools']]]
+];

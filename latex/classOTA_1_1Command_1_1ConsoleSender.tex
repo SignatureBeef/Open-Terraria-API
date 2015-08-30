@@ -1,0 +1,126 @@
+\hypertarget{classOTA_1_1Command_1_1ConsoleSender}{}\section{Console\+Sender}
+\label{classOTA_1_1Command_1_1ConsoleSender}\index{Console\+Sender@{Console\+Sender}}
+
+
+\hyperlink{classOTA_1_1Command_1_1ConsoleSender}{Console\+Sender} extension of \hyperlink{classOTA_1_1Command_1_1Sender}{Sender}. Allows for new Console\+Command\+Events  
+
+
+Inheritance diagram for Console\+Sender\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classOTA_1_1Command_1_1ConsoleSender}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classOTA_1_1Command_1_1ConsoleSender_a9e8a53f8e4474d7ad93e7fdc993baa87}{Console\+Sender} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{classOTA_1_1Command_1_1ConsoleSender}{Console\+Sender} constructor \end{DoxyCompactList}\item 
+override void \hyperlink{classOTA_1_1Command_1_1ConsoleSender_a39f7a740cc58640c8502e2159e5c724d}{Send\+Message} (string message, int A=255, byte R=255, byte G=255, byte B=255)
+\begin{DoxyCompactList}\small\item\em Sends a message to the console \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static System.\+Console\+Color \hyperlink{classOTA_1_1Command_1_1ConsoleSender_aa0495ec231617554d0341c7b0c53020d}{From\+Color} (byte r, byte g, byte b)
+\begin{DoxyCompactList}\small\item\em Parses a Console\+Color from R,G,B \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Command_1_1ConsoleSender_a8221eb58b3a5f827ba21a5e9c7aaea69}{Set\+Method} (Action$<$ String, Byte, Byte, Byte $>$ method)
+\begin{DoxyCompactList}\small\item\em Set the Console Write\+Line method \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static Console\+Color \hyperlink{classOTA_1_1Command_1_1ConsoleSender_a45c8186e29d86af5d38a0f35774db44a}{Default\+Colour} = Console\+Color.\+Gray
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{classOTA_1_1Command_1_1ConsoleSender}{Console\+Sender} extension of \hyperlink{classOTA_1_1Command_1_1Sender}{Sender}. Allows for new Console\+Command\+Events 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Command_1_1ConsoleSender_a9e8a53f8e4474d7ad93e7fdc993baa87}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!Console\+Sender@{Console\+Sender}}
+\index{Console\+Sender@{Console\+Sender}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{Console\+Sender()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Console\+Sender} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ConsoleSender_a9e8a53f8e4474d7ad93e7fdc993baa87}
+
+
+\hyperlink{classOTA_1_1Command_1_1ConsoleSender}{Console\+Sender} constructor 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Command_1_1ConsoleSender_aa0495ec231617554d0341c7b0c53020d}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!From\+Color@{From\+Color}}
+\index{From\+Color@{From\+Color}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{From\+Color(byte r, byte g, byte b)}]{\setlength{\rightskip}{0pt plus 5cm}static System.\+Console\+Color From\+Color (
+\begin{DoxyParamCaption}
+\item[{byte}]{r, }
+\item[{byte}]{g, }
+\item[{byte}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ConsoleSender_aa0495ec231617554d0341c7b0c53020d}
+
+
+Parses a Console\+Color from R,G,B 
+
+\begin{DoxyReturn}{Returns}
+The color.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The red component.\\
+\hline
+{\em g} & The green component.\\
+\hline
+{\em b} & The blue component.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1ConsoleSender_a39f7a740cc58640c8502e2159e5c724d}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!Send\+Message@{Send\+Message}}
+\index{Send\+Message@{Send\+Message}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{Send\+Message(string message, int A=255, byte R=255, byte G=255, byte B=255)}]{\setlength{\rightskip}{0pt plus 5cm}override void Send\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{message, }
+\item[{int}]{A = {\ttfamily 255}, }
+\item[{byte}]{R = {\ttfamily 255}, }
+\item[{byte}]{G = {\ttfamily 255}, }
+\item[{byte}]{B = {\ttfamily 255}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Command_1_1ConsoleSender_a39f7a740cc58640c8502e2159e5c724d}
+
+
+Sends a message to the console 
+
+
+
+Implements \hyperlink{classOTA_1_1Command_1_1Sender_a88442a754fb4b417ea6f7fcb0058b75e}{Sender}.
+
+\hypertarget{classOTA_1_1Command_1_1ConsoleSender_a8221eb58b3a5f827ba21a5e9c7aaea69}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!Set\+Method@{Set\+Method}}
+\index{Set\+Method@{Set\+Method}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{Set\+Method(\+Action$<$ String, Byte, Byte, Byte $>$ method)}]{\setlength{\rightskip}{0pt plus 5cm}static void Set\+Method (
+\begin{DoxyParamCaption}
+\item[{Action$<$ String, Byte, Byte, Byte $>$}]{method}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ConsoleSender_a8221eb58b3a5f827ba21a5e9c7aaea69}
+
+
+Set the Console Write\+Line method 
+
+
+\begin{DoxyParams}{Parameters}
+{\em method} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Command_1_1ConsoleSender_a45c8186e29d86af5d38a0f35774db44a}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!Default\+Colour@{Default\+Colour}}
+\index{Default\+Colour@{Default\+Colour}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{Default\+Colour}]{\setlength{\rightskip}{0pt plus 5cm}Console\+Color Default\+Colour = Console\+Color.\+Gray\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ConsoleSender_a45c8186e29d86af5d38a0f35774db44a}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{ConsoleSender_8cs}{Console\+Sender.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['a',['A',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a851238b137a20edbf656ad0b227c7657',1,'Microsoft::Xna::Framework::Color']]],
+  ['action',['Action',['../structOTA_1_1Plugin_1_1HookArgs_1_1PlayerWorldAlteration.html#a83f49f18996a7b98657455bfd5a756c3',1,'OTA::Plugin::HookArgs::PlayerWorldAlteration']]],
+  ['active',['Active',['../classOTA_1_1Sockets_1_1Connection.html#a2b6588a22e550fe70707398645103e2e',1,'OTA::Sockets::Connection']]],
+  ['ai',['AI',['../structOTA_1_1Plugin_1_1HookArgs_1_1ProjectileReceived.html#a3d326eb5ccbab41e91b0999bcdbd5c99',1,'OTA::Plugin::HookArgs::ProjectileReceived']]],
+  ['ai_5f0',['AI_0',['../structOTA_1_1Plugin_1_1HookArgs_1_1ProjectileReceived.html#a868950c116de23ad548e6b570e096ea7',1,'OTA::Plugin::HookArgs::ProjectileReceived']]],
+  ['ai_5f1',['AI_1',['../structOTA_1_1Plugin_1_1HookArgs_1_1ProjectileReceived.html#af739a5767285029634e6fc68bfeccf34',1,'OTA::Plugin::HookArgs::ProjectileReceived']]],
+  ['aliceblue',['AliceBlue',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#ac94287beea99da920d21f1abc87424c7',1,'Microsoft::Xna::Framework::Color']]],
+  ['allowuserresizing',['AllowUserResizing',['../classMicrosoft_1_1Xna_1_1Framework_1_1GameWindow.html#a975fc61d9846a4c4ab5b4d88e64ca42f',1,'Microsoft::Xna::Framework::GameWindow']]],
+  ['allpaused',['AllPaused',['../classOTA_1_1Plugin_1_1HookPoint.html#a3c3d633979c145243ff2834112d924fb',1,'OTA::Plugin::HookPoint']]],
+  ['am',['AM',['../structOTA_1_1Command_1_1WorldTime.html#a73feb466eb3d31450be8df9849a6ff3f',1,'OTA::Command::WorldTime']]],
+  ['amount',['Amount',['../structOTA_1_1Plugin_1_1HookArgs_1_1InventoryItemReceived.html#a86eee4fff35119212eb3f7309c752a34',1,'OTA.Plugin.HookArgs.InventoryItemReceived.Amount()'],['../structOTA_1_1Plugin_1_1HookArgs_1_1LiquidFlowReceived.html#add756aa4d6b5f1cc0f24fb5258fe927d',1,'OTA.Plugin.HookArgs.LiquidFlowReceived.Amount()']]],
+  ['antiquewhite',['AntiqueWhite',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a2061dfd6cbab3b2e74ae12d4a7bae4f5',1,'Microsoft::Xna::Framework::Color']]],
+  ['applytoguests',['ApplyToGuests',['../classOTA_1_1Data_1_1Group.html#a29e638d258230ab33b5e4568853f1adf',1,'OTA::Data::Group']]],
+  ['aqua',['Aqua',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a0513bb5c88733f3c4a46e7d171e5818d',1,'Microsoft::Xna::Framework::Color']]],
+  ['aquamarine',['Aquamarine',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#a541991157a9af348f5eec8f51810d6eb',1,'Microsoft::Xna::Framework::Color']]],
+  ['arguments',['Arguments',['../structOTA_1_1Plugin_1_1HookArgs_1_1ProgramStart.html#a0b011cf99678058c910536e515b7cfe5',1,'OTA.Plugin.HookArgs.ProgramStart.Arguments()'],['../structOTA_1_1Plugin_1_1HookArgs_1_1Command.html#a8dd3d15558c01f578c7d1d9085b9a77d',1,'OTA.Plugin.HookArgs.Command.Arguments()']]],
+  ['argumentstring',['ArgumentString',['../structOTA_1_1Plugin_1_1HookArgs_1_1Command.html#a26c3571b3256a575cb30f8435920b6ba',1,'OTA::Plugin::HookArgs::Command']]],
+  ['assembly',['Assembly',['../classOTA_1_1Plugin_1_1BasePlugin.html#aeee0920fba5ccfdf0f5e9d349143f4c1',1,'OTA::Plugin::BasePlugin']]],
+  ['attributes',['Attributes',['../classOTA_1_1Permissions_1_1XmlGroup.html#a7d2f22a63a9fbbbe5c87cfc3cbbe39ba',1,'OTA.Permissions.XmlGroup.Attributes()'],['../classOTA_1_1Permissions_1_1XmlPlayer.html#a7d2f22a63a9fbbbe5c87cfc3cbbe39ba',1,'OTA.Permissions.XmlPlayer.Attributes()']]],
+  ['authenticatedas',['AuthenticatedAs',['../classOTA_1_1BasePlayer.html#a99abed4b5ac2cf92871687dc00bf7f66',1,'OTA.BasePlayer.AuthenticatedAs()'],['../structOTA_1_1Plugin_1_1HookArgs_1_1PlayerAuthenticationChanging.html#a99abed4b5ac2cf92871687dc00bf7f66',1,'OTA.Plugin.HookArgs.PlayerAuthenticationChanging.AuthenticatedAs()'],['../structOTA_1_1Plugin_1_1HookArgs_1_1PlayerAuthenticationChanged.html#a99abed4b5ac2cf92871687dc00bf7f66',1,'OTA.Plugin.HookArgs.PlayerAuthenticationChanged.AuthenticatedAs()']]],
+  ['authenticatedby',['AuthenticatedBy',['../classOTA_1_1BasePlayer.html#a285fa2c208fa2471fb593dfd2f95329c',1,'OTA.BasePlayer.AuthenticatedBy()'],['../structOTA_1_1Plugin_1_1HookArgs_1_1PlayerAuthenticationChanging.html#a285fa2c208fa2471fb593dfd2f95329c',1,'OTA.Plugin.HookArgs.PlayerAuthenticationChanging.AuthenticatedBy()'],['../structOTA_1_1Plugin_1_1HookArgs_1_1PlayerAuthenticationChanged.html#a285fa2c208fa2471fb593dfd2f95329c',1,'OTA.Plugin.HookArgs.PlayerAuthenticationChanged.AuthenticatedBy()']]],
+  ['author',['Author',['../classOTA_1_1Plugin_1_1BasePlugin.html#a13cf46aff4dea87a8f5285a09efece69',1,'OTA::Plugin::BasePlugin']]],
+  ['autoincrement',['AutoIncrement',['../structOTA_1_1Data_1_1TableColumn.html#a3e6848fe3c66d4bac1f25c81f5f09c4a',1,'OTA::Data::TableColumn']]],
+  ['azure',['Azure',['../structMicrosoft_1_1Xna_1_1Framework_1_1Color.html#ac41ebd9c2b2a6b82e2c489c4b2738362',1,'Microsoft::Xna::Framework::Color']]]
+];

@@ -1,0 +1,126 @@
+\hypertarget{class_o_t_a_1_1_command_1_1_console_sender}{}\section{O\+T\+A.\+Command.\+Console\+Sender Class Reference}
+\label{class_o_t_a_1_1_command_1_1_console_sender}\index{O\+T\+A.\+Command.\+Console\+Sender@{O\+T\+A.\+Command.\+Console\+Sender}}
+
+
+\hyperlink{class_o_t_a_1_1_command_1_1_console_sender}{Console\+Sender} extension of \hyperlink{class_o_t_a_1_1_command_1_1_sender}{Sender}. Allows for new Console\+Command\+Events  
+
+
+Inheritance diagram for O\+T\+A.\+Command.\+Console\+Sender\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_o_t_a_1_1_command_1_1_console_sender}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_console_sender_a0392fc06bb67e8870eeb541229f21d95}{Console\+Sender} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_o_t_a_1_1_command_1_1_console_sender}{Console\+Sender} constructor \end{DoxyCompactList}\item 
+override void \hyperlink{class_o_t_a_1_1_command_1_1_console_sender_ab1569d02090c217a52d8e25f6846504c}{Send\+Message} (string message, int A=255, byte R=255, byte G=255, byte B=255)
+\begin{DoxyCompactList}\small\item\em Sends a message to the console \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_o_t_a_1_1_command_1_1_console_sender_a9db3656943a76164ad5501b9d67fadbe}{Set\+Method} (Action$<$ String, Byte, Byte, Byte $>$ method)
+\begin{DoxyCompactList}\small\item\em Set the Console Write\+Line method \end{DoxyCompactList}\item 
+static System.\+Console\+Color \hyperlink{class_o_t_a_1_1_command_1_1_console_sender_af66df3ce3746b40cd12a917d9e789987}{From\+Color} (byte r, byte g, byte b)
+\begin{DoxyCompactList}\small\item\em Parses a Console\+Color from R,G,B \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static Console\+Color \hyperlink{class_o_t_a_1_1_command_1_1_console_sender_a959ea02675496cb1bc5e32d81ea5ba7b}{Default\+Colour} = Console\+Color.\+Gray
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_o_t_a_1_1_command_1_1_console_sender}{Console\+Sender} extension of \hyperlink{class_o_t_a_1_1_command_1_1_sender}{Sender}. Allows for new Console\+Command\+Events 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_o_t_a_1_1_command_1_1_console_sender_a0392fc06bb67e8870eeb541229f21d95}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!Console\+Sender@{Console\+Sender}}
+\index{Console\+Sender@{Console\+Sender}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{Console\+Sender()}]{\setlength{\rightskip}{0pt plus 5cm}O\+T\+A.\+Command.\+Console\+Sender.\+Console\+Sender (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_console_sender_a0392fc06bb67e8870eeb541229f21d95}
+
+
+\hyperlink{class_o_t_a_1_1_command_1_1_console_sender}{Console\+Sender} constructor 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_o_t_a_1_1_command_1_1_console_sender_af66df3ce3746b40cd12a917d9e789987}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!From\+Color@{From\+Color}}
+\index{From\+Color@{From\+Color}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{From\+Color(byte r, byte g, byte b)}]{\setlength{\rightskip}{0pt plus 5cm}static System.\+Console\+Color O\+T\+A.\+Command.\+Console\+Sender.\+From\+Color (
+\begin{DoxyParamCaption}
+\item[{byte}]{r, }
+\item[{byte}]{g, }
+\item[{byte}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_o_t_a_1_1_command_1_1_console_sender_af66df3ce3746b40cd12a917d9e789987}
+
+
+Parses a Console\+Color from R,G,B 
+
+\begin{DoxyReturn}{Returns}
+The color.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The red component.\\
+\hline
+{\em g} & The green component.\\
+\hline
+{\em b} & The blue component.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_command_1_1_console_sender_ab1569d02090c217a52d8e25f6846504c}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!Send\+Message@{Send\+Message}}
+\index{Send\+Message@{Send\+Message}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{Send\+Message(string message, int A=255, byte R=255, byte G=255, byte B=255)}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Command.\+Console\+Sender.\+Send\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{message, }
+\item[{int}]{A = {\ttfamily 255}, }
+\item[{byte}]{R = {\ttfamily 255}, }
+\item[{byte}]{G = {\ttfamily 255}, }
+\item[{byte}]{B = {\ttfamily 255}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_o_t_a_1_1_command_1_1_console_sender_ab1569d02090c217a52d8e25f6846504c}
+
+
+Sends a message to the console 
+
+
+
+Implements \hyperlink{class_o_t_a_1_1_command_1_1_sender_ab4cea2690d2299d322ec51cce16ec7a4}{O\+T\+A.\+Command.\+Sender}.
+
+\hypertarget{class_o_t_a_1_1_command_1_1_console_sender_a9db3656943a76164ad5501b9d67fadbe}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!Set\+Method@{Set\+Method}}
+\index{Set\+Method@{Set\+Method}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{Set\+Method(\+Action$<$ String, Byte, Byte, Byte $>$ method)}]{\setlength{\rightskip}{0pt plus 5cm}static void O\+T\+A.\+Command.\+Console\+Sender.\+Set\+Method (
+\begin{DoxyParamCaption}
+\item[{Action$<$ String, Byte, Byte, Byte $>$}]{method}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_o_t_a_1_1_command_1_1_console_sender_a9db3656943a76164ad5501b9d67fadbe}
+
+
+Set the Console Write\+Line method 
+
+
+\begin{DoxyParams}{Parameters}
+{\em method} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_o_t_a_1_1_command_1_1_console_sender_a959ea02675496cb1bc5e32d81ea5ba7b}{}\index{O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}!Default\+Colour@{Default\+Colour}}
+\index{Default\+Colour@{Default\+Colour}!O\+T\+A\+::\+Command\+::\+Console\+Sender@{O\+T\+A\+::\+Command\+::\+Console\+Sender}}
+\subsubsection[{Default\+Colour}]{\setlength{\rightskip}{0pt plus 5cm}Console\+Color O\+T\+A.\+Command.\+Console\+Sender.\+Default\+Colour = Console\+Color.\+Gray\hspace{0.3cm}{\ttfamily [static]}}\label{class_o_t_a_1_1_command_1_1_console_sender_a959ea02675496cb1bc5e32d81ea5ba7b}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{_console_sender_8cs}{Console\+Sender.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,632 @@
+\hypertarget{classOTA_1_1Command_1_1ArgumentList}{}\section{Argument\+List}
+\label{classOTA_1_1Command_1_1ArgumentList}\index{Argument\+List@{Argument\+List}}
+
+
+The list of arguments received from a command sender  
+
+
+Inheritance diagram for Argument\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOTA_1_1Command_1_1ArgumentList}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classOTA_1_1Command_1_1ArgumentList_ab6e8f177f57931b8a4dc90e1bbf9bcf9}{Argument\+List} ()
+\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_a6bc7818c3a45a36d9f2cf6e12ce8a2db}{Get\+Bool} (int at)
+\begin{DoxyCompactList}\small\item\em Parses a boolean value at a specified position. \end{DoxyCompactList}\item 
+byte \hyperlink{classOTA_1_1Command_1_1ArgumentList_a3d9bef96ff373ddbc729f270665c2983}{Get\+Byte} (int at)
+\begin{DoxyCompactList}\small\item\em Parses a byte at an expected position. If it is invalid it will warn the sender. \end{DoxyCompactList}\item 
+double \hyperlink{classOTA_1_1Command_1_1ArgumentList_a32fdf502aede47d741576ed780470370}{Get\+Double} (int at)
+\begin{DoxyCompactList}\small\item\em Parses a double value at an expected position. If it fails the sender will be notified. \end{DoxyCompactList}\item 
+Time\+Span \hyperlink{classOTA_1_1Command_1_1ArgumentList_a1c04674d910823a9bc612d99914e507f}{Get\+Duration} (int at)
+\begin{DoxyCompactList}\small\item\em Parses a Time\+Span at an expected position. If it fails the sender will be notified. \end{DoxyCompactList}\item 
+int \hyperlink{classOTA_1_1Command_1_1ArgumentList_abe6125ea3957d831e8b39a6b6cf1221f}{Get\+Int} (int at)
+\begin{DoxyCompactList}\small\item\em Parses an integer at a specified location. It will warn the sender if it\textquotesingle{}s invalid \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1Command_1_1ArgumentList_a06c76c0eb36f7630e1f064a79cc84e72}{Get\+String} (int at)
+\begin{DoxyCompactList}\small\item\em Gets a string at a expected position \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_ad5daf3348e434c97f503293bdd161851}{Parse\+Four$<$ T, U, V, W $>$} (out T t, out U u, out V v, out W w)
+\begin{DoxyCompactList}\small\item\em Parses four values \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_a209af7f7ace41e8442d259fa9bbab24c}{Parse\+None} ()
+\begin{DoxyCompactList}\small\item\em Check to ensure no parameters were passed from the sender. If they have provided some a warning will be sent. \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_ab8722cb8a8b5d9b5d61b1cdb69d6e06b}{Parse\+One$<$ T $>$} (out T t)
+\begin{DoxyCompactList}\small\item\em Parses the first parameter \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_a422904dfe49df9245dbe72ff7b032ec6}{Parse\+One$<$ T $>$} (string literal1, out T t, string literal2=null)
+\begin{DoxyCompactList}\small\item\em Parses one value using literals \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_ad67bc7ccd7950ade47741b99cbee7499}{Parse\+Three$<$ T, U, V $>$} (out T t, out U u, out V v)
+\begin{DoxyCompactList}\small\item\em Parses three values \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_ac413a2a09e591276306a8ebbfa3d103d}{Parse\+Three$<$ T, U, V $>$} (string literal1, out T t, string literal2, out U u, string literal3, out V v, string literal4=null)
+\begin{DoxyCompactList}\small\item\em Parses three values using literals \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_a6155ee5ada5b77594469013e00749d6a}{Parse\+Three$<$ T, U, V $>$} (out T t, string literal2, out U u, string literal3, out V v, string literal4=null)
+\begin{DoxyCompactList}\small\item\em Parses three values using literals \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_a99b1b6ad5e24854820739767af9e22b1}{Parse\+Two$<$ T, U $>$} (out T t, out U u)
+\begin{DoxyCompactList}\small\item\em Parses two values \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_a6e1ece5e45c1f199565e609ae4901318}{Parse\+Two$<$ T, U $>$} (string literal1, out T t, string literal2, out U u, string literal3=null)
+\begin{DoxyCompactList}\small\item\em Parses two values using literals \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1ArgumentList_ab0f677e178b1dba8b3406e0cc380acd5}{Parse\+Two$<$ T, U $>$} (out T t, string literal2, out U u, string literal3=null)
+\begin{DoxyCompactList}\small\item\em Parses two values using literals \end{DoxyCompactList}\item 
+override string \hyperlink{classOTA_1_1Command_1_1ArgumentList_aa73e7c4dd1df5fd5fbf81c7764ee1533}{To\+String} ()
+\begin{DoxyCompactList}\small\item\em Reconstructs the argument string \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_ae016a77e02d2ba7793dc6ceeefebf681}{Try\+Get\+Bool} (int at, out bool val)
+\begin{DoxyCompactList}\small\item\em Attempts to parse various values of boolean representations. \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_a750303160a7c9d3e107d155013930944}{Try\+Get\+Byte} (int at, out byte val)
+\begin{DoxyCompactList}\small\item\em Attempts to parse a byte value at an expected position \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_acbe2ecbdbb2308ca8575c218ee58ef13}{Try\+Get\+Double} (int at, out double val)
+\begin{DoxyCompactList}\small\item\em Attempts to get a double value at an expected position \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_abf848ae58e85d764d8e9c2b11e445b22}{Try\+Get\+Duration} (int at, out Time\+Span val)
+\begin{DoxyCompactList}\small\item\em Attempts to parse a Time\+Span at an expected location. \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_aa5b6f61faa9b8c2a10c98edf74d3f84d}{Try\+Get\+Int} (int at, out int val)
+\begin{DoxyCompactList}\small\item\em Attempts to parse an integer at an expected position \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_a3c1e74c016c23bd91fe70ab4e8605e27}{Try\+Get\+String} (int at, out string val)
+\begin{DoxyCompactList}\small\item\em Attempts to get a string at a specified location \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_ae05e034dd555e3f144313d7afda1b240}{Try\+Parse\+Four$<$ T, U, V, W $>$} (out T t, out U u, out V v, out W w)
+\begin{DoxyCompactList}\small\item\em Tries to parse four values \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_a6eeeee97bb0e3c1bc5934be86b1481b1}{Try\+Parse\+One$<$ T $>$} (out T t)
+\begin{DoxyCompactList}\small\item\em Tries to parse one value at the first position. \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_add280e44f690058b1655e23b39d84822}{Try\+Parse\+One$<$ T $>$} (string literal1, out T t, string literal2=null)
+\begin{DoxyCompactList}\small\item\em Tries to parse a value using literals. \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_ac80a6731f8826ff819b74f923aca0bf2}{Try\+Parse\+Three$<$ T, U, V $>$} (out T t, out U u, out V v)
+\begin{DoxyCompactList}\small\item\em Tries to parse three values \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_acf474b50fa1cbaedb5e1736b1f295c20}{Try\+Parse\+Three$<$ T, U, V $>$} (string literal1, out T t, string literal2, out U u, string literal3, out V v, string literal4=null)
+\begin{DoxyCompactList}\small\item\em Tries to parse three values using literals \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_ac5c63b8f84751ef90a572ec2b7174d94}{Try\+Parse\+Two$<$ T, U $>$} (out T t, out U u)
+\begin{DoxyCompactList}\small\item\em Tried to parse two values sequentially \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_a6d98929ea7e2c44990a46c37c179a280}{Try\+Parse\+Two$<$ T, U $>$} (string literal1, out T t, string literal2, out U u, string literal3=null)
+\begin{DoxyCompactList}\small\item\em Tries to parse two values using literals \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_aa057f848fc9a002b8fc921cd33244948}{Try\+Pop} (string literal)
+\begin{DoxyCompactList}\small\item\em Checks if the first argument is the literal \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_ab2fed6dafbc4a252e949ca168a5c5195}{Try\+Pop\+Any$<$ T $>$} (string literal, out T t)
+\begin{DoxyCompactList}\small\item\em Search through the arguments for a match, then removes both the literal and the value. \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_ad2910029c92315f97be87569fe7bdec1}{Try\+Pop\+One$<$ T $>$} (out T t)
+\begin{DoxyCompactList}\small\item\em Tries to get a value at position 1. If successful it will be removed \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1Command_1_1ArgumentList_a9e956f684c001bb5e73d1027db7f8624}{Try\+Pop\+One$<$ T $>$} (string literal1, out T t, string literal2=null)
+\begin{DoxyCompactList}\small\item\em Tries to remove one value if it is an argument, using literals. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+object \hyperlink{classOTA_1_1Command_1_1ArgumentList_a2495ccac3aab294aa5f42ee0e268f811}{Plugin}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The plugin instance if the executed command was a plugin command \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The list of arguments received from a command sender 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ab6e8f177f57931b8a4dc90e1bbf9bcf9}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Argument\+List@{Argument\+List}}
+\index{Argument\+List@{Argument\+List}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Argument\+List()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Argument\+List} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ab6e8f177f57931b8a4dc90e1bbf9bcf9}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a6bc7818c3a45a36d9f2cf6e12ce8a2db}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Get\+Bool@{Get\+Bool}}
+\index{Get\+Bool@{Get\+Bool}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Get\+Bool(int at)}]{\setlength{\rightskip}{0pt plus 5cm}bool Get\+Bool (
+\begin{DoxyParamCaption}
+\item[{int}]{at}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a6bc7818c3a45a36d9f2cf6e12ce8a2db}
+
+
+Parses a boolean value at a specified position. 
+
+\begin{DoxyReturn}{Returns}
+The bool.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a3d9bef96ff373ddbc729f270665c2983}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Get\+Byte@{Get\+Byte}}
+\index{Get\+Byte@{Get\+Byte}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Get\+Byte(int at)}]{\setlength{\rightskip}{0pt plus 5cm}byte Get\+Byte (
+\begin{DoxyParamCaption}
+\item[{int}]{at}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a3d9bef96ff373ddbc729f270665c2983}
+
+
+Parses a byte at an expected position. If it is invalid it will warn the sender. 
+
+\begin{DoxyReturn}{Returns}
+The byte.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a32fdf502aede47d741576ed780470370}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Get\+Double@{Get\+Double}}
+\index{Get\+Double@{Get\+Double}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Get\+Double(int at)}]{\setlength{\rightskip}{0pt plus 5cm}double Get\+Double (
+\begin{DoxyParamCaption}
+\item[{int}]{at}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a32fdf502aede47d741576ed780470370}
+
+
+Parses a double value at an expected position. If it fails the sender will be notified. 
+
+\begin{DoxyReturn}{Returns}
+The double.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a1c04674d910823a9bc612d99914e507f}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Get\+Duration@{Get\+Duration}}
+\index{Get\+Duration@{Get\+Duration}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Get\+Duration(int at)}]{\setlength{\rightskip}{0pt plus 5cm}Time\+Span Get\+Duration (
+\begin{DoxyParamCaption}
+\item[{int}]{at}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a1c04674d910823a9bc612d99914e507f}
+
+
+Parses a Time\+Span at an expected position. If it fails the sender will be notified. 
+
+\begin{DoxyReturn}{Returns}
+The duration.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_abe6125ea3957d831e8b39a6b6cf1221f}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Get\+Int@{Get\+Int}}
+\index{Get\+Int@{Get\+Int}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Get\+Int(int at)}]{\setlength{\rightskip}{0pt plus 5cm}int Get\+Int (
+\begin{DoxyParamCaption}
+\item[{int}]{at}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_abe6125ea3957d831e8b39a6b6cf1221f}
+
+
+Parses an integer at a specified location. It will warn the sender if it\textquotesingle{}s invalid 
+
+\begin{DoxyReturn}{Returns}
+The int.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a06c76c0eb36f7630e1f064a79cc84e72}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Get\+String@{Get\+String}}
+\index{Get\+String@{Get\+String}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Get\+String(int at)}]{\setlength{\rightskip}{0pt plus 5cm}string Get\+String (
+\begin{DoxyParamCaption}
+\item[{int}]{at}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a06c76c0eb36f7630e1f064a79cc84e72}
+
+
+Gets a string at a expected position 
+
+\begin{DoxyReturn}{Returns}
+The string.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ad5daf3348e434c97f503293bdd161851}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+Four$<$ T, U, V, W $>$@{Parse\+Four$<$ T, U, V, W $>$}}
+\index{Parse\+Four$<$ T, U, V, W $>$@{Parse\+Four$<$ T, U, V, W $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+Four$<$ T, U, V, W $>$(out T t, out U u, out V v, out W w)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+Four$<$ T, U, V, W $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t, }
+\item[{out U}]{u, }
+\item[{out V}]{v, }
+\item[{out W}]{w}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ad5daf3348e434c97f503293bdd161851}
+
+
+Parses four values 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a209af7f7ace41e8442d259fa9bbab24c}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+None@{Parse\+None}}
+\index{Parse\+None@{Parse\+None}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+None()}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+None (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a209af7f7ace41e8442d259fa9bbab24c}
+
+
+Check to ensure no parameters were passed from the sender. If they have provided some a warning will be sent. 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ab8722cb8a8b5d9b5d61b1cdb69d6e06b}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+One$<$ T $>$@{Parse\+One$<$ T $>$}}
+\index{Parse\+One$<$ T $>$@{Parse\+One$<$ T $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+One$<$ T $>$(out T t)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+One$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ab8722cb8a8b5d9b5d61b1cdb69d6e06b}
+
+
+Parses the first parameter 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & T.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The 1st type parameter.\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a422904dfe49df9245dbe72ff7b032ec6}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+One$<$ T $>$@{Parse\+One$<$ T $>$}}
+\index{Parse\+One$<$ T $>$@{Parse\+One$<$ T $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+One$<$ T $>$(string literal1, out T t, string literal2=null)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+One$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{literal1, }
+\item[{out T}]{t, }
+\item[{string}]{literal2 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a422904dfe49df9245dbe72ff7b032ec6}
+
+
+Parses one value using literals 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ad67bc7ccd7950ade47741b99cbee7499}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+Three$<$ T, U, V $>$@{Parse\+Three$<$ T, U, V $>$}}
+\index{Parse\+Three$<$ T, U, V $>$@{Parse\+Three$<$ T, U, V $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+Three$<$ T, U, V $>$(out T t, out U u, out V v)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+Three$<$ T, U, V $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t, }
+\item[{out U}]{u, }
+\item[{out V}]{v}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ad67bc7ccd7950ade47741b99cbee7499}
+
+
+Parses three values 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & T.\\
+\hline
+{\em u} & U.\\
+\hline
+{\em v} & V.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The 1st type parameter.\\
+\hline
+{\em U} & The 2nd type parameter.\\
+\hline
+{\em V} & The 3rd type parameter.\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ac413a2a09e591276306a8ebbfa3d103d}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+Three$<$ T, U, V $>$@{Parse\+Three$<$ T, U, V $>$}}
+\index{Parse\+Three$<$ T, U, V $>$@{Parse\+Three$<$ T, U, V $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+Three$<$ T, U, V $>$(string literal1, out T t, string literal2, out U u, string literal3, out V v, string literal4=null)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+Three$<$ T, U, V $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{literal1, }
+\item[{out T}]{t, }
+\item[{string}]{literal2, }
+\item[{out U}]{u, }
+\item[{string}]{literal3, }
+\item[{out V}]{v, }
+\item[{string}]{literal4 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ac413a2a09e591276306a8ebbfa3d103d}
+
+
+Parses three values using literals 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a6155ee5ada5b77594469013e00749d6a}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+Three$<$ T, U, V $>$@{Parse\+Three$<$ T, U, V $>$}}
+\index{Parse\+Three$<$ T, U, V $>$@{Parse\+Three$<$ T, U, V $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+Three$<$ T, U, V $>$(out T t, string literal2, out U u, string literal3, out V v, string literal4=null)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+Three$<$ T, U, V $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t, }
+\item[{string}]{literal2, }
+\item[{out U}]{u, }
+\item[{string}]{literal3, }
+\item[{out V}]{v, }
+\item[{string}]{literal4 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a6155ee5ada5b77594469013e00749d6a}
+
+
+Parses three values using literals 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a99b1b6ad5e24854820739767af9e22b1}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+Two$<$ T, U $>$@{Parse\+Two$<$ T, U $>$}}
+\index{Parse\+Two$<$ T, U $>$@{Parse\+Two$<$ T, U $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+Two$<$ T, U $>$(out T t, out U u)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+Two$<$ T, U $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t, }
+\item[{out U}]{u}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a99b1b6ad5e24854820739767af9e22b1}
+
+
+Parses two values 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a6e1ece5e45c1f199565e609ae4901318}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+Two$<$ T, U $>$@{Parse\+Two$<$ T, U $>$}}
+\index{Parse\+Two$<$ T, U $>$@{Parse\+Two$<$ T, U $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+Two$<$ T, U $>$(string literal1, out T t, string literal2, out U u, string literal3=null)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+Two$<$ T, U $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{literal1, }
+\item[{out T}]{t, }
+\item[{string}]{literal2, }
+\item[{out U}]{u, }
+\item[{string}]{literal3 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a6e1ece5e45c1f199565e609ae4901318}
+
+
+Parses two values using literals 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ab0f677e178b1dba8b3406e0cc380acd5}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Parse\+Two$<$ T, U $>$@{Parse\+Two$<$ T, U $>$}}
+\index{Parse\+Two$<$ T, U $>$@{Parse\+Two$<$ T, U $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Parse\+Two$<$ T, U $>$(out T t, string literal2, out U u, string literal3=null)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+Two$<$ T, U $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t, }
+\item[{string}]{literal2, }
+\item[{out U}]{u, }
+\item[{string}]{literal3 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ab0f677e178b1dba8b3406e0cc380acd5}
+
+
+Parses two values using literals 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_aa73e7c4dd1df5fd5fbf81c7764ee1533}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{To\+String()}]{\setlength{\rightskip}{0pt plus 5cm}override string To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_aa73e7c4dd1df5fd5fbf81c7764ee1533}
+
+
+Reconstructs the argument string 
+
+\begin{DoxyReturn}{Returns}
+A System.\+String that represents the current \hyperlink{classOTA_1_1Command_1_1ArgumentList}{O\+T\+A.\+Command.\+Argument\+List}.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ae016a77e02d2ba7793dc6ceeefebf681}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Get\+Bool@{Try\+Get\+Bool}}
+\index{Try\+Get\+Bool@{Try\+Get\+Bool}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Get\+Bool(int at, out bool val)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Get\+Bool (
+\begin{DoxyParamCaption}
+\item[{int}]{at, }
+\item[{out bool}]{val}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ae016a77e02d2ba7793dc6ceeefebf681}
+
+
+Attempts to parse various values of boolean representations. 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a750303160a7c9d3e107d155013930944}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Get\+Byte@{Try\+Get\+Byte}}
+\index{Try\+Get\+Byte@{Try\+Get\+Byte}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Get\+Byte(int at, out byte val)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Get\+Byte (
+\begin{DoxyParamCaption}
+\item[{int}]{at, }
+\item[{out byte}]{val}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a750303160a7c9d3e107d155013930944}
+
+
+Attempts to parse a byte value at an expected position 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_acbe2ecbdbb2308ca8575c218ee58ef13}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Get\+Double@{Try\+Get\+Double}}
+\index{Try\+Get\+Double@{Try\+Get\+Double}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Get\+Double(int at, out double val)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Get\+Double (
+\begin{DoxyParamCaption}
+\item[{int}]{at, }
+\item[{out double}]{val}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_acbe2ecbdbb2308ca8575c218ee58ef13}
+
+
+Attempts to get a double value at an expected position 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_abf848ae58e85d764d8e9c2b11e445b22}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Get\+Duration@{Try\+Get\+Duration}}
+\index{Try\+Get\+Duration@{Try\+Get\+Duration}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Get\+Duration(int at, out Time\+Span val)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Get\+Duration (
+\begin{DoxyParamCaption}
+\item[{int}]{at, }
+\item[{out Time\+Span}]{val}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_abf848ae58e85d764d8e9c2b11e445b22}
+
+
+Attempts to parse a Time\+Span at an expected location. 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_aa5b6f61faa9b8c2a10c98edf74d3f84d}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Get\+Int@{Try\+Get\+Int}}
+\index{Try\+Get\+Int@{Try\+Get\+Int}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Get\+Int(int at, out int val)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Get\+Int (
+\begin{DoxyParamCaption}
+\item[{int}]{at, }
+\item[{out int}]{val}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_aa5b6f61faa9b8c2a10c98edf74d3f84d}
+
+
+Attempts to parse an integer at an expected position 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a3c1e74c016c23bd91fe70ab4e8605e27}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Get\+String@{Try\+Get\+String}}
+\index{Try\+Get\+String@{Try\+Get\+String}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Get\+String(int at, out string val)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Get\+String (
+\begin{DoxyParamCaption}
+\item[{int}]{at, }
+\item[{out string}]{val}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a3c1e74c016c23bd91fe70ab4e8605e27}
+
+
+Attempts to get a string at a specified location 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ae05e034dd555e3f144313d7afda1b240}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Parse\+Four$<$ T, U, V, W $>$@{Try\+Parse\+Four$<$ T, U, V, W $>$}}
+\index{Try\+Parse\+Four$<$ T, U, V, W $>$@{Try\+Parse\+Four$<$ T, U, V, W $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Parse\+Four$<$ T, U, V, W $>$(out T t, out U u, out V v, out W w)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Parse\+Four$<$ T, U, V, W $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t, }
+\item[{out U}]{u, }
+\item[{out V}]{v, }
+\item[{out W}]{w}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ae05e034dd555e3f144313d7afda1b240}
+
+
+Tries to parse four values 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a6eeeee97bb0e3c1bc5934be86b1481b1}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Parse\+One$<$ T $>$@{Try\+Parse\+One$<$ T $>$}}
+\index{Try\+Parse\+One$<$ T $>$@{Try\+Parse\+One$<$ T $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Parse\+One$<$ T $>$(out T t)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Parse\+One$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a6eeeee97bb0e3c1bc5934be86b1481b1}
+
+
+Tries to parse one value at the first position. 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_add280e44f690058b1655e23b39d84822}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Parse\+One$<$ T $>$@{Try\+Parse\+One$<$ T $>$}}
+\index{Try\+Parse\+One$<$ T $>$@{Try\+Parse\+One$<$ T $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Parse\+One$<$ T $>$(string literal1, out T t, string literal2=null)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Parse\+One$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{literal1, }
+\item[{out T}]{t, }
+\item[{string}]{literal2 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_add280e44f690058b1655e23b39d84822}
+
+
+Tries to parse a value using literals. 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ac80a6731f8826ff819b74f923aca0bf2}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Parse\+Three$<$ T, U, V $>$@{Try\+Parse\+Three$<$ T, U, V $>$}}
+\index{Try\+Parse\+Three$<$ T, U, V $>$@{Try\+Parse\+Three$<$ T, U, V $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Parse\+Three$<$ T, U, V $>$(out T t, out U u, out V v)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Parse\+Three$<$ T, U, V $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t, }
+\item[{out U}]{u, }
+\item[{out V}]{v}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ac80a6731f8826ff819b74f923aca0bf2}
+
+
+Tries to parse three values 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_acf474b50fa1cbaedb5e1736b1f295c20}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Parse\+Three$<$ T, U, V $>$@{Try\+Parse\+Three$<$ T, U, V $>$}}
+\index{Try\+Parse\+Three$<$ T, U, V $>$@{Try\+Parse\+Three$<$ T, U, V $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Parse\+Three$<$ T, U, V $>$(string literal1, out T t, string literal2, out U u, string literal3, out V v, string literal4=null)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Parse\+Three$<$ T, U, V $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{literal1, }
+\item[{out T}]{t, }
+\item[{string}]{literal2, }
+\item[{out U}]{u, }
+\item[{string}]{literal3, }
+\item[{out V}]{v, }
+\item[{string}]{literal4 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_acf474b50fa1cbaedb5e1736b1f295c20}
+
+
+Tries to parse three values using literals 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ac5c63b8f84751ef90a572ec2b7174d94}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Parse\+Two$<$ T, U $>$@{Try\+Parse\+Two$<$ T, U $>$}}
+\index{Try\+Parse\+Two$<$ T, U $>$@{Try\+Parse\+Two$<$ T, U $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Parse\+Two$<$ T, U $>$(out T t, out U u)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Parse\+Two$<$ T, U $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t, }
+\item[{out U}]{u}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ac5c63b8f84751ef90a572ec2b7174d94}
+
+
+Tried to parse two values sequentially 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a6d98929ea7e2c44990a46c37c179a280}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Parse\+Two$<$ T, U $>$@{Try\+Parse\+Two$<$ T, U $>$}}
+\index{Try\+Parse\+Two$<$ T, U $>$@{Try\+Parse\+Two$<$ T, U $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Parse\+Two$<$ T, U $>$(string literal1, out T t, string literal2, out U u, string literal3=null)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Parse\+Two$<$ T, U $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{literal1, }
+\item[{out T}]{t, }
+\item[{string}]{literal2, }
+\item[{out U}]{u, }
+\item[{string}]{literal3 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a6d98929ea7e2c44990a46c37c179a280}
+
+
+Tries to parse two values using literals 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_aa057f848fc9a002b8fc921cd33244948}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Pop@{Try\+Pop}}
+\index{Try\+Pop@{Try\+Pop}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Pop(string literal)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Pop (
+\begin{DoxyParamCaption}
+\item[{string}]{literal}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_aa057f848fc9a002b8fc921cd33244948}
+
+
+Checks if the first argument is the literal 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ab2fed6dafbc4a252e949ca168a5c5195}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Pop\+Any$<$ T $>$@{Try\+Pop\+Any$<$ T $>$}}
+\index{Try\+Pop\+Any$<$ T $>$@{Try\+Pop\+Any$<$ T $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Pop\+Any$<$ T $>$(string literal, out T t)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Pop\+Any$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{literal, }
+\item[{out T}]{t}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ab2fed6dafbc4a252e949ca168a5c5195}
+
+
+Search through the arguments for a match, then removes both the literal and the value. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em literal} & \\
+\hline
+{\em t} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_ad2910029c92315f97be87569fe7bdec1}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Pop\+One$<$ T $>$@{Try\+Pop\+One$<$ T $>$}}
+\index{Try\+Pop\+One$<$ T $>$@{Try\+Pop\+One$<$ T $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Pop\+One$<$ T $>$(out T t)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Pop\+One$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{out T}]{t}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_ad2910029c92315f97be87569fe7bdec1}
+
+
+Tries to get a value at position 1. If successful it will be removed 
+
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a9e956f684c001bb5e73d1027db7f8624}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Try\+Pop\+One$<$ T $>$@{Try\+Pop\+One$<$ T $>$}}
+\index{Try\+Pop\+One$<$ T $>$@{Try\+Pop\+One$<$ T $>$}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Try\+Pop\+One$<$ T $>$(string literal1, out T t, string literal2=null)}]{\setlength{\rightskip}{0pt plus 5cm}bool Try\+Pop\+One$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{literal1, }
+\item[{out T}]{t, }
+\item[{string}]{literal2 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1ArgumentList_a9e956f684c001bb5e73d1027db7f8624}
+
+
+Tries to remove one value if it is an argument, using literals. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if pop one was tryed, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em literal1} & Literal1.\\
+\hline
+{\em t} & T.\\
+\hline
+{\em literal2} & Literal2.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The 1st type parameter.\\
+\hline
+\end{DoxyTemplParams}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Command_1_1ArgumentList_a2495ccac3aab294aa5f42ee0e268f811}{}\index{O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}!Plugin@{Plugin}}
+\index{Plugin@{Plugin}!O\+T\+A\+::\+Command\+::\+Argument\+List@{O\+T\+A\+::\+Command\+::\+Argument\+List}}
+\subsubsection[{Plugin}]{\setlength{\rightskip}{0pt plus 5cm}object Plugin\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Command_1_1ArgumentList_a2495ccac3aab294aa5f42ee0e268f811}
+
+
+The plugin instance if the executed command was a plugin command 
+
+The plugin.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{ArgumentList_8cs}{Argument\+List.\+cs}\end{DoxyCompactItemize}

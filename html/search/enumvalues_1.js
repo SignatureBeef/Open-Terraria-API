@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['b',['B',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca9d5ed678fe57bcca610140957afab571',1,'Microsoft::Xna::Framework::Input']]],
+  ['back',['Back',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca0557fa923dcee4d0f86b1409f5c2167f',1,'Microsoft::Xna::Framework::Input']]],
+  ['backtofront',['BackToFront',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Graphics.html#a624fcd3c36bfc7628a4e4aacf3cee0cbaa253fb6224f27053016e7db132146e80',1,'Microsoft::Xna::Framework::Graphics']]],
+  ['beta',['Beta',['../namespaceOTA.html#a7e114a895c876876b92a8a256350f287a0b87d66b88c72957dfea8c9605016442',1,'OTA']]],
+  ['bgr565',['Bgr565',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Graphics.html#a2c30f3edaf443866b3c9b240306fdcc9a3f5d255dbdb725a923215898f9a0298e',1,'Microsoft::Xna::Framework::Graphics']]],
+  ['bgra4444',['Bgra4444',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Graphics.html#a2c30f3edaf443866b3c9b240306fdcc9a21dc65f64df9ff234e5573c2fbbab9be',1,'Microsoft::Xna::Framework::Graphics']]],
+  ['bgra5551',['Bgra5551',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Graphics.html#a2c30f3edaf443866b3c9b240306fdcc9a3741a54b5a6d947f10e6350fbe842e25',1,'Microsoft::Xna::Framework::Graphics']]],
+  ['boss',['BOSS',['../namespaceOTA_1_1Plugin.html#abfd87343e974fb3ed18f5915102f0217af0523bf35faf77235783d0f3e43762d2',1,'OTA::Plugin']]],
+  ['break',['BREAK',['../namespaceOTA_1_1Plugin.html#a3bb5a5644baf15ebe64118e735227668a14d6a3e0201f58bfe7c01e775973e80e',1,'OTA::Plugin']]],
+  ['brisk',['Brisk',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711afc0b4c2a537de7fc6b788a4396137e81',1,'OTA::Misc']]],
+  ['broken',['Broken',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711ac98dbc22f49f1b4a644307551924f8da',1,'OTA::Misc']]],
+  ['browserback',['BrowserBack',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca3b9bacad47d80ba436ab9fca2a0afe7d',1,'Microsoft::Xna::Framework::Input']]],
+  ['browserfavorites',['BrowserFavorites',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bcafed6c72bae0544ff39d0a157f66fbabe',1,'Microsoft::Xna::Framework::Input']]],
+  ['browserforward',['BrowserForward',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bcadfef0402778ce8430205b2c875a39cba',1,'Microsoft::Xna::Framework::Input']]],
+  ['browserhome',['BrowserHome',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bcab5fb5a50989498163b49c9bf1aaec11e',1,'Microsoft::Xna::Framework::Input']]],
+  ['browserrefresh',['BrowserRefresh',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca8e30d8ea7dc1b7d08e09cdc18b23a9fe',1,'Microsoft::Xna::Framework::Input']]],
+  ['browsersearch',['BrowserSearch',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bcac8814ad5c2f158da619f899f38c972b5',1,'Microsoft::Xna::Framework::Input']]],
+  ['browserstop',['BrowserStop',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bcacf296841951f298b60a689521eccea2e',1,'Microsoft::Xna::Framework::Input']]],
+  ['bulky',['Bulky',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711ad61c08395b098f2ffda390974a78cf76',1,'OTA::Misc']]]
+];

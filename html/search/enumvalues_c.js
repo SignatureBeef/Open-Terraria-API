@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['m',['M',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca69691c7bdcc3ce6d5d8a1361f22d04ac',1,'Microsoft::Xna::Framework::Input']]],
+  ['mac',['MAC',['../classOTA_1_1Misc_1_1Platform.html#a118d12ed2cb6c6d4ebd67a9891b95d5fa2e25c285356cbb0ed8785a1377027d79',1,'OTA::Misc::Platform']]],
+  ['manic',['Manic',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711a9811464063b6cd7fbf537b68507b84a5',1,'OTA::Misc']]],
+  ['martian',['Martian',['../namespaceOTA_1_1Misc.html#aa6885226dc34054738eb9ec32c9d1e30ae3a456fb4792defd318324000fda14c3',1,'OTA::Misc']]],
+  ['massive',['Massive',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711ac40f3fbfade0ee479b0dd980edefd449',1,'OTA::Misc']]],
+  ['masterful',['Masterful',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711a1fc6f63735e0dc41b1ba7e7fe94a33b7',1,'OTA::Misc']]],
+  ['medianexttrack',['MediaNextTrack',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca51d77ec4c0726881b5371a0738cd1c17',1,'Microsoft::Xna::Framework::Input']]],
+  ['mediaplaypause',['MediaPlayPause',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bcaad5b800a2da567cb4b91f857b48761ac',1,'Microsoft::Xna::Framework::Input']]],
+  ['mediaprevioustrack',['MediaPreviousTrack',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca2b544efa7eb11c924093836ee64b7c7c',1,'Microsoft::Xna::Framework::Input']]],
+  ['mediastop',['MediaStop',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca4e98cb54aeee7205dd16a2a054810be0',1,'Microsoft::Xna::Framework::Input']]],
+  ['menacing',['Menacing',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711aee525ea4ce685959e12a1383cb2bba44',1,'OTA::Misc']]],
+  ['microsoft',['Microsoft',['../namespaceOTA.html#aba44b3a41f587d61c3dfecf49323c837a140864078aeca1c7c35b4beb33c53c34',1,'OTA']]],
+  ['mono',['Mono',['../namespaceOTA.html#aba44b3a41f587d61c3dfecf49323c837a5d9b47bd3b65072e0d5daf55f01da086',1,'OTA']]],
+  ['multiply',['Multiply',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bcae257376d913f3b53cbb4a9b19d770648',1,'Microsoft::Xna::Framework::Input']]],
+  ['murderous',['Murderous',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711a841a280d22bee08d7fd13fc95addf6ce',1,'OTA::Misc']]],
+  ['mystic',['Mystic',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711a7b28158d613ea1869441676fa32a3b5a',1,'OTA::Misc']]],
+  ['mythical',['Mythical',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711a9cce556535c54f0a868908310f75a92e',1,'OTA::Misc']]]
+];

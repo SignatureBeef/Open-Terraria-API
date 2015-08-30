@@ -1,0 +1,1410 @@
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{}\section{Microsoft.\+Xna.\+Framework.\+Vector2 Struct Reference}
+\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}\index{Microsoft.\+Xna.\+Framework.\+Vector2@{Microsoft.\+Xna.\+Framework.\+Vector2}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af0241a60a6781f9fcbc649909cc64464}{Vector2} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2}.\end{DoxyCompactList}\item 
+\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a665199e0351f657cf0dc463712d78db1}{Vector2} (float value)
+\begin{DoxyCompactList}\small\item\em Creates a new instance of \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2}.\end{DoxyCompactList}\item 
+override string \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_aa7e3d5988c5976a0b9ca2e9428e5b717}{To\+String} ()
+\begin{DoxyCompactList}\small\item\em Retrieves a string representation of the current object.\end{DoxyCompactList}\item 
+bool \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a0425aba4927eed9f7d1227a8701a3f98}{Equals} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} other)
+\begin{DoxyCompactList}\small\item\em Determines whether the specified Object is equal to the \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2}.\end{DoxyCompactList}\item 
+override bool \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a085fab7a69388875b5bb337077162411}{Equals} (object obj)
+\begin{DoxyCompactList}\small\item\em Returns a value that indicates whether the current instance is equal to a specified object.\end{DoxyCompactList}\item 
+override int \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af5c8022711973f4cbbe011eabe01eeeb}{Get\+Hash\+Code} ()
+\begin{DoxyCompactList}\small\item\em Gets the hash code of the vector object.\end{DoxyCompactList}\item 
+float \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a0a8efc1ce6c7139ca2d5bbe8ba540d71}{Length} ()
+\begin{DoxyCompactList}\small\item\em Calculates the length of the vector.\end{DoxyCompactList}\item 
+float \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a6e5559b22dbd45810997ed845b88d5ef}{Length\+Squared} ()
+\begin{DoxyCompactList}\small\item\em Calculates the length of the vector squared.\end{DoxyCompactList}\item 
+void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ae0a4c81d525c2437d296bcd787d47572}{Normalize} ()
+\begin{DoxyCompactList}\small\item\em Turns the current vector into a unit vector. The result is a vector one unit in length pointing in the same direction as the original vector.\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static float \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ada46dcc9bd1a3d57e72f07fbfee0eef4}{Distance} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Calculates the distance between two vectors.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab39d1402386de6276a677eea335eb70a}{Distance} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, out float result)
+\begin{DoxyCompactList}\small\item\em Calculates the distance between two vectors.\end{DoxyCompactList}\item 
+static float \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ad38d673a8138fb36f9eef89e5378f94d}{Distance\+Squared} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Calculates the distance between two vectors squared.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a3408fa30bbc1e6aaeed88481858915bd}{Distance\+Squared} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, out float result)
+\begin{DoxyCompactList}\small\item\em Calculates the distance between two vectors squared.\end{DoxyCompactList}\item 
+static float \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a11d1631119a63b47d126ec8c6514158a}{Dot} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Calculates the dot product of two vectors. If the two vectors are unit vectors, the dot product returns a floating point value between -\/1 and 1 that can be used to determine some properties of the angle between two vectors. For example, it can show whether the vectors are orthogonal, parallel, or have an acute or obtuse angle between them.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a5e1961565b5a29f77cd27f2e2322bc98}{Dot} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, out float result)
+\begin{DoxyCompactList}\small\item\em Calculates the dot product of two vectors and writes the result to a user-\/specified variable. If the two vectors are unit vectors, the dot product returns a floating point value between -\/1 and 1 that can be used to determine some properties of the angle between two vectors. For example, it can show whether the vectors are orthogonal, parallel, or have an acute or obtuse angle between them.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a43577b900b79e2cca19017a9764110fa}{Normalize} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value)
+\begin{DoxyCompactList}\small\item\em Creates a unit vector from the specified vector. The result is a vector one unit in length pointing in the same direction as the original vector.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af13c3a68dca222883321eace82b5249d}{Normalize} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Creates a unit vector from the specified vector, writing the result to a user-\/specified variable. The result is a vector one unit in length pointing in the same direction as the original vector.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a3016b350393f1b600317d8938b0f1389}{Reflect} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} vector, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} normal)
+\begin{DoxyCompactList}\small\item\em Determines the reflect vector of the given vector and normal.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac6866823e16484efb29d38b6584f160f}{Reflect} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} vector, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} normal, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Determines the reflect vector of the given vector and normal.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a3ff30d3384ff9de35b0d2f95bfc9c822}{Min} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Returns a vector that contains the lowest value from each matching pair of components.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab4f299942d39bc3b4eea31220dcafd28}{Min} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Returns a vector that contains the lowest value from each matching pair of components.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac53cc49e4f898bff61dac9161b0fe84e}{Max} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Returns a vector that contains the highest value from each matching pair of components.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_aa62255b815297a777794f8b2b4abc526}{Max} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Returns a vector that contains the highest value from each matching pair of components.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a2c43d406f0b0c470776dd4e87a77ed7d}{Clamp} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} min, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} max)
+\begin{DoxyCompactList}\small\item\em Restricts a value to be within a specified range.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a807ed79b593c323a0568089da719a622}{Clamp} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} min, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} max, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Restricts a value to be within a specified range.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af24b6e17b0b78a82e7a65ed4dd475a3f}{Lerp} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, float amount)
+\begin{DoxyCompactList}\small\item\em Performs a linear interpolation between two vectors.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab37033f40e6ce0658ca6a11649eeb207}{Lerp} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, float amount, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Performs a linear interpolation between two vectors.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a401c97e9ff1e0069a6cc8d338654dc9c}{Barycentric} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value3, float amount1, float amount2)
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 2\+D triangle.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a8dc8ac35776dc098cfc89a502449b9c4}{Barycentric} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value3, float amount1, float amount2, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 2\+D triangle.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a7d5bcc5e9dbfab346be25615d01a3a04}{Smooth\+Step} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, float amount)
+\begin{DoxyCompactList}\small\item\em Interpolates between two values using a cubic equation.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a544da7c140a42ca0860b261b0c49a883}{Smooth\+Step} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, float amount, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Interpolates between two values using a cubic equation.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a43b1fff70ff6d31bca44616288b0866b}{Catmull\+Rom} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value3, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value4, float amount)
+\begin{DoxyCompactList}\small\item\em Performs a Catmull-\/\+Rom interpolation using the specified positions.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a071f330d0387d8ca73472c367cb79b38}{Catmull\+Rom} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value3, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value4, float amount, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Performs a Catmull-\/\+Rom interpolation using the specified positions.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ae6253f517ec3855591969fe64ad88985}{Hermite} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} tangent1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} tangent2, float amount)
+\begin{DoxyCompactList}\small\item\em Performs a Hermite spline interpolation.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_aca62b3073db26b1561a1e905c45003ca}{Hermite} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} tangent1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} tangent2, float amount, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Performs a Hermite spline interpolation.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a48b225b38328287410a008c132fce766}{Transform} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} position, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_matrix}{Matrix} matrix)
+\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a2bd16ffd90e8adba2dd788742578596f}{Negate} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value)
+\begin{DoxyCompactList}\small\item\em Returns a vector pointing in the opposite direction.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab2ef0e041442ae6ed99252f0ed52a889}{Negate} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Returns a vector pointing in the opposite direction.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a7e4e291cc72e89061ec150ae8e83f70d}{Add} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Adds two vectors.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a4ecb622533223cbcf951e438e416d1de}{Add} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Adds two vectors.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a48469e4ad1613743bf9c223d9f4644bf}{Subtract} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Subtracts a vector from a vector.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a5dbd7be74531904fbb666a01e4734f2d}{Subtract} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Subtracts a vector from a vector.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_afe9cb27575b53aed60ce1a2e0a8ad5ea}{Multiply} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Multiplies the components of two vectors by each other.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a048f00989327ed10f1be5aed272353ea}{Multiply} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Multiplies the components of two vectors by each other.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a33245a6351b32079625deb37d826d8fd}{Multiply} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, float scale\+Factor)
+\begin{DoxyCompactList}\small\item\em Multiplies a vector by a scalar value.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a29750eb00961435a73e46f1d1eb112d4}{Multiply} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, float scale\+Factor, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Multiplies a vector by a scalar value.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a80825404a896177105acdcc14183b20c}{Divide} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Divides the components of a vector by the components of another vector.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a34b590153d9cfd3da7d4c29cf81b8795}{Divide} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Divides the components of a vector by the components of another vector.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a04e7a5bdf518e16d90f9ade090598e8a}{Divide} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, float divider)
+\begin{DoxyCompactList}\small\item\em Divides a vector by a scalar value.\end{DoxyCompactList}\item 
+static void \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_adc4051426161db34dd495a9bfad6332b}{Divide} (ref \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, float divider, out \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} result)
+\begin{DoxyCompactList}\small\item\em Divides a vector by a scalar value.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a9e60bd85e07bf1f47ec9ab5ab83b45dd}{operator-\/} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value)
+\begin{DoxyCompactList}\small\item\em Returns a vector pointing in the opposite direction.\end{DoxyCompactList}\item 
+static bool \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a473aaaa26a7e95cea2133244bf1b57a3}{operator==} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Tests vectors for equality.\end{DoxyCompactList}\item 
+static bool \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a63e86ed828f9f0af032435fc21223f0e}{operator!=} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Tests vectors for inequality.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_abac1c36ab19d8cf569b230b362947c1f}{operator+} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Adds two vectors.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac2a2d0046508818743472e4bc0c70d03}{operator-\/} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Subtracts a vector from a vector.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a16b3751065ee46e45481925944996688}{operator$\ast$} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Multiplies the components of two vectors by each other.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a6c4efbfc69cb23b63dbb28e62f779353}{operator$\ast$} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value, float scale\+Factor)
+\begin{DoxyCompactList}\small\item\em Multiplies a vector by a scalar value.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a158520a0088078dfebf46347d4387bf8}{operator$\ast$} (float scale\+Factor, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value)
+\begin{DoxyCompactList}\small\item\em Multiplies a vector by a scalar value.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_acdc4770a856249d18c53f0b4ee1c4955}{operator/} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value2)
+\begin{DoxyCompactList}\small\item\em Divides the components of a vector by the components of another vector.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a694eff1433cd29a529da6c2f23ec6a86}{operator/} (\hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} value1, float divider)
+\begin{DoxyCompactList}\small\item\em Divides a vector by a scalar value.\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a2adf6ff3693ba54d76fdee8c202ec522}{X}
+\begin{DoxyCompactList}\small\item\em Gets or sets the x-\/component of the vector.\end{DoxyCompactList}\item 
+float \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_adb6b2d6af0cc594ae0f8e0b312663ef5}{Y}
+\begin{DoxyCompactList}\small\item\em Gets or sets the y-\/component of the vector.\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2}\mbox{[}$\,$\mbox{]} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ae680588c59bced140b0202ae87b35909}{Array}
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a326202f2b3a35f6b549d835dba935f93}{Zero}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} with all of its components set to zero.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a81e3bdd813a766ad2a1e14c96c8cfa3b}{One}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} with both of its components set to one.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a7884d5af8934eebc91a118a381b0ec25}{Unit\+X}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Returns the unit vector for the x-\/axis.\end{DoxyCompactList}\item 
+static \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac737216f0343a07a912c3fc34ec64569}{Unit\+Y}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Returns the unit vector for the y-\/axis.\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af0241a60a6781f9fcbc649909cc64464}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Vector2@{Vector2}}
+\index{Vector2@{Vector2}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Vector2(float x, float y)}]{\setlength{\rightskip}{0pt plus 5cm}Microsoft.\+Xna.\+Framework.\+Vector2.\+Vector2 (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+)}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af0241a60a6781f9fcbc649909cc64464}
+
+
+Initializes a new instance of \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Initial value for the x-\/component of the vector.\\
+\hline
+{\em y} & Initial value for the y-\/component of the vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a665199e0351f657cf0dc463712d78db1}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Vector2@{Vector2}}
+\index{Vector2@{Vector2}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Vector2(float value)}]{\setlength{\rightskip}{0pt plus 5cm}Microsoft.\+Xna.\+Framework.\+Vector2.\+Vector2 (
+\begin{DoxyParamCaption}
+\item[{float}]{value}
+\end{DoxyParamCaption}
+)}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a665199e0351f657cf0dc463712d78db1}
+
+
+Creates a new instance of \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to initialize both components to.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a7e4e291cc72e89061ec150ae8e83f70d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Add@{Add}}
+\index{Add@{Add}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Add(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Add (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a7e4e291cc72e89061ec150ae8e83f70d}
+
+
+Adds two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a4ecb622533223cbcf951e438e416d1de}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Add@{Add}}
+\index{Add@{Add}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Add(ref Vector2 value1, ref Vector2 value2, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Add (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a4ecb622533223cbcf951e438e416d1de}
+
+
+Adds two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} Sum of the source vectors.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a401c97e9ff1e0069a6cc8d338654dc9c}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Barycentric@{Barycentric}}
+\index{Barycentric@{Barycentric}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Barycentric(\+Vector2 value1, Vector2 value2, Vector2 value3, float amount1, float amount2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Barycentric (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2, }
+\item[{{\bf Vector2}}]{value3, }
+\item[{float}]{amount1, }
+\item[{float}]{amount2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a401c97e9ff1e0069a6cc8d338654dc9c}
+
+
+Returns a \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 2\+D triangle.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & A \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of vertex 1 of the triangle.\\
+\hline
+{\em value2} & A \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of vertex 2 of the triangle.\\
+\hline
+{\em value3} & A \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of vertex 3 of the triangle.\\
+\hline
+{\em amount1} & Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in value2).\\
+\hline
+{\em amount2} & Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in value3).\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a8dc8ac35776dc098cfc89a502449b9c4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Barycentric@{Barycentric}}
+\index{Barycentric@{Barycentric}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Barycentric(ref Vector2 value1, ref Vector2 value2, ref Vector2 value3, float amount1, float amount2, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Barycentric (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{ref {\bf Vector2}}]{value3, }
+\item[{float}]{amount1, }
+\item[{float}]{amount2, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a8dc8ac35776dc098cfc89a502449b9c4}
+
+
+Returns a \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 2\+D triangle.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & A \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of vertex 1 of the triangle.\\
+\hline
+{\em value2} & A \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of vertex 2 of the triangle.\\
+\hline
+{\em value3} & A \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} containing the 2\+D Cartesian coordinates of vertex 3 of the triangle.\\
+\hline
+{\em amount1} & Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in value2).\\
+\hline
+{\em amount2} & Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in value3).\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The 2\+D Cartesian coordinates of the specified point are placed in this \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} on exit.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a43b1fff70ff6d31bca44616288b0866b}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Catmull\+Rom@{Catmull\+Rom}}
+\index{Catmull\+Rom@{Catmull\+Rom}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Catmull\+Rom(\+Vector2 value1, Vector2 value2, Vector2 value3, Vector2 value4, float amount)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Catmull\+Rom (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2, }
+\item[{{\bf Vector2}}]{value3, }
+\item[{{\bf Vector2}}]{value4, }
+\item[{float}]{amount}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a43b1fff70ff6d31bca44616288b0866b}
+
+
+Performs a Catmull-\/\+Rom interpolation using the specified positions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & The first position in the interpolation.\\
+\hline
+{\em value2} & The second position in the interpolation.\\
+\hline
+{\em value3} & The third position in the interpolation.\\
+\hline
+{\em value4} & The fourth position in the interpolation.\\
+\hline
+{\em amount} & Weighting factor.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a071f330d0387d8ca73472c367cb79b38}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Catmull\+Rom@{Catmull\+Rom}}
+\index{Catmull\+Rom@{Catmull\+Rom}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Catmull\+Rom(ref Vector2 value1, ref Vector2 value2, ref Vector2 value3, ref Vector2 value4, float amount, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Catmull\+Rom (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{ref {\bf Vector2}}]{value3, }
+\item[{ref {\bf Vector2}}]{value4, }
+\item[{float}]{amount, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a071f330d0387d8ca73472c367cb79b38}
+
+
+Performs a Catmull-\/\+Rom interpolation using the specified positions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & The first position in the interpolation.\\
+\hline
+{\em value2} & The second position in the interpolation.\\
+\hline
+{\em value3} & The third position in the interpolation.\\
+\hline
+{\em value4} & The fourth position in the interpolation.\\
+\hline
+{\em amount} & Weighting factor.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} A vector that is the result of the Catmull-\/\+Rom interpolation.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a2c43d406f0b0c470776dd4e87a77ed7d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Clamp@{Clamp}}
+\index{Clamp@{Clamp}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Clamp(\+Vector2 value1, Vector2 min, Vector2 max)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Clamp (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{min, }
+\item[{{\bf Vector2}}]{max}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a2c43d406f0b0c470776dd4e87a77ed7d}
+
+
+Restricts a value to be within a specified range.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & The value to clamp.\\
+\hline
+{\em min} & The minimum value.\\
+\hline
+{\em max} & The maximum value.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a807ed79b593c323a0568089da719a622}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Clamp@{Clamp}}
+\index{Clamp@{Clamp}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Clamp(ref Vector2 value1, ref Vector2 min, ref Vector2 max, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Clamp (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{min, }
+\item[{ref {\bf Vector2}}]{max, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a807ed79b593c323a0568089da719a622}
+
+
+Restricts a value to be within a specified range.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & The value to clamp.\\
+\hline
+{\em min} & The minimum value.\\
+\hline
+{\em max} & The maximum value.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The clamped value.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ada46dcc9bd1a3d57e72f07fbfee0eef4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Distance@{Distance}}
+\index{Distance@{Distance}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Distance(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static float Microsoft.\+Xna.\+Framework.\+Vector2.\+Distance (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ada46dcc9bd1a3d57e72f07fbfee0eef4}
+
+
+Calculates the distance between two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab39d1402386de6276a677eea335eb70a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Distance@{Distance}}
+\index{Distance@{Distance}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Distance(ref Vector2 value1, ref Vector2 value2, out float result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Distance (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{out float}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab39d1402386de6276a677eea335eb70a}
+
+
+Calculates the distance between two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The distance between the vectors.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ad38d673a8138fb36f9eef89e5378f94d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Distance\+Squared@{Distance\+Squared}}
+\index{Distance\+Squared@{Distance\+Squared}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Distance\+Squared(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static float Microsoft.\+Xna.\+Framework.\+Vector2.\+Distance\+Squared (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ad38d673a8138fb36f9eef89e5378f94d}
+
+
+Calculates the distance between two vectors squared.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a3408fa30bbc1e6aaeed88481858915bd}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Distance\+Squared@{Distance\+Squared}}
+\index{Distance\+Squared@{Distance\+Squared}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Distance\+Squared(ref Vector2 value1, ref Vector2 value2, out float result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Distance\+Squared (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{out float}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a3408fa30bbc1e6aaeed88481858915bd}
+
+
+Calculates the distance between two vectors squared.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The distance between the vectors squared.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a80825404a896177105acdcc14183b20c}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Divide@{Divide}}
+\index{Divide@{Divide}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Divide(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Divide (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a80825404a896177105acdcc14183b20c}
+
+
+Divides the components of a vector by the components of another vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Divisor vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a34b590153d9cfd3da7d4c29cf81b8795}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Divide@{Divide}}
+\index{Divide@{Divide}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Divide(ref Vector2 value1, ref Vector2 value2, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Divide (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a34b590153d9cfd3da7d4c29cf81b8795}
+
+
+Divides the components of a vector by the components of another vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & The divisor.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The result of the division.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a04e7a5bdf518e16d90f9ade090598e8a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Divide@{Divide}}
+\index{Divide@{Divide}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Divide(\+Vector2 value1, float divider)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Divide (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{float}]{divider}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a04e7a5bdf518e16d90f9ade090598e8a}
+
+
+Divides a vector by a scalar value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em divider} & The divisor.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_adc4051426161db34dd495a9bfad6332b}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Divide@{Divide}}
+\index{Divide@{Divide}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Divide(ref Vector2 value1, float divider, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Divide (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{float}]{divider, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_adc4051426161db34dd495a9bfad6332b}
+
+
+Divides a vector by a scalar value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em divider} & The divisor.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The result of the division.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a11d1631119a63b47d126ec8c6514158a}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Dot@{Dot}}
+\index{Dot@{Dot}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Dot(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static float Microsoft.\+Xna.\+Framework.\+Vector2.\+Dot (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a11d1631119a63b47d126ec8c6514158a}
+
+
+Calculates the dot product of two vectors. If the two vectors are unit vectors, the dot product returns a floating point value between -\/1 and 1 that can be used to determine some properties of the angle between two vectors. For example, it can show whether the vectors are orthogonal, parallel, or have an acute or obtuse angle between them.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a5e1961565b5a29f77cd27f2e2322bc98}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Dot@{Dot}}
+\index{Dot@{Dot}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Dot(ref Vector2 value1, ref Vector2 value2, out float result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Dot (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{out float}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a5e1961565b5a29f77cd27f2e2322bc98}
+
+
+Calculates the dot product of two vectors and writes the result to a user-\/specified variable. If the two vectors are unit vectors, the dot product returns a floating point value between -\/1 and 1 that can be used to determine some properties of the angle between two vectors. For example, it can show whether the vectors are orthogonal, parallel, or have an acute or obtuse angle between them.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The dot product of the two vectors.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a0425aba4927eed9f7d1227a8701a3f98}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Equals@{Equals}}
+\index{Equals@{Equals}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Equals(\+Vector2 other)}]{\setlength{\rightskip}{0pt plus 5cm}bool Microsoft.\+Xna.\+Framework.\+Vector2.\+Equals (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{other}
+\end{DoxyParamCaption}
+)}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a0425aba4927eed9f7d1227a8701a3f98}
+
+
+Determines whether the specified Object is equal to the \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The Object to compare with the current \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2}.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a085fab7a69388875b5bb337077162411}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Equals@{Equals}}
+\index{Equals@{Equals}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Equals(object obj)}]{\setlength{\rightskip}{0pt plus 5cm}override bool Microsoft.\+Xna.\+Framework.\+Vector2.\+Equals (
+\begin{DoxyParamCaption}
+\item[{object}]{obj}
+\end{DoxyParamCaption}
+)}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a085fab7a69388875b5bb337077162411}
+
+
+Returns a value that indicates whether the current instance is equal to a specified object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & Object to make the comparison with.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af5c8022711973f4cbbe011eabe01eeeb}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Get\+Hash\+Code@{Get\+Hash\+Code}}
+\index{Get\+Hash\+Code@{Get\+Hash\+Code}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Get\+Hash\+Code()}]{\setlength{\rightskip}{0pt plus 5cm}override int Microsoft.\+Xna.\+Framework.\+Vector2.\+Get\+Hash\+Code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af5c8022711973f4cbbe011eabe01eeeb}
+
+
+Gets the hash code of the vector object.
+
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ae6253f517ec3855591969fe64ad88985}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Hermite@{Hermite}}
+\index{Hermite@{Hermite}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Hermite(\+Vector2 value1, Vector2 tangent1, Vector2 value2, Vector2 tangent2, float amount)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Hermite (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{tangent1, }
+\item[{{\bf Vector2}}]{value2, }
+\item[{{\bf Vector2}}]{tangent2, }
+\item[{float}]{amount}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ae6253f517ec3855591969fe64ad88985}
+
+
+Performs a Hermite spline interpolation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source position vector.\\
+\hline
+{\em tangent1} & Source tangent vector.\\
+\hline
+{\em value2} & Source position vector.\\
+\hline
+{\em tangent2} & Source tangent vector.\\
+\hline
+{\em amount} & Weighting factor.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_aca62b3073db26b1561a1e905c45003ca}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Hermite@{Hermite}}
+\index{Hermite@{Hermite}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Hermite(ref Vector2 value1, ref Vector2 tangent1, ref Vector2 value2, ref Vector2 tangent2, float amount, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Hermite (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{tangent1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{ref {\bf Vector2}}]{tangent2, }
+\item[{float}]{amount, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_aca62b3073db26b1561a1e905c45003ca}
+
+
+Performs a Hermite spline interpolation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source position vector.\\
+\hline
+{\em tangent1} & Source tangent vector.\\
+\hline
+{\em value2} & Source position vector.\\
+\hline
+{\em tangent2} & Source tangent vector.\\
+\hline
+{\em amount} & Weighting factor.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The result of the Hermite spline interpolation.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a0a8efc1ce6c7139ca2d5bbe8ba540d71}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Length@{Length}}
+\index{Length@{Length}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Length()}]{\setlength{\rightskip}{0pt plus 5cm}float Microsoft.\+Xna.\+Framework.\+Vector2.\+Length (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a0a8efc1ce6c7139ca2d5bbe8ba540d71}
+
+
+Calculates the length of the vector.
+
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a6e5559b22dbd45810997ed845b88d5ef}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Length\+Squared@{Length\+Squared}}
+\index{Length\+Squared@{Length\+Squared}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Length\+Squared()}]{\setlength{\rightskip}{0pt plus 5cm}float Microsoft.\+Xna.\+Framework.\+Vector2.\+Length\+Squared (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a6e5559b22dbd45810997ed845b88d5ef}
+
+
+Calculates the length of the vector squared.
+
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af24b6e17b0b78a82e7a65ed4dd475a3f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Lerp@{Lerp}}
+\index{Lerp@{Lerp}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Lerp(\+Vector2 value1, Vector2 value2, float amount)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Lerp (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2, }
+\item[{float}]{amount}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af24b6e17b0b78a82e7a65ed4dd475a3f}
+
+
+Performs a linear interpolation between two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em amount} & Value between 0 and 1 indicating the weight of value2.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab37033f40e6ce0658ca6a11649eeb207}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Lerp@{Lerp}}
+\index{Lerp@{Lerp}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Lerp(ref Vector2 value1, ref Vector2 value2, float amount, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Lerp (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{float}]{amount, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab37033f40e6ce0658ca6a11649eeb207}
+
+
+Performs a linear interpolation between two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em amount} & Value between 0 and 1 indicating the weight of value2.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The result of the interpolation.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac53cc49e4f898bff61dac9161b0fe84e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Max@{Max}}
+\index{Max@{Max}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Max(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Max (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac53cc49e4f898bff61dac9161b0fe84e}
+
+
+Returns a vector that contains the highest value from each matching pair of components.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_aa62255b815297a777794f8b2b4abc526}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Max@{Max}}
+\index{Max@{Max}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Max(ref Vector2 value1, ref Vector2 value2, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Max (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_aa62255b815297a777794f8b2b4abc526}
+
+
+Returns a vector that contains the highest value from each matching pair of components.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The maximized vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a3ff30d3384ff9de35b0d2f95bfc9c822}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Min@{Min}}
+\index{Min@{Min}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Min(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Min (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a3ff30d3384ff9de35b0d2f95bfc9c822}
+
+
+Returns a vector that contains the lowest value from each matching pair of components.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab4f299942d39bc3b4eea31220dcafd28}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Min@{Min}}
+\index{Min@{Min}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Min(ref Vector2 value1, ref Vector2 value2, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Min (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab4f299942d39bc3b4eea31220dcafd28}
+
+
+Returns a vector that contains the lowest value from each matching pair of components.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The minimized vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_afe9cb27575b53aed60ce1a2e0a8ad5ea}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Multiply@{Multiply}}
+\index{Multiply@{Multiply}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Multiply(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Multiply (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_afe9cb27575b53aed60ce1a2e0a8ad5ea}
+
+
+Multiplies the components of two vectors by each other.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a048f00989327ed10f1be5aed272353ea}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Multiply@{Multiply}}
+\index{Multiply@{Multiply}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Multiply(ref Vector2 value1, ref Vector2 value2, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Multiply (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a048f00989327ed10f1be5aed272353ea}
+
+
+Multiplies the components of two vectors by each other.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The result of the multiplication.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a33245a6351b32079625deb37d826d8fd}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Multiply@{Multiply}}
+\index{Multiply@{Multiply}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Multiply(\+Vector2 value1, float scale\+Factor)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Multiply (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{float}]{scale\+Factor}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a33245a6351b32079625deb37d826d8fd}
+
+
+Multiplies a vector by a scalar value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em scale\+Factor} & Scalar value.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a29750eb00961435a73e46f1d1eb112d4}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Multiply@{Multiply}}
+\index{Multiply@{Multiply}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Multiply(ref Vector2 value1, float scale\+Factor, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Multiply (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{float}]{scale\+Factor, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a29750eb00961435a73e46f1d1eb112d4}
+
+
+Multiplies a vector by a scalar value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em scale\+Factor} & Scalar value.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The result of the multiplication.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a2bd16ffd90e8adba2dd788742578596f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Negate@{Negate}}
+\index{Negate@{Negate}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Negate(\+Vector2 value)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Negate (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a2bd16ffd90e8adba2dd788742578596f}
+
+
+Returns a vector pointing in the opposite direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab2ef0e041442ae6ed99252f0ed52a889}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Negate@{Negate}}
+\index{Negate@{Negate}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Negate(ref Vector2 value, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Negate (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ab2ef0e041442ae6ed99252f0ed52a889}
+
+
+Returns a vector pointing in the opposite direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} Vector pointing in the opposite direction.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ae0a4c81d525c2437d296bcd787d47572}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Normalize@{Normalize}}
+\index{Normalize@{Normalize}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Normalize()}]{\setlength{\rightskip}{0pt plus 5cm}void Microsoft.\+Xna.\+Framework.\+Vector2.\+Normalize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ae0a4c81d525c2437d296bcd787d47572}
+
+
+Turns the current vector into a unit vector. The result is a vector one unit in length pointing in the same direction as the original vector.
+
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a43577b900b79e2cca19017a9764110fa}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Normalize@{Normalize}}
+\index{Normalize@{Normalize}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Normalize(\+Vector2 value)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Normalize (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a43577b900b79e2cca19017a9764110fa}
+
+
+Creates a unit vector from the specified vector. The result is a vector one unit in length pointing in the same direction as the original vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Source \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2}.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af13c3a68dca222883321eace82b5249d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Normalize@{Normalize}}
+\index{Normalize@{Normalize}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Normalize(ref Vector2 value, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Normalize (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_af13c3a68dca222883321eace82b5249d}
+
+
+Creates a unit vector from the specified vector, writing the result to a user-\/specified variable. The result is a vector one unit in length pointing in the same direction as the original vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} Normalized vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a63e86ed828f9f0af032435fc21223f0e}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator"!=(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Microsoft.\+Xna.\+Framework.\+Vector2.\+operator!= (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a63e86ed828f9f0af032435fc21223f0e}
+
+
+Tests vectors for inequality.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Vector to compare.\\
+\hline
+{\em value2} & Vector to compare.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a16b3751065ee46e45481925944996688}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator$\ast$(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a16b3751065ee46e45481925944996688}
+
+
+Multiplies the components of two vectors by each other.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a6c4efbfc69cb23b63dbb28e62f779353}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator$\ast$(\+Vector2 value, float scale\+Factor)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value, }
+\item[{float}]{scale\+Factor}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a6c4efbfc69cb23b63dbb28e62f779353}
+
+
+Multiplies a vector by a scalar value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Source vector.\\
+\hline
+{\em scale\+Factor} & Scalar value.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a158520a0088078dfebf46347d4387bf8}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator$\ast$(float scale\+Factor, Vector2 value)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{float}]{scale\+Factor, }
+\item[{{\bf Vector2}}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a158520a0088078dfebf46347d4387bf8}
+
+
+Multiplies a vector by a scalar value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scale\+Factor} & Scalar value.\\
+\hline
+{\em value} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_abac1c36ab19d8cf569b230b362947c1f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator+@{operator+}}
+\index{operator+@{operator+}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator+(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+operator+ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_abac1c36ab19d8cf569b230b362947c1f}
+
+
+Adds two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a9e60bd85e07bf1f47ec9ab5ab83b45dd}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator-\/(\+Vector2 value)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+operator-\/ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a9e60bd85e07bf1f47ec9ab5ab83b45dd}
+
+
+Returns a vector pointing in the opposite direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac2a2d0046508818743472e4bc0c70d03}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator-\/(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+operator-\/ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac2a2d0046508818743472e4bc0c70d03}
+
+
+Subtracts a vector from a vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_acdc4770a856249d18c53f0b4ee1c4955}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator/@{operator/}}
+\index{operator/@{operator/}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator/(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+operator/ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_acdc4770a856249d18c53f0b4ee1c4955}
+
+
+Divides the components of a vector by the components of another vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Divisor vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a694eff1433cd29a529da6c2f23ec6a86}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator/@{operator/}}
+\index{operator/@{operator/}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator/(\+Vector2 value1, float divider)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+operator/ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{float}]{divider}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a694eff1433cd29a529da6c2f23ec6a86}
+
+
+Divides a vector by a scalar value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em divider} & The divisor.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a473aaaa26a7e95cea2133244bf1b57a3}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!operator==@{operator==}}
+\index{operator==@{operator==}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{operator==(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Microsoft.\+Xna.\+Framework.\+Vector2.\+operator== (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a473aaaa26a7e95cea2133244bf1b57a3}
+
+
+Tests vectors for equality.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a3016b350393f1b600317d8938b0f1389}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Reflect@{Reflect}}
+\index{Reflect@{Reflect}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Reflect(\+Vector2 vector, Vector2 normal)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Reflect (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{vector, }
+\item[{{\bf Vector2}}]{normal}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a3016b350393f1b600317d8938b0f1389}
+
+
+Determines the reflect vector of the given vector and normal.
+
+
+\begin{DoxyParams}{Parameters}
+{\em vector} & Source vector.\\
+\hline
+{\em normal} & Normal of vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac6866823e16484efb29d38b6584f160f}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Reflect@{Reflect}}
+\index{Reflect@{Reflect}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Reflect(ref Vector2 vector, ref Vector2 normal, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Reflect (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{vector, }
+\item[{ref {\bf Vector2}}]{normal, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac6866823e16484efb29d38b6584f160f}
+
+
+Determines the reflect vector of the given vector and normal.
+
+
+\begin{DoxyParams}{Parameters}
+{\em vector} & Source vector.\\
+\hline
+{\em normal} & Normal of vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The created reflect vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a7d5bcc5e9dbfab346be25615d01a3a04}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Smooth\+Step@{Smooth\+Step}}
+\index{Smooth\+Step@{Smooth\+Step}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Smooth\+Step(\+Vector2 value1, Vector2 value2, float amount)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Smooth\+Step (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2, }
+\item[{float}]{amount}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a7d5bcc5e9dbfab346be25615d01a3a04}
+
+
+Interpolates between two values using a cubic equation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source value.\\
+\hline
+{\em value2} & Source value.\\
+\hline
+{\em amount} & Weighting value.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a544da7c140a42ca0860b261b0c49a883}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Smooth\+Step@{Smooth\+Step}}
+\index{Smooth\+Step@{Smooth\+Step}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Smooth\+Step(ref Vector2 value1, ref Vector2 value2, float amount, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Smooth\+Step (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{float}]{amount, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a544da7c140a42ca0860b261b0c49a883}
+
+
+Interpolates between two values using a cubic equation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source value.\\
+\hline
+{\em value2} & Source value.\\
+\hline
+{\em amount} & Weighting value.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The interpolated value.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a48469e4ad1613743bf9c223d9f4644bf}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Subtract@{Subtract}}
+\index{Subtract@{Subtract}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Subtract(\+Vector2 value1, Vector2 value2)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Subtract (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{value1, }
+\item[{{\bf Vector2}}]{value2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a48469e4ad1613743bf9c223d9f4644bf}
+
+
+Subtracts a vector from a vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a5dbd7be74531904fbb666a01e4734f2d}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Subtract@{Subtract}}
+\index{Subtract@{Subtract}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Subtract(ref Vector2 value1, ref Vector2 value2, out Vector2 result)}]{\setlength{\rightskip}{0pt plus 5cm}static void Microsoft.\+Xna.\+Framework.\+Vector2.\+Subtract (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Vector2}}]{value1, }
+\item[{ref {\bf Vector2}}]{value2, }
+\item[{out {\bf Vector2}}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a5dbd7be74531904fbb666a01e4734f2d}
+
+
+Subtracts a vector from a vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & Source vector.\\
+\hline
+{\em value2} & Source vector.\\
+\hline
+{\em result} & \mbox{[}Out\+Attribute\mbox{]} The result of the subtraction.\\
+\hline
+\end{DoxyParams}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_aa7e3d5988c5976a0b9ca2e9428e5b717}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{To\+String()}]{\setlength{\rightskip}{0pt plus 5cm}override string Microsoft.\+Xna.\+Framework.\+Vector2.\+To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_aa7e3d5988c5976a0b9ca2e9428e5b717}
+
+
+Retrieves a string representation of the current object.
+
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a48b225b38328287410a008c132fce766}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Transform@{Transform}}
+\index{Transform@{Transform}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Transform(\+Vector2 position, Matrix matrix)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Transform (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector2}}]{position, }
+\item[{{\bf Matrix}}]{matrix}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a48b225b38328287410a008c132fce766}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ae680588c59bced140b0202ae87b35909}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Array@{Array}}
+\index{Array@{Array}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Array}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2} \mbox{[}$\,$\mbox{]} Microsoft.\+Xna.\+Framework.\+Vector2.\+Array\hspace{0.3cm}{\ttfamily [static]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ae680588c59bced140b0202ae87b35909}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a2adf6ff3693ba54d76fdee8c202ec522}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!X@{X}}
+\index{X@{X}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{X}]{\setlength{\rightskip}{0pt plus 5cm}float Microsoft.\+Xna.\+Framework.\+Vector2.\+X}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a2adf6ff3693ba54d76fdee8c202ec522}
+
+
+Gets or sets the x-\/component of the vector.
+
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_adb6b2d6af0cc594ae0f8e0b312663ef5}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Y@{Y}}
+\index{Y@{Y}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Y}]{\setlength{\rightskip}{0pt plus 5cm}float Microsoft.\+Xna.\+Framework.\+Vector2.\+Y}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_adb6b2d6af0cc594ae0f8e0b312663ef5}
+
+
+Gets or sets the y-\/component of the vector.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a81e3bdd813a766ad2a1e14c96c8cfa3b}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!One@{One}}
+\index{One@{One}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{One}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+One\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a81e3bdd813a766ad2a1e14c96c8cfa3b}
+
+
+Returns a \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} with both of its components set to one.
+
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a7884d5af8934eebc91a118a381b0ec25}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Unit\+X@{Unit\+X}}
+\index{Unit\+X@{Unit\+X}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Unit\+X}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Unit\+X\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a7884d5af8934eebc91a118a381b0ec25}
+
+
+Returns the unit vector for the x-\/axis.
+
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac737216f0343a07a912c3fc34ec64569}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Unit\+Y@{Unit\+Y}}
+\index{Unit\+Y@{Unit\+Y}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Unit\+Y}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Unit\+Y\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_ac737216f0343a07a912c3fc34ec64569}
+
+
+Returns the unit vector for the y-\/axis.
+
+\hypertarget{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a326202f2b3a35f6b549d835dba935f93}{}\index{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}!Zero@{Zero}}
+\index{Zero@{Zero}!Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2@{Microsoft\+::\+Xna\+::\+Framework\+::\+Vector2}}
+\subsubsection[{Zero}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2} Microsoft.\+Xna.\+Framework.\+Vector2.\+Zero\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2_a326202f2b3a35f6b549d835dba935f93}
+
+
+Returns a \hyperlink{struct_microsoft_1_1_xna_1_1_framework_1_1_vector2}{Vector2} with all of its components set to zero.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Xna/\hyperlink{_vector2_8cs}{Vector2.\+cs}\end{DoxyCompactItemize}

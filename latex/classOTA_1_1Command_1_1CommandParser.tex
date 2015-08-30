@@ -1,0 +1,251 @@
+\hypertarget{classOTA_1_1Command_1_1CommandParser}{}\section{Command\+Parser}
+\label{classOTA_1_1Command_1_1CommandParser}\index{Command\+Parser@{Command\+Parser}}
+
+
+Functionality to process sender commands, and the default vanilla commands as an \hyperlink{namespaceOTA}{O\+T\+A} version.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandParser_a4f074493e57030ed27c34add3d0734ec}{Add\+Command} (string prefix)
+\begin{DoxyCompactList}\small\item\em Registers new command \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandParser_abedaa860b9bbc20e54cc09b5d30aba27}{Command\+Parser} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{classOTA_1_1Command_1_1CommandParser}{Command\+Parser} constructor \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1CommandParser_a70c31a78e41fdd27cfc8e1b9435fc984}{Parse\+And\+Process} (\hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender, string line)
+\begin{DoxyCompactList}\small\item\em Parses and process a command from a sender \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1CommandParser_a5944ad779013f1b6f1dce1b1af02135c}{Parse\+Console\+Command} (string line, \hyperlink{classOTA_1_1Command_1_1ConsoleSender}{Console\+Sender} sender=null)
+\begin{DoxyCompactList}\small\item\em Parses new console command \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classOTA_1_1Command_1_1CommandParser_a5e6d68105b93fbe34dd91d53524b885a}{Check\+Access\+Level} (\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} cmd, \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender)
+\begin{DoxyCompactList}\small\item\em Determines entity\textquotesingle{}s ability to use command. Used when permissions plugin is running. \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Command_1_1CommandParser_a6ac1e5a324c24c8cbea348e63848cfb1}{Check\+Access\+Level} (\hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdc}{Access\+Level} acc, \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender)
+\begin{DoxyCompactList}\small\item\em Determines the access level of the sender. Used when no permissions plugin is found. \end{DoxyCompactList}\item 
+static \hyperlink{namespaceOTA_1_1Data_a5335d23d62bc219ccbf40b018c002e8d}{Data.\+Permission} \hyperlink{classOTA_1_1Command_1_1CommandParser_ad96b35937fbc31608107174335577ed6}{Check\+Permissions} (\hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender, \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} cmd)
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespaceOTA_1_1Permissions}{Permissions} checking for registered commands. \end{DoxyCompactList}\item 
+static Dictionary$<$ string, \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} $>$ \hyperlink{classOTA_1_1Command_1_1CommandParser_a267151a0a06efe756f206df9a8e99f0b}{Get\+Available\+Commands} (\hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdc}{Access\+Level} access)
+\begin{DoxyCompactList}\small\item\em Gets the available commands for an access level. \end{DoxyCompactList}\item 
+static string \hyperlink{classOTA_1_1Command_1_1CommandParser_a41afa27c96dc7f46d4d48d5846873bcd}{Tokenize} (string command, List$<$ string $>$ args)
+\begin{DoxyCompactList}\small\item\em Splits a command on spaces, with support for \char`\"{}parameters in quotes\char`\"{} and non-\/breaking\textbackslash{} spaces. Literal quotes need to be escaped like this\+: " Literal backslashes need to escaped like this\+: \textbackslash{} Returns the first token \end{DoxyCompactList}\item 
+static List$<$ string $>$ \hyperlink{classOTA_1_1Command_1_1CommandParser_aed7a9badaa95f91a1a5c7110e5e87953}{Tokenize} (string command)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+readonly Dictionary$<$ String, \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} $>$ \hyperlink{classOTA_1_1Command_1_1CommandParser_a6b1a0845c0af065839766e04cb403502}{server\+Commands}
+\begin{DoxyCompactList}\small\item\em The default O\+T\+A/\+Vanilla commands \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static Func$<$ \hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdc}{Access\+Level}, \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender}, Boolean $>$ \hyperlink{classOTA_1_1Command_1_1CommandParser_ac15e5808dae73d018b83f64844aa130a}{Ext\+Check\+Access\+Level}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functionality to process sender commands, and the default vanilla commands as an \hyperlink{namespaceOTA}{O\+T\+A} version. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_abedaa860b9bbc20e54cc09b5d30aba27}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Command\+Parser@{Command\+Parser}}
+\index{Command\+Parser@{Command\+Parser}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Command\+Parser()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Parser} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandParser_abedaa860b9bbc20e54cc09b5d30aba27}
+
+
+\hyperlink{classOTA_1_1Command_1_1CommandParser}{Command\+Parser} constructor 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_a4f074493e57030ed27c34add3d0734ec}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Add\+Command@{Add\+Command}}
+\index{Add\+Command@{Add\+Command}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Add\+Command(string prefix)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} Add\+Command (
+\begin{DoxyParamCaption}
+\item[{string}]{prefix}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandParser_a4f074493e57030ed27c34add3d0734ec}
+
+
+Registers new command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prefix} & The text attached to the / that will be registered as the command.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} for new command
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_a5e6d68105b93fbe34dd91d53524b885a}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Check\+Access\+Level@{Check\+Access\+Level}}
+\index{Check\+Access\+Level@{Check\+Access\+Level}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Check\+Access\+Level(\+Command\+Info cmd, I\+Sender sender)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Check\+Access\+Level (
+\begin{DoxyParamCaption}
+\item[{{\bf Command\+Info}}]{cmd, }
+\item[{{\bf I\+Sender}}]{sender}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1CommandParser_a5e6d68105b93fbe34dd91d53524b885a}
+
+
+Determines entity\textquotesingle{}s ability to use command. Used when permissions plugin is running. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & \hyperlink{namespaceOTA_1_1Command}{Command} to check\\
+\hline
+{\em sender} & \hyperlink{classOTA_1_1Command_1_1Sender}{Sender} entity to check against\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if sender can use command, false if not
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_a6ac1e5a324c24c8cbea348e63848cfb1}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Check\+Access\+Level@{Check\+Access\+Level}}
+\index{Check\+Access\+Level@{Check\+Access\+Level}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Check\+Access\+Level(\+Access\+Level acc, I\+Sender sender)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Check\+Access\+Level (
+\begin{DoxyParamCaption}
+\item[{{\bf Access\+Level}}]{acc, }
+\item[{{\bf I\+Sender}}]{sender}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1CommandParser_a6ac1e5a324c24c8cbea348e63848cfb1}
+
+
+Determines the access level of the sender. Used when no permissions plugin is found. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em acc} & Access level to check against\\
+\hline
+{\em sender} & \hyperlink{classOTA_1_1Command_1_1Sender}{Sender} to check\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if sender has access level equal to or greater than acc
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_ad96b35937fbc31608107174335577ed6}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Check\+Permissions@{Check\+Permissions}}
+\index{Check\+Permissions@{Check\+Permissions}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Check\+Permissions(\+I\+Sender sender, Command\+Info cmd)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Data.\+Permission} Check\+Permissions (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sender}}]{sender, }
+\item[{{\bf Command\+Info}}]{cmd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1CommandParser_ad96b35937fbc31608107174335577ed6}
+
+
+\hyperlink{namespaceOTA_1_1Permissions}{Permissions} checking for registered commands. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & Entity to check permissions for\\
+\hline
+{\em cmd} & \hyperlink{namespaceOTA_1_1Command}{Command} to check for permissions on\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if entity can use command. False if not.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_a267151a0a06efe756f206df9a8e99f0b}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Get\+Available\+Commands@{Get\+Available\+Commands}}
+\index{Get\+Available\+Commands@{Get\+Available\+Commands}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Get\+Available\+Commands(\+Access\+Level access)}]{\setlength{\rightskip}{0pt plus 5cm}static Dictionary$<$string, {\bf Command\+Info}$>$ Get\+Available\+Commands (
+\begin{DoxyParamCaption}
+\item[{{\bf Access\+Level}}]{access}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1CommandParser_a267151a0a06efe756f206df9a8e99f0b}
+
+
+Gets the available commands for an access level. 
+
+\begin{DoxyReturn}{Returns}
+The available commands.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em access} & Access.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_a70c31a78e41fdd27cfc8e1b9435fc984}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Parse\+And\+Process@{Parse\+And\+Process}}
+\index{Parse\+And\+Process@{Parse\+And\+Process}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Parse\+And\+Process(\+I\+Sender sender, string line)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+And\+Process (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sender}}]{sender, }
+\item[{string}]{line}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandParser_a70c31a78e41fdd27cfc8e1b9435fc984}
+
+
+Parses and process a command from a sender 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & \hyperlink{classOTA_1_1Command_1_1Sender}{Sender}.\\
+\hline
+{\em line} & Line.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_a5944ad779013f1b6f1dce1b1af02135c}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Parse\+Console\+Command@{Parse\+Console\+Command}}
+\index{Parse\+Console\+Command@{Parse\+Console\+Command}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Parse\+Console\+Command(string line, Console\+Sender sender=null)}]{\setlength{\rightskip}{0pt plus 5cm}void Parse\+Console\+Command (
+\begin{DoxyParamCaption}
+\item[{string}]{line, }
+\item[{{\bf Console\+Sender}}]{sender = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandParser_a5944ad779013f1b6f1dce1b1af02135c}
+
+
+Parses new console command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & \hyperlink{namespaceOTA_1_1Command}{Command} to parse\\
+\hline
+{\em sender} & Sending entity\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_a41afa27c96dc7f46d4d48d5846873bcd}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Tokenize@{Tokenize}}
+\index{Tokenize@{Tokenize}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Tokenize(string command, List$<$ string $>$ args)}]{\setlength{\rightskip}{0pt plus 5cm}static string Tokenize (
+\begin{DoxyParamCaption}
+\item[{string}]{command, }
+\item[{List$<$ string $>$}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1CommandParser_a41afa27c96dc7f46d4d48d5846873bcd}
+
+
+Splits a command on spaces, with support for \char`\"{}parameters in quotes\char`\"{} and non-\/breaking\textbackslash{} spaces. Literal quotes need to be escaped like this\+: " Literal backslashes need to escaped like this\+: \textbackslash{} Returns the first token 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Whole command line without trailing newline \\
+\hline
+{\em args} & An empty list to put the arguments in \\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_aed7a9badaa95f91a1a5c7110e5e87953}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Tokenize@{Tokenize}}
+\index{Tokenize@{Tokenize}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Tokenize(string command)}]{\setlength{\rightskip}{0pt plus 5cm}static List$<$string$>$ Tokenize (
+\begin{DoxyParamCaption}
+\item[{string}]{command}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1CommandParser_aed7a9badaa95f91a1a5c7110e5e87953}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_ac15e5808dae73d018b83f64844aa130a}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!Ext\+Check\+Access\+Level@{Ext\+Check\+Access\+Level}}
+\index{Ext\+Check\+Access\+Level@{Ext\+Check\+Access\+Level}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{Ext\+Check\+Access\+Level}]{\setlength{\rightskip}{0pt plus 5cm}Func$<${\bf Access\+Level}, {\bf I\+Sender}, Boolean$>$ Ext\+Check\+Access\+Level\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1CommandParser_ac15e5808dae73d018b83f64844aa130a}
+\hypertarget{classOTA_1_1Command_1_1CommandParser_a6b1a0845c0af065839766e04cb403502}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}!server\+Commands@{server\+Commands}}
+\index{server\+Commands@{server\+Commands}!O\+T\+A\+::\+Command\+::\+Command\+Parser@{O\+T\+A\+::\+Command\+::\+Command\+Parser}}
+\subsubsection[{server\+Commands}]{\setlength{\rightskip}{0pt plus 5cm}readonly Dictionary$<$String, {\bf Command\+Info}$>$ server\+Commands}\label{classOTA_1_1Command_1_1CommandParser_a6b1a0845c0af065839766e04cb403502}
+
+
+The default O\+T\+A/\+Vanilla commands 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{CommandParser_8cs}{Command\+Parser.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,286 @@
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler}{}\section{O\+T\+A.\+Data.\+I\+Permission\+Handler Interface Reference}
+\label{interface_o_t_a_1_1_data_1_1_i_permission_handler}\index{O\+T\+A.\+Data.\+I\+Permission\+Handler@{O\+T\+A.\+Data.\+I\+Permission\+Handler}}
+
+
+The interface behind custom permissions handlers  
+
+
+Inheritance diagram for O\+T\+A.\+Data.\+I\+Permission\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interface_o_t_a_1_1_data_1_1_i_permission_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_o_t_a_1_1_data_acb383d9e681580b5a8710a08fb7c3aef}{Permission} \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a927eb305c4ae86bcb9dfa461cb041995}{Is\+Permitted} (string node, \hyperlink{class_o_t_a_1_1_base_player}{Base\+Player} player)
+\item 
+\hyperlink{class_o_t_a_1_1_data_1_1_group}{Group} \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a1ae08dc07d05431250ceb15e5d66dac8}{Find\+Group} (string name)
+\begin{DoxyCompactList}\small\item\em Find a group by name \end{DoxyCompactList}\item 
+bool \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a3c8528820ea08f448bd1ea153c1c7644}{Add\+Or\+Update\+Group} (string name, bool apply\+To\+Guests=false, string parent=null, byte r=255, byte g=255, byte b=255, string prefix=null, string suffix=null)
+\begin{DoxyCompactList}\small\item\em Add the or update a group. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a10772aa23ce1abe4c98e4e93fe068978}{Remove\+Group} (string name)
+\begin{DoxyCompactList}\small\item\em Remove a group from the data store. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a7e47bfa7cc400a772f4b90c6eb81deeb}{Add\+Group\+Node} (string group\+Name, string node, bool deny=false)
+\begin{DoxyCompactList}\small\item\em Add a group node to the data store \end{DoxyCompactList}\item 
+bool \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a1bae4eaa509aef2407bea474f06592c4}{Remove\+Group\+Node} (string group\+Name, string node, bool deny=false)
+\begin{DoxyCompactList}\small\item\em Remove a group node from the data store \end{DoxyCompactList}\item 
+string\mbox{[}$\,$\mbox{]} \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a6556edbd59ee5e4238262048a56e3e54}{Group\+List} ()
+\begin{DoxyCompactList}\small\item\em Fetches the list of group names from the data store. \end{DoxyCompactList}\item 
+\hyperlink{struct_o_t_a_1_1_data_1_1_permission_node}{Permission\+Node}\mbox{[}$\,$\mbox{]} \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_ad3b996b650f80e3f23bc02c9e19d3bbe}{Group\+Nodes} (string group\+Name)
+\begin{DoxyCompactList}\small\item\em Fetch the list of nodes for a group \end{DoxyCompactList}\item 
+bool \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a2fdd0b8e9ef34f6006a087007c920937}{Add\+User\+To\+Group} (string username, string group\+Name)
+\begin{DoxyCompactList}\small\item\em Add a user to a group. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_ae7d0c994d0e4a3509ecde3dc5748c4d0}{Remove\+User\+From\+Group} (string username, string group\+Name)
+\begin{DoxyCompactList}\small\item\em Remove a user from a group \end{DoxyCompactList}\item 
+bool \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a9b917c71bef8e5f725d74932cf162c7c}{Add\+Node\+To\+User} (string username, string node, bool deny=false)
+\begin{DoxyCompactList}\small\item\em Add a node to the user. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a122c2458f8500ed394cffb9b649b9302}{Remove\+Node\+From\+User} (string username, string node, bool deny=false)
+\begin{DoxyCompactList}\small\item\em Removed a node from a user \end{DoxyCompactList}\item 
+string\mbox{[}$\,$\mbox{]} \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_af6032f726116bbf7e53bce01d09f2d61}{User\+Group\+List} (string username)
+\begin{DoxyCompactList}\small\item\em Fetch the group names a user is associated to \end{DoxyCompactList}\item 
+\hyperlink{struct_o_t_a_1_1_data_1_1_permission_node}{Permission\+Node}\mbox{[}$\,$\mbox{]} \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a622583cac3db69e91c0e73465f9ab55a}{User\+Nodes} (string username)
+\begin{DoxyCompactList}\small\item\em Fetch the nodes a user has specific access to \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_data_1_1_group}{Group} \hyperlink{interface_o_t_a_1_1_data_1_1_i_permission_handler_a99a0812570f863236481e8ee53ce9b44}{Get\+Inherited\+Group\+For\+User} (string username)
+\begin{DoxyCompactList}\small\item\em Fetches the lowest inherited group \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The interface behind custom permissions handlers 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a7e47bfa7cc400a772f4b90c6eb81deeb}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Add\+Group\+Node@{Add\+Group\+Node}}
+\index{Add\+Group\+Node@{Add\+Group\+Node}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Add\+Group\+Node(string group\+Name, string node, bool deny=false)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Add\+Group\+Node (
+\begin{DoxyParamCaption}
+\item[{string}]{group\+Name, }
+\item[{string}]{node, }
+\item[{bool}]{deny = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a7e47bfa7cc400a772f4b90c6eb81deeb}
+
+
+Add a group node to the data store 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if the group node was added, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a9b917c71bef8e5f725d74932cf162c7c}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Add\+Node\+To\+User@{Add\+Node\+To\+User}}
+\index{Add\+Node\+To\+User@{Add\+Node\+To\+User}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Add\+Node\+To\+User(string username, string node, bool deny=false)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Add\+Node\+To\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{node, }
+\item[{bool}]{deny = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a9b917c71bef8e5f725d74932cf162c7c}
+
+
+Add a node to the user. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if the node was added to the user, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a3c8528820ea08f448bd1ea153c1c7644}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Add\+Or\+Update\+Group@{Add\+Or\+Update\+Group}}
+\index{Add\+Or\+Update\+Group@{Add\+Or\+Update\+Group}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Add\+Or\+Update\+Group(string name, bool apply\+To\+Guests=false, string parent=null, byte r=255, byte g=255, byte b=255, string prefix=null, string suffix=null)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Add\+Or\+Update\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{name, }
+\item[{bool}]{apply\+To\+Guests = {\ttfamily false}, }
+\item[{string}]{parent = {\ttfamily null}, }
+\item[{byte}]{r = {\ttfamily 255}, }
+\item[{byte}]{g = {\ttfamily 255}, }
+\item[{byte}]{b = {\ttfamily 255}, }
+\item[{string}]{prefix = {\ttfamily null}, }
+\item[{string}]{suffix = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a3c8528820ea08f448bd1ea153c1c7644}
+
+
+Add the or update a group. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if or update group was added, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a2fdd0b8e9ef34f6006a087007c920937}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Add\+User\+To\+Group@{Add\+User\+To\+Group}}
+\index{Add\+User\+To\+Group@{Add\+User\+To\+Group}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Add\+User\+To\+Group(string username, string group\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Add\+User\+To\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{group\+Name}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a2fdd0b8e9ef34f6006a087007c920937}
+
+
+Add a user to a group. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if the user was added to the group, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a1ae08dc07d05431250ceb15e5d66dac8}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Find\+Group@{Find\+Group}}
+\index{Find\+Group@{Find\+Group}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Find\+Group(string name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Group} O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Find\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a1ae08dc07d05431250ceb15e5d66dac8}
+
+
+Find a group by name 
+
+\begin{DoxyReturn}{Returns}
+The group.
+\end{DoxyReturn}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a99a0812570f863236481e8ee53ce9b44}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Get\+Inherited\+Group\+For\+User@{Get\+Inherited\+Group\+For\+User}}
+\index{Get\+Inherited\+Group\+For\+User@{Get\+Inherited\+Group\+For\+User}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Get\+Inherited\+Group\+For\+User(string username)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Group} O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Get\+Inherited\+Group\+For\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a99a0812570f863236481e8ee53ce9b44}
+
+
+Fetches the lowest inherited group 
+
+\begin{DoxyReturn}{Returns}
+The inherited group for user.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+\end{DoxyParams}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a6556edbd59ee5e4238262048a56e3e54}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Group\+List@{Group\+List}}
+\index{Group\+List@{Group\+List}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Group\+List()}]{\setlength{\rightskip}{0pt plus 5cm}string \mbox{[}$\,$\mbox{]} O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Group\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a6556edbd59ee5e4238262048a56e3e54}
+
+
+Fetches the list of group names from the data store. 
+
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_ad3b996b650f80e3f23bc02c9e19d3bbe}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Group\+Nodes@{Group\+Nodes}}
+\index{Group\+Nodes@{Group\+Nodes}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Group\+Nodes(string group\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Permission\+Node} \mbox{[}$\,$\mbox{]} O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Group\+Nodes (
+\begin{DoxyParamCaption}
+\item[{string}]{group\+Name}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_ad3b996b650f80e3f23bc02c9e19d3bbe}
+
+
+Fetch the list of nodes for a group 
+
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a927eb305c4ae86bcb9dfa461cb041995}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Is\+Permitted@{Is\+Permitted}}
+\index{Is\+Permitted@{Is\+Permitted}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Is\+Permitted(string node, Base\+Player player)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Permission} O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Is\+Permitted (
+\begin{DoxyParamCaption}
+\item[{string}]{node, }
+\item[{{\bf Base\+Player}}]{player}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a927eb305c4ae86bcb9dfa461cb041995}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a10772aa23ce1abe4c98e4e93fe068978}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Remove\+Group@{Remove\+Group}}
+\index{Remove\+Group@{Remove\+Group}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Remove\+Group(string name)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Remove\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a10772aa23ce1abe4c98e4e93fe068978}
+
+
+Remove a group from the data store. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if the group was removed, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a1bae4eaa509aef2407bea474f06592c4}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Remove\+Group\+Node@{Remove\+Group\+Node}}
+\index{Remove\+Group\+Node@{Remove\+Group\+Node}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Remove\+Group\+Node(string group\+Name, string node, bool deny=false)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Remove\+Group\+Node (
+\begin{DoxyParamCaption}
+\item[{string}]{group\+Name, }
+\item[{string}]{node, }
+\item[{bool}]{deny = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a1bae4eaa509aef2407bea474f06592c4}
+
+
+Remove a group node from the data store 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if the group node was removed, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a122c2458f8500ed394cffb9b649b9302}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Remove\+Node\+From\+User@{Remove\+Node\+From\+User}}
+\index{Remove\+Node\+From\+User@{Remove\+Node\+From\+User}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Remove\+Node\+From\+User(string username, string node, bool deny=false)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Remove\+Node\+From\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{node, }
+\item[{bool}]{deny = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a122c2458f8500ed394cffb9b649b9302}
+
+
+Removed a node from a user 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if the node was removed from the user, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_ae7d0c994d0e4a3509ecde3dc5748c4d0}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!Remove\+User\+From\+Group@{Remove\+User\+From\+Group}}
+\index{Remove\+User\+From\+Group@{Remove\+User\+From\+Group}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{Remove\+User\+From\+Group(string username, string group\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Data.\+I\+Permission\+Handler.\+Remove\+User\+From\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{group\+Name}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_ae7d0c994d0e4a3509ecde3dc5748c4d0}
+
+
+Remove a user from a group 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if the user was removed from the group, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_af6032f726116bbf7e53bce01d09f2d61}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!User\+Group\+List@{User\+Group\+List}}
+\index{User\+Group\+List@{User\+Group\+List}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{User\+Group\+List(string username)}]{\setlength{\rightskip}{0pt plus 5cm}string \mbox{[}$\,$\mbox{]} O\+T\+A.\+Data.\+I\+Permission\+Handler.\+User\+Group\+List (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_af6032f726116bbf7e53bce01d09f2d61}
+
+
+Fetch the group names a user is associated to 
+
+Currently should always be 1\hypertarget{interface_o_t_a_1_1_data_1_1_i_permission_handler_a622583cac3db69e91c0e73465f9ab55a}{}\index{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}!User\+Nodes@{User\+Nodes}}
+\index{User\+Nodes@{User\+Nodes}!O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler@{O\+T\+A\+::\+Data\+::\+I\+Permission\+Handler}}
+\subsubsection[{User\+Nodes(string username)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Permission\+Node} \mbox{[}$\,$\mbox{]} O\+T\+A.\+Data.\+I\+Permission\+Handler.\+User\+Nodes (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_data_1_1_i_permission_handler_a622583cac3db69e91c0e73465f9ab55a}
+
+
+Fetch the nodes a user has specific access to 
+
+\begin{DoxyReturn}{Returns}
+The nodes.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Data/\hyperlink{_i_data_connector_8cs}{I\+Data\+Connector.\+cs}\end{DoxyCompactItemize}

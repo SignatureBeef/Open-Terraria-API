@@ -1,0 +1,68 @@
+\hypertarget{class_o_t_a_1_1_callbacks_1_1_rand}{}\section{O\+T\+A.\+Callbacks.\+Rand Class Reference}
+\label{class_o_t_a_1_1_callbacks_1_1_rand}\index{O\+T\+A.\+Callbacks.\+Rand@{O\+T\+A.\+Callbacks.\+Rand}}
+
+
+A checked random instance  
+
+
+Inheritance diagram for O\+T\+A.\+Callbacks.\+Rand\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_o_t_a_1_1_callbacks_1_1_rand}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override int \hyperlink{class_o_t_a_1_1_callbacks_1_1_rand_a44c48f599fd8891a1dc64aa0666c3a52}{Next} (int max\+Value)
+\begin{DoxyCompactList}\small\item\em Ensures there is no exception, if max\+Value is lower then zero the random number will return as 0 \end{DoxyCompactList}\item 
+override int \hyperlink{class_o_t_a_1_1_callbacks_1_1_rand_a7b588c8fcfa862d236662c809f92ad7f}{Next} (int min\+Value, int max\+Value)
+\begin{DoxyCompactList}\small\item\em Generates a random number between min/max\+Value It ensures the min\+Value is higher than 0 and max\+Value is larger than min\+Value \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A checked random instance 
+
+This is mainly used to fix a bug in Terraria.\+Player.\+Ghost
+
+\subsection{Member Function Documentation}
+\hypertarget{class_o_t_a_1_1_callbacks_1_1_rand_a44c48f599fd8891a1dc64aa0666c3a52}{}\index{O\+T\+A\+::\+Callbacks\+::\+Rand@{O\+T\+A\+::\+Callbacks\+::\+Rand}!Next@{Next}}
+\index{Next@{Next}!O\+T\+A\+::\+Callbacks\+::\+Rand@{O\+T\+A\+::\+Callbacks\+::\+Rand}}
+\subsubsection[{Next(int max\+Value)}]{\setlength{\rightskip}{0pt plus 5cm}override int O\+T\+A.\+Callbacks.\+Rand.\+Next (
+\begin{DoxyParamCaption}
+\item[{int}]{max\+Value}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_callbacks_1_1_rand_a44c48f599fd8891a1dc64aa0666c3a52}
+
+
+Ensures there is no exception, if max\+Value is lower then zero the random number will return as 0 
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\+Value} & Max value.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_callbacks_1_1_rand_a7b588c8fcfa862d236662c809f92ad7f}{}\index{O\+T\+A\+::\+Callbacks\+::\+Rand@{O\+T\+A\+::\+Callbacks\+::\+Rand}!Next@{Next}}
+\index{Next@{Next}!O\+T\+A\+::\+Callbacks\+::\+Rand@{O\+T\+A\+::\+Callbacks\+::\+Rand}}
+\subsubsection[{Next(int min\+Value, int max\+Value)}]{\setlength{\rightskip}{0pt plus 5cm}override int O\+T\+A.\+Callbacks.\+Rand.\+Next (
+\begin{DoxyParamCaption}
+\item[{int}]{min\+Value, }
+\item[{int}]{max\+Value}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_callbacks_1_1_rand_a7b588c8fcfa862d236662c809f92ad7f}
+
+
+Generates a random number between min/max\+Value It ensures the min\+Value is higher than 0 and max\+Value is larger than min\+Value 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min\+Value} & Minimum value.\\
+\hline
+{\em max\+Value} & Max value.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Callbacks/\hyperlink{_utilities_8cs}{Utilities.\+cs}\end{DoxyCompactItemize}

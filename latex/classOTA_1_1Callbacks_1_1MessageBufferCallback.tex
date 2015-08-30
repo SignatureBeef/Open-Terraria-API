@@ -1,0 +1,77 @@
+\hypertarget{classOTA_1_1Callbacks_1_1MessageBufferCallback}{}\section{Message\+Buffer\+Callback}
+\label{classOTA_1_1Callbacks_1_1MessageBufferCallback}\index{Message\+Buffer\+Callback@{Message\+Buffer\+Callback}}
+
+
+The callbacks from the terrarian tcp clients\textquotesingle{} stream reader  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classOTA_1_1Callbacks_1_1MessageBufferCallback_af1f90c9ec6ecd3e8ec1fad19449589ee}{Check\+For\+Invalid\+State} (int buffer\+Id, byte packet\+Id)
+\begin{DoxyCompactList}\small\item\em The callback check to see if a client sent a wrong message at the wrong state \end{DoxyCompactList}\item 
+static byte \hyperlink{classOTA_1_1Callbacks_1_1MessageBufferCallback_a7b882aa35141825ee08c6401cc3349b7}{Process\+Packet} (int buffer\+Id, byte packet\+Id, int start, int length)
+\begin{DoxyCompactList}\small\item\em The call from within Terraria.\+Message\+Buffer.\+Get\+Data \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The callbacks from the terrarian tcp clients\textquotesingle{} stream reader 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Callbacks_1_1MessageBufferCallback_af1f90c9ec6ecd3e8ec1fad19449589ee}{}\index{O\+T\+A\+::\+Callbacks\+::\+Message\+Buffer\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Message\+Buffer\+Callback}!Check\+For\+Invalid\+State@{Check\+For\+Invalid\+State}}
+\index{Check\+For\+Invalid\+State@{Check\+For\+Invalid\+State}!O\+T\+A\+::\+Callbacks\+::\+Message\+Buffer\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Message\+Buffer\+Callback}}
+\subsubsection[{Check\+For\+Invalid\+State(int buffer\+Id, byte packet\+Id)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Check\+For\+Invalid\+State (
+\begin{DoxyParamCaption}
+\item[{int}]{buffer\+Id, }
+\item[{byte}]{packet\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MessageBufferCallback_af1f90c9ec6ecd3e8ec1fad19449589ee}
+
+
+The callback check to see if a client sent a wrong message at the wrong state 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer\+Id} & \\
+\hline
+{\em packet\+Id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Callbacks_1_1MessageBufferCallback_a7b882aa35141825ee08c6401cc3349b7}{}\index{O\+T\+A\+::\+Callbacks\+::\+Message\+Buffer\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Message\+Buffer\+Callback}!Process\+Packet@{Process\+Packet}}
+\index{Process\+Packet@{Process\+Packet}!O\+T\+A\+::\+Callbacks\+::\+Message\+Buffer\+Callback@{O\+T\+A\+::\+Callbacks\+::\+Message\+Buffer\+Callback}}
+\subsubsection[{Process\+Packet(int buffer\+Id, byte packet\+Id, int start, int length)}]{\setlength{\rightskip}{0pt plus 5cm}static byte Process\+Packet (
+\begin{DoxyParamCaption}
+\item[{int}]{buffer\+Id, }
+\item[{byte}]{packet\+Id, }
+\item[{int}]{start, }
+\item[{int}]{length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1MessageBufferCallback_a7b882aa35141825ee08c6401cc3349b7}
+
+
+The call from within Terraria.\+Message\+Buffer.\+Get\+Data 
+
+\begin{DoxyReturn}{Returns}
+0 when consumed, the original packet id if vanilla code is to process as normal
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em buffer\+Id} & Buffer identifier.\\
+\hline
+{\em packet\+Id} & Packet identifier.\\
+\hline
+{\em start} & Start of the net message.\\
+\hline
+{\em length} & Length of the net message.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Callbacks/\hyperlink{MessageBufferCallback_8cs}{Message\+Buffer\+Callback.\+cs}\end{DoxyCompactItemize}

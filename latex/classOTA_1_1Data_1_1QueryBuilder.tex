@@ -1,0 +1,438 @@
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder}{}\section{Query\+Builder}
+\label{classOTA_1_1Data_1_1QueryBuilder}\index{Query\+Builder@{Query\+Builder}}
+
+
+The bare implementation of a query builder  
+
+
+Inheritance diagram for Query\+Builder\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOTA_1_1Data_1_1QueryBuilder}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a07212319b039305abae33173ed4a7c51}{Add\+Param} (string name, object value, string prefix=\char`\"{}prm\char`\"{})
+\begin{DoxyCompactList}\small\item\em Adds a parameter. \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a8bf63a966801d4616b4b60d8f915a623}{All} ()
+\begin{DoxyCompactList}\small\item\em Adds the all expression to the query \end{DoxyCompactList}\item 
+virtual string \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a8adc78127122feef77727bf7fa43c520}{Build\+Command} ()
+\begin{DoxyCompactList}\small\item\em Builds the command. \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_aeda27740a724da1694b6d6a3e471ff01}{Count} (string expression=null)
+\begin{DoxyCompactList}\small\item\em Adds the count expression \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a8670bcdb50bf5efb7f438bd6bf761386}{Delete} ()
+\begin{DoxyCompactList}\small\item\em Add a D\+E\+L\+E\+T\+E statement \end{DoxyCompactList}\item 
+virtual \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a7a8556bc201e800c203b7bd14598882a}{Delete} (string table\+Name, params \hyperlink{structOTA_1_1Data_1_1WhereFilter}{Where\+Filter}\mbox{[}$\,$\mbox{]} clause)
+\begin{DoxyCompactList}\small\item\em Build a D\+E\+L\+E\+T\+E statement \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a35880cc3d5aca31f138b2be11722e91f}{From} (string table\+Name)
+\begin{DoxyCompactList}\small\item\em Adds the from table selector \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a9bde0ef6cc41bc9f5936a046f28cb61b}{Insert\+Into} (string table\+Name, params \hyperlink{structOTA_1_1Data_1_1DataParameter}{Data\+Parameter}\mbox{[}$\,$\mbox{]} values)
+\begin{DoxyCompactList}\small\item\em Add an I\+N\+S\+E\+R\+T T\+O statement \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Data_1_1QueryBuilder_a8ad66db426b1dba98a41b6fc94da3bf4}{Query\+Builder} (string plugin\+Name)
+\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a6a8be3e241335be7fe29c514b8198796}{Select} (params string\mbox{[}$\,$\mbox{]} expression)
+\begin{DoxyCompactList}\small\item\em Begins a S\+E\+L\+E\+C\+T query \end{DoxyCompactList}\item 
+virtual \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a801825ba2ef15b6581f8d2e7e367e7ee}{Select\+All} (string table\+Name, params \hyperlink{structOTA_1_1Data_1_1WhereFilter}{Where\+Filter}\mbox{[}$\,$\mbox{]} clause)
+\begin{DoxyCompactList}\small\item\em Builds a S\+E\+L\+E\+C\+T A\+L\+L ($\ast$) query \end{DoxyCompactList}\item 
+virtual \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a8dd0065482b15d76c23f878ed8723492}{Select\+From} (string table\+Name, string\mbox{[}$\,$\mbox{]} expression=null, params \hyperlink{structOTA_1_1Data_1_1WhereFilter}{Where\+Filter}\mbox{[}$\,$\mbox{]} clause)
+\begin{DoxyCompactList}\small\item\em Builds a S\+E\+L\+E\+C\+T \mbox{[}E\+X\+P\+R\+E\+S\+S\+I\+O\+N\mbox{]} F\+R\+O\+M query \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a931e295e162c17ec276b49670866cda7}{Table\+Create} (string name, params \hyperlink{structOTA_1_1Data_1_1TableColumn}{Table\+Column}\mbox{[}$\,$\mbox{]} columns)
+\begin{DoxyCompactList}\small\item\em Creates a table \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_ab285df1a750d804cd8bb25bfd43ceaf2}{Table\+Drop} (string name)
+\begin{DoxyCompactList}\small\item\em Drops a table \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_ad34634a54dd4144ddaca6fb14b4f69da}{Table\+Exists} (string name)
+\begin{DoxyCompactList}\small\item\em Check if a table exists \end{DoxyCompactList}\item 
+virtual \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a555ab46e312bac8d5fe07e2e89589898}{Update} (string table\+Name, \hyperlink{structOTA_1_1Data_1_1DataParameter}{Data\+Parameter}\mbox{[}$\,$\mbox{]} values, params \hyperlink{structOTA_1_1Data_1_1WhereFilter}{Where\+Filter}\mbox{[}$\,$\mbox{]} clause)
+\begin{DoxyCompactList}\small\item\em Builds an U\+P\+D\+A\+T\+E query \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_ad1e7c89323ba5635470ee438aa08433d}{Update\+Values} (string table\+Name, \hyperlink{structOTA_1_1Data_1_1DataParameter}{Data\+Parameter}\mbox{[}$\,$\mbox{]} values)
+\begin{DoxyCompactList}\small\item\em Adds a U\+P\+D\+A\+T\+E statement with specified columns and values \end{DoxyCompactList}\item 
+abstract \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a5d4c52ca2c95355a5eddfc53fcf4316d}{Where} (params \hyperlink{structOTA_1_1Data_1_1WhereFilter}{Where\+Filter}\mbox{[}$\,$\mbox{]} clause)
+\begin{DoxyCompactList}\small\item\em Adds a filter on data \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1QueryBuilder_af89af36b46e3abd1a3120e1d7b6c972d}{Append} (string fmt, params object\mbox{[}$\,$\mbox{]} args)
+\item 
+string \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a504fca6a98ccf4c5f066c262b92190f0}{Get\+Object\+Name} (string name)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classOTA_1_1Data_1_1QueryBuilder_afc7d200cbb2a51b12324da08e1dce3b9}{Command\+Text}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the command text. \end{DoxyCompactList}\item 
+Command\+Type \hyperlink{classOTA_1_1Data_1_1QueryBuilder_a2e9ad610a470cda1c0a0be926086019c}{Command\+Type}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the type of the command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The bare implementation of a query builder 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a8ad66db426b1dba98a41b6fc94da3bf4}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Query\+Builder@{Query\+Builder}}
+\index{Query\+Builder@{Query\+Builder}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Query\+Builder(string plugin\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Query\+Builder} (
+\begin{DoxyParamCaption}
+\item[{string}]{plugin\+Name}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Data_1_1QueryBuilder_a8ad66db426b1dba98a41b6fc94da3bf4}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a07212319b039305abae33173ed4a7c51}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Add\+Param@{Add\+Param}}
+\index{Add\+Param@{Add\+Param}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Add\+Param(string name, object value, string prefix=""prm"")}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Add\+Param (
+\begin{DoxyParamCaption}
+\item[{string}]{name, }
+\item[{object}]{value, }
+\item[{string}]{prefix = {\ttfamily \char`\"{}prm\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a07212319b039305abae33173ed4a7c51}
+
+
+Adds a parameter. 
+
+\begin{DoxyReturn}{Returns}
+The parameter.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name.\\
+\hline
+{\em value} & Value.\\
+\hline
+{\em prefix} & Prefix.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a8bf63a966801d4616b4b60d8f915a623}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!All@{All}}
+\index{All@{All}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{All()}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} All (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a8bf63a966801d4616b4b60d8f915a623}
+
+
+Adds the all expression to the query 
+
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_af89af36b46e3abd1a3120e1d7b6c972d}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Append@{Append}}
+\index{Append@{Append}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Append(string fmt, params object[] args)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Query\+Builder} Append (
+\begin{DoxyParamCaption}
+\item[{string}]{fmt, }
+\item[{params object\mbox{[}$\,$\mbox{]}}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Data_1_1QueryBuilder_af89af36b46e3abd1a3120e1d7b6c972d}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a8adc78127122feef77727bf7fa43c520}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Build\+Command@{Build\+Command}}
+\index{Build\+Command@{Build\+Command}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Build\+Command()}]{\setlength{\rightskip}{0pt plus 5cm}virtual string Build\+Command (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a8adc78127122feef77727bf7fa43c520}
+
+
+Builds the command. 
+
+\begin{DoxyReturn}{Returns}
+The command.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_aeda27740a724da1694b6d6a3e471ff01}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Count@{Count}}
+\index{Count@{Count}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Count(string expression=null)}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Count (
+\begin{DoxyParamCaption}
+\item[{string}]{expression = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_aeda27740a724da1694b6d6a3e471ff01}
+
+
+Adds the count expression 
+
+
+\begin{DoxyParams}{Parameters}
+{\em expression} & Expression.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a8670bcdb50bf5efb7f438bd6bf761386}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Delete@{Delete}}
+\index{Delete@{Delete}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Delete()}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Delete (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a8670bcdb50bf5efb7f438bd6bf761386}
+
+
+Add a D\+E\+L\+E\+T\+E statement 
+
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a7a8556bc201e800c203b7bd14598882a}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Delete@{Delete}}
+\index{Delete@{Delete}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Delete(string table\+Name, params Where\+Filter[] clause)}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Query\+Builder} Delete (
+\begin{DoxyParamCaption}
+\item[{string}]{table\+Name, }
+\item[{params {\bf Where\+Filter}\mbox{[}$\,$\mbox{]}}]{clause}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a7a8556bc201e800c203b7bd14598882a}
+
+
+Build a D\+E\+L\+E\+T\+E statement 
+
+
+\begin{DoxyParams}{Parameters}
+{\em table\+Name} & Table name.\\
+\hline
+{\em clause} & Clause.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a35880cc3d5aca31f138b2be11722e91f}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!From@{From}}
+\index{From@{From}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{From(string table\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} From (
+\begin{DoxyParamCaption}
+\item[{string}]{table\+Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a35880cc3d5aca31f138b2be11722e91f}
+
+
+Adds the from table selector 
+
+
+\begin{DoxyParams}{Parameters}
+{\em table\+Name} & Table name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a504fca6a98ccf4c5f066c262b92190f0}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Get\+Object\+Name@{Get\+Object\+Name}}
+\index{Get\+Object\+Name@{Get\+Object\+Name}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Get\+Object\+Name(string name)}]{\setlength{\rightskip}{0pt plus 5cm}string Get\+Object\+Name (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Data_1_1QueryBuilder_a504fca6a98ccf4c5f066c262b92190f0}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a9bde0ef6cc41bc9f5936a046f28cb61b}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Insert\+Into@{Insert\+Into}}
+\index{Insert\+Into@{Insert\+Into}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Insert\+Into(string table\+Name, params Data\+Parameter[] values)}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Insert\+Into (
+\begin{DoxyParamCaption}
+\item[{string}]{table\+Name, }
+\item[{params {\bf Data\+Parameter}\mbox{[}$\,$\mbox{]}}]{values}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a9bde0ef6cc41bc9f5936a046f28cb61b}
+
+
+Add an I\+N\+S\+E\+R\+T T\+O statement 
+
+\begin{DoxyReturn}{Returns}
+The into.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em table\+Name} & Table name.\\
+\hline
+{\em values} & Values.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a6a8be3e241335be7fe29c514b8198796}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Select@{Select}}
+\index{Select@{Select}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Select(params string[] expression)}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Select (
+\begin{DoxyParamCaption}
+\item[{params string\mbox{[}$\,$\mbox{]}}]{expression}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a6a8be3e241335be7fe29c514b8198796}
+
+
+Begins a S\+E\+L\+E\+C\+T query 
+
+
+\begin{DoxyParams}{Parameters}
+{\em expression} & Expression.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a801825ba2ef15b6581f8d2e7e367e7ee}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Select\+All@{Select\+All}}
+\index{Select\+All@{Select\+All}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Select\+All(string table\+Name, params Where\+Filter[] clause)}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Query\+Builder} Select\+All (
+\begin{DoxyParamCaption}
+\item[{string}]{table\+Name, }
+\item[{params {\bf Where\+Filter}\mbox{[}$\,$\mbox{]}}]{clause}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a801825ba2ef15b6581f8d2e7e367e7ee}
+
+
+Builds a S\+E\+L\+E\+C\+T A\+L\+L ($\ast$) query 
+
+\begin{DoxyReturn}{Returns}
+The all.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em table\+Name} & Table name.\\
+\hline
+{\em clause} & Clause.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a8dd0065482b15d76c23f878ed8723492}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Select\+From@{Select\+From}}
+\index{Select\+From@{Select\+From}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Select\+From(string table\+Name, string[] expression=null, params Where\+Filter[] clause)}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Query\+Builder} Select\+From (
+\begin{DoxyParamCaption}
+\item[{string}]{table\+Name, }
+\item[{string\mbox{[}$\,$\mbox{]}}]{expression = {\ttfamily null}, }
+\item[{params {\bf Where\+Filter}\mbox{[}$\,$\mbox{]}}]{clause}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a8dd0065482b15d76c23f878ed8723492}
+
+
+Builds a S\+E\+L\+E\+C\+T \mbox{[}E\+X\+P\+R\+E\+S\+S\+I\+O\+N\mbox{]} F\+R\+O\+M query 
+
+\begin{DoxyReturn}{Returns}
+The from.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em table\+Name} & Table name.\\
+\hline
+{\em expression} & Expression.\\
+\hline
+{\em clause} & Clause.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a931e295e162c17ec276b49670866cda7}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Table\+Create@{Table\+Create}}
+\index{Table\+Create@{Table\+Create}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Table\+Create(string name, params Table\+Column[] columns)}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Table\+Create (
+\begin{DoxyParamCaption}
+\item[{string}]{name, }
+\item[{params {\bf Table\+Column}\mbox{[}$\,$\mbox{]}}]{columns}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a931e295e162c17ec276b49670866cda7}
+
+
+Creates a table 
+
+\begin{DoxyReturn}{Returns}
+The create.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name.\\
+\hline
+{\em columns} & Columns.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_ab285df1a750d804cd8bb25bfd43ceaf2}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Table\+Drop@{Table\+Drop}}
+\index{Table\+Drop@{Table\+Drop}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Table\+Drop(string name)}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Table\+Drop (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_ab285df1a750d804cd8bb25bfd43ceaf2}
+
+
+Drops a table 
+
+\begin{DoxyReturn}{Returns}
+The drop.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_ad34634a54dd4144ddaca6fb14b4f69da}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Table\+Exists@{Table\+Exists}}
+\index{Table\+Exists@{Table\+Exists}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Table\+Exists(string name)}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Table\+Exists (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_ad34634a54dd4144ddaca6fb14b4f69da}
+
+
+Check if a table exists 
+
+\begin{DoxyReturn}{Returns}
+The exists.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a555ab46e312bac8d5fe07e2e89589898}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Update@{Update}}
+\index{Update@{Update}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Update(string table\+Name, Data\+Parameter[] values, params Where\+Filter[] clause)}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Query\+Builder} Update (
+\begin{DoxyParamCaption}
+\item[{string}]{table\+Name, }
+\item[{{\bf Data\+Parameter}\mbox{[}$\,$\mbox{]}}]{values, }
+\item[{params {\bf Where\+Filter}\mbox{[}$\,$\mbox{]}}]{clause}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a555ab46e312bac8d5fe07e2e89589898}
+
+
+Builds an U\+P\+D\+A\+T\+E query 
+
+
+\begin{DoxyParams}{Parameters}
+{\em table\+Name} & Table name.\\
+\hline
+{\em values} & Values.\\
+\hline
+{\em clause} & Clause.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_ad1e7c89323ba5635470ee438aa08433d}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Update\+Values@{Update\+Values}}
+\index{Update\+Values@{Update\+Values}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Update\+Values(string table\+Name, Data\+Parameter[] values)}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Update\+Values (
+\begin{DoxyParamCaption}
+\item[{string}]{table\+Name, }
+\item[{{\bf Data\+Parameter}\mbox{[}$\,$\mbox{]}}]{values}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_ad1e7c89323ba5635470ee438aa08433d}
+
+
+Adds a U\+P\+D\+A\+T\+E statement with specified columns and values 
+
+\begin{DoxyReturn}{Returns}
+The values.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em table\+Name} & Table name.\\
+\hline
+{\em values} & Values.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a5d4c52ca2c95355a5eddfc53fcf4316d}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Where@{Where}}
+\index{Where@{Where}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Where(params Where\+Filter[] clause)}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Query\+Builder} Where (
+\begin{DoxyParamCaption}
+\item[{params {\bf Where\+Filter}\mbox{[}$\,$\mbox{]}}]{clause}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classOTA_1_1Data_1_1QueryBuilder_a5d4c52ca2c95355a5eddfc53fcf4316d}
+
+
+Adds a filter on data 
+
+
+\begin{DoxyParams}{Parameters}
+{\em clause} & Clause.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Data_1_1QueryBuilder_afc7d200cbb2a51b12324da08e1dce3b9}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Command\+Text@{Command\+Text}}
+\index{Command\+Text@{Command\+Text}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Command\+Text}]{\setlength{\rightskip}{0pt plus 5cm}string Command\+Text\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Data_1_1QueryBuilder_afc7d200cbb2a51b12324da08e1dce3b9}
+
+
+Gets or sets the command text. 
+
+The command text.\hypertarget{classOTA_1_1Data_1_1QueryBuilder_a2e9ad610a470cda1c0a0be926086019c}{}\index{O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}!Command\+Type@{Command\+Type}}
+\index{Command\+Type@{Command\+Type}!O\+T\+A\+::\+Data\+::\+Query\+Builder@{O\+T\+A\+::\+Data\+::\+Query\+Builder}}
+\subsubsection[{Command\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Command\+Type Command\+Type\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1Data_1_1QueryBuilder_a2e9ad610a470cda1c0a0be926086019c}
+
+
+Gets or sets the type of the command. 
+
+The type of the command.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Data/\hyperlink{IDataConnector_8cs}{I\+Data\+Connector.\+cs}\end{DoxyCompactItemize}

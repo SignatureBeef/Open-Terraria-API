@@ -1,0 +1,52 @@
+\hypertarget{namespace_o_t_a_1_1_sockets}{}\section{O\+T\+A.\+Sockets Namespace Reference}
+\label{namespace_o_t_a_1_1_sockets}\index{O\+T\+A.\+Sockets@{O\+T\+A.\+Sockets}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_o_t_a_1_1_sockets_1_1_client_connection}{Client\+Connection}
+\begin{DoxyCompactList}\small\item\em A tcp client implementation that directly bolts into the Terrarian socket implementation \end{DoxyCompactList}\item 
+class \hyperlink{class_o_t_a_1_1_sockets_1_1_connection}{Connection}
+\begin{DoxyCompactList}\small\item\em An asynchronous tcp client implementation \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8}{Slot\+State} \+: int \{ \\*
+\hyperlink{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a93dd5a77b688ef34fcb26469278c13b1}{Slot\+State.\+P\+L\+A\+Y\+E\+R\+\_\+\+A\+U\+T\+H} = -\/2, 
+\hyperlink{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a0cefceee4b791ca19d9e0dabcb8441fe}{Slot\+State.\+S\+E\+R\+V\+E\+R\+\_\+\+A\+U\+T\+H} = -\/1, 
+\hyperlink{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8ab50339a10e1de285ac99d4c3990b8693}{Slot\+State.\+N\+O\+N\+E} = 0, 
+\hyperlink{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a9a14f95e151eec641316e7c784ce832d}{Slot\+State.\+C\+O\+N\+N\+E\+C\+T\+I\+N\+G} = 1, 
+\\*
+\hyperlink{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8aa806f1d2c42338ef5fa6497b66153e79}{Slot\+State.\+A\+C\+C\+E\+P\+T\+E\+D} = 2, 
+\hyperlink{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a547018cad1e3b450cff8b5348b78c4da}{Slot\+State.\+S\+E\+N\+D\+I\+N\+G\+\_\+\+T\+I\+L\+E\+S} = 3, 
+\hyperlink{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a50366a49630a416ab3ccaa004196027e}{Slot\+State.\+P\+L\+A\+Y\+I\+N\+G} = 10
+ \}\begin{DoxyCompactList}\small\item\em Known vanilla slot states \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8}{}\index{O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}!Slot\+State@{Slot\+State}}
+\index{Slot\+State@{Slot\+State}!O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}}
+\subsubsection[{Slot\+State}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf O\+T\+A.\+Sockets.\+Slot\+State} \+: int\hspace{0.3cm}{\ttfamily [strong]}}\label{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8}
+
+
+Known vanilla slot states 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+L\+A\+Y\+E\+R\+\_\+\+A\+U\+T\+H@{P\+L\+A\+Y\+E\+R\+\_\+\+A\+U\+T\+H}!O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}}\index{O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}!P\+L\+A\+Y\+E\+R\+\_\+\+A\+U\+T\+H@{P\+L\+A\+Y\+E\+R\+\_\+\+A\+U\+T\+H}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a93dd5a77b688ef34fcb26469278c13b1}{}P\+L\+A\+Y\+E\+R\+\_\+\+A\+U\+T\+H\label{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a93dd5a77b688ef34fcb26469278c13b1}
+}]\index{S\+E\+R\+V\+E\+R\+\_\+\+A\+U\+T\+H@{S\+E\+R\+V\+E\+R\+\_\+\+A\+U\+T\+H}!O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}}\index{O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}!S\+E\+R\+V\+E\+R\+\_\+\+A\+U\+T\+H@{S\+E\+R\+V\+E\+R\+\_\+\+A\+U\+T\+H}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a0cefceee4b791ca19d9e0dabcb8441fe}{}S\+E\+R\+V\+E\+R\+\_\+\+A\+U\+T\+H\label{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a0cefceee4b791ca19d9e0dabcb8441fe}
+}]\index{N\+O\+N\+E@{N\+O\+N\+E}!O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}}\index{O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}!N\+O\+N\+E@{N\+O\+N\+E}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8ab50339a10e1de285ac99d4c3990b8693}{}N\+O\+N\+E\label{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8ab50339a10e1de285ac99d4c3990b8693}
+}]\index{C\+O\+N\+N\+E\+C\+T\+I\+N\+G@{C\+O\+N\+N\+E\+C\+T\+I\+N\+G}!O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}}\index{O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}!C\+O\+N\+N\+E\+C\+T\+I\+N\+G@{C\+O\+N\+N\+E\+C\+T\+I\+N\+G}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a9a14f95e151eec641316e7c784ce832d}{}C\+O\+N\+N\+E\+C\+T\+I\+N\+G\label{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a9a14f95e151eec641316e7c784ce832d}
+}]\index{A\+C\+C\+E\+P\+T\+E\+D@{A\+C\+C\+E\+P\+T\+E\+D}!O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}}\index{O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}!A\+C\+C\+E\+P\+T\+E\+D@{A\+C\+C\+E\+P\+T\+E\+D}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8aa806f1d2c42338ef5fa6497b66153e79}{}A\+C\+C\+E\+P\+T\+E\+D\label{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8aa806f1d2c42338ef5fa6497b66153e79}
+}]\index{S\+E\+N\+D\+I\+N\+G\+\_\+\+T\+I\+L\+E\+S@{S\+E\+N\+D\+I\+N\+G\+\_\+\+T\+I\+L\+E\+S}!O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}}\index{O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}!S\+E\+N\+D\+I\+N\+G\+\_\+\+T\+I\+L\+E\+S@{S\+E\+N\+D\+I\+N\+G\+\_\+\+T\+I\+L\+E\+S}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a547018cad1e3b450cff8b5348b78c4da}{}S\+E\+N\+D\+I\+N\+G\+\_\+\+T\+I\+L\+E\+S\label{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a547018cad1e3b450cff8b5348b78c4da}
+}]\index{P\+L\+A\+Y\+I\+N\+G@{P\+L\+A\+Y\+I\+N\+G}!O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}}\index{O\+T\+A\+::\+Sockets@{O\+T\+A\+::\+Sockets}!P\+L\+A\+Y\+I\+N\+G@{P\+L\+A\+Y\+I\+N\+G}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a50366a49630a416ab3ccaa004196027e}{}P\+L\+A\+Y\+I\+N\+G\label{namespace_o_t_a_1_1_sockets_a716a4cdcbec05bdeb647942d47724ce8a50366a49630a416ab3ccaa004196027e}
+}]\end{description}
+\end{Desc}

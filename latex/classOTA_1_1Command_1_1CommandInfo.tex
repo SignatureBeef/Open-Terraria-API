@@ -1,0 +1,428 @@
+\hypertarget{classOTA_1_1Command_1_1CommandInfo}{}\section{Command\+Info}
+\label{classOTA_1_1Command_1_1CommandInfo}\index{Command\+Info@{Command\+Info}}
+
+
+An \hyperlink{namespaceOTA}{O\+T\+A} command definition/builder  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_a99e4b6101f6f60b07940c1742086bfb3}{By\+Permission\+Node} (string code)
+\begin{DoxyCompactList}\small\item\em Sets the permission node relative to the command name. \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_a1a2a0224609201df48ae6415a6b9c16e}{Calls} (Action$<$ \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender}, \hyperlink{classOTA_1_1Command_1_1ArgumentList}{Argument\+List} $>$ callback)
+\begin{DoxyCompactList}\small\item\em Sets the callback for the command \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_a804f53f1e52bdf956fb1b564685c6657}{Calls} (Action$<$ \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender}, string $>$ callback)
+\begin{DoxyCompactList}\small\item\em Sets the callback for the command \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_adac5f629125ad017db4df1f3aeba5fae}{Lua\+Call} (N\+Lua.\+Lua\+Function callback)
+\begin{DoxyCompactList}\small\item\em Sets a L\+U\+A callback \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_ae7a399893e2746abce6ee1e82fceed4b}{Set\+Default\+Usage} ()
+\begin{DoxyCompactList}\small\item\em Sets a flag for \hyperlink{namespaceOTA}{O\+T\+A} to generate a default usage based on the prefix when a sender queries how to use the command. \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_a8d15279570659a895752b61a18bf1003}{Set\+Old\+Help\+Style} ()
+\begin{DoxyCompactList}\small\item\em Sets the flag that the output help text must be in the pre T\+D\+S\+M Rebind format \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1CommandInfo_ad2857ed1f37516ea989c35dbbe60740f}{Show\+Description} (\hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender, int padd)
+\begin{DoxyCompactList}\small\item\em Shows the description to a sender \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1Command_1_1CommandInfo_a99ad5b1f7e7af8e344bfe6d3f629c533}{Show\+Help} (\hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender, bool no\+Help=false)
+\begin{DoxyCompactList}\small\item\em Shows help message for a sender \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_a1363e8d9675c5bcc3c95dcd7d3600d5c}{With\+Access\+Level} (\hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdc}{Access\+Level} \hyperlink{classOTA_1_1Command_1_1CommandInfo_af68c80b3842e0ee78384be580308abe0}{access\+Level})
+\begin{DoxyCompactList}\small\item\em Sets the required sender access level \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_ae8352bf5a73e4b7b9dce204d6dd7d90e}{With\+Access\+Level} (int \hyperlink{classOTA_1_1Command_1_1CommandInfo_af68c80b3842e0ee78384be580308abe0}{access\+Level})
+\begin{DoxyCompactList}\small\item\em Sets the required sender access level \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_a6e3b30f45ea4a2a0af24b738854bcf9d}{With\+Description} (string desc)
+\begin{DoxyCompactList}\small\item\em Sets the description of the command. \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_af328c750c5496fda7f07678c3cbf755e}{With\+Help\+Text} (string help)
+\begin{DoxyCompactList}\small\item\em Sets the help text of the command. \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_a428eaf92bc7f1019122a08b02273b7b4}{With\+Permission\+Node} (string \hyperlink{classOTA_1_1Command_1_1CommandInfo_a90c46d7eb29ad8baa1281a134b56ab4c}{node})
+\begin{DoxyCompactList}\small\item\em Sets the permission ndoe for this command \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Package Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classOTA_1_1Command_1_1CommandInfo_aa3165a95ccb97ace7311db08291742c5}{Clear\+Callbacks} ()
+\item 
+void \hyperlink{classOTA_1_1Command_1_1CommandInfo_a1b11e063ec0b4e808cfafd5d87fa3255}{Clear\+Events} ()
+\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo_ab794274d1b3e3e95443b67d441a7cae6}{Command\+Info} (string prefix)
+\item 
+void \hyperlink{classOTA_1_1Command_1_1CommandInfo_a9231f788edbecaf7abd2f3d2afcb81d1}{Init\+From} (\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} other)
+\item 
+void \hyperlink{classOTA_1_1Command_1_1CommandInfo_a442a8ded95955d62803cfc5c87e761bc}{Run} (\hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender, string args)
+\item 
+void \hyperlink{classOTA_1_1Command_1_1CommandInfo_a79782337c9afbffa212f938d153e975b}{Run} (\hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender, \hyperlink{classOTA_1_1Command_1_1ArgumentList}{Argument\+List} args)
+\item 
+\hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} \hyperlink{classOTA_1_1Command_1_1CommandInfo_a355596e4342a13e073b21fb0752178d2}{With\+Permission\+Node} ()
+\end{DoxyCompactItemize}
+\subsection*{Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classOTA_1_1Command_1_1CommandInfo_ae5f2be77d70f9aa3e39592c03d5e93ad}{\+\_\+default\+Help}
+\item 
+bool \hyperlink{classOTA_1_1Command_1_1CommandInfo_a76779b40caa0fc6e1b5befa9eaaf29d2}{\+\_\+old\+Help\+Style}
+\item 
+string \hyperlink{classOTA_1_1Command_1_1CommandInfo_aaa38b4ee3afbaa5755461bec16579d32}{\+\_\+prefix}
+\item 
+\hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdc}{Access\+Level} \hyperlink{classOTA_1_1Command_1_1CommandInfo_af68c80b3842e0ee78384be580308abe0}{access\+Level} = \hyperlink{namespaceOTA_1_1Command_a0bb463ef02a9fd3406866a98c6fc2cdca7457cdd15d09bfc6c4dbb5d2b6f87390}{Access\+Level.\+O\+P}
+\item 
+string \hyperlink{classOTA_1_1Command_1_1CommandInfo_a23af17c78302b71c14ef38ea40b8d1d7}{description}
+\item 
+List$<$ string $>$ \hyperlink{classOTA_1_1Command_1_1CommandInfo_ab02372b512a2298dd4e3326d363e787f}{help\+Text} = new List$<$string$>$()
+\item 
+N\+Lua.\+Lua\+Function \hyperlink{classOTA_1_1Command_1_1CommandInfo_a817f9ada52446111c0cdf4572b20dfbb}{Lua\+Callback}
+\item 
+string \hyperlink{classOTA_1_1Command_1_1CommandInfo_a90c46d7eb29ad8baa1281a134b56ab4c}{node}
+\item 
+Action$<$ \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender}, string $>$ \hyperlink{classOTA_1_1Command_1_1CommandInfo_a6d7bacc1b2cfbddf1148a21772022aca}{string\+Callback}
+\item 
+Action$<$ \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender}, \hyperlink{classOTA_1_1Command_1_1ArgumentList}{Argument\+List} $>$ \hyperlink{classOTA_1_1Command_1_1CommandInfo_a8924d7c0c150ba1bf80b6a4ddadc3b94}{token\+Callback}
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classOTA_1_1Command_1_1CommandInfo_ad44054822436f80660a4b86199b49fd3}{Node}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the permission node. \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1Command_1_1CommandInfo_a0bf9d0add9f4a8c150513d661361598c}{Prefix}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the prefix. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Events}
+\begin{DoxyCompactItemize}
+\item 
+Action$<$ \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} $>$ \hyperlink{classOTA_1_1Command_1_1CommandInfo_ab8ad1507610b5a9d460f412eb606cea8}{After\+Event}
+\item 
+Action$<$ \hyperlink{classOTA_1_1Command_1_1CommandInfo}{Command\+Info} $>$ \hyperlink{classOTA_1_1Command_1_1CommandInfo_abc05ff320f768663bcc90f0125e153cb}{Before\+Event}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An \hyperlink{namespaceOTA}{O\+T\+A} command definition/builder 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_ab794274d1b3e3e95443b67d441a7cae6}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Command\+Info@{Command\+Info}}
+\index{Command\+Info@{Command\+Info}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Command\+Info(string prefix)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} (
+\begin{DoxyParamCaption}
+\item[{string}]{prefix}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_ab794274d1b3e3e95443b67d441a7cae6}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a99e4b6101f6f60b07940c1742086bfb3}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!By\+Permission\+Node@{By\+Permission\+Node}}
+\index{By\+Permission\+Node@{By\+Permission\+Node}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{By\+Permission\+Node(string code)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} By\+Permission\+Node (
+\begin{DoxyParamCaption}
+\item[{string}]{code}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_a99e4b6101f6f60b07940c1742086bfb3}
+
+
+Sets the permission node relative to the command name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em code} & Permission node key\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a1a2a0224609201df48ae6415a6b9c16e}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Calls@{Calls}}
+\index{Calls@{Calls}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Calls(\+Action$<$ I\+Sender, Argument\+List $>$ callback)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} Calls (
+\begin{DoxyParamCaption}
+\item[{Action$<$ {\bf I\+Sender}, {\bf Argument\+List} $>$}]{callback}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_a1a2a0224609201df48ae6415a6b9c16e}
+
+
+Sets the callback for the command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em callback} & Callback.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a804f53f1e52bdf956fb1b564685c6657}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Calls@{Calls}}
+\index{Calls@{Calls}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Calls(\+Action$<$ I\+Sender, string $>$ callback)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} Calls (
+\begin{DoxyParamCaption}
+\item[{Action$<$ {\bf I\+Sender}, string $>$}]{callback}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_a804f53f1e52bdf956fb1b564685c6657}
+
+
+Sets the callback for the command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em callback} & Callback.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_aa3165a95ccb97ace7311db08291742c5}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Clear\+Callbacks@{Clear\+Callbacks}}
+\index{Clear\+Callbacks@{Clear\+Callbacks}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Clear\+Callbacks()}]{\setlength{\rightskip}{0pt plus 5cm}void Clear\+Callbacks (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_aa3165a95ccb97ace7311db08291742c5}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a1b11e063ec0b4e808cfafd5d87fa3255}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Clear\+Events@{Clear\+Events}}
+\index{Clear\+Events@{Clear\+Events}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Clear\+Events()}]{\setlength{\rightskip}{0pt plus 5cm}void Clear\+Events (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a1b11e063ec0b4e808cfafd5d87fa3255}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a9231f788edbecaf7abd2f3d2afcb81d1}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Init\+From@{Init\+From}}
+\index{Init\+From@{Init\+From}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Init\+From(\+Command\+Info other)}]{\setlength{\rightskip}{0pt plus 5cm}void Init\+From (
+\begin{DoxyParamCaption}
+\item[{{\bf Command\+Info}}]{other}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a9231f788edbecaf7abd2f3d2afcb81d1}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_adac5f629125ad017db4df1f3aeba5fae}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Lua\+Call@{Lua\+Call}}
+\index{Lua\+Call@{Lua\+Call}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Lua\+Call(\+N\+Lua.\+Lua\+Function callback)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} Lua\+Call (
+\begin{DoxyParamCaption}
+\item[{N\+Lua.\+Lua\+Function}]{callback}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_adac5f629125ad017db4df1f3aeba5fae}
+
+
+Sets a L\+U\+A callback 
+
+\begin{DoxyReturn}{Returns}
+The call.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em callback} & Callback.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a442a8ded95955d62803cfc5c87e761bc}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Run@{Run}}
+\index{Run@{Run}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Run(\+I\+Sender sender, string args)}]{\setlength{\rightskip}{0pt plus 5cm}void Run (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sender}}]{sender, }
+\item[{string}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a442a8ded95955d62803cfc5c87e761bc}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a79782337c9afbffa212f938d153e975b}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Run@{Run}}
+\index{Run@{Run}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Run(\+I\+Sender sender, Argument\+List args)}]{\setlength{\rightskip}{0pt plus 5cm}void Run (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sender}}]{sender, }
+\item[{{\bf Argument\+List}}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a79782337c9afbffa212f938d153e975b}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_ae7a399893e2746abce6ee1e82fceed4b}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Set\+Default\+Usage@{Set\+Default\+Usage}}
+\index{Set\+Default\+Usage@{Set\+Default\+Usage}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Set\+Default\+Usage()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} Set\+Default\+Usage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_ae7a399893e2746abce6ee1e82fceed4b}
+
+
+Sets a flag for \hyperlink{namespaceOTA}{O\+T\+A} to generate a default usage based on the prefix when a sender queries how to use the command. 
+
+\begin{DoxyReturn}{Returns}
+The default usage.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a8d15279570659a895752b61a18bf1003}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Set\+Old\+Help\+Style@{Set\+Old\+Help\+Style}}
+\index{Set\+Old\+Help\+Style@{Set\+Old\+Help\+Style}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Set\+Old\+Help\+Style()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} Set\+Old\+Help\+Style (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_a8d15279570659a895752b61a18bf1003}
+
+
+Sets the flag that the output help text must be in the pre T\+D\+S\+M Rebind format 
+
+\begin{DoxyReturn}{Returns}
+The old help style.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_ad2857ed1f37516ea989c35dbbe60740f}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Show\+Description@{Show\+Description}}
+\index{Show\+Description@{Show\+Description}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Show\+Description(\+I\+Sender sender, int padd)}]{\setlength{\rightskip}{0pt plus 5cm}void Show\+Description (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sender}}]{sender, }
+\item[{int}]{padd}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_ad2857ed1f37516ea989c35dbbe60740f}
+
+
+Shows the description to a sender 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & \hyperlink{classOTA_1_1Command_1_1Sender}{Sender}.\\
+\hline
+{\em padd} & Padd.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a99ad5b1f7e7af8e344bfe6d3f629c533}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Show\+Help@{Show\+Help}}
+\index{Show\+Help@{Show\+Help}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Show\+Help(\+I\+Sender sender, bool no\+Help=false)}]{\setlength{\rightskip}{0pt plus 5cm}void Show\+Help (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sender}}]{sender, }
+\item[{bool}]{no\+Help = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_a99ad5b1f7e7af8e344bfe6d3f629c533}
+
+
+Shows help message for a sender 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & \hyperlink{classOTA_1_1Command_1_1Sender}{Sender}.\\
+\hline
+{\em no\+Help} & If set to {\ttfamily true} no help.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a1363e8d9675c5bcc3c95dcd7d3600d5c}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Access\+Level@{With\+Access\+Level}}
+\index{With\+Access\+Level@{With\+Access\+Level}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Access\+Level(\+Access\+Level access\+Level)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} With\+Access\+Level (
+\begin{DoxyParamCaption}
+\item[{{\bf Access\+Level}}]{access\+Level}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_a1363e8d9675c5bcc3c95dcd7d3600d5c}
+
+
+Sets the required sender access level 
+
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_ae8352bf5a73e4b7b9dce204d6dd7d90e}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Access\+Level@{With\+Access\+Level}}
+\index{With\+Access\+Level@{With\+Access\+Level}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Access\+Level(int access\+Level)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} With\+Access\+Level (
+\begin{DoxyParamCaption}
+\item[{int}]{access\+Level}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_ae8352bf5a73e4b7b9dce204d6dd7d90e}
+
+
+Sets the required sender access level 
+
+For use with N\+Lua\hypertarget{classOTA_1_1Command_1_1CommandInfo_a6e3b30f45ea4a2a0af24b738854bcf9d}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Description@{With\+Description}}
+\index{With\+Description@{With\+Description}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Description(string desc)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} With\+Description (
+\begin{DoxyParamCaption}
+\item[{string}]{desc}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_a6e3b30f45ea4a2a0af24b738854bcf9d}
+
+
+Sets the description of the command. 
+
+\begin{DoxyReturn}{Returns}
+The description.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em desc} & Desc.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_af328c750c5496fda7f07678c3cbf755e}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Help\+Text@{With\+Help\+Text}}
+\index{With\+Help\+Text@{With\+Help\+Text}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Help\+Text(string help)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} With\+Help\+Text (
+\begin{DoxyParamCaption}
+\item[{string}]{help}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_af328c750c5496fda7f07678c3cbf755e}
+
+
+Sets the help text of the command. 
+
+\begin{DoxyReturn}{Returns}
+The help text.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em help} & Help.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a428eaf92bc7f1019122a08b02273b7b4}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Permission\+Node@{With\+Permission\+Node}}
+\index{With\+Permission\+Node@{With\+Permission\+Node}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Permission\+Node(string node)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} With\+Permission\+Node (
+\begin{DoxyParamCaption}
+\item[{string}]{node}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Command_1_1CommandInfo_a428eaf92bc7f1019122a08b02273b7b4}
+
+
+Sets the permission ndoe for this command 
+
+\begin{DoxyReturn}{Returns}
+The permission node.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em node} & Node.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a355596e4342a13e073b21fb0752178d2}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Permission\+Node@{With\+Permission\+Node}}
+\index{With\+Permission\+Node@{With\+Permission\+Node}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Permission\+Node()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} With\+Permission\+Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a355596e4342a13e073b21fb0752178d2}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_ae5f2be77d70f9aa3e39592c03d5e93ad}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!\+\_\+default\+Help@{\+\_\+default\+Help}}
+\index{\+\_\+default\+Help@{\+\_\+default\+Help}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{\+\_\+default\+Help}]{\setlength{\rightskip}{0pt plus 5cm}bool \+\_\+default\+Help\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_ae5f2be77d70f9aa3e39592c03d5e93ad}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a76779b40caa0fc6e1b5befa9eaaf29d2}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!\+\_\+old\+Help\+Style@{\+\_\+old\+Help\+Style}}
+\index{\+\_\+old\+Help\+Style@{\+\_\+old\+Help\+Style}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{\+\_\+old\+Help\+Style}]{\setlength{\rightskip}{0pt plus 5cm}bool \+\_\+old\+Help\+Style\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a76779b40caa0fc6e1b5befa9eaaf29d2}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_aaa38b4ee3afbaa5755461bec16579d32}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!\+\_\+prefix@{\+\_\+prefix}}
+\index{\+\_\+prefix@{\+\_\+prefix}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{\+\_\+prefix}]{\setlength{\rightskip}{0pt plus 5cm}string \+\_\+prefix\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_aaa38b4ee3afbaa5755461bec16579d32}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_af68c80b3842e0ee78384be580308abe0}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!access\+Level@{access\+Level}}
+\index{access\+Level@{access\+Level}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{access\+Level}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Access\+Level} access\+Level = {\bf Access\+Level.\+O\+P}\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_af68c80b3842e0ee78384be580308abe0}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a23af17c78302b71c14ef38ea40b8d1d7}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!description@{description}}
+\index{description@{description}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{description}]{\setlength{\rightskip}{0pt plus 5cm}string description\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a23af17c78302b71c14ef38ea40b8d1d7}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_ab02372b512a2298dd4e3326d363e787f}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!help\+Text@{help\+Text}}
+\index{help\+Text@{help\+Text}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{help\+Text}]{\setlength{\rightskip}{0pt plus 5cm}List$<$string$>$ help\+Text = new List$<$string$>$()\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_ab02372b512a2298dd4e3326d363e787f}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a817f9ada52446111c0cdf4572b20dfbb}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Lua\+Callback@{Lua\+Callback}}
+\index{Lua\+Callback@{Lua\+Callback}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Lua\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}N\+Lua.\+Lua\+Function Lua\+Callback\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a817f9ada52446111c0cdf4572b20dfbb}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a90c46d7eb29ad8baa1281a134b56ab4c}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!node@{node}}
+\index{node@{node}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{node}]{\setlength{\rightskip}{0pt plus 5cm}string node\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a90c46d7eb29ad8baa1281a134b56ab4c}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a6d7bacc1b2cfbddf1148a21772022aca}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!string\+Callback@{string\+Callback}}
+\index{string\+Callback@{string\+Callback}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{string\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}Action$<${\bf I\+Sender}, string$>$ string\+Callback\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a6d7bacc1b2cfbddf1148a21772022aca}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_a8924d7c0c150ba1bf80b6a4ddadc3b94}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!token\+Callback@{token\+Callback}}
+\index{token\+Callback@{token\+Callback}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{token\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}Action$<${\bf I\+Sender}, {\bf Argument\+List}$>$ token\+Callback\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_a8924d7c0c150ba1bf80b6a4ddadc3b94}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_ad44054822436f80660a4b86199b49fd3}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Node@{Node}}
+\index{Node@{Node}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Node}]{\setlength{\rightskip}{0pt plus 5cm}string Node\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Command_1_1CommandInfo_ad44054822436f80660a4b86199b49fd3}
+
+
+Gets the permission node. 
+
+The node.\hypertarget{classOTA_1_1Command_1_1CommandInfo_a0bf9d0add9f4a8c150513d661361598c}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Prefix@{Prefix}}
+\index{Prefix@{Prefix}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Prefix}]{\setlength{\rightskip}{0pt plus 5cm}string Prefix\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1Command_1_1CommandInfo_a0bf9d0add9f4a8c150513d661361598c}
+
+
+Gets the prefix. 
+
+The prefix.
+
+\subsection{Event Documentation}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_ab8ad1507610b5a9d460f412eb606cea8}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!After\+Event@{After\+Event}}
+\index{After\+Event@{After\+Event}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{After\+Event}]{\setlength{\rightskip}{0pt plus 5cm}Action$<${\bf Command\+Info}$>$ After\+Event\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_ab8ad1507610b5a9d460f412eb606cea8}
+\hypertarget{classOTA_1_1Command_1_1CommandInfo_abc05ff320f768663bcc90f0125e153cb}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Before\+Event@{Before\+Event}}
+\index{Before\+Event@{Before\+Event}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Before\+Event}]{\setlength{\rightskip}{0pt plus 5cm}Action$<${\bf Command\+Info}$>$ Before\+Event\hspace{0.3cm}{\ttfamily [package]}}\label{classOTA_1_1Command_1_1CommandInfo_abc05ff320f768663bcc90f0125e153cb}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{CommandParser_8cs}{Command\+Parser.\+cs}\end{DoxyCompactItemize}

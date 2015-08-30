@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['actcolor',['actColor',['../classOTA_1_1Memory_1_1MemTile.html#a0bd25b30a88fb3f0ea649b57b770474f',1,'OTA::Memory::MemTile']]],
+  ['active',['active',['../classOTA_1_1Memory_1_1MemTile.html#a0cb3050c8a4f6bdb2c1f727eec8d9701',1,'OTA.Memory.MemTile.active()'],['../classOTA_1_1Memory_1_1MemTile.html#af9fc9f49e798e732e3c4193d8b841a45',1,'OTA.Memory.MemTile.active(bool active)']]],
+  ['actuator',['actuator',['../classOTA_1_1Memory_1_1MemTile.html#a08235e6470163e162616da9ca214f0a2',1,'OTA.Memory.MemTile.actuator()'],['../classOTA_1_1Memory_1_1MemTile.html#a0df0332048ebd19fcbb584aa71616a89',1,'OTA.Memory.MemTile.actuator(bool actuator)']]],
+  ['add',['Add',['../classOTA_1_1Misc_1_1PairFileRegister.html#a52c0d41415756aa1f51d039fe1c3dbc1',1,'OTA.Misc.PairFileRegister.Add()'],['../classOTA_1_1Misc_1_1DataRegister.html#aae585a0a0da16c15edeeea48bdf46575',1,'OTA.Misc.DataRegister.Add()'],['../classOTA_1_1Misc_1_1StringCache.html#a49ca28afa3d3eeb894f38c7736fd8937',1,'OTA.Misc.StringCache.Add()'],['../structMicrosoft_1_1Xna_1_1Framework_1_1Vector2.html#ae2990a556175474e7dc37a807f01d9b6',1,'Microsoft.Xna.Framework.Vector2.Add(Vector2 value1, Vector2 value2)'],['../structMicrosoft_1_1Xna_1_1Framework_1_1Vector2.html#a7e01f4b4c2a8fa8bc1ad7b3f0bc58fac',1,'Microsoft.Xna.Framework.Vector2.Add(ref Vector2 value1, ref Vector2 value2, out Vector2 result)'],['../structMicrosoft_1_1Xna_1_1Framework_1_1Vector3.html#a1e074fdb7e2303703c1c5f6566906738',1,'Microsoft.Xna.Framework.Vector3.Add(Vector3 value1, Vector3 value2)'],['../structMicrosoft_1_1Xna_1_1Framework_1_1Vector3.html#ad931a80d5b929420557fb494af735f95',1,'Microsoft.Xna.Framework.Vector3.Add(ref Vector3 value1, ref Vector3 value2, out Vector3 result)']]],
+  ['addban',['AddBan',['../classOTA_1_1Callbacks_1_1NetplayCallback.html#a257eb4faedacb5a9ce808043a57785f0',1,'OTA::Callbacks::NetplayCallback']]],
+  ['addcommand',['AddCommand',['../classOTA_1_1Command_1_1CommandParser.html#a4f074493e57030ed27c34add3d0734ec',1,'OTA.Command.CommandParser.AddCommand()'],['../classOTA_1_1Plugin_1_1BasePlugin.html#a4f074493e57030ed27c34add3d0734ec',1,'OTA.Plugin.BasePlugin.AddCommand()'],['../classOTA_1_1Plugin_1_1LUAPlugin.html#a74547444192b65a50fe76a521588331a',1,'OTA.Plugin.LUAPlugin.AddCommand()']]],
+  ['addgroupnode',['AddGroupNode',['../interfaceOTA_1_1Data_1_1IPermissionHandler.html#a1ece49a5411ae2f2d49dfa9d2c0b5a48',1,'OTA.Data.IPermissionHandler.AddGroupNode()'],['../classOTA_1_1Data_1_1Storage.html#ab3b86a9e0eba7c30a5f262ddf8705bad',1,'OTA.Data.Storage.AddGroupNode()']]],
+  ['addnodetouser',['AddNodeToUser',['../interfaceOTA_1_1Data_1_1IPermissionHandler.html#a4e079eedf32612c823b06fb0887516d3',1,'OTA.Data.IPermissionHandler.AddNodeToUser()'],['../classOTA_1_1Data_1_1Storage.html#ae0600889620e383d3e41f78d1660c50d',1,'OTA.Data.Storage.AddNodeToUser()']]],
+  ['addorupdategroup',['AddOrUpdateGroup',['../interfaceOTA_1_1Data_1_1IPermissionHandler.html#ac2d924bb7019d02b40c7037c623ca059',1,'OTA.Data.IPermissionHandler.AddOrUpdateGroup()'],['../classOTA_1_1Data_1_1Storage.html#a6188ee1735a0ffeac15143956cecf97a',1,'OTA.Data.Storage.AddOrUpdateGroup()']]],
+  ['addparam',['AddParam',['../classOTA_1_1Data_1_1QueryBuilder.html#a07212319b039305abae33173ed4a7c51',1,'OTA::Data::QueryBuilder']]],
+  ['addprogresslogger',['AddProgressLogger',['../classOTA_1_1Logging_1_1ProgramLog.html#a7e057bd5832f68de6a907bdef159f18f',1,'OTA::Logging::ProgramLog']]],
+  ['addtarget',['AddTarget',['../classOTA_1_1Logging_1_1ProgramLog.html#af916dc7b5cebbb06e126a842d09ebf56',1,'OTA::Logging::ProgramLog']]],
+  ['addusertogroup',['AddUserToGroup',['../interfaceOTA_1_1Data_1_1IPermissionHandler.html#a3f10bd7f2a21ca4a54acdba9c9f5ba9c',1,'OTA.Data.IPermissionHandler.AddUserToGroup()'],['../classOTA_1_1Data_1_1Storage.html#a9c50ecc78f5836f3adf875088db4b1a6',1,'OTA.Data.Storage.AddUserToGroup()']]],
+  ['all',['All',['../classOTA_1_1Data_1_1QueryBuilder.html#a8bf63a966801d4616b4b60d8f915a623',1,'OTA::Data::QueryBuilder']]],
+  ['append',['Append',['../classOTA_1_1Data_1_1QueryBuilder.html#af89af36b46e3abd1a3120e1d7b6c972d',1,'OTA::Data::QueryBuilder']]],
+  ['apply',['Apply',['../classMicrosoft_1_1Xna_1_1Framework_1_1Graphics_1_1EffectPass.html#a83547725c7532a8ebd835d603857bc2d',1,'Microsoft::Xna::Framework::Graphics::EffectPass']]],
+  ['applychanges',['ApplyChanges',['../classMicrosoft_1_1Xna_1_1Framework_1_1GraphicsDeviceManager.html#a27a4bd5c1d94aae3d4991b3bff39327c',1,'Microsoft::Xna::Framework::GraphicsDeviceManager']]],
+  ['argumentlist',['ArgumentList',['../classOTA_1_1Command_1_1ArgumentList.html#ab6e8f177f57931b8a4dc90e1bbf9bcf9',1,'OTA::Command::ArgumentList']]],
+  ['arraydeque',['ArrayDeque',['../classOTA_1_1Misc_1_1ArrayDeque.html#aae49a37f3c0334d54d689d43ed12b140',1,'OTA::Misc::ArrayDeque']]],
+  ['arraysort',['ArraySort',['../classOTA_1_1Plugin_1_1LUAPlugin.html#a0e0b343be27b612bdbaa7c79b684962c',1,'OTA::Plugin::LUAPlugin']]],
+  ['assigninvasiontype',['AssignInvasionType',['../classOTA_1_1Callbacks_1_1NPCCallback.html#a4e28a06fc52f876963bbcbe5fd3c05cb',1,'OTA::Callbacks::NPCCallback']]],
+  ['asyncreceive',['AsyncReceive',['../interfaceOTA_1_1Callbacks_1_1ISocket.html#a0131ade4ba879fac2b6d466a6cb83e0c',1,'OTA::Callbacks::ISocket']]],
+  ['asyncsend',['AsyncSend',['../interfaceOTA_1_1Callbacks_1_1ISocket.html#a43bc672371744e6b2ebdeb7de49e6189',1,'OTA::Callbacks::ISocket']]],
+  ['attatchonparse',['AttatchOnParse',['../classOTA_1_1Permissions_1_1PermissionsManager.html#af749447d403d2a6cacbcd23e30e31f1a',1,'OTA::Permissions::PermissionsManager']]],
+  ['audioengine',['AudioEngine',['../classMicrosoft_1_1Xna_1_1Framework_1_1Audio_1_1AudioEngine.html#a1444af3bcc84ff4e9bb1b060b02a75fd',1,'Microsoft::Xna::Framework::Audio::AudioEngine']]]
+];

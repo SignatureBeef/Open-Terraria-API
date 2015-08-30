@@ -1,0 +1,86 @@
+\hypertarget{namespace_o_t_a_1_1_i_d}{}\section{O\+T\+A.\+I\+D Namespace Reference}
+\label{namespace_o_t_a_1_1_i_d}\index{O\+T\+A.\+I\+D@{O\+T\+A.\+I\+D}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries Lookup}
+\begin{DoxyCompactList}\small\item\em Generic lookup for tiles, items, buffs etc \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21}{Action\+Type} \+: byte \{ \\*
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a8b520b6574873fb1a4f5b566eac9597a}{Action\+Type.\+Kill\+Tile} = 0, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a3e8d8d0f0e9aba98ad7ef76c7abd90a2}{Action\+Type.\+Place\+Tile} = 1, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a4541e1c8c5d3e90b260b2347cf53c99e}{Action\+Type.\+Kill\+Wall} = 2, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21adfc0c08f6edbf511bf70fd870bb6f522}{Action\+Type.\+Place\+Wall} = 3, 
+\\*
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21acc7021cf7041b96ffd41006d306d5637}{Action\+Type.\+Kill\+Tile1} = 4, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a68f6de8c575e537e588797b61da87613}{Action\+Type.\+Place\+Wire} = 5, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a6d9561bf394989161179bf9838d757f1}{Action\+Type.\+Kill\+Wire} = 6, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21aa42dcb46da07d9bbd2643675862934b3}{Action\+Type.\+Pound\+Tile} = 7, 
+\\*
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a2992d2f3e56e90f98e15bf7da3fbe8cf}{Action\+Type.\+Place\+Actuator} = 8, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21ab95017d89cf3130e60cd51ad9488dd4c}{Action\+Type.\+Kill\+Actuator} = 9, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a00560ab1a14c21293a0593fc64455276}{Action\+Type.\+Place\+Wire2} = 10, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21aa7721d397f066c458fb4124617145aff}{Action\+Type.\+Kill\+Wire2} = 11, 
+\\*
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21ad4a60a066c79029da8e8f2dac831fab3}{Action\+Type.\+Place\+Wire3} = 12, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a02e031a491baccdd6b1571cf5755ebe7}{Action\+Type.\+Kill\+Wire3} = 13, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a27c6287cec7822e96fdc763a14c4c223}{Action\+Type.\+Slope\+Tile} = 14, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21ac55fb5bc02692cb77b1b4b144480e251}{Action\+Type.\+Frame\+Track} = 15, 
+\\*
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a36bc3a08d1039521174dc924c02a3999}{Action\+Type.\+U\+N\+K\+N\+O\+W\+N\+\_\+1} = 100, 
+\hyperlink{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a6348f945cf9021cafc37dfe5af2296d8}{Action\+Type.\+U\+N\+K\+N\+O\+W\+N\+\_\+2} = 101
+ \}\begin{DoxyCompactList}\small\item\em Action type. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21}{}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Action\+Type@{Action\+Type}}
+\index{Action\+Type@{Action\+Type}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}
+\subsubsection[{Action\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf O\+T\+A.\+I\+D.\+Action\+Type} \+: byte\hspace{0.3cm}{\ttfamily [strong]}}\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21}
+
+
+Action type. 
+
+Typically used in tile actions. For example when reading the messages from a client.\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Kill\+Tile@{Kill\+Tile}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Tile@{Kill\+Tile}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a8b520b6574873fb1a4f5b566eac9597a}{}Kill\+Tile\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a8b520b6574873fb1a4f5b566eac9597a}
+}]\index{Place\+Tile@{Place\+Tile}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Tile@{Place\+Tile}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a3e8d8d0f0e9aba98ad7ef76c7abd90a2}{}Place\+Tile\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a3e8d8d0f0e9aba98ad7ef76c7abd90a2}
+}]\index{Kill\+Wall@{Kill\+Wall}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Wall@{Kill\+Wall}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a4541e1c8c5d3e90b260b2347cf53c99e}{}Kill\+Wall\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a4541e1c8c5d3e90b260b2347cf53c99e}
+}]\index{Place\+Wall@{Place\+Wall}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Wall@{Place\+Wall}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21adfc0c08f6edbf511bf70fd870bb6f522}{}Place\+Wall\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21adfc0c08f6edbf511bf70fd870bb6f522}
+}]\index{Kill\+Tile1@{Kill\+Tile1}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Tile1@{Kill\+Tile1}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21acc7021cf7041b96ffd41006d306d5637}{}Kill\+Tile1\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21acc7021cf7041b96ffd41006d306d5637}
+}]\index{Place\+Wire@{Place\+Wire}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Wire@{Place\+Wire}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a68f6de8c575e537e588797b61da87613}{}Place\+Wire\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a68f6de8c575e537e588797b61da87613}
+}]\index{Kill\+Wire@{Kill\+Wire}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Wire@{Kill\+Wire}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a6d9561bf394989161179bf9838d757f1}{}Kill\+Wire\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a6d9561bf394989161179bf9838d757f1}
+}]\index{Pound\+Tile@{Pound\+Tile}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Pound\+Tile@{Pound\+Tile}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21aa42dcb46da07d9bbd2643675862934b3}{}Pound\+Tile\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21aa42dcb46da07d9bbd2643675862934b3}
+}]\index{Place\+Actuator@{Place\+Actuator}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Actuator@{Place\+Actuator}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a2992d2f3e56e90f98e15bf7da3fbe8cf}{}Place\+Actuator\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a2992d2f3e56e90f98e15bf7da3fbe8cf}
+}]\index{Kill\+Actuator@{Kill\+Actuator}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Actuator@{Kill\+Actuator}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21ab95017d89cf3130e60cd51ad9488dd4c}{}Kill\+Actuator\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21ab95017d89cf3130e60cd51ad9488dd4c}
+}]\index{Place\+Wire2@{Place\+Wire2}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Wire2@{Place\+Wire2}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a00560ab1a14c21293a0593fc64455276}{}Place\+Wire2\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a00560ab1a14c21293a0593fc64455276}
+}]\index{Kill\+Wire2@{Kill\+Wire2}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Wire2@{Kill\+Wire2}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21aa7721d397f066c458fb4124617145aff}{}Kill\+Wire2\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21aa7721d397f066c458fb4124617145aff}
+}]\index{Place\+Wire3@{Place\+Wire3}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Place\+Wire3@{Place\+Wire3}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21ad4a60a066c79029da8e8f2dac831fab3}{}Place\+Wire3\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21ad4a60a066c79029da8e8f2dac831fab3}
+}]\index{Kill\+Wire3@{Kill\+Wire3}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Kill\+Wire3@{Kill\+Wire3}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a02e031a491baccdd6b1571cf5755ebe7}{}Kill\+Wire3\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a02e031a491baccdd6b1571cf5755ebe7}
+}]\index{Slope\+Tile@{Slope\+Tile}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Slope\+Tile@{Slope\+Tile}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a27c6287cec7822e96fdc763a14c4c223}{}Slope\+Tile\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a27c6287cec7822e96fdc763a14c4c223}
+}]\index{Frame\+Track@{Frame\+Track}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!Frame\+Track@{Frame\+Track}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21ac55fb5bc02692cb77b1b4b144480e251}{}Frame\+Track\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21ac55fb5bc02692cb77b1b4b144480e251}
+}]\index{U\+N\+K\+N\+O\+W\+N\+\_\+1@{U\+N\+K\+N\+O\+W\+N\+\_\+1}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!U\+N\+K\+N\+O\+W\+N\+\_\+1@{U\+N\+K\+N\+O\+W\+N\+\_\+1}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a36bc3a08d1039521174dc924c02a3999}{}U\+N\+K\+N\+O\+W\+N\+\_\+1\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a36bc3a08d1039521174dc924c02a3999}
+}]\index{U\+N\+K\+N\+O\+W\+N\+\_\+2@{U\+N\+K\+N\+O\+W\+N\+\_\+2}!O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}}\index{O\+T\+A\+::\+I\+D@{O\+T\+A\+::\+I\+D}!U\+N\+K\+N\+O\+W\+N\+\_\+2@{U\+N\+K\+N\+O\+W\+N\+\_\+2}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a6348f945cf9021cafc37dfe5af2296d8}{}U\+N\+K\+N\+O\+W\+N\+\_\+2\label{namespace_o_t_a_1_1_i_d_a57decdbefe599cd02efcf8605eccec21a6348f945cf9021cafc37dfe5af2296d8}
+}]\end{description}
+\end{Desc}

@@ -1,0 +1,96 @@
+\hypertarget{classOTA_1_1Logging_1_1LogTarget}{}\section{Log\+Target}
+\label{classOTA_1_1Logging_1_1LogTarget}\index{Log\+Target@{Log\+Target}}
+Inheritance diagram for Log\+Target\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classOTA_1_1Logging_1_1LogTarget}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classOTA_1_1Logging_1_1LogTarget_ace36743954f0a3a2e5d8cba379d5313f}{Close} ()
+\item 
+void \hyperlink{classOTA_1_1Logging_1_1LogTarget_aaee4fb83e5eaa9e8423be5b7baca8602}{Send} (\hyperlink{structOTA_1_1Logging_1_1OutputEntry}{Output\+Entry} entry)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classOTA_1_1Logging_1_1LogTarget_abcc191484b348f076e8d8d14832dec3a}{Entry\+Count} ()
+\item 
+virtual void \hyperlink{classOTA_1_1Logging_1_1LogTarget_a5eae342fcf81534aef90242d4f7684aa}{Reset\+Color} ()
+\item 
+virtual void \hyperlink{classOTA_1_1Logging_1_1LogTarget_af289a1a417633601353caf23a8a3fc1f}{Set\+Color} (Console\+Color color)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Queue$<$ \hyperlink{structOTA_1_1Logging_1_1OutputEntry}{Output\+Entry} $>$ \hyperlink{classOTA_1_1Logging_1_1LogTarget_a7a7f792d063d5d1d30679d1d9581456b}{entries} = new Queue$<$\hyperlink{structOTA_1_1Logging_1_1OutputEntry}{Output\+Entry}$>$ (1024)
+\item 
+bool \hyperlink{classOTA_1_1Logging_1_1LogTarget_add93a36b81b5f541d2f3237a7f363a7e}{exit} = false
+\item 
+\hyperlink{structOTA_1_1Misc_1_1ProducerConsumerSignal}{Producer\+Consumer\+Signal} \hyperlink{classOTA_1_1Logging_1_1LogTarget_a72183e3b2c008e99f2b0ed66fe527ab5}{signal} = new \hyperlink{structOTA_1_1Misc_1_1ProducerConsumerSignal}{Producer\+Consumer\+Signal} (false)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Logging_1_1LogTarget_ace36743954f0a3a2e5d8cba379d5313f}{}\index{O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}!Close@{Close}}
+\index{Close@{Close}!O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}}
+\subsubsection[{Close()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1Logging_1_1LogTarget_ace36743954f0a3a2e5d8cba379d5313f}
+\hypertarget{classOTA_1_1Logging_1_1LogTarget_abcc191484b348f076e8d8d14832dec3a}{}\index{O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}!Entry\+Count@{Entry\+Count}}
+\index{Entry\+Count@{Entry\+Count}!O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}}
+\subsubsection[{Entry\+Count()}]{\setlength{\rightskip}{0pt plus 5cm}int Entry\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Logging_1_1LogTarget_abcc191484b348f076e8d8d14832dec3a}
+\hypertarget{classOTA_1_1Logging_1_1LogTarget_a5eae342fcf81534aef90242d4f7684aa}{}\index{O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}!Reset\+Color@{Reset\+Color}}
+\index{Reset\+Color@{Reset\+Color}!O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}}
+\subsubsection[{Reset\+Color()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Reset\+Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Logging_1_1LogTarget_a5eae342fcf81534aef90242d4f7684aa}
+
+
+Reimplemented in \hyperlink{classOTA_1_1Logging_1_1StandardOutputTarget_a160381b37add18d5d439e2993a85253c}{Standard\+Output\+Target}.
+
+\hypertarget{classOTA_1_1Logging_1_1LogTarget_aaee4fb83e5eaa9e8423be5b7baca8602}{}\index{O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}!Send@{Send}}
+\index{Send@{Send}!O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}}
+\subsubsection[{Send(\+Output\+Entry entry)}]{\setlength{\rightskip}{0pt plus 5cm}void Send (
+\begin{DoxyParamCaption}
+\item[{{\bf Output\+Entry}}]{entry}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Logging_1_1LogTarget_aaee4fb83e5eaa9e8423be5b7baca8602}
+\hypertarget{classOTA_1_1Logging_1_1LogTarget_af289a1a417633601353caf23a8a3fc1f}{}\index{O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}!Set\+Color@{Set\+Color}}
+\index{Set\+Color@{Set\+Color}!O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}}
+\subsubsection[{Set\+Color(\+Console\+Color color)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Set\+Color (
+\begin{DoxyParamCaption}
+\item[{Console\+Color}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{classOTA_1_1Logging_1_1LogTarget_af289a1a417633601353caf23a8a3fc1f}
+
+
+Reimplemented in \hyperlink{classOTA_1_1Logging_1_1StandardOutputTarget_a3de5502cb52b348c3fa04d081342cceb}{Standard\+Output\+Target}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1Logging_1_1LogTarget_a7a7f792d063d5d1d30679d1d9581456b}{}\index{O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}!entries@{entries}}
+\index{entries@{entries}!O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}}
+\subsubsection[{entries}]{\setlength{\rightskip}{0pt plus 5cm}Queue$<${\bf Output\+Entry}$>$ entries = new Queue$<${\bf Output\+Entry}$>$ (1024)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Logging_1_1LogTarget_a7a7f792d063d5d1d30679d1d9581456b}
+\hypertarget{classOTA_1_1Logging_1_1LogTarget_add93a36b81b5f541d2f3237a7f363a7e}{}\index{O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}!exit@{exit}}
+\index{exit@{exit}!O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}}
+\subsubsection[{exit}]{\setlength{\rightskip}{0pt plus 5cm}bool exit = false\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Logging_1_1LogTarget_add93a36b81b5f541d2f3237a7f363a7e}
+\hypertarget{classOTA_1_1Logging_1_1LogTarget_a72183e3b2c008e99f2b0ed66fe527ab5}{}\index{O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}!signal@{signal}}
+\index{signal@{signal}!O\+T\+A\+::\+Logging\+::\+Log\+Target@{O\+T\+A\+::\+Logging\+::\+Log\+Target}}
+\subsubsection[{signal}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Producer\+Consumer\+Signal} signal = new {\bf Producer\+Consumer\+Signal} (false)\hspace{0.3cm}{\ttfamily [protected]}}\label{classOTA_1_1Logging_1_1LogTarget_a72183e3b2c008e99f2b0ed66fe527ab5}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Logging/\hyperlink{LogTarget_8cs}{Log\+Target.\+cs}\end{DoxyCompactItemize}

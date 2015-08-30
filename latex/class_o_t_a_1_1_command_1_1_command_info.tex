@@ -1,0 +1,285 @@
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info}{}\section{O\+T\+A.\+Command.\+Command\+Info Class Reference}
+\label{class_o_t_a_1_1_command_1_1_command_info}\index{O\+T\+A.\+Command.\+Command\+Info@{O\+T\+A.\+Command.\+Command\+Info}}
+
+
+An \hyperlink{namespace_o_t_a}{O\+T\+A} command definition/builder  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a5e1946986761c093f6502e7e6e6e090d}{With\+Description} (string desc)
+\begin{DoxyCompactList}\small\item\em Sets the description of the command. \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a5e6e33482694024a3f9d6037f063fe8b}{With\+Help\+Text} (string help)
+\begin{DoxyCompactList}\small\item\em Sets the help text of the command. \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a5b94cc2c1109440759ff866a3b041050}{Set\+Default\+Usage} ()
+\begin{DoxyCompactList}\small\item\em Sets a flag for \hyperlink{namespace_o_t_a}{O\+T\+A} to generate a default usage based on the prefix when a sender queries how to use the command. \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a3f3d9e3db813063f113923ff3a9db2f4}{Set\+Old\+Help\+Style} ()
+\begin{DoxyCompactList}\small\item\em Sets the flag that the output help text must be in the pre T\+D\+S\+M Rebind format \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_ac88a7c0a3c0bd6aea6fa5420255bbc5e}{With\+Access\+Level} (\hyperlink{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8e}{Access\+Level} access\+Level)
+\begin{DoxyCompactList}\small\item\em Sets the required sender access level \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a0d5ce5c5ebff49ab3be8c1671e3f9a38}{With\+Access\+Level} (int access\+Level)
+\begin{DoxyCompactList}\small\item\em Sets the required sender access level \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a45d075e4f25b8f2e226250287741772c}{With\+Permission\+Node} (string node)
+\begin{DoxyCompactList}\small\item\em Sets the permission ndoe for this command \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_aebaf1fb1ebe617f53b1950970ee3bacc}{By\+Permission\+Node} (string code)
+\begin{DoxyCompactList}\small\item\em Sets the permission node relative to the command name. \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a347b7c26ea03353febc7f4e7dee6b6ee}{Calls} (Action$<$ \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender}{I\+Sender}, \hyperlink{class_o_t_a_1_1_command_1_1_argument_list}{Argument\+List} $>$ callback)
+\begin{DoxyCompactList}\small\item\em Sets the callback for the command \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a9ecbdf31147c786e7ed0dfcc6dd5cf5f}{Calls} (Action$<$ \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender}{I\+Sender}, string $>$ callback)
+\begin{DoxyCompactList}\small\item\em Sets the callback for the command \end{DoxyCompactList}\item 
+\hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info} \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a2108c70a368f22d3985cf3cb978275e0}{Lua\+Call} (N\+Lua.\+Lua\+Function callback)
+\begin{DoxyCompactList}\small\item\em Sets a L\+U\+A callback \end{DoxyCompactList}\item 
+void \hyperlink{class_o_t_a_1_1_command_1_1_command_info_af2157881e8d1308d022a4fa9f2a56ac9}{Show\+Help} (\hyperlink{interface_o_t_a_1_1_command_1_1_i_sender}{I\+Sender} sender, bool no\+Help=false)
+\begin{DoxyCompactList}\small\item\em Shows help message for a sender \end{DoxyCompactList}\item 
+void \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a4a924c48f10e7af95cd13ff14ff9a756}{Show\+Description} (\hyperlink{interface_o_t_a_1_1_command_1_1_i_sender}{I\+Sender} sender, int padd)
+\begin{DoxyCompactList}\small\item\em Shows the description to a sender \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{class_o_t_a_1_1_command_1_1_command_info_a7b0530400298e30d56643002dc27da4b}{Prefix}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the prefix. \end{DoxyCompactList}\item 
+string \hyperlink{class_o_t_a_1_1_command_1_1_command_info_ae9537928af7e17583d46d8535c9743c9}{Node}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the permission node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An \hyperlink{namespace_o_t_a}{O\+T\+A} command definition/builder 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_aebaf1fb1ebe617f53b1950970ee3bacc}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!By\+Permission\+Node@{By\+Permission\+Node}}
+\index{By\+Permission\+Node@{By\+Permission\+Node}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{By\+Permission\+Node(string code)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+By\+Permission\+Node (
+\begin{DoxyParamCaption}
+\item[{string}]{code}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_aebaf1fb1ebe617f53b1950970ee3bacc}
+
+
+Sets the permission node relative to the command name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em code} & Permission node key\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a347b7c26ea03353febc7f4e7dee6b6ee}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Calls@{Calls}}
+\index{Calls@{Calls}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Calls(\+Action$<$ I\+Sender, Argument\+List $>$ callback)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+Calls (
+\begin{DoxyParamCaption}
+\item[{Action$<$ {\bf I\+Sender}, {\bf Argument\+List} $>$}]{callback}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a347b7c26ea03353febc7f4e7dee6b6ee}
+
+
+Sets the callback for the command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em callback} & Callback.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a9ecbdf31147c786e7ed0dfcc6dd5cf5f}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Calls@{Calls}}
+\index{Calls@{Calls}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Calls(\+Action$<$ I\+Sender, string $>$ callback)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+Calls (
+\begin{DoxyParamCaption}
+\item[{Action$<$ {\bf I\+Sender}, string $>$}]{callback}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a9ecbdf31147c786e7ed0dfcc6dd5cf5f}
+
+
+Sets the callback for the command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em callback} & Callback.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a2108c70a368f22d3985cf3cb978275e0}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Lua\+Call@{Lua\+Call}}
+\index{Lua\+Call@{Lua\+Call}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Lua\+Call(\+N\+Lua.\+Lua\+Function callback)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+Lua\+Call (
+\begin{DoxyParamCaption}
+\item[{N\+Lua.\+Lua\+Function}]{callback}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a2108c70a368f22d3985cf3cb978275e0}
+
+
+Sets a L\+U\+A callback 
+
+\begin{DoxyReturn}{Returns}
+The call.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em callback} & Callback.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a5b94cc2c1109440759ff866a3b041050}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Set\+Default\+Usage@{Set\+Default\+Usage}}
+\index{Set\+Default\+Usage@{Set\+Default\+Usage}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Set\+Default\+Usage()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+Set\+Default\+Usage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a5b94cc2c1109440759ff866a3b041050}
+
+
+Sets a flag for \hyperlink{namespace_o_t_a}{O\+T\+A} to generate a default usage based on the prefix when a sender queries how to use the command. 
+
+\begin{DoxyReturn}{Returns}
+The default usage.
+\end{DoxyReturn}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a3f3d9e3db813063f113923ff3a9db2f4}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Set\+Old\+Help\+Style@{Set\+Old\+Help\+Style}}
+\index{Set\+Old\+Help\+Style@{Set\+Old\+Help\+Style}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Set\+Old\+Help\+Style()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+Set\+Old\+Help\+Style (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a3f3d9e3db813063f113923ff3a9db2f4}
+
+
+Sets the flag that the output help text must be in the pre T\+D\+S\+M Rebind format 
+
+\begin{DoxyReturn}{Returns}
+The old help style.
+\end{DoxyReturn}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a4a924c48f10e7af95cd13ff14ff9a756}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Show\+Description@{Show\+Description}}
+\index{Show\+Description@{Show\+Description}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Show\+Description(\+I\+Sender sender, int padd)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Command.\+Command\+Info.\+Show\+Description (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sender}}]{sender, }
+\item[{int}]{padd}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a4a924c48f10e7af95cd13ff14ff9a756}
+
+
+Shows the description to a sender 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & \hyperlink{class_o_t_a_1_1_command_1_1_sender}{Sender}.\\
+\hline
+{\em padd} & Padd.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_af2157881e8d1308d022a4fa9f2a56ac9}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Show\+Help@{Show\+Help}}
+\index{Show\+Help@{Show\+Help}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Show\+Help(\+I\+Sender sender, bool no\+Help=false)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Command.\+Command\+Info.\+Show\+Help (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sender}}]{sender, }
+\item[{bool}]{no\+Help = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_af2157881e8d1308d022a4fa9f2a56ac9}
+
+
+Shows help message for a sender 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & \hyperlink{class_o_t_a_1_1_command_1_1_sender}{Sender}.\\
+\hline
+{\em no\+Help} & If set to {\ttfamily true} no help.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_ac88a7c0a3c0bd6aea6fa5420255bbc5e}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Access\+Level@{With\+Access\+Level}}
+\index{With\+Access\+Level@{With\+Access\+Level}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Access\+Level(\+Access\+Level access\+Level)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+With\+Access\+Level (
+\begin{DoxyParamCaption}
+\item[{{\bf Access\+Level}}]{access\+Level}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_ac88a7c0a3c0bd6aea6fa5420255bbc5e}
+
+
+Sets the required sender access level 
+
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a0d5ce5c5ebff49ab3be8c1671e3f9a38}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Access\+Level@{With\+Access\+Level}}
+\index{With\+Access\+Level@{With\+Access\+Level}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Access\+Level(int access\+Level)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+With\+Access\+Level (
+\begin{DoxyParamCaption}
+\item[{int}]{access\+Level}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a0d5ce5c5ebff49ab3be8c1671e3f9a38}
+
+
+Sets the required sender access level 
+
+For use with N\+Lua\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a5e1946986761c093f6502e7e6e6e090d}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Description@{With\+Description}}
+\index{With\+Description@{With\+Description}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Description(string desc)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+With\+Description (
+\begin{DoxyParamCaption}
+\item[{string}]{desc}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a5e1946986761c093f6502e7e6e6e090d}
+
+
+Sets the description of the command. 
+
+\begin{DoxyReturn}{Returns}
+The description.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em desc} & Desc.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a5e6e33482694024a3f9d6037f063fe8b}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Help\+Text@{With\+Help\+Text}}
+\index{With\+Help\+Text@{With\+Help\+Text}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Help\+Text(string help)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+With\+Help\+Text (
+\begin{DoxyParamCaption}
+\item[{string}]{help}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a5e6e33482694024a3f9d6037f063fe8b}
+
+
+Sets the help text of the command. 
+
+\begin{DoxyReturn}{Returns}
+The help text.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em help} & Help.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a45d075e4f25b8f2e226250287741772c}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!With\+Permission\+Node@{With\+Permission\+Node}}
+\index{With\+Permission\+Node@{With\+Permission\+Node}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{With\+Permission\+Node(string node)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Command\+Info} O\+T\+A.\+Command.\+Command\+Info.\+With\+Permission\+Node (
+\begin{DoxyParamCaption}
+\item[{string}]{node}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_command_1_1_command_info_a45d075e4f25b8f2e226250287741772c}
+
+
+Sets the permission ndoe for this command 
+
+\begin{DoxyReturn}{Returns}
+The permission node.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em node} & Node.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Property Documentation}
+\hypertarget{class_o_t_a_1_1_command_1_1_command_info_ae9537928af7e17583d46d8535c9743c9}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Node@{Node}}
+\index{Node@{Node}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Node}]{\setlength{\rightskip}{0pt plus 5cm}string O\+T\+A.\+Command.\+Command\+Info.\+Node\hspace{0.3cm}{\ttfamily [get]}}\label{class_o_t_a_1_1_command_1_1_command_info_ae9537928af7e17583d46d8535c9743c9}
+
+
+Gets the permission node. 
+
+The node.\hypertarget{class_o_t_a_1_1_command_1_1_command_info_a7b0530400298e30d56643002dc27da4b}{}\index{O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}!Prefix@{Prefix}}
+\index{Prefix@{Prefix}!O\+T\+A\+::\+Command\+::\+Command\+Info@{O\+T\+A\+::\+Command\+::\+Command\+Info}}
+\subsubsection[{Prefix}]{\setlength{\rightskip}{0pt plus 5cm}string O\+T\+A.\+Command.\+Command\+Info.\+Prefix\hspace{0.3cm}{\ttfamily [get]}}\label{class_o_t_a_1_1_command_1_1_command_info_a7b0530400298e30d56643002dc27da4b}
+
+
+Gets the prefix. 
+
+The prefix.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{_command_parser_8cs}{Command\+Parser.\+cs}\end{DoxyCompactItemize}

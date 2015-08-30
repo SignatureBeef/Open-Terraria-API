@@ -1,0 +1,99 @@
+\hypertarget{classOTA_1_1ConfigUpdater}{}\section{Config\+Updater}
+\label{classOTA_1_1ConfigUpdater}\index{Config\+Updater@{Config\+Updater}}
+
+
+A generic configuration updater for the format of the official serverconfig.\+txt.  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classOTA_1_1ConfigUpdater_a011da67e3e5ed70f9513daeecdaa5d14}{Set} (string key, string value, bool include\+Commented=true, bool preserve\+Comment=false)
+\begin{DoxyCompactList}\small\item\em Update the specified configuration file with the prefix. \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1ConfigUpdater_a5cc3e425a8df501422db6ed637d7a0fc}{Set} (string key, object value, bool include\+Commented=true, bool preserve\+Comment=false)
+\begin{DoxyCompactList}\small\item\em Set the specified key, value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classOTA_1_1ConfigUpdater_a7a547596c0c095817d16bbe4ba4c48f4}{Is\+Available}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a value indicating is available. \end{DoxyCompactList}\item 
+static string \hyperlink{classOTA_1_1ConfigUpdater_a0b6a7aa2ed188dc7820c804906dd8ead}{Source\+File}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A generic configuration updater for the format of the official serverconfig.\+txt. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1ConfigUpdater_a011da67e3e5ed70f9513daeecdaa5d14}{}\index{O\+T\+A\+::\+Config\+Updater@{O\+T\+A\+::\+Config\+Updater}!Set@{Set}}
+\index{Set@{Set}!O\+T\+A\+::\+Config\+Updater@{O\+T\+A\+::\+Config\+Updater}}
+\subsubsection[{Set(string key, string value, bool include\+Commented=true, bool preserve\+Comment=false)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Set (
+\begin{DoxyParamCaption}
+\item[{string}]{key, }
+\item[{string}]{value, }
+\item[{bool}]{include\+Commented = {\ttfamily true}, }
+\item[{bool}]{preserve\+Comment = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1ConfigUpdater_a011da67e3e5ed70f9513daeecdaa5d14}
+
+
+Update the specified configuration file with the prefix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Prefix to use. E.\+g. motd\\
+\hline
+{\em value} & Value to be set\\
+\hline
+{\em include\+Commented} & If set to {\ttfamily true}, allows commented lines to be updated.\\
+\hline
+{\em preserve\+Comment} & If set to {\ttfamily true} the save will preserve commented lines.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1ConfigUpdater_a5cc3e425a8df501422db6ed637d7a0fc}{}\index{O\+T\+A\+::\+Config\+Updater@{O\+T\+A\+::\+Config\+Updater}!Set@{Set}}
+\index{Set@{Set}!O\+T\+A\+::\+Config\+Updater@{O\+T\+A\+::\+Config\+Updater}}
+\subsubsection[{Set(string key, object value, bool include\+Commented=true, bool preserve\+Comment=false)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Set (
+\begin{DoxyParamCaption}
+\item[{string}]{key, }
+\item[{object}]{value, }
+\item[{bool}]{include\+Commented = {\ttfamily true}, }
+\item[{bool}]{preserve\+Comment = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1ConfigUpdater_a5cc3e425a8df501422db6ed637d7a0fc}
+
+
+Set the specified key, value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Key.\\
+\hline
+{\em value} & Value.\\
+\hline
+{\em include\+Commented} & If set to {\ttfamily true} include commented.\\
+\hline
+{\em preserve\+Comment} & If set to {\ttfamily true} preserve comment.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1ConfigUpdater_a7a547596c0c095817d16bbe4ba4c48f4}{}\index{O\+T\+A\+::\+Config\+Updater@{O\+T\+A\+::\+Config\+Updater}!Is\+Available@{Is\+Available}}
+\index{Is\+Available@{Is\+Available}!O\+T\+A\+::\+Config\+Updater@{O\+T\+A\+::\+Config\+Updater}}
+\subsubsection[{Is\+Available}]{\setlength{\rightskip}{0pt plus 5cm}bool Is\+Available\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{classOTA_1_1ConfigUpdater_a7a547596c0c095817d16bbe4ba4c48f4}
+
+
+Gets a value indicating is available. 
+
+If a configuration file is not specified to the program we cannot update.
+
+{\ttfamily true} if is available; otherwise, {\ttfamily false}.\hypertarget{classOTA_1_1ConfigUpdater_a0b6a7aa2ed188dc7820c804906dd8ead}{}\index{O\+T\+A\+::\+Config\+Updater@{O\+T\+A\+::\+Config\+Updater}!Source\+File@{Source\+File}}
+\index{Source\+File@{Source\+File}!O\+T\+A\+::\+Config\+Updater@{O\+T\+A\+::\+Config\+Updater}}
+\subsubsection[{Source\+File}]{\setlength{\rightskip}{0pt plus 5cm}string Source\+File\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}, {\ttfamily [set]}, {\ttfamily [package]}}\label{classOTA_1_1ConfigUpdater_a0b6a7aa2ed188dc7820c804906dd8ead}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Misc/\hyperlink{ConfigUpdater_8cs}{Config\+Updater.\+cs}\end{DoxyCompactItemize}

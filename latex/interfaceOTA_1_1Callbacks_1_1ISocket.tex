@@ -1,0 +1,108 @@
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket}{}\section{I\+Socket}
+\label{interfaceOTA_1_1Callbacks_1_1ISocket}\index{I\+Socket@{I\+Socket}}
+Inheritance diagram for I\+Socket\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interfaceOTA_1_1Callbacks_1_1ISocket}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket_a0131ade4ba879fac2b6d466a6cb83e0c}{Async\+Receive} (byte\mbox{[}$\,$\mbox{]} data, int offset, int size, \hyperlink{namespaceOTA_1_1Callbacks_ae072013cce199869fb359bea97dbdb17}{Socket\+Receive\+Callback} callback, object state)
+\item 
+void \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket_a43bc672371744e6b2ebdeb7de49e6189}{Async\+Send} (byte\mbox{[}$\,$\mbox{]} data, int offset, int size, \hyperlink{namespaceOTA_1_1Callbacks_a23847c8d354ca8b53cfd6a3f466e0099}{Socket\+Send\+Callback} callback, object state)
+\item 
+void \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket_a7f7a3199c392465d0767c6506c1af5b4}{Close} ()
+\item 
+void \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket_ae9cb57357bdb0517823d7e663c4544f6}{Connect} (\hyperlink{classOTA_1_1Callbacks_1_1RemoteAddress}{Remote\+Address} address)
+\item 
+\hyperlink{classOTA_1_1Callbacks_1_1RemoteAddress}{Remote\+Address} \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket_af6dac4f7824ece5d8eac8078fee01087}{Get\+Remote\+Address} ()
+\item 
+bool \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket_ab8e2702adca8f47228f9754f4963455d}{Is\+Connected} ()
+\item 
+bool \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket_ab2323e7b79a1fe7b29ff0d20ac2f0a2c}{Is\+Data\+Available} ()
+\item 
+bool \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket_a2d9d2524de656d8fd8106f2f0df42f6c}{Start\+Listening} (\hyperlink{namespaceOTA_1_1Callbacks_afb9741507c3efff20f6f9a86dc42af20}{Socket\+Connection\+Accepted} callback)
+\item 
+void \hyperlink{interfaceOTA_1_1Callbacks_1_1ISocket_a16fd1b0cb96e78851dcd78fce8774c21}{Stop\+Listening} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket_a0131ade4ba879fac2b6d466a6cb83e0c}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Async\+Receive@{Async\+Receive}}
+\index{Async\+Receive@{Async\+Receive}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Async\+Receive(byte[] data, int offset, int size, Socket\+Receive\+Callback callback, object state)}]{\setlength{\rightskip}{0pt plus 5cm}void Async\+Receive (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{data, }
+\item[{int}]{offset, }
+\item[{int}]{size, }
+\item[{{\bf Socket\+Receive\+Callback}}]{callback, }
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Callbacks_1_1ISocket_a0131ade4ba879fac2b6d466a6cb83e0c}
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket_a43bc672371744e6b2ebdeb7de49e6189}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Async\+Send@{Async\+Send}}
+\index{Async\+Send@{Async\+Send}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Async\+Send(byte[] data, int offset, int size, Socket\+Send\+Callback callback, object state)}]{\setlength{\rightskip}{0pt plus 5cm}void Async\+Send (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{data, }
+\item[{int}]{offset, }
+\item[{int}]{size, }
+\item[{{\bf Socket\+Send\+Callback}}]{callback, }
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Callbacks_1_1ISocket_a43bc672371744e6b2ebdeb7de49e6189}
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket_a7f7a3199c392465d0767c6506c1af5b4}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Close@{Close}}
+\index{Close@{Close}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Close()}]{\setlength{\rightskip}{0pt plus 5cm}void Close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Callbacks_1_1ISocket_a7f7a3199c392465d0767c6506c1af5b4}
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket_ae9cb57357bdb0517823d7e663c4544f6}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Connect@{Connect}}
+\index{Connect@{Connect}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Connect(\+Remote\+Address address)}]{\setlength{\rightskip}{0pt plus 5cm}void Connect (
+\begin{DoxyParamCaption}
+\item[{{\bf Remote\+Address}}]{address}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Callbacks_1_1ISocket_ae9cb57357bdb0517823d7e663c4544f6}
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket_af6dac4f7824ece5d8eac8078fee01087}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Get\+Remote\+Address@{Get\+Remote\+Address}}
+\index{Get\+Remote\+Address@{Get\+Remote\+Address}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Get\+Remote\+Address()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Remote\+Address} Get\+Remote\+Address (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Callbacks_1_1ISocket_af6dac4f7824ece5d8eac8078fee01087}
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket_ab8e2702adca8f47228f9754f4963455d}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Is\+Connected@{Is\+Connected}}
+\index{Is\+Connected@{Is\+Connected}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Is\+Connected()}]{\setlength{\rightskip}{0pt plus 5cm}bool Is\+Connected (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Callbacks_1_1ISocket_ab8e2702adca8f47228f9754f4963455d}
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket_ab2323e7b79a1fe7b29ff0d20ac2f0a2c}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Is\+Data\+Available@{Is\+Data\+Available}}
+\index{Is\+Data\+Available@{Is\+Data\+Available}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Is\+Data\+Available()}]{\setlength{\rightskip}{0pt plus 5cm}bool Is\+Data\+Available (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Callbacks_1_1ISocket_ab2323e7b79a1fe7b29ff0d20ac2f0a2c}
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket_a2d9d2524de656d8fd8106f2f0df42f6c}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Start\+Listening@{Start\+Listening}}
+\index{Start\+Listening@{Start\+Listening}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Start\+Listening(\+Socket\+Connection\+Accepted callback)}]{\setlength{\rightskip}{0pt plus 5cm}bool Start\+Listening (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Connection\+Accepted}}]{callback}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Callbacks_1_1ISocket_a2d9d2524de656d8fd8106f2f0df42f6c}
+\hypertarget{interfaceOTA_1_1Callbacks_1_1ISocket_a16fd1b0cb96e78851dcd78fce8774c21}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Stop\+Listening@{Stop\+Listening}}
+\index{Stop\+Listening@{Stop\+Listening}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Stop\+Listening()}]{\setlength{\rightskip}{0pt plus 5cm}void Stop\+Listening (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interfaceOTA_1_1Callbacks_1_1ISocket_a16fd1b0cb96e78851dcd78fce8774c21}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Callbacks/\hyperlink{NetplayCallback_8cs}{Netplay\+Callback.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,267 @@
+\hypertarget{classOTA_1_1BasePlayer}{}\section{Base\+Player}
+\label{classOTA_1_1BasePlayer}\index{Base\+Player@{Base\+Player}}
+
+
+This is what Terraria.\+Player is forced to inherit  
+
+
+Inheritance diagram for Base\+Player\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classOTA_1_1BasePlayer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classOTA_1_1BasePlayer_a1a60c20af7806e8be97190c1b035fba8}{Clear\+Plugin\+Data} (string key)
+\begin{DoxyCompactList}\small\item\em Removed plugin data for this player \end{DoxyCompactList}\item 
+T \hyperlink{classOTA_1_1BasePlayer_a7a8a4aede1a3721c557e962b7fcf71dd}{Get\+Plugin\+Data$<$ T $>$} (string key, T default\+Value)
+\begin{DoxyCompactList}\small\item\em Gets plugin data for this player \end{DoxyCompactList}\item 
+override void \hyperlink{classOTA_1_1BasePlayer_aab351e86d2672170773b0e58782ce64c}{Send\+Message} (string message, int sender=255, byte R=255, byte G=255, byte B=255)
+\begin{DoxyCompactList}\small\item\em Sends a message to the players client \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1BasePlayer_a8fe3889b8e8013c043f7bb0f31ccb652}{Send\+Message} (string message, \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} color)
+\begin{DoxyCompactList}\small\item\em Sends a message to the player \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1BasePlayer_a2611407de80854038643a84fac41f2c9}{Set\+Authentication} (string auth, string by)
+\begin{DoxyCompactList}\small\item\em Sets the authentication of this user \end{DoxyCompactList}\item 
+void \hyperlink{classOTA_1_1BasePlayer_a65a264256638a3e74fa8303360ebcef7}{Set\+Plugin\+Data} (string key, object value)
+\begin{DoxyCompactList}\small\item\em Sets plugin data for this player \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classOTA_1_1BasePlayer_abe19975d0fc102a4dc9950045e2b6a1f}{Disconnect\+Reason}
+\begin{DoxyCompactList}\small\item\em The reason of disconnection \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1BasePlayer_a7d95a07d68f081c6363697469e1c117f}{I\+P\+Address}
+\begin{DoxyCompactList}\small\item\em The players I\+P Address \end{DoxyCompactList}\item 
+Concurrent\+Dictionary$<$ String, Object $>$ \hyperlink{classOTA_1_1BasePlayer_a9e32cc779b1659f2752ee5564650f5f1}{Plugin\+Data} = new Concurrent\+Dictionary$<$String, Object$>$()
+\begin{DoxyCompactList}\small\item\em Storage for plugins for on a per-\/player basis \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classOTA_1_1BasePlayer_a99abed4b5ac2cf92871687dc00bf7f66}{Authenticated\+As}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets who the player is authenticated as \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1BasePlayer_a285fa2c208fa2471fb593dfd2f95329c}{Authenticated\+By}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the authenticator \end{DoxyCompactList}\item 
+string \hyperlink{classOTA_1_1BasePlayer_a816fb41b89b7df273d909df9e9a1c701}{Client\+U\+U\+Id}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets or sets the clients globally unique identifier. \end{DoxyCompactList}\item 
+bool \hyperlink{classOTA_1_1BasePlayer_a113748123407c45ee6c5faed4bd20edd}{Is\+Authenticated}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+override string \hyperlink{classOTA_1_1BasePlayer_ab0ac1d6f4f094b0171294b8bd22c06ac}{Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the name of this player \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is what Terraria.\+Player is forced to inherit 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1BasePlayer_a1a60c20af7806e8be97190c1b035fba8}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Clear\+Plugin\+Data@{Clear\+Plugin\+Data}}
+\index{Clear\+Plugin\+Data@{Clear\+Plugin\+Data}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Clear\+Plugin\+Data(string key)}]{\setlength{\rightskip}{0pt plus 5cm}bool Clear\+Plugin\+Data (
+\begin{DoxyParamCaption}
+\item[{string}]{key}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1BasePlayer_a1a60c20af7806e8be97190c1b035fba8}
+
+
+Removed plugin data for this player 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if plugin data was cleared, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Key.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1BasePlayer_a7a8a4aede1a3721c557e962b7fcf71dd}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Get\+Plugin\+Data$<$ T $>$@{Get\+Plugin\+Data$<$ T $>$}}
+\index{Get\+Plugin\+Data$<$ T $>$@{Get\+Plugin\+Data$<$ T $>$}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Get\+Plugin\+Data$<$ T $>$(string key, T default\+Value)}]{\setlength{\rightskip}{0pt plus 5cm}T Get\+Plugin\+Data$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{key, }
+\item[{T}]{default\+Value}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1BasePlayer_a7a8a4aede1a3721c557e962b7fcf71dd}
+
+
+Gets plugin data for this player 
+
+\begin{DoxyReturn}{Returns}
+The plugin data.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Key.\\
+\hline
+{\em default\+Value} & Default value.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The 1st type parameter.\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classOTA_1_1BasePlayer_aab351e86d2672170773b0e58782ce64c}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Send\+Message@{Send\+Message}}
+\index{Send\+Message@{Send\+Message}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Send\+Message(string message, int sender=255, byte R=255, byte G=255, byte B=255)}]{\setlength{\rightskip}{0pt plus 5cm}override void Send\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{message, }
+\item[{int}]{sender = {\ttfamily 255}, }
+\item[{byte}]{R = {\ttfamily 255}, }
+\item[{byte}]{G = {\ttfamily 255}, }
+\item[{byte}]{B = {\ttfamily 255}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classOTA_1_1BasePlayer_aab351e86d2672170773b0e58782ce64c}
+
+
+Sends a message to the players client 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Message} & Message to send\\
+\hline
+{\em A} & \\
+\hline
+{\em R} & Red text color value\\
+\hline
+{\em G} & Green text color value\\
+\hline
+{\em B} & Blue text color value\\
+\hline
+{\em message} & Message.\\
+\hline
+{\em sender} & Sender.\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classOTA_1_1Command_1_1Sender_a88442a754fb4b417ea6f7fcb0058b75e}{Sender}.
+
+\hypertarget{classOTA_1_1BasePlayer_a8fe3889b8e8013c043f7bb0f31ccb652}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Send\+Message@{Send\+Message}}
+\index{Send\+Message@{Send\+Message}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Send\+Message(string message, Color color)}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{message, }
+\item[{{\bf Color}}]{color}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1BasePlayer_a8fe3889b8e8013c043f7bb0f31ccb652}
+
+
+Sends a message to the player 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Message.\\
+\hline
+{\em color} & Color.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1BasePlayer_a2611407de80854038643a84fac41f2c9}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Set\+Authentication@{Set\+Authentication}}
+\index{Set\+Authentication@{Set\+Authentication}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Set\+Authentication(string auth, string by)}]{\setlength{\rightskip}{0pt plus 5cm}void Set\+Authentication (
+\begin{DoxyParamCaption}
+\item[{string}]{auth, }
+\item[{string}]{by}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1BasePlayer_a2611407de80854038643a84fac41f2c9}
+
+
+Sets the authentication of this user 
+
+
+\begin{DoxyParams}{Parameters}
+{\em auth} & Auth.\\
+\hline
+{\em by} & By.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1BasePlayer_a65a264256638a3e74fa8303360ebcef7}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Set\+Plugin\+Data@{Set\+Plugin\+Data}}
+\index{Set\+Plugin\+Data@{Set\+Plugin\+Data}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Set\+Plugin\+Data(string key, object value)}]{\setlength{\rightskip}{0pt plus 5cm}void Set\+Plugin\+Data (
+\begin{DoxyParamCaption}
+\item[{string}]{key, }
+\item[{object}]{value}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1BasePlayer_a65a264256638a3e74fa8303360ebcef7}
+
+
+Sets plugin data for this player 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Key.\\
+\hline
+{\em value} & Value.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classOTA_1_1BasePlayer_abe19975d0fc102a4dc9950045e2b6a1f}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Disconnect\+Reason@{Disconnect\+Reason}}
+\index{Disconnect\+Reason@{Disconnect\+Reason}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Disconnect\+Reason}]{\setlength{\rightskip}{0pt plus 5cm}string Disconnect\+Reason}\label{classOTA_1_1BasePlayer_abe19975d0fc102a4dc9950045e2b6a1f}
+
+
+The reason of disconnection 
+
+\hypertarget{classOTA_1_1BasePlayer_a7d95a07d68f081c6363697469e1c117f}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!I\+P\+Address@{I\+P\+Address}}
+\index{I\+P\+Address@{I\+P\+Address}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{I\+P\+Address}]{\setlength{\rightskip}{0pt plus 5cm}string I\+P\+Address}\label{classOTA_1_1BasePlayer_a7d95a07d68f081c6363697469e1c117f}
+
+
+The players I\+P Address 
+
+\hypertarget{classOTA_1_1BasePlayer_a9e32cc779b1659f2752ee5564650f5f1}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Plugin\+Data@{Plugin\+Data}}
+\index{Plugin\+Data@{Plugin\+Data}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Plugin\+Data}]{\setlength{\rightskip}{0pt plus 5cm}Concurrent\+Dictionary$<$String, Object$>$ Plugin\+Data = new Concurrent\+Dictionary$<$String, Object$>$()}\label{classOTA_1_1BasePlayer_a9e32cc779b1659f2752ee5564650f5f1}
+
+
+Storage for plugins for on a per-\/player basis 
+
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1BasePlayer_a99abed4b5ac2cf92871687dc00bf7f66}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Authenticated\+As@{Authenticated\+As}}
+\index{Authenticated\+As@{Authenticated\+As}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Authenticated\+As}]{\setlength{\rightskip}{0pt plus 5cm}string Authenticated\+As\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1BasePlayer_a99abed4b5ac2cf92871687dc00bf7f66}
+
+
+Gets who the player is authenticated as 
+
+The authenticated as.\hypertarget{classOTA_1_1BasePlayer_a285fa2c208fa2471fb593dfd2f95329c}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Authenticated\+By@{Authenticated\+By}}
+\index{Authenticated\+By@{Authenticated\+By}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Authenticated\+By}]{\setlength{\rightskip}{0pt plus 5cm}string Authenticated\+By\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1BasePlayer_a285fa2c208fa2471fb593dfd2f95329c}
+
+
+Gets the authenticator 
+
+\hypertarget{classOTA_1_1BasePlayer_a816fb41b89b7df273d909df9e9a1c701}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Client\+U\+U\+Id@{Client\+U\+U\+Id}}
+\index{Client\+U\+U\+Id@{Client\+U\+U\+Id}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Client\+U\+U\+Id}]{\setlength{\rightskip}{0pt plus 5cm}string Client\+U\+U\+Id\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{classOTA_1_1BasePlayer_a816fb41b89b7df273d909df9e9a1c701}
+
+
+Gets or sets the clients globally unique identifier. 
+
+\hypertarget{classOTA_1_1BasePlayer_a113748123407c45ee6c5faed4bd20edd}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Is\+Authenticated@{Is\+Authenticated}}
+\index{Is\+Authenticated@{Is\+Authenticated}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Is\+Authenticated}]{\setlength{\rightskip}{0pt plus 5cm}bool Is\+Authenticated\hspace{0.3cm}{\ttfamily [get]}}\label{classOTA_1_1BasePlayer_a113748123407c45ee6c5faed4bd20edd}
+\hypertarget{classOTA_1_1BasePlayer_ab0ac1d6f4f094b0171294b8bd22c06ac}{}\index{O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}!Name@{Name}}
+\index{Name@{Name}!O\+T\+A\+::\+Base\+Player@{O\+T\+A\+::\+Base\+Player}}
+\subsubsection[{Name}]{\setlength{\rightskip}{0pt plus 5cm}override string Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [protected set]}}\label{classOTA_1_1BasePlayer_ab0ac1d6f4f094b0171294b8bd22c06ac}
+
+
+Gets the name of this player 
+
+\begin{DoxyReturn}{Returns}
+Sending entity name
+\end{DoxyReturn}
+
+
+The name.
+
+This is for compatibility
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{BasePlayer_8cs}{Base\+Player.\+cs}\end{DoxyCompactItemize}

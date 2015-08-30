@@ -1,7 +1,0 @@
-language: csharp
-solution: Open\ Terraria\ API.sln
-install:
-  - mozroots --import --sync
-  - nuget restore Open\ Terraria\ API.sln
-script:
-  - xbuild /p:Configuration=Debug Open\ Terraria\ API.sln

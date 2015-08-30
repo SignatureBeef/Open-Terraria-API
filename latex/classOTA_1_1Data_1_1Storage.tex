@@ -1,0 +1,583 @@
+\hypertarget{classOTA_1_1Data_1_1Storage}{}\section{Storage}
+\label{classOTA_1_1Data_1_1Storage}\index{Storage@{Storage}}
+
+
+Direct access to the active \hyperlink{namespaceOTA_1_1Data}{Data} Connector.  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_ab3b86a9e0eba7c30a5f262ddf8705bad}{Add\+Group\+Node} (string group\+Name, string node, bool deny=false)
+\begin{DoxyCompactList}\small\item\em Adds a node to a group \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_ae0600889620e383d3e41f78d1660c50d}{Add\+Node\+To\+User} (string username, string node, bool deny=false)
+\begin{DoxyCompactList}\small\item\em Adds a specific node to a user \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_a6188ee1735a0ffeac15143956cecf97a}{Add\+Or\+Update\+Group} (string name, bool apply\+To\+Guests=false, string parent=null, byte r=255, byte g=255, byte b=255, string prefix=null, string suffix=null)
+\begin{DoxyCompactList}\small\item\em Add or update a group \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_a9c50ecc78f5836f3adf875088db4b1a6}{Add\+User\+To\+Group} (string username, string group\+Name)
+\begin{DoxyCompactList}\small\item\em Adds a user to a group \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_a9fccbe162c670b472f7f11963b669d81}{Execute} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Execute the specified builder. \end{DoxyCompactList}\item 
+static T\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Data_1_1Storage_abccea4260a77f89ddbea6238139ea94e}{Execute\+Array$<$ T $>$} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes and reflects rows into an array. \end{DoxyCompactList}\item 
+static Data\+Set \hyperlink{classOTA_1_1Data_1_1Storage_a3b69a24f0c47513b72aa71c77a66124a}{Execute\+Data\+Set} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes and returns a data set. \end{DoxyCompactList}\item 
+static long \hyperlink{classOTA_1_1Data_1_1Storage_af15c736688ce016b946a53ed07b860c4}{Execute\+Insert} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes the builder and returns an insert id. \end{DoxyCompactList}\item 
+static int \hyperlink{classOTA_1_1Data_1_1Storage_aa374772fd64b181a5f939159873d6ebe}{Execute\+Non\+Query} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes a non query. \end{DoxyCompactList}\item 
+static T \hyperlink{classOTA_1_1Data_1_1Storage_a19466149536c081f98dffa3863d2049b}{Execute\+Scalar$<$ T $>$} (\hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} builder)
+\begin{DoxyCompactList}\small\item\em Executes the builder and returns the first row and column as a value. \end{DoxyCompactList}\item 
+static \hyperlink{classOTA_1_1Data_1_1Group}{Group} \hyperlink{classOTA_1_1Data_1_1Storage_a3fe44de8832b93f92e4e77fd65bbee22}{Find\+Group} (string name)
+\begin{DoxyCompactList}\small\item\em Find a group by name \end{DoxyCompactList}\item 
+static \hyperlink{classOTA_1_1Data_1_1QueryBuilder}{Query\+Builder} \hyperlink{classOTA_1_1Data_1_1Storage_a760fbaf3b84ffeb61d49b680f2bb6e96}{Get\+Builder} (string plugin\+Name)
+\begin{DoxyCompactList}\small\item\em Gets a builder compatible with the connector \end{DoxyCompactList}\item 
+static \hyperlink{classOTA_1_1Data_1_1Group}{Group} \hyperlink{classOTA_1_1Data_1_1Storage_a69e850219dfc826ae2e212455a798c5c}{Get\+Inherited\+Group\+For\+User} (string username)
+\begin{DoxyCompactList}\small\item\em Fetches the lower most group for a player \end{DoxyCompactList}\item 
+static string\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Data_1_1Storage_a1088a742986d8f51ddef9ddb5884567d}{Group\+List} ()
+\begin{DoxyCompactList}\small\item\em Fetches the group names available \end{DoxyCompactList}\item 
+static \hyperlink{structOTA_1_1Data_1_1PermissionNode}{Permission\+Node}\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Data_1_1Storage_afd8887fe0cbeb807583c8b14e0785e4f}{Group\+Nodes} (string group\+Name)
+\begin{DoxyCompactList}\small\item\em Fetches the nodes for a group \end{DoxyCompactList}\item 
+static \hyperlink{namespaceOTA_1_1Data_a5335d23d62bc219ccbf40b018c002e8d}{Permission} \hyperlink{classOTA_1_1Data_1_1Storage_aea6304b830384f0be104f169632a0fa1}{Is\+Permitted} (string node, \hyperlink{classOTA_1_1BasePlayer}{Base\+Player} player)
+\begin{DoxyCompactList}\small\item\em Determines if a player is permitted for a node \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_a50d5625901d40320158413930f7bb441}{Remove\+Group} (string name)
+\begin{DoxyCompactList}\small\item\em Remove a group \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_a2d7fd528da26fed902f6e4bb828ff04a}{Remove\+Group\+Node} (string group\+Name, string node, bool deny=false)
+\begin{DoxyCompactList}\small\item\em Removes a node from a group \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_a4b6e956e8f38a1ebe7bfdd7024ff64f2}{Remove\+Node\+From\+User} (string username, string node, bool deny=false)
+\begin{DoxyCompactList}\small\item\em Removes a specific node from a user \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_a3861f7c907c29945bb087e30cc134152}{Remove\+User\+From\+Group} (string username, string group\+Name)
+\begin{DoxyCompactList}\small\item\em Removes a player from a group \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Data_1_1Storage_ac1460ae900de87508e0c5b83d8e71e52}{Set\+Connector} (\hyperlink{interfaceOTA_1_1Data_1_1IDataConnector}{I\+Data\+Connector} connector, bool throw\+When\+Set=true)
+\begin{DoxyCompactList}\small\item\em Sets the active connector. \end{DoxyCompactList}\item 
+static string\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Data_1_1Storage_a7a3ad1e8b9e81464bd483cd5877e6b64}{User\+Group\+List} (string username)
+\begin{DoxyCompactList}\small\item\em Fetches the associated groups names for a user \end{DoxyCompactList}\item 
+static \hyperlink{structOTA_1_1Data_1_1PermissionNode}{Permission\+Node}\mbox{[}$\,$\mbox{]} \hyperlink{classOTA_1_1Data_1_1Storage_abef11a9c3944a2b4dc6e2b724673e5f9}{User\+Nodes} (string username)
+\begin{DoxyCompactList}\small\item\em Fetches the list of nodes for a user \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classOTA_1_1Data_1_1Storage_a7a547596c0c095817d16bbe4ba4c48f4}{Is\+Available}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a value indicating if there is a connector available. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Direct access to the active \hyperlink{namespaceOTA_1_1Data}{Data} Connector. 
+
+Plugins use this
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Data_1_1Storage_ab3b86a9e0eba7c30a5f262ddf8705bad}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Add\+Group\+Node@{Add\+Group\+Node}}
+\index{Add\+Group\+Node@{Add\+Group\+Node}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Add\+Group\+Node(string group\+Name, string node, bool deny=false)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Add\+Group\+Node (
+\begin{DoxyParamCaption}
+\item[{string}]{group\+Name, }
+\item[{string}]{node, }
+\item[{bool}]{deny = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_ab3b86a9e0eba7c30a5f262ddf8705bad}
+
+
+Adds a node to a group 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if group node was added, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em group\+Name} & \hyperlink{classOTA_1_1Data_1_1Group}{Group} name.\\
+\hline
+{\em node} & Node.\\
+\hline
+{\em deny} & If set to {\ttfamily true} deny.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_ae0600889620e383d3e41f78d1660c50d}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Add\+Node\+To\+User@{Add\+Node\+To\+User}}
+\index{Add\+Node\+To\+User@{Add\+Node\+To\+User}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Add\+Node\+To\+User(string username, string node, bool deny=false)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Add\+Node\+To\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{node, }
+\item[{bool}]{deny = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_ae0600889620e383d3e41f78d1660c50d}
+
+
+Adds a specific node to a user 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if node to user was added, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+{\em node} & Node.\\
+\hline
+{\em deny} & If set to {\ttfamily true} deny.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a6188ee1735a0ffeac15143956cecf97a}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Add\+Or\+Update\+Group@{Add\+Or\+Update\+Group}}
+\index{Add\+Or\+Update\+Group@{Add\+Or\+Update\+Group}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Add\+Or\+Update\+Group(string name, bool apply\+To\+Guests=false, string parent=null, byte r=255, byte g=255, byte b=255, string prefix=null, string suffix=null)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Add\+Or\+Update\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{name, }
+\item[{bool}]{apply\+To\+Guests = {\ttfamily false}, }
+\item[{string}]{parent = {\ttfamily null}, }
+\item[{byte}]{r = {\ttfamily 255}, }
+\item[{byte}]{g = {\ttfamily 255}, }
+\item[{byte}]{b = {\ttfamily 255}, }
+\item[{string}]{prefix = {\ttfamily null}, }
+\item[{string}]{suffix = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a6188ee1735a0ffeac15143956cecf97a}
+
+
+Add or update a group 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if the update group was added/updated, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name.\\
+\hline
+{\em apply\+To\+Guests} & If set to {\ttfamily true}, the group will be applied to guests.\\
+\hline
+{\em parent} & Parent.\\
+\hline
+{\em r} & The red chat component.\\
+\hline
+{\em g} & The green chat component.\\
+\hline
+{\em b} & The blue chat component.\\
+\hline
+{\em prefix} & Prefix.\\
+\hline
+{\em suffix} & Suffix.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a9c50ecc78f5836f3adf875088db4b1a6}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Add\+User\+To\+Group@{Add\+User\+To\+Group}}
+\index{Add\+User\+To\+Group@{Add\+User\+To\+Group}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Add\+User\+To\+Group(string username, string group\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Add\+User\+To\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{group\+Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a9c50ecc78f5836f3adf875088db4b1a6}
+
+
+Adds a user to a group 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if user to group was added, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+{\em group\+Name} & \hyperlink{classOTA_1_1Data_1_1Group}{Group} name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a9fccbe162c670b472f7f11963b669d81}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Execute@{Execute}}
+\index{Execute@{Execute}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Execute(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Execute (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a9fccbe162c670b472f7f11963b669d81}
+
+
+Execute the specified builder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_abccea4260a77f89ddbea6238139ea94e}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Execute\+Array$<$ T $>$@{Execute\+Array$<$ T $>$}}
+\index{Execute\+Array$<$ T $>$@{Execute\+Array$<$ T $>$}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Execute\+Array$<$ T $>$(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}static T \mbox{[}$\,$\mbox{]} Execute\+Array$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_abccea4260a77f89ddbea6238139ea94e}
+
+
+Executes and reflects rows into an array. 
+
+\begin{DoxyReturn}{Returns}
+The array.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The 1st type parameter.\\
+\hline
+\end{DoxyTemplParams}
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em T} : {\em new()}]\end{description}
+\end{Desc}
+\hypertarget{classOTA_1_1Data_1_1Storage_a3b69a24f0c47513b72aa71c77a66124a}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Execute\+Data\+Set@{Execute\+Data\+Set}}
+\index{Execute\+Data\+Set@{Execute\+Data\+Set}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Execute\+Data\+Set(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}static Data\+Set Execute\+Data\+Set (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a3b69a24f0c47513b72aa71c77a66124a}
+
+
+Executes and returns a data set. 
+
+\begin{DoxyReturn}{Returns}
+The data set.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_af15c736688ce016b946a53ed07b860c4}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Execute\+Insert@{Execute\+Insert}}
+\index{Execute\+Insert@{Execute\+Insert}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Execute\+Insert(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}static long Execute\+Insert (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_af15c736688ce016b946a53ed07b860c4}
+
+
+Executes the builder and returns an insert id. 
+
+\begin{DoxyReturn}{Returns}
+The insert.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_aa374772fd64b181a5f939159873d6ebe}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Execute\+Non\+Query@{Execute\+Non\+Query}}
+\index{Execute\+Non\+Query@{Execute\+Non\+Query}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Execute\+Non\+Query(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}static int Execute\+Non\+Query (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_aa374772fd64b181a5f939159873d6ebe}
+
+
+Executes a non query. 
+
+\begin{DoxyReturn}{Returns}
+The non query.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a19466149536c081f98dffa3863d2049b}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Execute\+Scalar$<$ T $>$@{Execute\+Scalar$<$ T $>$}}
+\index{Execute\+Scalar$<$ T $>$@{Execute\+Scalar$<$ T $>$}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Execute\+Scalar$<$ T $>$(\+Query\+Builder builder)}]{\setlength{\rightskip}{0pt plus 5cm}static T Execute\+Scalar$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Query\+Builder}}]{builder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a19466149536c081f98dffa3863d2049b}
+
+
+Executes the builder and returns the first row and column as a value. 
+
+\begin{DoxyReturn}{Returns}
+The scalar.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Builder.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The 1st type parameter.\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a3fe44de8832b93f92e4e77fd65bbee22}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Find\+Group@{Find\+Group}}
+\index{Find\+Group@{Find\+Group}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Find\+Group(string name)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Group} Find\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a3fe44de8832b93f92e4e77fd65bbee22}
+
+
+Find a group by name 
+
+\begin{DoxyReturn}{Returns}
+The group.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a760fbaf3b84ffeb61d49b680f2bb6e96}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Get\+Builder@{Get\+Builder}}
+\index{Get\+Builder@{Get\+Builder}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Get\+Builder(string plugin\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Query\+Builder} Get\+Builder (
+\begin{DoxyParamCaption}
+\item[{string}]{plugin\+Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a760fbaf3b84ffeb61d49b680f2bb6e96}
+
+
+Gets a builder compatible with the connector 
+
+\begin{DoxyReturn}{Returns}
+The builder.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em plugin\+Name} & Calling plugin name for encapsulation.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a69e850219dfc826ae2e212455a798c5c}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Get\+Inherited\+Group\+For\+User@{Get\+Inherited\+Group\+For\+User}}
+\index{Get\+Inherited\+Group\+For\+User@{Get\+Inherited\+Group\+For\+User}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Get\+Inherited\+Group\+For\+User(string username)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Group} Get\+Inherited\+Group\+For\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a69e850219dfc826ae2e212455a798c5c}
+
+
+Fetches the lower most group for a player 
+
+There should always be one at this stage in \hyperlink{namespaceOTA}{O\+T\+A}. The flexibility is just here.
+
+\begin{DoxyReturn}{Returns}
+The inherited group for user.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a1088a742986d8f51ddef9ddb5884567d}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Group\+List@{Group\+List}}
+\index{Group\+List@{Group\+List}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Group\+List()}]{\setlength{\rightskip}{0pt plus 5cm}static string \mbox{[}$\,$\mbox{]} Group\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a1088a742986d8f51ddef9ddb5884567d}
+
+
+Fetches the group names available 
+
+\begin{DoxyReturn}{Returns}
+The list.
+\end{DoxyReturn}
+\hypertarget{classOTA_1_1Data_1_1Storage_afd8887fe0cbeb807583c8b14e0785e4f}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Group\+Nodes@{Group\+Nodes}}
+\index{Group\+Nodes@{Group\+Nodes}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Group\+Nodes(string group\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Permission\+Node} \mbox{[}$\,$\mbox{]} Group\+Nodes (
+\begin{DoxyParamCaption}
+\item[{string}]{group\+Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_afd8887fe0cbeb807583c8b14e0785e4f}
+
+
+Fetches the nodes for a group 
+
+\begin{DoxyReturn}{Returns}
+The nodes.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em group\+Name} & \hyperlink{classOTA_1_1Data_1_1Group}{Group} name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_aea6304b830384f0be104f169632a0fa1}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Is\+Permitted@{Is\+Permitted}}
+\index{Is\+Permitted@{Is\+Permitted}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Is\+Permitted(string node, Base\+Player player)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Permission} Is\+Permitted (
+\begin{DoxyParamCaption}
+\item[{string}]{node, }
+\item[{{\bf Base\+Player}}]{player}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_aea6304b830384f0be104f169632a0fa1}
+
+
+Determines if a player is permitted for a node 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if is permitted the specified node player; otherwise, {\ttfamily false}.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em node} & Node.\\
+\hline
+{\em player} & Player.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a50d5625901d40320158413930f7bb441}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Remove\+Group@{Remove\+Group}}
+\index{Remove\+Group@{Remove\+Group}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Remove\+Group(string name)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Remove\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a50d5625901d40320158413930f7bb441}
+
+
+Remove a group 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if group was removed, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a2d7fd528da26fed902f6e4bb828ff04a}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Remove\+Group\+Node@{Remove\+Group\+Node}}
+\index{Remove\+Group\+Node@{Remove\+Group\+Node}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Remove\+Group\+Node(string group\+Name, string node, bool deny=false)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Remove\+Group\+Node (
+\begin{DoxyParamCaption}
+\item[{string}]{group\+Name, }
+\item[{string}]{node, }
+\item[{bool}]{deny = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a2d7fd528da26fed902f6e4bb828ff04a}
+
+
+Removes a node from a group 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if group node was removed, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em group\+Name} & \hyperlink{classOTA_1_1Data_1_1Group}{Group} name.\\
+\hline
+{\em node} & Node.\\
+\hline
+{\em deny} & If set to {\ttfamily true} deny.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a4b6e956e8f38a1ebe7bfdd7024ff64f2}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Remove\+Node\+From\+User@{Remove\+Node\+From\+User}}
+\index{Remove\+Node\+From\+User@{Remove\+Node\+From\+User}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Remove\+Node\+From\+User(string username, string node, bool deny=false)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Remove\+Node\+From\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{node, }
+\item[{bool}]{deny = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a4b6e956e8f38a1ebe7bfdd7024ff64f2}
+
+
+Removes a specific node from a user 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if node from user was removed, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+{\em node} & Node.\\
+\hline
+{\em deny} & If set to {\ttfamily true} deny.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a3861f7c907c29945bb087e30cc134152}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Remove\+User\+From\+Group@{Remove\+User\+From\+Group}}
+\index{Remove\+User\+From\+Group@{Remove\+User\+From\+Group}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Remove\+User\+From\+Group(string username, string group\+Name)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Remove\+User\+From\+Group (
+\begin{DoxyParamCaption}
+\item[{string}]{username, }
+\item[{string}]{group\+Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a3861f7c907c29945bb087e30cc134152}
+
+
+Removes a player from a group 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true}, if user from group was removed, {\ttfamily false} otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+{\em group\+Name} & \hyperlink{classOTA_1_1Data_1_1Group}{Group} name.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_ac1460ae900de87508e0c5b83d8e71e52}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Set\+Connector@{Set\+Connector}}
+\index{Set\+Connector@{Set\+Connector}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Set\+Connector(\+I\+Data\+Connector connector, bool throw\+When\+Set=true)}]{\setlength{\rightskip}{0pt plus 5cm}static void Set\+Connector (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Data\+Connector}}]{connector, }
+\item[{bool}]{throw\+When\+Set = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_ac1460ae900de87508e0c5b83d8e71e52}
+
+
+Sets the active connector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em connector} & Connector.\\
+\hline
+{\em throw\+When\+Set} & If set to {\ttfamily true} and a connector has already been set an exception will be thrown.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_a7a3ad1e8b9e81464bd483cd5877e6b64}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!User\+Group\+List@{User\+Group\+List}}
+\index{User\+Group\+List@{User\+Group\+List}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{User\+Group\+List(string username)}]{\setlength{\rightskip}{0pt plus 5cm}static string \mbox{[}$\,$\mbox{]} User\+Group\+List (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_a7a3ad1e8b9e81464bd483cd5877e6b64}
+
+
+Fetches the associated groups names for a user 
+
+\begin{DoxyReturn}{Returns}
+The group list.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Data_1_1Storage_abef11a9c3944a2b4dc6e2b724673e5f9}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!User\+Nodes@{User\+Nodes}}
+\index{User\+Nodes@{User\+Nodes}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{User\+Nodes(string username)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Permission\+Node} \mbox{[}$\,$\mbox{]} User\+Nodes (
+\begin{DoxyParamCaption}
+\item[{string}]{username}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Data_1_1Storage_abef11a9c3944a2b4dc6e2b724673e5f9}
+
+
+Fetches the list of nodes for a user 
+
+\begin{DoxyReturn}{Returns}
+The nodes.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Property Documentation}
+\hypertarget{classOTA_1_1Data_1_1Storage_a7a547596c0c095817d16bbe4ba4c48f4}{}\index{O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}!Is\+Available@{Is\+Available}}
+\index{Is\+Available@{Is\+Available}!O\+T\+A\+::\+Data\+::\+Storage@{O\+T\+A\+::\+Data\+::\+Storage}}
+\subsubsection[{Is\+Available}]{\setlength{\rightskip}{0pt plus 5cm}bool Is\+Available\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{classOTA_1_1Data_1_1Storage_a7a547596c0c095817d16bbe4ba4c48f4}
+
+
+Gets a value indicating if there is a connector available. 
+
+{\ttfamily true} if is available; otherwise, {\ttfamily false}.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Data/\hyperlink{IDataConnector_8cs}{I\+Data\+Connector.\+cs}\end{DoxyCompactItemize}

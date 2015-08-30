@@ -1,0 +1,176 @@
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions}{}\section{I\+Sender\+Extensions}
+\label{classOTA_1_1Command_1_1ISenderExtensions}\index{I\+Sender\+Extensions@{I\+Sender\+Extensions}}
+
+
+\hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} extensions  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342}{Sender\+Type} \hyperlink{classOTA_1_1Command_1_1ISenderExtensions_a626f661c3944fd7b282784321166f544}{Get\+Sender\+Type} (this \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender)
+\item 
+static bool \hyperlink{classOTA_1_1Command_1_1ISenderExtensions_a6ba210eadbd46096f78e208ed0b1df3a}{Is\+Sender} (this \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} sender, \hyperlink{namespaceOTA_1_1Command_ab957a14a33aecd4b104f6e4992efd342}{Sender\+Type} type)
+\begin{DoxyCompactList}\small\item\em Determines if is sender the specified sender type. \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Command_1_1ISenderExtensions_a780d10a4c8369a119447e8ea9c0c2777}{Message} (this \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} recpt, string message)
+\begin{DoxyCompactList}\small\item\em Sends a message \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Command_1_1ISenderExtensions_ab4eb589780cd64244cfa85e20e3ec544}{Message} (this \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} recpt, string message, params object\mbox{[}$\,$\mbox{]} args)
+\begin{DoxyCompactList}\small\item\em Sends a formatted message \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Command_1_1ISenderExtensions_a2d9eb5c77747780962f0d84a4774b1a2}{Message} (this \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} recpt, string message, \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} colour, params object\mbox{[}$\,$\mbox{]} args)
+\begin{DoxyCompactList}\small\item\em Sends a formatted message with colour if the sender supports it \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Command_1_1ISenderExtensions_a5cbd8d76c7a9886dc89b89595ddae058}{Message} (this \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} recpt, int sender, string message)
+\item 
+static void \hyperlink{classOTA_1_1Command_1_1ISenderExtensions_a0a465998faa718315672a7654124a8fd}{Message} (this \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} recpt, int sender, \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} color, string message)
+\item 
+static void \hyperlink{classOTA_1_1Command_1_1ISenderExtensions_aa0a7e85a9bafa99c7fb7e571e985b5d3}{Message} (this \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} recpt, int sender, string fmt, params object\mbox{[}$\,$\mbox{]} args)
+\item 
+static void \hyperlink{classOTA_1_1Command_1_1ISenderExtensions_a908f8c885bc33f717df804669676b6b1}{Message} (this \hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} recpt, int sender, \hyperlink{structMicrosoft_1_1Xna_1_1Framework_1_1Color}{Color} color, string fmt, params object\mbox{[}$\,$\mbox{]} args)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{interfaceOTA_1_1Command_1_1ISender}{I\+Sender} extensions 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions_a626f661c3944fd7b282784321166f544}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}!Get\+Sender\+Type@{Get\+Sender\+Type}}
+\index{Get\+Sender\+Type@{Get\+Sender\+Type}!O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}}
+\subsubsection[{Get\+Sender\+Type(this I\+Sender sender)}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Sender\+Type} Get\+Sender\+Type (
+\begin{DoxyParamCaption}
+\item[{this {\bf I\+Sender}}]{sender}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ISenderExtensions_a626f661c3944fd7b282784321166f544}
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions_a6ba210eadbd46096f78e208ed0b1df3a}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}!Is\+Sender@{Is\+Sender}}
+\index{Is\+Sender@{Is\+Sender}!O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}}
+\subsubsection[{Is\+Sender(this I\+Sender sender, Sender\+Type type)}]{\setlength{\rightskip}{0pt plus 5cm}static bool Is\+Sender (
+\begin{DoxyParamCaption}
+\item[{this {\bf I\+Sender}}]{sender, }
+\item[{{\bf Sender\+Type}}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ISenderExtensions_a6ba210eadbd46096f78e208ed0b1df3a}
+
+
+Determines if is sender the specified sender type. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if is sender the specified sender type; otherwise, {\ttfamily false}.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & \hyperlink{classOTA_1_1Command_1_1Sender}{Sender}.\\
+\hline
+{\em type} & Type.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions_a780d10a4c8369a119447e8ea9c0c2777}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}!Message@{Message}}
+\index{Message@{Message}!O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}}
+\subsubsection[{Message(this I\+Sender recpt, string message)}]{\setlength{\rightskip}{0pt plus 5cm}static void Message (
+\begin{DoxyParamCaption}
+\item[{this {\bf I\+Sender}}]{recpt, }
+\item[{string}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ISenderExtensions_a780d10a4c8369a119447e8ea9c0c2777}
+
+
+Sends a message 
+
+
+\begin{DoxyParams}{Parameters}
+{\em recpt} & Recpt.\\
+\hline
+{\em message} & Message.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions_ab4eb589780cd64244cfa85e20e3ec544}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}!Message@{Message}}
+\index{Message@{Message}!O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}}
+\subsubsection[{Message(this I\+Sender recpt, string message, params object[] args)}]{\setlength{\rightskip}{0pt plus 5cm}static void Message (
+\begin{DoxyParamCaption}
+\item[{this {\bf I\+Sender}}]{recpt, }
+\item[{string}]{message, }
+\item[{params object\mbox{[}$\,$\mbox{]}}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ISenderExtensions_ab4eb589780cd64244cfa85e20e3ec544}
+
+
+Sends a formatted message 
+
+
+\begin{DoxyParams}{Parameters}
+{\em recpt} & Recpt.\\
+\hline
+{\em message} & Message.\\
+\hline
+{\em args} & Arguments.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions_a2d9eb5c77747780962f0d84a4774b1a2}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}!Message@{Message}}
+\index{Message@{Message}!O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}}
+\subsubsection[{Message(this I\+Sender recpt, string message, Color colour, params object[] args)}]{\setlength{\rightskip}{0pt plus 5cm}static void Message (
+\begin{DoxyParamCaption}
+\item[{this {\bf I\+Sender}}]{recpt, }
+\item[{string}]{message, }
+\item[{{\bf Color}}]{colour, }
+\item[{params object\mbox{[}$\,$\mbox{]}}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ISenderExtensions_a2d9eb5c77747780962f0d84a4774b1a2}
+
+
+Sends a formatted message with colour if the sender supports it 
+
+
+\begin{DoxyParams}{Parameters}
+{\em recpt} & Recpt.\\
+\hline
+{\em message} & Message.\\
+\hline
+{\em colour} & Colour.\\
+\hline
+{\em args} & Arguments.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions_a5cbd8d76c7a9886dc89b89595ddae058}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}!Message@{Message}}
+\index{Message@{Message}!O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}}
+\subsubsection[{Message(this I\+Sender recpt, int sender, string message)}]{\setlength{\rightskip}{0pt plus 5cm}static void Message (
+\begin{DoxyParamCaption}
+\item[{this {\bf I\+Sender}}]{recpt, }
+\item[{int}]{sender, }
+\item[{string}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ISenderExtensions_a5cbd8d76c7a9886dc89b89595ddae058}
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions_a0a465998faa718315672a7654124a8fd}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}!Message@{Message}}
+\index{Message@{Message}!O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}}
+\subsubsection[{Message(this I\+Sender recpt, int sender, Color color, string message)}]{\setlength{\rightskip}{0pt plus 5cm}static void Message (
+\begin{DoxyParamCaption}
+\item[{this {\bf I\+Sender}}]{recpt, }
+\item[{int}]{sender, }
+\item[{{\bf Color}}]{color, }
+\item[{string}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ISenderExtensions_a0a465998faa718315672a7654124a8fd}
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions_aa0a7e85a9bafa99c7fb7e571e985b5d3}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}!Message@{Message}}
+\index{Message@{Message}!O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}}
+\subsubsection[{Message(this I\+Sender recpt, int sender, string fmt, params object[] args)}]{\setlength{\rightskip}{0pt plus 5cm}static void Message (
+\begin{DoxyParamCaption}
+\item[{this {\bf I\+Sender}}]{recpt, }
+\item[{int}]{sender, }
+\item[{string}]{fmt, }
+\item[{params object\mbox{[}$\,$\mbox{]}}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ISenderExtensions_aa0a7e85a9bafa99c7fb7e571e985b5d3}
+\hypertarget{classOTA_1_1Command_1_1ISenderExtensions_a908f8c885bc33f717df804669676b6b1}{}\index{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}!Message@{Message}}
+\index{Message@{Message}!O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions@{O\+T\+A\+::\+Command\+::\+I\+Sender\+Extensions}}
+\subsubsection[{Message(this I\+Sender recpt, int sender, Color color, string fmt, params object[] args)}]{\setlength{\rightskip}{0pt plus 5cm}static void Message (
+\begin{DoxyParamCaption}
+\item[{this {\bf I\+Sender}}]{recpt, }
+\item[{int}]{sender, }
+\item[{{\bf Color}}]{color, }
+\item[{string}]{fmt, }
+\item[{params object\mbox{[}$\,$\mbox{]}}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Command_1_1ISenderExtensions_a908f8c885bc33f717df804669676b6b1}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Command/\hyperlink{ISender_8cs}{I\+Sender.\+cs}\end{DoxyCompactItemize}

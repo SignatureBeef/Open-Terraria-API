@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['i',['I',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bcadd7536794b63bf90eccfd37f9b147d7f',1,'Microsoft::Xna::Framework::Input']]],
+  ['ignorant',['Ignorant',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711a7e3eed5d2629cce3615937074d5b6852',1,'OTA::Misc']]],
+  ['ignore',['IGNORE',['../namespaceOTA_1_1Plugin.html#a22f5f3f4da022b4336138cb37a5e4dfcaa2e843feab94ef623fea888f07c28696',1,'OTA.Plugin.IGNORE()'],['../namespaceOTA_1_1Plugin.html#a3bb5a5644baf15ebe64118e735227668aa2e843feab94ef623fea888f07c28696',1,'OTA.Plugin.IGNORE()']]],
+  ['imeconvert',['ImeConvert',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca77ee859d232790a420e7d44c280955a3',1,'Microsoft::Xna::Framework::Input']]],
+  ['imenoconvert',['ImeNoConvert',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bca980762e6c7d4e3704e48fdb936b8235b',1,'Microsoft::Xna::Framework::Input']]],
+  ['immediate',['Immediate',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Audio.html#a8971953d3b31e62db241f81984a5433fa43f6615bbb2c40a5306ff804094420b1',1,'Microsoft.Xna.Framework.Audio.Immediate()'],['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Graphics.html#a624fcd3c36bfc7628a4e4aacf3cee0cba43f6615bbb2c40a5306ff804094420b1',1,'Microsoft.Xna.Framework.Graphics.Immediate()']]],
+  ['inept',['Inept',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711a1a437d6997fe992f98f4e50c47aff353',1,'OTA::Misc']]],
+  ['initialising',['Initialising',['../namespaceOTA.html#aeee15ce451435cc7f2fdb211337d0694aa3aec8ad5296270028f3c01db319169d',1,'OTA']]],
+  ['insert',['Insert',['../namespaceMicrosoft_1_1Xna_1_1Framework_1_1Input.html#a0ada92b8263d776ca3c779d2a0e031bcaa458be0f08b7e4ff3c0f633c100176c0',1,'Microsoft::Xna::Framework::Input']]],
+  ['intense',['Intense',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711a40399988dc3f678053ddb5a046de6219',1,'OTA::Misc']]],
+  ['intimidating',['Intimidating',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711a95b0f1df56ac1f4cc3a5e9abbe1a9350',1,'OTA::Misc']]],
+  ['intrepid',['Intrepid',['../namespaceOTA_1_1Misc.html#a06ade520b68410be4889588d9a440711aa537797c6c542366c2b551c67183e7e5',1,'OTA::Misc']]],
+  ['invasion',['INVASION',['../namespaceOTA_1_1Plugin.html#abfd87343e974fb3ed18f5915102f0217acb7dc9a09afccc3afac59ef725b18ee0',1,'OTA::Plugin']]],
+  ['inventory_5fdata',['INVENTORY_DATA',['../namespaceOTA.html#a171602badf7b6889d328488937bafa63ad9171032a4e50edb4b01a8b5e106a31f',1,'OTA']]],
+  ['item_5finfo',['ITEM_INFO',['../namespaceOTA.html#a171602badf7b6889d328488937bafa63a567dc2963d8fbf0f93f028ef23dde7f2',1,'OTA']]],
+  ['item_5fowner_5finfo',['ITEM_OWNER_INFO',['../namespaceOTA.html#a171602badf7b6889d328488937bafa63aa8b59bcd309c26569947b6d8f38269fe',1,'OTA']]],
+  ['item_5fowner_5fupdate',['ITEM_OWNER_UPDATE',['../namespaceOTA.html#a171602badf7b6889d328488937bafa63aeabbf59280900288986f91f98311ce0d',1,'OTA']]]
+];

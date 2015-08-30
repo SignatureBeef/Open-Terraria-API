@@ -1,0 +1,108 @@
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket}{}\section{O\+T\+A.\+Callbacks.\+I\+Socket Interface Reference}
+\label{interface_o_t_a_1_1_callbacks_1_1_i_socket}\index{O\+T\+A.\+Callbacks.\+I\+Socket@{O\+T\+A.\+Callbacks.\+I\+Socket}}
+Inheritance diagram for O\+T\+A.\+Callbacks.\+I\+Socket\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interface_o_t_a_1_1_callbacks_1_1_i_socket}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{interface_o_t_a_1_1_callbacks_1_1_i_socket_ac76ca3d475a9a054c191f0fd9b2132ad}{Async\+Receive} (byte\mbox{[}$\,$\mbox{]} data, int offset, int size, \hyperlink{namespace_o_t_a_1_1_callbacks_ae072013cce199869fb359bea97dbdb17}{Socket\+Receive\+Callback} callback, object state)
+\item 
+void \hyperlink{interface_o_t_a_1_1_callbacks_1_1_i_socket_a1e849909a4537800263ee569cb536ca0}{Async\+Send} (byte\mbox{[}$\,$\mbox{]} data, int offset, int size, \hyperlink{namespace_o_t_a_1_1_callbacks_a23847c8d354ca8b53cfd6a3f466e0099}{Socket\+Send\+Callback} callback, object state)
+\item 
+void \hyperlink{interface_o_t_a_1_1_callbacks_1_1_i_socket_a1c503b157c5a7dbb852b15432f1100d9}{Close} ()
+\item 
+void \hyperlink{interface_o_t_a_1_1_callbacks_1_1_i_socket_a18907f6fc1d2e30adc7e258b036b0700}{Connect} (\hyperlink{class_o_t_a_1_1_callbacks_1_1_remote_address}{Remote\+Address} address)
+\item 
+\hyperlink{class_o_t_a_1_1_callbacks_1_1_remote_address}{Remote\+Address} \hyperlink{interface_o_t_a_1_1_callbacks_1_1_i_socket_ad93238268bca0052105eba833b596c20}{Get\+Remote\+Address} ()
+\item 
+bool \hyperlink{interface_o_t_a_1_1_callbacks_1_1_i_socket_a2e9241b0a59990d1ff4a47c50fe2c585}{Is\+Connected} ()
+\item 
+bool \hyperlink{interface_o_t_a_1_1_callbacks_1_1_i_socket_a4275299b4d44d4a60a29697248487fac}{Is\+Data\+Available} ()
+\item 
+bool \hyperlink{interface_o_t_a_1_1_callbacks_1_1_i_socket_a4bd96e0a7e0898a9b2442f34794297ea}{Start\+Listening} (\hyperlink{namespace_o_t_a_1_1_callbacks_afb9741507c3efff20f6f9a86dc42af20}{Socket\+Connection\+Accepted} callback)
+\item 
+void \hyperlink{interface_o_t_a_1_1_callbacks_1_1_i_socket_a09346c574bd7994f9648a2705e138e5c}{Stop\+Listening} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket_ac76ca3d475a9a054c191f0fd9b2132ad}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Async\+Receive@{Async\+Receive}}
+\index{Async\+Receive@{Async\+Receive}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Async\+Receive(byte[] data, int offset, int size, Socket\+Receive\+Callback callback, object state)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Callbacks.\+I\+Socket.\+Async\+Receive (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{data, }
+\item[{int}]{offset, }
+\item[{int}]{size, }
+\item[{{\bf Socket\+Receive\+Callback}}]{callback, }
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_callbacks_1_1_i_socket_ac76ca3d475a9a054c191f0fd9b2132ad}
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket_a1e849909a4537800263ee569cb536ca0}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Async\+Send@{Async\+Send}}
+\index{Async\+Send@{Async\+Send}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Async\+Send(byte[] data, int offset, int size, Socket\+Send\+Callback callback, object state)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Callbacks.\+I\+Socket.\+Async\+Send (
+\begin{DoxyParamCaption}
+\item[{byte\mbox{[}$\,$\mbox{]}}]{data, }
+\item[{int}]{offset, }
+\item[{int}]{size, }
+\item[{{\bf Socket\+Send\+Callback}}]{callback, }
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_callbacks_1_1_i_socket_a1e849909a4537800263ee569cb536ca0}
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket_a1c503b157c5a7dbb852b15432f1100d9}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Close@{Close}}
+\index{Close@{Close}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Close()}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Callbacks.\+I\+Socket.\+Close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_callbacks_1_1_i_socket_a1c503b157c5a7dbb852b15432f1100d9}
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket_a18907f6fc1d2e30adc7e258b036b0700}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Connect@{Connect}}
+\index{Connect@{Connect}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Connect(\+Remote\+Address address)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Callbacks.\+I\+Socket.\+Connect (
+\begin{DoxyParamCaption}
+\item[{{\bf Remote\+Address}}]{address}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_callbacks_1_1_i_socket_a18907f6fc1d2e30adc7e258b036b0700}
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket_ad93238268bca0052105eba833b596c20}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Get\+Remote\+Address@{Get\+Remote\+Address}}
+\index{Get\+Remote\+Address@{Get\+Remote\+Address}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Get\+Remote\+Address()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Remote\+Address} O\+T\+A.\+Callbacks.\+I\+Socket.\+Get\+Remote\+Address (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_callbacks_1_1_i_socket_ad93238268bca0052105eba833b596c20}
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket_a2e9241b0a59990d1ff4a47c50fe2c585}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Is\+Connected@{Is\+Connected}}
+\index{Is\+Connected@{Is\+Connected}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Is\+Connected()}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Callbacks.\+I\+Socket.\+Is\+Connected (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_callbacks_1_1_i_socket_a2e9241b0a59990d1ff4a47c50fe2c585}
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket_a4275299b4d44d4a60a29697248487fac}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Is\+Data\+Available@{Is\+Data\+Available}}
+\index{Is\+Data\+Available@{Is\+Data\+Available}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Is\+Data\+Available()}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Callbacks.\+I\+Socket.\+Is\+Data\+Available (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_callbacks_1_1_i_socket_a4275299b4d44d4a60a29697248487fac}
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket_a4bd96e0a7e0898a9b2442f34794297ea}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Start\+Listening@{Start\+Listening}}
+\index{Start\+Listening@{Start\+Listening}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Start\+Listening(\+Socket\+Connection\+Accepted callback)}]{\setlength{\rightskip}{0pt plus 5cm}bool O\+T\+A.\+Callbacks.\+I\+Socket.\+Start\+Listening (
+\begin{DoxyParamCaption}
+\item[{{\bf Socket\+Connection\+Accepted}}]{callback}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_callbacks_1_1_i_socket_a4bd96e0a7e0898a9b2442f34794297ea}
+\hypertarget{interface_o_t_a_1_1_callbacks_1_1_i_socket_a09346c574bd7994f9648a2705e138e5c}{}\index{O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}!Stop\+Listening@{Stop\+Listening}}
+\index{Stop\+Listening@{Stop\+Listening}!O\+T\+A\+::\+Callbacks\+::\+I\+Socket@{O\+T\+A\+::\+Callbacks\+::\+I\+Socket}}
+\subsubsection[{Stop\+Listening()}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Callbacks.\+I\+Socket.\+Stop\+Listening (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_o_t_a_1_1_callbacks_1_1_i_socket_a09346c574bd7994f9648a2705e138e5c}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Callbacks/\hyperlink{_netplay_callback_8cs}{Netplay\+Callback.\+cs}\end{DoxyCompactItemize}

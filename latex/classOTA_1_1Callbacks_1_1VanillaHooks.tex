@@ -1,0 +1,106 @@
+\hypertarget{classOTA_1_1Callbacks_1_1VanillaHooks}{}\section{Vanilla\+Hooks}
+\label{classOTA_1_1Callbacks_1_1VanillaHooks}\index{Vanilla\+Hooks@{Vanilla\+Hooks}}
+
+
+A collection of callbacks from vanilla code  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static string \hyperlink{classOTA_1_1Callbacks_1_1VanillaHooks_af6587696a49cfe8ded654d3584e78f9a}{On\+Death\+Message} (int plr=-\/1, int npc=-\/1, int proj=-\/1, int other=-\/1)
+\begin{DoxyCompactList}\small\item\em A replacement call for a player death message \end{DoxyCompactList}\item 
+static bool \hyperlink{classOTA_1_1Callbacks_1_1VanillaHooks_a7745ee3ce6ec00d571ea2ad41b8c9979}{On\+Greet\+Player} (int player\+Id)
+\begin{DoxyCompactList}\small\item\em The replacement call for greeting a player \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1VanillaHooks_a4f1bd1b68f0d3a20e450b4b19d93b374}{On\+Player\+Entering} (\hyperlink{classOTA_1_1Callbacks_1_1Player}{Player} player)
+\begin{DoxyCompactList}\small\item\em The call from vanilla code when a player is entering the world/game \end{DoxyCompactList}\item 
+static void \hyperlink{classOTA_1_1Callbacks_1_1VanillaHooks_adb74152f1c3953d295cf6c71b31e2a2a}{On\+Player\+Leave} (\hyperlink{classOTA_1_1Callbacks_1_1Player}{Player} player)
+\begin{DoxyCompactList}\small\item\em The callback from vanilla code when a player has left the server \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A collection of callbacks from vanilla code 
+
+T\+O\+D\+O\+: Split these out into their relevant callback classes 
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Callbacks_1_1VanillaHooks_af6587696a49cfe8ded654d3584e78f9a}{}\index{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks@{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks}!On\+Death\+Message@{On\+Death\+Message}}
+\index{On\+Death\+Message@{On\+Death\+Message}!O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks@{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks}}
+\subsubsection[{On\+Death\+Message(int plr=-\/1, int npc=-\/1, int proj=-\/1, int other=-\/1)}]{\setlength{\rightskip}{0pt plus 5cm}static string On\+Death\+Message (
+\begin{DoxyParamCaption}
+\item[{int}]{plr = {\ttfamily -\/1}, }
+\item[{int}]{npc = {\ttfamily -\/1}, }
+\item[{int}]{proj = {\ttfamily -\/1}, }
+\item[{int}]{other = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1VanillaHooks_af6587696a49cfe8ded654d3584e78f9a}
+
+
+A replacement call for a player death message 
+
+
+\begin{DoxyParams}{Parameters}
+{\em plr} & Plr.\\
+\hline
+{\em npc} & Npc.\\
+\hline
+{\em proj} & Proj.\\
+\hline
+{\em other} & Other.\\
+\hline
+\end{DoxyParams}
+
+
+This may not work yet\hypertarget{classOTA_1_1Callbacks_1_1VanillaHooks_a7745ee3ce6ec00d571ea2ad41b8c9979}{}\index{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks@{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks}!On\+Greet\+Player@{On\+Greet\+Player}}
+\index{On\+Greet\+Player@{On\+Greet\+Player}!O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks@{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks}}
+\subsubsection[{On\+Greet\+Player(int player\+Id)}]{\setlength{\rightskip}{0pt plus 5cm}static bool On\+Greet\+Player (
+\begin{DoxyParamCaption}
+\item[{int}]{player\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1VanillaHooks_a7745ee3ce6ec00d571ea2ad41b8c9979}
+
+
+The replacement call for greeting a player 
+
+
+\begin{DoxyParams}{Parameters}
+{\em player\+Id} & \hyperlink{classOTA_1_1Callbacks_1_1Player}{Player} identifier.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Callbacks_1_1VanillaHooks_a4f1bd1b68f0d3a20e450b4b19d93b374}{}\index{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks@{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks}!On\+Player\+Entering@{On\+Player\+Entering}}
+\index{On\+Player\+Entering@{On\+Player\+Entering}!O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks@{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks}}
+\subsubsection[{On\+Player\+Entering(\+Player player)}]{\setlength{\rightskip}{0pt plus 5cm}static void On\+Player\+Entering (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{player}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1VanillaHooks_a4f1bd1b68f0d3a20e450b4b19d93b374}
+
+
+The call from vanilla code when a player is entering the world/game 
+
+
+\begin{DoxyParams}{Parameters}
+{\em player} & \hyperlink{classOTA_1_1Callbacks_1_1Player}{Player}.\\
+\hline
+\end{DoxyParams}
+\hypertarget{classOTA_1_1Callbacks_1_1VanillaHooks_adb74152f1c3953d295cf6c71b31e2a2a}{}\index{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks@{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks}!On\+Player\+Leave@{On\+Player\+Leave}}
+\index{On\+Player\+Leave@{On\+Player\+Leave}!O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks@{O\+T\+A\+::\+Callbacks\+::\+Vanilla\+Hooks}}
+\subsubsection[{On\+Player\+Leave(\+Player player)}]{\setlength{\rightskip}{0pt plus 5cm}static void On\+Player\+Leave (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{player}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classOTA_1_1Callbacks_1_1VanillaHooks_adb74152f1c3953d295cf6c71b31e2a2a}
+
+
+The callback from vanilla code when a player has left the server 
+
+
+\begin{DoxyParams}{Parameters}
+{\em player} & \hyperlink{classOTA_1_1Callbacks_1_1Player}{Player}.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Callbacks/\hyperlink{VanillaHooks_8cs}{Vanilla\+Hooks.\+cs}\end{DoxyCompactItemize}

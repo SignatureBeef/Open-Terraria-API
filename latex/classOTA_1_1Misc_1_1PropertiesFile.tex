@@ -1,0 +1,87 @@
+\hypertarget{classOTA_1_1Misc_1_1PropertiesFile}{}\section{Properties\+File}
+\label{classOTA_1_1Misc_1_1PropertiesFile}\index{Properties\+File@{Properties\+File}}
+
+
+A basic low use key/value properties file implementation  
+
+
+Inheritance diagram for Properties\+File\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classOTA_1_1Misc_1_1PropertiesFile}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+T \hyperlink{classOTA_1_1Misc_1_1PropertiesFile_a147b61402aae9b15d05f9896e61251aa}{Get\+Value$<$ T $>$} (string key, T default\+Value, bool auto\+Save=false)
+\begin{DoxyCompactList}\small\item\em Parses the value of an item when found using the key. \end{DoxyCompactList}\item 
+\hyperlink{classOTA_1_1Misc_1_1PropertiesFile_a2bc36d5dd4c5c00f1ac4f9b9a467fb3b}{Properties\+File} (string path, bool lower\+Keys=true, bool auto\+Load=true)
+\item 
+bool \hyperlink{classOTA_1_1Misc_1_1PropertiesFile_adb5c4b77d5aec39fe2e9cf8b5be91918}{Set\+Value} (string key, object value, bool auto\+Save=false)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A basic low use key/value properties file implementation 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classOTA_1_1Misc_1_1PropertiesFile_a2bc36d5dd4c5c00f1ac4f9b9a467fb3b}{}\index{O\+T\+A\+::\+Misc\+::\+Properties\+File@{O\+T\+A\+::\+Misc\+::\+Properties\+File}!Properties\+File@{Properties\+File}}
+\index{Properties\+File@{Properties\+File}!O\+T\+A\+::\+Misc\+::\+Properties\+File@{O\+T\+A\+::\+Misc\+::\+Properties\+File}}
+\subsubsection[{Properties\+File(string path, bool lower\+Keys=true, bool auto\+Load=true)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Properties\+File} (
+\begin{DoxyParamCaption}
+\item[{string}]{path, }
+\item[{bool}]{lower\+Keys = {\ttfamily true}, }
+\item[{bool}]{auto\+Load = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1PropertiesFile_a2bc36d5dd4c5c00f1ac4f9b9a467fb3b}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classOTA_1_1Misc_1_1PropertiesFile_a147b61402aae9b15d05f9896e61251aa}{}\index{O\+T\+A\+::\+Misc\+::\+Properties\+File@{O\+T\+A\+::\+Misc\+::\+Properties\+File}!Get\+Value$<$ T $>$@{Get\+Value$<$ T $>$}}
+\index{Get\+Value$<$ T $>$@{Get\+Value$<$ T $>$}!O\+T\+A\+::\+Misc\+::\+Properties\+File@{O\+T\+A\+::\+Misc\+::\+Properties\+File}}
+\subsubsection[{Get\+Value$<$ T $>$(string key, T default\+Value, bool auto\+Save=false)}]{\setlength{\rightskip}{0pt plus 5cm}T Get\+Value$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{string}]{key, }
+\item[{T}]{default\+Value, }
+\item[{bool}]{auto\+Save = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1PropertiesFile_a147b61402aae9b15d05f9896e61251aa}
+
+
+Parses the value of an item when found using the key. 
+
+\begin{DoxyReturn}{Returns}
+The value.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Key.\\
+\hline
+{\em default\+Value} & Default value.\\
+\hline
+{\em auto\+Save} & If set to {\ttfamily true} auto save.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The 1st type parameter.\\
+\hline
+\end{DoxyTemplParams}
+\hypertarget{classOTA_1_1Misc_1_1PropertiesFile_adb5c4b77d5aec39fe2e9cf8b5be91918}{}\index{O\+T\+A\+::\+Misc\+::\+Properties\+File@{O\+T\+A\+::\+Misc\+::\+Properties\+File}!Set\+Value@{Set\+Value}}
+\index{Set\+Value@{Set\+Value}!O\+T\+A\+::\+Misc\+::\+Properties\+File@{O\+T\+A\+::\+Misc\+::\+Properties\+File}}
+\subsubsection[{Set\+Value(string key, object value, bool auto\+Save=false)}]{\setlength{\rightskip}{0pt plus 5cm}bool Set\+Value (
+\begin{DoxyParamCaption}
+\item[{string}]{key, }
+\item[{object}]{value, }
+\item[{bool}]{auto\+Save = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\label{classOTA_1_1Misc_1_1PropertiesFile_adb5c4b77d5aec39fe2e9cf8b5be91918}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Misc/\hyperlink{PropertiesFile_8cs}{Properties\+File.\+cs}\end{DoxyCompactItemize}

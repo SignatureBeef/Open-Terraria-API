@@ -1,0 +1,85 @@
+\hypertarget{namespace_o_t_a_1_1_command}{}\section{O\+T\+A.\+Command Namespace Reference}
+\label{namespace_o_t_a_1_1_command}\index{O\+T\+A.\+Command@{O\+T\+A.\+Command}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_o_t_a_1_1_command_1_1_argument_list}{Argument\+List}
+\begin{DoxyCompactList}\small\item\em The list of arguments received from a command sender \end{DoxyCompactList}\item 
+class \hyperlink{class_o_t_a_1_1_command_1_1_command_error}{Command\+Error}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{namespace_o_t_a}{O\+T\+A} exception for throwing a command error to the sender with the help usage + message \end{DoxyCompactList}\item 
+class \hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command\+Info}
+\begin{DoxyCompactList}\small\item\em An \hyperlink{namespace_o_t_a}{O\+T\+A} command definition/builder \end{DoxyCompactList}\item 
+class {\bfseries Command\+Map\+Extensions}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespace_o_t_a_1_1_command}{Command} map extensions \end{DoxyCompactList}\item 
+class \hyperlink{class_o_t_a_1_1_command_1_1_command_parser}{Command\+Parser}
+\begin{DoxyCompactList}\small\item\em Functionality to process sender commands, and the default vanilla commands as an \hyperlink{namespace_o_t_a}{O\+T\+A} version. \end{DoxyCompactList}\item 
+class \hyperlink{class_o_t_a_1_1_command_1_1_console_sender}{Console\+Sender}
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_o_t_a_1_1_command_1_1_console_sender}{Console\+Sender} extension of \hyperlink{class_o_t_a_1_1_command_1_1_sender}{Sender}. Allows for new Console\+Command\+Events \end{DoxyCompactList}\item 
+interface \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender}{I\+Sender}
+\begin{DoxyCompactList}\small\item\em The bare implementation of a sender \end{DoxyCompactList}\item 
+class {\bfseries I\+Sender\+Extensions}
+\begin{DoxyCompactList}\small\item\em \hyperlink{interface_o_t_a_1_1_command_1_1_i_sender}{I\+Sender} extensions \end{DoxyCompactList}\item 
+class \hyperlink{class_o_t_a_1_1_command_1_1_sender}{Sender}
+\item 
+class \hyperlink{class_o_t_a_1_1_command_1_1_world_sender}{World\+Sender}
+\item 
+struct \hyperlink{struct_o_t_a_1_1_command_1_1_world_time}{World\+Time}
+\begin{DoxyCompactList}\small\item\em 12 hour world time for use with plugins. It provides easy modifications of game time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8e}{Access\+Level} \+: int \{ \hyperlink{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea07c80e2a355d91402a00d82b1fa13855}{Access\+Level.\+P\+L\+A\+Y\+E\+R} = 1, 
+\hyperlink{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea7457cdd15d09bfc6c4dbb5d2b6f87390}{Access\+Level.\+O\+P}, 
+\hyperlink{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea2f76a17583676d1e769f74885a5bd411}{Access\+Level.\+R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E}, 
+\hyperlink{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea4695859f52d337ca3d7020b2c8f7882a}{Access\+Level.\+C\+O\+N\+S\+O\+L\+E}
+ \}\begin{DoxyCompactList}\small\item\em Default access privileges. \end{DoxyCompactList}
+\item 
+enum \hyperlink{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8}{Sender\+Type} \{ \hyperlink{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8a4695859f52d337ca3d7020b2c8f7882a}{Sender\+Type.\+C\+O\+N\+S\+O\+L\+E}, 
+\hyperlink{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8a07c80e2a355d91402a00d82b1fa13855}{Sender\+Type.\+P\+L\+A\+Y\+E\+R}, 
+\hyperlink{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8af2d3ec013c88e111064483739a50a7f4}{Sender\+Type.\+R\+C\+O\+N}, 
+\hyperlink{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8a696b031073e74bf2cb98e5ef201d4aa3}{Sender\+Type.\+U\+N\+K\+N\+O\+W\+N}
+ \}\begin{DoxyCompactList}\small\item\em Default expected Sender Types. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8e}{}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!Access\+Level@{Access\+Level}}
+\index{Access\+Level@{Access\+Level}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}
+\subsubsection[{Access\+Level}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf O\+T\+A.\+Command.\+Access\+Level} \+: int\hspace{0.3cm}{\ttfamily [strong]}}\label{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8e}
+
+
+Default access privileges. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+L\+A\+Y\+E\+R@{P\+L\+A\+Y\+E\+R}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!P\+L\+A\+Y\+E\+R@{P\+L\+A\+Y\+E\+R}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea07c80e2a355d91402a00d82b1fa13855}{}P\+L\+A\+Y\+E\+R\label{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea07c80e2a355d91402a00d82b1fa13855}
+}]\index{O\+P@{O\+P}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!O\+P@{O\+P}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea7457cdd15d09bfc6c4dbb5d2b6f87390}{}O\+P\label{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea7457cdd15d09bfc6c4dbb5d2b6f87390}
+}]\index{R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E@{R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E@{R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea2f76a17583676d1e769f74885a5bd411}{}R\+E\+M\+O\+T\+E\+\_\+\+C\+O\+N\+S\+O\+L\+E\label{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea2f76a17583676d1e769f74885a5bd411}
+}]\index{C\+O\+N\+S\+O\+L\+E@{C\+O\+N\+S\+O\+L\+E}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!C\+O\+N\+S\+O\+L\+E@{C\+O\+N\+S\+O\+L\+E}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea4695859f52d337ca3d7020b2c8f7882a}{}C\+O\+N\+S\+O\+L\+E\label{namespace_o_t_a_1_1_command_a8b5f51579148d05d330f1911083e7a8ea4695859f52d337ca3d7020b2c8f7882a}
+}]\end{description}
+\end{Desc}
+\hypertarget{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8}{}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!Sender\+Type@{Sender\+Type}}
+\index{Sender\+Type@{Sender\+Type}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}
+\subsubsection[{Sender\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf O\+T\+A.\+Command.\+Sender\+Type}\hspace{0.3cm}{\ttfamily [strong]}}\label{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8}
+
+
+Default expected \hyperlink{class_o_t_a_1_1_command_1_1_sender}{Sender} Types. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{C\+O\+N\+S\+O\+L\+E@{C\+O\+N\+S\+O\+L\+E}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!C\+O\+N\+S\+O\+L\+E@{C\+O\+N\+S\+O\+L\+E}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8a4695859f52d337ca3d7020b2c8f7882a}{}C\+O\+N\+S\+O\+L\+E\label{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8a4695859f52d337ca3d7020b2c8f7882a}
+}]\index{P\+L\+A\+Y\+E\+R@{P\+L\+A\+Y\+E\+R}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!P\+L\+A\+Y\+E\+R@{P\+L\+A\+Y\+E\+R}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8a07c80e2a355d91402a00d82b1fa13855}{}P\+L\+A\+Y\+E\+R\label{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8a07c80e2a355d91402a00d82b1fa13855}
+}]\index{R\+C\+O\+N@{R\+C\+O\+N}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!R\+C\+O\+N@{R\+C\+O\+N}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8af2d3ec013c88e111064483739a50a7f4}{}R\+C\+O\+N\label{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8af2d3ec013c88e111064483739a50a7f4}
+}]\index{U\+N\+K\+N\+O\+W\+N@{U\+N\+K\+N\+O\+W\+N}!O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}}\index{O\+T\+A\+::\+Command@{O\+T\+A\+::\+Command}!U\+N\+K\+N\+O\+W\+N@{U\+N\+K\+N\+O\+W\+N}}\item[{\em 
+\hypertarget{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8a696b031073e74bf2cb98e5ef201d4aa3}{}U\+N\+K\+N\+O\+W\+N\label{namespace_o_t_a_1_1_command_a7d2b04368b1225808532428bd2f63ae8a696b031073e74bf2cb98e5ef201d4aa3}
+}]\end{description}
+\end{Desc}

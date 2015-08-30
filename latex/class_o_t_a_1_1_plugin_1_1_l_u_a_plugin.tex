@@ -1,0 +1,265 @@
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin}{}\section{O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin Class Reference}
+\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin}\index{O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin@{O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin}}
+
+
+The implementation to get L\+U\+A plugins working as an \hyperlink{namespace_o_t_a}{O\+T\+A} plugin  
+
+
+Inheritance diagram for O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a43260158f57d1e46d1ec85320f27a5d7}{Internal\+Call$<$ T $>$} (ref \hyperlink{struct_o_t_a_1_1_plugin_1_1_hook_context}{Hook\+Context} ctx, ref T args)
+\item 
+void \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_ab002ee608c74b761e9357e6a2f85d508}{Hook\+Base} (\hyperlink{class_o_t_a_1_1_plugin_1_1_hook_point}{Hook\+Point} hook\+Point, \hyperlink{namespace_o_t_a_1_1_plugin_a1030f4a1f490e336a706685a767f6874}{Hook\+Order} order, N\+Lua.\+Lua\+Function callback)
+\item 
+new \hyperlink{class_o_t_a_1_1_command_1_1_command_info}{Command.\+Command\+Info} \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_aa79c2465b45707ca2058dac2d7642c4d}{Add\+Command} (string prefix)
+\begin{DoxyCompactList}\small\item\em Adds a command into the server \end{DoxyCompactList}\item 
+void \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_aa3d7efa3b58b9bfef821197b840eb9c0}{Call} (ref \hyperlink{struct_o_t_a_1_1_plugin_1_1_hook_context}{Hook\+Context} ctx, ref object args, string function)
+\begin{DoxyCompactList}\small\item\em Calls a L\+U\+A command \end{DoxyCompactList}\item 
+Array \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a699e916cd5ff16c5da4d8e7819124e67}{Array\+Sort} (Array arr, N\+Lua.\+Lua\+Function callback)
+\begin{DoxyCompactList}\small\item\em Sorts an array using a L\+U\+A callback \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a3d4b13055c51eb0102570791a39ad342}{Initialized} (object state)
+\begin{DoxyCompactList}\small\item\em A callback for initializing the plugin\textquotesingle{}s resources and subscribing to hooks. 
+\begin{DoxyParams}{Parameters}
+{\em state} & A state object returned from On\+Dispose by a previous instance of the plugin, or null otherwise. \\
+\hline
+\end{DoxyParams}
+\end{DoxyCompactList}\item 
+override void \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a66f59d2f50de758a8ba6f313bbd7d34f}{Disabled} ()
+\begin{DoxyCompactList}\small\item\em When the plugin is disabled \end{DoxyCompactList}\item 
+override void \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a83468512ba470c685c98bc97f0e4e3d0}{Enabled} ()
+\begin{DoxyCompactList}\small\item\em When the plugin is enabled \end{DoxyCompactList}\item 
+override void \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_ace1081e8469ea2eba5f1e34b0e4f8fcf}{Resumed} (object state)
+\begin{DoxyCompactList}\small\item\em When the plugin is resumed \end{DoxyCompactList}\item 
+override object \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a1e83eee80339a1ef25f85fb7f669a118}{Suspended\+And\+Saved} ()
+\begin{DoxyCompactList}\small\item\em When the plugin is suspended \end{DoxyCompactList}\item 
+override void \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a3b793a6fdc8bd554c10cbb59256b1499}{World\+Loaded} ()
+\begin{DoxyCompactList}\small\item\em When the world is loaded \end{DoxyCompactList}\item 
+override void \hyperlink{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a43ac75f9664f8494c6546c9f945ce760}{Disposed} (object state)
+\begin{DoxyCompactList}\small\item\em Called when the plugin is disposing \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The implementation to get L\+U\+A plugins working as an \hyperlink{namespace_o_t_a}{O\+T\+A} plugin 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_aa79c2465b45707ca2058dac2d7642c4d}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Add\+Command@{Add\+Command}}
+\index{Add\+Command@{Add\+Command}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Add\+Command(string prefix)}]{\setlength{\rightskip}{0pt plus 5cm}new {\bf Command.\+Command\+Info} O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Add\+Command (
+\begin{DoxyParamCaption}
+\item[{string}]{prefix}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_aa79c2465b45707ca2058dac2d7642c4d}
+
+
+Adds a command into the server 
+
+\begin{DoxyReturn}{Returns}
+The command.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em prefix} & Prefix.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a699e916cd5ff16c5da4d8e7819124e67}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Array\+Sort@{Array\+Sort}}
+\index{Array\+Sort@{Array\+Sort}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Array\+Sort(\+Array arr, N\+Lua.\+Lua\+Function callback)}]{\setlength{\rightskip}{0pt plus 5cm}Array O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Array\+Sort (
+\begin{DoxyParamCaption}
+\item[{Array}]{arr, }
+\item[{N\+Lua.\+Lua\+Function}]{callback}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a699e916cd5ff16c5da4d8e7819124e67}
+
+
+Sorts an array using a L\+U\+A callback 
+
+\begin{DoxyReturn}{Returns}
+The sort.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em arr} & Arr.\\
+\hline
+{\em callback} & Callback.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_aa3d7efa3b58b9bfef821197b840eb9c0}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Call@{Call}}
+\index{Call@{Call}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Call(ref Hook\+Context ctx, ref object args, string function)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Call (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Hook\+Context}}]{ctx, }
+\item[{ref object}]{args, }
+\item[{string}]{function}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_aa3d7efa3b58b9bfef821197b840eb9c0}
+
+
+Calls a L\+U\+A command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & Context.\\
+\hline
+{\em args} & Arguments.\\
+\hline
+{\em function} & Function.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a66f59d2f50de758a8ba6f313bbd7d34f}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Disabled@{Disabled}}
+\index{Disabled@{Disabled}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Disabled()}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Disabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a66f59d2f50de758a8ba6f313bbd7d34f}
+
+
+When the plugin is disabled 
+
+
+
+Reimplemented from \hyperlink{class_o_t_a_1_1_plugin_1_1_base_plugin_abc3cfe9fa2c5e0922db0eb059476eb0b}{O\+T\+A.\+Plugin.\+Base\+Plugin}.
+
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a43ac75f9664f8494c6546c9f945ce760}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Disposed@{Disposed}}
+\index{Disposed@{Disposed}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Disposed(object state)}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Disposed (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a43ac75f9664f8494c6546c9f945ce760}
+
+
+Called when the plugin is disposing 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & A state object previously returned from Save\+State to be disposed of as well.\\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{class_o_t_a_1_1_plugin_1_1_base_plugin_a16190565c3559dd1da98f9ca242375fb}{O\+T\+A.\+Plugin.\+Base\+Plugin}.
+
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a83468512ba470c685c98bc97f0e4e3d0}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Enabled@{Enabled}}
+\index{Enabled@{Enabled}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Enabled()}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a83468512ba470c685c98bc97f0e4e3d0}
+
+
+When the plugin is enabled 
+
+
+
+Reimplemented from \hyperlink{class_o_t_a_1_1_plugin_1_1_base_plugin_a23c95149e43d0ba5037eb302af044990}{O\+T\+A.\+Plugin.\+Base\+Plugin}.
+
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_ab002ee608c74b761e9357e6a2f85d508}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Hook\+Base@{Hook\+Base}}
+\index{Hook\+Base@{Hook\+Base}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Hook\+Base(\+Hook\+Point hook\+Point, Hook\+Order order, N\+Lua.\+Lua\+Function callback)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Hook\+Base (
+\begin{DoxyParamCaption}
+\item[{{\bf Hook\+Point}}]{hook\+Point, }
+\item[{{\bf Hook\+Order}}]{order, }
+\item[{N\+Lua.\+Lua\+Function}]{callback}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_ab002ee608c74b761e9357e6a2f85d508}
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a3d4b13055c51eb0102570791a39ad342}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Initialized@{Initialized}}
+\index{Initialized@{Initialized}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Initialized(object state)}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Initialized (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a3d4b13055c51eb0102570791a39ad342}
+
+
+A callback for initializing the plugin\textquotesingle{}s resources and subscribing to hooks. 
+\begin{DoxyParams}{Parameters}
+{\em state} & A state object returned from On\+Dispose by a previous instance of the plugin, or null otherwise. \\
+\hline
+\end{DoxyParams}
+
+
+
+
+Reimplemented from \hyperlink{class_o_t_a_1_1_plugin_1_1_base_plugin_aec0eb63b189e79a0ab06c4b65aeddbfa}{O\+T\+A.\+Plugin.\+Base\+Plugin}.
+
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a43260158f57d1e46d1ec85320f27a5d7}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Internal\+Call$<$ T $>$@{Internal\+Call$<$ T $>$}}
+\index{Internal\+Call$<$ T $>$@{Internal\+Call$<$ T $>$}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Internal\+Call$<$ T $>$(ref Hook\+Context ctx, ref T args)}]{\setlength{\rightskip}{0pt plus 5cm}void O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Internal\+Call$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{ref {\bf Hook\+Context}}]{ctx, }
+\item[{ref T}]{args}
+\end{DoxyParamCaption}
+)}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a43260158f57d1e46d1ec85320f27a5d7}
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_ace1081e8469ea2eba5f1e34b0e4f8fcf}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Resumed@{Resumed}}
+\index{Resumed@{Resumed}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Resumed(object state)}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Resumed (
+\begin{DoxyParamCaption}
+\item[{object}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_ace1081e8469ea2eba5f1e34b0e4f8fcf}
+
+
+When the plugin is resumed 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & State.\\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{class_o_t_a_1_1_plugin_1_1_base_plugin_af98fa3cde270ae116c83dc03cf5f432d}{O\+T\+A.\+Plugin.\+Base\+Plugin}.
+
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a1e83eee80339a1ef25f85fb7f669a118}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!Suspended\+And\+Saved@{Suspended\+And\+Saved}}
+\index{Suspended\+And\+Saved@{Suspended\+And\+Saved}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{Suspended\+And\+Saved()}]{\setlength{\rightskip}{0pt plus 5cm}override object O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+Suspended\+And\+Saved (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a1e83eee80339a1ef25f85fb7f669a118}
+
+
+When the plugin is suspended 
+
+\begin{DoxyReturn}{Returns}
+The and saved.
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{class_o_t_a_1_1_plugin_1_1_base_plugin_af99bea5fbfc6c396fe20c792a175e0ad}{O\+T\+A.\+Plugin.\+Base\+Plugin}.
+
+\hypertarget{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a3b793a6fdc8bd554c10cbb59256b1499}{}\index{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}!World\+Loaded@{World\+Loaded}}
+\index{World\+Loaded@{World\+Loaded}!O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin@{O\+T\+A\+::\+Plugin\+::\+L\+U\+A\+Plugin}}
+\subsubsection[{World\+Loaded()}]{\setlength{\rightskip}{0pt plus 5cm}override void O\+T\+A.\+Plugin.\+L\+U\+A\+Plugin.\+World\+Loaded (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_o_t_a_1_1_plugin_1_1_l_u_a_plugin_a3b793a6fdc8bd554c10cbb59256b1499}
+
+
+When the world is loaded 
+
+
+
+Reimplemented from \hyperlink{class_o_t_a_1_1_plugin_1_1_base_plugin_a56703883c56ae6b32e830a709a788397}{O\+T\+A.\+Plugin.\+Base\+Plugin}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Plugin/\hyperlink{_l_u_a_manager_8cs}{L\+U\+A\+Manager.\+cs}\end{DoxyCompactItemize}
