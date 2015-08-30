@@ -9,13 +9,42 @@ using Terraria.Net.Sockets;
 
 namespace OTA.Callbacks
 {
+    /// <summary>
+    /// Callbacks for sending net messages
+    /// </summary>
     public static class NetMessageCallback
     {
+        /// <summary>
+        /// Send data to client(s)
+        /// </summary>
+        /// <returns><c>true</c>, if data was sent, <c>false</c> otherwise.</returns>
+        /// <param name="msgType">Message type.</param>
+        /// <param name="remoteClient">Remote client.</param>
+        /// <param name="ignoreClient">Ignore client.</param>
+        /// <param name="text">Text.</param>
+        /// <param name="number">Number.</param>
+        /// <param name="number2">Number2.</param>
+        /// <param name="number3">Number3.</param>
+        /// <param name="number4">Number4.</param>
+        /// <param name="number5">Number5.</param>
         public static bool SendData(Packet msgType, int remoteClient = -1, int ignoreClient = -1, string text = "", int number = 0, float number2 = 0f, float number3 = 0f, float number4 = 0f, int number5 = 0)
         {
             return SendData((int)msgType, remoteClient, ignoreClient, text, number, number2, number3, number4, number5);
         }
 
+        /// <summary>
+        /// Send data to client(s)
+        /// </summary>
+        /// <returns><c>true</c>, if data was sent, <c>false</c> otherwise.</returns>
+        /// <param name="msgType">Message type.</param>
+        /// <param name="remoteClient">Remote client.</param>
+        /// <param name="ignoreClient">Ignore client.</param>
+        /// <param name="text">Text.</param>
+        /// <param name="number">Number.</param>
+        /// <param name="number2">Number2.</param>
+        /// <param name="number3">Number3.</param>
+        /// <param name="number4">Number4.</param>
+        /// <param name="number5">Number5.</param>
         public static bool SendData(int msgType, int remoteClient = -1, int ignoreClient = -1, string text = "", int number = 0, float number2 = 0f, float number3 = 0f, float number4 = 0f, int number5 = 0)
         {
             #if Full_API

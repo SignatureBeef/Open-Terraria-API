@@ -21,6 +21,9 @@ using System.Security.Claims;
 
 namespace OTA.Web
 {
+    /// <summary>
+    /// OTA web server for plugins. Currently based around OWIN
+    /// </summary>
     public static class WebServer
     {
 
@@ -51,6 +54,10 @@ namespace OTA.Web
         }
         #endif
 
+        /// <summary>
+        /// Start the web server at the specified address
+        /// </summary>
+        /// <param name="baseAddress">Base address.</param>
         public static void Start(string baseAddress)
         {
             #if WEBSERVER
@@ -59,6 +66,9 @@ namespace OTA.Web
             #endif
         }
 
+        /// <summary>
+        /// Stop the server.
+        /// </summary>
         public static void Stop()
         {
             #if WEBSERVER

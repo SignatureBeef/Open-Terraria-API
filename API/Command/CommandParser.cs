@@ -11,6 +11,9 @@ using Terraria;
 
 namespace OTA.Command
 {
+    /// <summary>
+    /// Default access privileges.
+    /// </summary>
     public enum AccessLevel : int
     {
         PLAYER = 1,
@@ -19,6 +22,9 @@ namespace OTA.Command
         CONSOLE,
     }
 
+    /// <summary>
+    /// An OTA command definition/builder
+    /// </summary>
     public class CommandInfo
     {
         internal string description;
@@ -43,12 +49,20 @@ namespace OTA.Command
         //			{ return _defaultHelp ? 1 + helpText.Count : helpText.Count; }
         //		}
 
+        /// <summary>
+        /// Gets the prefix.
+        /// </summary>
+        /// <value>The prefix.</value>
         public string Prefix
         {
             get
             { return _prefix; }
         }
 
+        /// <summary>
+        /// Gets the permission node.
+        /// </summary>
+        /// <value>The node.</value>
         public string Node
         {
             get
@@ -78,48 +92,82 @@ namespace OTA.Command
             LuaCallback = null;
         }
 
+        /// <summary>
+        /// Sets the description of the command.
+        /// </summary>
+        /// <returns>The description.</returns>
+        /// <param name="desc">Desc.</param>
         public CommandInfo WithDescription(string desc)
         {
             description = desc;
             return this;
         }
 
+        /// <summary>
+        /// Sets the help text of the command.
+        /// </summary>
+        /// <returns>The help text.</returns>
+        /// <param name="help">Help.</param>
         public CommandInfo WithHelpText(string help)
         {
             helpText.Add(help);
             return this;
         }
 
+        /// <summary>
+        /// Sets a flag for OTA to generate a default usage based on the prefix when a sender queries how to use the command.
+        /// </summary>
+        /// <returns>The default usage.</returns>
         public CommandInfo SetDefaultUsage()
         {
             _defaultHelp = true;
             return this;
         }
 
+        /// <summary>
+        /// Sets the flag that the output help text must be in the pre TDSM Rebind format
+        /// </summary>
+        /// <returns>The old help style.</returns>
         public CommandInfo SetOldHelpStyle()
         {
             _oldHelpStyle = true;
             return this;
         }
 
+        /// <summary>
+        /// Sets the required sender access level
+        /// </summary>
         public CommandInfo WithAccessLevel(AccessLevel accessLevel)
         {
             this.accessLevel = accessLevel;
             return this;
         }
 
+        /// <summary>
+        /// Sets the required sender access level
+        /// </summary>
+        /// <remarks>For use with NLua</remarks>
         public CommandInfo WithAccessLevel(int accessLevel) //LUA...
         {
             this.accessLevel = (AccessLevel)accessLevel;
             return this;
         }
 
+        /// <summary>
+        /// Sets the permission ndoe for this command
+        /// </summary>
+        /// <returns>The permission node.</returns>
+        /// <param name="node">Node.</param>
         public CommandInfo WithPermissionNode(string node)
         {
             this.node = node;
             return this;
         }
 
+        /// <summary>
+        /// Sets the permission node relative to the command name.
+        /// </summary>
+        /// <param name="code">Permission node key</param>
         public CommandInfo ByPermissionNode(string code)
         {
             this.node = code + '.' + this._prefix;
@@ -133,24 +181,42 @@ namespace OTA.Command
             return this;
         }
 
+        /// <summary>
+        /// Sets the callback for the command
+        /// </summary>
+        /// <param name="callback">Callback.</param>
         public CommandInfo Calls(Action<ISender, ArgumentList> callback)
         {
             tokenCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Sets the callback for the command
+        /// </summary>
+        /// <param name="callback">Callback.</param>
         public CommandInfo Calls(Action<ISender, string> callback)
         {
             stringCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Sets a LUA callback
+        /// </summary>
+        /// <returns>The call.</returns>
+        /// <param name="callback">Callback.</param>
         public CommandInfo LuaCall(NLua.LuaFunction callback)
         {
             LuaCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Shows help message for a sender
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="noHelp">If set to <c>true</c> no help.</param>
         public void ShowHelp(ISender sender, bool noHelp = false)
         {
             if (helpText.Count == 0 && noHelp)
@@ -188,6 +254,11 @@ namespace OTA.Command
 #endif
         }
 
+        /// <summary>
+        /// Shows the description to a sender
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="padd">Padd.</param>
         public void ShowDescription(ISender sender, int padd)
         {
 #if Full_API
@@ -261,6 +332,9 @@ namespace OTA.Command
         }
     }
 
+    /// <summary>
+    /// Functionality to process sender commands, and the default vanilla commands as an OTA version.
+    /// </summary>
     public class CommandParser
     {
         /// <summary>
@@ -409,6 +483,9 @@ namespace OTA.Command
 #endif
         }
 
+        /// <summary>
+        /// The default OTA/Vanilla commands
+        /// </summary>
         public readonly Dictionary<String, CommandInfo> serverCommands;
 
         //        /// <summary>
@@ -523,6 +600,11 @@ namespace OTA.Command
             throw new NotImplementedException("Unexpected ISender implementation");
         }
 
+        /// <summary>
+        /// Gets the available commands for an access level.
+        /// </summary>
+        /// <returns>The available commands.</returns>
+        /// <param name="access">Access.</param>
         public static Dictionary<string, CommandInfo> GetAvailableCommands(AccessLevel access)
         {
             var available = OTA.Callbacks.UserInput.CommandParser.serverCommands.GetAvailableCommands(access);
@@ -627,6 +709,11 @@ namespace OTA.Command
             return false;
         }
 
+        /// <summary>
+        /// Parses and process a command from a sender
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="line">Line.</param>
         public void ParseAndProcess(ISender sender, string line)
         {
             var ctx = new HookContext

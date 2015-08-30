@@ -5,31 +5,58 @@ using System.Linq;
 
 namespace OTA
 {
+    /// <summary>
+    /// Socket extensions.
+    /// </summary>
     public static class SocketExtensions
     {
         #if Full_API
+        /// <summary>
+        /// Determines if the client is in the playing state
+        /// </summary>
+        /// <returns><c>true</c> if is playing the specified sock; otherwise, <c>false</c>.</returns>
+        /// <param name="sock">Sock.</param>
         public static bool IsPlaying(this Terraria.RemoteClient sock)
         {
-            return sock.State == 10;
+            return sock.State == (int)OTA.Sockets.SlotState.PLAYING;
         }
 
+        /// <summary>
+        /// Determines if the client is in a state where they can be sent water
+        /// </summary>
+        /// <returns><c>true</c> if can send water the specified sock; otherwise, <c>false</c>.</returns>
+        /// <param name="sock">Sock.</param>
         public static bool CanSendWater(this Terraria.RemoteClient sock)
         {
             //return state >= 3;
-            return (Terraria.NetMessage.buffer[sock.Id].broadcast || sock.State >= 3) && sock.Socket.IsConnected();
+            return (Terraria.NetMessage.buffer[sock.Id].broadcast || sock.State >= (int)OTA.Sockets.SlotState.SENDING_TILES) && sock.Socket.IsConnected();
         }
 
+        /// <summary>
+        /// Gets the clients remote address
+        /// </summary>
+        /// <returns>The address.</returns>
+        /// <param name="sock">Sock.</param>
         public static string RemoteAddress(this Terraria.RemoteClient sock)
         {
             return sock.Socket.GetRemoteAddress().ToString();
         }
 
+        /// <summary>
+        /// Kicks the connection
+        /// </summary>
+        /// <param name="sock">Sock.</param>
+        /// <param name="reason">Reason.</param>
         public static void Kick(this Terraria.RemoteClient sock, string reason)
         {
             Terraria.NetMessage.SendData((int)Packet.DISCONNECT, sock.Id, -1, reason);
         }
         #endif
 
+        /// <summary>
+        /// Sagely closes the socket
+        /// </summary>
+        /// <param name="socket">Socket.</param>
         public static void SafeClose(this Socket socket)
         {
             if (socket == null)
@@ -47,6 +74,10 @@ namespace OTA
             }
         }
 
+        /// <summary>
+        /// Safely shuts the socket down
+        /// </summary>
+        /// <param name="socket">Socket.</param>
         public static void SafeShutdown(this Socket socket)
         {
             if (socket == null)
@@ -65,10 +96,18 @@ namespace OTA
         }
     }
 
+    /// <summary>
+    /// Linq extensions.
+    /// </summary>
     public static class LinqExtensions
     {
         static readonly Random _rand = new Random();
 
+        /// <summary>
+        /// Selects a random item from the list
+        /// </summary>
+        /// <param name="enumerable">Enumerable.</param>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
         public static T Random<T>(this IEnumerable<T> enumerable)
         {
             var list = enumerable as IList<T> ?? enumerable.ToList();
@@ -100,8 +139,16 @@ namespace OTA
         }
     }
 
+    /// <summary>
+    /// Assembly extensions.
+    /// </summary>
     public static class AssemblyExtensions
     {
+        /// <summary>
+        /// Gets types where they can be successfully loaded. This is useful when asseblies use lazy loading and don't have an optional component.
+        /// </summary>
+        /// <returns>The types loaded.</returns>
+        /// <param name="assembly">Assembly.</param>
         public static Type[] GetTypesLoaded(this System.Reflection.Assembly assembly)
         {
             try

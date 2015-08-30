@@ -2,6 +2,9 @@
 
 namespace OTA.Misc
 {
+    /// <summary>
+    /// A basic low use key/value properties file implementation
+    /// </summary>
     public class PropertiesFile : PairFileRegister
     {
         //public PropertiesFile(string path)
@@ -15,6 +18,14 @@ namespace OTA.Misc
 
         }
 
+        /// <summary>
+        /// Parses the value of an item when found using the key.
+        /// </summary>
+        /// <returns>The value.</returns>
+        /// <param name="key">Key.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <param name="autoSave">If set to <c>true</c> auto save.</param>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
         public T GetValue<T>(string key, T defaultValue, bool autoSave = false)
         {
             var item = base.Find(key);

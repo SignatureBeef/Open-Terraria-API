@@ -318,6 +318,9 @@ namespace OTA.Callbacks
 //        }
 //    }
 
+    /// <summary>
+    /// Callbacks from Terraria.Netplay
+    /// </summary>
     public static class NetplayCallback
     {
         //        public static Terraria.ServerSock[] slots;// = new IAPISocket[256];
@@ -332,6 +335,10 @@ namespace OTA.Callbacks
 //#endif
 //        }
 
+        /// <summary>
+        /// When vanilla requests to start the server, this method is called.
+        /// </summary>
+        /// <param name="state">State.</param>
         public static void StartServer(object state)
         {
 #if Full_API
@@ -350,7 +357,10 @@ namespace OTA.Callbacks
             }
 #endif
         }
-
+        /// <summary>
+        /// When vanilla requests to ban a slot, this method is called.
+        /// </summary>
+        /// <param name="plr">Plr.</param>
         public static void AddBan(int plr)
         {
 #if Full_API
@@ -379,6 +389,10 @@ namespace OTA.Callbacks
 
 //        public static int LastSlot;
 
+        /// <summary>
+        /// Called upon a connection of a new slot
+        /// </summary>
+        /// <param name="slot">Slot.</param>
         public static void OnNewConnection(int slot)
         {
             #if Full_API
@@ -391,6 +405,10 @@ namespace OTA.Callbacks
             #endif
         }
 
+
+        /// <summary>
+        /// The callback from Terraria.Netplay.Initialize
+        /// </summary>
         public static bool Initialise()
         {
             #if Full_API

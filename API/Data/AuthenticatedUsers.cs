@@ -6,6 +6,9 @@ using System.Text;
 
 namespace OTA.Data
 {
+    /// <summary>
+    /// Default OTA user information
+    /// </summary>
     public struct UserDetails
     {
         public int Id;
@@ -18,6 +21,12 @@ namespace OTA.Data
             return String.Format("[UserDetails: Id {3}, Username: '{0}', Password: '{1}', Operator: {2}]", Username, Password, Operator, Id);
         }
 
+        /// <summary>
+        /// Compares a username & password to the current instance
+        /// </summary>
+        /// <returns><c>true</c>, if password was compared, <c>false</c> otherwise.</returns>
+        /// <param name="username">Username.</param>
+        /// <param name="password">Password.</param>
         public bool ComparePassword(string username, string password)
         {
             var hs = AuthenticatedUsers.Hash(username, password);
@@ -44,6 +53,9 @@ namespace OTA.Data
             return sb.ToString();
         }
 
+        /// <summary>
+        /// The default user table
+        /// </summary>
         public class UserTable
         {
             public const String TableName = "users";
@@ -66,6 +78,9 @@ namespace OTA.Data
                 new TableColumn(ColumnNames.DateAdded, typeof(DateTime))
             };
 
+            /// <summary>
+            /// Checks if the table exists
+            /// </summary>
             public static bool Exists()
             {
                 using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -76,6 +91,9 @@ namespace OTA.Data
                 }
             }
 
+            /// <summary>
+            /// Creates the table
+            /// </summary>
             public static bool Create()
             {
                 using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -96,6 +114,10 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Gets the user count.
+        /// </summary>
+        /// <value>The user count.</value>
         public static int UserCount
         {
             get
@@ -112,6 +134,11 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Checks if a user exists
+        /// </summary>
+        /// <returns><c>true</c>, if exists was usered, <c>false</c> otherwise.</returns>
+        /// <param name="username">Username.</param>
         public static bool UserExists(string username)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -122,6 +149,11 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Gets the user password.
+        /// </summary>
+        /// <returns>The user password.</returns>
+        /// <param name="username">Username.</param>
         public static string GetUserPassword(string username)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -132,6 +164,11 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Gets the user from the database by name
+        /// </summary>
+        /// <returns>The user.</returns>
+        /// <param name="username">Username.</param>
         public static UserDetails? GetUser(string username)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -157,6 +194,11 @@ namespace OTA.Data
             public string Username;
         }
 
+        /// <summary>
+        /// Finds a list of users matching a prefix
+        /// </summary>
+        /// <returns>The users by prefix.</returns>
+        /// <param name="search">Search.</param>
         public static string[] FindUsersByPrefix(string search)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -170,6 +212,11 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Removes a user from the database by name
+        /// </summary>
+        /// <returns><c>true</c>, if user was deleted, <c>false</c> otherwise.</returns>
+        /// <param name="username">Username.</param>
         public static bool DeleteUser(string username)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -182,6 +229,13 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Creates a user.
+        /// </summary>
+        /// <returns><c>true</c>, if user was created, <c>false</c> otherwise.</returns>
+        /// <param name="username">Username.</param>
+        /// <param name="password">Password.</param>
+        /// <param name="op">If set to <c>true</c> op.</param>
         public static bool CreateUser(string username, string password, bool op = false)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -198,6 +252,13 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Updates a user in the database.
+        /// </summary>
+        /// <returns><c>true</c>, if user was updated, <c>false</c> otherwise.</returns>
+        /// <param name="username">Username.</param>
+        /// <param name="password">Password.</param>
+        /// <param name="op">If set to <c>true</c> op.</param>
         public static bool UpdateUser(string username, string password, bool op = false)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -214,6 +275,12 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Updates a user in the database.
+        /// </summary>
+        /// <returns><c>true</c>, if user was updated, <c>false</c> otherwise.</returns>
+        /// <param name="username">Username.</param>
+        /// <param name="password">Password.</param>
         public static bool UpdateUser(string username, string password)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -229,6 +296,12 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Updates a user in the database.
+        /// </summary>
+        /// <returns><c>true</c>, if user was updated, <c>false</c> otherwise.</returns>
+        /// <param name="username">Username.</param>
+        /// <param name="op">If set to <c>true</c> op.</param>
         public static bool UpdateUser(string username, bool op = false)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))

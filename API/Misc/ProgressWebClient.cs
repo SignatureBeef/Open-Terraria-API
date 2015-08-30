@@ -3,6 +3,9 @@ using OTA.Logging;
 
 namespace OTA.Misc
 {
+    /// <summary>
+    /// A web client that logs to the console/log
+    /// </summary>
     public class ProgressWebClient : WebClient
     {
         ProgressLogger _logger;

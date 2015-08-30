@@ -1,5 +1,8 @@
 ﻿namespace OTA
 {
+    /// <summary>
+    /// Known Terraria packets
+    /// </summary>
     public enum Packet : int
     {
         CONNECTION_REQUEST = 1,

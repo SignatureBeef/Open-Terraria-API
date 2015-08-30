@@ -8,6 +8,10 @@ using OTA.Logging;
 
 namespace OTA
 {
+    /// <summary>
+    /// Scheduled notification for players or the console
+    /// </summary>
+    // TODO Allow per-player
     public class ScheduledNotification : Task
     {
         private new Action<Task> Method { get; set; }

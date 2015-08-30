@@ -6,6 +6,9 @@ using OTA.Logging;
 
 namespace OTA.ID
 {
+    /// <summary>
+    /// Generic lookup for tiles, items, buffs etc
+    /// </summary>
     public static class Lookup
     {
         class FieldInfoComparer<T> : IEqualityComparer<FieldInfo>

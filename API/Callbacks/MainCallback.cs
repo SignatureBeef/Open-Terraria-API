@@ -10,6 +10,12 @@ using System.IO;
 
 namespace OTA.Callbacks
 {
+    /// <summary>
+    /// The Terraia.Main (vanilla) class callbacks
+    /// </summary>
+    /// <remarks>
+    /// This needs to be split out into other files, as this was the first ever API file.
+    /// </remarks>
     public static class MainCallback
     {
         static MainCallback()
@@ -72,13 +78,23 @@ namespace OTA.Callbacks
             };
         }
 
+        /// <summary>
+        /// The callback to update the console with Terraria.Main.statusText
+        /// </summary>
         public static Action StatusTextChange;
-        public static Action UpdateServer;
+
+        /// <summary>
+        /// Game UpdateServer event
+        /// </summary>
+        public static event EventHandler UpdateServer;
 
         //public static bool StartEclipse;
         //public static bool StartBloodMoon;
 
-        public static void ProgramStart()
+        /// <summary>
+        /// The startup call (non vanilla) for both the client and server
+        /// </summary>
+        static void ProgramStart()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -133,6 +149,11 @@ namespace OTA.Callbacks
 //            }
         }
 
+        /// <summary>
+        /// The first ever call from vanilla code
+        /// </summary>
+        /// <remarks>The callback from Terraria.Program.LaunchGame</remarks>
+        /// <param name="cmd">Cmd.</param>
         public static bool OnProgramStarted(string[] cmd)
         {
             System.Threading.Thread.CurrentThread.Name = "Run";
@@ -161,6 +182,9 @@ namespace OTA.Callbacks
             return ctx.Result == HookResult.DEFAULT;
         }
 
+        /// <summary>
+        /// The callback from vanilla code to start shutting down
+        /// </summary>
         public static void OnProgramFinished()
         {
             var ctx = new HookContext()
@@ -181,6 +205,10 @@ namespace OTA.Callbacks
 //                Tools.WriteClose.Invoke();
         }
 
+        /// <summary>
+        /// The call from the XNA Game initialise
+        /// </summary>
+        /// <remarks>This could have been in the XNA shims, but the client uses FNA/XNA and if our client is to work they require CIL modifications</remarks>
         public static void Initialise()
         {
             #if Full_API
@@ -199,6 +227,9 @@ namespace OTA.Callbacks
             #endif
         }
 
+        /// <summary>
+        /// The call from the end of Terraria.Main.UpdateServer
+        /// </summary>
         public static void UpdateServerEnd()
         {
 //            Console.WriteLine("SE");
@@ -206,7 +237,7 @@ namespace OTA.Callbacks
             //Tasks.CheckTasks();
 
             if (UpdateServer != null)
-                UpdateServer();
+                UpdateServer(null, EventArgs.Empty);
 
             #if Full_API
             for (var i = 0; i < Terraria.Netplay.Clients.Length; i++)
@@ -247,6 +278,9 @@ namespace OTA.Callbacks
             #endif
         }
 
+        /// <summary>
+        /// The call from the start of Terraria.WorldFile.loadWorld
+        /// </summary>
         public static void WorldLoadBegin()
         {
             //Since this is hook is at the end of the world loading then we can clear the new progress loading
@@ -265,6 +299,9 @@ namespace OTA.Callbacks
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
         }
 
+        /// <summary>
+        /// The call from the end of Terraria.WorldFile.loadWorld
+        /// </summary>
         public static void WorldLoadEnd()
         {
             //Since this is hook is at the end of the world loading then we can clear the new progress loading
@@ -283,6 +320,9 @@ namespace OTA.Callbacks
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
         }
 
+        /// <summary>
+        /// The call from the start of Terraria.WorldGen.generateWorld
+        /// </summary>
         public static void WorldGenerateBegin()
         {
             //Since this is hook is at the end of the world loading then we can clear the new progress loading
@@ -300,7 +340,9 @@ namespace OTA.Callbacks
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
         }
-
+        /// <summary>
+        /// The call from the end of Terraria.WorldGen.generateWorld
+        /// </summary>
         public static void WorldGenerateEnd()
         {
             //Since this is hook is at the end of the world loading then we can clear the new progress loading
@@ -320,6 +362,9 @@ namespace OTA.Callbacks
         }
 
         //private static int _textTimeout = 0;
+        /// <summary>
+        /// Callback from Terraria.Main.DedServ
+        /// </summary>
         public static void OnStatusTextChange()
         {
             try
@@ -368,6 +413,9 @@ namespace OTA.Callbacks
             }
         }
 
+        /// <summary>
+        /// The call from Terraria.Main.InvasionWarning
+        /// </summary>
         public static bool OnInvasionWarning()
         {
             var ctx = new HookContext();

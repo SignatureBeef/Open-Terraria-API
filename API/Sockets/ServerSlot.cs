@@ -2,6 +2,9 @@
 
 namespace OTA.Sockets
 {
+    /// <summary>
+    /// Known vanilla slot states
+    /// </summary>
     public enum SlotState : int
     {
         PLAYER_AUTH = -2,

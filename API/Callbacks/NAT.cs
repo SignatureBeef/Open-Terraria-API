@@ -10,6 +10,9 @@ namespace OTA.Callbacks
         static Mono.Nat.Mapping _map;
         static System.Collections.Generic.List<Mono.Nat.INatDevice> _devices = new System.Collections.Generic.List<Mono.Nat.INatDevice>();
 
+        /// <summary>
+        /// Open the NAT port for the current Terraria ip:port
+        /// </summary>
         public static void OpenPort()
         {
 #if ENABLE_NAT && Full_API
@@ -84,6 +87,9 @@ namespace OTA.Callbacks
 #endif
         }
 
+        /// <summary>
+        /// Closes the open NAT port.
+        /// </summary>
         public static void ClosePort()
         {
             #if Full_API

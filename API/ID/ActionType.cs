@@ -1,5 +1,9 @@
 ﻿namespace OTA.ID
 {
+    /// <summary>
+    /// Action type.
+    /// </summary>
+    /// <remarks>Typically used in tile actions. For example when reading the messages from a client.</remarks>
     public enum ActionType : byte
     {
         KillTile = 0,

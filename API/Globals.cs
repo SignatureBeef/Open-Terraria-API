@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace OTA
 {
+    /// <summary>
+    /// Release phase.
+    /// </summary>
     public enum ReleasePhase : ushort
     {
         PreAlpha = 0x70,                        //p
@@ -12,6 +15,10 @@ namespace OTA
         ReleaseCandiate = 0x72 | (0x63 << 8),   //rc
         LiveRelease = 0x6C | (0x72 << 8)        //lr
     }
+
+    /// <summary>
+    /// Globals for OTA.
+    /// </summary>
     public static class Globals
     {
         public const Int32 Build = 5;
@@ -29,6 +36,10 @@ namespace OTA
 
         public static volatile bool Exit = false;
 
+        /// <summary>
+        /// The current directory
+        /// </summary>
+        /// TODO See if this should be renamed
         public static string SavePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         //public static bool IsPatching { get; set; }
@@ -39,6 +50,10 @@ namespace OTA
         public const bool FullAPIDefined = false;
 #endif
 
+        /// <summary>
+        /// Gets the world save path.
+        /// </summary>
+        /// <value>The world path.</value>
         public static string WorldPath
         {
             get
@@ -51,24 +66,40 @@ namespace OTA
         //    { return Path.Combine(SavePath, WorldDirectory, BackupDirectory); }
         //}
 
+        /// <summary>
+        /// Gets the plugin folder.
+        /// </summary>
+        /// <value>The plugin path.</value>
         public static string PluginPath
         {
             get
             { return Path.Combine(SavePath, PluginDirectory); }
         }
 
+        /// <summary>
+        /// Gets the libraries folder.
+        /// </summary>
+        /// <value>The libraries path.</value>
         public static string LibrariesPath
         {
             get
             { return Path.Combine(SavePath, LibrariesDirectory); }
         }
 
+        /// <summary>
+        /// Gets the data folder.
+        /// </summary>
+        /// <value>The data path.</value>
         public static string DataPath
         {
             get
             { return Path.Combine(SavePath, DataDirectory); }
         }
 
+        /// <summary>
+        /// Gets the character data folder.
+        /// </summary>
+        /// <value>The character data path.</value>
         public static string CharacterDataPath
         {
             get
@@ -77,6 +108,9 @@ namespace OTA
 
 //        public static readonly bool IsMono = Type.GetType("Mono.Runtime") != null;
 
+        /// <summary>
+        /// Creates default required folders
+        /// </summary>
         public static void Touch()
         {
             if (!Directory.Exists(SavePath)) Directory.CreateDirectory(SavePath);

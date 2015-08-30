@@ -2,6 +2,9 @@
 
 namespace OTA.Plugin
 {
+    /// <summary>
+    /// Mark a method as an OTA hook
+    /// </summary>
     public class HookAttribute : Attribute
     {
         internal readonly HookOrder order;

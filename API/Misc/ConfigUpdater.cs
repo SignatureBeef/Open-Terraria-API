@@ -2,10 +2,18 @@
 
 namespace OTA
 {
+    /// <summary>
+    /// A generic configuration updater for the format of the official serverconfig.txt.
+    /// </summary>
     public static class ConfigUpdater
     {
         internal static string SourceFile { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating is available.
+        /// </summary>
+        /// <remarks>If a configuration file is not specified to the program we cannot update.</remarks>
+        /// <value><c>true</c> if is available; otherwise, <c>false</c>.</value>
         public static bool IsAvailable
         {
             get
@@ -62,6 +70,13 @@ namespace OTA
             return changed;
         }
 
+        /// <summary>
+        /// Set the specified key, value.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="includeCommented">If set to <c>true</c> include commented.</param>
+        /// <param name="preserveComment">If set to <c>true</c> preserve comment.</param>
         public static bool Set(string key, object value, bool includeCommented = true, bool preserveComment = false)
         {
             return Set(key, value.ToString(), includeCommented, preserveComment);

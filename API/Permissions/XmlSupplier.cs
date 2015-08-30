@@ -5,6 +5,7 @@ using OTA.Logging;
 
 namespace OTA.Permissions
 {
+    [Obsolete("Use OTA.Data.Storage")]
     public class XmlSupplier : IPermissionHandler
     {
         private XmlReflect _store;

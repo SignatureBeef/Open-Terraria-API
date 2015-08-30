@@ -3,10 +3,16 @@ using OTA.Logging;
 
 namespace OTA.Data
 {
+    /// <summary>
+    /// The generic setting store for OTA and its plugins
+    /// </summary>
     public static class SettingsStore
     {
         public const String SQLSafeName = "tdsm";
 
+        /// <summary>
+        /// The settings table definition
+        /// </summary>
         public class SettingsTable
         {
             public const String TableName = "settings";
@@ -25,6 +31,9 @@ namespace OTA.Data
                 new TableColumn(ColumnNames.Value, typeof(String), 255)
             };
 
+            /// <summary>
+            /// Checks if the table exists
+            /// </summary>
             public static bool Exists()
             {
                 using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -35,6 +44,9 @@ namespace OTA.Data
                 }
             }
 
+            /// <summary>
+            /// Creates the table
+            /// </summary>
             public static bool Create()
             {
                 using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -45,6 +57,10 @@ namespace OTA.Data
                 }
             }
 
+            /// <summary>
+            /// Determines if a setting exists
+            /// </summary>
+            /// <param name="key">Key.</param>
             public static bool Exists(string key)
             {
                 using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -55,6 +71,11 @@ namespace OTA.Data
                 }
             }
 
+            /// <summary>
+            /// Creates a setting
+            /// </summary>
+            /// <param name="key">Key.</param>
+            /// <param name="value">Value.</param>
             public static int Insert(string key, string value)
             {
                 using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -68,6 +89,11 @@ namespace OTA.Data
                 }
             }
 
+            /// <summary>
+            /// Updates a settings value
+            /// </summary>
+            /// <param name="key">Key.</param>
+            /// <param name="value">Value.</param>
             public static bool Update(string key, string value)
             {
                 using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -94,11 +120,21 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Store a setting
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value.</param>
         public static void Set(string key, object value)
         {
             Set(key, value.ToString());
         }
 
+        /// <summary>
+        /// Store a setting
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value.</param>
         public static void Set(string key, string value)
         {
             if (SettingsTable.Exists(key))
@@ -111,6 +147,11 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Fetches the setting by key
+        /// </summary>
+        /// <returns>The string.</returns>
+        /// <param name="key">Key.</param>
         public static string GetString(string key)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
@@ -123,6 +164,11 @@ namespace OTA.Data
             }
         }
 
+        /// <summary>
+        /// Fetches the int value of a setting
+        /// </summary>
+        /// <returns>The int.</returns>
+        /// <param name="key">Key.</param>
         public static int GetInt(string key)
         {
             return Convert.ToInt32(GetString(key));

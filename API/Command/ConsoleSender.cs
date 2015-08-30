@@ -32,6 +32,13 @@ namespace OTA.Command
             // I don't know what the hell was the deal with this
         }
 
+        /// <summary>
+        /// Parses a ConsoleColor from R,G,B
+        /// </summary>
+        /// <returns>The color.</returns>
+        /// <param name="r">The red component.</param>
+        /// <param name="g">The green component.</param>
+        /// <param name="b">The blue component.</param>
         public static System.ConsoleColor FromColor(byte r, byte g, byte b)
         {
             int index = (r > 128 | g > 128 | b > 128) ? 8 : 0; // Bright bit
@@ -41,6 +48,9 @@ namespace OTA.Command
             return (System.ConsoleColor)index;
         }
 
+        /// <summary>
+        /// Sends a message to the console
+        /// </summary>
         public override void SendMessage(string message, int A = 255, byte R = 255, byte G = 255, byte B = 255)
         {
             if (_consoleMethod == null)

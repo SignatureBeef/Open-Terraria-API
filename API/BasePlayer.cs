@@ -10,21 +10,42 @@ using Terraria.Net.Sockets;
 
 namespace OTA
 {
+    /// <summary>
+    /// This is what Terraria.Player is forced to inherit
+    /// </summary>
     public partial class BasePlayer : Sender
     {
+        /// <summary>
+        /// Gets or sets the clients globally unique identifier.
+        /// </summary>
         public string ClientUUId { get; set; }
 
+        /// <summary>
+        /// Gets who the player is authenticated as
+        /// </summary>
+        /// <value>The authenticated as.</value>
         public string AuthenticatedAs { get; private set; }
 
-        public string AuthenticatedBy { get; set; }
+        /// <summary>
+        /// Gets the authenticator
+        /// </summary>
+        public string AuthenticatedBy { get; private set; }
 
         public bool IsAuthenticated
         {
-            get { return !String.IsNullOrEmpty(AuthenticatedAs); }
+            get { return !String.IsNullOrEmpty(AuthenticatedAs) && AuthenticatedBy != Name; }
         }
 
+        /// <summary>
+        /// Storage for plugins for on a per-player basis
+        /// </summary>
         public ConcurrentDictionary<String, Object> PluginData = new ConcurrentDictionary<String, Object>();
 
+        /// <summary>
+        /// Sets plugin data for this player
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value.</param>
         public void SetPluginData(string key, object value)
         {
             if (PluginData == null)
@@ -32,6 +53,13 @@ namespace OTA
             PluginData[key] = value;
         }
 
+        /// <summary>
+        /// Gets plugin data for this player
+        /// </summary>
+        /// <returns>The plugin data.</returns>
+        /// <param name="key">Key.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
         public T GetPluginData<T>(string key, T defaultValue)
         {
             if (PluginData == null)
@@ -45,6 +73,11 @@ namespace OTA
             return defaultValue;
         }
 
+        /// <summary>
+        /// Removed plugin data for this player
+        /// </summary>
+        /// <returns><c>true</c>, if plugin data was cleared, <c>false</c> otherwise.</returns>
+        /// <param name="key">Key.</param>
         public bool ClearPluginData(string key)
         {
             if (PluginData == null)
@@ -59,6 +92,11 @@ namespace OTA
             return false;
         }
 
+        /// <summary>
+        /// Sets the authentication of this user
+        /// </summary>
+        /// <param name="auth">Auth.</param>
+        /// <param name="by">By.</param>
         public void SetAuthentication(string auth, string by)
         {
             #if Full_API
@@ -95,6 +133,12 @@ namespace OTA
             #endif
         }
 
+        /// <summary>
+        /// Gets the name of this player
+        /// </summary>
+        /// <returns>Sending entity name</returns>
+        /// <value>The name.</value>
+        /// <remarks>This is for compatibility</remarks>
         public override string Name
         {
             get
@@ -110,6 +154,16 @@ namespace OTA
             protected set { }
         }
 
+        /// <summary>
+        /// Sends a message to the players client
+        /// </summary>
+        /// <param name="Message">Message to send</param>
+        /// <param name="A"></param>
+        /// <param name="R">Red text color value</param>
+        /// <param name="G">Green text color value</param>
+        /// <param name="B">Blue text color value</param>
+        /// <param name="message">Message.</param>
+        /// <param name="sender">Sender.</param>
         public override void SendMessage(string message, int sender = 255, byte R = 255, byte G = 255, byte B = 255)
         {
 #if Full_API
@@ -117,19 +171,35 @@ namespace OTA
 #endif
         }
 
+        /// <summary>
+        /// Sends a message to the player
+        /// </summary>
+        /// <param name="message">Message.</param>
+        /// <param name="color">Color.</param>
         public void SendMessage(string message, Color color)
         {
             SendMessage(message, 255, color.R, color.G, color.B);
         }
 
         #if Full_API
+        /// <summary>
+        /// Gets the players connection instance.
+        /// </summary>
+        /// <value>The connection.</value>
         public Terraria.RemoteClient Connection
         {
             get { return Terraria.Netplay.Clients[this.whoAmI]; }
         }
         #endif
 
+        /// <summary>
+        /// The players IP Address
+        /// </summary>
         public string IPAddress;
+
+        /// <summary>
+        /// The reason of disconnection
+        /// </summary>
         public string DisconnectReason;
 
         #if Full_API

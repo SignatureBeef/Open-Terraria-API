@@ -54,6 +54,12 @@ namespace OTA.Misc
             }
         }
 
+        /// <summary>
+        /// Add the specified key and value.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="autoSave">If set to <c>true</c> auto save.</param>
         public bool Add(string key, string value, bool autoSave = true)
         {
             lock (_data)
@@ -67,6 +73,12 @@ namespace OTA.Misc
             return true;
         }
 
+        /// <summary>
+        /// Update a keys value
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="autoSave">If set to <c>true</c> auto save.</param>
         public bool Update(string key, string value, bool autoSave = true)
         {
             key = (_lowerKeys ? key.ToLower() : key).Trim();
@@ -115,6 +127,12 @@ namespace OTA.Misc
             return null;
         }
 
+        /// <summary>
+        /// Determine if a key and value exist
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="compareAsLowered">If set to <c>true</c> compare as lowered.</param>
         public bool Contains(string key, string value, bool compareAsLowered = false)
         {
             return base.Contains(key + PrefixKey + value, compareAsLowered);
@@ -138,12 +156,19 @@ namespace OTA.Misc
                 Load();
         }
 
+        /// <summary>
+        /// Total registered items
+        /// </summary>
+        /// <value>The count.</value>
         public int Count
         {
             get
             { return _data.Length; }
         }
 
+        /// <summary>
+        /// Loads lines from the file
+        /// </summary>
         public virtual void Load()
         {
             lock (_data)
@@ -160,6 +185,9 @@ namespace OTA.Misc
             }
         }
 
+        /// <summary>
+        /// Saves this instance into a file
+        /// </summary>
         public virtual bool Save()
         {
             try
@@ -179,6 +207,10 @@ namespace OTA.Misc
             }
         }
 
+        /// <summary>
+        /// Clear out this instance
+        /// </summary>
+        /// <param name="autoSave">If set to <c>true</c> auto save.</param>
         public virtual bool Clear(bool autoSave = true)
         {
             lock (_data)
@@ -191,6 +223,11 @@ namespace OTA.Misc
             return true;
         }
 
+        /// <summary>
+        /// Adds a new line into this instance
+        /// </summary>
+        /// <param name="item">Item.</param>
+        /// <param name="autoSave">If set to <c>true</c> auto save.</param>
         public virtual bool Add(string item, bool autoSave = true)
         {
             lock (_data)
@@ -204,6 +241,11 @@ namespace OTA.Misc
             return true;
         }
 
+        /// <summary>
+        /// Removes a line from this instance
+        /// </summary>
+        /// <param name="item">Item.</param>
+        /// <param name="autoSave">If set to <c>true</c> auto save.</param>
         public virtual bool Remove(string item, bool autoSave = true)
         {
             lock (_data)
@@ -216,6 +258,11 @@ namespace OTA.Misc
             return true;
         }
 
+        /// <summary>
+        /// Checks to see if this instance contains a line
+        /// </summary>
+        /// <param name="item">Item.</param>
+        /// <param name="compareAsLowered">If set to <c>true</c> compare as lowered.</param>
         public virtual bool Contains(string item, bool compareAsLowered = false)
         {
             lock (_data)

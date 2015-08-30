@@ -8,6 +8,9 @@ using OTA.Logging;
 
 namespace OTA.Sockets
 {
+    /// <summary>
+    /// An asynchronous tcp client implementation
+    /// </summary>
     public abstract class Connection
     {
         public static int SendQueueQuota = 1024;

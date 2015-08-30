@@ -2,6 +2,9 @@ using System;
 
 namespace OTA.Logging
 {
+    /// <summary>
+    /// Specific log channel
+    /// </summary>
 	public class LogChannel
 	{
 		public ConsoleColor Color { get; private set; }

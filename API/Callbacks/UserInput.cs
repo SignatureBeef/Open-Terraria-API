@@ -6,14 +6,24 @@ using OTA.Logging;
 
 namespace OTA.Callbacks
 {
+    /// <summary>
+    /// Callbacks from vanilla code for miscellaneous patches
+    /// </summary>
     public static class Patches
     {
+        /// <summary>
+        /// Used in vanilla code where there was fixed windows paths
+        /// </summary>
+        /// <returns>The current directory.</returns>
         public static string GetCurrentDirectory()
         {
             return Environment.CurrentDirectory;
         }
     }
 
+    /// <summary>
+    /// Input specific callbacks from Terraria.Main
+    /// </summary>
     public static class UserInput
     {
         //        static readonly List<String> _officialCommands = new List<String>()
@@ -41,6 +51,9 @@ namespace OTA.Callbacks
         //        };
 
 
+        /// <summary>
+        /// The request from vanilla code to start listening for commands
+        /// </summary>
         public static void ListenForCommands()
         {
             var ctx = new HookContext()
@@ -51,18 +64,29 @@ namespace OTA.Callbacks
             HookPoints.StartCommandProcessing.Invoke(ref ctx, ref args);
 
             if (ctx.Result == HookResult.DEFAULT)
-                System.Threading.ThreadPool.QueueUserWorkItem(startDedInputCallBack);
+            {
+                //This might change to the vanilla code (allowing for pure vanilla functionalities). but we'll see.
+                System.Threading.ThreadPool.QueueUserWorkItem(ListenForCommands); 
+            }
         }
 
         static readonly CommandParser _cmdParser = new CommandParser();
 
+        /// <summary>
+        /// The active server instance of the command parser
+        /// </summary>
+        /// <value>The command parser.</value>
         public static CommandParser CommandParser
         {
             get
             { return _cmdParser; }
         }
 
-        public static void startDedInputCallBack(object threadContext)
+        /// <summary>
+        /// The call to start OTA command
+        /// </summary>
+        /// <param name="threadContext">Thread context.</param>
+        private static void ListenForCommands(object threadContext)
         {
             System.Threading.Thread.CurrentThread.Name = "APC";
 

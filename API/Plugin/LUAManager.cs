@@ -5,6 +5,9 @@ using OTA.Logging;
 
 namespace OTA.Plugin
 {
+    /// <summary>
+    /// The implementation to get LUA plugins working as an OTA plugin
+    /// </summary>
     public class LUAPlugin : BasePlugin
     {
         private NLua.Lua _ctx;
@@ -107,11 +110,22 @@ namespace OTA.Plugin
             //}
         }
 
+        /// <summary>
+        /// Adds a command into the server
+        /// </summary>
+        /// <returns>The command.</returns>
+        /// <param name="prefix">Prefix.</param>
         public new Command.CommandInfo AddCommand(string prefix)
         {
             return base.AddCommand(prefix);
         }
 
+        /// <summary>
+        /// Calls a LUA command
+        /// </summary>
+        /// <param name="ctx">Context.</param>
+        /// <param name="args">Arguments.</param>
+        /// <param name="function">Function.</param>
         public void Call(ref HookContext ctx, ref object args, string function)
         {
             if (_ctx != null)
@@ -130,6 +144,11 @@ namespace OTA.Plugin
             }
         }
 
+        /// <summary>
+        /// Finds a hook order by name.
+        /// </summary>
+        /// <returns>The order.</returns>
+        /// <param name="text">Text.</param>
         static HookOrder FindOrder(string text)
         {
             var vals = Enum.GetValues(typeof(HookOrder));
@@ -142,30 +161,47 @@ namespace OTA.Plugin
             return HookOrder.NORMAL;
         }
 
+        /// <summary>
+        /// When the plugin is disabled
+        /// </summary>
         protected override void Disabled()
         {
             base.Disabled();
             CallSelf("Disabled");
         }
 
+        /// <summary>
+        /// When the plugin is enabled
+        /// </summary>
         protected override void Enabled()
         {
             base.Enabled();
             CallSelf("Enabled");
         }
 
+        /// <summary>
+        /// When the plugin is resumed
+        /// </summary>
+        /// <param name="state">State.</param>
         protected override void Resumed(object state)
         {
             base.Resumed(state);
             CallSelf("Resumed");
         }
 
+        /// <summary>
+        /// When the plugin is suspended
+        /// </summary>
+        /// <returns>The and saved.</returns>
         protected override object SuspendedAndSaved()
         {
             //return base.SuspendedAndSaved();
             return CallSelf("SuspendedAndSaved") ?? base.SuspendedAndSaved();
         }
 
+        /// <summary>
+        /// When the world is loaded
+        /// </summary>
         protected override void WorldLoaded()
         {
             base.WorldLoaded();
@@ -205,6 +241,10 @@ namespace OTA.Plugin
             return null;
         }
 
+        /// <summary>
+        /// Called when the plugin is disposing
+        /// </summary>
+        /// <param name="state">A state object previously returned from SaveState to be disposed of as well.</param>
         protected override void Disposed(object state)
         {
             if (_ctx != null)
@@ -233,6 +273,12 @@ namespace OTA.Plugin
             }
         }
 
+        /// <summary>
+        /// Sorts an array using a LUA callback
+        /// </summary>
+        /// <returns>The sort.</returns>
+        /// <param name="arr">Arr.</param>
+        /// <param name="callback">Callback.</param>
         public Array ArraySort(Array arr, NLua.LuaFunction callback)
         {
             var comparer = new LuaSorter(callback);

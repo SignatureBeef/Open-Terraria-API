@@ -2,6 +2,10 @@
 using System;
 namespace OTA.Permissions
 {
+    /// <summary>
+    /// The old XML permission system
+    /// </summary>
+    [Obsolete("Replaced with OTA.Data.Storage")]
     public static class PermissionsManager
     {
         private static IPermissionHandler _handler;

@@ -10,6 +10,10 @@ using OTA.ID;
 
 namespace OTA.Plugin
 {
+    /// <summary>
+    /// Contains definitions of all OTA hooks
+    /// </summary>
+    // TODO remove unused hooks
     public static class HookPoints
     {
         public static readonly HookPoint<HookArgs.ConsoleMessageReceived> ConsoleMessageReceived;

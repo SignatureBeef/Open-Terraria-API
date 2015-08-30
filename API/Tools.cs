@@ -11,8 +11,17 @@ using System.Collections.Generic;
 
 namespace OTA
 {
+    /// <summary>
+    /// General utilities for plugins to use
+    /// </summary>
     public static class Tools
     {
+        /// <summary>
+        /// Notifies all players.
+        /// </summary>
+        /// <param name="message">Message.</param>
+        /// <param name="color">Color.</param>
+        /// <param name="writeToConsole">If set to <c>true</c> write to console.</param>
         public static void NotifyAllPlayers(string message, Color color, bool writeToConsole = true) //, SendingLogger Logger = SendingLogger.CONSOLE)
         {
 #if Full_API
@@ -27,6 +36,11 @@ namespace OTA
 #endif
         }
 
+        /// <summary>
+        /// Notifies all ops.
+        /// </summary>
+        /// <param name="message">Message.</param>
+        /// <param name="writeToConsole">If set to <c>true</c> write to console.</param>
         public static void NotifyAllOps(string message, bool writeToConsole = true) //, SendingLogger Logger = SendingLogger.CONSOLE)
         {
 #if Full_API
@@ -315,6 +329,12 @@ namespace OTA
             return TryFindNPCByName(name, out Id);
         }
 
+        /// <summary>
+        /// Tries to find the first NPC by name
+        /// </summary>
+        /// <returns><c>true</c>, if find NPC by name was tryed, <c>false</c> otherwise.</returns>
+        /// <param name="name">Name.</param>
+        /// <param name="id">Identifier.</param>
         public static bool TryFindNPCByName(string name, out int id)
         {
             id = default(Int32);
@@ -331,7 +351,13 @@ namespace OTA
             return false;
         }
 
-        public static int FindExistingProjectileForUser(int playerId, int identity)
+        /// <summary>
+        /// Finds the existing projectile a player.
+        /// </summary>
+        /// <returns>The existing projectile for user.</returns>
+        /// <param name="playerId">Player identifier.</param>
+        /// <param name="identity">Identity.</param>
+        public static int FindExistingProjectileForPlayer(int playerId, int identity)
         {
             for (int x = 0; x < 1000; x++)
             {
@@ -342,6 +368,10 @@ namespace OTA
             return -1;
         }
 
+        /// <summary>
+        /// Gets the available NPC slots count.
+        /// </summary>
+        /// <value>The available NPC slots.</value>
         public static int AvailableNPCSlots
         {
             get
@@ -352,6 +382,10 @@ namespace OTA
             }
         }
 
+        /// <summary>
+        /// Gets the used NPC slots count.
+        /// </summary>
+        /// <value>The used NPC slots.</value>
         public static int UsedNPCSlots
         {
             get
@@ -362,6 +396,10 @@ namespace OTA
             }
         }
 
+        /// <summary>
+        /// Gets the available item slots count.
+        /// </summary>
+        /// <value>The available item slots.</value>
         public static int AvailableItemSlots
         {
             get
@@ -372,6 +410,10 @@ namespace OTA
             }
         }
 
+        /// <summary>
+        /// Gets the used item slots count.
+        /// </summary>
+        /// <value>The used item slots.</value>
         public static int UsedItemSlots
         {
             get
@@ -382,6 +424,10 @@ namespace OTA
             }
         }
 
+        /// <summary>
+        /// Gets the active player count.
+        /// </summary>
+        /// <value>The active player count.</value>
         public static int ActivePlayerCount
         {
             get
@@ -392,6 +438,10 @@ namespace OTA
             }
         }
 
+        /// <summary>
+        /// Gets the max players.
+        /// </summary>
+        /// <value>The max players.</value>
         public static int MaxPlayers
         {
             get
@@ -400,6 +450,10 @@ namespace OTA
             }
         }
         #endif
+        /// <summary>
+        /// Gets the runtime platform.
+        /// </summary>
+        /// <value>The runtime platform.</value>
         public static RuntimePlatform RuntimePlatform
         {
             get
@@ -408,25 +462,51 @@ namespace OTA
 
         #region "Encoding"
 
+        /// <summary>
+        /// Generic encoding for some OTA functions
+        /// </summary>
         public static class Encoding
         {
             public const Int32 BitsPerByte = 8;
 
+            /// <summary>
+            /// Encodes a color.
+            /// </summary>
+            /// <returns>The color.</returns>
+            /// <param name="color">Color.</param>
             public static uint EncodeColor(Color color)
             {
                 return color.PackedValue;
             }
 
+            /// <summary>
+            /// Encodes a color.
+            /// </summary>
+            /// <returns>The color.</returns>
+            /// <param name="r">The red component.</param>
+            /// <param name="g">The green component.</param>
+            /// <param name="b">The blue component.</param>
+            /// <param name="a">The alpha component.</param>
             public static uint EncodeColor(int r, int g, int b, int a = 255)
             {
                 return Color.PackHelper(r, g, b, a);
             }
 
+            /// <summary>
+            /// Decodes a color.
+            /// </summary>
+            /// <returns>The color.</returns>
+            /// <param name="color">Color.</param>
             public static Color DecodeColor(uint color)
             {
                 return new Color(color);
             }
 
+            /// <summary>
+            /// Decodes bits into an array.
+            /// </summary>
+            /// <returns>The bits.</returns>
+            /// <param name="data">Data.</param>
             public static bool[] DecodeBits(byte data)
             {
                 var bits = new bool[BitsPerByte];
@@ -436,6 +516,11 @@ namespace OTA
                 return bits;
             }
 
+            /// <summary>
+            /// Decodes bits into an array.
+            /// </summary>
+            /// <returns>The bits.</returns>
+            /// <param name="data">Data.</param>
             public static bool[] DecodeBits(short data)
             {
                 var bits = new bool[2 * BitsPerByte];
@@ -445,6 +530,11 @@ namespace OTA
                 return bits;
             }
 
+            /// <summary>
+            /// Decodes bits into an array.
+            /// </summary>
+            /// <returns>The bits.</returns>
+            /// <param name="data">Data.</param>
             public static bool[] DecodeBits(int data)
             {
                 var bits = new bool[4 * BitsPerByte];
@@ -454,6 +544,11 @@ namespace OTA
                 return bits;
             }
 
+            /// <summary>
+            /// Encodes to a byte.
+            /// </summary>
+            /// <returns>The byte.</returns>
+            /// <param name="bits">Bits.</param>
             public static byte EncodeByte(bool[] bits)
             {
                 if (bits == null) return 0;
@@ -470,6 +565,11 @@ namespace OTA
                 else throw new ArgumentOutOfRangeException();
             }
 
+            /// <summary>
+            /// Encodes to a short.
+            /// </summary>
+            /// <returns>The short.</returns>
+            /// <param name="bits">Bits.</param>
             public static short EncodeShort(bool[] bits)
             {
                 if (bits == null) return 0;
@@ -486,6 +586,11 @@ namespace OTA
                 else throw new ArgumentOutOfRangeException();
             }
 
+            /// <summary>
+            /// Encodes to a integer.
+            /// </summary>
+            /// <returns>The integer.</returns>
+            /// <param name="bits">Bits.</param>
             public static int EncodeInteger(bool[] bits)
             {
                 if (bits == null) return 0;
@@ -506,6 +611,9 @@ namespace OTA
         #endregion
     }
 
+    /// <summary>
+    /// Item info.
+    /// </summary>
     public struct ItemInfo
     {
         public int NetID { get; set; }
@@ -513,6 +621,9 @@ namespace OTA
         public int Type { get; set; }
     }
 
+    /// <summary>
+    /// Runtime platform enumeration.
+    /// </summary>
     public enum RuntimePlatform
     {
         Microsoft = 1,

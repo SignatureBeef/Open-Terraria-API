@@ -14,8 +14,15 @@ using Terraria.IO;
 
 namespace OTA.Callbacks
 {
+    /// <summary>
+    /// The configuration callback from vanilla code
+    /// </summary>
     public static class Configuration
     {
+        /// <summary>
+        /// Command line configuration callback
+        /// </summary>
+        /// <param name="game">Game.</param>
         public static void StartupConfig(Microsoft.Xna.Framework.Game game)
         {
             #if Full_API
@@ -82,6 +89,13 @@ namespace OTA.Callbacks
             HookPoints.ParseCommandLineArguments.Invoke(ref ctx, ref args);
         }
 
+        /// <summary>
+        /// Loads a terraria server configuration file.
+        /// </summary>
+        /// <remarks>>
+        /// OTA callback instead of vanilla code loading it, this way we have full control over the input 
+        /// </remarks>
+        /// <param name="file">File.</param>
         public static void Load(string file)
         {
             ConfigUpdater.SourceFile = file;

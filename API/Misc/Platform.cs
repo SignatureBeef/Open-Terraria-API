@@ -3,6 +3,9 @@ using System.IO;
 
 namespace OTA.Misc
 {
+    /// <summary>
+    /// Platform detections
+    /// </summary>
     public static class Platform
     {
         static Platform()
@@ -10,8 +13,15 @@ namespace OTA.Misc
             InitPlatform();
         }
 
+        /// <summary>
+        /// Gets the type of platform the application is running on
+        /// </summary>
+        /// <value>The type.</value>
         public static PlatformType Type { get; set; }
 
+        /// <summary>
+        /// Platform type.
+        /// </summary>
         public enum PlatformType : int
         {
             UNKNOWN = 0,
@@ -20,6 +30,9 @@ namespace OTA.Misc
             WINDOWS = 3
         }
 
+        /// <summary>
+        /// Determines the current platform
+        /// </summary>
         public static void InitPlatform()
         {
             switch (Environment.OSVersion.Platform)

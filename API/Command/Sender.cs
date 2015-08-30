@@ -86,6 +86,10 @@ namespace OTA.Command
         }
         #endif
 
+        /// <summary>
+        /// Gets the available commands for the sender
+        /// </summary>
+        /// <returns>The available commands.</returns>
         public Dictionary<string, CommandInfo> GetAvailableCommands()
         {
             var available = UserInput.CommandParser.serverCommands.GetAvailableCommands(this);
@@ -111,8 +115,17 @@ namespace OTA.Command
         }
     }
 
+    /// <summary>
+    /// Command map extensions
+    /// </summary>
     public static class CommandMapExtensions
     {
+        /// <summary>
+        /// Gets commands for a particular sender
+        /// </summary>
+        /// <returns>The available commands.</returns>
+        /// <param name="map">Map.</param>
+        /// <param name="sender">Sender.</param>
         public static Dictionary<string, CommandInfo> GetAvailableCommands(this Dictionary<string, CommandInfo> map, ISender sender)
         {
             return map
@@ -120,6 +133,12 @@ namespace OTA.Command
                 .ToDictionary(x => x.Key, y => y.Value);
         }
 
+        /// <summary>
+        /// Gets commands for a particular access level
+        /// </summary>
+        /// <returns>The available commands.</returns>
+        /// <param name="map">Map.</param>
+        /// <param name="access">Access.</param>
         public static Dictionary<string, CommandInfo> GetAvailableCommands(this Dictionary<string, CommandInfo> map, AccessLevel access)
         {
             return map

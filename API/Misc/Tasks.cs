@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace OTA.Misc
 {
+    /// <summary>
+    /// A triggerable task that can be used call a function at intervals
+    /// </summary>
     public class Task /* Needed this to be a reference type */
     {
         //public static readonly Task Empty;
@@ -84,6 +87,9 @@ namespace OTA.Misc
         //}
     }
 
+    /// <summary>
+    /// Task manager
+    /// </summary>
     public static class Tasks
     {
         static Stack<Task> _tasks;
@@ -94,6 +100,11 @@ namespace OTA.Misc
             _tasks = new Stack<Task>();
         }
 
+        /// <summary>
+        /// Schedule a task for triggering
+        /// </summary>
+        /// <param name="task">Task.</param>
+        /// <param name="init">If set to <c>true</c> init.</param>
         public static void Schedule(Task task, bool init = true)
         {
             if (init) task.Init();

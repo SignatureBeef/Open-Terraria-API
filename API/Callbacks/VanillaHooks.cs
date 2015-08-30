@@ -15,8 +15,16 @@ namespace OTA.Callbacks
     }
     #endif
 
+    /// <summary>
+    /// A collection of callbacks from vanilla code
+    /// </summary>
+    /// <remarks>TODO: Split these out into their relevant callback classes
     public static class VanillaHooks
     {
+        /// <summary>
+        /// The call from vanilla code when a player is entering the world/game
+        /// </summary>
+        /// <param name="player">Player.</param>
         public static void OnPlayerEntering(Player player)
         {
             #if Full_API
@@ -40,6 +48,10 @@ namespace OTA.Callbacks
             #endif
         }
 
+        /// <summary>
+        /// The callback from vanilla code when a player has left the server
+        /// </summary>
+        /// <param name="player">Player.</param>
         public static void OnPlayerLeave(Player player)
         {
             #if Full_API
@@ -59,6 +71,10 @@ namespace OTA.Callbacks
             #endif
         }
 
+        /// <summary>
+        /// The replacement call for greeting a player
+        /// </summary>
+        /// <param name="playerId">Player identifier.</param>
         public static bool OnGreetPlayer(int playerId)
         {
             #if Full_API
@@ -119,6 +135,14 @@ namespace OTA.Callbacks
             return false; //We implemented our own, so do not continue on with vanilla
         }
 
+        /// <summary>
+        /// A replacement call for a player death message
+        /// </summary>
+        /// <param name="plr">Plr.</param>
+        /// <param name="npc">Npc.</param>
+        /// <param name="proj">Proj.</param>
+        /// <param name="other">Other.</param>
+        /// <remarks>This may not work yet</remarks>
         public static string OnDeathMessage(int plr = -1, int npc = -1, int proj = -1, int other = -1)
         {
 //            ProgramLog.Log("DEATH");

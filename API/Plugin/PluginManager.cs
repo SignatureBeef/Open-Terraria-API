@@ -78,6 +78,10 @@ namespace OTA
 
         public static Dictionary<String, BasePlugin> _plugins;
 
+        /// <summary>
+        /// Gets the plugin count.
+        /// </summary>
+        /// <value>The plugin count.</value>
         public static int PluginCount { get { return _plugins.Count; } }
 
         private static Type _hookPointSource;
@@ -108,6 +112,10 @@ namespace OTA
             }
         }
 
+        /// <summary>
+        /// Gets the enumeration used to enumerate over plugins
+        /// </summary>
+        /// <value>The enumerate plugins.</value>
         public static PluginEnumerator EnumeratePlugins
         {
             get
@@ -254,8 +262,6 @@ namespace OTA
             }
         }
 
-       
-
         static BasePlugin LoadPluginAssembly(Assembly assembly)
         {
             foreach (var type in assembly.GetTypesLoaded().Where(x => typeof(BasePlugin).IsAssignableFrom(x) && !x.IsAbstract))
@@ -388,6 +394,11 @@ namespace OTA
             return LoadPluginAssembly(result.CompiledAssembly);
         }
 
+        /// <summary>
+        /// Loads the plugin from a file path.
+        /// </summary>
+        /// <returns>The plugin from path.</returns>
+        /// <param name="file">File.</param>
         public static BasePlugin LoadPluginFromPath(string file)
         {
             FileInfo fileInfo = new FileInfo(file);
@@ -440,6 +451,13 @@ namespace OTA
             return plugin;
         }
 
+        /// <summary>
+        /// Replaces a plugin
+        /// </summary>
+        /// <returns><c>true</c>, if plugin was replaced, <c>false</c> otherwise.</returns>
+        /// <param name="oldPlugin">Old plugin.</param>
+        /// <param name="newPlugin">New plugin.</param>
+        /// <param name="saveState">If set to <c>true</c> save state.</param>
         public static bool ReplacePlugin(BasePlugin oldPlugin, BasePlugin newPlugin, bool saveState = true)
         {
             lock (_plugins)
@@ -467,6 +485,12 @@ namespace OTA
             return false;
         }
 
+        /// <summary>
+        /// Reloads a plugin
+        /// </summary>
+        /// <returns>The plugin.</returns>
+        /// <param name="oldPlugin">Old plugin.</param>
+        /// <param name="saveState">If set to <c>true</c> save state.</param>
         public static BasePlugin ReloadPlugin(BasePlugin oldPlugin, bool saveState = true)
         {
             var fi = new FileInfo(oldPlugin.Path);
@@ -994,6 +1018,10 @@ namespace OTA
                 }
         }
 
+        /// <summary>
+        /// Registers a loaded plugin
+        /// </summary>
+        /// <param name="plugin">Plugin.</param>
         public static void RegisterPlugin(BasePlugin plugin)
         {
             if (!plugin.InitializeAndHookUp())
@@ -1009,6 +1037,11 @@ namespace OTA
             }
         }
 
+        /// <summary>
+        /// Loads and initialoses a plugin
+        /// </summary>
+        /// <returns>The and init plugin.</returns>
+        /// <param name="Path">Path.</param>
         public static PluginLoadStatus LoadAndInitPlugin(string Path)
         {
             var rPlg = LoadPluginFromDLL(Path);
@@ -1037,6 +1070,9 @@ namespace OTA
         }
     }
 
+    /// <summary>
+    /// Plugin load status.
+    /// </summary>
     public enum PluginLoadStatus : int
     {
         FAIL_ENABLE,

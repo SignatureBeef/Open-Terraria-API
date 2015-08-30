@@ -1,17 +1,18 @@
-﻿
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using OTA.ID;
 using OTA.Plugin;
 using OTA.Logging;
 using System.Collections.Concurrent;
 
-
 #if Full_API
 using Terraria;
 #endif
 namespace OTA.Callbacks
 {
+    /// <summary>
+    /// The callbacks from the terrarian tcp clients' stream reader
+    /// </summary>
     public static class MessageBufferCallback
     {
         //TODO Put these in a Messages folder as like in the old system.
@@ -21,6 +22,14 @@ namespace OTA.Callbacks
         //        public static string PlayerNameFormatForChat = "<{0}> {1}";
         //        public static string PlayerNameFormatForConsole = PlayerNameFormatForChat;
 
+        /// <summary>
+        /// The call from within Terraria.MessageBuffer.GetData
+        /// </summary>
+        /// <returns>0 when consumed, the original packet id if vanilla code is to process as normal</returns>
+        /// <param name="bufferId">Buffer identifier.</param>
+        /// <param name="packetId">Packet identifier.</param>
+        /// <param name="start">Start of the net message.</param>
+        /// <param name="length">Length of the net message.</param>
         public static byte ProcessPacket(int bufferId, byte packetId, int start, int length)
         {
             #if Full_API
@@ -106,7 +115,7 @@ namespace OTA.Callbacks
         }
 
         /// <summary>
-        /// Check to see if a client sent a wrong message at the wrong state
+        /// The callback check to see if a client sent a wrong message at the wrong state
         /// </summary>
         /// <param name="bufferId"></param>
         /// <param name="packetId"></param>
@@ -127,6 +136,7 @@ namespace OTA.Callbacks
         }
 
         #if Full_API
+
         private static void ProcessNPCStrike(int bufferId)
         {
             var buffer = NetMessage.buffer[bufferId];
@@ -1634,6 +1644,11 @@ namespace OTA.Callbacks
         #endif
     }
 
+    /// <summary>
+    /// A player command
+    /// </summary>
+    /// <remarks>Used to schedule player commands, this may not stay</remarks>
+    // TODO  This may be altered if it causes issues on the server thread
     public struct PlayerCommandReceived
     {
         public int BufferId;

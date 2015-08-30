@@ -4,6 +4,9 @@ using System.Threading;
 
 namespace OTA.Misc
 {
+    /// <summary>
+    /// Creates a program thread.
+    /// </summary>
     public class ProgramThread
     {
         Thread thread;

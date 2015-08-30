@@ -2,6 +2,10 @@
 
 namespace OTA.Misc
 {
+    /// <summary>
+    /// Current affix's generated from the vanilla server
+    /// </summary>
+    /// <remarks>These need updating each Terraria release. TODO I'm not certain of the last update.</remarks>
     public enum Affix : byte
     {
         None = 0,

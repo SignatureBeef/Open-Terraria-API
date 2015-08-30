@@ -1,6 +1,9 @@
 ﻿
 namespace OTA.Misc
 {
+    /// <summary>
+    /// Official invasion types
+    /// </summary>
     public enum InvasionType : int
     {
         Goblin = 1,

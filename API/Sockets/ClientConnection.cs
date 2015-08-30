@@ -20,6 +20,9 @@ using OTA.Callbacks;
 #endif
 namespace OTA.Sockets
 {
+    /// <summary>
+    /// A tcp client implementation that directly bolts into the Terrarian socket implementation
+    /// </summary>
     public class ClientConnection : Connection, ISocket
     {
         private TcpAddress _remoteAddress;
