@@ -5,12 +5,18 @@ using System.Linq;
 
 namespace OTA.Patcher
 {
+    /// <summary>
+    /// Patch mode.
+    /// </summary>
     public enum PatchMode
     {
         Server,
         Client
     }
 
+    /// <summary>
+    /// The startup class for the OTA Injector program.
+    /// </summary>
     public class Program
     {
         static void Main(string[] args)
@@ -37,11 +43,22 @@ namespace OTA.Patcher
         }
     }
 
+    /// <summary>
+    /// The Patcher OTA patcher API
+    /// </summary>
     public static class OTAPatcher
     {
         public const String OTAGuid = "9f7bca2e-4d2e-4244-aaae-fa56ca7797ec";
         public const Int32 Build = 5;
 
+        /// <summary>
+        /// Development tools. Copies files into the Debug folder.
+        /// </summary>
+        /// <param name="root">Root.</param>
+        /// <param name="project">Project.</param>
+        /// <param name="to">To.</param>
+        /// <param name="pluginName">Plugin name.</param>
+        /// <param name="debugFolder">If set to <c>true</c> debug folder.</param>
         public static void Copy(DirectoryInfo root, string project, string to, string pluginName = null, bool debugFolder = true)
         {
             var projectBinary = (pluginName ?? project).Replace("-", ".");
@@ -64,6 +81,10 @@ namespace OTA.Patcher
             CopyDep(pdbFrom, pdbTo);
         }
 
+        /// <summary>
+        /// Development tools. Ensures a directory exists.
+        /// </summary>
+        /// <param name="path">Path.</param>
         public static void EnsurePath(string path)
         {
             var dir = Path.GetDirectoryName(path);
@@ -73,6 +94,11 @@ namespace OTA.Patcher
             }
         }
 
+        /// <summary>
+        /// Development tools. Copies a file.
+        /// </summary>
+        /// <param name="src">Source.</param>
+        /// <param name="dest">Destination.</param>
         public static void CopyDep(string src, string dest)
         {
             //Remove destination
@@ -152,6 +178,10 @@ namespace OTA.Patcher
         /// <value>The libraries folder.</value>
         public static string LibrariesFolder { get; set; }
 
+        /// <summary>
+        /// When saving allow the OTA.dll references to be updated to the current Terraria assembly
+        /// </summary>
+        /// <value><c>true</c> if swap OTA references; otherwise, <c>false</c>.</value>
         public static bool SwapOTAReferences { get; set; }
 
         static OTAPatcher()
@@ -159,18 +189,30 @@ namespace OTA.Patcher
             LibrariesFolder = DefaultLibrariesFolder;
         }
 
+        /// <summary>
+        /// Injector event arguments.
+        /// </summary>
         public class InjectorEventArgs
         {
             public Injector Injector { get; internal set; }
         }
 
+        /// <summary>
+        /// Occurs after the patcher has just finished it's default patches
+        /// </summary>
         public static event EventHandler<InjectorEventArgs> PerformPatch;
 
+        /// <summary>
+        /// Copy dependencies event arguments.
+        /// </summary>
         public class CopyDependenciesEventArgs
         {
             public DirectoryInfo RootDirectory { get; internal set; }
         }
 
+        /// <summary>
+        /// Occurs when the patcher copies dependencies
+        /// </summary>
         public static event EventHandler<CopyDependenciesEventArgs> CopyDependencies;
 
         /// <summary>
@@ -361,7 +403,7 @@ namespace OTA.Patcher
                 Console.Write("Ok\nRemoving mono incompatible code...");
                 patcher.SwapProcessPriority();
                 Console.Write("Ok\nSkipping sysmenus functions...");
-                patcher.SkipMenu();
+                patcher.SkipMenu(PatchMode);
                 Console.Write("Ok\nPatching save paths...");
                 patcher.FixSavePath();
                 Console.Write("Ok\nHooking receive buffer...");
@@ -393,8 +435,8 @@ namespace OTA.Patcher
                 Console.Write("Ok\nHooking invasions...");
                 patcher.HookInvasions();
                 patcher.HookInvasionWarning();
-                Console.Write("Ok\nEnabling rain...");
-                patcher.EnableRaining();
+//                Console.Write("Ok\nEnabling rain...");
+//                patcher.EnableRaining();
 
                 Console.Write("Ok\nFixing world removal...");
                 patcher.PathFileIO();
@@ -476,6 +518,11 @@ namespace OTA.Patcher
             }
         }
 
+        /// <summary>
+        /// Prompts the user to run.
+        /// </summary>
+        /// <param name="output">Output.</param>
+        /// <param name="isMono">If set to <c>true</c> is mono.</param>
         public static void PromptUserToRun(string output, bool isMono)
         {
             Console.WriteLine("Press [y] to run {0}, any other key will exit . . .", output);
@@ -485,6 +532,12 @@ namespace OTA.Patcher
             }
         }
 
+        /// <summary>
+        /// Run the specified patched file.
+        /// </summary>
+        /// <param name="file">File.</param>
+        /// <param name="isMono">If set to <c>true</c> is mono.</param>
+        /// <param name="configFile">Config file.</param>
         public static void Run(string file, bool isMono, string configFile = "server.config")
         {
             if (!isMono)
@@ -545,6 +598,9 @@ namespace OTA.Patcher
             }
         }
 
+        /// <summary>
+        /// Config modification.
+        /// </summary>
         public class ConfigModification
         {
             public string OfficialLinePrefix { get; set; }
@@ -554,7 +610,13 @@ namespace OTA.Patcher
             public string[] Modifications { get; set; }
         }
 
-        public  static string PatchConfig(string[] input, string targetFile = "serverconfig.mods.json")
+        /// <summary>
+        /// Patchs the config with the modifications file.
+        /// </summary>
+        /// <returns>The config.</returns>
+        /// <param name="input">Input.</param>
+        /// <param name="targetFile">Target file.</param>
+        public static string PatchConfig(string[] input, string targetFile = "serverconfig.mods.json")
         {
             var lines = new List<String>(input);
 
@@ -604,6 +666,10 @@ namespace OTA.Patcher
             return String.Join(Environment.NewLine, lines.ToArray());
         }
 
+        /// <summary>
+        /// Gets the binaries folder.
+        /// </summary>
+        /// <returns>The binaries folder.</returns>
         public static DirectoryInfo GetBinariesFolder()
         {
             var pathToBinaries = new DirectoryInfo(Environment.CurrentDirectory);
@@ -614,7 +680,13 @@ namespace OTA.Patcher
             return new DirectoryInfo(Path.Combine(pathToBinaries.FullName, "Binaries"));
         }
 
-        public  static void GenerateConfig(string official = "serverconfig.txt", string additional = "additional.config", string output = "server.config")
+        /// <summary>
+        /// Generates the output config.
+        /// </summary>
+        /// <param name="official">Official.</param>
+        /// <param name="additional">Additional.</param>
+        /// <param name="output">Output.</param>
+        public static void GenerateConfig(string official = "serverconfig.txt", string additional = "additional.config", string output = "server.config")
         {
             var pathToBinaries = GetBinariesFolder();
             if (!pathToBinaries.Exists)
@@ -639,6 +711,9 @@ namespace OTA.Patcher
             File.WriteAllText(outputPath, contents);
         }
 
+        /// <summary>
+        /// The list of binaries files to be updated
+        /// </summary>
         public static List<String> BinariesFiles = new List<String>(new string[]
             {
                 "OTA.dll",
@@ -660,6 +735,9 @@ namespace OTA.Patcher
                 "start-server.cmd"
             });
 
+        /// <summary>
+        /// Updates the binaries.
+        /// </summary>
         public static void UpdateBinaries()
         {
             var pathToBinaries = GetBinariesFolder();

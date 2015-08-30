@@ -5,8 +5,14 @@ using System.Linq;
 
 namespace OTA.Patcher
 {
+    /// <summary>
+    /// Console helper.
+    /// </summary>
     public static class ConsoleHelper
     {
+        /// <summary>
+        /// Clears the current console line
+        /// </summary>
         public static void ClearLine()
         {
             var current = System.Console.CursorTop;
@@ -16,11 +22,17 @@ namespace OTA.Patcher
         }
     }
 
+    /// <summary>
+    /// Server specific hook
+    /// </summary>
     public sealed class ServerHookAttribute : Attribute
     {
 
     }
 
+    /// <summary>
+    /// Client specific hook
+    /// </summary>
     public sealed class ClientHookAttribute : Attribute
     {
 
@@ -42,6 +54,10 @@ namespace OTA.Patcher
             API = new APIOrganiser(_self);
         }
 
+        /// <summary>
+        /// Grabs all available hooks and executes them to hook into the target assembly
+        /// </summary>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
         public void InjectHooks<T>()
         {
             var hooks = typeof(Injector)

@@ -6,19 +6,30 @@ using System.Reflection;
 namespace OTA.Patcher
 {
     [Serializable]
+    /// <summary>
+    /// AppDomain proxy for accessing OTA
+    /// </summary>
     public class Proxy : MarshalByRefObject
     {
         Assembly _api;
 
-        public int Build
-        {
-            get
-            {
-                return (int)_api.GetType("OTA.Globals").GetField("Build").GetValue(null);
+//        /// <summary>
+//        /// Gets the build for OTA.
+//        /// </summary>
+//        /// <value>The build.</value>
+//        public int Build
+//        {
+//            get
+//            {
+//                return (int)_api.GetType("OTA.Globals").GetField("Build").GetValue(null);
+//
+//            }
+//        }
 
-            }
-        }
-
+        /// <summary>
+        /// Get the supported Terraria version
+        /// </summary>
+        /// <value>The terraria version.</value>
         public string TerrariaVersion
         {
             get
@@ -28,69 +39,73 @@ namespace OTA.Patcher
         }
 
 
-        public string LibrariesPath
-        {
-            get
-            {
-                return (string)_api.GetType("OTA.Globals").GetProperty("LibrariesPath").GetValue(null, null);
-            }
-        }
+//        public string LibrariesPath
+//        {
+//            get
+//            {
+//                return (string)_api.GetType("OTA.Globals").GetProperty("LibrariesPath").GetValue(null, null);
+//            }
+//        }
+//
+//        public string PluginPath
+//        {
+//            get
+//            {
+//                return (string)_api.GetType("OTA.Globals").GetProperty("PluginPath").GetValue(null, null);
+//            }
+//        }
+//
+//        public bool IsPatching
+//        {
+//            get
+//            {
+//                return (bool)_api.GetType("OTA.Globals").GetProperty("IsPatching").GetValue(null, null);
+//            }
+//            set
+//            {
+//                _api.GetType("OTA.Globals").GetProperty("IsPatching").SetValue(null, value, null);
+//            }
+//        }
+//
+//        public void Initialise()
+//        {
+//            IsPatching = true;
+//
+//            _api.GetType("OTA.Globals").GetMethod("Touch").Invoke(null, null);
+//
+//            var pm = _api.GetType("OTA.PluginManager");
+//
+//            pm.GetMethod("SetHookSource").Invoke(null, new object[] { _api.GetType("TDSM.API.Plugin.HookPoints") });
+//            pm.GetMethod("Initialize").Invoke(null, new object[] { PluginPath, LibrariesPath });
+//            pm.GetMethod("LoadPlugins").Invoke(null, null);
+//        }
+//
+//        public void InvokeEvent(byte[] terraria, bool isServer)
+//        {
+//            var hct = _api.GetType("OTA.Plugin.HookContext");
+//            var hap = _api.GetType("OTA.Plugin.HookArgs").GetNestedType("PatchServer");
+//
+//            var ctx = Activator.CreateInstance(hct);
+//            var args = Activator.CreateInstance(hap);
+//
+//            hap.GetProperty("Terraria").SetValue(args, terraria, null);
+//            hap.GetProperty("IsServer").SetValue(args, isServer, null);
+//            hap.GetProperty("IsClient").SetValue(args, !isServer, null);
+//
+//            var pst = _api.GetType("OTA.Plugin.HookPoints")
+//                .GetField("PatchServer");
+//            var pse = pst.GetValue(null);
+//
+//            var arguments = new object[] { ctx, args };
+//            pst.FieldType.GetMethod("Invoke").Invoke(pse, arguments);
+//
+//            //return hap.GetProperty("Terraria").GetValue(arguments[1], null) as byte[];
+//        }
 
-        public string PluginPath
-        {
-            get
-            {
-                return (string)_api.GetType("OTA.Globals").GetProperty("PluginPath").GetValue(null, null);
-            }
-        }
-
-        public bool IsPatching
-        {
-            get
-            {
-                return (bool)_api.GetType("OTA.Globals").GetProperty("IsPatching").GetValue(null, null);
-            }
-            set
-            {
-                _api.GetType("OTA.Globals").GetProperty("IsPatching").SetValue(null, value, null);
-            }
-        }
-
-        public void Initialise()
-        {
-            IsPatching = true;
-
-            _api.GetType("OTA.Globals").GetMethod("Touch").Invoke(null, null);
-
-            var pm = _api.GetType("OTA.PluginManager");
-
-            pm.GetMethod("SetHookSource").Invoke(null, new object[] { _api.GetType("TDSM.API.Plugin.HookPoints") });
-            pm.GetMethod("Initialize").Invoke(null, new object[] { PluginPath, LibrariesPath });
-            pm.GetMethod("LoadPlugins").Invoke(null, null);
-        }
-
-        public void InvokeEvent(byte[] terraria, bool isServer)
-        {
-            var hct = _api.GetType("OTA.Plugin.HookContext");
-            var hap = _api.GetType("OTA.Plugin.HookArgs").GetNestedType("PatchServer");
-
-            var ctx = Activator.CreateInstance(hct);
-            var args = Activator.CreateInstance(hap);
-
-            hap.GetProperty("Terraria").SetValue(args, terraria, null);
-            hap.GetProperty("IsServer").SetValue(args, isServer, null);
-            hap.GetProperty("IsClient").SetValue(args, !isServer, null);
-
-            var pst = _api.GetType("OTA.Plugin.HookPoints")
-                .GetField("PatchServer");
-            var pse = pst.GetValue(null);
-
-            var arguments = new object[] { ctx, args };
-            pst.FieldType.GetMethod("Invoke").Invoke(pse, arguments);
-
-            //return hap.GetProperty("Terraria").GetValue(arguments[1], null) as byte[];
-        }
-
+        /// <summary>
+        /// Load an assembly into the domain
+        /// </summary>
+        /// <param name="path">Path.</param>
         public void Load(string path)
         {
             _api = Assembly.LoadFile(path);
@@ -167,6 +182,10 @@ namespace OTA.Patcher
         //    }
         //}
 
+        /// <summary>
+        /// Gets the supported Terraria version for OTA.
+        /// </summary>
+        /// <value>The terraria version.</value>
         public static string TerrariaVersion
         {
             get
