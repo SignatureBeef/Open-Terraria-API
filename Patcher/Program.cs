@@ -493,6 +493,9 @@ namespace OTA.Patcher
                 patcher.HookProgramStart(PatchMode);
                 Console.Write("Ok\nInjecting hooks");
                 patcher.InjectHooks<ClientHookAttribute>();
+                Console.Write("Opening up classes for API usage...");
+                patcher.MakeTypesPublic(true);
+                patcher.MakeEverythingAccessible();
                 Console.Write("Ok\n");
 
                 if (PerformPatch != null)
