@@ -42,21 +42,21 @@ namespace OTA.Patcher
             OTAPatcher.DefaultProcess(args);
         }
 
-//        public static void Main(string[] args)
-//        {
-//            //By default we will patch a server
-//            OTAPatcher.PatchMode = OTA.Patcher.PatchMode.Client;
-//
-//            //Specifiy the official file name
-//            OTAPatcher.InputFileName = "Terraria.exe";
-//
-//            //Specify the output assembly[name]
-//            OTAPatcher.OutputName = "Terraria";
-//
-//            OTAPatcher.CopyProjectFiles = true;
-//
-//            OTAPatcher.DefaultProcess(args);
-//        }
+        //        public static void Main(string[] args)
+        //        {
+        //            //By default we will patch a server
+        //            OTAPatcher.PatchMode = OTA.Patcher.PatchMode.Client;
+        //
+        //            //Specifiy the official file name
+        //            OTAPatcher.InputFileName = "Terraria.exe";
+        //
+        //            //Specify the output assembly[name]
+        //            OTAPatcher.OutputName = "Terraria";
+        //
+        //            OTAPatcher.CopyProjectFiles = true;
+        //
+        //            OTAPatcher.DefaultProcess(args);
+        //        }
     }
 
     /// <summary>
@@ -86,15 +86,18 @@ namespace OTA.Patcher
             var dllFrom = Path.Combine(p, projectBinary + ".dll");
             var ddbFrom = Path.Combine(p, projectBinary + ".dll.mdb");
             var pdbFrom = Path.Combine(p, projectBinary + ".pdb");
+            var exeFrom = Path.Combine(p, projectBinary + ".exe");
 
             //To the patcher
             var dllTo = Path.Combine(to, projectBinary + ".dll");
             var ddbTo = Path.Combine(to, projectBinary + ".dll.mdb");
             var pdbTo = Path.Combine(to, projectBinary + ".pdb");
+            var exeTo = Path.Combine(to, projectBinary + ".exe");
 
             CopyDep(dllFrom, dllTo);
             CopyDep(ddbFrom, ddbTo);
             CopyDep(pdbFrom, pdbTo);
+            CopyDep(exeFrom, exeTo);
         }
 
         /// <summary>
@@ -309,6 +312,20 @@ namespace OTA.Patcher
                     if (CopyAPI)
                     {
                         Copy(root, "API", Environment.CurrentDirectory, "OTA", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.Diagnostics", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.FileSystems", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.Host.HttpListener", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.Hosting", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.Security", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.Security.OAuth", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.StaticFiles", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Newtonsoft.Json", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Owin", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Net.Http.Formatting", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http.Owin", true);
+//                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.Security.Google", true);
 
                         if (!String.IsNullOrEmpty(OTAProjectDirectory))
                         {
@@ -323,6 +340,7 @@ namespace OTA.Patcher
                     Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "NLua", false);
                     Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "ICSharpCode.SharpZipLib", false);
                     Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Mono.Nat", false);
+                    Copy(root, "Official", Environment.CurrentDirectory, "TerrariaServer", false);
                     //            Copy(root, "tdsm-core", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Newtonsoft.Json", true);
                     //            Copy(root, "tdsm-web", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-web", true);
                     //            Copy(root, "tdsm-mysql-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-mysql-connector", true);
@@ -601,12 +619,12 @@ namespace OTA.Patcher
                                         new string[] { "-config", configFile, "-noupnp", "-heartbeat", "false" }
                                     });
                             else
-                                asm.EntryPoint.Invoke(null, null);
+                                asm.EntryPoint.Invoke(null, new object[]{ new string[] { } });
 
                         }
                         else if (PatchMode == PatchMode.Client)
                         {
-                            asm.EntryPoint.Invoke(null, null);
+                            asm.EntryPoint.Invoke(null, new object[]{ new string[] { } });
                         }
                     }
                     catch (Exception e)

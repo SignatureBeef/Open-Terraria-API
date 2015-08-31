@@ -147,6 +147,8 @@ namespace OTA.Callbacks
 //                        Permissions.PermissionsManager.SetHandler(handler);
 //                }
 //            }
+
+//            Web.WebServer.Start("http://localhost:8448/");
         }
 
         /// <summary>
@@ -159,7 +161,16 @@ namespace OTA.Callbacks
             System.Threading.Thread.CurrentThread.Name = "Run";
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            ProgramStart();
+            //Preload our Libraries before we attempt anything
+            if (Directory.Exists(Globals.LibrariesPath))
+            {
+                foreach (var file in Directory.GetFiles(Globals.LibrariesPath, "*.dll"))
+                {
+                    var data = File.ReadAllBytes(file);
+                    AppDomain.CurrentDomain.Load(data);
+                }
+            }
+
 #pragma warning disable 0162
             if (!Globals.FullAPIDefined)
             {
@@ -167,7 +178,9 @@ namespace OTA.Callbacks
                 Console.WriteLine("If you are compiling from source you must enable the Full_API compilation flag");
                 return false;
             }
-#pragma warning restore 0162
+            #pragma warning restore 0162
+
+            ProgramStart();
 
             var ctx = new HookContext()
             {

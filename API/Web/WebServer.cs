@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Net.Http;
+using System.Net;
+using Microsoft.Owin.Security.OAuth;
 
 #if WEBSERVER
 using System.Threading;
@@ -18,6 +21,63 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 #endif
+
+/// <summary>
+/// Basic OTA API's
+/// </summary>
+namespace OTA.Web.API
+{
+    /// <summary>
+    /// Public access controllers.
+    /// </summary>
+    [AllowAnonymous]
+    public class PublicController : ApiController
+    {
+        /// <summary>
+        /// Get the online player names
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<String> Get()
+        { 
+            return Terraria.Main.player
+                .Where(x => x != null && x.active && !String.IsNullOrEmpty(x.Name))
+                .Select(x => x.Name)
+                .OrderBy(x => x);
+        }
+    }
+
+    /// <summary>
+    /// Player controller.
+    /// </summary>
+    [Authorize(Roles = "OTA.GetPlayers")]
+    public class PlayerController : ApiController
+    {
+        public HttpResponseMessage Get(string name)
+        {
+            return this.Request.CreateResponse(HttpStatusCode.OK,
+                Terraria.Main.player
+                    .Where(x => x != null && x.active && x.Name == name)
+                    .Select(x => new { Name = x.name, Position = x.position })
+                .FirstOrDefault()
+            );
+        }
+    }
+
+    [Authorize(Roles = "OTA.User")]
+    public class UserController : ApiController
+    {
+        public System.Collections.Generic.IEnumerable<object> Get()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+
+            return identity.Claims.Select(x => new
+            {
+                Type = x.Type,
+                Value = x.Value
+            });
+        }
+    }
+
+}
 
 namespace OTA.Web
 {
@@ -50,6 +110,7 @@ namespace OTA.Web
 //            Config.DependencyResolver = new AssembliesResolver();
             Config.Services.Replace(typeof(System.Web.Http.Dispatcher.IAssembliesResolver), new PluginServiceResolver());
 
+            Config.MapHttpAttributeRoutes();
 //            Config.Formatters.Add(new System.Net.Http.Formatting.JsonMediaTypeFormatter());
         }
         #endif
@@ -90,22 +151,33 @@ namespace OTA.Web
     {
         class PermissionsOAuthProvider : Microsoft.Owin.Security.OAuth.OAuthAuthorizationServerProvider
         {
-            public override async System.Threading.Tasks.Task ValidateClientAuthentication(Microsoft.Owin.Security.OAuth.OAuthValidateClientAuthenticationContext context)
+            //            public override async System.Threading.Tasks.Task ValidateClientAuthentication(Microsoft.Owin.Security.OAuth.OAuthValidateClientAuthenticationContext context)
+            //            {
+            //                await Task.FromResult(context.Validated());
+            ////                return base.ValidateClientAuthentication(context);
+            //            }
+
+            public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
             {
-                await Task.FromResult(context.Validated());
-//                return base.ValidateClientAuthentication(context);
+                context.Validated();
             }
 
             public override async Task GrantResourceOwnerCredentials(Microsoft.Owin.Security.OAuth.OAuthGrantResourceOwnerCredentialsContext context)
             {
+                context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
                 if (context.UserName == "DeathCradle" && context.Password == "test")
                 {
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-                    identity.AddClaim(new Claim("user_name", context.UserName));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
 
                     //Load permissions for user
-//                    identity.AddClaim(new Claim(ClaimTypes.Role, "OTA.getplayers"));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "OTA.GetPlayers"));
 
+//                    var ticket = new AuthenticationTicket(identity, new AuthenticationProperties()
+//                        {
+//                            IsPersistent = true,
+//                            IssuedUtc = DateTime.UtcNow
+//                        });
                     context.Validated(identity);
                 }
                 else
@@ -116,10 +188,45 @@ namespace OTA.Web
             }
         }
 
+        static OAuthAuthorizationServerOptions ServerOptions = new OAuthAuthorizationServerOptions()
+        {
+            TokenEndpointPath = new Microsoft.Owin.PathString("/token"),
+            Provider = new PermissionsOAuthProvider(),
+
+            AccessTokenExpireTimeSpan = TimeSpan.FromHours(WebServer.SessionTimeoutHours),
+
+            AllowInsecureHttp = true, //WebServer.AllowInsecureHttp,
+
+            /* Use app.SetDataProtectionProvider ? */
+            RefreshTokenFormat = 
+                    new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
+                new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
+            AccessTokenFormat = 
+                    new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
+                new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
+            AuthorizationCodeFormat = 
+                    new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
+                new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
+
+            ApplicationCanDisplayErrors = true
+        };
+
+        static OAuthBearerAuthenticationOptions BearerOptions = new OAuthBearerAuthenticationOptions()
+        {
+            AccessTokenFormat =
+                    new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
+                new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
+            AuthenticationMode = AuthenticationMode.Active,
+            AuthenticationType = "Bearer"
+        };
+
         public void Configuration(Owin.IAppBuilder app)
         {
             app.UseErrorPage();
-            app.UseWebApi(WebServer.Config); 
+            app.UseOAuthAuthorizationServer(ServerOptions);
+            app.UseOAuthBearerAuthentication(BearerOptions);
+
+            app.UseWebApi(WebServer.Config);
 
 //            app.SetDataProtectionProvider( TODO
 
@@ -130,32 +237,6 @@ namespace OTA.Web
                     EnableDirectoryBrowsing = false
                 });
 
-            app.UseOAuthAuthorizationServer(new Microsoft.Owin.Security.OAuth.OAuthAuthorizationServerOptions()
-                {
-                    TokenEndpointPath = new Microsoft.Owin.PathString("/token"),
-                    Provider = new PermissionsOAuthProvider(),
-               
-                    AccessTokenExpireTimeSpan = TimeSpan.FromHours(WebServer.SessionTimeoutHours),
-
-                    AllowInsecureHttp = WebServer.AllowInsecureHttp,
-
-                    /* Use app.SetDataProtectionProvider ? */
-                    RefreshTokenFormat = 
-                        new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
-                        new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
-                    AccessTokenFormat = 
-                        new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
-                        new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
-                    AuthorizationCodeFormat = 
-                        new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
-                        new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64)
-                });
-            app.UseOAuthBearerAuthentication(new Microsoft.Owin.Security.OAuth.OAuthBearerAuthenticationOptions()
-                {
-                    AccessTokenFormat =
-                        new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
-                        new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64)
-                });
         }
 
         /// <summary>
@@ -164,7 +245,7 @@ namespace OTA.Web
         internal class MonoDataProtector : IDataProtector
         {
             private string[] _purposes;
-            const String DefaultPurpose = "tdsm-web-dp";
+            const String DefaultPurpose = "ota-web-dp";
 
             public MonoDataProtector()
             {
