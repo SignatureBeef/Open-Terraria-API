@@ -1632,8 +1632,18 @@ namespace OTA.Callbacks
 
                 if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
                     return;
+                
+                if (ctx.Result == HookResult.RECTIFY)
+                {
+                    //The a plugin is enforcing the format
+                    NetMessage.SendData((int)Packet.PLAYER_CHAT, -1, -1, args.Message, 255, (float)args.Color.R, (float)args.Color.G, (float)args.Color.B, 0, 0, 0);
+                }
+                else
+                {
+                    //Default <Player> ...
+                    NetMessage.SendData((int)Packet.PLAYER_CHAT, -1, -1, args.Message, cmd.BufferId, (float)args.Color.R, (float)args.Color.G, (float)args.Color.B, 0, 0, 0);
+                }
 
-                NetMessage.SendData((int)Packet.PLAYER_CHAT, -1, -1, args.Message, cmd.BufferId, (float)args.Color.R, (float)args.Color.G, (float)args.Color.B, 0, 0, 0);
                 if (Main.dedServ)
                 {
                     ProgramLog.Chat.Log("<" + Main.player[cmd.BufferId].name + "> " + args.Message);

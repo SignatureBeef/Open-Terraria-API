@@ -148,7 +148,7 @@ namespace OTA.Callbacks
 //                }
 //            }
 
-//            Web.WebServer.Start("http://localhost:8448/");
+            Web.WebServer.Start("http://localhost:8448/");
         }
 
         /// <summary>
