@@ -180,6 +180,7 @@ namespace OTA.Callbacks
             }
             #pragma warning restore 0162
 
+            Globals.CurrentState = ServerState.PreInitialisation; //This is to be before plugins and the web server. No event required.
             ProgramStart();
 
             var ctx = new HookContext()

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net;
-using Microsoft.Owin.Security.OAuth;
 
 #if WEBSERVER
 using System.Threading;
@@ -20,8 +19,10 @@ using System.Security;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using Microsoft.Owin.Security.OAuth;
 #endif
 
+#if WEBSERVER
 /// <summary>
 /// Basic OTA API's
 /// </summary>
@@ -42,6 +43,22 @@ namespace OTA.Web.API
                 .Where(x => x != null && x.active && !String.IsNullOrEmpty(x.Name))
                 .Select(x => x.Name)
                 .OrderBy(x => x);
+        }
+    }
+
+    /// <summary>
+    /// Public access controllers.
+    /// </summary>
+    [AllowAnonymous]
+    public class PingController : ApiController
+    {
+        public HttpResponseMessage Ping()
+        {
+            return this.Request.CreateResponse(HttpStatusCode.OK,
+                new {
+                    ServerState = Globals.CurrentState
+                }
+            );
         }
     }
 
@@ -78,6 +95,7 @@ namespace OTA.Web.API
     }
 
 }
+#endif
 
 namespace OTA.Web
 {

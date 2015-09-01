@@ -37,6 +37,11 @@ namespace OTA
         public static volatile bool Exit = false;
 
         /// <summary>
+        /// Gets or sets the current state of the server.
+        /// </summary>
+        public static ServerState CurrentState { get; set; }
+
+        /// <summary>
         /// The current directory
         /// </summary>
         /// TODO See if this should be renamed
