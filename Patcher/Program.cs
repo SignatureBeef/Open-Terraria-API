@@ -325,7 +325,6 @@ namespace OTA.Patcher
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Net.Http.Formatting", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http.Owin", true);
-//                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.Security.Google", true);
 
                         if (!String.IsNullOrEmpty(OTAProjectDirectory))
                         {
@@ -763,13 +762,27 @@ namespace OTA.Patcher
                 "Patcher.pdb",
                 //                "Vestris.ResourceLib.dll",
                 LibrariesFolder + Path.DirectorySeparatorChar + "KopiLua.dll",
-                LibrariesFolder + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
+//                LibrariesFolder + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
                 LibrariesFolder + Path.DirectorySeparatorChar + "Mono.Nat.dll",
                 LibrariesFolder + Path.DirectorySeparatorChar + "Mono.Nat.pdb",
 
                 "start-server.bat",
                 "start-server.sh",
-                "start-server.cmd"
+                "start-server.cmd",
+
+                //OWIN
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.Owin.Diagnostics.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.Owin.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.Owin.FileSystems.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.Owin.Host.HttpListener.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.Owin.Hosting.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.Owin.Security.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.Owin.Security.OAuth.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.Owin.StaticFiles.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Owin.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "System.Net.Http.Formatting.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "System.Web.Http.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "System.Web.Http.Owin.dll"
             });
 
         /// <summary>

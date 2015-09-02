@@ -31,6 +31,10 @@ namespace OTA
         /// </summary>
         public string AuthenticatedBy { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this player is authenticated.
+        /// </summary>
+        /// <value><c>true</c> if this instance is authenticated; otherwise, <c>false</c>.</value>
         public bool IsAuthenticated
         {
             get { return !String.IsNullOrEmpty(AuthenticatedAs) && AuthenticatedBy != Name; }

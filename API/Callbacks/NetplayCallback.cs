@@ -324,16 +324,16 @@ namespace OTA.Callbacks
     public static class NetplayCallback
     {
         //        public static Terraria.ServerSock[] slots;// = new IAPISocket[256];
-//        #if Full_API
-//        public static Action<Int32, Vector2, Int32> CheckSectionMethod = Terraria.RemoteClient.CheckSection;
-//        #endif
-//
-//        public static void CheckSection(int slot, Vector2 position, int fluff = 1)
-//        {
-//#if Full_API
-//            CheckSectionMethod(slot, position, fluff);
-//#endif
-//        }
+        //        #if Full_API
+        //        public static Action<Int32, Vector2, Int32> CheckSectionMethod = Terraria.RemoteClient.CheckSection;
+        //        #endif
+        //
+        //        public static void CheckSection(int slot, Vector2 position, int fluff = 1)
+        //        {
+        //#if Full_API
+        //            CheckSectionMethod(slot, position, fluff);
+        //#endif
+        //        }
 
         /// <summary>
         /// When vanilla requests to start the server, this method is called.
@@ -342,12 +342,23 @@ namespace OTA.Callbacks
         public static void StartServer(object state)
         {
 #if Full_API
+//            var ctx = new HookContext()
+//            {
+//                Sender = HookContext.ConsoleSender
+//            };
+//            var args = new HookArgs.StartDefaultServer();
+            //            HookPoints.StartDefaultServer.Invoke(ref ctx, ref args);
+            //TODO, get rid of StartDefaultServer,
+
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
             };
-            var args = new HookArgs.StartDefaultServer();
-            HookPoints.StartDefaultServer.Invoke(ref ctx, ref args);
+            var args = new HookArgs.ServerStateChange()
+            {
+                ServerChangeState = (Globals.CurrentState = ServerState.Starting)
+            };
+            HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
 
             if (ctx.Result != HookResult.IGNORE)
             {
@@ -357,6 +368,7 @@ namespace OTA.Callbacks
             }
 #endif
         }
+
         /// <summary>
         /// When vanilla requests to ban a slot, this method is called.
         /// </summary>
@@ -377,17 +389,17 @@ namespace OTA.Callbacks
 
             if (ctx.Result == HookResult.DEFAULT)
             {
-                var remoteAddress = Terraria.Netplay.Clients [plr].Socket.GetRemoteAddress ();
-                using (StreamWriter streamWriter = new StreamWriter (Terraria.Netplay.BanFilePath, true))
+                var remoteAddress = Terraria.Netplay.Clients[plr].Socket.GetRemoteAddress();
+                using (StreamWriter streamWriter = new StreamWriter(Terraria.Netplay.BanFilePath, true))
                 {
-                    streamWriter.WriteLine ("//" + Terraria.Main.player [plr].name);
-                    streamWriter.WriteLine (remoteAddress.GetIdentifier ());
+                    streamWriter.WriteLine("//" + Terraria.Main.player[plr].name);
+                    streamWriter.WriteLine(remoteAddress.GetIdentifier());
                 }
             }
 #endif
         }
 
-//        public static int LastSlot;
+        //        public static int LastSlot;
 
         /// <summary>
         /// Called upon a connection of a new slot

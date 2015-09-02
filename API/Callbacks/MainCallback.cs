@@ -207,7 +207,7 @@ namespace OTA.Callbacks
             };
             var args = new HookArgs.ServerStateChange()
             {
-                ServerChangeState = ServerState.Stopping
+                ServerChangeState = (Globals.CurrentState = ServerState.Stopping)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
 
@@ -234,7 +234,7 @@ namespace OTA.Callbacks
                 };
                 var args = new HookArgs.ServerStateChange()
                 {
-                    ServerChangeState = ServerState.Initialising
+                    ServerChangeState = (Globals.CurrentState = ServerState.Initialising)
                 };
                 HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
             }
@@ -308,7 +308,7 @@ namespace OTA.Callbacks
             };
             var args = new HookArgs.ServerStateChange()
             {
-                ServerChangeState = ServerState.WorldLoading
+                ServerChangeState = (Globals.CurrentState = ServerState.WorldLoading)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
         }
@@ -329,7 +329,7 @@ namespace OTA.Callbacks
             };
             var args = new HookArgs.ServerStateChange()
             {
-                ServerChangeState = ServerState.WorldLoaded
+                ServerChangeState = (Globals.CurrentState = ServerState.WorldLoaded)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
         }
@@ -350,7 +350,7 @@ namespace OTA.Callbacks
             };
             var args = new HookArgs.ServerStateChange()
             {
-                ServerChangeState = ServerState.WorldGenerating
+                ServerChangeState = (Globals.CurrentState = ServerState.WorldGenerating)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
         }
@@ -371,7 +371,7 @@ namespace OTA.Callbacks
             };
             var args = new HookArgs.ServerStateChange()
             {
-                ServerChangeState = ServerState.WorldGenerated
+                ServerChangeState = (Globals.CurrentState = ServerState.WorldGenerated)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
         }

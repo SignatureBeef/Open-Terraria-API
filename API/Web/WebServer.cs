@@ -37,30 +37,39 @@ namespace OTA.Web.API
         /// <summary>
         /// Get the online player names
         /// </summary>
-        public System.Collections.Generic.IEnumerable<String> Get()
-        { 
-            return Terraria.Main.player
-                .Where(x => x != null && x.active && !String.IsNullOrEmpty(x.Name))
-                .Select(x => x.Name)
-                .OrderBy(x => x);
+        public HttpResponseMessage Get()
+        {
+            return this.Request.CreateResponse(HttpStatusCode.OK, new {
+                Name = Terraria.Main.ActiveWorldFileData.Name,
+                Port = Terraria.Netplay.ListenPort,
+
+                MaxPlayers = Terraria.Main.maxNetPlayers,
+                Player = Terraria.Main.player
+                    .Where(x => x != null && x.active && !String.IsNullOrEmpty(x.Name))
+                    .Select(x => x.Name)
+                    .OrderBy(x => x)
+                    .ToArray(),
+
+                ServerState = Globals.CurrentState
+            });
         }
     }
 
-    /// <summary>
-    /// Public access controllers.
-    /// </summary>
-    [AllowAnonymous]
-    public class PingController : ApiController
-    {
-        public HttpResponseMessage Ping()
-        {
-            return this.Request.CreateResponse(HttpStatusCode.OK,
-                new {
-                    ServerState = Globals.CurrentState
-                }
-            );
-        }
-    }
+    //    /// <summary>
+    //    /// Public access controllers.
+    //    /// </summary>
+    //    [AllowAnonymous]
+    //    public class PingController : ApiController
+    //    {
+    //        public HttpResponseMessage Ping()
+    //        {
+    //            return this.Request.CreateResponse(HttpStatusCode.OK,
+    //                new {
+    //                    ServerState = Globals.CurrentState
+    //                }
+    //            );
+    //        }
+    //    }
 
     /// <summary>
     /// Player controller.

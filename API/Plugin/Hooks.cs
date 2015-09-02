@@ -18,7 +18,7 @@ namespace OTA.Plugin
     {
         public static readonly HookPoint<HookArgs.ConsoleMessageReceived> ConsoleMessageReceived;
         public static readonly HookPoint<HookArgs.ConfigurationLine> ConfigurationLine;
-        public static readonly HookPoint<HookArgs.StartDefaultServer> StartDefaultServer;
+//        public static readonly HookPoint<HookArgs.StartDefaultServer> StartDefaultServer;
         //public static readonly HookPoint<HookArgs.StatusTextChanged> StatusTextChanged;
         //public static readonly HookPoint<HookArgs.UpdateServer> UpdateServer;
         public static readonly HookPoint<HookArgs.InvasionNPCSpawn> InvasionNPCSpawn;
@@ -147,7 +147,7 @@ namespace OTA.Plugin
             Command = new HookPoint<HookArgs.Command>("command");
             //WorldGeneration = new HookPoint<HookArgs.WorldGeneration>("world-generation");
             WorldRequestMessage = new HookPoint<HookArgs.WorldRequestMessage>("world-request-message");
-            StartDefaultServer = new HookPoint<HookArgs.StartDefaultServer>("start-default-server");
+//            StartDefaultServer = new HookPoint<HookArgs.StartDefaultServer>("start-default-server");
             //StatusTextChanged = new HookPoint<HookArgs.StatusTextChanged>("status-text-changed");
             SendNetMessage = new HookPoint<HookArgs.SendNetMessage>("send-net-message");
             ReceiveNetMessage = new HookPoint<HookArgs.ReceiveNetMessage>("receive-net-message");
@@ -313,10 +313,10 @@ namespace OTA.Plugin
         //    public string New { get; set; }
         //}
 
-        public struct StartDefaultServer
-        {
-
-        }
+//        public struct StartDefaultServer
+//        {
+//
+//        }
 
         public struct StartCommandProcessing
         {
