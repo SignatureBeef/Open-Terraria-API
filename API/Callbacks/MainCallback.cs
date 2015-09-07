@@ -91,6 +91,23 @@ namespace OTA.Callbacks
         //public static bool StartEclipse;
         //public static bool StartBloodMoon;
 
+        static void Test()
+        {
+            using (var ctx = new OTA.Data.Models.OTAContext())
+            {
+                ctx.Groups.Add(new OTA.Data.Group()
+                    {
+                        Name = "test" + (new Random()).Next(100)
+                    });
+                ctx.SaveChanges();
+
+                foreach (var item in ctx.Groups)
+                {
+                    Console.WriteLine("{0}\t- {1}", item.Id, item.Name); 
+                }
+            }
+        }
+
         /// <summary>
         /// The startup call (non vanilla) for both the client and server
         /// </summary>
@@ -107,6 +124,21 @@ namespace OTA.Callbacks
 
             Globals.Touch();
             ID.Lookup.Initialise();
+
+//            OTA.Data.Models.ConnectionManager.ConnectionString = "Server=127.0.0.1;Database=tdsm;Uid=root;Pwd=;";
+//            OTA.Data.Models.ConnectionManager.PrepareFromAssembly("MySql.Data.Entity", true);
+
+            OTA.Data.Models.ConnectionManager.ConnectionString = "Data Source=database.sqlite;Version=3;";
+            OTA.Data.Models.ConnectionManager.PrepareFromAssembly("System.Data.SQLite.EF6", true);
+
+            try
+            {
+                Test();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
             try
             {
@@ -166,8 +198,16 @@ namespace OTA.Callbacks
             {
                 foreach (var file in Directory.GetFiles(Globals.LibrariesPath, "*.dll"))
                 {
-                    var data = File.ReadAllBytes(file);
-                    AppDomain.CurrentDomain.Load(data);
+                    try
+                    {
+                        var data = File.ReadAllBytes(file);
+                        AppDomain.CurrentDomain.Load(data);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Failed to load " + file);
+                        Console.WriteLine(e);
+                    }
                 }
             }
 

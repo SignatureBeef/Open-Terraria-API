@@ -2597,6 +2597,14 @@ namespace OTA.Patcher
                 }
             }
 
+//            foreach (var mod in _asm.Modules)
+//            {
+//                for (var x = mod.Resources.Count - 1; x >= 0; x--)
+//                {
+//                    mod.Resources.RemoveAt(x);
+//                }
+//            }
+
             //_asm.Write(fileName);
             using (var fs = File.OpenWrite(fileName))
             {

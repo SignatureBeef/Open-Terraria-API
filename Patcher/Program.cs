@@ -325,6 +325,11 @@ namespace OTA.Patcher
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Net.Http.Formatting", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http.Owin", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.Core", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.EntityFramework", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite.EF6", true);
 
                         if (!String.IsNullOrEmpty(OTAProjectDirectory))
                         {
@@ -782,7 +787,12 @@ namespace OTA.Patcher
                 LibrariesFolder + Path.DirectorySeparatorChar + "Owin.dll",
                 LibrariesFolder + Path.DirectorySeparatorChar + "System.Net.Http.Formatting.dll",
                 LibrariesFolder + Path.DirectorySeparatorChar + "System.Web.Http.dll",
-                LibrariesFolder + Path.DirectorySeparatorChar + "System.Web.Http.Owin.dll"
+                LibrariesFolder + Path.DirectorySeparatorChar + "System.Web.Http.Owin.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "EntityFramework.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.AspNet.Identity.Core.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.AspNet.Identity.EntityFramework.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "System.Data.SQLite.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "System.Data.SQLite.EF6.dll"
             });
 
         /// <summary>

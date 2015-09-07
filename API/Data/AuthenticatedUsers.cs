@@ -9,12 +9,17 @@ namespace OTA.Data
     /// <summary>
     /// Default OTA user information
     /// </summary>
-    public struct UserDetails
+    public class DbPlayer
     {
-        public int Id;
-        public string Password;
-        public string Username;
-        public bool Operator;
+        public int Id { get; set; }
+
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+
+        public bool Operator { get; set; }
+
+        public DateTime DateAddedUTC { get; set; }
 
         public override string ToString()
         {
@@ -169,7 +174,7 @@ namespace OTA.Data
         /// </summary>
         /// <returns>The user.</returns>
         /// <param name="username">Username.</param>
-        public static UserDetails? GetUser(string username)
+        public static DbPlayer GetUser(string username)
         {
             using (var bl = Storage.GetBuilder(SQLSafeName))
             {
@@ -181,7 +186,7 @@ namespace OTA.Data
                         UserTable.ColumnNames.Operator 
                     }, new WhereFilter(UserTable.ColumnNames.Username, username));
 
-                var res = Storage.ExecuteArray<UserDetails>(bl);
+                var res = Storage.ExecuteArray<DbPlayer>(bl);
                 if (res != null && res.Length > 0)
                     return res[0];
 

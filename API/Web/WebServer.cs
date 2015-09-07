@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin;
+using OTA.Data.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 #if WEBSERVER
 using System.Threading;
@@ -174,8 +178,24 @@ namespace OTA.Web
         }
     }
 
+//    public class ApplicationRoleManager : RoleManager<IdentityRole>
+//    {
+//        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+//            : base(roleStore)
+//        {
+//        }
+//
+//        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+//        {
+//            var appRoleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<OTAContext>()));
+//
+//            return appRoleManager;
+//        }
+//    }
+
     class OWINServer
     {
+
         class PermissionsOAuthProvider : Microsoft.Owin.Security.OAuth.OAuthAuthorizationServerProvider
         {
             //            public override async System.Threading.Tasks.Task ValidateClientAuthentication(Microsoft.Owin.Security.OAuth.OAuthValidateClientAuthenticationContext context)
@@ -252,6 +272,7 @@ namespace OTA.Web
             app.UseErrorPage();
             app.UseOAuthAuthorizationServer(ServerOptions);
             app.UseOAuthBearerAuthentication(BearerOptions);
+//            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
             app.UseWebApi(WebServer.Config);
 

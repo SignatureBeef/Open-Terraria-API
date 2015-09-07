@@ -455,7 +455,7 @@ namespace OTA.Patcher
         public TypeDefinition Configuration
         {
             get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Configuration"); }
+            { return _asm.MainModule.Types.Single(x => x.Name == "Configuration" && x.Namespace == "OTA.Callbacks"); }
         }
 
         public TypeDefinition GameWindow
