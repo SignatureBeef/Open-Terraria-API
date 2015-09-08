@@ -790,9 +790,9 @@ namespace OTA.Patcher
                 LibrariesFolder + Path.DirectorySeparatorChar + "System.Web.Http.Owin.dll",
                 LibrariesFolder + Path.DirectorySeparatorChar + "EntityFramework.dll",
                 LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.AspNet.Identity.Core.dll",
-                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.AspNet.Identity.EntityFramework.dll"
-//                LibrariesFolder + Path.DirectorySeparatorChar + "System.Data.SQLite.dll",
-//                LibrariesFolder + Path.DirectorySeparatorChar + "System.Data.SQLite.EF6.dll"
+                LibrariesFolder + Path.DirectorySeparatorChar + "Microsoft.AspNet.Identity.EntityFramework.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "System.Data.SQLite.dll",
+                LibrariesFolder + Path.DirectorySeparatorChar + "System.Data.SQLite.EF6.dll"
             });
 
         /// <summary>
