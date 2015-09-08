@@ -263,6 +263,18 @@
     <Compile Include="Data\SettingsStore.cs" />
     <Compile Include="Web\WebServer.cs" />
     <Compile Include="Data\Models.cs" />
+    <Compile Include="Data\Entity\Models\APIAccount.cs" />
+    <Compile Include="Data\Entity\Models\APIAccountRole.cs" />
+    <Compile Include="Data\Entity\Models\GroupNode.cs" />
+    <Compile Include="Data\Entity\Models\PermissionNode.cs" />
+    <Compile Include="Data\Entity\Models\PlayerGroup.cs" />
+    <Compile Include="Data\Entity\Models\PlayerNode.cs" />
+    <Compile Include="Data\Entity\PasswordFormat.cs" />
+    <Compile Include="Data\Entity\SQLite\SQLiteProviderFactoryResolver.cs" />
+    <Compile Include="Data\Entity\EFConfiguration.cs" />
+    <Compile Include="Data\Entity\OTAConnectionFactory.cs" />
+    <Compile Include="Data\Entity\SQLite\SqliteContextInitializer.cs" />
+    <Compile Include="Data\Entity\ConnectionManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -280,5 +292,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Entity\" />
+    <Folder Include="Data\Entity\SQLite\" />
   </ItemGroup>
 </Project>

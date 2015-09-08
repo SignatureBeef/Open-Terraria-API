@@ -3,8 +3,10 @@ using System.Net.Http;
 using System.Net;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
-using OTA.Data.Models;
 using Microsoft.AspNet.Identity.Owin;
+using System.Data.Entity;
+using OTA.Data.Entity.Models;
+using OTA.Data;
 
 #if WEBSERVER
 using System.Threading;
@@ -59,26 +61,10 @@ namespace OTA.Web.API
         }
     }
 
-    //    /// <summary>
-    //    /// Public access controllers.
-    //    /// </summary>
-    //    [AllowAnonymous]
-    //    public class PingController : ApiController
-    //    {
-    //        public HttpResponseMessage Ping()
-    //        {
-    //            return this.Request.CreateResponse(HttpStatusCode.OK,
-    //                new {
-    //                    ServerState = Globals.CurrentState
-    //                }
-    //            );
-    //        }
-    //    }
-
     /// <summary>
     /// Player controller.
     /// </summary>
-    [Authorize(Roles = "OTA.GetPlayers")]
+    [Authorize(Roles = "player,SuperAdmin")]
     public class PlayerController : ApiController
     {
         public HttpResponseMessage Get(string name)
@@ -92,7 +78,7 @@ namespace OTA.Web.API
         }
     }
 
-    [Authorize(Roles = "OTA.User")]
+    [Authorize(Roles = "registered")]
     public class UserController : ApiController
     {
         public System.Collections.Generic.IEnumerable<object> Get()
@@ -109,6 +95,8 @@ namespace OTA.Web.API
 
 }
 #endif
+
+//Note to self, roles are to be kept at a minimum
 
 namespace OTA.Web
 {
@@ -178,20 +166,39 @@ namespace OTA.Web
         }
     }
 
-//    public class ApplicationRoleManager : RoleManager<IdentityRole>
-//    {
-//        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
-//            : base(roleStore)
-//        {
-//        }
-//
-//        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
-//        {
-//            var appRoleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<OTAContext>()));
-//
-//            return appRoleManager;
-//        }
-//    }
+    //    public class ApplicationRoleManager : RoleManager<IdentityRole>
+    //    {
+    //        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+    //            : base(roleStore)
+    //        {
+    //        }
+    //
+    //        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+    //        {
+    //            var appRoleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<OTAContext>()));
+    //
+    //            return appRoleManager;
+    //        }
+    //    }
+
+    static class AccountManager
+    {
+        public static async Task<APIAccount> FindByName(string name)
+        {
+            using (var ctx = new OTAContext())
+            {
+                return await ctx.APIAccounts.FirstOrDefaultAsync(x => x.Username == name);
+            }
+        }
+
+        public static async Task<APIAccountRole[]> GetRolesForAccount(int accountId)
+        {
+            using (var ctx = new OTAContext())
+            {
+                return await ctx.APIAccountsRoles.Where(x => x.AccountId == accountId).ToArrayAsync();
+            }
+        }
+    }
 
     class OWINServer
     {
@@ -212,13 +219,19 @@ namespace OTA.Web
             public override async Task GrantResourceOwnerCredentials(Microsoft.Owin.Security.OAuth.OAuthGrantResourceOwnerCredentialsContext context)
             {
                 context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-                if (context.UserName == "DeathCradle" && context.Password == "test")
+
+                var user = await AccountManager.FindByName(context.UserName);
+                if (user != null && user.ComparePassword(context.Password))
                 {
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
                     identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
 
                     //Load permissions for user
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "OTA.GetPlayers"));
+                    foreach (var role in await AccountManager.GetRolesForAccount(user.Id))
+                    {
+                        identity.AddClaim(new Claim(role.Type, role.Value));
+//                    identity.AddClaim(new Claim(ClaimTypes.Role, "player"));
+                    }
 
 //                    var ticket = new AuthenticationTicket(identity, new AuthenticationProperties()
 //                        {

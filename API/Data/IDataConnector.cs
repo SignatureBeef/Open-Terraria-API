@@ -2,6 +2,7 @@
 using System.Data;
 using System.Text;
 using System.Collections.Generic;
+using OTA.Data.Entity.Models;
 
 namespace OTA.Data
 {
@@ -29,15 +30,15 @@ namespace OTA.Data
         public string Chat_Suffix { get; set; }
     }
 
-    /// <summary>
-    /// Permission node.
-    /// </summary>
-    public struct PermissionNode
-    {
-        public string Node { get; set; }
-
-        public bool Deny { get; set; }
-    }
+//    /// <summary>
+//    /// Permission node.
+//    /// </summary>
+//    public struct PermissionNode
+//    {
+//        public string Node { get; set; }
+//
+//        public bool Deny { get; set; }
+//    }
 
     /// <summary>
     /// The interface behind custom permissions handlers

@@ -93,19 +93,28 @@ namespace OTA.Callbacks
 
         static void Test()
         {
-//            using (var ctx = new OTA.Data.Models.OTAContext())
-//            {
-//                ctx.Groups.Add(new OTA.Data.Group()
-//                    {
-//                        Name = "test" + (new Random()).Next(100)
-//                    });
-//                ctx.SaveChanges();
-//
-//                foreach (var item in ctx.Groups)
-//                {
-//                    Console.WriteLine("{0}\t- {1}", item.Id, item.Name); 
-//                }
-//            }
+            using (var ctx = new OTA.Data.OTAContext())
+            {
+                var acc = ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
+                    {
+                        Username = "Justin",
+                        Password = "Testing"
+                    });
+                ctx.SaveChanges(); //To update the [Id]
+
+                ctx.APIAccountsRoles.Add(new OTA.Data.Entity.Models.APIAccountRole()
+                    {
+                        AccountId = acc.Id,
+                        Type = System.Security.Claims.ClaimTypes.Role,
+                        Value = "SuperAdmin"
+                    });
+                ctx.SaveChanges();
+
+                foreach (var item in ctx.APIAccounts)
+                {
+                    Console.WriteLine("{0}\t- {1}", item.Id, item.Username); 
+                }
+            }
         }
 
         /// <summary>
@@ -125,11 +134,11 @@ namespace OTA.Callbacks
             Globals.Touch();
             ID.Lookup.Initialise();
 
-//            OTA.Data.Models.ConnectionManager.ConnectionString = "Server=127.0.0.1;Database=tdsm;Uid=root;Pwd=;";
-//            OTA.Data.Models.ConnectionManager.PrepareFromAssembly("MySql.Data", true);
+//            OTA.Data.Entity.ConnectionManager.ConnectionString = "Server=127.0.0.1;Database=tdsm;Uid=root;Pwd=;";
+//            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("MySql.Data.Entity", true);
 
-            OTA.Data.Models.ConnectionManager.ConnectionString = "Data Source=database.sqlite;Version=3;";
-            OTA.Data.Models.ConnectionManager.PrepareFromAssembly("System.Data.SQLite", true);
+            OTA.Data.Entity.ConnectionManager.ConnectionString = "Data Source=database.sqlite;Version=3;";
+            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("System.Data.SQLite", true);
 
             try
             {
