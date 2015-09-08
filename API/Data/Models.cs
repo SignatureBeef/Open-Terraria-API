@@ -60,7 +60,6 @@ namespace OTA.Data.Models
         public string PasswordHash { get; set; }
 
         public PasswordFormat PasswordFormat { get; set; }
-
     }
 
     public enum PasswordFormat
@@ -68,53 +67,60 @@ namespace OTA.Data.Models
         SHA256 = 1
     }
 
-    //    class SqliteDbConfiguration : DbConfiguration
-    //    {
-    //        public SqliteDbConfiguration()
-    //        {
-    //            string assemblyName = typeof (System.Data.SQLite.EF6.SQLiteProviderFactory).Assembly.GetName().Name;
-    //
-    //            RegisterDbProviderFactories(assemblyName );
-    //            SetProviderFactory(assemblyName, System.Data.SQLite.EF6.SQLiteProviderFactory.Instance);
-    //            SetProviderServices(assemblyName,
-    //                (DbProviderServices) System.Data.SQLite.EF6.SQLiteProviderFactory.Instance.GetService(
-    //                    typeof (DbProviderServices)));
-    //        }
-    //
-    //        static void RegisterDbProviderFactories(string assemblyName)
-    //        {
-    //            var dataSet = System.Configuration.ConfigurationManager.GetSection("system.data") as DataSet;
-    //            if (dataSet != null)
-    //            {
-    //                var dbProviderFactoriesDataTable = dataSet.Tables.OfType<DataTable>()
-    //                    .First(x => x.TableName == typeof (DbProviderFactories).Name);
-    //
-    //                var dataRow = dbProviderFactoriesDataTable.Rows.OfType<DataRow>()
-    //                    .FirstOrDefault(x => x.ItemArray[2].ToString() == assemblyName);
-    //
-    //                if (dataRow != null)
-    //                    dbProviderFactoriesDataTable.Rows.Remove(dataRow);
-    //
-    //                dbProviderFactoriesDataTable.Rows.Add(
-    //                    "SQLite Data Provider (Entity Framework 6)",
-    //                    ".NET Framework Data Provider for SQLite (Entity Framework 6)",
-    //                    assemblyName,
-    //                    typeof (System.Data.SQLite.EF6.SQLiteProviderFactory).AssemblyQualifiedName
-    //                );
-    //            }
-    //        }
-    //    }
+    class EFConfiguration : DbConfiguration
+    {
+        public static string ProviderName { get; set; }
+
+        public static DbProviderServices ProviderService { get; set; }
+
+        public static DbProviderFactory ProviderFactory { get; set; }
+
+        public EFConfiguration()
+        {
+            if (ProviderFactory != null && !String.IsNullOrEmpty(ProviderName))
+            {
+                this.SetProviderFactory(ProviderName, ProviderFactory);
+            }
+            if (ProviderService != null && !String.IsNullOrEmpty(ProviderName))
+            {
+                this.SetProviderServices(ProviderName, ProviderService);
+            }
+            if (ProviderFactory != null)
+            {
+                this.SetDefaultConnectionFactory(OTAConnectionFactory.Instance);
+            }
+            this.SetProviderFactoryResolver(new SQLiteProviderFactoryResolver());
+        }
+    }
+
+    public class SQLiteProviderFactoryResolver : IDbProviderFactoryResolver
+    {
+        public DbProviderFactory ResolveProviderFactory(DbConnection connection)
+        {
+            return DbProviderFactories.GetFactory(connection);
+        }
+    }
+
+    class OTAConnectionFactory : IDbConnectionFactory
+    {
+        public static OTAConnectionFactory Instance = new OTAConnectionFactory();
+
+        DbConnection IDbConnectionFactory.CreateConnection(string nameOrConnectionString)
+        {
+            var conn = EFConfiguration.ProviderFactory.CreateConnection();
+            conn.ConnectionString = nameOrConnectionString;
+            return conn;
+        }
+    }
 
     /// <summary>
     /// The connection context for talking to an OTA database
     /// </summary>
-    //    [DbConfigurationType(typeof(MyDbConfiguration))] 
+    [DbConfigurationType(typeof(EFConfiguration))] 
     public class OTAContext : DbContext // IdentityDbContext<IdentityUser>
     {
-        public OTAContext() : base("terraria_ota")//ConnectionManager.ConnectionString)
+        public OTAContext() : this(ConnectionManager.ConnectionString)
         {
-            Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
         }
 
         /// <summary>
@@ -123,7 +129,8 @@ namespace OTA.Data.Models
         /// <param name="nameOrConnectionString">Name or connection string. Default is terraria_ota</param>
         public OTAContext(string nameOrConnectionString = "terraria_ota") : base(nameOrConnectionString)
         {
-            
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public DbSet<PlayerGroup> PlayerGroups { get; set; }
@@ -143,7 +150,11 @@ namespace OTA.Data.Models
         protected override void OnModelCreating(DbModelBuilder builder)
         {
             builder.Conventions.Remove<PluralizingTableNameConvention>();
-            Database.SetInitializer(new SqliteContextInitializer<OTAContext>(builder));
+
+            if (this.Database.Connection.GetType().Name == "SQLiteConnection") //Since we support SQLite as default, let's use this hack...
+            {
+                Database.SetInitializer(new SqliteContextInitializer<OTAContext>(builder));
+            }
 
             builder.Entity<Group>()
                 .HasKey(x => x.Id)
@@ -189,9 +200,9 @@ namespace OTA.Data.Models
         DbModelBuilder _modelBuilder;
 
         static readonly Dictionary<String,String> DataTypeMap = new Dictionary<String,String>()
-            {
-                { "int", "integer" }
-            };
+        {
+            { "int", "integer" }
+        };
 
         public static string GetDataType(string typeName)
         {
@@ -207,9 +218,24 @@ namespace OTA.Data.Models
 
         public void InitializeDatabase(T context)
         {
-            if (context.Database.Exists())
-                return;
-            
+            //Find the database file name from the connection
+            var matches = System.Text.RegularExpressions.Regex.Match(context.Database.Connection.ConnectionString, "Data Source=(.*?);");
+            if (matches != null && matches.Length > 0)
+            {
+                while (matches.Success)
+                {
+                    if (matches.Groups.Count > 1)
+                    {
+                        var db = matches.Groups[1].Value;
+                        if (File.Exists(db)) return;
+                    }
+
+                    matches = matches.NextMatch();
+                }  
+            }
+//            if (context.Database.Exists())
+//                return;
+
             var model = _modelBuilder.Build(context.Database.Connection);
 
             using (var xact = context.Database.BeginTransaction())
@@ -268,8 +294,7 @@ namespace OTA.Data.Models
                         .OfType<IndexAnnotation>();
 
                     foreach (var annotation in annotations)
-                    {
-                        
+                    {   
                         foreach (var attr in annotation.Indexes)
                         {
                             if (attr.IsUnique)
@@ -319,7 +344,6 @@ namespace OTA.Data.Models
 
                 // create table
                 var sql = string.Format(tableTmpl, type.Name, string.Join(",\n", defs));
-                Console.WriteLine(sql);
                 db.ExecuteSqlCommand(sql);
             }
 
@@ -353,9 +377,37 @@ namespace OTA.Data.Models
         {
             get
             {
-                Console.WriteLine("Selecting: " + (ConnectionManager.ConnectionString ?? "Null"));
                 return new OTAContext(ConnectionString);
             }
+        }
+
+        static T LoadInstanceType<T>(Type type) where T : class
+        {
+            T instance = default(T);
+
+            //Typically there is a general rule of thumb about an 'Instance' static field on the providers factory class
+            //Let's try to use it if we can find one in the case they use it in the library.
+            var ist = type.GetField("Instance", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            if (ist != null)
+            {
+                instance = ist.GetValue(null) as T;
+            }
+
+//            if (factory == null) untested
+//            {
+//                var pst = type.GetProperty("Instance", System.Reflection.BindingFlags.Public);
+//                if (pst.CanRead)
+//                {
+//                    factory = pst.GetGetMethod().Invoke(null, null) as DbProviderFactory;
+//                }
+//            }
+
+            if (instance == null)
+            {
+                instance = Activator.CreateInstance(type) as T;
+            }
+
+            return instance;
         }
 
         /// <summary>
@@ -366,63 +418,38 @@ namespace OTA.Data.Models
         /// <param name="verbose">If set to <c>true</c> verbose.</param>
         public static bool PrepareFromAssembly(string assemblyName, bool verbose = false)
         {
-//            Database.SetInitializer<OTAContext>(new DropCreateDatabaseAlways<OTAContext>());
-//            Database.SetInitializer<OTAContext>(new DropCreateDatabaseIfModelChanges<OTAContext>());
-
-//            var asmName = "MySql.Data.Entity";
-
-//            MyDbConfiguration.FactoryName = "System.Data.SQLite.EF6";
-////            MyDbConfiguration.FactoryName = "Mono.Data.Sqlite";
-//            MyDbConfiguration.FactoryInstance = new System.Data.SQLite.EF6.SQLiteProviderFactory();
-//            MyDbConfiguration.FactoryServices = new System.Data.SQLite.EF6.SQLiteProviderFactory();
-////            MyDbConfiguration.FactoryInstance = new Mono.Data.Sqlite.SqliteFactory();
-////            var r = new  SQLite.Net.Async.SQLiteAsyncConnection();
-//
-            return true;
-
             try
             {
-                assemblyName = "System.Data.SQLite,";
+                EFConfiguration.ProviderName = assemblyName;
+
                 //Find the assembly by name that was pre-loaded from the Libraries folder
                 var providers = AppDomain.CurrentDomain
                     .GetAssemblies()
-                    .Where(x => x.FullName.StartsWith(assemblyName))
-                    .ToArray();
-//                    .FirstOrDefault(x => x.FullName.StartsWith(assemblyName));
-
-                //Ensure we have at least one provider that matches
-                if (providers != null)
+                    .Where(x => x.FullName.StartsWith(assemblyName));
+                
+                foreach (var provider in providers)
                 {
-                    var provider = providers[0];
-                    //Load the configuration from the found provider
+                    System.Reflection.TypeInfo inf;
 
-//                    DbConfiguration.Loaded += (sender, args) =>
-//                    {
-//                        Console.WriteLine("Loaded");
-//                        args.ReplaceService<IDbConnectionFactory>((s, a) => DbFactory.Instance); 
-//                        args.ReplaceService<IDbProviderFactoryResolver>((s, a) => TestProviderFactoryResolver.Instance);
-//                    };
-//                    
-//                    var cf = provider.DefinedTypes.Where(x => typeof(System.Data.Common.DbProviderFactory).IsAssignableFrom(x)).FirstOrDefault();
-//
-//                    if (cf != null)
-//                    {
-//                        MyDbConfiguration.FactoryName = "System.Data.SQLite";
-//                        MyDbConfiguration.FactoryInstance = (System.Data.Common.DbProviderFactory)Activator.CreateInstance(cf);
-//                    }
-//                    assemblyName = "System.Data.SQLite.E";
-//                    //Find the assembly by name that was pre-loaded from the Libraries folder
-//                    provider = AppDomain.CurrentDomain
-//                        .GetAssemblies()
-//                        .Where(x => x.FullName.StartsWith(assemblyName))
-//                        .ToArray()[0];
-//                    System.Data.Entity.DbConfiguration.LoadConfiguration(provider);
-//                    //Mono.Data.Sqlite
-//                    cf = provider.DefinedTypes.Where(x => typeof(DbProviderServices).IsAssignableFrom(x)).FirstOrDefault();
-//                    if (cf != null)
-//                    {
-//                        MyDbConfiguration.FactoryServices = (DbProviderServices)Activator.CreateInstance(cf);
-//                    }
+                    //Find the assembly by name that was pre-loaded from the Libraries folder
+                    if (EFConfiguration.ProviderFactory == null)
+                    {
+                        inf = provider.DefinedTypes.Where(x => typeof(System.Data.Common.DbProviderFactory).IsAssignableFrom(x)).FirstOrDefault();
+                        if (inf != null)
+                        {
+                            EFConfiguration.ProviderFactory = LoadInstanceType<DbProviderFactory>(inf.AsType());
+                        }
+                    }
+                    if (EFConfiguration.ProviderFactory == null)
+                    {
+                        inf = provider.DefinedTypes.Where(x => typeof(DbProviderServices).IsAssignableFrom(x)).FirstOrDefault();
+                        if (inf != null)
+                        {
+                            EFConfiguration.ProviderService = LoadInstanceType<DbProviderServices>(inf.AsType());
+                        }
+                    }
+
+                    System.Data.Entity.DbConfiguration.LoadConfiguration(provider);
 
 //                    Database.SetInitializer(new MigrateDatabaseToLatestVersion<OTAContext, OTADatabaseInitializer>());
 
@@ -444,14 +471,16 @@ namespace OTA.Data.Models
 
 //                    var migrator = new DbMigrator(new OTADatabaseInitializer() );
 //                    migrator.Update();
+                }
 
-                    return true;
-                }
-                else
+                //Load the configuration from the found provider
+                DbConfiguration.Loaded += (sender, args) =>
                 {
-                    if (verbose)
-                        ProgramLog.Error.Log("Specified database file not found");
-                }
+                    //This replacement will ensure we (OTA) can dictate the connection string
+                    if (EFConfiguration.ProviderFactory != null) args.ReplaceService<DbProviderFactory>((s, a) => EFConfiguration.ProviderFactory); 
+                    if (EFConfiguration.ProviderService != null) args.ReplaceService<DbProviderServices>((s, a) => EFConfiguration.ProviderService); 
+                    if (EFConfiguration.ProviderFactory != null) args.ReplaceService<IDbConnectionFactory>((s, a) => OTAConnectionFactory.Instance); 
+                };
             }
             catch (Exception e)
             {
