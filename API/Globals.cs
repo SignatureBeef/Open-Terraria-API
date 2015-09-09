@@ -9,11 +9,16 @@ namespace OTA
     /// </summary>
     public enum ReleasePhase : ushort
     {
-        PreAlpha = 0x70,                        //p
-        Alpha = 0x61,                           //a
-        Beta = 0x62,                            //b
-        ReleaseCandiate = 0x72 | (0x63 << 8),   //rc
-        LiveRelease = 0x6C | (0x72 << 8)        //lr
+        //p
+        PreAlpha = 0x70,
+        //a
+        Alpha = 0x61,
+        //b
+        Beta = 0x62,
+        //rc
+        ReleaseCandiate = 0x72 | (0x63 << 8),
+        //lr
+        LiveRelease = 0x6C | (0x72 << 8)
     }
 
     /// <summary>
@@ -23,6 +28,11 @@ namespace OTA
     {
         public const Int32 Build = 5;
         public const ReleasePhase BuildPhase = ReleasePhase.LiveRelease;
+
+        public static string BuildInfo
+        {
+            get { return Build + PhaseToSuffix(BuildPhase); }
+        }
 
         public const Int32 TerrariaRelease = 146;
         public const String TerrariaVersion = "1.3.0.7";
@@ -49,9 +59,9 @@ namespace OTA
 
         //public static bool IsPatching { get; set; }
 
-#if Full_API
+        #if Full_API
         public const bool FullAPIDefined = true;
-#else
+        #else
         public const bool FullAPIDefined = false;
 #endif
 
@@ -111,7 +121,7 @@ namespace OTA
             { return Path.Combine(SavePath, DataDirectory, CharacterData); }
         }
 
-//        public static readonly bool IsMono = Type.GetType("Mono.Runtime") != null;
+        //        public static readonly bool IsMono = Type.GetType("Mono.Runtime") != null;
 
         /// <summary>
         /// Creates default required folders

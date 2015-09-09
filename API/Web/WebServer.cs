@@ -40,15 +40,20 @@ namespace OTA.Web.API
     [AllowAnonymous]
     public class PublicController : ApiController
     {
+        public static bool ShowPlugins = true;
+// { get; set; }
+
         /// <summary>
         /// Get the online player names
         /// </summary>
         public HttpResponseMessage Get()
         {
             return this.Request.CreateResponse(HttpStatusCode.OK, new {
+                //Connection info
                 Name = Terraria.Main.ActiveWorldFileData.Name,
                 Port = Terraria.Netplay.ListenPort,
 
+                //Allocations
                 MaxPlayers = Terraria.Main.maxNetPlayers,
                 Player = Terraria.Main.player
                     .Where(x => x != null && x.active && !String.IsNullOrEmpty(x.Name))
@@ -56,8 +61,30 @@ namespace OTA.Web.API
                     .OrderBy(x => x)
                     .ToArray(),
 
+                //Installed plugins/mods
+                Plugins = GetPlugins(),
+
+                //Version info
+                OTA = Globals.BuildInfo,
+                Terraria = Globals.TerrariaVersion,
+
+                //Can be used to determine if the actual server is started or not
                 ServerState = Globals.CurrentState
             });
+        }
+
+        private string[] GetPlugins()
+        {
+            if (ShowPlugins)
+            {
+                return PluginManager._plugins
+                    .Where(x => x.Value.IsEnabled)
+                    .Select(y => y.Value.Name)
+                    .OrderBy(z => z)
+                    .ToArray();
+            }
+
+            return null;
         }
     }
 
