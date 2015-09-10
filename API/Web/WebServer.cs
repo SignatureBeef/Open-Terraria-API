@@ -52,6 +52,8 @@ namespace OTA.Web.API
                 Name = Terraria.Main.ActiveWorldFileData.Name,
                 Port = Terraria.Netplay.ListenPort,
 
+                PasswordRequired = !String.IsNullOrEmpty(Terraria.Netplay.ServerPassword),
+
                 //Allocations
                 MaxPlayers = Terraria.Main.maxNetPlayers,
                 Player = Terraria.Main.player
