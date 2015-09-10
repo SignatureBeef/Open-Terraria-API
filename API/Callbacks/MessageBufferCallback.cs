@@ -922,7 +922,7 @@ namespace OTA.Callbacks
                 }
             }
 
-            string address = player.IPAddress.Split(':')[0];
+//            string address = player.IPAddress.Split(':')[0];
             //            if (!data.BansChecked)
             //            {
             //                if (Server.Bans.Contains(address) || Server.Bans.Contains(data.Name))

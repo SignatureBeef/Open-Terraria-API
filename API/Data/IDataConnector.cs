@@ -298,11 +298,11 @@ namespace OTA.Data
                 var group = ctx.Groups.Where(x => x.Name == groupName).SingleOrDefault();
                 var perm = await FindOrCreateNode(node, permission);
 
-                var grpNode = new GroupNode()
-                {
-                    GroupId = group.Id,
-                    NodeId = perm.Id
-                };
+                ctx.GroupNodes.Add(new GroupNode()
+                    {
+                        GroupId = group.Id,
+                        NodeId = perm.Id
+                    });
 
                 await ctx.SaveChangesAsync();
 
