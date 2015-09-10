@@ -27,6 +27,10 @@ namespace OTA.Callbacks
                 {
                     if (a.Name == "Terraria" || a.Name == "TerrariaServer")
                         return Assembly.GetEntryAssembly();
+//                    else if (a.Name.StartsWith("System.Data.Entity"))
+//                    {
+//                        Console.WriteLine("FIND ENTITY");
+//                    }
                         
                     if (PluginManager._plugins != null)
                     {
@@ -44,13 +48,18 @@ namespace OTA.Callbacks
                     }
 
                     //Look in libraries - assembly name must match filename
-                    string filename;
+                    string filename, prefix;
                     var ix = a.Name.IndexOf(',');
                     if (ix > -1)
                     {
-                        filename = Path.Combine(Globals.LibrariesPath, a.Name.Substring(0, ix) + ".dll");
+                        prefix = a.Name.Substring(0, ix);
+                        filename = Path.Combine(Globals.LibrariesPath, prefix + ".dll");
                     }
-                    else filename = Path.Combine(Globals.LibrariesPath, a.Name + ".dll");
+                    else
+                    {
+                        prefix = a.Name;
+                        filename = Path.Combine(Globals.LibrariesPath, a.Name + ".dll");
+                    }
 
                     if (File.Exists(filename))
                     {
@@ -68,6 +77,12 @@ namespace OTA.Callbacks
                             return Assembly.Load(ms.ToArray());
                         }
                     }
+
+//                    //Try currently loaded
+//                    var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+//                            .Where(x => x.DefinedTypes.Where(y => y.Namespace == prefix).Count() > 0).ToList();
+//
+//                    if (null != assemblies && assemblies.Any()) return assemblies.First();  
                 }
                 catch (Exception e)
                 {
@@ -91,31 +106,31 @@ namespace OTA.Callbacks
         //public static bool StartEclipse;
         //public static bool StartBloodMoon;
 
-        static void Test()
-        {
-            using (var ctx = new OTA.Data.OTAContext())
-            {
-                var acc = ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
-                    {
-                        Username = "Justin",
-                        Password = "Testing"
-                    });
-                ctx.SaveChanges(); //To update the [Id]
-
-                ctx.APIAccountsRoles.Add(new OTA.Data.Entity.Models.APIAccountRole()
-                    {
-                        AccountId = acc.Id,
-                        Type = System.Security.Claims.ClaimTypes.Role,
-                        Value = "SuperAdmin"
-                    });
-                ctx.SaveChanges();
-
-                foreach (var item in ctx.APIAccounts)
-                {
-                    Console.WriteLine("{0}\t- {1}", item.Id, item.Username); 
-                }
-            }
-        }
+//        static void Test()
+//        {
+//            using (var ctx = new OTA.Data.OTAContext())
+//            {
+//                var acc = ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
+//                    {
+//                        Username = "Justin",
+//                        Password = "Testing"
+//                    });
+//                ctx.SaveChanges(); //To update the [Id]
+////
+//////                ctx.APIAccountsRoles.Add(new OTA.Data.Entity.Models.APIAccountRole()
+//////                    {
+//////                        AccountId = acc.Id,
+//////                        Type = System.Security.Claims.ClaimTypes.Role,
+//////                        Value = "SuperAdmin"
+//////                    });
+//////                ctx.SaveChanges();
+////
+//                foreach (var item in ctx.APIAccounts)
+//                {
+//                    Console.WriteLine("{0}\t- {1}", item.Id, item.Username); 
+//                }
+//            }
+//        }
 
         /// <summary>
         /// The startup call (non vanilla) for both the client and server
@@ -135,19 +150,19 @@ namespace OTA.Callbacks
             ID.Lookup.Initialise();
 
 //            OTA.Data.Entity.ConnectionManager.ConnectionString = "Server=127.0.0.1;Database=tdsm;Uid=root;Pwd=;";
-//            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("MySql.Data.Entity", true);
+//            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("MySql.Data", true);
 
-            OTA.Data.Entity.ConnectionManager.ConnectionString = "Data Source=database.sqlite;Version=3;";
-            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("System.Data.SQLite", true);
+//            OTA.Data.Entity.ConnectionManager.ConnectionString = "Data Source=database.sqlite;Version=3;";
+//            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("System.Data.SQLite", true);
 
-            try
-            {
-                Test();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+//            try
+//            {
+//                Test();
+//            }
+//            catch (Exception e)
+//            {
+//                Console.WriteLine(e);
+//            }
 
             try
             {

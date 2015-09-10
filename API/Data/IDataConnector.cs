@@ -11,7 +11,7 @@ namespace OTA.Data
     /// </summary>
     public class Group
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

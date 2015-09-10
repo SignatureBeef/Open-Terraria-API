@@ -72,7 +72,7 @@ namespace OTA.Data.Entity
         {
             try
             {
-                EFConfiguration.ProviderName = assemblyName;
+//                EFConfiguration.ProviderName = assemblyName;
 
                 //Find the assembly by name that was pre-loaded from the Libraries folder
                 var providers = AppDomain.CurrentDomain
@@ -81,36 +81,42 @@ namespace OTA.Data.Entity
 
                 foreach (var provider in providers)
                 {
+                    Console.WriteLine(provider.FullName);
                     System.Reflection.TypeInfo inf;
 
-                    //Find the assembly by name that was pre-loaded from the Libraries folder
-                    if (EFConfiguration.ProviderFactory == null)
-                    {
-                        inf = provider.DefinedTypes.Where(x => typeof(System.Data.Common.DbProviderFactory).IsAssignableFrom(x)).FirstOrDefault();
-                        if (inf != null)
-                        {
-                            EFConfiguration.ProviderFactory = LoadInstanceType<DbProviderFactory>(inf.AsType());
-                        }
-                    }
-                    if (EFConfiguration.ProviderFactory == null)
-                    {
-                        inf = provider.DefinedTypes.Where(x => typeof(DbProviderServices).IsAssignableFrom(x)).FirstOrDefault();
-                        if (inf != null)
-                        {
-                            EFConfiguration.ProviderService = LoadInstanceType<DbProviderServices>(inf.AsType());
-                        }
-                    }
+//                    //Find the assembly by name that was pre-loaded from the Libraries folder
+//                    if (EFConfiguration.ProviderFactory == null)
+//                    {
+//                        inf = provider.DefinedTypes.Where(x => typeof(System.Data.Common.DbProviderFactory).IsAssignableFrom(x)).FirstOrDefault();
+//                        if (inf != null)
+//                        {
+////                            EFConfiguration.ProviderFactory = LoadInstanceType<DbProviderFactory>(inf.AsType());
+//                        }
+//                    }
+//                    if (EFConfiguration.ProviderFactory == null)
+//                    {
+//                        inf = provider.DefinedTypes.Where(x => typeof(DbProviderServices).IsAssignableFrom(x)).FirstOrDefault();
+//                        if (inf != null)
+//                        {
+////                            EFConfiguration.ProviderService = LoadInstanceType<DbProviderServices>(inf.AsType());
+//                        }
+//                    }
                     //                    if (EFConfiguration.ProviderConfiguration == null)
                     //                    {
-                    //                        inf = provider.DefinedTypes.Where(x => typeof(DbConfiguration).IsAssignableFrom(x)).FirstOrDefault();
-                    //                        if (inf != null)
-                    //                        {
-                    //                            EFConfiguration.ProviderConfiguration = LoadInstanceType<DbConfiguration>(inf.AsType());
-                    ////                            DbConfiguration.SetConfiguration(EFConfiguration.ProviderConfiguration);
-                    //                        }
+                    inf = provider.DefinedTypes.Where(x => typeof(DbConfiguration).IsAssignableFrom(x)).FirstOrDefault();
+                    if (inf != null)
+                    {
+//                        OTAContext.Config = LoadInstanceType<DbConfiguration>(inf.AsType());
+                        DbConfiguration.SetConfiguration(LoadInstanceType<DbConfiguration>(inf.AsType()));
+//                        DbConfiguration.SetConfiguration(OTAContext.Config);
+//                        EFConfiguration.ProviderService = null;
+//                        EFConfiguration.ProviderFactory = null;
+//                        EFConfiguration.ProviderName = null;
+                        return true;
+                    }
                     //                    }
 
-                    //                    System.Data.Entity.DbConfiguration.LoadConfiguration(provider);
+//                    System.Data.Entity.DbConfiguration.LoadConfiguration(provider);
 
                     //                    Database.SetInitializer(new MigrateDatabaseToLatestVersion<OTAContext, OTADatabaseInitializer>());
 
@@ -134,15 +140,15 @@ namespace OTA.Data.Entity
                     //                    migrator.Update();
                 }
 
-                //Load the configuration from the found provider
-                DbConfiguration.Loaded += (sender, args) =>
-                    {
-                        //This replacement will ensure we (OTA) can dictate the connection string
-                        if (EFConfiguration.ProviderFactory != null) args.ReplaceService<DbProviderFactory>((s, a) => EFConfiguration.ProviderFactory); 
-                        if (EFConfiguration.ProviderService != null) args.ReplaceService<DbProviderServices>((s, a) => EFConfiguration.ProviderService); 
-                        if (EFConfiguration.ProviderFactory != null) args.ReplaceService<IDbConnectionFactory>((s, a) => OTAConnectionFactory.Instance); 
-                        //                    if (EFConfiguration.ProviderConfiguration != null) args.ReplaceService<DbConfiguration>((s, a) => EFConfiguration.ProviderConfiguration); 
-                    };
+//                //Load the configuration from the found provider
+//                DbConfiguration.Loaded += (sender, args) =>
+//                {
+//                    //This replacement will ensure we (OTA) can dictate the connection string
+//                    if (EFConfiguration.ProviderFactory != null) args.ReplaceService<DbProviderFactory>((s, a) => EFConfiguration.ProviderFactory); 
+//                    if (EFConfiguration.ProviderService != null) args.ReplaceService<DbProviderServices>((s, a) => EFConfiguration.ProviderService); 
+//                    if (EFConfiguration.ProviderFactory != null) args.ReplaceService<IDbConnectionFactory>((s, a) => OTAConnectionFactory.Instance); 
+//                    //                    if (EFConfiguration.ProviderConfiguration != null) args.ReplaceService<DbConfiguration>((s, a) => EFConfiguration.ProviderConfiguration); 
+//                };
             }
             catch (Exception e)
             {

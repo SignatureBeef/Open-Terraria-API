@@ -3,17 +3,26 @@ using OTA.Data.Entity.Models;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.ComponentModel.DataAnnotations.Schema;
 using OTA.Data.Entity;
+using System.Data.Entity.Migrations.History;
 
 namespace OTA.Data
 {
     /// <summary>
     /// The connection context for talking to an OTA database
     /// </summary>
-    [DbConfigurationType(typeof(EFConfiguration))] 
+    //    [DbConfigurationType(typeof(EFConfiguration))] 
     public class OTAContext : DbContext // IdentityDbContext<IdentityUser>
     {
-        public OTAContext() : this(ConnectionManager.ConnectionString)
+        public static DbConfiguration Config;
+
+        public OTAContext() : this("terraria_ota") //ConnectionManager.ConnectionString)
         {
+//            if (null != Config)
+//            {
+//                System.Console.Write("Setting DB Config...");
+//                DbConfiguration.SetConfiguration(Config);
+//                System.Console.WriteLine("Done");
+//            }
         }
 
         /// <summary>
@@ -23,7 +32,7 @@ namespace OTA.Data
         public OTAContext(string nameOrConnectionString = "terraria_ota") : base(nameOrConnectionString)
         {
             Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
+            Configuration.LazyLoadingEnabled = true;
         }
 
         public DbSet<PlayerGroup> PlayerGroups { get; set; }
@@ -45,6 +54,14 @@ namespace OTA.Data
         protected override void OnModelCreating(DbModelBuilder builder)
         {
             builder.Conventions.Remove<PluralizingTableNameConvention>();
+//            builder.Entity<HistoryRow>()
+//                .Property(h => h.MigrationId)
+//                .HasMaxLength(100)
+//                .IsRequired();
+//            builder.Entity<HistoryRow>()
+//                .Property(h => h.ContextKey)
+//                .HasMaxLength(200)
+//                .IsRequired();
 
             if (this.Database.Connection.GetType().Name == "SQLiteConnection") //Since we support SQLite as default, let's use this hack...
             {
@@ -66,7 +83,7 @@ namespace OTA.Data
                 .HasKey(x => new { x.Id })
                 .Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
+            
             builder.Entity<PermissionNode>()
                 .HasKey(x => new { x.Id })
                 .Property(x => x.Id)
