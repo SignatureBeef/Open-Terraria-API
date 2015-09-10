@@ -211,21 +211,21 @@ namespace OTA.Web
 
     static class AccountManager
     {
-        //        public static async Task<APIAccount> FindByName(string name)
-        //        {
-        //            using (var ctx = new OTAContext())
-        //            {
-        //                return await ctx.APIAccounts.FirstOrDefaultAsync(x => x.Username == name);
-        //            }
-        //        }
+        public static async Task<APIAccount> FindByName(string name)
+        {
+            using (var ctx = new OTAContext())
+            {
+                return await ctx.APIAccounts.FirstOrDefaultAsync(x => x.Username == name);
+            }
+        }
 
-        //        public static async Task<APIAccountRole[]> GetRolesForAccount(int accountId)
-        //        {
-        //            using (var ctx = new OTAContext())
-        //            {
-        //                return await ctx.APIAccountsRoles.Where(x => x.AccountId == accountId).ToArrayAsync();
-        //            }
-        //        }
+        public static async Task<APIAccountRole[]> GetRolesForAccount(int accountId)
+        {
+            using (var ctx = new OTAContext())
+            {
+                return await ctx.APIAccountsRoles.Where(x => x.AccountId == accountId).ToArrayAsync();
+            }
+        }
     }
 
     class OWINServer
@@ -236,7 +236,7 @@ namespace OTA.Web
             //            public override async System.Threading.Tasks.Task ValidateClientAuthentication(Microsoft.Owin.Security.OAuth.OAuthValidateClientAuthenticationContext context)
             //            {
             //                await Task.FromResult(context.Validated());
-            ////                return base.ValidateClientAuthentication(context);
+            //                //                return base.ValidateClientAuthentication(context);
             //            }
 
             public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
@@ -248,31 +248,31 @@ namespace OTA.Web
             {
                 context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-//                var user = await AccountManager.FindByName(context.UserName);
-//                if (user != null && user.ComparePassword(context.Password))
-//                {
-//                    var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-//                    identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-////
-////                    //Load permissions for user
-////                    foreach (var role in await AccountManager.GetRolesForAccount(user.Id))
-////                    {
-////                        identity.AddClaim(new Claim(role.Type, role.Value));
-//////                    identity.AddClaim(new Claim(ClaimTypes.Role, "player"));
-////                    }
-//
-////                    var ticket = new AuthenticationTicket(identity, new AuthenticationProperties()
-////                        {
-////                            IsPersistent = true,
-////                            IssuedUtc = DateTime.UtcNow
-////                        });
-//                    context.Validated(identity);
-//                }
-//                else
-//                {
-//                    context.SetError("invalid_grant", "The user name or password is incorrect.");
-//                    context.Rejected();
-//                }
+                var user = await AccountManager.FindByName(context.UserName);
+                if (user != null && user.ComparePassword(context.Password))
+                {
+                    var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                    identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+
+                    //Load permissions for user
+                    foreach (var role in await AccountManager.GetRolesForAccount(user.Id))
+                    {
+                        identity.AddClaim(new Claim(role.Type, role.Value));
+//                    identity.AddClaim(new Claim(ClaimTypes.Role, "player"));
+                    }
+
+//                    var ticket = new AuthenticationTicket(identity, new AuthenticationProperties()
+//                        {
+//                            IsPersistent = true,
+//                            IssuedUtc = DateTime.UtcNow
+//                        });
+                    context.Validated(identity);
+                }
+                else
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    context.Rejected();
+                }
             }
         }
 

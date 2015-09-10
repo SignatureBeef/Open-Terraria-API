@@ -267,7 +267,6 @@
     <Compile Include="Data\Entity\Models\APIAccount.cs" />
     <Compile Include="Data\Entity\Models\APIAccountRole.cs" />
     <Compile Include="Data\Entity\Models\GroupNode.cs" />
-    <Compile Include="Data\Entity\Models\PermissionNode.cs" />
     <Compile Include="Data\Entity\Models\PlayerGroup.cs" />
     <Compile Include="Data\Entity\Models\PlayerNode.cs" />
     <Compile Include="Data\Entity\PasswordFormat.cs" />
@@ -276,6 +275,8 @@
     <Compile Include="Data\Entity\OTAConnectionFactory.cs" />
     <Compile Include="Data\Entity\SQLite\SqliteContextInitializer.cs" />
     <Compile Include="Data\Entity\ConnectionManager.cs" />
+    <Compile Include="Data\Entity\Models\DataSetting.cs" />
+    <Compile Include="Data\Entity\Models\NodePermission.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -106,32 +106,6 @@ namespace OTA.Callbacks
         //public static bool StartEclipse;
         //public static bool StartBloodMoon;
 
-//        static void Test()
-//        {
-//            using (var ctx = new OTA.Data.OTAContext())
-//            {
-//                var acc = ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
-//                    {
-//                        Username = "Justin",
-//                        Password = "Testing"
-//                    });
-//                ctx.SaveChanges(); //To update the [Id]
-////
-//////                ctx.APIAccountsRoles.Add(new OTA.Data.Entity.Models.APIAccountRole()
-//////                    {
-//////                        AccountId = acc.Id,
-//////                        Type = System.Security.Claims.ClaimTypes.Role,
-//////                        Value = "SuperAdmin"
-//////                    });
-//////                ctx.SaveChanges();
-////
-//                foreach (var item in ctx.APIAccounts)
-//                {
-//                    Console.WriteLine("{0}\t- {1}", item.Id, item.Username); 
-//                }
-//            }
-//        }
-
         /// <summary>
         /// The startup call (non vanilla) for both the client and server
         /// </summary>
@@ -204,7 +178,7 @@ namespace OTA.Callbacks
 //                }
 //            }
 
-            Web.WebServer.Start("http://localhost:8448/");
+//            Web.WebServer.Start("http://localhost:8448/");
         }
 
         /// <summary>

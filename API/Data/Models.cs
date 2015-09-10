@@ -41,7 +41,7 @@ namespace OTA.Data
 
         public DbSet<DbPlayer> Players { get; set; }
 
-        public DbSet<PermissionNode> Nodes { get; set; }
+        public DbSet<NodePermission> Nodes { get; set; }
 
         public DbSet<PlayerNode> PlayerNodes { get; set; }
 
@@ -50,6 +50,8 @@ namespace OTA.Data
         public DbSet<APIAccount> APIAccounts { get; set; }
 
         public DbSet<APIAccountRole> APIAccountsRoles { get; set; }
+
+        public DbSet<DataSetting> Settings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
@@ -84,7 +86,7 @@ namespace OTA.Data
                 .Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             
-            builder.Entity<PermissionNode>()
+            builder.Entity<NodePermission>()
                 .HasKey(x => new { x.Id })
                 .Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
@@ -105,6 +107,11 @@ namespace OTA.Data
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             builder.Entity<APIAccountRole>()
+                .HasKey(x => new { x.Id })
+                .Property(x => x.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            builder.Entity<DataSetting>()
                 .HasKey(x => new { x.Id })
                 .Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
