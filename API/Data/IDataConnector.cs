@@ -155,7 +155,7 @@ namespace OTA.Data
     /// <remarks>Plugins use this</remarks>
     public static class Storage
     {
-        private static readonly object _sync = new object();
+        //        private static readonly object _sync = new object();
         //        private static IDataConnector _connector;
 
         /// <summary>
@@ -176,9 +176,139 @@ namespace OTA.Data
         /// <param name="player">Player.</param>
         public static Permission IsPermitted(string node, BasePlayer player)
         {
-//            if (IsAvailable)
-            return player.Op ? Permission.Permitted : Permission.Denied;
-//            return _connector.IsPermitted(node, player);
+            if (player != null)
+            {
+                if (player.AuthenticatedAs != null)
+                    return IsPermitted(node, false, player.AuthenticatedAs);
+
+                return IsPermitted(node, true);
+            }
+
+            return Permission.Denied;
+        }
+
+        private static Permission IsPermitted(string prmNode, bool prmIsGuest, string prmAuthentication = null)
+        {
+            var vPermissionValue = Permission.Denied;
+            var vUserId = 0;
+            var vGroupId = 0;
+            var vPrevGroupId = 0;
+            var vNodeFound = false;
+
+            using (var ctx = new OTAContext())
+            {
+                if (prmIsGuest == false && prmAuthentication != null && prmAuthentication.Length > 0)
+                {
+                    var user = ctx.GetUser(prmAuthentication).Single();
+                    if (user != null)
+                    {
+                        vUserId = user.Id;
+
+                        if (user.Operator)
+                            return  Permission.Permitted;
+                    }
+
+                    if (vUserId > 0)
+                    {
+                        /*
+                        If the user has specific nodes then use them
+                        If not then search for a group
+                        If still none then try the guest permissions
+                    */
+
+                        /*Do we have any nodes?*/
+                        var nodes = ctx.GetPermissionByNodeForUser(vUserId, prmNode).ToArray();
+                        if (nodes != null && nodes.Length > 0)
+                        {
+                            if (nodes.Where(x => x.Permission == Permission.Denied).Count() == 0)
+                            {
+                                vPermissionValue = Permission.Permitted;
+                                vNodeFound = true;
+                            }
+                            else
+                            {
+                                vPermissionValue = Permission.Denied;
+                                vNodeFound = true;
+                            }
+                        }
+                        else
+                        {
+                            /*
+                            For each group, see if it has a permission
+                            Else, if it has a parent recheck.
+                            Else guestMode
+                        */
+
+                            var grp = ctx.GetUserGroups(vUserId).FirstOrDefault();
+                            vGroupId = 0;
+                            if (grp != null) vGroupId = grp.Id;
+                            if (vGroupId > 0)
+                            {
+                                vPrevGroupId = vGroupId;
+                                vNodeFound = false;
+
+                                while (vGroupId > 0 && !vNodeFound)
+                                {
+                                    /* Check group permissions */
+
+                                    var groupPermissions = ctx.GetPermissionByNodeForGroup(vGroupId, prmNode);
+
+                                    if (groupPermissions.Where(x => x.Permission == Permission.Denied).Count() > 0)
+                                    {
+                                        vPermissionValue = Permission.Denied;
+                                        vGroupId = 0;
+                                        vNodeFound = true;
+                                    }
+                                    else if (groupPermissions.Where(x => x.Permission == Permission.Permitted).Count() > 0)
+                                    {
+                                        vPermissionValue = Permission.Permitted;
+                                        vGroupId = 0;
+                                        vNodeFound = true;
+                                    }
+                                    else
+                                    {
+                                        var par = ctx.GetParentForGroup(vGroupId).FirstOrDefault();
+                                        if (par != null)
+                                        {
+                                            vGroupId = par.Id;
+                                            if (vPrevGroupId == vGroupId)
+                                            {
+                                                vGroupId = 0;
+                                            }
+
+                                            vPrevGroupId = vGroupId;
+                                        }
+                                        else
+                                        {
+                                            vGroupId = 0;
+                                        }
+                                    }
+                                }
+                            }
+                            if (!vNodeFound)
+                            {
+                                prmIsGuest = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        /* Invalid user - try guest */
+                        prmIsGuest = true;
+                    }
+                }
+
+                if (!vNodeFound && prmIsGuest)
+                {
+                    if (ctx.GuestGroupHasNode(prmNode, Permission.Permitted))
+                    {
+                        vPermissionValue = Permission.Permitted;
+                        vNodeFound = true;
+                    }
+                }
+
+                return vPermissionValue;
+            }
         }
 
         /// <summary>

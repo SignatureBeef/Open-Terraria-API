@@ -78,6 +78,8 @@ namespace OTA.Callbacks
                         }
                     }
 
+                        Console.WriteLine(a.Name);
+
 //                    //Try currently loaded
 //                    var assemblies = AppDomain.CurrentDomain.GetAssemblies()
 //                            .Where(x => x.DefinedTypes.Where(y => y.Namespace == prefix).Count() > 0).ToList();
@@ -199,7 +201,12 @@ namespace OTA.Callbacks
                     try
                     {
                         var data = File.ReadAllBytes(file);
-                        AppDomain.CurrentDomain.Load(data);
+                        var asm = AppDomain.CurrentDomain.Load(data);
+
+                        if (asm.GetName().Name == "EntityFramework")
+                        {
+                            OTA.Data.Storage.IsAvailable = true;
+                        }
                     }
                     catch (Exception e)
                     {

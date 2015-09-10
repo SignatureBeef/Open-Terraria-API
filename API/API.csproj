@@ -277,6 +277,7 @@
     <Compile Include="Data\Entity\ConnectionManager.cs" />
     <Compile Include="Data\Entity\Models\DataSetting.cs" />
     <Compile Include="Data\Entity\Models\NodePermission.cs" />
+    <Compile Include="Data\Entity\OTAContextExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
