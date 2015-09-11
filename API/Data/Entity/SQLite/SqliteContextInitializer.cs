@@ -9,7 +9,7 @@ using System.Linq;
 namespace OTA
 {
     //Based off https://gist.github.com/flaub/1968486e1b3f2b9fddaf#file-sqlitecontextinitializer-cs
-    class SqliteContextInitializer<T> : IDatabaseInitializer<T> where T : DbContext
+    public class SqliteContextInitializer<T> : IDatabaseInitializer<T> where T : DbContext
     {
         DbModelBuilder _modelBuilder;
 
