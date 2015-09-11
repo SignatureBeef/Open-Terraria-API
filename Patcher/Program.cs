@@ -808,6 +808,7 @@ namespace OTA.Patcher
             }
 
             BinariesFiles.Add(OutputName + ".exe");
+            BinariesFiles.Add(OutputName + ".exe.config");
 
             foreach (var rel in BinariesFiles)
             {
