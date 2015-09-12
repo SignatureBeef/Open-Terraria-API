@@ -48,6 +48,7 @@ namespace OTA.Web.API
         public HttpResponseMessage Get()
         {
             return this.Request.CreateResponse(HttpStatusCode.OK, new {
+#if Full_API
                 //Connection info
                 Name = Terraria.Main.ActiveWorldFileData.Name,
                 Port = Terraria.Netplay.ListenPort,
@@ -71,6 +72,7 @@ namespace OTA.Web.API
 
                 //Can be used to determine if the actual server is started or not
                 ServerState = Globals.CurrentState
+#endif
             });
         }
 
@@ -97,12 +99,16 @@ namespace OTA.Web.API
     {
         public HttpResponseMessage Get(string name)
         {
+#if Full_API
             return this.Request.CreateResponse(HttpStatusCode.OK,
                 Terraria.Main.player
                     .Where(x => x != null && x.active && x.Name == name)
                     .Select(x => new { Name = x.name, Position = x.position })
                 .FirstOrDefault()
             );
+#else
+            return null;
+#endif
         }
     }
 
@@ -124,9 +130,9 @@ namespace OTA.Web.API
 }
 #endif
 
-//Note to self, roles are to be kept at a minimum
+            //Note to self, roles are to be kept at a minimum
 
-namespace OTA.Web
+    namespace OTA.Web
 {
     /// <summary>
     /// OTA web server for plugins. Currently based around OWIN

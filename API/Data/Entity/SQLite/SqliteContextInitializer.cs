@@ -13,7 +13,7 @@ namespace OTA
     {
         DbModelBuilder _modelBuilder;
 
-        static readonly Dictionary<String,String> DataTypeMap = new Dictionary<String,String>()
+        static readonly Dictionary<String, String> DataTypeMap = new Dictionary<String, String>()
         {
             { "int", "integer" }
         };
@@ -45,7 +45,7 @@ namespace OTA
                     }
 
                     matches = matches.NextMatch();
-                }  
+                }
             }
             //            if (context.Database.Exists())
             //                return;
@@ -108,7 +108,7 @@ namespace OTA
                         .OfType<IndexAnnotation>();
 
                     foreach (var annotation in annotations)
-                    {   
+                    {
                         foreach (var attr in annotation.Indexes)
                         {
                             if (attr.IsUnique)

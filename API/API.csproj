@@ -58,6 +58,9 @@
     <WarningLevel>4</WarningLevel>
     <AssemblyName>OTA</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>OTA</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLua">
       <HintPath>..\External\NLua.dll</HintPath>
@@ -296,8 +299,5 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Entity\" />
-    <Folder Include="Data\Entity\SQLite\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

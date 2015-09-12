@@ -19,7 +19,7 @@ namespace OTA.Callbacks
     public static class MainCallback
     {
         static MainCallback()
-        {   
+        {
             //Resolves external plugin hook assemblies. So there is no need to place the DLL beside tdsm.exe
             AppDomain.CurrentDomain.AssemblyResolve += (s, a) =>
             {
@@ -27,11 +27,11 @@ namespace OTA.Callbacks
                 {
                     if (a.Name == "Terraria" || a.Name == "TerrariaServer")
                         return Assembly.GetEntryAssembly();
-//                    else if (a.Name.StartsWith("System.Data.Entity"))
-//                    {
-//                        Console.WriteLine("FIND ENTITY");
-//                    }
-                        
+                    //                    else if (a.Name.StartsWith("System.Data.Entity"))
+                    //                    {
+                    //                        Console.WriteLine("FIND ENTITY");
+                    //                    }
+
                     if (PluginManager._plugins != null)
                     {
                         var items = PluginManager._plugins.Values
@@ -78,13 +78,13 @@ namespace OTA.Callbacks
                         }
                     }
 
-                        Console.WriteLine(a.Name);
+                    //Console.WriteLine(a.Name);
 
-//                    //Try currently loaded
-//                    var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-//                            .Where(x => x.DefinedTypes.Where(y => y.Namespace == prefix).Count() > 0).ToList();
-//
-//                    if (null != assemblies && assemblies.Any()) return assemblies.First();  
+                    //                    //Try currently loaded
+                    //                    var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                    //                            .Where(x => x.DefinedTypes.Where(y => y.Namespace == prefix).Count() > 0).ToList();
+                    //
+                    //                    if (null != assemblies && assemblies.Any()) return assemblies.First();  
                 }
                 catch (Exception e)
                 {
@@ -108,6 +108,20 @@ namespace OTA.Callbacks
         //public static bool StartEclipse;
         //public static bool StartBloodMoon;
 
+        static void Test()
+        {
+            using (var ctx = new OTA.Data.OTAContext())
+            {
+                ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
+                {
+                    Username = "Test",
+                    Password = "Testing"
+                });
+
+                ctx.SaveChanges();
+            }
+        }
+
         /// <summary>
         /// The startup call (non vanilla) for both the client and server
         /// </summary>
@@ -115,8 +129,8 @@ namespace OTA.Callbacks
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            ProgramLog.Log("Open Terraria API build {0}{1} running on {2}", 
-                Globals.Build, 
+            ProgramLog.Log("Open Terraria API build {0}{1} running on {2}",
+                Globals.Build,
                 Globals.PhaseToSuffix(Globals.BuildPhase),
                 Tools.RuntimePlatform.ToString()
             );
@@ -125,20 +139,20 @@ namespace OTA.Callbacks
             Globals.Touch();
             ID.Lookup.Initialise();
 
-//            OTA.Data.Entity.ConnectionManager.ConnectionString = "Server=127.0.0.1;Database=tdsm;Uid=root;Pwd=;";
-//            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("MySql.Data", true);
+            //            OTA.Data.Entity.ConnectionManager.ConnectionString = "Server=127.0.0.1;Database=tdsm;Uid=root;Pwd=;";
+            //            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("MySql.Data", true);
 
-//            OTA.Data.Entity.ConnectionManager.ConnectionString = "Data Source=database.sqlite;Version=3;";
-//            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("System.Data.SQLite", true);
+            //            OTA.Data.Entity.ConnectionManager.ConnectionString = "Data Source=database.sqlite;Version=3;";
+            //            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("System.Data.SQLite", true);
 
-//            try
-//            {
-//                Test();
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e);
-//            }
+            try
+            {
+                Test();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
             try
             {
@@ -168,19 +182,19 @@ namespace OTA.Callbacks
             //Load plugins
             PluginManager.LoadPlugins();
 
-//            if (!Permissions.PermissionsManager.IsSet)
-//            {
-//                var file = System.IO.Path.Combine(Globals.DataPath, "permissions.xml");
-//                //if (System.IO.File.Exists(file)) System.IO.File.Delete(file);
-//                if (System.IO.File.Exists(file))
-//                {
-//                    var handler = new Permissions.XmlSupplier(file);
-//                    if (handler.Load())
-//                        Permissions.PermissionsManager.SetHandler(handler);
-//                }
-//            }
+            //            if (!Permissions.PermissionsManager.IsSet)
+            //            {
+            //                var file = System.IO.Path.Combine(Globals.DataPath, "permissions.xml");
+            //                //if (System.IO.File.Exists(file)) System.IO.File.Delete(file);
+            //                if (System.IO.File.Exists(file))
+            //                {
+            //                    var handler = new Permissions.XmlSupplier(file);
+            //                    if (handler.Load())
+            //                        Permissions.PermissionsManager.SetHandler(handler);
+            //                }
+            //            }
 
-//            Web.WebServer.Start("http://localhost:8448/");
+            //            Web.WebServer.Start("http://localhost:8448/");
         }
 
         /// <summary>
@@ -223,7 +237,7 @@ namespace OTA.Callbacks
                 Console.WriteLine("If you are compiling from source you must enable the Full_API compilation flag");
                 return false;
             }
-            #pragma warning restore 0162
+#pragma warning restore 0162
 
             Globals.CurrentState = ServerState.PreInitialisation; //This is to be before plugins and the web server. No event required.
             ProgramStart();
@@ -260,8 +274,8 @@ namespace OTA.Callbacks
 
             //Close the logging if set
             ProgramLog.Close();
-//            if (Tools.WriteClose != null)
-//                Tools.WriteClose.Invoke();
+            //            if (Tools.WriteClose != null)
+            //                Tools.WriteClose.Invoke();
         }
 
         /// <summary>
@@ -270,7 +284,7 @@ namespace OTA.Callbacks
         /// <remarks>This could have been in the XNA shims, but the client uses FNA/XNA and if our client is to work they require CIL modifications</remarks>
         public static void Initialise()
         {
-            #if Full_API
+#if Full_API
             if (Terraria.Main.dedServ)
             {
                 var ctx = new HookContext()
@@ -283,7 +297,7 @@ namespace OTA.Callbacks
                 };
                 HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
             }
-            #endif
+#endif
         }
 
         /// <summary>
@@ -291,18 +305,18 @@ namespace OTA.Callbacks
         /// </summary>
         public static void UpdateServerEnd()
         {
-//            Console.WriteLine("SE");
+            //            Console.WriteLine("SE");
             ///* Check tolled tasks */
             //Tasks.CheckTasks();
 
             if (UpdateServer != null)
                 UpdateServer(null, EventArgs.Empty);
 
-            #if Full_API
+#if Full_API
             for (var i = 0; i < Terraria.Netplay.Clients.Length; i++)
             {
                 var client = Terraria.Netplay.Clients[i];
-//                if (player.active)
+                //                if (player.active)
                 if (client != null && client.Socket != null && client.Socket is ClientConnection)
                 {
                     var conn = (client.Socket as ClientConnection);
@@ -310,7 +324,7 @@ namespace OTA.Callbacks
                         conn.Flush();
                 }
             }
-            #endif
+#endif
             //var ctx = new HookContext()
             //{
             //    Sender = HookContext.ConsoleSender
@@ -318,7 +332,7 @@ namespace OTA.Callbacks
             //var args = new HookArgs.UpdateServer();
             //HookPoints.UpdateServer.Invoke(ref ctx, ref args);
 
-            #if Full_API
+#if Full_API
             try
             {
                 if (MessageBufferCallback.PlayerCommands.Count > 0)
@@ -334,7 +348,7 @@ namespace OTA.Callbacks
             {
                 ProgramLog.Log(e, "Exception from user chat");
             }
-            #endif
+#endif
         }
 
         /// <summary>
@@ -456,7 +470,7 @@ namespace OTA.Callbacks
                 }*/
                     //_textTimeout = 0;
                 }
-            
+
                 //else if (Terraria.Main.oldStatusText == String.Empty && Terraria.Main.statusText == String.Empty)
                 //{
                 //    if (_textTimeout++ > 1000)
@@ -465,7 +479,7 @@ namespace OTA.Callbacks
                 //        Terraria.Main.statusText = String.Empty;
                 //    }
                 //}
-                #endif
+#endif
             }
             catch (Exception e)
             {
@@ -480,7 +494,7 @@ namespace OTA.Callbacks
         {
             var ctx = new HookContext();
             var args = new HookArgs.InvasionWarning();
-            
+
             HookPoints.InvasionWarning.Invoke(ref ctx, ref args);
             return ctx.Result == HookResult.DEFAULT; //Continue on
         }
