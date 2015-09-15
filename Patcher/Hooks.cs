@@ -102,8 +102,8 @@ namespace OTA.Patcher
 
             //Arguments
             il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
-//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_1));
-//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_2));
+            //            il.InsertBefore(first, il.Create(OpCodes.Ldarg_1));
+            //            il.InsertBefore(first, il.Create(OpCodes.Ldarg_2));
             il.InsertBefore(first, il.Create(OpCodes.Ldarga_S, mth.Parameters.Single(x => x.Name == "dmg")));
             il.InsertBefore(first, il.Create(OpCodes.Ldarga_S, mth.Parameters.Single(x => x.Name == "hitDirection")));
             il.InsertBefore(first, il.Create(OpCodes.Ldarga_S, mth.Parameters.Single(x => x.Name == "pvp")));
@@ -121,7 +121,7 @@ namespace OTA.Patcher
                               && (x.Operand as MethodReference).Name == "Concat")
                 .Reverse() /* Remove IL from the bottom up */
                 .ToArray();
-         
+
             foreach (var match in matches)
             {
                 il.Remove(match.Previous.Previous.Previous); //this
@@ -293,7 +293,7 @@ namespace OTA.Patcher
         [ClientHookAttribute]
         private void HookXNAEvents()
         {
-            foreach (var mth in new string[]{ "Draw", "Update", "UpdateClient"})
+            foreach (var mth in new string[] { "Draw", "Update", "UpdateClient" })
             {
                 var method = Terraria.Main.Methods.Single(x => x.Name == mth);
                 var begin = API.MainCallback.Methods.First(m => m.Name == "On" + mth + "Begin");
@@ -309,6 +309,29 @@ namespace OTA.Patcher
                 {
                     il.InsertBefore(ins, il.Create(OpCodes.Call, _asm.MainModule.Import(end)));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Hooks Begin and End of Terraria.WorldGen.clearWorld
+        /// </summary>
+        [ServerHook]
+        [ClientHook]
+        private void HookClearWorld()
+        {
+            var method = Terraria.WorldGen.Methods.Single(x => x.Name == "clearWorld");
+            var replacement = API.WorldFileCallback.Methods.First(m => m.Name == "ClearWorld");
+
+            var calls = _asm.MainModule.Types
+                .SelectMany(x => x.Methods)
+                .Where(y => y.HasBody)
+                .SelectMany(z => z.Body.Instructions)
+                .Where(ins => ins.OpCode == OpCodes.Call && ins.Operand is MethodReference && (ins.Operand as MethodReference).Name == "clearWorld")
+                .ToArray();
+
+            foreach(var ins in calls)
+            {
+                ins.Operand = _asm.MainModule.Import(replacement);
             }
         }
     }

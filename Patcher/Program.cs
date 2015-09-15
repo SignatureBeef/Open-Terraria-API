@@ -487,6 +487,8 @@ namespace OTA.Patcher
                 patcher.FixRandomErrors();
                 //            patcher.DetectMissingXNA();
 
+                patcher.HookWorldFile_DEBUG();
+
                 Console.Write("Ok\n");
                 patcher.InjectHooks<ServerHookAttribute>();
 
@@ -494,8 +496,10 @@ namespace OTA.Patcher
                 patcher.SwitchFramework("4.5.1");
                 Console.Write("Ok\nPatching Newtonsoft.Json...");
                 patcher.PatchJSON();
-
-                //            patcher.SwapToVanillaTile(); //Holy shit batman! it works
+                
+                Console.Write("Ok\nPutting Terraria on a diet...");
+                patcher.SwapToVanillaTile(); //Holy shit batman! it works
+                patcher.InjectTileSet();
 
                 Console.Write("Ok\n");
 

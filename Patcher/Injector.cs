@@ -1,4 +1,7 @@
-﻿using Mono.Cecil;
+﻿//For debugging, When MemTile is used as a vanilla style it doesnt have properties, it has fields
+//#define MEM_TILE_IS_VANILLA
+
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System;
 using System.IO;
@@ -116,7 +119,7 @@ namespace OTA.Patcher
         /// <param name="version">Version.</param>
         public void SwitchFramework(string version)
         {
-//            _asm.MainModule.RuntimeVersion = "";
+            //            _asm.MainModule.RuntimeVersion = "";
 
             for (var x = 0; x < _asm.CustomAttributes.Count; x++)
             {
@@ -213,9 +216,18 @@ namespace OTA.Patcher
         {
             var memTile = _self.MainModule.Types.Single(x => x.Name == "MemTile");
             var vt = _asm.MainModule.Import(memTile);
-            var setCall = _asm.MainModule.Import(memTile.Methods.Single(x => x.Name == "SetTile"));
-//            var emptyTile = _asm.MainModule.Import(memTile.Fields.Single(x => x.Name == "Empty"));
+
+            //            MethodReference setCall = null;
+            //#if !MEM_TILE_IS_VANILLA
+            //            var memSetCall = memTile.Methods.SingleOrDefault(x => x.Name == "SetTile");
+            //            if (memSetCall != null) setCall = _asm.MainModule.Import(memSetCall);
+            //#endif
+            //            var emptyTile = _asm.MainModule.Import(memTile.Fields.Single(x => x.Name == "Empty"));
             //var vt = _asm.MainModule.Import(_self.MainModule.Types.Single(x => x.Name == "VanillaTile"));
+
+            var tileSet = _self.MainModule.Types.Single(x => x.Name == "TileCollection");
+            var setCall = _asm.MainModule.Import(tileSet.Methods.SingleOrDefault(x => x.Name == "SetTile"));
+            var getCall = _asm.MainModule.Import(tileSet.Methods.SingleOrDefault(x => x.Name == "GetTile"));
 
             if (ty.Name != "Tile")
             {
@@ -262,11 +274,17 @@ namespace OTA.Patcher
 
                                 //                                if (mth.Name == "clearWorld")
                                 {
-//                                    var sss = "";
+                                    //                                    var sss = "";
                                     if (ins.OpCode == OpCodes.Call && ins.Operand is MemberReference)
                                     {
                                         var mr = ins.Operand as MemberReference;
-                                        if (mr.Name == "Set" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.Name == "MemTile")
+
+                                        if (setCall != null && mr.Name == "Set" && mr.DeclaringType is ArrayType)
+                                        {
+                                            var asd = "";
+                                        }
+
+                                        if (setCall != null && mr.Name == "Set" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.Name == "MemTile")
                                         {
                                             //Swap
                                             var il = mth.Body.GetILProcessor();
@@ -278,27 +296,75 @@ namespace OTA.Patcher
 
                                             //Remove previous instructions to remove the array instance
 
-                                            var iii = ins.Previous;
-                                            while (true)
-                                            {
+                                            //bool remove = true;
+                                            //var iii = ins.Previous;
+                                            //while (true)
+                                            //{
+                                            //    //Currently the LiquidRender tiles are not a TileCollection
+                                            //    if ((iii.Operand is FieldReference
+                                            //        && (iii.Operand as FieldReference).Name == "_tiles" ||
+                                            //        (iii.Operand is MethodReference && (iii.Operand as MethodReference).Name == "get__tiles")))
+                                            //    {
+                                            //        remove = false;
+                                            //        break;
+                                            //    }
 
-                                                if ((iii.Operand is FieldReference
-                                                    && (iii.Operand as FieldReference).Name == "tile") ||
-                                                    (iii.Operand is MethodReference && (iii.Operand as MethodReference).Name == "get__tiles"))
-                                                {
-                                                    il.Remove(iii);
-                                                    i--;
-                                                    break;
-                                                }
-                                                else
-                                                {
-                                                    //                                                    il.Remove(ins.Previous);
-                                                    iii = iii.Previous;
-                                                    //                                                    i--;
-                                                }
-                                            }
+                                            //    if ((iii.Operand is FieldReference
+                                            //        && (iii.Operand as FieldReference).Name == "tile"))
+                                            //    {
+                                            //        il.Remove(iii);
+                                            //        i--;
+                                            //        break;
+                                            //    }
+                                            //    else
+                                            //    {
+                                            //        //                                                    il.Remove(ins.Previous);
+                                            //        iii = iii.Previous;
+                                            //        //                                                    i--;
+                                            //    }
+                                            //}
 
-                                            il.Replace(ins, il.Create(OpCodes.Call, setCall));
+                                            ins.Operand = _asm.MainModule.Import(setCall);
+                                            //if (remove) il.Replace(ins, il.Create(OpCodes.Call, setCall));
+                                        }
+
+                                        if (getCall != null && mr.Name == "Get" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.Name == "MemTile")
+                                        {
+                                            //Swap
+                                            var il = mth.Body.GetILProcessor();
+                                            //Remove previous instructions to remove the array instance
+
+                                            //bool remove = true;
+                                            //var iii = ins.Previous;
+                                            //while (true)
+                                            //{
+                                            //    if ((iii.Operand is FieldReference
+                                            //        && (iii.Operand as FieldReference).Name == "_tiles") ||
+                                            //        (iii.Operand is MethodReference && (iii.Operand as MethodReference).Name == "get__tiles"))
+                                            //    {
+                                            //        remove = false;
+                                            //        break;
+                                            //    }
+
+                                            //    if (
+                                            //        (iii.Operand is FieldReference
+                                            //        && (iii.Operand as FieldReference).Name == "tile"))
+                                            //    {
+                                            //        //il.Remove(iii);
+                                            //        i--;
+                                            //        break;
+                                            //    }
+                                            //    else
+                                            //    {
+                                            //        //                                                    il.Remove(ins.Previous);
+                                            //        iii = iii.Previous;
+                                            //        //                                                    i--;
+                                            //    }
+                                            //}
+
+                                            ins.Operand = _asm.MainModule.Import(getCall);
+                                            //if (remove)
+                                            //    il.Replace(iii, il.Create(OpCodes.Call, getCall));
                                         }
                                     }
                                 }
@@ -466,17 +532,29 @@ namespace OTA.Patcher
                                         var il = mth.Body.GetILProcessor();
                                         if (ins.OpCode == OpCodes.Ldfld)
                                         {
+#if MEM_TILE_IS_VANILLA
+                                            //Get
+                                            var prop = _asm.MainModule.Import(vt.Resolve().Fields.Single(x => x.Name == fld.Name));
+                                            ins.Operand = prop;
+#else
                                             //Get
                                             var prop = _asm.MainModule.Import(vt.Resolve().Properties.Single(x => x.Name == fld.Name).GetMethod);
 
                                             il.Replace(ins, il.Create(OpCodes.Callvirt, prop));
+#endif
                                         }
                                         else if (ins.OpCode == OpCodes.Stfld)
                                         {
+#if MEM_TILE_IS_VANILLA
+                                            //Set
+                                            var prop = _asm.MainModule.Import(vt.Resolve().Fields.Single(x => x.Name == fld.Name));
+                                            ins.Operand = prop;
+#else
                                             //Set
                                             var prop = _asm.MainModule.Import(vt.Resolve().Properties.Single(x => x.Name == fld.Name).SetMethod);
 
                                             il.Replace(ins, il.Create(OpCodes.Callvirt, prop));
+#endif
                                         }
                                         else
                                         {
@@ -505,7 +583,7 @@ namespace OTA.Patcher
                                 }
                                 else if (ins.Operand is MemberReference)
                                 {
-//                                    var mem = ins.Operand as MemberReference;
+                                    //                                    var mem = ins.Operand as MemberReference;
                                     //if (mem..Name == "Tile")
                                     //{
                                     //    vrb.VariableType = SwapToVanillaReference(vrb.VariableType, vt);
@@ -531,9 +609,29 @@ namespace OTA.Patcher
             {
                 SwapVanillaType(ty);
             }
+
+            //Swap the constructor
+            var mainCctor = Terraria.Main.Methods.Single(x => x.Name == ".cctor");
+            var constructor = _asm.MainModule.Import(_self.MainModule.Types.Single(x => x.Name == "TileCollection").Methods.Single(y => y.Name == ".ctor"));
+
+            var il = mainCctor.Body.GetILProcessor();
+            var ins = mainCctor.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
+                                 && x.Operand is MethodReference
+                                 && (x.Operand as MethodReference).Name == ".ctor"
+                                 && (x.Operand as MethodReference).DeclaringType is ArrayType
+                                 && ((x.Operand as MethodReference).DeclaringType as ArrayType).ElementType.Name == "MemTile");
+            ins.Operand = constructor;
         }
 
         #endregion
+
+        public void InjectTileSet()
+        {
+            var ts = _self.MainModule.Types.Single(x => x.Name == "TileCollection");
+            var tm = _asm.MainModule.Types.Single(x => x.Name == "Main").Fields.Single(x => x.Name == "tile");
+
+            tm.FieldType = _asm.MainModule.Import(ts);
+        }
 
         /// <summary>
         /// Applies the patch so OTA can select what server states are valid
@@ -973,7 +1071,7 @@ namespace OTA.Patcher
             il = method.Body.GetILProcessor();
             il.InsertBefore(method.Body.Instructions.First(), il.Create(OpCodes.Call, _asm.MainModule.Import(callbackBegin)));
 
-//            var old = method.Body.Instructions.Last();
+            //            var old = method.Body.Instructions.Last();
             var newI = il.Create(OpCodes.Call, _asm.MainModule.Import(callbackEnd));
 
             for (var x = 0; x < method.Body.Instructions.Count; x++)
@@ -1406,7 +1504,7 @@ namespace OTA.Patcher
             var initialise = Terraria.Main.Methods.Single(x => x.Name == "Initialize");
             var loc = initialise.Body.Instructions
                 .Where(x => x.OpCode == OpCodes.Ldsfld && x.Operand is FieldDefinition)
-                      //.Select(x => x.Operand as FieldDefinition)
+                //.Select(x => x.Operand as FieldDefinition)
                 .Single(x => (x.Operand as FieldDefinition).Name == "skipMenu");
             var il = initialise.Body.GetILProcessor();
             il.InsertBefore(loc, il.Create(OpCodes.Ret));
@@ -1635,7 +1733,7 @@ namespace OTA.Patcher
 
             var tl = _asm.MainModule.Types.Single(x => x.Name == "Tile");
             MethodDefinition opInequality;
-//            MethodDefinition opEquality;
+            //            MethodDefinition opEquality;
             //Add operators that call a static API function for comparisions
 
 
@@ -1672,7 +1770,7 @@ namespace OTA.Patcher
             //We're storing one local variable
             method.Body.Variables.Add(new VariableDefinition(boolType));
 
-//            opEquality = method;
+            //            opEquality = method;
             tl.Methods.Add(method);
 
             //Do != operator
@@ -1759,26 +1857,26 @@ namespace OTA.Patcher
                 }
             }
 
-//            //Section 2 for inequality
-//            foreach (var mtd in _asm.MainModule.Types
-//                     .SelectMany(x => x.Methods)
-//                     .Where(y => y.Body != null && y.Body.Instructions.Where(z =>
-//                                                                    z.OpCode == OpCodes.Newobj
-//                                                                    && z.Operand is MethodReference
-//                                                                    && (z.Operand as MethodReference).DeclaringType.FullName == ("Terraria.Tile")
-//                                                                    ).Count() > 0))
-//            {
-//                var instructions = mtd.Body.Instructions.Where(z =>
-//                                                               z.OpCode == OpCodes.Newobj
-//                                       && z.Operand is MethodReference
-//                                       && (z.Operand as MethodReference).DeclaringType.FullName == ("Terraria.Tile")
-//                                   ).ToArray();
-//                var mil = mtd.Body.GetILProcessor();
-//                foreach (var ins in instructions)
-//                {
-//
-//                }
-//            }
+            //            //Section 2 for inequality
+            //            foreach (var mtd in _asm.MainModule.Types
+            //                     .SelectMany(x => x.Methods)
+            //                     .Where(y => y.Body != null && y.Body.Instructions.Where(z =>
+            //                                                                    z.OpCode == OpCodes.Newobj
+            //                                                                    && z.Operand is MethodReference
+            //                                                                    && (z.Operand as MethodReference).DeclaringType.FullName == ("Terraria.Tile")
+            //                                                                    ).Count() > 0))
+            //            {
+            //                var instructions = mtd.Body.Instructions.Where(z =>
+            //                                                               z.OpCode == OpCodes.Newobj
+            //                                       && z.Operand is MethodReference
+            //                                       && (z.Operand as MethodReference).DeclaringType.FullName == ("Terraria.Tile")
+            //                                   ).ToArray();
+            //                var mil = mtd.Body.GetILProcessor();
+            //                foreach (var ins in instructions)
+            //                {
+            //
+            //                }
+            //            }
         }
 
         /// <summary>
@@ -1790,7 +1888,7 @@ namespace OTA.Patcher
                 .Where(x => x.Name.StartsWith("Terraria"))
                 .ToArray();
 
-//            Console.WriteLine("Changing {0} references to {1}", terrariaReferences.Length, _asm.Name.Name);
+            //            Console.WriteLine("Changing {0} references to {1}", terrariaReferences.Length, _asm.Name.Name);
             foreach (var item in terrariaReferences)
             {
                 item.Name = _asm.Name.Name;
@@ -1842,7 +1940,7 @@ namespace OTA.Patcher
             var xnaFramework = _asm.MainModule.AssemblyReferences
                 .Where(x => x.Name.StartsWith("Newtonsoft"))
                 .ToArray();
-            
+
             for (var x = 0; x < xnaFramework.Length; x++)
             {
                 xnaFramework[x].Version = new Version("7.0.0.0");
@@ -1855,18 +1953,18 @@ namespace OTA.Patcher
         public void PatchSteam()
         {
             //Not finished
-//            return;
-//            var xnaFramework = _asm.MainModule.AssemblyReferences
-//                .Where(x => x.Name.StartsWith("Steamworks.NET"))
-//                .ToArray();
-//
-//            for (var x = 0; x < xnaFramework.Length; x++)
-//            {
-//                xnaFramework[x].Name = _self.Name.Name;
-//                xnaFramework[x].PublicKey = _self.Name.PublicKey;
-//                xnaFramework[x].PublicKeyToken = _self.Name.PublicKeyToken;
-//                xnaFramework[x].Version = _self.Name.Version;
-//            }
+            //            return;
+            //            var xnaFramework = _asm.MainModule.AssemblyReferences
+            //                .Where(x => x.Name.StartsWith("Steamworks.NET"))
+            //                .ToArray();
+            //
+            //            for (var x = 0; x < xnaFramework.Length; x++)
+            //            {
+            //                xnaFramework[x].Name = _self.Name.Name;
+            //                xnaFramework[x].PublicKey = _self.Name.PublicKey;
+            //                xnaFramework[x].PublicKeyToken = _self.Name.PublicKeyToken;
+            //                xnaFramework[x].Version = _self.Name.Version;
+            //            }
         }
 
         /// <summary>
@@ -2570,7 +2668,7 @@ namespace OTA.Patcher
                 _asm.MainModule.Name = fileName;
 
                 //Change the uniqueness from what Terraria has, to something different (that way vanilla isn't picked up by assembly resolutions)
-//                var g = _asm.CustomAttributes.Single(x => x.AttributeType.Name == "GuidAttribute");
+                //                var g = _asm.CustomAttributes.Single(x => x.AttributeType.Name == "GuidAttribute");
 
                 for (var x = 0; x < _asm.CustomAttributes.Count; x++)
                 {
@@ -2597,13 +2695,13 @@ namespace OTA.Patcher
                 }
             }
 
-//            foreach (var mod in _asm.Modules)
-//            {
-//                for (var x = mod.Resources.Count - 1; x >= 0; x--)
-//                {
-//                    mod.Resources.RemoveAt(x);
-//                }
-//            }
+            //            foreach (var mod in _asm.Modules)
+            //            {
+            //                for (var x = mod.Resources.Count - 1; x >= 0; x--)
+            //                {
+            //                    mod.Resources.RemoveAt(x);
+            //                }
+            //            }
 
             //_asm.Write(fileName);
             using (var fs = File.OpenWrite(fileName))

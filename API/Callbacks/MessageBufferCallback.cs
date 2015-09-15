@@ -32,17 +32,17 @@ namespace OTA.Callbacks
         /// <param name="length">Length of the net message.</param>
         public static byte ProcessPacket(int bufferId, byte packetId, int start, int length)
         {
-            #if Full_API
+#if Full_API
             //ProgramLog.Debug.Log("Slot/Packet: {0}/{1}", bufferId, packetId);
             //Console.WriteLine("Trace: {0}", Environment.StackTrace);
             switch ((Packet)packetId)
             {
-            /* Misc / Command */
+                /* Misc / Command */
                 case Packet.PLAYER_CHAT:
                     ProcessChat(bufferId); //Returns
                     return 0;
 
-            /* Cheat protection */
+                /* Cheat protection */
                 case Packet.TILE_BREAK:
                     ProcessTileBreak(bufferId); //Returns
                     return 0;
@@ -71,7 +71,7 @@ namespace OTA.Callbacks
                     ProcessNPCStrike(bufferId);
                     return 0;
 
-            /* Password handling */
+                /* Password handling */
                 case Packet.PASSWORD_RESPONSE: //Returns
                     ProcessPassword(bufferId);
                     return 0;
@@ -88,13 +88,13 @@ namespace OTA.Callbacks
             {
                 Connection = Netplay.Clients[bufferId].Socket,
                 Player = Main.player[bufferId],
-                Sender = Main.player[bufferId] 
+                Sender = Main.player[bufferId]
             };
             var args = new HookArgs.ReceiveNetMessage()
             {
                 BufferId = bufferId,
-                PacketId = packetId,   
-                Start = start,   
+                PacketId = packetId,
+                Start = start,
                 Length = length
             };
             HookPoints.ReceiveNetMessage.Invoke(ref ctx, ref args);
@@ -109,9 +109,9 @@ namespace OTA.Callbacks
             }
 
             return packetId;
-            #else
+#else
             return 0;
-            #endif
+#endif
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace OTA.Callbacks
         /// <returns></returns>
         public static bool CheckForInvalidState(int bufferId, byte packetId)
         {
-            #if Full_API
+#if Full_API
             var res = Main.netMode == 2 && Netplay.Clients[bufferId].State < 10
                       && packetId > 12 && packetId != 93 && packetId != 16 && packetId != 42
                       && packetId != 50 && packetId != 38 && packetId != 68;
@@ -130,12 +130,12 @@ namespace OTA.Callbacks
                 return false;
 
             return res;
-            #else
+#else
             return false;
-            #endif
+#endif
         }
 
-        #if Full_API
+#if Full_API
 
         private static void ProcessNPCStrike(int bufferId)
         {
@@ -191,7 +191,7 @@ namespace OTA.Callbacks
                 X = x,
                 Y = y,
                 Direction = direction,
-                Kind = kind 
+                Kind = kind
             };
             var ctx = new HookContext()
             {
@@ -488,13 +488,14 @@ namespace OTA.Callbacks
                 {
                     if (Main.tile[x, y] == null)
                     {
-                        
-#if Full_API && !MemTile
+
+#if Full_API && !MemTile && !VANILLACOMPAT
                         Main.tile[x, y] = new Tile();
-                        
 #elif Full_API && MemTile
                         Main.tile[x, y] = new OTA.Memory.MemTile(x, y);
-                        #endif
+#elif Full_API && VANILLACOMPAT && TileReady
+                        Main.tile[x, y] = new OTA.Memory.MemTile();
+#endif
                     }
                     var tile = Main.tile[x, y];
                     bool flag7 = tile.active();
@@ -632,13 +633,15 @@ namespace OTA.Callbacks
 
             if (Main.tile[x, y] == null)
             {
-                
-#if Full_API && !MemTile
+
+#if Full_API && !MemTile && !VANILLACOMPAT
                 Main.tile[x, y] = new Tile();
                 
 #elif Full_API && MemTile
                 Main.tile[x, y] = new OTA.Memory.MemTile(x, y);
-                #endif
+#elif Full_API && VANILLACOMPAT && TileReady
+                Main.tile[x, y] = new OTA.Memory.MemTile();
+#endif
             }
             lock (Main.tile[x, y])
             {
@@ -922,7 +925,7 @@ namespace OTA.Callbacks
                 }
             }
 
-//            string address = player.IPAddress.Split(':')[0];
+            //            string address = player.IPAddress.Split(':')[0];
             //            if (!data.BansChecked)
             //            {
             //                if (Server.Bans.Contains(address) || Server.Bans.Contains(data.Name))
@@ -1347,13 +1350,14 @@ namespace OTA.Callbacks
 
             if (Main.tile[x, y] == null)
             {
-                
-#if Full_API && !MemTile
+
+#if Full_API && !MemTile && !VANILLACOMPAT
                 Main.tile[x, y] = new Tile();
-                
 #elif Full_API && MemTile
                 Main.tile[x, y] = new OTA.Memory.MemTile(x, y);
-                #endif
+#elif Full_API && VANILLACOMPAT && TileReady
+                Main.tile[x, y] = new OTA.Memory.MemTile();
+#endif
             }
 
             if (Main.netMode == 2)
@@ -1452,100 +1456,100 @@ namespace OTA.Callbacks
             var chatText = buffer.reader.ReadString();
 
             PlayerCommands.Enqueue(new PlayerCommandReceived()
-                {
-                    BufferId = bufferId,
-                    Message = chatText
-                });
+            {
+                BufferId = bufferId,
+                Message = chatText
+            });
             return;
-//            var player = Main.player[bufferId];
-//            var color = Color.White;
-//
-//            if (Main.netMode != 2)
-//                return;
-//
-//            var lowered = chatText.ToLower();
-//            if (lowered == Lang.mp[6] || lowered == Lang.mp[21])
-//            {
-//                var players = "";
-//                for (int i = 0; i < 255; i++)
-//                {
-//                    if (Main.player[i].active)
-//                    {
-//                        if (players.Length > 0)
-//                            players += ", ";
-//                        players += Main.player[i].name;
-//                    }
-//                }
-//                NetMessage.SendData(25, bufferId, -1, Lang.mp[7] + " " + players + ".", 255, 255, 240, 20, 0, 0, 0);
-//                return;
-//            }
-//            else if (lowered.StartsWith("/me "))
-//            {
-//                NetMessage.SendData(25, -1, -1, "*" + Main.player[bufferId].name + " " + chatText.Substring(4), 255, 200, 100, 0, 0, 0, 0);
-//                return;
-//            }
-//            else if (lowered == Lang.mp[8])
-//            {
-//                NetMessage.SendData(25, -1, -1, string.Concat(new object[]
-//                        {
-//                            "*",
-//                            Main.player[bufferId].name,
-//                            " ",
-//                            Lang.mp[9],
-//                            " ",
-//                            Main.rand.Next(1, 101)
-//                        }), 255, 255, 240, 20, 0, 0, 0);
-//                return;
-//            }
-//            else if (lowered.StartsWith("/p "))
-//            {
-//                int team = Main.player[bufferId].team;
-//                color = Main.teamColor[team];
-//                if (team != 0)
-//                {
-//                    for (int num74 = 0; num74 < 255; num74++)
-//                    {
-//                        if (Main.player[num74].team == team)
-//                        {
-//                            NetMessage.SendData(25, num74, -1, chatText.Substring(3), bufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
-//                        }
-//                    }
-//                    return;
-//                }
-//                NetMessage.SendData(25, bufferId, -1, Lang.mp[10], 255, 255, 240, 20, 0, 0, 0);
-//                return;
-//            }
-//            else
-//            {
-//                if (Main.player[bufferId].difficulty == 2)
-//                    color = Main.hcColor;
-//                else if (Main.player[bufferId].difficulty == 1)
-//                    color = Main.mcColor;
-//
-//                var ctx = new HookContext
-//                {
-//                    Connection = player.Connection.Socket,
-//                    Sender = player,
-//                    Player = player
-//                };
-//
-//                var args = new HookArgs.PlayerChat
-//                {
-//                    Message = chatText,
-//                    Color = color
-//                };
-//
-//                HookPoints.PlayerChat.Invoke(ref ctx, ref args);
-//
-//                if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
-//                    return;
-//
-//                NetMessage.SendData(25, -1, -1, chatText, bufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
-//                if (Main.dedServ)
-//                {
-//                    ProgramLog.Chat.Log("<" + Main.player[bufferId].name + "> " + chatText);
-//                }
-//            }
+            //            var player = Main.player[bufferId];
+            //            var color = Color.White;
+            //
+            //            if (Main.netMode != 2)
+            //                return;
+            //
+            //            var lowered = chatText.ToLower();
+            //            if (lowered == Lang.mp[6] || lowered == Lang.mp[21])
+            //            {
+            //                var players = "";
+            //                for (int i = 0; i < 255; i++)
+            //                {
+            //                    if (Main.player[i].active)
+            //                    {
+            //                        if (players.Length > 0)
+            //                            players += ", ";
+            //                        players += Main.player[i].name;
+            //                    }
+            //                }
+            //                NetMessage.SendData(25, bufferId, -1, Lang.mp[7] + " " + players + ".", 255, 255, 240, 20, 0, 0, 0);
+            //                return;
+            //            }
+            //            else if (lowered.StartsWith("/me "))
+            //            {
+            //                NetMessage.SendData(25, -1, -1, "*" + Main.player[bufferId].name + " " + chatText.Substring(4), 255, 200, 100, 0, 0, 0, 0);
+            //                return;
+            //            }
+            //            else if (lowered == Lang.mp[8])
+            //            {
+            //                NetMessage.SendData(25, -1, -1, string.Concat(new object[]
+            //                        {
+            //                            "*",
+            //                            Main.player[bufferId].name,
+            //                            " ",
+            //                            Lang.mp[9],
+            //                            " ",
+            //                            Main.rand.Next(1, 101)
+            //                        }), 255, 255, 240, 20, 0, 0, 0);
+            //                return;
+            //            }
+            //            else if (lowered.StartsWith("/p "))
+            //            {
+            //                int team = Main.player[bufferId].team;
+            //                color = Main.teamColor[team];
+            //                if (team != 0)
+            //                {
+            //                    for (int num74 = 0; num74 < 255; num74++)
+            //                    {
+            //                        if (Main.player[num74].team == team)
+            //                        {
+            //                            NetMessage.SendData(25, num74, -1, chatText.Substring(3), bufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
+            //                        }
+            //                    }
+            //                    return;
+            //                }
+            //                NetMessage.SendData(25, bufferId, -1, Lang.mp[10], 255, 255, 240, 20, 0, 0, 0);
+            //                return;
+            //            }
+            //            else
+            //            {
+            //                if (Main.player[bufferId].difficulty == 2)
+            //                    color = Main.hcColor;
+            //                else if (Main.player[bufferId].difficulty == 1)
+            //                    color = Main.mcColor;
+            //
+            //                var ctx = new HookContext
+            //                {
+            //                    Connection = player.Connection.Socket,
+            //                    Sender = player,
+            //                    Player = player
+            //                };
+            //
+            //                var args = new HookArgs.PlayerChat
+            //                {
+            //                    Message = chatText,
+            //                    Color = color
+            //                };
+            //
+            //                HookPoints.PlayerChat.Invoke(ref ctx, ref args);
+            //
+            //                if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
+            //                    return;
+            //
+            //                NetMessage.SendData(25, -1, -1, chatText, bufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
+            //                if (Main.dedServ)
+            //                {
+            //                    ProgramLog.Chat.Log("<" + Main.player[bufferId].name + "> " + chatText);
+            //                }
+            //            }
         }
 
         internal static void ProcessQueuedPlayerCommand(PlayerCommandReceived cmd)
@@ -1632,7 +1636,7 @@ namespace OTA.Callbacks
 
                 if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
                     return;
-                
+
                 if (ctx.Result == HookResult.RECTIFY)
                 {
                     //The a plugin is enforcing the format
@@ -1651,7 +1655,7 @@ namespace OTA.Callbacks
             }
 
         }
-        #endif
+#endif
     }
 
     /// <summary>

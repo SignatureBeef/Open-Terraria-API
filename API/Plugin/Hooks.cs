@@ -18,7 +18,7 @@ namespace OTA.Plugin
     {
         public static readonly HookPoint<HookArgs.ConsoleMessageReceived> ConsoleMessageReceived;
         public static readonly HookPoint<HookArgs.ConfigurationLine> ConfigurationLine;
-//        public static readonly HookPoint<HookArgs.StartDefaultServer> StartDefaultServer;
+        //        public static readonly HookPoint<HookArgs.StartDefaultServer> StartDefaultServer;
         //public static readonly HookPoint<HookArgs.StatusTextChanged> StatusTextChanged;
         //public static readonly HookPoint<HookArgs.UpdateServer> UpdateServer;
         public static readonly HookPoint<HookArgs.InvasionNPCSpawn> InvasionNPCSpawn;
@@ -105,8 +105,8 @@ namespace OTA.Plugin
         static HookPoints()
         {
             ConsoleMessageReceived = new HookPoint<HookArgs.ConsoleMessageReceived>("console-message-received");
-//            UnknownReceivedPacket = new HookPoint<HookArgs.UnknownReceivedPacket>("unknown-receive-packet");
-//            UnknownSendPacket = new HookPoint<HookArgs.UnknownSendPacket>("unknown-send-packet");
+            //            UnknownReceivedPacket = new HookPoint<HookArgs.UnknownReceivedPacket>("unknown-receive-packet");
+            //            UnknownSendPacket = new HookPoint<HookArgs.UnknownSendPacket>("unknown-send-packet");
             //PlayerTeleport = new HookPoint<HookArgs.PlayerTeleport>("player-teleport");
             ServerStateChange = new HookPoint<HookArgs.ServerStateChange>("server-state-change");
             NewConnection = new HookPoint<HookArgs.NewConnection>("new-connection");
@@ -147,7 +147,7 @@ namespace OTA.Plugin
             Command = new HookPoint<HookArgs.Command>("command");
             //WorldGeneration = new HookPoint<HookArgs.WorldGeneration>("world-generation");
             WorldRequestMessage = new HookPoint<HookArgs.WorldRequestMessage>("world-request-message");
-//            StartDefaultServer = new HookPoint<HookArgs.StartDefaultServer>("start-default-server");
+            //            StartDefaultServer = new HookPoint<HookArgs.StartDefaultServer>("start-default-server");
             //StatusTextChanged = new HookPoint<HookArgs.StatusTextChanged>("status-text-changed");
             SendNetMessage = new HookPoint<HookArgs.SendNetMessage>("send-net-message");
             ReceiveNetMessage = new HookPoint<HookArgs.ReceiveNetMessage>("receive-net-message");
@@ -313,10 +313,10 @@ namespace OTA.Plugin
         //    public string New { get; set; }
         //}
 
-//        public struct StartDefaultServer
-//        {
-//
-//        }
+        //        public struct StartDefaultServer
+        //        {
+        //
+        //        }
 
         public struct StartCommandProcessing
         {
@@ -332,9 +332,9 @@ namespace OTA.Plugin
 
         public struct UnkownReceivedPacket
         {
-            #if Full_API
+#if Full_API
             public ClientConnection Connection { get; set; }
-            #endif
+#endif
             public byte[] ReadBuffer { get; set; }
 
             public int Start { get; set; }
@@ -344,9 +344,9 @@ namespace OTA.Plugin
 
         public struct UnkownSendPacket
         {
-            #if Full_API
+#if Full_API
             public NetMessage Message { get; set; }
-            #endif
+#endif
             public int PacketId { get; set; }
 
             public int RemoteClient { get; set; }
@@ -465,119 +465,119 @@ namespace OTA.Plugin
 
             public int Parse(System.IO.BinaryReader reader, int at, int length)
             {
-                #if Full_API
+#if Full_API
 
-                reader.ReadByte (); //Ignore player id
+                reader.ReadByte(); //Ignore player id
 
-                SkinVariant = (int)MathHelper.Clamp ((float)(int)reader.ReadByte (), 0, 7);
-                Hair = (int)reader.ReadByte ();
+                SkinVariant = (int)MathHelper.Clamp((float)(int)reader.ReadByte(), 0, 7);
+                Hair = (int)reader.ReadByte();
                 if (Hair >= 134)
                     Hair = 0;
 
-                Name = reader.ReadString ().Trim ();
-                HairDye = reader.ReadByte ();
+                Name = reader.ReadString().Trim();
+                HairDye = reader.ReadByte();
 
                 BitsByte bb;
 
                 HideVisual = new bool[10];
-                bb = reader.ReadByte ();
+                bb = reader.ReadByte();
                 for (int i = 0; i < 8; i++)
-                    HideVisual [i] = bb [i];
+                    HideVisual[i] = bb[i];
 
-                bb = reader.ReadByte ();
+                bb = reader.ReadByte();
                 for (int i = 0; i < 2; i++)
-                    HideVisual [i + 8] = bb [i];
+                    HideVisual[i + 8] = bb[i];
 
-                HideMisc = reader.ReadByte ();
-                HairColor = reader.ReadRGB ();
-                SkinColor = reader.ReadRGB ();
-                EyeColor = reader.ReadRGB ();
-                ShirtColor = reader.ReadRGB ();
-                UnderShirtColor = reader.ReadRGB ();
-                PantsColor = reader.ReadRGB ();
-                ShoeColor = reader.ReadRGB ();
+                HideMisc = reader.ReadByte();
+                HairColor = reader.ReadRGB();
+                SkinColor = reader.ReadRGB();
+                EyeColor = reader.ReadRGB();
+                ShirtColor = reader.ReadRGB();
+                UnderShirtColor = reader.ReadRGB();
+                PantsColor = reader.ReadRGB();
+                ShoeColor = reader.ReadRGB();
 
-                bb = reader.ReadByte ();
+                bb = reader.ReadByte();
                 Difficulty = 0;
-                if (bb [0]) Difficulty += 1;
-                if (bb [1]) Difficulty += 2;
+                if (bb[0]) Difficulty += 1;
+                if (bb[1]) Difficulty += 2;
                 if (Difficulty > 2) Difficulty = 2;
 
-                ExtraAccessory = bb [2];
+                ExtraAccessory = bb[2];
 
-//                var start = at + 1 /*Skip player id */;
-//
-//                //                var playerId = (int)buf[at++];
-//                //            if (Main.netMode == 2)
-//                //            {
-//                //                num6 = bufferId;
-//                //            }
-//
-//                SkinVariant = (int)MathHelper.Clamp((float)buf[start++], 0, 7);
-//                Hair = (int)buf[start++];
-//                if (Hair >= 134)
-//                    Hair = 0;
-//
-//                int len = 0;
-//                while (true)
-//                {
-//                    len += buf[start] & 0x7F;
-//                    if (buf[start++] > 127)
-//                        len <<= 7;
-//                    else break;
-//                }
-//
-//                Logging.ProgramLog.Log("len: {0}", len);
-//
-////                start += len;
-//                Name = System.Text.Encoding.UTF8.GetString(buf, start, len).Trim();
-//
-//                HairDye = buf[start++];
-//                BitsByte bitsByte = buf[start++];
-//                HideVisual = new bool[10];
-//                for (int num7 = 0; num7 < 8; num7++)
-//                {
-//                    HideVisual[num7] = bitsByte[num7];
-//                }
-//                bitsByte = buf[start++];
-//                for (int num8 = 0; num8 < 2; num8++)
-//                {
-//                    HideVisual[num8 + 8] = bitsByte[num8];
-//                }
-//                HideMisc = buf[start++];
-//                HairColor = ParseColor(buf, ref start);
-//                SkinColor = ParseColor(buf, ref start);
-//
-//                Logging.ProgramLog.Log("R: {0},{1},{2}", SkinColor.R, SkinColor.G, SkinColor.B);
-//
-//                EyeColor = ParseColor(buf, ref start);
-//                ShirtColor = ParseColor(buf, ref start);
-//                UnderShirtColor = ParseColor(buf, ref start);
-//                PantsColor = ParseColor(buf, ref start);
-//                ShoeColor = ParseColor(buf, ref start);
-//                BitsByte bitsByte2 = buf[start++];
-//                Difficulty = 0;
-//                if (bitsByte2[0])
-//                {
-//                    Difficulty += 1;
-//                }
-//                if (bitsByte2[1])
-//                {
-//                    Difficulty += 2;
-//                }
-//                if (Difficulty > 2)
-//                {
-//                    Difficulty = 2;
-//                }
-//                ExtraAccessory = bitsByte2[2];
+                //                var start = at + 1 /*Skip player id */;
+                //
+                //                //                var playerId = (int)buf[at++];
+                //                //            if (Main.netMode == 2)
+                //                //            {
+                //                //                num6 = bufferId;
+                //                //            }
+                //
+                //                SkinVariant = (int)MathHelper.Clamp((float)buf[start++], 0, 7);
+                //                Hair = (int)buf[start++];
+                //                if (Hair >= 134)
+                //                    Hair = 0;
+                //
+                //                int len = 0;
+                //                while (true)
+                //                {
+                //                    len += buf[start] & 0x7F;
+                //                    if (buf[start++] > 127)
+                //                        len <<= 7;
+                //                    else break;
+                //                }
+                //
+                //                Logging.ProgramLog.Log("len: {0}", len);
+                //
+                ////                start += len;
+                //                Name = System.Text.Encoding.UTF8.GetString(buf, start, len).Trim();
+                //
+                //                HairDye = buf[start++];
+                //                BitsByte bitsByte = buf[start++];
+                //                HideVisual = new bool[10];
+                //                for (int num7 = 0; num7 < 8; num7++)
+                //                {
+                //                    HideVisual[num7] = bitsByte[num7];
+                //                }
+                //                bitsByte = buf[start++];
+                //                for (int num8 = 0; num8 < 2; num8++)
+                //                {
+                //                    HideVisual[num8 + 8] = bitsByte[num8];
+                //                }
+                //                HideMisc = buf[start++];
+                //                HairColor = ParseColor(buf, ref start);
+                //                SkinColor = ParseColor(buf, ref start);
+                //
+                //                Logging.ProgramLog.Log("R: {0},{1},{2}", SkinColor.R, SkinColor.G, SkinColor.B);
+                //
+                //                EyeColor = ParseColor(buf, ref start);
+                //                ShirtColor = ParseColor(buf, ref start);
+                //                UnderShirtColor = ParseColor(buf, ref start);
+                //                PantsColor = ParseColor(buf, ref start);
+                //                ShoeColor = ParseColor(buf, ref start);
+                //                BitsByte bitsByte2 = buf[start++];
+                //                Difficulty = 0;
+                //                if (bitsByte2[0])
+                //                {
+                //                    Difficulty += 1;
+                //                }
+                //                if (bitsByte2[1])
+                //                {
+                //                    Difficulty += 2;
+                //                }
+                //                if (Difficulty > 2)
+                //                {
+                //                    Difficulty = 2;
+                //                }
+                //                ExtraAccessory = bitsByte2[2];
 
                 return 0; //start - at;
-                #else
+#else
                 return 0;
-                #endif
+#endif
             }
 
-            #if Full_API
+#if Full_API
             public void Apply(Player player)
             {
                 player.difficulty = Difficulty;
@@ -600,7 +600,7 @@ namespace OTA.Plugin
 
                 Netplay.Clients[player.whoAmI].Name = Name;
             }
-            #endif
+#endif
 
             public static Color ParseColor(byte[] buf, ref int at)
             {
@@ -737,7 +737,7 @@ namespace OTA.Plugin
                     FlagsB &= (byte)~f;
             }
 
-            #if Full_API
+#if Full_API
             public void ApplyKeys(Player player)
             {
                 player.controlUp = ControlUp;
@@ -760,7 +760,7 @@ namespace OTA.Plugin
                 player.pulley = Pulley;
                 player.pulleyDir = PulleyDirection;
             }
-            #endif
+#endif
 
             public void Parse(byte[] buf, int at)
             {
@@ -791,9 +791,9 @@ namespace OTA.Plugin
 
             public int NetID { get; set; }
 
-            #if Full_API
+#if Full_API
             public Item Item { get; set; }
-            #endif
+#endif
 
             public void SetItem()
             {
@@ -882,15 +882,11 @@ namespace OTA.Plugin
                 }
             }
 
-            #if Full_API && !MemTile
+#if Full_API && !MemTile && !VANILLACOMPAT
             public Terraria.Tile Tile => Main.tile[X, Y];
-#elif Full_API && MemTile
-            public OTA.Memory.MemTile Tile
-            {
-                get
-                { return Main.tile[X, Y]; }
-            }
-            #endif
+#elif Full_API && (MemTile || VANILLACOMPAT) && TileReady
+            public OTA.Memory.MemTile Tile => Main.tile[X, Y];
+#endif
         }
 
         public struct DoorStateChanged
@@ -899,8 +895,8 @@ namespace OTA.Plugin
             /// Location of the player when the state was changed
             /// </summary>
             /// <value>The position.</value>
-            public Vector2 Position { get; set;}
-            
+            public Vector2 Position { get; set; }
+
             public int X { get; set; }
 
             public int Y { get; set; }
@@ -966,7 +962,7 @@ namespace OTA.Plugin
 
             public int ExistingIndex { get; set; }
 
-            #if Full_API
+#if Full_API
             internal Projectile projectile;
 
             public Projectile CreateProjectile()
@@ -1018,7 +1014,7 @@ namespace OTA.Plugin
             {
                 get { return Main.projectile[Id]; }
             }
-            #endif
+#endif
         }
 
         public struct KillProjectileReceived
@@ -1032,9 +1028,9 @@ namespace OTA.Plugin
 
         public struct Explosion
         {
-            #if Full_API
+#if Full_API
             public Projectile Source { get; set; }
-            #endif
+#endif
         }
 
         public struct ChestBreakReceived
@@ -1097,9 +1093,9 @@ namespace OTA.Plugin
             public int SignIndex { get; set; }
 
             public string Text { get; set; }
-            #if Full_API
+#if Full_API
             public Sign OldSign { get; set; }
-            #endif
+#endif
         }
 
         public struct PluginsLoaded
@@ -1115,9 +1111,9 @@ namespace OTA.Plugin
 
         public struct PlayerHurt
         {
-            #if Full_API
+#if Full_API
             public Player Victim { get; internal set; }
-            #endif
+#endif
             public int Damage { get; set; }
 
             public int HitDirection { get; set; }
@@ -1135,9 +1131,9 @@ namespace OTA.Plugin
 
         public struct NpcHurt
         {
-            #if Full_API
+#if Full_API
             public NPC Victim { get; set; }
-            #endif
+#endif
             public int Damage { get; set; }
 
             public int HitDirection { get; set; }
@@ -1159,9 +1155,9 @@ namespace OTA.Plugin
 
             public string Name { get; set; }
 
-            #if Full_API
+#if Full_API
             public NPC CreatedNpc { get; set; }
-            #endif
+#endif
         }
 
         public struct PlayerTriggeredEvent
