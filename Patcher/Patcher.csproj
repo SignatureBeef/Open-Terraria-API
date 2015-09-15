@@ -75,9 +75,6 @@
   <PropertyGroup>
     <StartupObject>OTA.Patcher.Program</StartupObject>
   </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyName>OTA.Patcher</AssemblyName>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
