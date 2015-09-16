@@ -26,7 +26,10 @@ namespace OTA.Callbacks
             //System.Console.WriteLine("Tile definition size: " + (System.Runtime.InteropServices.Marshal.SizeOf(typeof(Memory.MemTile))));
 #endif
             //Memory.MemTile.data = new byte[Terraria.Main.maxTilesX * Terraria.Main.maxTilesY * Memory.MemTile.TileDataSize];
+            Terraria.Main.tile = new OTA.Memory.TileCollection(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
             WorldGen.clearWorld();
+
+            GC.Collect();
         }
 
         public static void loadWorld(bool loadFromCloud)

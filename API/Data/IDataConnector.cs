@@ -166,6 +166,10 @@ namespace OTA.Data
         {
             internal set;
             get;
+//            get
+//            {
+//                return OTAContext.HasConnection();
+//            }
         }
 
         /// <summary>

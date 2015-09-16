@@ -113,10 +113,10 @@ namespace OTA.Callbacks
             using (var ctx = new OTA.Data.OTAContext())
             {
                 ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
-                {
-                    Username = "Test",
-                    Password = "Testing"
-                });
+                    {
+                        Username = "Test",
+                        Password = "Testing"
+                    });
 
                 ctx.SaveChanges();
             }
@@ -172,12 +172,17 @@ namespace OTA.Callbacks
             PluginManager.SetHookSource(typeof(HookPoints));
 
             //Load the logs
+            //TODO Why on earth did I put the log opening here?
             if (!ProgramLog.IsOpen)
             {
                 var logFile = Globals.DataPath + System.IO.Path.DirectorySeparatorChar + "server.log";
                 ProgramLog.OpenLogFile(logFile);
                 ConsoleSender.DefaultColour = ConsoleColor.Gray;
             }
+
+
+            if (OTA.Data.Storage.IsAvailable) ProgramLog.Admin.Log("Entity framework has a registered connection.");
+            else ProgramLog.Admin.Log("Entity framework has no registered connection.");
 
             //Load plugins
             PluginManager.LoadPlugins();
@@ -219,7 +224,12 @@ namespace OTA.Callbacks
 
                         if (asm.GetName().Name == "EntityFramework")
                         {
-                            OTA.Data.Storage.IsAvailable = true;
+//                            OTA.Data.Storage.IsAvailable = true;
+//                            OTA.Data.Storage.IsAvailable = Data.OTAContext.HasConnection();
+                            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
+                                .DefinedTypes
+                                .Where(x => x.Name == "OTAContext")
+                                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
                         }
                     }
                     catch (Exception e)

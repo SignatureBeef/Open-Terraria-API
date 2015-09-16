@@ -15,7 +15,18 @@ namespace OTA.Data
     {
         public static DbConfiguration Config;
 
-        public OTAContext() : this("terraria_ota") //ConnectionManager.ConnectionString)
+        public static bool HasConnection() => System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionNameOrString] != null;
+
+        const string DefaultConnection = "terraria_ota";
+
+        public static string ConnectionNameOrString { get; set; }
+
+        static OTAContext()
+        {
+            ConnectionNameOrString = DefaultConnection;
+        }
+
+        public OTAContext() : this(ConnectionNameOrString) //ConnectionManager.ConnectionString)
         {
 //            if (null != Config)
 //            {
@@ -29,7 +40,7 @@ namespace OTA.Data
         /// Initializes a new instance of the <see cref="OTA.Data.Models.OTAContext"/> class.
         /// </summary>
         /// <param name="nameOrConnectionString">Name or connection string. Default is terraria_ota</param>
-        public OTAContext(string nameOrConnectionString = "terraria_ota") : base(nameOrConnectionString)
+        public OTAContext(string nameOrConnectionString = DefaultConnection) : base(nameOrConnectionString)
         {
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = true;
