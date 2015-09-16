@@ -9,6 +9,7 @@ In this API it contains the tools to run a cross platform vanilla client or serv
  3. Drawing,Server,Player,NPC and World events (+more)
  4. Permissions system for player restrictions and privileges
  5. Optional Entity Framework 6 support (v7 soon) for cross platform database access [Tested: MSSql,MySQL,SQLite]
+ 6. Memory optimisations
 
 What makes this mod special is not only how quick updates are, but the capability to patch both the client and server binaries for each platform. This means you can write a generic cross platform plugin and have it work for both the client or server.
 
