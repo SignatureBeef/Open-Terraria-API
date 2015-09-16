@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using OTA.Data.Entity.Models;
 using System.Linq;
 using OTA.Permissions;
-using System.Threading.Tasks;
 
 namespace OTA.Data
 {
@@ -180,6 +179,9 @@ namespace OTA.Data
         /// <param name="player">Player.</param>
         public static Permission IsPermitted(string node, BasePlayer player)
         {
+            if (!IsAvailable)
+                throw new InvalidOperationException("No connector attached");
+            
             if (player != null)
             {
                 if (player.AuthenticatedAs != null)
@@ -193,6 +195,9 @@ namespace OTA.Data
 
         private static Permission IsPermitted(string prmNode, bool prmIsGuest, string prmAuthentication = null)
         {
+            if (!IsAvailable)
+                throw new InvalidOperationException("No connector attached");
+            
             var vPermissionValue = Permission.Denied;
             var vUserId = 0;
             var vGroupId = 0;
@@ -322,7 +327,7 @@ namespace OTA.Data
         /// <param name="name">Name.</param>
         public static Group FindGroup(string name)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
            
             using (var ctx = new OTAContext()) return ctx.Groups.SingleOrDefault(x => x.Name == name);
@@ -342,6 +347,9 @@ namespace OTA.Data
         /// <param name="suffix">Suffix.</param>
         public static Group AddOrUpdateGroup(string name, bool applyToGuests = false, string parent = null, byte r = 255, byte g = 255, byte b = 255, string prefix = null, string suffix = null)
         {
+            if (!IsAvailable)
+                throw new InvalidOperationException("No connector attached");
+            
             using (var ctx = new OTAContext())
             {
                 var group = ctx.Groups.SingleOrDefault(x => x.Name == name);
@@ -377,6 +385,9 @@ namespace OTA.Data
 
         public static NodePermission FindOrCreateNode(string node, Permission permission)
         {
+            if (!IsAvailable)
+                throw new InvalidOperationException("No connector attached");
+            
             using (var ctx = new OTAContext())
             {
                 var existing = ctx.Nodes.SingleOrDefault(x => x.Node == node && x.Permission == permission);
@@ -403,7 +414,7 @@ namespace OTA.Data
         /// <param name="name">Name.</param>
         public static bool RemoveGroup(string name)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
            
             using (var ctx = new OTAContext())
@@ -424,7 +435,7 @@ namespace OTA.Data
         /// <param name="deny">If set to <c>true</c> deny.</param>
         public static bool AddGroupNode(string groupName, string node, Permission permission)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -453,7 +464,7 @@ namespace OTA.Data
         /// <param name="deny">If set to <c>true</c> deny.</param>
         public static bool RemoveGroupNode(string groupName, string node, Permission permission)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -476,7 +487,7 @@ namespace OTA.Data
         /// <returns>The list.</returns>
         public static string[] GroupList()
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -492,7 +503,7 @@ namespace OTA.Data
         /// <param name="groupName">Group name.</param>
         public static NodePermission[] GroupNodes(string groupName)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -513,7 +524,7 @@ namespace OTA.Data
         /// <param name="groupName">Group name.</param>
         public static bool AddUserToGroup(string username, string groupName)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -545,7 +556,7 @@ namespace OTA.Data
         /// <param name="groupName">Group name.</param>
         public static bool RemoveUserFromGroup(string username, string groupName)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -573,7 +584,7 @@ namespace OTA.Data
         /// <param name="deny">If set to <c>true</c> deny.</param>
         public static bool AddNodeToUser(string username, string node, Permission permission)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -601,7 +612,7 @@ namespace OTA.Data
         /// <param name="deny">If set to <c>true</c> deny.</param>
         public static bool RemoveNodeFromUser(string username, string node, Permission permission)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -625,7 +636,7 @@ namespace OTA.Data
         /// <param name="username">Username.</param>
         public static string[] UserGroupList(string username)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -646,7 +657,7 @@ namespace OTA.Data
         /// <param name="username">Username.</param>
         public static NodePermission[] UserNodes(string username)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
 
             using (var ctx = new OTAContext())
@@ -667,7 +678,7 @@ namespace OTA.Data
         /// <param name="username">Username.</param>
         public static Group GetInheritedGroupForUser(string username)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
             
             using (var ctx = new OTAContext())

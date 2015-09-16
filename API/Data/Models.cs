@@ -4,6 +4,9 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.ComponentModel.DataAnnotations.Schema;
 using OTA.Data.Entity;
 using System.Data.Entity.Migrations.History;
+using OTA.Command;
+using System.Linq;
+using System;
 
 namespace OTA.Data
 {
@@ -16,6 +19,14 @@ namespace OTA.Data
         public static DbConfiguration Config;
 
         public static bool HasConnection() => System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionNameOrString] != null;
+
+        //TODO fix this hack - seems there is no IndexOf function in SQLite, so we need something in the ADO/EF dll for this.
+        //Maybe EF7 solves this (?)
+        public static bool IsSQLite
+        {
+            get;
+            private set;
+        }
 
         const string DefaultConnection = "terraria_ota";
 
@@ -82,7 +93,9 @@ namespace OTA.Data
             if (this.Database.Connection.GetType().Name == "SQLiteConnection") //Since we support SQLite as default, let's use this hack...
             {
                 Database.SetInitializer(new SqliteContextInitializer<OTAContext>(builder));
+                IsSQLite = true;
             }
+            else IsSQLite = false;
 
             builder.Entity<Group>()
                 .HasKey(x => x.Id)
@@ -129,6 +142,57 @@ namespace OTA.Data
                 .HasKey(x => new { x.Id })
                 .Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+        }
+
+        public void CreateDefaultGroups()
+        {
+            var pc = CommandParser.GetAvailableCommands(AccessLevel.PLAYER);
+            var ad = CommandParser.GetAvailableCommands(AccessLevel.OP);
+            var op = CommandParser.GetAvailableCommands(AccessLevel.CONSOLE); //Funny how these have now changed
+
+            CreateGroup("Guest", true, null, 255, 255, 255, pc
+                .Where(x => !String.IsNullOrEmpty(x.Value.Node))
+                .Select(x => x.Value.Node)
+                .Distinct()
+                .ToArray(), this);
+            CreateGroup("Admin", false, "Guest", 240, 131, 77, ad
+                .Where(x => !String.IsNullOrEmpty(x.Value.Node))
+                .Select(x => x.Value.Node)
+                .Distinct()
+                .ToArray(), this);
+            CreateGroup("Operator", false, "Admin", 77, 166, 240, op
+                .Where(x => !String.IsNullOrEmpty(x.Value.Node))
+                .Select(x => x.Value.Node)
+                .Distinct()
+                .ToArray(), this);
+        }
+
+        static void CreateGroup(string name, bool guest, string parent, byte r, byte g, byte b, string[] nodes, OTAContext ctx)
+        {
+            var grp = new Group()
+            {
+                Name = name,
+                ApplyToGuests = guest,
+                Parent = parent,
+                Chat_Red = r,
+                Chat_Green = g,
+                Chat_Blue = b
+            };
+            ctx.Groups.Add(grp);
+
+            ctx.SaveChanges(); //Save to get the ID
+
+            foreach (var nd in nodes)
+            {
+                var node = Storage.FindOrCreateNode(nd, Permission.Permitted);
+                ctx.GroupNodes.Add(new GroupNode()
+                    {
+                        GroupId = grp.Id,
+                        NodeId = node.Id 
+                    });
+            }
+
+            ctx.SaveChanges();
         }
     }
 }

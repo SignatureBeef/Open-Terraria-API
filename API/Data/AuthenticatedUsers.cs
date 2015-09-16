@@ -3,7 +3,6 @@ using OTA.Logging;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OTA.Data
 {
@@ -21,6 +20,16 @@ namespace OTA.Data
         public bool Operator { get; set; }
 
         public DateTime DateAddedUTC { get; set; }
+
+        public DbPlayer()
+        {
+        }
+
+        public DbPlayer(string name, string rawPassword)
+        {
+            this.Name = name;
+            this.Password = AuthenticatedUsers.Hash(name, rawPassword);
+        }
 
         public override string ToString()
         {
@@ -124,7 +133,15 @@ namespace OTA.Data
         {
             using (var ctx = new OTAContext())
             {
-                return ctx.Players
+                if (OTAContext.IsSQLite)
+                {
+                    var lowered = search.ToLower();
+                    return ctx.Players
+                        .Where(x => x.Name.Length >= search.Length && x.Name.Substring(0, search.Length).ToLower() == lowered)
+                        .Select(x => x.Name)
+                        .ToArray();
+                }
+                else return ctx.Players
                     .Where(x => x.Name.StartsWith(search))
                     .Select(x => x.Name)
                     .ToArray();
@@ -159,10 +176,8 @@ namespace OTA.Data
         {
             using (var ctx = new OTAContext())
             {
-                var player = ctx.Players.Add(new DbPlayer()
+                var player = ctx.Players.Add(new DbPlayer(username, password)
                     {
-                        Name = username,
-                        Password = password,
                         Operator = op,
                         DateAddedUTC = DateTime.UtcNow
                     });
