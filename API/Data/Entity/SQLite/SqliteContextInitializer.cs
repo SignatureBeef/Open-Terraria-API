@@ -5,6 +5,8 @@ using System.IO;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Core.Mapping;
 
 namespace OTA
 {
@@ -28,6 +30,34 @@ namespace OTA
         public SqliteContextInitializer(DbModelBuilder modelBuilder)
         {
             _modelBuilder = modelBuilder;
+        }
+
+        //<3 http://romiller.com/2014/04/08/ef6-1-mapping-between-types-tables/
+        public static string GetTableName(EntityType type, DbContext context)
+        {
+            var metadata = ((IObjectContextAdapter)context).ObjectContext.MetadataWorkspace;
+
+            // Get the entity set that uses this entity type
+            var entitySet = metadata
+                .GetItems<EntityContainer>(DataSpace.CSpace)
+                .Single()
+                .EntitySets
+                .Single(s => s.ElementType.Name == type.Name);
+
+            // Find the mapping between conceptual and storage model for this entity set
+            var mapping = metadata.GetItems<EntityContainerMapping>(DataSpace.CSSpace)
+                .Single()
+                .EntitySetMappings
+                .Single(s => s.EntitySet == entitySet);
+
+            // Find the storage entity set (table) that the entity is mapped
+            var table = mapping
+                .EntityTypeMappings.Single()
+                .Fragments.Single()
+                .StoreEntitySet;
+
+            // Return the table name from the storage entity set
+            return (string)table.MetadataProperties["Table"].Value ?? table.Name;
         }
 
         public void InitializeDatabase(T context)
@@ -56,7 +86,7 @@ namespace OTA
             {
                 try
                 {
-                    CreateDatabase(context.Database, model);
+                    CreateDatabase(context, model);
                     xact.Commit();
                 }
                 catch (Exception)
@@ -76,7 +106,7 @@ namespace OTA
             public List<string> Columns { get; set; }
         }
 
-        private void CreateDatabase(Database db, DbModel model)
+        private void CreateDatabase(T ctx, DbModel model)
         {
             const string tableTmpl = "CREATE TABLE [{0}] (\n{1}\n);";
             const string columnTmpl = "    [{0}] {1} {2}"; // name, type, decl
@@ -157,8 +187,9 @@ namespace OTA
                 }
 
                 // create table
-                var sql = string.Format(tableTmpl, type.Name, string.Join(",\n", defs));
-                db.ExecuteSqlCommand(sql);
+                var tableName = GetTableName(type, ctx) ?? type.Name;
+                var sql = string.Format(tableTmpl, tableName, string.Join(",\n", defs));
+                ctx.Database.ExecuteSqlCommand(sql);
             }
 
             // create index
@@ -166,7 +197,7 @@ namespace OTA
             {
                 var columns = string.Join(", ", index.Columns);
                 var sql = string.Format(indexTmpl, index.Name, index.Table, columns);
-                db.ExecuteSqlCommand(sql);
+                ctx.Database.ExecuteSqlCommand(sql);
             }
         }
     }

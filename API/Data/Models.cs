@@ -66,6 +66,9 @@ namespace OTA.Data
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
+            Logging.ProgramLog.Admin.Log("Initialising database for provider {0}", 
+                System.Configuration.ConfigurationManager.ConnectionStrings[OTAContext.ConnectionNameOrString].ProviderName);
+
             builder.Conventions.Remove<PluralizingTableNameConvention>();
 //            builder.Entity<HistoryRow>()
 //                .Property(h => h.MigrationId)
