@@ -487,7 +487,7 @@ namespace OTA.Patcher
                 patcher.FixRandomErrors();
                 //            patcher.DetectMissingXNA();
 
-                patcher.HookWorldFile_DEBUG();
+//                patcher.HookWorldFile_DEBUG();
 
                 Console.Write("Ok\n");
                 patcher.InjectHooks<ServerHookAttribute>();
