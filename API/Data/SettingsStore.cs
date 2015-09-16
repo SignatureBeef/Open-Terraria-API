@@ -26,7 +26,7 @@ namespace OTA.Data
         /// </summary>
         /// <param name="key">Key.</param>
         /// <param name="value">Value.</param>
-        public static async void Set(string key, string value)
+        public static void Set(string key, string value)
         {
             using (var ctx = new OTAContext())
             {
@@ -44,7 +44,7 @@ namespace OTA.Data
                         });
                 }
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
             }
         }
 

@@ -340,7 +340,7 @@ namespace OTA.Data
         /// <param name="b">The blue chat component.</param>
         /// <param name="prefix">Prefix.</param>
         /// <param name="suffix">Suffix.</param>
-        public async static Task<Group> AddOrUpdateGroup(string name, bool applyToGuests = false, string parent = null, byte r = 255, byte g = 255, byte b = 255, string prefix = null, string suffix = null)
+        public static Group AddOrUpdateGroup(string name, bool applyToGuests = false, string parent = null, byte r = 255, byte g = 255, byte b = 255, string prefix = null, string suffix = null)
         {
             using (var ctx = new OTAContext())
             {
@@ -369,13 +369,13 @@ namespace OTA.Data
                         });
                 }
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return group;
             }
         }
 
-        public static async Task<NodePermission> FindOrCreateNode(string node, Permission permission)
+        public static NodePermission FindOrCreateNode(string node, Permission permission)
         {
             using (var ctx = new OTAContext())
             {
@@ -389,7 +389,7 @@ namespace OTA.Data
                             Permission = permission
                         });
 
-                    await ctx.SaveChangesAsync();
+                    ctx.SaveChanges();
 
                     return existing;
                 }
@@ -401,7 +401,7 @@ namespace OTA.Data
         /// </summary>
         /// <returns><c>true</c>, if group was removed, <c>false</c> otherwise.</returns>
         /// <param name="name">Name.</param>
-        public static async Task<bool> RemoveGroup(string name)
+        public static bool RemoveGroup(string name)
         {
             if (IsAvailable)
                 throw new InvalidOperationException("No connector attached");
@@ -409,7 +409,7 @@ namespace OTA.Data
             using (var ctx = new OTAContext())
             {
                 var range = ctx.Groups.RemoveRange(ctx.Groups.Where(x => x.Name == name));
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return range.Any();
             }
@@ -422,7 +422,7 @@ namespace OTA.Data
         /// <param name="groupName">Group name.</param>
         /// <param name="node">Node.</param>
         /// <param name="deny">If set to <c>true</c> deny.</param>
-        public static async Task<bool> AddGroupNode(string groupName, string node, Permission permission)
+        public static bool AddGroupNode(string groupName, string node, Permission permission)
         {
             if (IsAvailable)
                 throw new InvalidOperationException("No connector attached");
@@ -430,7 +430,7 @@ namespace OTA.Data
             using (var ctx = new OTAContext())
             {
                 var group = ctx.Groups.Where(x => x.Name == groupName).SingleOrDefault();
-                var perm = await FindOrCreateNode(node, permission);
+                var perm = FindOrCreateNode(node, permission);
 
                 ctx.GroupNodes.Add(new GroupNode()
                     {
@@ -438,7 +438,7 @@ namespace OTA.Data
                         NodeId = perm.Id
                     });
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return true;
             }
@@ -451,7 +451,7 @@ namespace OTA.Data
         /// <param name="groupName">Group name.</param>
         /// <param name="node">Node.</param>
         /// <param name="deny">If set to <c>true</c> deny.</param>
-        public static async Task<bool> RemoveGroupNode(string groupName, string node, Permission permission)
+        public static bool RemoveGroupNode(string groupName, string node, Permission permission)
         {
             if (IsAvailable)
                 throw new InvalidOperationException("No connector attached");
@@ -464,7 +464,7 @@ namespace OTA.Data
                                                select nds
                             );
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return range.Any();
             }
@@ -511,7 +511,7 @@ namespace OTA.Data
         /// <returns><c>true</c>, if user to group was added, <c>false</c> otherwise.</returns>
         /// <param name="username">Username.</param>
         /// <param name="groupName">Group name.</param>
-        public static async Task<bool> AddUserToGroup(string username, string groupName)
+        public static bool AddUserToGroup(string username, string groupName)
         {
             if (IsAvailable)
                 throw new InvalidOperationException("No connector attached");
@@ -531,7 +531,7 @@ namespace OTA.Data
                         UserId = user.Id
                     });
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return true;
             }
@@ -543,7 +543,7 @@ namespace OTA.Data
         /// <returns><c>true</c>, if user from group was removed, <c>false</c> otherwise.</returns>
         /// <param name="username">Username.</param>
         /// <param name="groupName">Group name.</param>
-        public static async Task<bool> RemoveUserFromGroup(string username, string groupName)
+        public static bool RemoveUserFromGroup(string username, string groupName)
         {
             if (IsAvailable)
                 throw new InvalidOperationException("No connector attached");
@@ -558,7 +558,7 @@ namespace OTA.Data
                                     x.UserId == user.Id
                                 ));
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return range.Any();
             }
@@ -571,7 +571,7 @@ namespace OTA.Data
         /// <param name="username">Username.</param>
         /// <param name="node">Node.</param>
         /// <param name="deny">If set to <c>true</c> deny.</param>
-        public static async Task<bool> AddNodeToUser(string username, string node, Permission permission)
+        public static bool AddNodeToUser(string username, string node, Permission permission)
         {
             if (IsAvailable)
                 throw new InvalidOperationException("No connector attached");
@@ -579,14 +579,14 @@ namespace OTA.Data
             using (var ctx = new OTAContext())
             {
                 var user = ctx.Players.Single(x => x.Name == username);
-                var perm = await FindOrCreateNode(node, permission);
+                var perm = FindOrCreateNode(node, permission);
 
                 var range = ctx.PlayerNodes.RemoveRange(ctx.PlayerNodes.Where(x =>
                                     x.NodeId == perm.Id &&
                                     x.UserId == user.Id
                                 ));
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return range.Any();
             }
@@ -599,7 +599,7 @@ namespace OTA.Data
         /// <param name="username">Username.</param>
         /// <param name="node">Node.</param>
         /// <param name="deny">If set to <c>true</c> deny.</param>
-        public static async Task<bool> RemoveNodeFromUser(string username, string node, Permission permission)
+        public static bool RemoveNodeFromUser(string username, string node, Permission permission)
         {
             if (IsAvailable)
                 throw new InvalidOperationException("No connector attached");
@@ -612,7 +612,7 @@ namespace OTA.Data
                                     .Join(ctx.PlayerNodes, x => x.Id, y => y.UserId, (a, b) => b)
                             );
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return range.Any();
             }

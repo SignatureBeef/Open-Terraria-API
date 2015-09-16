@@ -136,13 +136,13 @@ namespace OTA.Data
         /// </summary>
         /// <returns><c>true</c>, if user was deleted, <c>false</c> otherwise.</returns>
         /// <param name="username">Username.</param>
-        public static async Task<bool> DeleteUser(string username)
+        public static bool DeleteUser(string username)
         {
             using (var ctx = new OTAContext())
             {
                 var range = ctx.Players.RemoveRange(ctx.Players.Where(x => x.Name == username));
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return range.Any();
             }
@@ -155,7 +155,7 @@ namespace OTA.Data
         /// <param name="username">Username.</param>
         /// <param name="password">Password.</param>
         /// <param name="op">If set to <c>true</c> op.</param>
-        public static async Task<DbPlayer> CreateUser(string username, string password, bool op = false)
+        public static DbPlayer CreateUser(string username, string password, bool op = false)
         {
             using (var ctx = new OTAContext())
             {
@@ -167,7 +167,7 @@ namespace OTA.Data
                         DateAddedUTC = DateTime.UtcNow
                     });
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return player;
             }
@@ -180,7 +180,7 @@ namespace OTA.Data
         /// <param name="username">Username.</param>
         /// <param name="password">Password.</param>
         /// <param name="op">If set to <c>true</c> op.</param>
-        public static async Task<bool> UpdateUser(string username, string password, bool? op = null)
+        public static bool UpdateUser(string username, string password, bool? op = null)
         {
             if (username == null && op == null) throw new InvalidOperationException("You have not specified anything to be updated");
             using (var ctx = new OTAContext())
@@ -191,7 +191,7 @@ namespace OTA.Data
                 if (password != null) player.Password = password;
                 if (op.HasValue) player.Operator = op.Value;
 
-                await ctx.SaveChangesAsync();
+                ctx.SaveChanges();
 
                 return true;
             }
