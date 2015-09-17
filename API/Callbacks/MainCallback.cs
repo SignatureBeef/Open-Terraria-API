@@ -147,15 +147,6 @@ namespace OTA.Callbacks
 
             try
             {
-                Test();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            try
-            {
                 var lis = new Logging.LogTraceListener();
                 System.Diagnostics.Trace.Listeners.Clear();
                 System.Diagnostics.Trace.Listeners.Add(lis);
@@ -180,12 +171,16 @@ namespace OTA.Callbacks
                 ConsoleSender.DefaultColour = ConsoleColor.Gray;
             }
 
+            //Load plugins
+            PluginManager.LoadPlugins();
+
+            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
+                .DefinedTypes
+                .Where(x => x.Name == "OTAContext")
+                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
 
             if (OTA.Data.Storage.IsAvailable) ProgramLog.Admin.Log("Entity framework has a registered connection.");
             else ProgramLog.Admin.Log("Entity framework has no registered connection.");
-
-            //Load plugins
-            PluginManager.LoadPlugins();
 
             //            if (!Permissions.PermissionsManager.IsSet)
             //            {
@@ -222,15 +217,15 @@ namespace OTA.Callbacks
                         var data = File.ReadAllBytes(file);
                         var asm = AppDomain.CurrentDomain.Load(data);
 
-                        if (asm.GetName().Name == "EntityFramework")
-                        {
-//                            OTA.Data.Storage.IsAvailable = true;
-//                            OTA.Data.Storage.IsAvailable = Data.OTAContext.HasConnection();
-                            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
-                                .DefinedTypes
-                                .Where(x => x.Name == "OTAContext")
-                                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
-                        }
+//                        if (asm.GetName().Name == "EntityFramework")
+//                        {
+////                            OTA.Data.Storage.IsAvailable = true;
+////                            OTA.Data.Storage.IsAvailable = Data.OTAContext.HasConnection();
+//                            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
+//                                .DefinedTypes
+//                                .Where(x => x.Name == "OTAContext")
+//                                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
+//                        }
                     }
                     catch (Exception e)
                     {

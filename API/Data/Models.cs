@@ -158,12 +158,11 @@ namespace OTA.Data
                 .Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
-            var ctx = HookContext.Empty;
-            var args = new HookArgs.DatabaseInitialise()
+            OTA.Logging.ProgramLog.Log("Calling hook");
+            foreach (var plg in PluginManager.EnumeratePlugins)
             {
-                Builder = builder
-            };
-            HookPoints.DatabaseInitialise.Invoke(ref ctx, ref args);
+                plg.InitialiseDatabase(builder);
+            }
         }
 
         public void CreateDefaultGroups()

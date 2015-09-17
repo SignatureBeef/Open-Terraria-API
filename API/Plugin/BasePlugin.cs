@@ -144,6 +144,13 @@ namespace OTA.Plugin
         {
         }
 
+        /// <summary>
+        /// Here the first ever DbContext should be called.
+        /// </summary>
+        protected virtual void DatabaseInitialising(System.Data.Entity.DbModelBuilder builder)
+        {
+        }
+
         protected virtual void WorldLoaded()
         {
         }
@@ -665,6 +672,21 @@ namespace OTA.Plugin
         {
             Interlocked.Decrement(ref runningCommands);
             threadInCommand = 0;
+        }
+
+        internal bool InitialiseDatabase(System.Data.Entity.DbModelBuilder builder)
+        {
+            try
+            {
+                DatabaseInitialising(builder);
+            }
+            catch (Exception e)
+            {
+                ProgramLog.Log(e, "Exception in database intialised handler of plugin " + Name);
+                return false;
+            }
+
+            return true;
         }
     }
 }

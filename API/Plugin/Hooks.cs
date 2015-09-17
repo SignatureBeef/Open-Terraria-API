@@ -16,7 +16,7 @@ namespace OTA.Plugin
     // TODO remove unused hooks
     public static class HookPoints
     {
-        public static readonly HookPoint<HookArgs.DatabaseInitialise> DatabaseInitialise;
+//        public static readonly HookPoint<HookArgs.DatabaseInitialise> DatabaseInitialise;
         public static readonly HookPoint<HookArgs.ConsoleMessageReceived> ConsoleMessageReceived;
         public static readonly HookPoint<HookArgs.ConfigurationLine> ConfigurationLine;
         //        public static readonly HookPoint<HookArgs.StartDefaultServer> StartDefaultServer;
@@ -105,7 +105,7 @@ namespace OTA.Plugin
 
         static HookPoints()
         {
-            DatabaseInitialise = new HookPoint<HookArgs.DatabaseInitialise>("database-initialise");
+//            DatabaseInitialise = new HookPoint<HookArgs.DatabaseInitialise>("database-initialise");
             ConsoleMessageReceived = new HookPoint<HookArgs.ConsoleMessageReceived>("console-message-received");
             //            UnknownReceivedPacket = new HookPoint<HookArgs.UnknownReceivedPacket>("unknown-receive-packet");
             //            UnknownSendPacket = new HookPoint<HookArgs.UnknownSendPacket>("unknown-send-packet");
@@ -191,10 +191,10 @@ namespace OTA.Plugin
         public struct UpdateClient { public MethodState State { get; set; } }
         #endregion
 
-        public struct DatabaseInitialise
-        {
-            public System.Data.Entity.DbModelBuilder Builder { get; set; }
-        }
+//        public struct DatabaseInitialise
+//        {
+//            public System.Data.Entity.DbModelBuilder Builder { get; set; }
+//        }
 
         public struct PlayerKilled
         {
