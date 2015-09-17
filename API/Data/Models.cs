@@ -158,7 +158,7 @@ namespace OTA.Data
                 .Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
-            OTA.Logging.ProgramLog.Log("Calling hook");
+            //Allow plugins to apply to our database 
             foreach (var plg in PluginManager.EnumeratePlugins)
             {
                 plg.InitialiseDatabase(builder);

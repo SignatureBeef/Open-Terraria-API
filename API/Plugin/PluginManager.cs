@@ -549,13 +549,11 @@ namespace OTA
 
             try
             {
-                ProgramLog.Admin.Log("Probing database...");
                 using (var ctx = new OTA.Data.OTAContext())
                 {
                     ctx.Players.Count();
                     ctx.SaveChanges();
                 }
-                ProgramLog.Admin.Log("Database A-Ok");
             }
             catch (Exception e)
             {
