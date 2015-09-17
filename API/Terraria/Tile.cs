@@ -89,9 +89,9 @@ namespace OTA.Memory
     /// The actual tile to be used by Terraria and plugins
     /// </summary>
     /// <remarks>This replaces Terraria.Tile and supersedes OTA.Memory.MemTile</remarks>
-    public class TileRef : MemTile
+    public sealed class TileRef : MemTile
     {
-        protected int x, y;
+        protected readonly int x, y;
 
         public TileRef(int x, int y)
         {

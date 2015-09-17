@@ -7,6 +7,7 @@ using System.Data.Entity.Migrations.History;
 using OTA.Command;
 using System.Linq;
 using System;
+using OTA.Plugin;
 
 namespace OTA.Data
 {
@@ -77,11 +78,25 @@ namespace OTA.Data
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
+//            builder.HasDefaultSchema("ota");
+
             Logging.ProgramLog.Admin.Log("Initialising database for provider {0}", 
                 System.Configuration.ConfigurationManager.ConnectionStrings[OTAContext.ConnectionNameOrString].ProviderName);
 
             builder.Conventions.Remove<PluralizingTableNameConvention>();
 //            builder.Entity<HistoryRow>()
+//                .Property(h => h.MigrationId)
+//                .HasMaxLength(100)
+//                .IsRequired();
+//            builder.Entity<HistoryRow>()
+//                .Property(h => h.ContextKey)
+//                .HasMaxLength(200)
+//                .IsRequired();
+
+
+//            builder.Entity<HistoryRow>()
+//                .ToTable("__MigrationHistory", "ota")
+//                .HasKey(x => x.MigrationId)
 //                .Property(h => h.MigrationId)
 //                .HasMaxLength(100)
 //                .IsRequired();
@@ -142,6 +157,13 @@ namespace OTA.Data
                 .HasKey(x => new { x.Id })
                 .Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.DatabaseInitialise()
+            {
+                Builder = builder
+            };
+            HookPoints.DatabaseInitialise.Invoke(ref ctx, ref args);
         }
 
         public void CreateDefaultGroups()
