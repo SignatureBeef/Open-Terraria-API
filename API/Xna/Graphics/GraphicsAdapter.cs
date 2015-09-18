@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class GraphicsAdapter
@@ -19,3 +19,4 @@ namespace Microsoft.Xna.Framework.Graphics
         }
     }
 }
+#endif

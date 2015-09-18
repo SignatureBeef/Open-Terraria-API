@@ -1,4 +1,5 @@
-﻿namespace Microsoft.Xna.Framework.Content
+﻿#if XNA_SHIMS
+namespace Microsoft.Xna.Framework.Content
 {
     public class ContentManager
     {
@@ -14,3 +15,4 @@
         //}
     }
 }
+#endif

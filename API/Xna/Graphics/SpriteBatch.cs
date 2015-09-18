@@ -1,5 +1,5 @@
-﻿using System.Text;
-
+﻿#if XNA_SHIMS
+using System.Text;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -133,3 +133,4 @@ namespace Microsoft.Xna.Framework.Graphics
 		}
 	}
 }
+#endif

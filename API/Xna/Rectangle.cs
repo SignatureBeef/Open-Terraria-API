@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework
 {
 	public struct Rectangle
@@ -189,3 +189,4 @@ namespace Microsoft.Xna.Framework
 		}
 	}
 }
+#endif

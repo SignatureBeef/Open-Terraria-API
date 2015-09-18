@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Audio
 {
     public class AudioEngine
@@ -6,3 +6,4 @@ namespace Microsoft.Xna.Framework.Audio
         public AudioEngine(string settingsFile) { }
     }
 }
+#endif

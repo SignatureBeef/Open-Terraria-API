@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class GraphicsResource
@@ -12,3 +12,4 @@ namespace Microsoft.Xna.Framework.Graphics
         public bool IsDisposed { get; set; }
     }
 }
+#endif

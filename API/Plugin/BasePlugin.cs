@@ -145,7 +145,7 @@ namespace OTA.Plugin
         }
 
         /// <summary>
-        /// Here the first ever DbContext should be called.
+        /// Here the first ever DbContext should be called. It is used in order for the DbContext to join OTA's database model.
         /// </summary>
         protected virtual void DatabaseInitialising(System.Data.Entity.DbModelBuilder builder)
         {

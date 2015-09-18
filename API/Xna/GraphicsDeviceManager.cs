@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿#if XNA_SHIMS
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Xna.Framework
 {
@@ -17,3 +18,4 @@ namespace Microsoft.Xna.Framework
         public GraphicsDevice GraphicsDevice { get; set; }
     }
 }
+#endif

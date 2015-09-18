@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public enum RenderTargetUsage
@@ -8,3 +8,4 @@ namespace Microsoft.Xna.Framework.Graphics
         PlatformContents
     }
 }
+#endif

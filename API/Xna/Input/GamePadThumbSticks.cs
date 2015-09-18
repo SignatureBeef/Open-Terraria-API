@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 using Microsoft.Xna.Framework.Graphics;
 namespace Microsoft.Xna.Framework.Input
 {
@@ -8,3 +8,4 @@ namespace Microsoft.Xna.Framework.Input
         public Vector2 Left { get; set; }
     }
 }
+#endif

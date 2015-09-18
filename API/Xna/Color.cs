@@ -1,3 +1,4 @@
+#if XNA_SHIMS
 using System;
 using System.Globalization;
 
@@ -2019,3 +2020,4 @@ namespace Microsoft.Xna.Framework
         }
     }
 }
+#endif

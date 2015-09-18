@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Audio
 {
     public class Cue
@@ -15,3 +15,4 @@ namespace Microsoft.Xna.Framework.Audio
         public void SetVariable(string name, float value) { }
     }
 }
+#endif

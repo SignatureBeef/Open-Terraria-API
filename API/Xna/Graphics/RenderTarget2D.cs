@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 using System.Runtime.InteropServices;
 using System;
 
@@ -32,3 +32,4 @@ namespace Microsoft.Xna.Framework.Graphics
 	}
 	// : Texture2D, IDynamicGraphicsResource
 }
+#endif

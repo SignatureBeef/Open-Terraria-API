@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Input
 {
     public struct Mouse
@@ -9,3 +9,4 @@ namespace Microsoft.Xna.Framework.Input
         }
     }
 }
+#endif

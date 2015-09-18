@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 using System;
 using OTA;
 namespace Microsoft.Xna.Framework
@@ -24,3 +24,4 @@ namespace Microsoft.Xna.Framework
         public bool AllowUserResizing { get; set; }
     }
 }
+#endif

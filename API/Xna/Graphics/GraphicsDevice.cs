@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class GraphicsDevice
@@ -83,3 +83,4 @@ namespace Microsoft.Xna.Framework.Graphics
         }
     }
 }
+#endif

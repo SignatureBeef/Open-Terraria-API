@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if XNA_SHIMS
+using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -7,3 +8,4 @@ namespace Microsoft.Xna.Framework.Graphics
         public IEnumerator<DisplayMode> GetEnumerator() { return null; }
     }
 }
+#endif

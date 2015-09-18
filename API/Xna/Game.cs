@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿#if XNA_SHIMS
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -76,3 +77,4 @@ namespace Microsoft.Xna.Framework
         }
     }
 }
+#endif

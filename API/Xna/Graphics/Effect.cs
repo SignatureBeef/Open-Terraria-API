@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class Effect
@@ -43,3 +43,4 @@ namespace Microsoft.Xna.Framework.Graphics
         }
     }
 }
+#endif

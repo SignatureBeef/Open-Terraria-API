@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 using System;
 
 namespace Microsoft.Xna.Framework
@@ -148,6 +148,6 @@ namespace Microsoft.Xna.Framework
             result.M44 = 1f;
             return result;
         }
-
     }
 }
+#endif

@@ -1,6 +1,8 @@
-﻿using System;
+﻿#if XNA_SHIMS
+using System;
 using System.ComponentModel;
 using System.Globalization;
+
 namespace Microsoft.Xna.Framework
 {
     [Serializable]
@@ -726,3 +728,4 @@ namespace Microsoft.Xna.Framework
         }
     }
 }
+#endif

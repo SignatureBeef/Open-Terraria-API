@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Audio
 {
     public class SoundBank
@@ -10,3 +10,4 @@ namespace Microsoft.Xna.Framework.Audio
         public Cue GetCue(string name) { return default(Cue); }
     }
 }
+#endif

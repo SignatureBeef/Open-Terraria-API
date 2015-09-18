@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public enum DepthFormat
@@ -9,3 +9,4 @@ namespace Microsoft.Xna.Framework.Graphics
         Depth24Stencil8
     }
 }
+#endif

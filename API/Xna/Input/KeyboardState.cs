@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Input
 {
     public struct KeyboardState
@@ -13,3 +13,4 @@ namespace Microsoft.Xna.Framework.Input
         public Keys[] GetPressedKeys() { return Empty; }
     }
 }
+#endif

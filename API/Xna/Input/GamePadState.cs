@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Input
 {
     public struct GamePadState
@@ -8,3 +8,4 @@ namespace Microsoft.Xna.Framework.Input
         public GamePadThumbSticks ThumbSticks { get; set; }
     }
 }
+#endif

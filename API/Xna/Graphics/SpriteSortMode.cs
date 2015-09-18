@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public enum SpriteSortMode
@@ -10,3 +10,4 @@ namespace Microsoft.Xna.Framework.Graphics
         FrontToBack
     }
 }
+#endif

@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Input
 {
     public struct GamePadDPad
@@ -9,3 +9,4 @@ namespace Microsoft.Xna.Framework.Input
         public ButtonState Right { get; set; }
     }
 }
+#endif

@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework
 {
     public struct Point
@@ -52,3 +52,4 @@ namespace Microsoft.Xna.Framework
         }
     }
 }
+#endif

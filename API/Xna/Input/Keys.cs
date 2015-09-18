@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Input
 {
     public enum Keys
@@ -165,3 +165,4 @@ namespace Microsoft.Xna.Framework.Input
         ChatPadOrange
     }
 }
+#endif

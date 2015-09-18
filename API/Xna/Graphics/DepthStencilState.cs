@@ -1,5 +1,4 @@
-﻿
-
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public partial class DepthStencilState : GraphicsResource
@@ -14,3 +13,4 @@ namespace Microsoft.Xna.Framework.Graphics
         public static readonly DepthStencilState Default;
     }
 }
+#endif

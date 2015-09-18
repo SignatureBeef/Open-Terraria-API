@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Input
 {
     public struct Keyboard
@@ -8,3 +8,4 @@ namespace Microsoft.Xna.Framework.Input
         public static KeyboardState GetState() { return default(KeyboardState); }
     }
 }
+#endif

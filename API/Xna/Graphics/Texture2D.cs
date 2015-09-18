@@ -1,5 +1,5 @@
-﻿using System;
-
+﻿#if XNA_SHIMS
+using System;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -67,3 +67,4 @@ namespace Microsoft.Xna.Framework.Graphics
 		}
 	}
 }
+#endif

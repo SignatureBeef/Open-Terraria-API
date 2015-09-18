@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class RasterizerState
@@ -62,3 +62,4 @@ namespace Microsoft.Xna.Framework.Graphics
         WireFrame
     }
 }
+#endif

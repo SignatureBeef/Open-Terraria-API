@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public struct Viewport
@@ -7,3 +7,4 @@ namespace Microsoft.Xna.Framework.Graphics
         public int Height { get; set; }
     }
 }
+#endif

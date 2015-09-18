@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class EffectPass
@@ -6,3 +6,4 @@ namespace Microsoft.Xna.Framework.Graphics
         public void Apply() { }
     }
 }
+#endif

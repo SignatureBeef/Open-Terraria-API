@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Audio
 {
     public class WaveBank
@@ -9,3 +9,4 @@ namespace Microsoft.Xna.Framework.Audio
         public WaveBank(AudioEngine audioEngine, string streamingWaveBankFilename, int offset, short packetsize) { }
     }
 }
+#endif

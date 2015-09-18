@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Input
 {
     public enum ButtonState
@@ -7,3 +7,4 @@ namespace Microsoft.Xna.Framework.Input
         Pressed
     }
 }
+#endif

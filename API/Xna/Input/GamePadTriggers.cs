@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Input
 {
     public struct GamePadTriggers
@@ -7,3 +7,4 @@ namespace Microsoft.Xna.Framework.Input
         public float Left { get; set; }
     }
 }
+#endif

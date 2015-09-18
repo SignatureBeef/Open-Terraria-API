@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public partial class BlendState : GraphicsResource
@@ -16,3 +16,4 @@ namespace Microsoft.Xna.Framework.Graphics
         NoOverwrite
     }
 }
+#endif

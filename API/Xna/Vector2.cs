@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if XNA_SHIMS
+using System;
 using System.Globalization;
 
 namespace Microsoft.Xna.Framework
@@ -959,3 +960,4 @@ namespace Microsoft.Xna.Framework
         }
     }
 }
+#endif

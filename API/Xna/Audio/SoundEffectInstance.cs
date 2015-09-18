@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Audio
 {
     public class SoundEffectInstance
@@ -19,14 +19,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         public void Stop(bool immediate)
         {
-            //lock (this.voiceHandleLock)
-            //{
-            //    if (this.IsDisposed)
-            //    {
-            //        throw new ObjectDisposedException(base.GetType().Name, FrameworkResources.ObjectDisposedException);
-            //    }
-            //    Helpers.ThrowExceptionFromErrorCode(SoundEffectUnsafeNativeMethods.Stop(this.voiceHandle, immediate));
-            //}
         }
     }
 }
+#endif

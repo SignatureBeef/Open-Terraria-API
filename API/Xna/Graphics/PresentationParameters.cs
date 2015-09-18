@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class PresentationParameters
@@ -8,3 +8,4 @@ namespace Microsoft.Xna.Framework.Graphics
         public int BackBufferHeight { get; set; }
     }
 }
+#endif

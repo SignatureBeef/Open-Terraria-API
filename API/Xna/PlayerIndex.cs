@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework
 {
     public enum PlayerIndex
@@ -9,3 +9,4 @@ namespace Microsoft.Xna.Framework
         Four
     }
 }
+#endif

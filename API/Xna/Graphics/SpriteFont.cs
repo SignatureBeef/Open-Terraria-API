@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class SpriteFont
@@ -8,14 +8,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public Vector2 MeasureString(string text)
         {
-            //if (text == null)
-            //{
-            //    throw new ArgumentNullException("text");
-            //}
-            //SpriteFont.StringProxy stringProxy = new SpriteFont.StringProxy(text);
-            //return this.InternalMeasure(ref stringProxy);
-
             return default(Vector2);
         }
     }
 }
+#endif

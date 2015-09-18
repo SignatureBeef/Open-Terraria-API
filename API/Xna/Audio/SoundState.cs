@@ -1,4 +1,4 @@
-﻿
+﻿#if XNA_SHIMS
 namespace Microsoft.Xna.Framework.Audio
 {
     public enum SoundState
@@ -8,3 +8,4 @@ namespace Microsoft.Xna.Framework.Audio
         Stopped
     }
 }
+#endif
