@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin;
-using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
 using OTA.Data.Entity.Models;
 using OTA.Data;
@@ -26,113 +23,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin;
+using Microsoft.AspNet.Identity.Owin;
 #endif
 
-#if WEBSERVER
-/// <summary>
-/// Basic OTA API's
-/// </summary>
-namespace OTA.Web.API
-{
-    /// <summary>
-    /// Public access controllers.
-    /// </summary>
-    [AllowAnonymous]
-    public class PublicController : ApiController
-    {
-        public static bool ShowPlugins { get; set; }
+//Note to self, roles are to be kept at a minimum
 
-        /// <summary>
-        /// Get the online player names
-        /// </summary>
-        public HttpResponseMessage Get()
-        {
-            return this.Request.CreateResponse(HttpStatusCode.OK, new {
-#if Full_API
-                //Connection info
-                Name = Terraria.Main.ActiveWorldFileData.Name,
-                Port = Terraria.Netplay.ListenPort,
-
-                PasswordRequired = !String.IsNullOrEmpty(Terraria.Netplay.ServerPassword),
-
-                //Allocations
-                MaxPlayers = Terraria.Main.maxNetPlayers,
-                Player = Terraria.Main.player
-                    .Where(x => x != null && x.active && !String.IsNullOrEmpty(x.Name))
-                    .Select(x => x.Name)
-                    .OrderBy(x => x)
-                    .ToArray(),
-
-                //Installed plugins/mods
-                Plugins = GetPlugins(),
-
-                //Version info
-                OTA = Globals.BuildInfo,
-                Terraria = Globals.TerrariaVersion,
-
-                //Can be used to determine if the actual server is started or not
-                ServerState = Globals.CurrentState
-#endif
-            });
-        }
-
-        private string[] GetPlugins()
-        {
-            if (ShowPlugins)
-            {
-                return PluginManager._plugins
-                    .Where(x => x.Value.IsEnabled)
-                    .Select(y => y.Value.Name)
-                    .OrderBy(z => z)
-                    .ToArray();
-            }
-
-            return null;
-        }
-    }
-
-    /// <summary>
-    /// Player controller.
-    /// </summary>
-    [Authorize(Roles = "player,SuperAdmin")]
-    public class PlayerController : ApiController
-    {
-        public HttpResponseMessage Get(string name)
-        {
-#if Full_API
-            return this.Request.CreateResponse(HttpStatusCode.OK,
-                Terraria.Main.player
-                    .Where(x => x != null && x.active && x.Name == name)
-                    .Select(x => new { Name = x.name, Position = x.position })
-                .FirstOrDefault()
-            );
-#else
-            return null;
-#endif
-        }
-    }
-
-    [Authorize(Roles = "registered")]
-    public class UserController : ApiController
-    {
-        public System.Collections.Generic.IEnumerable<object> Get()
-        {
-            var identity = User.Identity as ClaimsIdentity;
-
-            return identity.Claims.Select(x => new
-            {
-                Type = x.Type,
-                Value = x.Value
-            });
-        }
-    }
-
-}
-#endif
-
-            //Note to self, roles are to be kept at a minimum
-
-    namespace OTA.Web
+namespace OTA.Web
 {
     /// <summary>
     /// OTA web server for plugins. Currently based around OWIN

@@ -278,6 +278,9 @@
     <Compile Include="Data\Entity\Models\NodePermission.cs" />
     <Compile Include="Data\Entity\OTAContextExtensions.cs" />
     <Compile Include="Memory\Tile.cs" />
+    <Compile Include="Web\API\PublicController.cs" />
+    <Compile Include="Web\API\PlayerController.cs" />
+    <Compile Include="Web\API\UserController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -297,4 +300,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Web\API\" />
+  </ItemGroup>
 </Project>
