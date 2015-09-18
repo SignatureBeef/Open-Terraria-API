@@ -554,6 +554,7 @@ namespace OTA
                     ctx.Players.Count();
                     ctx.SaveChanges();
                 }
+                OTA.Data.OTAContext.ProbeSuccess = true;
             }
             catch (Exception e)
             {

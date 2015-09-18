@@ -215,7 +215,7 @@ namespace OTA.Callbacks
                     try
                     {
                         var data = File.ReadAllBytes(file);
-                        var asm = AppDomain.CurrentDomain.Load(data);
+                        AppDomain.CurrentDomain.Load(data);
 
 //                        if (asm.GetName().Name == "EntityFramework")
 //                        {
@@ -403,7 +403,8 @@ namespace OTA.Callbacks
         /// </summary>
         public static void WorldGenerateBegin()
         {
-            //Since this is hook is at the end of the world loading then we can clear the new progress loading
+            MainCallback.ResetTileArray(8400, 2400); //You make me sad Terraria.WorldGen
+
 #if Full_API
             Terraria.Main.statusText = String.Empty;
 #endif
@@ -586,6 +587,16 @@ namespace OTA.Callbacks
             };
 
             HookPoints.UpdateClient.Invoke(ref ctx, ref args);
+        }
+
+        internal static void ResetTileArray()
+        {
+            ResetTileArray(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
+        }
+
+        internal static void ResetTileArray(int x, int y)
+        {
+            Terraria.Main.tile = new OTA.Memory.TileCollection(x, y);
         }
     }
 }

@@ -81,7 +81,6 @@ namespace OTA
             //                return;
 
             var model = _modelBuilder.Build(context.Database.Connection);
-
             using (var xact = context.Database.BeginTransaction())
             {
                 try

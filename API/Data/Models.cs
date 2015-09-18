@@ -19,7 +19,9 @@ namespace OTA.Data
     {
         public static DbConfiguration Config;
 
-        public static bool HasConnection() => System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionNameOrString] != null;
+        internal static bool ProbeSuccess { get; set; }
+
+        public static bool HasConnection() => ProbeSuccess && System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionNameOrString] != null;
 
         //TODO fix this hack - seems there is no IndexOf function in SQLite, so we need something in the ADO/EF dll for this.
         //Maybe EF7 solves this (?)
