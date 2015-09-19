@@ -554,9 +554,9 @@ namespace OTA.Patcher
                 patcher.MakeEverythingAccessible();
                 Console.Write("Ok\nHooking senders...");
                 patcher.HookSenders();
-                Console.Write("Ok\nPutting Terraria on a diet...");
-                patcher.SwapToVanillaTile(); //Holy shit batman! it works
-                patcher.InjectTileSet();
+//                Console.Write("Ok\nPutting Terraria on a diet...");
+//                patcher.SwapToVanillaTile(); //Holy shit batman! it works
+//                patcher.InjectTileSet();
 
                 Console.Write("Ok\nInjecting hooks");
                 patcher.InjectHooks<ClientHookAttribute>();
