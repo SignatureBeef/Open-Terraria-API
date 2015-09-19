@@ -1,6 +1,5 @@
-using TDSM.API;
-using TDSM.API.Command;
-using TDSM.API.Plugin;
+using OTA.Plugin;
+using OTA.Command;
 
 namespace BareBones
 {

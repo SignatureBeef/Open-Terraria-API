@@ -1,6 +1,5 @@
-﻿Imports tdsm.api
-Imports tdsm.api.Command
-Imports tdsm.api.Plugin
+﻿Imports OTA.Command
+Imports OTA.Plugin
 
 Public Class YourPlugin : Inherits BasePlugin
     Public Sub New()

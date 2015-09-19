@@ -1,11 +1,11 @@
 import ('System')
 import ('System.IO')
-import ('tdsm')
-import ('TDSM.API')
-import ('TDSM.API.Misc')
-import ('TDSM.API.Plugin') --HookResult
-import ('TDSM.API.Command') --AccessLevel
-import ('TDSM.API.Logging') 
+import ('TerrariaServer')
+import ('OTA')
+import ('OTA.Misc')
+import ('OTA.Plugin') --HookResult
+import ('OTA.Command') --AccessLevel
+import ('OTA.Logging') 
 
 WelcomePlugin = {}
 WelcomePlugin.__index = WelcomePlugin

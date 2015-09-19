@@ -1,8 +1,8 @@
 ﻿namespace BareBones
 
 open System
-open tdsm.api.Plugin
-open tdsm.api.Command
+open OTA.Plugin
+open OTA.Command
 
 type Class1() =
     inherit BasePlugin()

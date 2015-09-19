@@ -11,7 +11,7 @@
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <ProductVersion>12.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -48,11 +48,11 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="tdsm.api">
-      <HintPath>..\..\..\Binaries\tdsm.api.dll</HintPath>
+    <Reference Include="TerrariaServer">
+      <HintPath>..\..\..\Binaries\TerrariaServer.exe</HintPath>
     </Reference>
-    <Reference Include="tdsm">
-      <HintPath>..\..\..\Binaries\tdsm.exe</HintPath>
+    <Reference Include="OTA">
+      <HintPath>..\..\..\Binaries\OTA.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
