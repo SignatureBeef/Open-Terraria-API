@@ -346,7 +346,7 @@ namespace OTA.Sockets
                     ISocket socket = new ClientConnection(this._listener.AcceptSocket());
                     Netplay.anyClients = true;
                     //                    ProgramLog.Users.Log(socket.GetRemoteAddress() + " is connecting..."); TODO remove IL in vanilla as it's a bare log (or change it...)
-                    this._listenerCallback(socket);
+//                    this._listenerCallback(socket);
                     this._listenerCallback.BeginInvoke(socket, (ar) =>
                         {
                             _listenerCallback.EndInvoke(ar);
