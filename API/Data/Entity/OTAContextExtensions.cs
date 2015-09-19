@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using OTA.Data.Entity.Models;
 
-namespace OTA
+namespace OTA.Data.Entity
 {
     public static class OTAContextExtensions
     {

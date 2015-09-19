@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using OTA.Data.Entity.Models;
 using System.Linq;
 using OTA.Permissions;
+using OTA.Data.Entity;
 
 namespace OTA.Data
 {

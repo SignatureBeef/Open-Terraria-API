@@ -281,6 +281,7 @@
     <Compile Include="Web\API\PublicController.cs" />
     <Compile Include="Web\API\PlayerController.cs" />
     <Compile Include="Web\API\UserController.cs" />
+    <Compile Include="Data\Entity\OTAInitializer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

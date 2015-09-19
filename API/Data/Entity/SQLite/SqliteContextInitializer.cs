@@ -7,11 +7,12 @@ using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Core.Mapping;
+using OTA.Data.Entity;
 
-namespace OTA
+namespace OTA.Data.Entity.SQLite
 {
     //Based off https://gist.github.com/flaub/1968486e1b3f2b9fddaf#file-sqlitecontextinitializer-cs
-    public class SqliteContextInitializer<T> : IDatabaseInitializer<T> where T : DbContext
+    public class SqliteContextInitializer<T> : OTAInitializer<T> where T : DbContext
     {
         DbModelBuilder _modelBuilder;
 
@@ -60,7 +61,7 @@ namespace OTA
             return (string)table.MetadataProperties["Table"].Value ?? table.Name;
         }
 
-        public void InitializeDatabase(T context)
+        public override void InitializeDatabase(T context)
         {
             //Find the database file name from the connection
             var matches = System.Text.RegularExpressions.Regex.Match(context.Database.Connection.ConnectionString, "Data Source=(.*?);");
@@ -94,6 +95,8 @@ namespace OTA
                     throw;
                 }
             }
+
+            base.InitializeDatabase(context);
         }
 
         class Index

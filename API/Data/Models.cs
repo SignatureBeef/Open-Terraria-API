@@ -109,10 +109,14 @@ namespace OTA.Data
 
             if (this.Database.Connection.GetType().Name == "SQLiteConnection") //Since we support SQLite as default, let's use this hack...
             {
-                Database.SetInitializer(new SqliteContextInitializer<OTAContext>(builder));
+                Database.SetInitializer(new OTA.Data.Entity.SQLite.SqliteContextInitializer<OTAContext>(builder));
                 IsSQLite = true;
             }
-            else IsSQLite = false;
+            else
+            {
+                Database.SetInitializer(new OTA.Data.Entity.OTAInitializer<OTAContext>());
+                IsSQLite = false;
+            }
 
             builder.Entity<Group>()
                 .HasKey(x => x.Id)
@@ -164,13 +168,6 @@ namespace OTA.Data
             foreach (var plg in PluginManager.EnumeratePlugins)
             {
                 plg.NotifyDatabaseInitialising(builder);
-            }
-
-            //All instances of DbContext's for the current database must be done by now
-            //So now we can fire an event to populate the database with default values (if any)
-            foreach (var plg in PluginManager.EnumeratePlugins)
-            {
-                plg.NotifyDatabaseCreated();
             }
         }
     }
