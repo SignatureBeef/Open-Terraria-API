@@ -305,6 +305,26 @@ namespace OTA.Callbacks
 #endif
         }
 
+        public static void ServerTick()
+        {
+            #if Full_API
+            if (Terraria.Netplay.anyClients)
+            {
+                for (var i = 0; i < Terraria.Netplay.Clients.Length; i++)
+                {
+                    var client = Terraria.Netplay.Clients[i];
+                    //                if (player.active)
+                    if (client != null && client.Socket != null && client.Socket is ClientConnection)
+                    {
+                        var conn = (client.Socket as ClientConnection);
+                        if (conn != null)
+                            conn.Flush();
+                    }
+                }
+            }
+            #endif
+        }
+
         /// <summary>
         /// The call from the end of Terraria.Main.UpdateServer
         /// </summary>
@@ -316,20 +336,7 @@ namespace OTA.Callbacks
 
             if (UpdateServer != null)
                 UpdateServer(null, EventArgs.Empty);
-
-#if Full_API
-            for (var i = 0; i < Terraria.Netplay.Clients.Length; i++)
-            {
-                var client = Terraria.Netplay.Clients[i];
-                //                if (player.active)
-                if (client != null && client.Socket != null && client.Socket is ClientConnection)
-                {
-                    var conn = (client.Socket as ClientConnection);
-                    if (conn != null)
-                        conn.Flush();
-                }
-            }
-#endif
+            
             //var ctx = new HookContext()
             //{
             //    Sender = HookContext.ConsoleSender

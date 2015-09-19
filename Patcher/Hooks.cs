@@ -329,10 +329,33 @@ namespace OTA.Patcher
                 .Where(ins => ins.OpCode == OpCodes.Call && ins.Operand is MethodReference && (ins.Operand as MethodReference).Name == "clearWorld")
                 .ToArray();
 
-            foreach(var ins in calls)
+            foreach (var ins in calls)
             {
                 ins.Operand = _asm.MainModule.Import(replacement);
             }
+        }
+
+        /// <summary>
+        /// Called on every server update tick, regardless of connections
+        /// </summary>
+        [ServerHook]
+        private void HookServerTick()
+        {
+            var method = Terraria.Main.Methods.Single(x => x.Name == "DedServ");
+            var addition = API.MainCallback.Methods.First(m => m.Name == "ServerTick");
+
+            var onTick = method.Body.Instructions
+                .Where(ins => ins.OpCode == OpCodes.Ldsfld && ins.Operand is FieldReference && (ins.Operand as FieldReference).Name == "OnTick")
+                .First();
+
+            var il = method.Body.GetILProcessor();
+
+            //Inject our call
+            var repl = il.Create(OpCodes.Call, _asm.MainModule.Import(addition));
+            il.InsertBefore(onTick, repl);
+
+            //Now move the Update if block back above us
+            repl.Previous.Previous.Previous.Previous.Operand = repl;
         }
     }
 

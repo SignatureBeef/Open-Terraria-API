@@ -186,7 +186,7 @@ namespace OTA.Sockets
             if (callback != null)
                 callback(state);
             
-            this.Flush();
+//            this.Flush();
             #endif
         }
 
@@ -298,7 +298,7 @@ namespace OTA.Sockets
             #if Full_API
             IPAddress any = IPAddress.Any;
             string ipString;
-            if (Program.LaunchParameters.TryGetValue ("-ip", out ipString) && !IPAddress.TryParse (ipString, out any))
+            if (Program.LaunchParameters.TryGetValue("-ip", out ipString) && !IPAddress.TryParse(ipString, out any))
             {
                 any = IPAddress.Any;
             }
@@ -344,8 +344,13 @@ namespace OTA.Sockets
                 try
                 {
                     ISocket socket = new ClientConnection(this._listener.AcceptSocket());
-                    ProgramLog.Users.Log(socket.GetRemoteAddress() + " is connecting...");
+                    Netplay.anyClients = true;
+                    //                    ProgramLog.Users.Log(socket.GetRemoteAddress() + " is connecting..."); TODO remove IL in vanilla as it's a bare log (or change it...)
                     this._listenerCallback(socket);
+                    this._listenerCallback.BeginInvoke(socket, (ar) =>
+                        {
+                            _listenerCallback.EndInvoke(ar);
+                        }, null);
                 }
                 catch
                 {
