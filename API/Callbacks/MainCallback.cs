@@ -174,10 +174,11 @@ namespace OTA.Callbacks
             //Load plugins
             PluginManager.LoadPlugins();
 
-            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
-                .DefinedTypes
-                .Where(x => x.Name == "OTAContext")
-                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
+//            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
+//                .DefinedTypes
+//                .Where(x => x.Name == "OTAContext")
+//                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
+            OTA.Data.Storage.IsAvailable = OTA.Data.OTAContext.HasConnection();
 
             if (OTA.Data.Storage.IsAvailable) ProgramLog.Admin.Log("Entity framework has a registered connection.");
             else ProgramLog.Admin.Log("Entity framework has no registered connection.");
