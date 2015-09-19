@@ -4,4 +4,4 @@ install:
   - mozroots --import --sync
   - nuget restore Open\ Terraria\ API.sln
 script:
-  - xbuild /p:Configuration=Debug Open\ Terraria\ API.sln
+  - xbuild /p:Configuration=Server-Debug Open\ Terraria\ API.sln
