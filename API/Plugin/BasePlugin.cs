@@ -151,6 +151,13 @@ namespace OTA.Plugin
         {
         }
 
+        /// <summary>
+        /// Called upon the database being created and ready for default values if required.
+        /// </summary>
+        protected virtual void DatabaseCreated()
+        {
+        }
+
         protected virtual void WorldLoaded()
         {
         }
@@ -674,7 +681,7 @@ namespace OTA.Plugin
             threadInCommand = 0;
         }
 
-        internal bool InitialiseDatabase(System.Data.Entity.DbModelBuilder builder)
+        internal bool NotifyDatabaseInitialising(System.Data.Entity.DbModelBuilder builder)
         {
             try
             {
@@ -683,6 +690,21 @@ namespace OTA.Plugin
             catch (Exception e)
             {
                 ProgramLog.Log(e, "Exception in database intialised handler of plugin " + Name);
+                return false;
+            }
+
+            return true;
+        }
+
+        internal bool NotifyDatabaseCreated()
+        {
+            try
+            {
+                DatabaseCreated();
+            }
+            catch (Exception e)
+            {
+                ProgramLog.Log(e, "Exception in database created handler of plugin " + Name);
                 return false;
             }
 

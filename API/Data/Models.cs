@@ -163,59 +163,15 @@ namespace OTA.Data
             //Allow plugins to apply to our database 
             foreach (var plg in PluginManager.EnumeratePlugins)
             {
-                plg.InitialiseDatabase(builder);
-            }
-        }
-
-        public void CreateDefaultGroups()
-        {
-            var pc = CommandParser.GetAvailableCommands(AccessLevel.PLAYER);
-            var ad = CommandParser.GetAvailableCommands(AccessLevel.OP);
-            var op = CommandParser.GetAvailableCommands(AccessLevel.CONSOLE); //Funny how these have now changed
-
-            CreateGroup("Guest", true, null, 255, 255, 255, pc
-                .Where(x => !String.IsNullOrEmpty(x.Value.Node))
-                .Select(x => x.Value.Node)
-                .Distinct()
-                .ToArray(), this);
-            CreateGroup("Admin", false, "Guest", 240, 131, 77, ad
-                .Where(x => !String.IsNullOrEmpty(x.Value.Node))
-                .Select(x => x.Value.Node)
-                .Distinct()
-                .ToArray(), this);
-            CreateGroup("Operator", false, "Admin", 77, 166, 240, op
-                .Where(x => !String.IsNullOrEmpty(x.Value.Node))
-                .Select(x => x.Value.Node)
-                .Distinct()
-                .ToArray(), this);
-        }
-
-        static void CreateGroup(string name, bool guest, string parent, byte r, byte g, byte b, string[] nodes, OTAContext ctx)
-        {
-            var grp = new Group()
-            {
-                Name = name,
-                ApplyToGuests = guest,
-                Parent = parent,
-                Chat_Red = r,
-                Chat_Green = g,
-                Chat_Blue = b
-            };
-            ctx.Groups.Add(grp);
-
-            ctx.SaveChanges(); //Save to get the ID
-
-            foreach (var nd in nodes)
-            {
-                var node = Storage.FindOrCreateNode(nd, Permission.Permitted);
-                ctx.GroupNodes.Add(new GroupNode()
-                    {
-                        GroupId = grp.Id,
-                        NodeId = node.Id 
-                    });
+                plg.NotifyDatabaseInitialising(builder);
             }
 
-            ctx.SaveChanges();
+            //All instances of DbContext's for the current database must be done by now
+            //So now we can fire an event to populate the database with default values (if any)
+            foreach (var plg in PluginManager.EnumeratePlugins)
+            {
+                plg.NotifyDatabaseCreated();
+            }
         }
     }
 }

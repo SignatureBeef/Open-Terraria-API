@@ -493,18 +493,20 @@ namespace OTA
                 }
             }
 
+            //Init the db here so:
+            //  1) Plugins can create a context
+            //  2) The database is ready before and normal plugins are enabled
             try
             {
                 using (var ctx = new OTA.Data.OTAContext())
                 {
-                    ctx.Players.Count();
-                    ctx.SaveChanges();
+                    ctx.Database.Initialize(false);
                 }
                 OTA.Data.OTAContext.ProbeSuccess = true;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                ProgramLog.Log(e, "Database probe failed.");
             }
 
             EnablePlugins();
