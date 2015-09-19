@@ -25,6 +25,35 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <AssemblyName>OTA.Patcher</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Server\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SERVER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Client\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;CLIENT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>OTA.Patcher.Program</StartupObject>
@@ -56,37 +85,58 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Binaries\TerrariaServer.exe.config">
-      <Link>TerrariaServer.exe.config</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Official\serverconfig.txt">
-      <Link>serverconfig.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="packages.config" />
-    <None Include="..\Binaries\start-server.cmd">
-      <Link>start-server.cmd</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Binaries\start-server.sh">
-      <Link>start-server.sh</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Official\start-server.bat">
-      <Link>start-server.bat</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Official\TerrariaServer.exe">
-      <Link>TerrariaServer.exe</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+  <Choose>
+    <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|x86' ">
+      <ItemGroup>
+        <None Include="..\Binaries\Terraria.exe.config">
+          <Link>Terraria.exe.config</Link>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="packages.config" />
+        <None Include="..\Official\Terraria.exe">
+          <Link>Terraria.exe</Link>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="..\External\FNA.dll">
+          <Link>FNA.dll</Link>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <None Include="..\Binaries\TerrariaServer.exe.config">
+          <Link>TerrariaServer.exe.config</Link>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="..\Official\serverconfig.txt">
+          <Link>serverconfig.txt</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Include="packages.config" />
+        <None Include="..\Binaries\start-server.cmd">
+          <Link>start-server.cmd</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Include="..\Binaries\start-server.sh">
+          <Link>start-server.sh</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+      <ItemGroup>
+        <None Include="..\Official\start-server.bat">
+          <Link>start-server.bat</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+      <ItemGroup>
+        <None Include="..\Official\TerrariaServer.exe">
+          <Link>TerrariaServer.exe</Link>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
       <Visible>False</Visible>
@@ -103,46 +153,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AssemblyName>Patcher</AssemblyName>
-    <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Externalconsole>true</Externalconsole>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Release|x86' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AssemblyName>Patcher</AssemblyName>
-    <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|x86' ">
-    <Optimize>false</Optimize>
-    <OutputPath>bin\x86\Client</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <AssemblyName>OTA.Patcher</AssemblyName>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Client-Release|x86' ">
-    <Optimize>false</Optimize>
-    <OutputPath>bin\x86\Client-Release</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <AssemblyName>OTA.Patcher</AssemblyName>
-    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <!---<PropertyGroup>
     <PostBuildEvent>

@@ -23,8 +23,9 @@ namespace OTA.Callbacks
         {
 //            Terraria.Main.tile = new OTA.Memory.TileCollection(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY); //TODO when generating a small Terraria doesn't obey the size (that's why it's always large i guess. *siiiiiigh*)
             MainCallback.ResetTileArray();
+            #if Full_API
             WorldGen.clearWorld();
-
+            #endif
             GC.Collect();
         }
 

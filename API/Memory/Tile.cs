@@ -91,7 +91,7 @@ namespace OTA.Memory
     /// <remarks>This replaces Terraria.Tile and supersedes OTA.Memory.MemTile</remarks>
     public sealed class TileRef : MemTile
     {
-        protected readonly int x, y;
+        readonly int x, y;
 
         public TileRef(int x, int y)
         {
@@ -99,6 +99,7 @@ namespace OTA.Memory
             this.y = y;
         }
 
+        #if Full_API
         public override byte _wall
         {
             get
@@ -161,6 +162,7 @@ namespace OTA.Memory
             { return Terraria.Main.tile.data[x, y]._type; }
             set { Terraria.Main.tile.data[x, y]._type = value; }
         }
+        #endif
     }
 
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Pack = 1)]

@@ -603,7 +603,9 @@ namespace OTA.Callbacks
 
         internal static void ResetTileArray(int x, int y)
         {
+            #if Full_API
             Terraria.Main.tile = new OTA.Memory.TileCollection(x, y);
+            #endif
         }
     }
 }

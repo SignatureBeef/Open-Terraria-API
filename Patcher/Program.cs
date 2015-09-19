@@ -19,6 +19,7 @@ namespace OTA.Patcher
     /// </summary>
     public class Program
     {
+        #if SERVER
         static void Main(string[] args)
         {
             //By default we will patch a server
@@ -41,6 +42,30 @@ namespace OTA.Patcher
 
             OTAPatcher.DefaultProcess(args);
         }
+        #elif CLIENT
+        static void Main(string[] args)
+        {
+            //By default we will patch a server
+            OTAPatcher.PatchMode = PatchMode.Client;
+
+            //Specifiy the official file name
+            OTAPatcher.InputFileName = "Terraria.exe";
+
+            //Specify the output assembly[name]
+            OTAPatcher.OutputName = "Terraria";
+
+            //Debugging :)
+            OTAPatcher.CopyProjectFiles = true;
+
+            //Allow auto running
+            OTAPatcher.PromptToRun = true;
+
+            //Allow the copy of the API from it's bin folder
+            OTAPatcher.CopyAPI = true;
+
+            OTAPatcher.DefaultProcess(args);
+        }
+        #endif
 
         //        public static void Main(string[] args)
         //        {
@@ -67,6 +92,12 @@ namespace OTA.Patcher
         public const String OTAGuid = "9f7bca2e-4d2e-4244-aaae-fa56ca7797ec";
         public const Int32 Build = 5;
 
+        #if CLIENT 
+        private const String FolderKind = "Client";
+        #elif SERVER
+        private const String FolderKind = "Server";
+        #endif
+
         /// <summary>
         /// Development tools. Copies files into the Debug folder.
         /// </summary>
@@ -78,9 +109,9 @@ namespace OTA.Patcher
         public static void Copy(DirectoryInfo root, string project, string to, string pluginName = null, bool debugFolder = true)
         {
             var projectBinary = (pluginName ?? project).Replace("-", ".");
-            var p = debugFolder ? Path.Combine(root.FullName, project, "bin", "x86", "Debug") : Path.Combine(root.FullName, project);
+            var p = debugFolder ? Path.Combine(root.FullName, project, "bin", "x86", FolderKind) : Path.Combine(root.FullName, project);
             if (!Directory.Exists(p))
-                p = debugFolder ? Path.Combine(root.FullName, project, "bin", "Debug") : Path.Combine(root.FullName, project);
+                p = debugFolder ? Path.Combine(root.FullName, project, "bin", FolderKind) : Path.Combine(root.FullName, project);
 
             //From the project
             var dllFrom = Path.Combine(p, projectBinary + ".dll");

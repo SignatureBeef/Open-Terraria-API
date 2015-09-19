@@ -1,4 +1,5 @@
 ﻿#define ENABLE_NAT
+#if MONO_NAT
 using OTA.Logging;
 using System;
 
@@ -92,7 +93,7 @@ namespace OTA.Callbacks
         /// </summary>
         public static void ClosePort()
         {
-            #if Full_API
+#if Full_API
             if (Terraria.Netplay.portForwardOpen && _map != null && _devices.Count > 0)
             {
                 //Netplay.mappings.Remove(Netplay.portForwardPort, "TCP");
@@ -110,7 +111,7 @@ namespace OTA.Callbacks
                 ProgramLog.Admin.Log("Removed NAT map record for Terraria Server");
             }
             Mono.Nat.NatUtility.StopDiscovery();
-            #endif
+#endif
         }
 
 
@@ -216,3 +217,4 @@ namespace OTA.Callbacks
         //        }
     }
 }
+#endif
