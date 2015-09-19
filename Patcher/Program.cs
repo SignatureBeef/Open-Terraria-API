@@ -42,7 +42,8 @@ namespace OTA.Patcher
 
             OTAPatcher.DefaultProcess(args);
         }
-        #elif CLIENT
+        
+#elif CLIENT
         static void Main(string[] args)
         {
             //By default we will patch a server
@@ -92,7 +93,7 @@ namespace OTA.Patcher
         public const String OTAGuid = "9f7bca2e-4d2e-4244-aaae-fa56ca7797ec";
         public const Int32 Build = 5;
 
-        #if CLIENT 
+        #if CLIENT
         private const String FolderKind = "Client";
         #elif SERVER
         private const String FolderKind = "Server";
@@ -357,6 +358,7 @@ namespace OTA.Patcher
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http.Owin", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework", true);
+                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework.SqlServer", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.Core", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.EntityFramework", true);
 //                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite", true);
@@ -527,7 +529,7 @@ namespace OTA.Patcher
                 patcher.SwitchFramework("4.5.1");
                 Console.Write("Ok\nPatching Newtonsoft.Json...");
                 patcher.PatchJSON();
-                
+
                 Console.Write("Ok\nPutting Terraria on a diet...");
                 patcher.SwapToVanillaTile(); //Holy shit batman! it works
                 patcher.InjectTileSet();
@@ -545,14 +547,19 @@ namespace OTA.Patcher
             }
             else if (PatchMode == PatchMode.Client)
             {
-
-                Console.Write("Ok\nHooking start...");
+                Console.Write("Hooking start...");
                 patcher.HookProgramStart(PatchMode);
-                Console.Write("Ok\nInjecting hooks");
-                patcher.InjectHooks<ClientHookAttribute>();
                 Console.Write("Opening up classes for API usage...");
                 patcher.MakeTypesPublic(true);
                 patcher.MakeEverythingAccessible();
+                Console.Write("Ok\nHooking senders...");
+                patcher.HookSenders();
+                Console.Write("Ok\nPutting Terraria on a diet...");
+                patcher.SwapToVanillaTile(); //Holy shit batman! it works
+                patcher.InjectTileSet();
+
+                Console.Write("Ok\nInjecting hooks");
+                patcher.InjectHooks<ClientHookAttribute>();
                 Console.Write("Ok\n");
 
                 if (PerformPatch != null)
@@ -560,7 +567,6 @@ namespace OTA.Patcher
                         {
                             Injector = patcher
                         });
-                
             }
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;

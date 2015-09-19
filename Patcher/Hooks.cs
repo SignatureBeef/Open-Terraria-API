@@ -290,7 +290,7 @@ namespace OTA.Patcher
         /// <summary>
         /// Hooks Begin and End of Terraria.Main.[Draw/Update]
         /// </summary>
-        [ClientHookAttribute]
+        [ClientHook]
         private void HookXNAEvents()
         {
             foreach (var mth in new string[] { "Draw", "Update", "UpdateClient" })

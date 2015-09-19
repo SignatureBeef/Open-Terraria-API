@@ -603,7 +603,7 @@ namespace OTA.Callbacks
 
         internal static void ResetTileArray(int x, int y)
         {
-            #if Full_API
+            #if Full_API && TileReady
             Terraria.Main.tile = new OTA.Memory.TileCollection(x, y);
             #endif
         }

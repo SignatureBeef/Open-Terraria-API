@@ -14,22 +14,31 @@ namespace OTA.Callbacks
         /// <param name="path">Path.</param>
         public static bool RemoveFile(string path)
         {
+            #if Full_API && (SERVER || WINDOWS)
             if (Tools.RuntimePlatform == RuntimePlatform.Mono)
             {
                 try
                 {
                     System.IO.File.Delete(path);
                     return true;
-                }
+                    }
                 catch
                 {
                     return false;
                 }
             }
-            #if Full_API
+
             return Terraria.Utilities.FileOperationAPIWrapper.MoveToRecycleBin(path);
             #else
-            return false;
+            try
+            {
+                System.IO.File.Delete(path);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
             #endif
         }
     }

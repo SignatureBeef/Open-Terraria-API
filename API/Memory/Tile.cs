@@ -99,7 +99,7 @@ namespace OTA.Memory
             this.y = y;
         }
 
-        #if Full_API
+        #if Full_API && TileReady
         public override byte _wall
         {
             get
