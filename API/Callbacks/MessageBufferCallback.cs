@@ -37,12 +37,12 @@ namespace OTA.Callbacks
             //Console.WriteLine("Trace: {0}", Environment.StackTrace);
             switch ((Packet)packetId)
             {
-                /* Misc / Command */
+            /* Misc / Command */
                 case Packet.PLAYER_CHAT:
                     ProcessChat(bufferId); //Returns
                     return 0;
 
-                /* Cheat protection */
+            /* Cheat protection */
                 case Packet.TILE_BREAK:
                     ProcessTileBreak(bufferId); //Returns
                     return 0;
@@ -71,7 +71,7 @@ namespace OTA.Callbacks
                     ProcessNPCStrike(bufferId);
                     return 0;
 
-                /* Password handling */
+            /* Password handling */
                 case Packet.PASSWORD_RESPONSE: //Returns
                     ProcessPassword(bufferId);
                     return 0;
@@ -135,7 +135,7 @@ namespace OTA.Callbacks
 #endif
         }
 
-#if Full_API
+        #if Full_API
 
         private static void ProcessNPCStrike(int bufferId)
         {
@@ -1440,10 +1440,10 @@ namespace OTA.Callbacks
             }
         }
 
-        /// <summary>
-        /// Used to run player commands from the server thread preventing deadlocks under certain circumstances
-        /// </summary>
-        public static readonly ConcurrentQueue<PlayerCommandReceived> PlayerCommands = new ConcurrentQueue<PlayerCommandReceived>();
+        //        /// <summary>
+        //        /// Used to run player commands from the server thread preventing deadlocks under certain circumstances
+        //        /// </summary>
+        //        public static readonly ConcurrentQueue<PlayerCommandReceived> PlayerCommands = new ConcurrentQueue<PlayerCommandReceived>();
 
         private static void ProcessChat(int bufferId)
         {
@@ -1455,11 +1455,13 @@ namespace OTA.Callbacks
 
             var chatText = buffer.reader.ReadString();
 
-            PlayerCommands.Enqueue(new PlayerCommandReceived()
-            {
-                BufferId = bufferId,
-                Message = chatText
-            });
+            ProcessQueuedPlayerCommand(new Tuple<Int32,String>(bufferId, chatText));
+
+//            PlayerCommands.Enqueue(new PlayerCommandReceived()
+//                {
+//                    BufferId = bufferId,
+//                    Message = chatText
+//                });
             return;
             //            var player = Main.player[bufferId];
             //            var color = Color.White;
@@ -1552,15 +1554,18 @@ namespace OTA.Callbacks
             //            }
         }
 
-        internal static void ProcessQueuedPlayerCommand(PlayerCommandReceived cmd)
+        internal static void ProcessQueuedPlayerCommand(Tuple<Int32, String> message)
         {
-            var player = Main.player[cmd.BufferId];
+            var bufferId = message.Item1;
+            var chat = message.Item2;
+
+            var player = Main.player[bufferId];
             var color = Color.White;
 
             if (Main.netMode != 2)
                 return;
 
-            var lowered = cmd.Message.ToLower();
+            var lowered = message.Item2.ToLower();
             if (lowered == Lang.mp[6] || lowered == Lang.mp[21])
             {
                 var players = "";
@@ -1573,12 +1578,12 @@ namespace OTA.Callbacks
                         players += Main.player[i].name;
                     }
                 }
-                NetMessage.SendData((int)Packet.PLAYER_CHAT, cmd.BufferId, -1, Lang.mp[7] + " " + players + ".", 255, 255, 240, 20, 0, 0, 0);
+                NetMessage.SendData((int)Packet.PLAYER_CHAT, bufferId, -1, Lang.mp[7] + " " + players + ".", 255, 255, 240, 20, 0, 0, 0);
                 return;
             }
             else if (lowered.StartsWith("/me "))
             {
-                NetMessage.SendData((int)Packet.PLAYER_CHAT, -1, -1, "*" + Main.player[cmd.BufferId].name + " " + cmd.Message.Substring(4), 255, 200, 100, 0, 0, 0, 0);
+                NetMessage.SendData((int)Packet.PLAYER_CHAT, -1, -1, "*" + Main.player[bufferId].name + " " + chat.Substring(4), 255, 200, 100, 0, 0, 0, 0);
                 return;
             }
             else if (lowered == Lang.mp[8])
@@ -1586,7 +1591,7 @@ namespace OTA.Callbacks
                 NetMessage.SendData((int)Packet.PLAYER_CHAT, -1, -1, string.Concat(new object[]
                         {
                             "*",
-                            Main.player[cmd.BufferId].name,
+                            Main.player[bufferId].name,
                             " ",
                             Lang.mp[9],
                             " ",
@@ -1596,7 +1601,7 @@ namespace OTA.Callbacks
             }
             else if (lowered.StartsWith("/p "))
             {
-                int team = Main.player[cmd.BufferId].team;
+                int team = Main.player[bufferId].team;
                 color = Main.teamColor[team];
                 if (team != 0)
                 {
@@ -1604,19 +1609,19 @@ namespace OTA.Callbacks
                     {
                         if (Main.player[num74].team == team)
                         {
-                            NetMessage.SendData((int)Packet.PLAYER_CHAT, num74, -1, cmd.Message.Substring(3), cmd.BufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
+                            NetMessage.SendData((int)Packet.PLAYER_CHAT, num74, -1, chat.Substring(3), bufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
                         }
                     }
                     return;
                 }
-                NetMessage.SendData((int)Packet.PLAYER_CHAT, cmd.BufferId, -1, Lang.mp[10], 255, 255, 240, 20, 0, 0, 0);
+                NetMessage.SendData((int)Packet.PLAYER_CHAT, bufferId, -1, Lang.mp[10], 255, 255, 240, 20, 0, 0, 0);
                 return;
             }
             else
             {
-                if (Main.player[cmd.BufferId].difficulty == 2)
+                if (Main.player[bufferId].difficulty == 2)
                     color = Main.hcColor;
-                else if (Main.player[cmd.BufferId].difficulty == 1)
+                else if (Main.player[bufferId].difficulty == 1)
                     color = Main.mcColor;
 
                 var ctx = new HookContext
@@ -1628,7 +1633,7 @@ namespace OTA.Callbacks
 
                 var args = new HookArgs.PlayerChat
                 {
-                    Message = cmd.Message,
+                    Message = chat,
                     Color = color
                 };
 
@@ -1645,27 +1650,27 @@ namespace OTA.Callbacks
                 else
                 {
                     //Default <Player> ...
-                    NetMessage.SendData((int)Packet.PLAYER_CHAT, -1, -1, args.Message, cmd.BufferId, (float)args.Color.R, (float)args.Color.G, (float)args.Color.B, 0, 0, 0);
+                    NetMessage.SendData((int)Packet.PLAYER_CHAT, -1, -1, args.Message, bufferId, (float)args.Color.R, (float)args.Color.G, (float)args.Color.B, 0, 0, 0);
                 }
 
                 if (Main.dedServ)
                 {
-                    ProgramLog.Chat.Log("<" + Main.player[cmd.BufferId].name + "> " + args.Message);
+                    ProgramLog.Chat.Log("<" + Main.player[bufferId].name + "> " + args.Message);
                 }
             }
 
         }
-#endif
+        #endif
     }
 
-    /// <summary>
-    /// A player command
-    /// </summary>
-    /// <remarks>Used to schedule player commands, this may not stay</remarks>
-    // TODO  This may be altered if it causes issues on the server thread
-    public struct PlayerCommandReceived
-    {
-        public int BufferId;
-        public string Message;
-    }
+    //    /// <summary>
+    //    /// A player command
+    //    /// </summary>
+    //    /// <remarks>Used to schedule player commands, this may not stay</remarks>
+    //    // TODO  This may be altered if it causes issues on the server thread
+    //    public struct PlayerCommandReceived
+    //    {
+    //        public int BufferId;
+    //        public string Message;
+    //    }
 }

@@ -326,6 +326,8 @@ namespace OTA.Callbacks
             #endif
         }
 
+//        private static DateTime? _lastUpdate;
+
         /// <summary>
         /// The call from the end of Terraria.Main.UpdateServer
         /// </summary>
@@ -337,6 +339,16 @@ namespace OTA.Callbacks
 
             if (UpdateServer != null)
                 UpdateServer(null, EventArgs.Empty);
+
+//            if (_lastUpdate != null)
+//            {
+//                var diff = (DateTime.Now - _lastUpdate.Value);
+//                if (diff.TotalMilliseconds > 50)
+//                {
+//                    ProgramLog.Debug.Log("Update took {0}ms", diff.TotalMilliseconds);
+//                }
+//            }
+//            _lastUpdate = DateTime.Now;
             
             //var ctx = new HookContext()
             //{
@@ -345,23 +357,23 @@ namespace OTA.Callbacks
             //var args = new HookArgs.UpdateServer();
             //HookPoints.UpdateServer.Invoke(ref ctx, ref args);
 
-#if Full_API
-            try
-            {
-                if (MessageBufferCallback.PlayerCommands.Count > 0)
-                {
-                    PlayerCommandReceived cmd;
-                    if (MessageBufferCallback.PlayerCommands.TryDequeue(out cmd))
-                    {
-                        MessageBufferCallback.ProcessQueuedPlayerCommand(cmd);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                ProgramLog.Log(e, "Exception from user chat");
-            }
-#endif
+//#if Full_API
+//            try
+//            {
+//                if (MessageBufferCallback.PlayerCommands.Count > 0)
+//                {
+//                    PlayerCommandReceived cmd;
+//                    if (MessageBufferCallback.PlayerCommands.TryDequeue(out cmd))
+//                    {
+//                        MessageBufferCallback.ProcessQueuedPlayerCommand(cmd);
+//                    }
+//                }
+//            }
+//            catch (Exception e)
+//            {
+//                ProgramLog.Log(e, "Exception from user chat");
+//            }
+//#endif
         }
 
         /// <summary>

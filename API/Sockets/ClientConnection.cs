@@ -186,7 +186,7 @@ namespace OTA.Sockets
             if (callback != null)
                 callback(state);
             
-//            this.Flush();
+            this.Flush();
             #endif
         }
 
