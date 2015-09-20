@@ -42,7 +42,7 @@ namespace OTA.Web.API
 
                 //Version info
                 OTA = Globals.BuildInfo,
-                Terraria = Globals.TerrariaVersion,
+                Terraria = Terraria.Main.versionNumber,
 
                 //Can be used to determine if the actual server is started or not
                 ServerState = Globals.CurrentState
