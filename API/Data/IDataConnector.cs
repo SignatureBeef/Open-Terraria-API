@@ -681,7 +681,7 @@ namespace OTA.Data
         {
             if (!IsAvailable)
                 throw new InvalidOperationException("No connector attached");
-            
+
             using (var ctx = new OTAContext())
             {
                 return ctx.Players
@@ -689,6 +689,21 @@ namespace OTA.Data
                     .Join(ctx.PlayerGroups, pg => pg.Id, us => us.UserId, (a, b) => b)
                     .Join(ctx.Groups, pg => pg.GroupId, gr => gr.Id, (a, b) => b)
                     .FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Gets the first guest group from the database
+        /// </summary>
+        /// <returns>The guest group.</returns>
+        public static Group GetGuestGroup()
+        {
+            if (!IsAvailable)
+                throw new InvalidOperationException("No connector attached");
+
+            using (var ctx = new OTAContext())
+            {
+                return ctx.Groups.Where(x => x.ApplyToGuests).FirstOrDefault();
             }
         }
     }
