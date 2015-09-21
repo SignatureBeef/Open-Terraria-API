@@ -693,6 +693,28 @@ namespace OTA.Data
         }
 
         /// <summary>
+        /// Gets the inherited group for a player.
+        /// </summary>
+        /// <returns>The inherited group for a player.</returns>
+        /// <param name="player">Player.</param>
+        public static Group GetInheritedGroup(BasePlayer player)
+        {
+            if (!IsAvailable)
+                throw new InvalidOperationException("No connector attached");
+
+            if (player.IsAuthenticated)
+            {
+                var grp = GetInheritedGroupForUser(player.Name);
+                if (grp != null) return grp;
+            }
+
+            var guestGroup = GetGuestGroup();
+            if (guestGroup != null) return guestGroup;
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets the first guest group from the database
         /// </summary>
         /// <returns>The guest group.</returns>
