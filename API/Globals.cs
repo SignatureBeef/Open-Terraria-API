@@ -42,6 +42,7 @@ namespace OTA
         private const String DataDirectory = "Data";
         private const String LibrariesDirectory = "Libraries";
         private const String CharacterData = "Characters";
+        private const String LogFolder = "Logs";
         //private const String BackupDirectory = "BackupDirectory";
 
         public static volatile bool Exit = false;
@@ -119,6 +120,16 @@ namespace OTA
         {
             get
             { return Path.Combine(SavePath, DataDirectory, CharacterData); }
+        }
+
+
+        /// <summary>
+        /// Gets the log folder.
+        /// </summary>
+        /// <value>The log folder.</value>
+        public static string LogFolderPath
+        {
+            get { return Path.Combine(Globals.DataPath, LogFolder); }
         }
 
         //        public static readonly bool IsMono = Type.GetType("Mono.Runtime") != null;

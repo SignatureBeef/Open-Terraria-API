@@ -166,7 +166,8 @@ namespace OTA.Callbacks
             //TODO Why on earth did I put the log opening here?
             if (!ProgramLog.IsOpen)
             {
-                var logFile = Globals.DataPath + System.IO.Path.DirectorySeparatorChar + "server.log";
+                if (!Directory.Exists(Globals.LogFolderPath)) Directory.CreateDirectory(Globals.LogFolderPath);
+                var logFile = Path.Combine(Globals.LogFolderPath, "server.log");
                 ProgramLog.OpenLogFile(logFile);
                 ConsoleSender.DefaultColour = ConsoleColor.Gray;
             }
@@ -326,7 +327,7 @@ namespace OTA.Callbacks
             #endif
         }
 
-//        private static DateTime? _lastUpdate;
+        //        private static DateTime? _lastUpdate;
 
         /// <summary>
         /// The call from the end of Terraria.Main.UpdateServer
