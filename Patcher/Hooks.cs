@@ -399,8 +399,6 @@ namespace OTA.Patcher
             var method = Terraria.WorldFile.Methods.Single(x => x.Name == "saveWorld" && x.Parameters.Count == 2);
             var replacement = API.WorldFileCallback.Properties.Single(m => m.Name == "SavePath");
 
-            var il = method.Body.GetILProcessor();
-
             foreach (var ins in method.Body.Instructions)
             {
                 if (ins.Operand != null && ins.Operand is MethodReference)
