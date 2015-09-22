@@ -107,12 +107,12 @@ namespace OTA.Patcher
         /// <param name="to">To.</param>
         /// <param name="pluginName">Plugin name.</param>
         /// <param name="debugFolder">If set to <c>true</c> debug folder.</param>
-        public static void Copy(DirectoryInfo root, string project, string to, string pluginName = null, bool debugFolder = true)
+        public static void Copy(DirectoryInfo root, string project, string to, string pluginName = null, bool debugFolder = true, string projectFolder = FolderKind)
         {
             var projectBinary = (pluginName ?? project).Replace("-", ".");
-            var p = debugFolder ? Path.Combine(root.FullName, project, "bin", "x86", FolderKind) : Path.Combine(root.FullName, project);
+            var p = debugFolder ? Path.Combine(root.FullName, project, "bin", "x86", projectFolder) : Path.Combine(root.FullName, project);
             if (!Directory.Exists(p))
-                p = debugFolder ? Path.Combine(root.FullName, project, "bin", FolderKind) : Path.Combine(root.FullName, project);
+                p = debugFolder ? Path.Combine(root.FullName, project, "bin", projectFolder) : Path.Combine(root.FullName, project);
 
             //From the project
             var dllFrom = Path.Combine(p, projectBinary + ".dll");
