@@ -101,9 +101,14 @@ namespace OTA.Callbacks
         public static Action StatusTextChange;
 
         /// <summary>
-        /// Game UpdateServer event
+        /// Game UpdateServer event. Does not occur without players.
         /// </summary>
         public static event EventHandler UpdateServer;
+
+        /// <summary>
+        /// Server tick event. Occurs without players.
+        /// </summary>
+        public static event EventHandler ServerTick;
 
         //public static bool StartEclipse;
         //public static bool StartBloodMoon;
@@ -307,7 +312,7 @@ namespace OTA.Callbacks
 #endif
         }
 
-        public static void ServerTick()
+        public static void OnServerTick()
         {
             #if Full_API
             if (Terraria.Netplay.anyClients)
@@ -324,6 +329,8 @@ namespace OTA.Callbacks
                     }
                 }
             }
+
+            if (ServerTick != null) ServerTick(null, EventArgs.Empty);
             #endif
         }
 

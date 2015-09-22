@@ -342,7 +342,7 @@ namespace OTA.Patcher
         private void HookServerTick()
         {
             var method = Terraria.Main.Methods.Single(x => x.Name == "DedServ");
-            var addition = API.MainCallback.Methods.First(m => m.Name == "ServerTick");
+            var addition = API.MainCallback.Methods.First(m => m.Name == "OnServerTick");
 
             var onTick = method.Body.Instructions
                 .Where(ins => ins.OpCode == OpCodes.Ldsfld && ins.Operand is FieldReference && (ins.Operand as FieldReference).Name == "OnTick")
