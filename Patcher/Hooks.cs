@@ -368,18 +368,18 @@ namespace OTA.Patcher
             var replacement = _asm.MainModule.Import(API.WorldFileCallback.Methods.First(m => m.Name == "OnAutoSave"));
 
             //Instead of replacing, let's hook directly in the method
-//            foreach (var method in _asm.MainModule.Types
-//                .SelectMany(x => x.Methods)
-//                .Where(y => y.HasBody))
-//            {
-//                var il = method.Body.GetILProcessor();
-//
-//                foreach (var ins in method.Body.Instructions
-//                    .Where(ins => ins.OpCode == OpCodes.Call && ins.Operand is MethodReference && (ins.Operand as MethodReference).Name == "clearWorld"))
-//                {
-//                    il.Replace(ins, il.Create(OpCodes.Call, replacement));
-//                }
-//            }
+            //            foreach (var method in _asm.MainModule.Types
+            //                .SelectMany(x => x.Methods)
+            //                .Where(y => y.HasBody))
+            //            {
+            //                var il = method.Body.GetILProcessor();
+            //
+            //                foreach (var ins in method.Body.Instructions
+            //                    .Where(ins => ins.OpCode == OpCodes.Call && ins.Operand is MethodReference && (ins.Operand as MethodReference).Name == "clearWorld"))
+            //                {
+            //                    il.Replace(ins, il.Create(OpCodes.Call, replacement));
+            //                }
+            //            }
 
             var il = method.Body.GetILProcessor();
             var first = method.Body.Instructions.First();
@@ -388,6 +388,30 @@ namespace OTA.Patcher
 
             il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
             il.InsertBefore(first, il.Create(OpCodes.Ret));
+        }
+
+        /// <summary>
+        /// Replaces Main.worldPathName with OTA's
+        /// </summary>
+        [ServerHook]
+        private void PatchInSavePath()
+        {
+            var method = Terraria.WorldFile.Methods.Single(x => x.Name == "saveWorld" && x.Parameters.Count == 2);
+            var replacement = API.WorldFileCallback.Properties.Single(m => m.Name == "SavePath");
+
+            var il = method.Body.GetILProcessor();
+
+            foreach (var ins in method.Body.Instructions)
+            {
+                if (ins.Operand != null && ins.Operand is MethodReference)
+                {
+                    var pr = ins.Operand as MethodReference;
+                    if (pr.Name == "get_worldPathName")
+                    {
+                        ins.Operand = _asm.MainModule.Import(replacement.GetMethod);
+                    }
+                }
+            }
         }
     }
 

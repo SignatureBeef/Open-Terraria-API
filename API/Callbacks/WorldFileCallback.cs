@@ -18,6 +18,16 @@ namespace OTA.Callbacks
 {
     public static class WorldFileCallback
     {
+        private static string _savePath;
+        public static readonly object SavePathLock = new object();
+
+        public static string SavePath
+        {
+            get { return _savePath ?? Terraria.Main.worldPathName; }
+            set
+            { _savePath = value; }
+        }
+
         public static bool OnAutoSave()
         {
             var args = new HookArgs.WorldAutoSave();
