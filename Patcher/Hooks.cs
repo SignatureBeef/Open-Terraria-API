@@ -357,6 +357,38 @@ namespace OTA.Patcher
             //Now move the Update if block back above us
             repl.Previous.Previous.Previous.Previous.Operand = repl;
         }
+
+        /// <summary>
+        /// Replaces the world save with OTA's custom one
+        /// </summary>
+        [ServerHook]
+        private void HookWorldAutoSave()
+        {
+            var method = Terraria.WorldGen.Methods.Single(x => x.Name == "saveAndPlay");
+            var replacement = _asm.MainModule.Import(API.WorldFileCallback.Methods.First(m => m.Name == "OnAutoSave"));
+
+            //Instead of replacing, let's hook directly in the method
+//            foreach (var method in _asm.MainModule.Types
+//                .SelectMany(x => x.Methods)
+//                .Where(y => y.HasBody))
+//            {
+//                var il = method.Body.GetILProcessor();
+//
+//                foreach (var ins in method.Body.Instructions
+//                    .Where(ins => ins.OpCode == OpCodes.Call && ins.Operand is MethodReference && (ins.Operand as MethodReference).Name == "clearWorld"))
+//                {
+//                    il.Replace(ins, il.Create(OpCodes.Call, replacement));
+//                }
+//            }
+
+            var il = method.Body.GetILProcessor();
+            var first = method.Body.Instructions.First();
+
+            il.InsertBefore(first, il.Create(OpCodes.Call, replacement));
+
+            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
+            il.InsertBefore(first, il.Create(OpCodes.Ret));
+        }
     }
 
     public class TerrariaOrganiser

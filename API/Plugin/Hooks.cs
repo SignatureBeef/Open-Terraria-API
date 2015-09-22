@@ -99,9 +99,18 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.PlayerKilled> PlayerKilled;
 
         //Client hooks
+        #region "Client"
         public static readonly HookPoint<HookArgs.Draw> Draw;
         public static readonly HookPoint<HookArgs.Update> Update;
         public static readonly HookPoint<HookArgs.UpdateClient> UpdateClient;
+        #endregion
+
+        #region "Server"
+        public static readonly HookPoint<HookArgs.WorldAutoSave> WorldAutoSave;
+        #endregion
+
+        #region "Multi"
+        #endregion
 
         static HookPoints()
         {
@@ -173,6 +182,8 @@ namespace OTA.Plugin
             Draw = new HookPoint<HookArgs.Draw>("draw");
             Update = new HookPoint<HookArgs.Update>("update");
             UpdateClient = new HookPoint<HookArgs.UpdateClient>("update-client");
+
+            WorldAutoSave = new HookPoint<HookArgs.WorldAutoSave>("world-auto-save");
         }
     }
 
@@ -1274,6 +1285,8 @@ namespace OTA.Plugin
             //                }
             //            }
         }
+
+        public struct WorldAutoSave { }
     }
 
     public enum TileSquareForEachResult

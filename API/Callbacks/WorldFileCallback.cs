@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using OTA.Logging;
+using OTA.Plugin;
+using OTA.Command;
 
 #if Full_API
 using Terraria;
@@ -16,6 +18,16 @@ namespace OTA.Callbacks
 {
     public static class WorldFileCallback
     {
+        public static bool OnAutoSave()
+        {
+            var args = new HookArgs.WorldAutoSave();
+            var ctx = HookContext.Empty;
+
+            HookPoints.WorldAutoSave.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+
         /// <summary>
         /// Clears the world, and is a direct replacement of Terraria.WorldGen.clearWorld.
         /// </summary>

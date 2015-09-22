@@ -4,7 +4,6 @@ using OTA.Callbacks;
 
 namespace OTA.Command
 {
-
     #if Full_API
     /// <summary>
     /// Sender class for command sending/parsing
