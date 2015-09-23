@@ -38,7 +38,7 @@ namespace OTA.Web
     public static class WebServer
     {
 
-        #if WEBSERVER
+#if WEBSERVER
         public static System.Web.Http.HttpConfiguration Config { get; private set; }
 
         public static string StaticFileDirectory = "Web";
@@ -53,18 +53,18 @@ namespace OTA.Web
             Config = new System.Web.Http.HttpConfiguration();
 
             Config.Routes.MapHttpRoute(
-                name: "DefaultApi", 
-                routeTemplate: "api/{controller}/{id}", 
-                defaults: new { id = System.Web.Http.RouteParameter.Optional } 
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = System.Web.Http.RouteParameter.Optional }
             );
 
-//            Config.DependencyResolver = new AssembliesResolver();
+            //            Config.DependencyResolver = new AssembliesResolver();
             Config.Services.Replace(typeof(System.Web.Http.Dispatcher.IAssembliesResolver), new PluginServiceResolver());
 
             Config.MapHttpAttributeRoutes();
-//            Config.Formatters.Add(new System.Net.Http.Formatting.JsonMediaTypeFormatter());
+            //            Config.Formatters.Add(new System.Net.Http.Formatting.JsonMediaTypeFormatter());
         }
-        #endif
+#endif
 
         /// <summary>
         /// Start the web server at the specified address
@@ -72,10 +72,10 @@ namespace OTA.Web
         /// <param name="baseAddress">Base address.</param>
         public static void Start(string baseAddress)
         {
-            #if WEBSERVER
+#if WEBSERVER
             Switch.Reset();
             (new Thread(OWINServer.StartServer)).Start(baseAddress);
-            #endif
+#endif
         }
 
         /// <summary>
@@ -83,13 +83,13 @@ namespace OTA.Web
         /// </summary>
         public static void Stop()
         {
-            #if WEBSERVER
+#if WEBSERVER
             Switch.Set();
-            #endif
+#endif
         }
     }
 
-    #if WEBSERVER
+#if WEBSERVER
     class PluginServiceResolver : System.Web.Http.Dispatcher.DefaultAssembliesResolver
     {
         public override System.Collections.Generic.ICollection<System.Reflection.Assembly> GetAssemblies()
@@ -162,14 +162,14 @@ namespace OTA.Web
                     foreach (var role in await AccountManager.GetRolesForAccount(user.Id))
                     {
                         identity.AddClaim(new Claim(role.Type, role.Value));
-//                    identity.AddClaim(new Claim(ClaimTypes.Role, "player"));
+                        //                    identity.AddClaim(new Claim(ClaimTypes.Role, "player"));
                     }
 
-//                    var ticket = new AuthenticationTicket(identity, new AuthenticationProperties()
-//                        {
-//                            IsPersistent = true,
-//                            IssuedUtc = DateTime.UtcNow
-//                        });
+                    //                    var ticket = new AuthenticationTicket(identity, new AuthenticationProperties()
+                    //                        {
+                    //                            IsPersistent = true,
+                    //                            IssuedUtc = DateTime.UtcNow
+                    //                        });
                     context.Validated(identity);
                 }
                 else
@@ -190,14 +190,14 @@ namespace OTA.Web
             AllowInsecureHttp = true, //WebServer.AllowInsecureHttp,
 
             /* Use app.SetDataProtectionProvider ? */
-            RefreshTokenFormat = 
-                    new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
+            RefreshTokenFormat =
+                new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
                 new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
-            AccessTokenFormat = 
-                    new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
+            AccessTokenFormat =
+                new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
                 new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
-            AuthorizationCodeFormat = 
-                    new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
+            AuthorizationCodeFormat =
+                new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
                 new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
 
             ApplicationCanDisplayErrors = true
@@ -206,7 +206,7 @@ namespace OTA.Web
         static OAuthBearerAuthenticationOptions BearerOptions = new OAuthBearerAuthenticationOptions()
         {
             AccessTokenFormat =
-                    new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
+                new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
                 new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
             AuthenticationMode = AuthenticationMode.Active,
             AuthenticationType = "Bearer"
@@ -214,21 +214,21 @@ namespace OTA.Web
 
         public void Configuration(Owin.IAppBuilder app)
         {
-            app.UseErrorPage();
+            //app.UseErrorPage();
             app.UseOAuthAuthorizationServer(ServerOptions);
             app.UseOAuthBearerAuthentication(BearerOptions);
-//            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+            //            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
             app.UseWebApi(WebServer.Config);
 
-//            app.SetDataProtectionProvider( TODO
+            //            app.SetDataProtectionProvider( TODO
 
             app.UseFileServer(new Microsoft.Owin.StaticFiles.FileServerOptions()
-                {
-                    RequestPath = new Microsoft.Owin.PathString("/web"),
-                    FileSystem = new Microsoft.Owin.FileSystems.PhysicalFileSystem(WebServer.StaticFileDirectory),
-                    EnableDirectoryBrowsing = false
-                });
+            {
+                RequestPath = new Microsoft.Owin.PathString("/web"),
+                FileSystem = new Microsoft.Owin.FileSystems.PhysicalFileSystem(WebServer.StaticFileDirectory),
+                EnableDirectoryBrowsing = false
+            });
 
         }
 
@@ -276,7 +276,8 @@ namespace OTA.Web
                         //Default purpose 
                         sw.Write(DefaultPurpose);
 
-                        if (_purposes != null) foreach (var purpose in _purposes)
+                        if (_purposes != null)
+                            foreach (var purpose in _purposes)
                             {
                                 sw.Write(purpose);
                             }
@@ -302,7 +303,7 @@ namespace OTA.Web
                 {
                     ProgramLog.Web.Log("Web server started listening on {0}", baseAddress);
                     WebServer.Switch.WaitOne();
-                } 
+                }
             }
             catch (Exception e)
             {
@@ -310,6 +311,6 @@ namespace OTA.Web
             }
         }
     }
-    #endif
+#endif
 }
 
