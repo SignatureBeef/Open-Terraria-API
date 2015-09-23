@@ -813,6 +813,9 @@ namespace OTA.Patcher
                 LibrariesFolder + Path.DirectorySeparatorChar + "Mono.Nat.dll",
                 LibrariesFolder + Path.DirectorySeparatorChar + "Mono.Nat.pdb",
 
+                "Mono.Cecil.dll",
+                "Mono.Cecil.pdb",
+
                 "start-server.bat",
                 "start-server.sh",
                 "start-server.cmd",
