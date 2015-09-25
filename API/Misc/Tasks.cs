@@ -6,7 +6,7 @@ namespace OTA.Misc
     /// <summary>
     /// A triggerable task that can be used call a function at intervals
     /// </summary>
-    public class Task /* Needed this to be a reference type */
+    public class GameTask /* Needed this to be a reference type */
     {
         //public static readonly Task Empty;
 
@@ -60,7 +60,7 @@ namespace OTA.Misc
         /// <value>
         /// The method.
         /// </value>
-        public Action<Task> Method { get; set; }
+        public Action<GameTask> Method { get; set; }
 
         public void Reset(bool triggered = true, bool clearData = true)
         {
@@ -75,7 +75,7 @@ namespace OTA.Misc
             _insertedAt = DateTime.Now.AddSeconds(-Trigger);
         }
 
-        public Task Init()
+        public GameTask Init()
         {
             Reset(false);
             return this;
@@ -92,12 +92,12 @@ namespace OTA.Misc
     /// </summary>
     public static class Tasks
     {
-        static Stack<Task> _tasks;
+        static Stack<GameTask> _tasks;
         static DateTime _lastCheck;
 
         static Tasks()
         {
-            _tasks = new Stack<Task>();
+            _tasks = new Stack<GameTask>();
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace OTA.Misc
         /// </summary>
         /// <param name="task">Task.</param>
         /// <param name="init">If set to <c>true</c> init.</param>
-        public static void Schedule(Task task, bool init = true)
+        public static void Schedule(GameTask task, bool init = true)
         {
             if (init) task.Init();
             lock (_tasks) _tasks.Push(task);
@@ -122,7 +122,7 @@ namespace OTA.Misc
                 {
                     for (var i = 0; i < _tasks.Count; i++)
                     {
-                        Task task = _tasks.Pop();
+                        GameTask task = _tasks.Pop();
                         if (task.Triggerable)
                         {
                             task.Method.BeginInvoke

@@ -93,6 +93,15 @@ namespace OTA.Callbacks
 
                 return null;
             };
+
+            AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) =>
+            {
+                var ex = e.ExceptionObject  as Exception;
+                if (ex != null)
+                    ProgramLog.Log(ex, "Unhandled exception");
+                else
+                    ProgramLog.Error.Log("Unhandled exception encountered");
+            };
         }
 
         /// <summary>
@@ -112,20 +121,6 @@ namespace OTA.Callbacks
 
         //public static bool StartEclipse;
         //public static bool StartBloodMoon;
-
-        static void Test()
-        {
-            using (var ctx = new OTA.Data.OTAContext())
-            {
-                ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
-                    {
-                        Username = "Test",
-                        Password = "Testing"
-                    });
-
-                ctx.SaveChanges();
-            }
-        }
 
         /// <summary>
         /// The startup call (non vanilla) for both the client and server
@@ -188,6 +183,19 @@ namespace OTA.Callbacks
 
             if (OTA.Data.Storage.IsAvailable) ProgramLog.Admin.Log("Entity framework has a registered connection.");
             else ProgramLog.Admin.Log("Entity framework has no registered connection.");
+
+
+            if (OTA.Data.Storage.IsAvailable)
+                using (var ctx = new OTA.Data.OTAContext())
+                {
+                    ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
+                        {
+                            Username = "Test",
+                            Password = "Testing"
+                        });
+
+                    ctx.SaveChanges();
+                }
 
             //            if (!Permissions.PermissionsManager.IsSet)
             //            {

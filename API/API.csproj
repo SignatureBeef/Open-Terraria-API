@@ -147,9 +147,9 @@
           <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
         </Reference>
         <Reference Include="System.Data.Entity" />
-	    <Reference Include="Open.Nat">
-	      <HintPath>..\packages\Open.NAT.2.0.13.0\lib\net45\Open.Nat.dll</HintPath>
-	    </Reference>
+        <Reference Include="Open.Nat">
+          <HintPath>..\packages\Open.NAT.2.0.13.0\lib\net45\Open.Nat.dll</HintPath>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -299,6 +299,8 @@
     <Compile Include="Web\API\PlayerController.cs" />
     <Compile Include="Web\API\UserController.cs" />
     <Compile Include="Data\Entity\OTAInitializer.cs" />
+    <Compile Include="Misc\FixedConcurrentQueue.cs" />
+    <Compile Include="Protection\IpLimiting.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -320,5 +322,6 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="Web\API\" />
+    <Folder Include="Protection\" />
   </ItemGroup>
 </Project>

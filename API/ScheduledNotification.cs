@@ -12,9 +12,9 @@ namespace OTA
     /// Scheduled notification for players or the console
     /// </summary>
     // TODO Allow per-player
-    public class ScheduledNotification : Task
+    public class ScheduledNotification : GameTask
     {
-        private new Action<Task> Method { get; set; }
+        private new Action<GameTask> Method { get; set; }
 
         private string _message;
         private Color _colour;

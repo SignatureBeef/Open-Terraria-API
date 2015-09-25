@@ -4,6 +4,8 @@ using System.Net;
 using System.Data.Entity;
 using OTA.Data.Entity.Models;
 using OTA.Data;
+using System.Collections.Concurrent;
+using OTA.Misc;
 
 #if WEBSERVER
 using System.Threading;
@@ -28,7 +30,7 @@ using Microsoft.Owin;
 using Microsoft.AspNet.Identity.Owin;
 #endif
 
-//Note to self, roles are to be kept at a minimum
+//Note to self, roles are to be kept at a minimum as the roles build the bearer token
 
 namespace OTA.Web
 {
@@ -38,13 +40,16 @@ namespace OTA.Web
     public static class WebServer
     {
 
-#if WEBSERVER
+        #if WEBSERVER
         public static System.Web.Http.HttpConfiguration Config { get; private set; }
 
         public static string StaticFileDirectory = "Web";
         public static bool AllowInsecureHttp = true;
         public static string ServerKey = Guid.NewGuid().ToString();
         public static int SessionTimeoutHours = 12;
+
+        public static int RequestLockoutDuration = 10;
+        public static int MaxRequestsPerLapse = 15;
 
         internal static readonly AutoResetEvent Switch = new AutoResetEvent(false);
 
@@ -64,7 +69,7 @@ namespace OTA.Web
             Config.MapHttpAttributeRoutes();
             //            Config.Formatters.Add(new System.Net.Http.Formatting.JsonMediaTypeFormatter());
         }
-#endif
+        #endif
 
         /// <summary>
         /// Start the web server at the specified address
@@ -89,7 +94,7 @@ namespace OTA.Web
         }
     }
 
-#if WEBSERVER
+    #if WEBSERVER
     class PluginServiceResolver : System.Web.Http.Dispatcher.DefaultAssembliesResolver
     {
         public override System.Collections.Generic.ICollection<System.Reflection.Assembly> GetAssemblies()
@@ -134,7 +139,6 @@ namespace OTA.Web
 
     class OWINServer
     {
-
         class PermissionsOAuthProvider : Microsoft.Owin.Security.OAuth.OAuthAuthorizationServerProvider
         {
             //            public override async System.Threading.Tasks.Task ValidateClientAuthentication(Microsoft.Owin.Security.OAuth.OAuthValidateClientAuthenticationContext context)
@@ -151,6 +155,26 @@ namespace OTA.Web
             public override async Task GrantResourceOwnerCredentials(Microsoft.Owin.Security.OAuth.OAuthGrantResourceOwnerCredentialsContext context)
             {
                 context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+
+                if (String.IsNullOrEmpty(context.UserName))
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    context.Rejected();
+                    return;
+                }
+
+                if (OTA.Protection.IpLimiting.Register(context.Request.RemoteIpAddress, WebServer.MaxRequestsPerLapse, WebServer.RequestLockoutDuration))
+                {
+                    //Prevent console spamming
+                    if (OTA.Protection.IpLimiting.GetJustLockedOut(context.Request.RemoteIpAddress))
+                    {
+                        ProgramLog.Web.Log("API client reached request limit for user/ip {0}", context.UserName, context.Request.RemoteIpAddress);
+                    }
+
+                    context.SetError("request_limit", "You have reached the service limit");
+                    context.Rejected();
+                    return;
+                }
 
                 var user = await AccountManager.FindByName(context.UserName);
                 if (user != null && user.ComparePassword(context.Password))
@@ -224,11 +248,11 @@ namespace OTA.Web
             //            app.SetDataProtectionProvider( TODO
 
             app.UseFileServer(new Microsoft.Owin.StaticFiles.FileServerOptions()
-            {
-                RequestPath = new Microsoft.Owin.PathString("/web"),
-                FileSystem = new Microsoft.Owin.FileSystems.PhysicalFileSystem(WebServer.StaticFileDirectory),
-                EnableDirectoryBrowsing = false
-            });
+                {
+                    RequestPath = new Microsoft.Owin.PathString("/web"),
+                    FileSystem = new Microsoft.Owin.FileSystems.PhysicalFileSystem(WebServer.StaticFileDirectory),
+                    EnableDirectoryBrowsing = false
+                });
 
         }
 
@@ -292,6 +316,8 @@ namespace OTA.Web
         {
             System.Threading.Thread.CurrentThread.Name = "Web";
 
+            ProgramLog.Web.Log("Initialising web server");
+
             if (!Directory.Exists(WebServer.StaticFileDirectory))
             {
                 Directory.CreateDirectory(WebServer.StaticFileDirectory);
@@ -311,6 +337,6 @@ namespace OTA.Web
             }
         }
     }
-#endif
+    #endif
 }
 

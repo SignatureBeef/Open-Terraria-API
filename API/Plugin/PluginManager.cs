@@ -223,6 +223,7 @@ namespace OTA
                     return plugin;
                 }
             }
+
             return null;
         }
 
@@ -371,11 +372,21 @@ namespace OTA
                 {
                     ProgramLog.Plugin.Log("Loading plugin from {0}.", fileInfo.Name);
                     plugin = LoadPluginFromDLL(file);
+
+                    if (null == plugin)
+                    {
+                        ProgramLog.Error.Log("Failed to load {0}.", fileInfo.Name);
+                    }
                 }
                 else if (ext == ".cs")
                 {
                     ProgramLog.Plugin.Log("Compiling and loading plugin from {0}.", fileInfo.Name);
                     plugin = LoadSourcePlugin(file);
+
+                    if (null == plugin)
+                    {
+                        ProgramLog.Error.Log("Failed to load {0}.", fileInfo.Name);
+                    }
                 }
                 else if (ext == ".lua")
                 {

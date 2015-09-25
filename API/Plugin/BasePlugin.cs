@@ -138,7 +138,7 @@ namespace OTA.Plugin
         /// </param>
         /// </summary>
         protected virtual void Initialized(object state)
-        {
+        {   
         }
 
         /// <summary>
