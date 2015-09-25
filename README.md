@@ -11,7 +11,7 @@ In this API it contains the tools to run a cross platform vanilla client or serv
  5. Optional Entity Framework 6 support (v7 soon) for cross platform database access [Tested: MSSQL,MySQL,SQLite]
  6. Memory optimisations
 
-What makes this mod special is not only how quick updates are, but the capability to patch both the client and server binaries for each platform. This means you can write a generic cross platform plugin and have it work for both the client or server.
+What makes this mod special is not only how quick updates are, but the capability to patch both the client and server binaries for each platform. This means you can write a generic cross platform plugin for both the client and server with one code base.
 
 
 While the client support is limited feel free to join the TDSM team over on slack to help out or request functionalities. [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](http://tdsm.sithous.com/slack)
