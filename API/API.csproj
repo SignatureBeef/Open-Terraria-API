@@ -146,10 +146,10 @@
         <Reference Include="EntityFramework.SqlServer">
           <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
         </Reference>
-        <Reference Include="System.Data.Entity" />
         <Reference Include="Open.Nat">
-          <HintPath>..\packages\Open.NAT.2.0.13.0\lib\net45\Open.Nat.dll</HintPath>
+          <HintPath>..\packages\Open.Nat.2.0.13.0\lib\net45\Open.Nat.dll</HintPath>
         </Reference>
+        <Reference Include="System.Data.Entity" />
       </ItemGroup>
     </Otherwise>
   </Choose>

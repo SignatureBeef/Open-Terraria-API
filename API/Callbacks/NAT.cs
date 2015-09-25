@@ -12,7 +12,6 @@ using System;
 
 namespace OTA.Callbacks
 {
-    //https://github.com/mono/Mono.Nat/releases
     public static class NAT
     {
         //        static Mono.Nat.Mapping _map;
