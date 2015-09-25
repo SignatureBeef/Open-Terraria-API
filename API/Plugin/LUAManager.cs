@@ -8,6 +8,7 @@ namespace OTA.Plugin
     /// <summary>
     /// The implementation to get LUA plugins working as an OTA plugin
     /// </summary>
+    [OTAVersion(1, 1)]
     public class LUAPlugin : BasePlugin
     {
         private NLua.Lua _ctx;

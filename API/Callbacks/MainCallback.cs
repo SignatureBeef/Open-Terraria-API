@@ -272,6 +272,11 @@ namespace OTA.Callbacks
         /// </summary>
         public static void OnProgramFinished()
         {
+            while (NAT.ShuttingDown)
+            {
+                System.Threading.Thread.Sleep(50);
+            }
+
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -619,7 +624,9 @@ namespace OTA.Callbacks
 
         internal static void ResetTileArray()
         {
+            #if Full_API
             ResetTileArray(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
+            #endif
         }
 
         internal static void ResetTileArray(int x, int y)

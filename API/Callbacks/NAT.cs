@@ -1,4 +1,11 @@
 ﻿#define ENABLE_NAT
+using Open.Nat;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
+
+
 #if MONO_NAT
 using OTA.Logging;
 using System;
@@ -8,8 +15,12 @@ namespace OTA.Callbacks
     //https://github.com/mono/Mono.Nat/releases
     public static class NAT
     {
-        static Mono.Nat.Mapping _map;
-        static System.Collections.Generic.List<Mono.Nat.INatDevice> _devices = new System.Collections.Generic.List<Mono.Nat.INatDevice>();
+        //        static Mono.Nat.Mapping _map;
+        //        static System.Collections.Generic.List<Mono.Nat.INatDevice> _devices = new System.Collections.Generic.List<Mono.Nat.INatDevice>();
+        static NatDevice _device;
+        const String NatMapName = "Terraria Server";
+
+        private static CancellationTokenSource _cancel;
 
         /// <summary>
         /// Open the NAT port for the current Terraria ip:port
@@ -22,8 +33,42 @@ namespace OTA.Callbacks
                 Terraria.Netplay.portForwardIP = Terraria.Netplay.GetLocalIPAddress();
                 Terraria.Netplay.portForwardPort = Terraria.Netplay.ListenPort;
 
-                Mono.Nat.NatUtility.DeviceFound += NatUtility_DeviceFound;
-                Mono.Nat.NatUtility.StartDiscovery();
+//                Mono.Nat.NatUtility.DeviceFound += NatUtility_DeviceFound;
+//                Mono.Nat.NatUtility.StartDiscovery();
+
+                var th = new System.Threading.Thread(async () =>
+                    {
+                        System.Threading.Thread.CurrentThread.Name = "NAT";
+                        try
+                        {
+                            var discoverer = new NatDiscoverer();
+                            _cancel = new CancellationTokenSource(10000);
+                            _device = await discoverer.DiscoverDeviceAsync(PortMapper.Upnp, _cancel);
+
+                            if (_device != null)
+                            {
+                                var ip = await _device.GetExternalIPAsync();
+
+                                var existing = await _device.GetSpecificMappingAsync(Protocol.Tcp, Terraria.Netplay.portForwardPort);
+                                if (existing != null && existing.PublicPort == Terraria.Netplay.portForwardPort)
+                                {
+                                    ProgramLog.Admin.Log("Detected an existing NAT map record for {0} on IP {1}", NatMapName, ip);
+                                }
+                                else
+                                {
+                                    await _device.CreatePortMapAsync(new Mapping(Protocol.Tcp, Terraria.Netplay.portForwardPort, Terraria.Netplay.portForwardPort, NatMapName));
+                                    ProgramLog.Admin.Log("Created a new NAT map record for {0} on IP {1}", NatMapName, ip);
+                                }
+                                Terraria.Netplay.portForwardOpen = true;
+                            }
+                            else ProgramLog.Admin.Log("Failed to find a NAT device");
+                        }
+                        catch (Exception e)
+                        {
+                            ProgramLog.Log(e, "Failed to create NAT device mapping");
+                        }
+                    });
+                th.Start();
             }
 #endif
 
@@ -44,73 +89,122 @@ namespace OTA.Callbacks
             //}
         }
 
-        static void NatUtility_DeviceFound(object sender, Mono.Nat.DeviceEventArgs e)
-        {
-#if ENABLE_NAT && Full_API
-            try
-            {
-                if (e.Device is Mono.Nat.Upnp.UpnpNatDevice) //TODO, see if Pmp should work as well
-                {
-//                    var current = e.Device.GetAllMappings();
-//                    if (current != null)
-//                    {
-//                        foreach (var map in current)
-//                        {
-//                            if (map.Protocol == Mono.Nat.Protocol.Tcp && map.PrivatePort == Terraria.Netplay.portForwardPort && map.PublicPort == Terraria.Netplay.portForwardPort)
-//                            {
-//                                Terraria.Netplay.portForwardOpen = true;
-//                            }
-//                        }
-//                    }
+        //        static void NatUtility_DeviceFound(object sender, Mono.Nat.DeviceEventArgs e)
+        //        {
+        //#if ENABLE_NAT && Full_API
+        //            try
+        //            {
+        //                if (e.Device is Mono.Nat.Upnp.UpnpNatDevice) //TODO, see if Pmp should work as well
+        //                {
+        //                    try
+        //                    {
+        //                        var current = e.Device.GetAllMappings();
+        //                        if (current != null)
+        //                        {
+        //                            foreach (var map in current)
+        //                            {
+        //                                if (map.Protocol == Mono.Nat.Protocol.Tcp && map.PrivatePort == Terraria.Netplay.portForwardPort && map.PublicPort == Terraria.Netplay.portForwardPort)
+        //                                {
+        //                                    Terraria.Netplay.portForwardOpen = true;
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        ProgramLog.Log(ex, "Failed to detect existing NAT device mapping(s)");
+        //                    }
+        //
+        //                    if (!Terraria.Netplay.portForwardOpen)
+        //                    {
+        //                        _devices.Add(e.Device);
+        //                        _map = new Mono.Nat.Mapping(Mono.Nat.Protocol.Tcp, Terraria.Netplay.portForwardPort, Terraria.Netplay.portForwardPort)
+        //                        {
+        //                            Description = "Terraria Server"
+        //                        };
+        //
+        //                        e.Device.CreatePortMap(_map);
+        //                        ProgramLog.Admin.Log("Created a new NAT map record for Terraria Server");
+        //                        Terraria.Netplay.portForwardOpen = true;
+        //                    }
+        //                    else
+        //                    {
+        //                        ProgramLog.Admin.Log("Detected an existing NAT map record for Terraria Server");
+        //                    }
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                ProgramLog.Log(ex, "Failed to create NAT device mapping");
+        //            }
+        //#endif
+        //        }
+        public static bool ShuttingDown { get; set; }
 
-                    if (!Terraria.Netplay.portForwardOpen)
-                    {
-                        _devices.Add(e.Device);
-                        _map = new Mono.Nat.Mapping(Mono.Nat.Protocol.Tcp, Terraria.Netplay.portForwardPort, Terraria.Netplay.portForwardPort)
-                        {
-                            Description = "Terraria Server"
-                        };
-
-                        e.Device.CreatePortMap(_map);
-                        ProgramLog.Admin.Log("Created a new NAT map record for Terraria Server");
-                        Terraria.Netplay.portForwardOpen = true;
-                    }
-                    else
-                    {
-                        ProgramLog.Admin.Log("Detected an existing NAT map record for Terraria Server");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ProgramLog.Log(ex, "Failed to create NAT device mapping");
-            }
-#endif
-        }
 
         /// <summary>
         /// Closes the open NAT port.
         /// </summary>
         public static void ClosePort()
         {
+            ShuttingDown = true;
 #if Full_API
-            if (Terraria.Netplay.portForwardOpen && _map != null && _devices.Count > 0)
+            if (Terraria.Netplay.portForwardOpen)
             {
-                //Netplay.mappings.Remove(Netplay.portForwardPort, "TCP");
-                foreach (var device in _devices)
+                if (_device != null)
                 {
                     try
                     {
-                        device.DeletePortMap(_map);
+                        var task = Task.Run(async () =>
+                        {
+                            Mapping map = await _device.GetSpecificMappingAsync(Protocol.Tcp, Terraria.Netplay.portForwardPort);
+                            while (map != null && map.PublicPort == Terraria.Netplay.portForwardPort)
+                            {
+                                System.Threading.Thread.Sleep(5);
+                                await _device.DeletePortMapAsync(new Mapping(Protocol.Tcp, Terraria.Netplay.portForwardPort, Terraria.Netplay.portForwardPort, NatMapName));
+                            }
+                        });
+                        task.Wait();
+
+                        if (task.IsCompleted)
+                        {
+                            ProgramLog.Admin.Log("Successfully removed NAT device mapping");
+                        }
+                        else
+                        {
+                            ProgramLog.Admin.Log("Failed to remove NAT device mapping");
+                        }
                     }
                     catch (Exception e)
                     {
-                        ProgramLog.Log(e);
+                        ProgramLog.Log(e, "Failed to delete NAT device mapping");
                     }
                 }
-                ProgramLog.Admin.Log("Removed NAT map record for Terraria Server");
+//                else ProgramLog.Admin.Log("Device is null");
             }
-            Mono.Nat.NatUtility.StopDiscovery();
+            else if (_cancel != null)
+            {
+                if (!_cancel.IsCancellationRequested) _cancel.Cancel();
+            }
+
+//            if (Terraria.Netplay.portForwardOpen && _map != null && _devices.Count > 0)
+//            {
+//                //Netplay.mappings.Remove(Netplay.portForwardPort, "TCP");
+//                foreach (var device in _devices)
+//                {
+//                    try
+//                    {
+//                        device.DeletePortMap(_map);
+//                    }
+//                    catch (Exception e)
+//                    {
+//                        ProgramLog.Log(e);
+//                    }
+//                }
+//                ProgramLog.Admin.Log("Removed NAT map record for Terraria Server");
+//            }
+//            Mono.Nat.NatUtility.StopDiscovery();
+            ShuttingDown = false;
 #endif
         }
 

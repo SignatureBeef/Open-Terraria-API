@@ -26,8 +26,8 @@ namespace OTA
     /// </summary>
     public static class Globals
     {
-        public const Int32 Build = 5;
-        public const ReleasePhase BuildPhase = ReleasePhase.LiveRelease;
+        public const Int32 Build = 6;
+        public const ReleasePhase BuildPhase = ReleasePhase.Beta;
 
         public static string BuildInfo
         {

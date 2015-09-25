@@ -10,6 +10,36 @@ using OTA.Logging;
 namespace OTA.Plugin
 {
     /// <summary>
+    /// OTA version attribute.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class OTAVersionAttribute : Attribute
+    {
+        /// <summary>
+        /// [NO-LOAD] This is ticked when OTA has a major update that could potentially break all plugins.
+        /// </summary>
+        /// <example>Terraria.Tile swapping or underlying OTA Database changes</example>
+        public int Major { get; set; }
+
+        /// <summary>
+        /// [WARNING] This is ticked with OTA makes API changes that could potentially break some plugins.
+        /// </summary>
+        /// <example>A new OTA build, function is renamed or arguments swapped.</example>
+        public int Minor { get; set; }
+
+        /// <summary>
+        /// Used to determine the compatability with OTA
+        /// </summary>
+        /// <param name="major">[NO-LOAD] This is ticked when OTA has a major update that could potentially break all plugins.</param>
+        /// <param name="minor">[WARNING] This is ticked with OTA makes API changes that could potentially break some plugins.</param>
+        public OTAVersionAttribute(int major, int minor)
+        {
+            Major = major;
+            Minor = minor;
+        }
+    }
+
+    /// <summary>
     /// Plugin class, used as base for plugin extensions
     /// </summary>
     public abstract class BasePlugin

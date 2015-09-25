@@ -41,6 +41,15 @@ namespace OTA
         }
 
         /// <summary>
+        /// Gets a value indicating whether this player is self authenticated.
+        /// </summary>
+        /// <remarks>This is not for real authentication, rather to prevent self authentications being included</remarks>
+        public bool IsSelfAuthenticated
+        {
+            get { return AuthenticatedBy == Name; }
+        }
+
+        /// <summary>
         /// Storage for plugins for on a per-player basis
         /// </summary>
         public ConcurrentDictionary<String, Object> PluginData = new ConcurrentDictionary<String, Object>();
@@ -271,7 +280,10 @@ namespace OTA
 
                 // Set a max drops limit to be safe.
                 int maxDrops = 10;
-                if (stack / maxStack > maxDrops) { stack = maxStack * maxDrops; }
+                if (stack / maxStack > maxDrops)
+                {
+                    stack = maxStack * maxDrops;
+                }
 
                 int index;
                 while (stack > maxStack) // If stack is greater than the stack size...

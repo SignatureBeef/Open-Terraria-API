@@ -91,7 +91,7 @@ namespace OTA.Patcher
     public static class OTAPatcher
     {
         public const String OTAGuid = "9f7bca2e-4d2e-4244-aaae-fa56ca7797ec";
-        public const Int32 Build = 5;
+        public const Int32 Build = 6;
 
         #if CLIENT
         private const String FolderKind = "Client";
@@ -376,7 +376,6 @@ namespace OTA.Patcher
                     Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "KopiLua", false);
                     Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "NLua", false);
                     Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "ICSharpCode.SharpZipLib", false);
-                    Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Mono.Nat", false);
                     Copy(root, "Official", Environment.CurrentDirectory, "TerrariaServer", false);
                     //            Copy(root, "tdsm-core", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Newtonsoft.Json", true);
                     //            Copy(root, "tdsm-web", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-web", true);
@@ -810,8 +809,7 @@ namespace OTA.Patcher
                 //                "Vestris.ResourceLib.dll",
                 LibrariesFolder + Path.DirectorySeparatorChar + "KopiLua.dll",
 //                LibrariesFolder + Path.DirectorySeparatorChar + "ICSharpCode.SharpZipLib.dll",
-                LibrariesFolder + Path.DirectorySeparatorChar + "Mono.Nat.dll",
-                LibrariesFolder + Path.DirectorySeparatorChar + "Mono.Nat.pdb",
+                LibrariesFolder + Path.DirectorySeparatorChar + "Open.Nat.dll",
 
                 "Mono.Cecil.dll",
                 "Mono.Cecil.pdb",

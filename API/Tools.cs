@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using OTA.Logging;
 
-
 #if Full_API
 using Terraria;
 using System.Collections.Generic;

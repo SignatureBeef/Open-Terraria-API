@@ -23,7 +23,11 @@ namespace OTA.Callbacks
 
         public static string SavePath
         {
+            #if Full_API
             get { return _savePath ?? Terraria.Main.worldPathName; }
+            #else
+            get { return null; }
+            #endif
             set
             { _savePath = value; }
         }
