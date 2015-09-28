@@ -411,6 +411,22 @@ namespace OTA.Patcher
                 }
             }
         }
+
+        [ServerHook]
+        private void FixNetplayServerFull()
+        {
+            var method = Terraria.Netplay.Methods.Single(x => x.Name == "OnConnectionAccepted");
+            var callback = API.NetplayCallback.Methods.Single(m => m.Name == "OnServerFull");
+
+            var toReplace = method.Body.Instructions.Single(x => x.OpCode == OpCodes.Call
+                                && x.Operand is MethodReference
+                                && (x.Operand as MethodReference).Name == "StopListening");
+
+            toReplace.Operand = _asm.MainModule.Import(callback);
+
+            var il = method.Body.GetILProcessor();
+            il.InsertBefore(toReplace, il.Create(OpCodes.Ldarg_0));
+        }
     }
 
     public class TerrariaOrganiser

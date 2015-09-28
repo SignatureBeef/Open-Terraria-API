@@ -442,5 +442,13 @@ namespace OTA.Callbacks
 
             return true; //Allow continue
         }
+
+        public static void OnServerFull(ISocket client)
+        {
+            #if Full_API && SERVER
+            var conn = client as ClientConnection;
+            conn.Kick("Server is full");
+            #endif
+        }
     }
 }

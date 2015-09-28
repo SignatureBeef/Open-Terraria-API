@@ -639,6 +639,8 @@ namespace OTA.Patcher
             {
                 Console.Clear();
 
+                var domain = AppDomain.CreateDomain("ota_exec");
+
                 using (var ms = new MemoryStream())
                 {
                     using (var fs = File.OpenRead(file))
@@ -652,7 +654,8 @@ namespace OTA.Patcher
                     }
 
                     ms.Seek(0L, SeekOrigin.Begin);
-                    var asm = System.Reflection.Assembly.Load(ms.ToArray());
+//                    var asm = System.Reflection.Assembly.Load(ms.ToArray());
+                    var asm = domain.Load(ms.ToArray());
                     try
                     {
                         if (PatchMode == PatchMode.Server)
@@ -673,6 +676,7 @@ namespace OTA.Patcher
                     }
                     catch (Exception e)
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine(e);
                     }
                 }

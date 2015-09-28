@@ -244,7 +244,7 @@ namespace OTA.Sockets
             _isReceiving = false;
 
             //Issue a 0 byte response, Terraria will close the connection :)
-            _callback.Callback(null, 0);
+            if (_callback != null) _callback.Callback(null, 0);
         }
 
         public void StartReading()

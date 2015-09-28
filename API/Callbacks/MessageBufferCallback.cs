@@ -34,7 +34,7 @@ namespace OTA.Callbacks
         {
 #if Full_API
             //ProgramLog.Debug.Log("Slot/Packet: {0}/{1}", bufferId, packetId);
-            //Console.WriteLine("Trace: {0}", Environment.StackTrace);
+//            Console.WriteLine("Trace: {0}", Environment.StackTrace);
             switch ((Packet)packetId)
             {
             /* Misc / Command */
