@@ -10,6 +10,9 @@
 - Command line arguments can now be specified for TDSM commands, and supersede configuration properties.
 - Fixed the heartbeat not disabling
 - Fixed character data reading - other players now look like they are meant to.
+- Fixed where upon reaching the player limit it would refuse any more connections
+- Fixed as couple socket exceptions
+- Swapped out the database backend with Entity Framework 6
 
 ## Build 5 - 1.3.0.8
 - Added send data hook

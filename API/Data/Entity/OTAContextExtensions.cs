@@ -43,7 +43,10 @@ namespace OTA.Data.Entity
         {
             return ctx.Groups
                 .Where(x => x.Id == groupId)
-                .Select(x => ctx.Groups.Where(y => y.Name == x.Parent).FirstOrDefault());
+                .Join(ctx.Groups, g => g.Parent, sg => sg.Name, (a, b) => b);
+//            return ctx.Groups
+//                .Where(x => x.Id == groupId)
+//                .Select(x => ctx.Groups.Where(y => y.Name == x.Parent).FirstOrDefault());
         }
 
         public static bool GuestGroupHasNode(this OTAContext ctx, string node, Permission permission)

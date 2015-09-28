@@ -157,11 +157,12 @@ namespace OTA.Data
         {
             using (var ctx = new OTAContext())
             {
-                var range = ctx.Players.RemoveRange(ctx.Players.Where(x => x.Name == username));
+                var matches = ctx.Players.Where(x => x.Name == username);
+                var range = ctx.Players.RemoveRange(matches);
 
                 ctx.SaveChanges();
 
-                return range.Any();
+                return matches.Any();
             }
         }
 
