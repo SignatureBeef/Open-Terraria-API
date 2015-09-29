@@ -43,6 +43,20 @@ namespace OTA
         }
 
         /// <summary>
+        /// Gets the clients remote IP address
+        /// </summary>
+        /// <returns>The IP address.</returns>
+        /// <param name="sock">Sock.</param>
+        public static string RemoteIPAddress(this Terraria.RemoteClient sock)
+        {
+            var addr = sock.Socket.GetRemoteAddress().ToString();
+            var ix = addr.IndexOf(':');
+            if (ix > 0) addr = addr.Substring(0, ix);
+
+            return addr;
+        }
+
+        /// <summary>
         /// Kicks the connection
         /// </summary>
         /// <param name="sock">Sock.</param>

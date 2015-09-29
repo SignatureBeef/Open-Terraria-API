@@ -237,7 +237,7 @@ namespace OTA.Command
         public static void Version(ISender sender, ArgumentList args)
         {
             sender.Message("Terraria Server " + Main.versionNumber);
-            sender.Message("TDSM API Version " + Globals.Build + Globals.PhaseToSuffix(Globals.BuildPhase));
+            sender.Message("OTA Version " + Globals.Build + Globals.PhaseToSuffix(Globals.BuildPhase));
         }
 
         /// <summary>

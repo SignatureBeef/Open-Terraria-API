@@ -10,9 +10,10 @@ namespace OTA.Protection
         {
             public FixedConcurrentQueue<DateTime> Requests;
             public DateTime? LastLockout;
-            public bool JustLocketOut;
+            public bool JustLockedOut;
         }
 
+        //TODO perhaps a context is required (??), say 1) API, 2) Player Login
         private static ConcurrentDictionary<String, IpLimit> _requestMap = new ConcurrentDictionary<String, IpLimit>();
 
         //        public static int DelayMinutes { get; set; }
@@ -37,7 +38,7 @@ namespace OTA.Protection
             IpLimit existing;
             if (_requestMap.TryGetValue(ip, out existing))
             {
-                return existing.JustLocketOut;
+                return existing.JustLockedOut;
             }
             return false;
         }
@@ -69,7 +70,7 @@ namespace OTA.Protection
                 }
             }
 
-            if (existing.JustLocketOut) existing.JustLocketOut = false;
+            if (existing.JustLockedOut) existing.JustLockedOut = false;
 
             if (existing.Requests.IsLimited(delayMinutes))
             {
@@ -84,7 +85,7 @@ namespace OTA.Protection
                 //Ensure rejected requests reset the wait time
                 existing.Requests.Fill(DateTime.Now);
                 existing.LastLockout = DateTime.Now;
-                existing.JustLocketOut = true;
+                existing.JustLockedOut = true;
                 return true;
             }
 
