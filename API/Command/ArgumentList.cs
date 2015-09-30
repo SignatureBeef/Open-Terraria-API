@@ -341,6 +341,62 @@ namespace OTA.Command
         }
         #endif
 
+        static Dictionary<Type, ArgumentConverter<Object>> _converters = new Dictionary<Type, ArgumentConverter<Object>>();
+
+        /// <summary>
+        /// Registers a custom command converter
+        /// </summary>
+        /// <returns><c>true</c>, if the converter was registered, <c>false</c> otherwise.</returns>
+        /// <param name="type">Type.</param>
+        /// <param name="converter">Converter callback.</param>
+        public static bool RegisterConverter(Type type, ArgumentConverter<Object> converter)
+        {
+            if (!_converters.ContainsKey(type))
+            {
+                _converters.Add(type, converter);
+                return true;
+            }
+            else return false;
+        }
+
+        /// <summary>
+        /// Unregisters a converter.
+        /// </summary>
+        /// <returns><c>true</c>, if the converter was unregistered, <c>false</c> otherwise.</returns>
+        /// <param name="type">Type.</param>
+        public static bool UnregisterConverter(Type type)
+        {
+            if (_converters.ContainsKey(type))
+            {
+                return _converters.Remove(type);
+            }
+            return false;
+        }
+
+        static ArgumentList()
+        {
+            #if Full_API
+            RegisterConverter(typeof(OTA.Memory.MemTile), (ArgumentList list, int position, out object converted) =>
+                {
+                    converted = null;
+                    int x, y;
+                    string fmt; //{x},{y}
+
+                    if (list.TryGetString(position, out fmt))
+                    {
+                        var coords = fmt.Split(',');
+                        if (coords.Length == 2 && Int32.TryParse(coords[0], out x) && Int32.TryParse(coords[1], out y))
+                        {
+                            converted = Terraria.Main.tile[x, y];
+                            return true;
+                        }
+                    }
+
+                    return false;
+                });
+            #endif
+        }
+
         /// <summary>
         /// Tries to parse a value at a specified position.
         /// </summary>
@@ -349,7 +405,8 @@ namespace OTA.Command
         {
             t = default(T);
 
-            if (typeof(T) == typeof(string))
+            var targetType = typeof(T);
+            if (targetType == typeof(string))
             {
                 string val;
                 if (TryGetString(at, out val))
@@ -360,7 +417,7 @@ namespace OTA.Command
                 return false;
 
             }
-            else if (typeof(T) == typeof(int))
+            else if (targetType == typeof(int))
             {
                 int val;
                 if (TryGetInt(at, out val))
@@ -370,7 +427,7 @@ namespace OTA.Command
                 }
                 return false;
             }
-            else if (typeof(T) == typeof(bool))
+            else if (targetType == typeof(bool))
             {
                 bool val;
                 if (TryGetBool(at, out val))
@@ -381,7 +438,7 @@ namespace OTA.Command
                 return false;
             }
 #if Full_API
-            else if (typeof(T) == typeof(Player))
+            else if (targetType == typeof(Player))
             {
                 Player val;
                 if (TryGetOnlinePlayer(at, out val))
@@ -392,7 +449,7 @@ namespace OTA.Command
                 return false;
             }
 #endif
-            else if (typeof(T) == typeof(double))
+            else if (targetType == typeof(double))
             {
                 double val;
                 if (TryGetDouble(at, out val))
@@ -402,7 +459,7 @@ namespace OTA.Command
                 }
                 return false;
             }
-            else if (typeof(T) == typeof(TimeSpan))
+            else if (targetType == typeof(TimeSpan))
             {
                 TimeSpan val;
                 if (TryGetDuration(at, out val))
@@ -412,7 +469,7 @@ namespace OTA.Command
                 }
                 return false;
             }
-            else if (typeof(T) == typeof(WorldTime))
+            else if (targetType == typeof(WorldTime))
             {
                 var val = WorldTime.Parse(this[at]);
                 if (val != null)
@@ -426,6 +483,16 @@ namespace OTA.Command
                     else throw new CommandError("Invalid time.");
                 }
                 return false;
+            }
+
+            if (_converters.ContainsKey(targetType))
+            {
+                object cv;
+                if (_converters[targetType](this, at, out cv))
+                {
+                    t = (T)cv;
+                    return true;
+                }
             }
 
             throw new CommandError("Internal command error, type is unsupported by parser: {0}.", typeof(T).ToString());
@@ -971,4 +1038,9 @@ namespace OTA.Command
         }
         #endif
     }
+
+    /// <summary>
+    /// Argument converter callback.
+    /// </summary>
+    public delegate bool ArgumentConverter<T>(ArgumentList list,int position,out T converted);
 }

@@ -3,6 +3,7 @@
     /// <summary>
     /// Known Terraria packets
     /// </summary>
+    // TODO Pascal case these, and correct the name if incorrect...anyone?...hello?
     public enum Packet : int
     {
         CONNECTION_REQUEST = 1,
@@ -89,6 +90,8 @@
         ANGLER_QUEST = 74,
         ANGLER_FINISH_REGISTER = 75,
         ANGLER_QUESTS_FINISHED = 76,
+
+        //Up to 105 is missing
 
         //custom
         TILE_ROW_COMPRESSED = 240,

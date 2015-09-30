@@ -1,6 +1,4 @@
-﻿#define TESTING
-
-using Microsoft.Xna.Framework;
+﻿//#define TESTING
 
 namespace OTA.Memory
 {
@@ -10,11 +8,19 @@ namespace OTA.Memory
     public class TileCollection
     {
         internal TileData[,] data;
+        #if TESTING
+        internal TileRef[,] refs;
+        #endif
 
         public TileCollection(int X, int Y)
         {
+            X++;
+            Y++;
             Logging.ProgramLog.Log("Creating tile array of {0}x{1}, {2}MB", X, Y, System.Runtime.InteropServices.Marshal.SizeOf(typeof(TileData)) * X * Y / 1024 / 1024);
             data = new TileData[X, Y];
+            #if TESTING
+            refs = new TileRef[X, Y];
+            #endif
         }
 
         public int SizeX
@@ -29,13 +35,30 @@ namespace OTA.Memory
 
         public TileRef At(int x, int y)
         {
+            #if TESTING
+            try
+            {
+                if (refs[x, y] == null) refs[x, y] = new TileRef(x, y);
+                return refs[x, y];
+            }
+            catch (System.IndexOutOfRangeException e)
+            {
+                Logging.ProgramLog.Error.Log($"Error with our of range tile at {x},{y} / {Terraria.Main.maxTilesX},{Terraria.Main.maxTilesY} / {SizeX},{SizeY}");
+                return null;
+            }
+            #else
             return new TileRef(x, y);
+            #endif
         }
 
         public TileRef CreateTileAt(int x, int y)
         {
             data[x, y] = default(TileData);
+            #if TESTING
+            return this.At(x, y);
+            #else
             return new TileRef(x, y);
+            #endif
         }
 
         public void RemoveTileAt(int x, int y)
@@ -43,10 +66,14 @@ namespace OTA.Memory
             data[x, y] = default(TileData);
         }
 
-        public MemTile this[int x, int y]
+        public MemTile this [int x, int y]
         {
             get
+            #if TESTING
+            { return this.At(x, y); }
+            #else
             { return new TileRef(x, y); }
+            #endif
             set
             { SetTile(x, y, value); }
         }
@@ -76,7 +103,11 @@ namespace OTA.Memory
 
         public MemTile GetTile(int x, int y)
         {
+            #if TESTING
+            return At(x, y);
+            #else
             return new TileRef(x, y);
+            #endif
         }
 
         public static implicit operator TileCollection(MemTile[,] set)
@@ -89,9 +120,10 @@ namespace OTA.Memory
     /// The actual tile to be used by Terraria and plugins
     /// </summary>
     /// <remarks>This replaces Terraria.Tile and supersedes OTA.Memory.MemTile</remarks>
-    public sealed class TileRef : MemTile
+    // TODO make this not specific to Terraria.Main.tile and allow it to be used in WorldGen's tile array
+    public class TileRef : MemTile
     {
-        readonly int x, y;
+        protected readonly int x, y;
 
         public TileRef(int x, int y)
         {
@@ -102,64 +134,55 @@ namespace OTA.Memory
         #if Full_API && TileReady
         public override byte _wall
         {
-            get
-            { return Terraria.Main.tile.data[x, y]._wall; }
+            get { return Terraria.Main.tile.data[x, y]._wall; }
             set { Terraria.Main.tile.data[x, y]._wall = value; }
         }
 
         public override byte _liquid
         {
-            get
-            { return Terraria.Main.tile.data[x, y]._liquid; }
+            get { return Terraria.Main.tile.data[x, y]._liquid; }
             set { Terraria.Main.tile.data[x, y]._liquid = value; }
         }
 
         public override byte _bTileHeader
         {
-            get
-            { return Terraria.Main.tile.data[x, y]._bTileHeader; }
+            get { return Terraria.Main.tile.data[x, y]._bTileHeader; }
             set { Terraria.Main.tile.data[x, y]._bTileHeader = value; }
         }
 
         public override byte _bTileHeader2
         {
-            get
-            { return Terraria.Main.tile.data[x, y]._bTileHeader2; }
+            get { return Terraria.Main.tile.data[x, y]._bTileHeader2; }
             set { Terraria.Main.tile.data[x, y]._bTileHeader2 = value; }
         }
 
         public override byte _bTileHeader3
         {
-            get
-            { return Terraria.Main.tile.data[x, y]._bTileHeader3; }
+            get { return Terraria.Main.tile.data[x, y]._bTileHeader3; }
             set { Terraria.Main.tile.data[x, y]._bTileHeader3 = value; }
         }
 
         public override short _frameX
         {
-            get
-            { return Terraria.Main.tile.data[x, y]._frameX; }
+            get { return Terraria.Main.tile.data[x, y]._frameX; }
             set { Terraria.Main.tile.data[x, y]._frameX = value; }
         }
 
         public override short _frameY
         {
-            get
-            { return Terraria.Main.tile.data[x, y]._frameY; }
+            get { return Terraria.Main.tile.data[x, y]._frameY; }
             set { Terraria.Main.tile.data[x, y]._frameY = value; }
         }
 
         public override short _sTileHeader
         {
-            get
-            { return Terraria.Main.tile.data[x, y]._sTileHeader; }
+            get { return Terraria.Main.tile.data[x, y]._sTileHeader; }
             set { Terraria.Main.tile.data[x, y]._sTileHeader = value; }
         }
 
         public override ushort _type
         {
-            get
-            { return Terraria.Main.tile.data[x, y]._type; }
+            get { return Terraria.Main.tile.data[x, y]._type; }
             set { Terraria.Main.tile.data[x, y]._type = value; }
         }
         #endif
@@ -199,34 +222,42 @@ namespace OTA.Memory
         {
             this._wall = value;
         }
+
         public void SetLiquid(byte value)
         {
             this._liquid = value;
         }
+
         public void SetBTileHeader(byte value)
         {
             this._bTileHeader = value;
         }
+
         public void SetBTileHeader2(byte value)
         {
             this._bTileHeader2 = value;
         }
+
         public void SetBTileHeader3(byte value)
         {
             this._bTileHeader3 = value;
         }
+
         public void SetFrameX(short value)
         {
             this._frameX = value;
         }
+
         public void SetFrameY(short value)
         {
             this._frameY = value;
         }
+
         public void SetSTileHeader(short value)
         {
             this._sTileHeader = value;
         }
+
         public void SetType(ushort value)
         {
             this._type = value;
@@ -236,76 +267,83 @@ namespace OTA.Memory
     /// <summary>
     /// Overridable terrarian tile. 
     /// [TODO] Allow use from SQL and so on, contact DeathCradle if you require this.
+    /// This is also possible to be done in the patcher/IL
     /// </summary>
     public class MemTile
     {
         public const System.Int32 TileDataSize = 13;
 
         public virtual byte _wall { get; set; }
+
         public virtual byte _liquid { get; set; }
+
         public virtual byte _bTileHeader { get; set; }
+
         public virtual byte _bTileHeader2 { get; set; }
+
         public virtual byte _bTileHeader3 { get; set; }
+
         public virtual short _sTileHeader { get; set; }
+
         public virtual short _frameX { get; set; }
+
         public virtual short _frameY { get; set; }
+
         public virtual ushort _type { get; set; }
 
         //private TileRef _ref;
 
         public byte wall
         {
-            get
-            { return _wall; }
+            get { return _wall; }
             set { _wall = value; }
         }
+
         public byte liquid
         {
-            get
-            { return _liquid; }
+            get { return _liquid; }
             set { _liquid = value; }
         }
+
         public byte bTileHeader
         {
-            get
-            { return _bTileHeader; }
+            get { return _bTileHeader; }
             set { _bTileHeader = value; }
         }
+
         public byte bTileHeader2
         {
-            get
-            { return _bTileHeader2; }
+            get { return _bTileHeader2; }
             set { _bTileHeader2 = value; }
         }
+
         public byte bTileHeader3
         {
-            get
-            { return _bTileHeader3; }
+            get { return _bTileHeader3; }
             set { _bTileHeader3 = value; }
         }
 
         public short sTileHeader
         {
-            get
-            { return _sTileHeader; }
+            get { return _sTileHeader; }
             set { _sTileHeader = value; }
         }
+
         public ushort type
         {
-            get
-            { return _type; }
+            get { return _type; }
             set { _type = value; }
         }
+
         public short frameX
         {
-            get
-            { return _frameX; }
+            get { return _frameX; }
             set { _frameX = value; }
         }
+
         public short frameY
         {
-            get
-            { return _frameY; }
+            get { return _frameY; }
             set { _frameY = value; }
         }
 
@@ -781,14 +819,14 @@ namespace OTA.Memory
             this.type = type;
         }
 
-        public Color actColor(Color oldColor)
+        public Microsoft.Xna.Framework.Color actColor(Microsoft.Xna.Framework.Color oldColor)
         {
             if (!this.inActive())
             {
                 return oldColor;
             }
             double num = 0.4;
-            return new Color((int)((byte)(num * (double)oldColor.R)), (int)((byte)(num * (double)oldColor.G)), (int)((byte)(num * (double)oldColor.B)), (int)oldColor.A);
+            return new Microsoft.Xna.Framework.Color((int)((byte)(num * (double)oldColor.R)), (int)((byte)(num * (double)oldColor.G)), (int)((byte)(num * (double)oldColor.B)), (int)oldColor.A);
         }
 
         public static void SmoothSlope(int x, int y, bool applyToNeighbors = true)

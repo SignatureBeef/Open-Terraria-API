@@ -633,7 +633,7 @@ namespace OTA.Callbacks
         internal static void ResetTileArray()
         {
             #if Full_API
-            ResetTileArray(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
+            ResetTileArray(Terraria.Main.maxTilesX + 1, Terraria.Main.maxTilesY + 1);
             #endif
         }
 
