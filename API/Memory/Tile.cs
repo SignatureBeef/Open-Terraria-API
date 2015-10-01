@@ -1,5 +1,7 @@
 ﻿//#define TESTING
 
+using System.Runtime.InteropServices;
+
 namespace OTA.Memory
 {
     /// <summary>
@@ -7,7 +9,8 @@ namespace OTA.Memory
     /// </summary>
     public class TileCollection
     {
-        internal TileData[,] data;
+        internal byte[] tileData;
+        
         #if TESTING
         internal TileRef[,] refs;
         #endif
@@ -16,98 +19,36 @@ namespace OTA.Memory
         {
             X++;
             Y++;
+            int size = Marshal.SizeOf(typeof(TileData)) * X * Y;
+
             Logging.ProgramLog.Log("Creating tile array of {0}x{1}, {2}MB", X, Y, System.Runtime.InteropServices.Marshal.SizeOf(typeof(TileData)) * X * Y / 1024 / 1024);
-            data = new TileData[X, Y];
+            tileData = new byte[size];
+
             #if TESTING
             refs = new TileRef[X, Y];
             #endif
         }
-
-        public int SizeX
-        {
-            get { return data.GetLength(0); }
-        }
-
-        public int SizeY
-        {
-            get { return data.GetLength(1); }
-        }
-
-        public TileRef At(int x, int y)
-        {
-            #if TESTING
-            try
-            {
-                if (refs[x, y] == null) refs[x, y] = new TileRef(x, y);
-                return refs[x, y];
-            }
-            catch (System.IndexOutOfRangeException e)
-            {
-                Logging.ProgramLog.Error.Log($"Error with our of range tile at {x},{y} / {Terraria.Main.maxTilesX},{Terraria.Main.maxTilesY} / {SizeX},{SizeY}");
-                return null;
-            }
-            #else
-            return new TileRef(x, y);
-            #endif
-        }
-
-        public TileRef CreateTileAt(int x, int y)
-        {
-            data[x, y] = default(TileData);
-            #if TESTING
-            return this.At(x, y);
-            #else
-            return new TileRef(x, y);
-            #endif
-        }
-
-        public void RemoveTileAt(int x, int y)
-        {
-            data[x, y] = default(TileData);
-        }
+       
 
         public MemTile this [int x, int y]
         {
-            get
-            #if TESTING
-            { return this.At(x, y); }
-            #else
-            { return new TileRef(x, y); }
-            #endif
-            set
-            { SetTile(x, y, value); }
+            get {
+                return GetTile(x, y);
+            }
+            set {
+                SetTile(x, y, value);
+            }
         }
 
-        //public static void SetWorldTile(int x, int y, MemTile tile)
-        //{
-        //    Terraria.Main.tile.SetTile(tile, x, y);
-        //}
-
-        //public static MemTile GetWorldTile(int x, int y)
-        //{
-        //    return Terraria.Main.tile.GetTile(x, y);
-        //}
-
-        public void SetTile(int x, int y, MemTile tile)
+        public unsafe MemTile GetTile(int x, int y)
         {
-            data[x, y]._wall = tile._wall;
-            data[x, y]._type = tile._type;
-            data[x, y]._sTileHeader = tile._sTileHeader;
-            data[x, y]._liquid = tile._liquid;
-            data[x, y]._frameY = tile._frameY;
-            data[x, y]._frameX = tile._frameX;
-            data[x, y]._bTileHeader3 = tile._bTileHeader3;
-            data[x, y]._bTileHeader2 = tile._bTileHeader2;
-            data[x, y]._bTileHeader = tile._bTileHeader;
+            return new HeapTile(tileData, x, y);
         }
 
-        public MemTile GetTile(int x, int y)
+        public unsafe void SetTile(int x, int y, MemTile tile)
         {
-            #if TESTING
-            return At(x, y);
-            #else
-            return new TileRef(x, y);
-            #endif
+            HeapTile heapTile = new HeapTile(tileData, x, y);
+            heapTile.CopyFrom(tile);
         }
 
         public static implicit operator TileCollection(MemTile[,] set)
@@ -115,78 +56,7 @@ namespace OTA.Memory
             return new TileCollection(set.GetLength(0), set.GetLength(1));
         }
     }
-
-    /// <summary>
-    /// The actual tile to be used by Terraria and plugins
-    /// </summary>
-    /// <remarks>This replaces Terraria.Tile and supersedes OTA.Memory.MemTile</remarks>
-    // TODO make this not specific to Terraria.Main.tile and allow it to be used in WorldGen's tile array
-    public class TileRef : MemTile
-    {
-        protected readonly int x, y;
-
-        public TileRef(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-
-        #if Full_API && TileReady
-        public override byte _wall
-        {
-            get { return Terraria.Main.tile.data[x, y]._wall; }
-            set { Terraria.Main.tile.data[x, y]._wall = value; }
-        }
-
-        public override byte _liquid
-        {
-            get { return Terraria.Main.tile.data[x, y]._liquid; }
-            set { Terraria.Main.tile.data[x, y]._liquid = value; }
-        }
-
-        public override byte _bTileHeader
-        {
-            get { return Terraria.Main.tile.data[x, y]._bTileHeader; }
-            set { Terraria.Main.tile.data[x, y]._bTileHeader = value; }
-        }
-
-        public override byte _bTileHeader2
-        {
-            get { return Terraria.Main.tile.data[x, y]._bTileHeader2; }
-            set { Terraria.Main.tile.data[x, y]._bTileHeader2 = value; }
-        }
-
-        public override byte _bTileHeader3
-        {
-            get { return Terraria.Main.tile.data[x, y]._bTileHeader3; }
-            set { Terraria.Main.tile.data[x, y]._bTileHeader3 = value; }
-        }
-
-        public override short _frameX
-        {
-            get { return Terraria.Main.tile.data[x, y]._frameX; }
-            set { Terraria.Main.tile.data[x, y]._frameX = value; }
-        }
-
-        public override short _frameY
-        {
-            get { return Terraria.Main.tile.data[x, y]._frameY; }
-            set { Terraria.Main.tile.data[x, y]._frameY = value; }
-        }
-
-        public override short _sTileHeader
-        {
-            get { return Terraria.Main.tile.data[x, y]._sTileHeader; }
-            set { Terraria.Main.tile.data[x, y]._sTileHeader = value; }
-        }
-
-        public override ushort _type
-        {
-            get { return Terraria.Main.tile.data[x, y]._type; }
-            set { Terraria.Main.tile.data[x, y]._type = value; }
-        }
-        #endif
-    }
+    
 
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Pack = 1)]
     public struct TileData
@@ -261,6 +131,156 @@ namespace OTA.Memory
         public void SetType(ushort value)
         {
             this._type = value;
+        }
+    }
+
+    public class HeapTile : MemTile
+    {
+        protected readonly int offset;
+        protected byte[] heap;
+
+        public const int kHeapTileSize = 13;
+
+        public const int kHeapTileTypeOffset = 0;
+        public const int kHeapTileWallOffset = 2;
+        public const int kHeapTileLiquidOffset = 3;
+        public const int kHeapTileSTileHeaderOffset = 4;
+        public const int kHeapTileBTypeHeaderOffset = 6;
+        public const int kHeapTileBTypeHeader2Offset = 7;
+        public const int kHeapTileBTypeHeader3Offset = 8;
+        public const int kHeapTileFrameXOffset = 9;
+        public const int kHeapTileFrameYOffset = 11;
+
+        protected int x;
+        protected int y;
+
+        public HeapTile(byte[] array, int x, int y)
+        {
+            heap = array;
+            this.offset = (Terraria.Main.maxTilesY * x + y) * kHeapTileSize;
+            this.x = x;
+            this.y = y;
+        }
+
+        public override ushort _type
+        {
+            get
+            {
+                return (ushort)((heap[offset + kHeapTileTypeOffset + 1] << 8) | heap[offset + kHeapTileTypeOffset]);
+            }
+
+            set
+            {
+                heap[offset + kHeapTileTypeOffset + 1] = (byte)(value >> 8);
+                heap[offset + kHeapTileTypeOffset] = (byte)(value & 0xFF);
+            }
+        }
+
+        public override byte _wall
+        {
+            get
+            {
+                return heap[offset + kHeapTileWallOffset];
+            }
+
+            set
+            {
+                heap[offset + kHeapTileWallOffset] = value;
+            }
+        }
+
+        public override byte _liquid
+        {
+            get
+            {
+                return heap[offset + kHeapTileLiquidOffset];
+            }
+
+            set
+            {
+                heap[offset + kHeapTileLiquidOffset] = value;
+            }
+        }
+
+        public override short _sTileHeader
+        {
+            get
+            {
+                return (short)((heap[offset + kHeapTileSTileHeaderOffset + 1] << 8) | heap[offset + kHeapTileSTileHeaderOffset]);
+            }
+
+            set
+            {
+                heap[offset + kHeapTileSTileHeaderOffset + 1] = (byte)(value >> 8);
+                heap[offset + kHeapTileSTileHeaderOffset] = (byte)(value & 0xFF);
+            }
+        }
+
+        public override byte _bTileHeader
+        {
+            get
+            {
+                return heap[offset + kHeapTileBTypeHeaderOffset];
+            }
+
+            set
+            {
+                heap[offset + kHeapTileBTypeHeaderOffset] = value;
+            }
+        }
+
+        public override byte _bTileHeader2
+        {
+            get
+            {
+                return heap[offset + kHeapTileBTypeHeader2Offset];
+            }
+
+            set
+            {
+                heap[offset + kHeapTileBTypeHeader2Offset] = value;
+            }
+        }
+
+        public override byte _bTileHeader3
+        {
+            get
+            {
+                return heap[offset + kHeapTileBTypeHeader3Offset];
+            }
+
+            set
+            {
+                heap[offset + kHeapTileBTypeHeader3Offset] = value;
+            }
+        }
+
+        public override short _frameX
+        {
+            get
+            {
+                return (short)((heap[offset + kHeapTileFrameXOffset + 1] << 8) | heap[offset + kHeapTileFrameXOffset]);
+            }
+
+            set
+            {
+                heap[offset + kHeapTileFrameXOffset + 1] = (byte)(value >> 8);
+                heap[offset + kHeapTileFrameXOffset] = (byte)(value & 0xFF);
+            }
+        }
+
+        public override short _frameY
+        {
+            get
+            {
+                return (short)((heap[offset + kHeapTileFrameYOffset + 1] << 8) | heap[offset + kHeapTileFrameYOffset]);
+            }
+
+            set
+            {
+                heap[offset + kHeapTileFrameYOffset + 1] = (byte)(value >> 8);
+                heap[offset + kHeapTileFrameYOffset] = (byte)(value & 0xFF);
+            }
         }
     }
 
@@ -375,15 +395,6 @@ namespace OTA.Memory
 
         public MemTile()
         {
-            this.type = 0;
-            this.wall = 0;
-            this.liquid = 0;
-            this.sTileHeader = 0;
-            this.bTileHeader = 0;
-            this.bTileHeader2 = 0;
-            this.bTileHeader3 = 0;
-            this.frameX = 0;
-            this.frameY = 0;
         }
 
         public MemTile(MemTile copy)
