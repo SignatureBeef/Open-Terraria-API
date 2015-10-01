@@ -11,24 +11,9 @@ namespace OTA.Memory
     {
         internal byte[] tileData;
         
-        #if TESTING
-        internal TileRef[,] refs;
-        #endif
-
         public TileCollection(int X, int Y)
         {
-            X++;
-            Y++;
-            int size = Marshal.SizeOf(typeof(TileData)) * X * Y;
-
-            Logging.ProgramLog.Log("Creating tile array of {0}x{1}, {2}MB", X, Y, System.Runtime.InteropServices.Marshal.SizeOf(typeof(TileData)) * X * Y / 1024 / 1024);
-            tileData = new byte[size];
-
-            #if TESTING
-            refs = new TileRef[X, Y];
-            #endif
         }
-       
 
         public MemTile this [int x, int y]
         {
@@ -42,6 +27,19 @@ namespace OTA.Memory
 
         public unsafe MemTile GetTile(int x, int y)
         {
+            if (tileData == null)
+            {
+                /*
+                 * The array is created deliberately on the first getter, because Terraria
+                 * has a bad habit of over-commiting the tile buffers when it starts up.
+                 *
+                 * -Wolfje
+                 */
+                int size = HeapTile.kHeapTileSize * (Terraria.Main.maxTilesX + 1) * (Terraria.Main.maxTilesY + 1);
+                Logging.ProgramLog.Log("Creating tile array of {0}x{1}, {2}MB", Terraria.Main.maxTilesX,
+                    Terraria.Main.maxTilesY, HeapTile.kHeapTileSize * Terraria.Main.maxTilesX * Terraria.Main.maxTilesY / 1024 / 1024);
+                tileData = new byte[size];
+            }
             return new HeapTile(tileData, x, y);
         }
 
@@ -57,83 +55,6 @@ namespace OTA.Memory
         }
     }
     
-
-    [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Pack = 1)]
-    public struct TileData
-    {
-        [System.Runtime.InteropServices.FieldOffset(0)]
-        internal byte _wall;
-
-        [System.Runtime.InteropServices.FieldOffset(1)]
-        internal byte _liquid;
-
-        [System.Runtime.InteropServices.FieldOffset(2)]
-        internal byte _bTileHeader;
-
-        [System.Runtime.InteropServices.FieldOffset(3)]
-        internal byte _bTileHeader2;
-
-        [System.Runtime.InteropServices.FieldOffset(4)]
-        internal byte _bTileHeader3;
-
-        [System.Runtime.InteropServices.FieldOffset(5)]
-        internal short _frameX;
-
-        [System.Runtime.InteropServices.FieldOffset(7)]
-        internal short _frameY;
-
-        [System.Runtime.InteropServices.FieldOffset(9)]
-        internal short _sTileHeader;
-
-        [System.Runtime.InteropServices.FieldOffset(11)]
-        internal ushort _type;
-
-        public void SetWall(byte value)
-        {
-            this._wall = value;
-        }
-
-        public void SetLiquid(byte value)
-        {
-            this._liquid = value;
-        }
-
-        public void SetBTileHeader(byte value)
-        {
-            this._bTileHeader = value;
-        }
-
-        public void SetBTileHeader2(byte value)
-        {
-            this._bTileHeader2 = value;
-        }
-
-        public void SetBTileHeader3(byte value)
-        {
-            this._bTileHeader3 = value;
-        }
-
-        public void SetFrameX(short value)
-        {
-            this._frameX = value;
-        }
-
-        public void SetFrameY(short value)
-        {
-            this._frameY = value;
-        }
-
-        public void SetSTileHeader(short value)
-        {
-            this._sTileHeader = value;
-        }
-
-        public void SetType(ushort value)
-        {
-            this._type = value;
-        }
-    }
-
     public class HeapTile : MemTile
     {
         protected readonly int offset;
