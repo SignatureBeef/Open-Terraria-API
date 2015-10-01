@@ -368,6 +368,7 @@ namespace OTA.Data
                 {
                     ctx.Groups.Add(group = new Group()
                         {
+                            Name = name,
                             ApplyToGuests = applyToGuests,
                             Parent = parent,
                             Chat_Red = r,

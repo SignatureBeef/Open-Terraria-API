@@ -427,6 +427,72 @@ namespace OTA.Patcher
             var il = method.Body.GetILProcessor();
             il.InsertBefore(toReplace, il.Create(OpCodes.Ldarg_0));
         }
+
+//        [ServerHook]
+//        private void NurfWorldMap() wip, dumped a lot of code in place of cecil extensions
+//        {
+//            var wm = _asm.MainModule.Types.Single(x => x.Name == "WorldMap");
+////            _asm.MainModule.Architecture = TargetArchitecture.IA64;
+//
+//            foreach (var method in wm.Methods)
+//            {
+//                if (method.ReturnType.Name == "Boolean" || method.ReturnType.Name == "Void")
+//                    method.EmptyInstructions();
+//            }
+//
+//            foreach (var mth in new string[] { "checkMap", "DrawMap", "DrawToMap", "DrawToMap_Section"})
+//            {
+//                var method = Terraria.Main.Methods.Single(x => x.Name == mth);
+//
+//                method.EmptyInstructions();
+//            }
+//
+////            _asm.MainModule.Types.Remove(wm);
+////            Terraria.Main.Fields.Remove(Terraria.Main.Fields.Single(x => x.Name == "Map"));
+//        }
+    }
+
+    static class CecilMethodExtensions
+    {
+        public static void EmptyInstructions(this MethodDefinition method)
+        {
+            if (method.HasBody)
+            {
+                //Clear out everything
+                method.Body.Variables.Clear();
+                method.Body.ExceptionHandlers.Clear();
+                method.Body.Instructions.Clear();
+
+                var il = method.Body.GetILProcessor();
+                if (method.ReturnType.IsValueType)
+                {
+                    //return default(<return type>);
+                    method.Body.Instructions.Insert(0, il.Create(OpCodes.Ret));
+
+                    if (method.ReturnType.IsPrimitive)
+                    {
+                        //If a primitive type then pushing this onto the stack will trigger, for example default(bool)
+                        method.Body.Instructions.Insert(0, il.Create(OpCodes.Ldc_I4_0));
+                    }
+                    else
+                    {
+                        //This is not yet tested. But it should, say for example, struct testing {}, create default(testing)
+                        method.Body.Instructions.Insert(0, il.Create(OpCodes.Initobj, method.ReturnType));
+                    }
+                }
+                else if (method.ReturnType.MetadataType == MetadataType.Void)
+                {
+                    //return null;
+                    method.Body.Instructions.Insert(0, il.Create(OpCodes.Ret));
+                }
+                else
+                {
+                    //return null;
+                    method.Body.Instructions.Insert(0, il.Create(OpCodes.Ret));
+                    method.Body.Instructions.Insert(0, il.Create(OpCodes.Ldnull));
+                }
+            }
+        }
     }
 
     public class TerrariaOrganiser

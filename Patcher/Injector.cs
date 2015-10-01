@@ -524,6 +524,7 @@ namespace OTA.Patcher
                                     var fld = ins.Operand as FieldReference;
                                     if (fld.DeclaringType.Name == "Tile")
                                     {
+                                        
                                         //Vanilla 
                                         //ins.Operand = _asm.MainModule.Import(vt.Resolve().Fields.Single(x => x.Name == fld.Name));
 

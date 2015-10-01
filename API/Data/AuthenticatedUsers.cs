@@ -36,6 +36,11 @@ namespace OTA.Data
             return String.Format("[UserDetails: Id {3}, Name: '{0}', Password: '{1}', Operator: {2}]", Name, Password, Operator, Id);
         }
 
+        public void SetRawPassword(string password)
+        {
+            this.Password = AuthenticatedUsers.Hash(this.Name, password);
+        }
+
         /// <summary>
         /// Compares a username & password to the current instance
         /// </summary>
@@ -204,7 +209,7 @@ namespace OTA.Data
                 var player = ctx.Players.SingleOrDefault(p => p.Name == username);
                 if (player == null) throw new InvalidOperationException("Cannot update a non-existent player");
 
-                if (password != null) player.Password = password;
+                if (password != null) player.SetRawPassword(password);
                 if (op.HasValue) player.Operator = op.Value;
 
                 ctx.SaveChanges();

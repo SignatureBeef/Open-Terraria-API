@@ -483,7 +483,7 @@ namespace OTA.Command
                     sender.SendMessage("    help <command> - Get help for a command.");
                     sender.SendMessage("    help <page> - View a list of commands. Valid page numbers are 1 to " + maxPages + ".");
                     sender.SendMessage("Examples:");
-                    sender.SendMessage("    help oplogin");
+                    sender.SendMessage("    help motd");
                     sender.SendMessage("    help 1");
                 }
             }
