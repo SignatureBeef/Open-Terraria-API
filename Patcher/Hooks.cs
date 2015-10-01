@@ -428,28 +428,39 @@ namespace OTA.Patcher
             il.InsertBefore(toReplace, il.Create(OpCodes.Ldarg_0));
         }
 
-//        [ServerHook]
-//        private void NurfWorldMap() wip, dumped a lot of code in place of cecil extensions
-//        {
-//            var wm = _asm.MainModule.Types.Single(x => x.Name == "WorldMap");
-////            _asm.MainModule.Architecture = TargetArchitecture.IA64;
-//
-//            foreach (var method in wm.Methods)
-//            {
-//                if (method.ReturnType.Name == "Boolean" || method.ReturnType.Name == "Void")
-//                    method.EmptyInstructions();
-//            }
-//
-//            foreach (var mth in new string[] { "checkMap", "DrawMap", "DrawToMap", "DrawToMap_Section"})
-//            {
-//                var method = Terraria.Main.Methods.Single(x => x.Name == mth);
-//
-//                method.EmptyInstructions();
-//            }
-//
-////            _asm.MainModule.Types.Remove(wm);
-////            Terraria.Main.Fields.Remove(Terraria.Main.Fields.Single(x => x.Name == "Map"));
-//        }
+        [ServerHook]
+        private void NurfWorldMap() //wip, dumped a lot of code in place of cecil extensions
+        {
+            var wm = _asm.MainModule.Types.Single(x => x.Name == "WorldMap");
+
+            foreach (var method in wm.Methods)
+            {
+                //if (method.ReturnType.Name == "Boolean" || method.ReturnType.Name == "Void")
+                method.EmptyInstructions();
+            }
+
+            foreach (var mth in new string[] { "checkMap", "DrawMap", "DrawToMap", "DrawToMap_Section" })
+            {
+                var method = Terraria.Main.Methods.Single(x => x.Name == mth);
+
+                method.EmptyInstructions();
+            }
+
+            //            _asm.MainModule.Types.Remove(wm);
+            //            Terraria.Main.Fields.Remove(Terraria.Main.Fields.Single(x => x.Name == "Map"));
+        }
+
+        //[ServerHook]
+        //void SwapArchitecture()
+        //{
+        //    _asm.MainModule.Architecture = TargetArchitecture.AMD64; //Any CPU
+        //}
+
+        [ServerHook]
+        void GetDataTests()
+        {
+            //Attempt to copy GetData, swap it to static and add all locals as a parameter
+        }
     }
 
     static class CecilMethodExtensions
@@ -463,6 +474,7 @@ namespace OTA.Patcher
                 method.Body.ExceptionHandlers.Clear();
                 method.Body.Instructions.Clear();
 
+                //Now it needs the return instruction.
                 var il = method.Body.GetILProcessor();
                 if (method.ReturnType.IsValueType)
                 {
@@ -477,12 +489,35 @@ namespace OTA.Patcher
                     else
                     {
                         //This is not yet tested. But it should, say for example, struct testing {}, create default(testing)
-                        method.Body.Instructions.Insert(0, il.Create(OpCodes.Initobj, method.ReturnType));
+
+                        //What needs to happen is we need to create a local variable to store the [initobj], then we can safely return it
+                        //It should len decompile to return default(xyz)
+
+                        ///Create the variable - this one goes at index 0
+                        VariableDefinition vr1, vr2;
+                        method.Body.Variables.Add(vr1 = new VariableDefinition(method.ReturnType));
+                        method.Body.Variables.Add(vr2 = new VariableDefinition(method.ReturnType));
+
+                        ////Initialise the variable
+                        method.Body.Instructions.Clear();
+                        method.Body.Instructions.Add(il.Create(OpCodes.Nop));
+                        method.Body.Instructions.Add(il.Create(OpCodes.Ldloca_S, vr1));
+                        method.Body.Instructions.Add(il.Create(OpCodes.Initobj, method.ReturnType));
+                        method.Body.Instructions.Add(il.Create(OpCodes.Ldloc_0));
+                        method.Body.Instructions.Add(il.Create(OpCodes.Stloc_1));
+
+                        var ins = il.Create(OpCodes.Ldloc_1);
+                        method.Body.Instructions.Add(il.Create(OpCodes.Br_S, ins));
+
+                        method.Body.Instructions.Add(ins);
+                        method.Body.Instructions.Add(il.Create(OpCodes.Ret));
+
+                        //Return it
                     }
                 }
                 else if (method.ReturnType.MetadataType == MetadataType.Void)
                 {
-                    //return null;
+                    //Behind the scenes there is a return opcode
                     method.Body.Instructions.Insert(0, il.Create(OpCodes.Ret));
                 }
                 else
