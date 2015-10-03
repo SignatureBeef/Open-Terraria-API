@@ -19,7 +19,7 @@ namespace OTA.Patcher
     /// </summary>
     public class Program
     {
-        #if SERVER
+#if SERVER
         static void Main(string[] args)
         {
             //By default we will patch a server
@@ -42,7 +42,7 @@ namespace OTA.Patcher
 
             OTAPatcher.DefaultProcess(args);
         }
-        
+
 #elif CLIENT
         static void Main(string[] args)
         {
@@ -66,7 +66,7 @@ namespace OTA.Patcher
 
             OTAPatcher.DefaultProcess(args);
         }
-        #endif
+#endif
 
         //        public static void Main(string[] args)
         //        {
@@ -93,11 +93,11 @@ namespace OTA.Patcher
         public const String OTAGuid = "9f7bca2e-4d2e-4244-aaae-fa56ca7797ec";
         public const Int32 Build = 6;
 
-        #if CLIENT
+#if CLIENT
         private const String FolderKind = "Client";
-        #elif SERVER
+#elif SERVER
         private const String FolderKind = "Server";
-        #endif
+#endif
 
         /// <summary>
         /// Development tools. Copies files into the Debug folder.
@@ -361,8 +361,8 @@ namespace OTA.Patcher
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework.SqlServer", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.Core", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.EntityFramework", true);
-//                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite", true);
-//                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite.EF6", true);
+                        //                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite", true);
+                        //                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite.EF6", true);
 
                         if (!String.IsNullOrEmpty(OTAProjectDirectory))
                         {
@@ -384,9 +384,9 @@ namespace OTA.Patcher
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                            {
-                                RootDirectory = root
-                            });
+                        {
+                            RootDirectory = root
+                        });
                 }
 
                 if (!File.Exists(inFile))
@@ -437,9 +437,9 @@ namespace OTA.Patcher
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                            {
-                                RootDirectory = root
-                            });
+                        {
+                            RootDirectory = root
+                        });
                 }
             }
 
@@ -505,8 +505,8 @@ namespace OTA.Patcher
                 Console.Write("Ok\nHooking invasions...");
                 patcher.HookInvasions();
                 patcher.HookInvasionWarning();
-//                Console.Write("Ok\nEnabling rain...");
-//                patcher.EnableRaining();
+                //                Console.Write("Ok\nEnabling rain...");
+                //                patcher.EnableRaining();
 
                 Console.Write("Ok\nFixing world removal...");
                 patcher.PathFileIO();
@@ -519,7 +519,7 @@ namespace OTA.Patcher
                 patcher.FixRandomErrors();
                 //            patcher.DetectMissingXNA();
 
-//                patcher.HookWorldFile_DEBUG();
+                //                patcher.HookWorldFile_DEBUG();
 
                 Console.Write("Ok\n");
                 patcher.InjectHooks<ServerHookAttribute>();
@@ -537,9 +537,9 @@ namespace OTA.Patcher
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                        {
-                            Injector = patcher
-                        });
+                    {
+                        Injector = patcher
+                    });
 
                 //TODO repace Terraria's Console.SetTitles
 
@@ -553,9 +553,9 @@ namespace OTA.Patcher
                 patcher.MakeEverythingAccessible();
                 Console.Write("Ok\nHooking senders...");
                 patcher.HookSenders();
-//                Console.Write("Ok\nPutting Terraria on a diet...");
-//                patcher.SwapToVanillaTile(); //Holy shit batman! it works
-//                patcher.InjectTileSet();
+                //                Console.Write("Ok\nPutting Terraria on a diet...");
+                //                patcher.SwapToVanillaTile(); //Holy shit batman! it works
+                //                patcher.InjectTileSet();
 
                 Console.Write("Ok\nInjecting hooks");
                 patcher.InjectHooks<ClientHookAttribute>();
@@ -563,9 +563,9 @@ namespace OTA.Patcher
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                        {
-                            Injector = patcher
-                        });
+                    {
+                        Injector = patcher
+                    });
             }
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -654,7 +654,7 @@ namespace OTA.Patcher
                     }
 
                     ms.Seek(0L, SeekOrigin.Begin);
-//                    var asm = System.Reflection.Assembly.Load(ms.ToArray());
+                    //                    var asm = System.Reflection.Assembly.Load(ms.ToArray());
                     var asm = domain.Load(ms.ToArray());
                     try
                     {
@@ -666,12 +666,12 @@ namespace OTA.Patcher
                                         new string[] { "-config", configFile, "-noupnp", "-heartbeat", "false" }
                                     });
                             else
-                                asm.EntryPoint.Invoke(null, new object[]{ new string[] { } });
+                                asm.EntryPoint.Invoke(null, new object[] { new string[] { } });
 
                         }
                         else if (PatchMode == PatchMode.Client)
                         {
-                            asm.EntryPoint.Invoke(null, new object[]{ new string[] { } });
+                            asm.EntryPoint.Invoke(null, new object[] { new string[] { } });
                         }
                     }
                     catch (Exception e)
@@ -867,7 +867,23 @@ namespace OTA.Patcher
                     if (!inf.Directory.Exists)
                         inf.Directory.Create();
                     if (inf.Exists)
-                        inf.Delete();
+                    {
+                        int retry = 0;
+                        RETRY:
+                        try
+                        {
+                            inf.Delete();
+                        }
+                        catch (Exception e)
+                        {
+                            if (++retry == 5) throw e;
+                            else
+                            {
+                                System.Threading.Thread.Sleep(1000);
+                                goto RETRY;
+                            }
+                        }
+                    }
 
                     File.Copy(rel, pth);
                 }

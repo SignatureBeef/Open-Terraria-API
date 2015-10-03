@@ -1,25 +1,26 @@
-﻿#define ENABLE_NAT
+﻿#if ENABLE_NAT
 using Open.Nat;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-
-#if MONO_NAT
 using OTA.Logging;
 using System;
+#endif
 
 namespace OTA.Callbacks
 {
     public static class NAT
     {
+#if ENABLE_NAT
         //        static Mono.Nat.Mapping _map;
         //        static System.Collections.Generic.List<Mono.Nat.INatDevice> _devices = new System.Collections.Generic.List<Mono.Nat.INatDevice>();
         static NatDevice _device;
         const String NatMapName = "Terraria Server";
 
         private static CancellationTokenSource _cancel;
+#endif
 
         /// <summary>
         /// Open the NAT port for the current Terraria ip:port
@@ -138,16 +139,18 @@ namespace OTA.Callbacks
         //            }
         //#endif
         //        }
-        public static bool ShuttingDown { get; set; }
 
+#if ENABLE_NAT
+        public static bool ShuttingDown { get; set; }
+#endif
 
         /// <summary>
         /// Closes the open NAT port.
         /// </summary>
         public static void ClosePort()
         {
+#if ENABLE_NAT && Full_API
             ShuttingDown = true;
-#if Full_API
             if (Terraria.Netplay.portForwardOpen)
             {
                 if (_device != null)
@@ -206,8 +209,7 @@ namespace OTA.Callbacks
             ShuttingDown = false;
 #endif
         }
-
-
+        
         //        static class NatUtility
         //        {
         //            private static bool _discovering;
@@ -310,4 +312,3 @@ namespace OTA.Callbacks
         //        }
     }
 }
-#endif

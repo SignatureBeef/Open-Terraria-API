@@ -16,174 +16,135 @@ namespace OTA.Plugin
     // TODO remove unused hooks
     public static class HookPoints
     {
-//        public static readonly HookPoint<HookArgs.DatabaseInitialise> DatabaseInitialise;
-        public static readonly HookPoint<HookArgs.ConsoleMessageReceived> ConsoleMessageReceived;
-        public static readonly HookPoint<HookArgs.ConfigurationLine> ConfigurationLine;
-        //        public static readonly HookPoint<HookArgs.StartDefaultServer> StartDefaultServer;
-        //public static readonly HookPoint<HookArgs.StatusTextChanged> StatusTextChanged;
-        //public static readonly HookPoint<HookArgs.UpdateServer> UpdateServer;
-        public static readonly HookPoint<HookArgs.InvasionNPCSpawn> InvasionNPCSpawn;
-
-        public static readonly HookPoint<HookArgs.NewConnection> NewConnection;
-        public static readonly HookPoint<HookArgs.ServerStateChange> ServerStateChange;
-        public static readonly HookPoint<HookArgs.PluginLoadRequest> PluginLoadRequest;
-        //        public static readonly HookPoint<HookArgs.UnknownSendPacket> UnknownSendPacket;
-        //        public static readonly HookPoint<HookArgs.UnknownReceivedPacket> UnknownReceivedPacket;
-        public static readonly HookPoint<HookArgs.SendNetMessage> SendNetMessage;
-        public static readonly HookPoint<HookArgs.ReceiveNetMessage> ReceiveNetMessage;
-        //[TODO] determine if this should be a Action<...>
-
-        public static readonly HookPoint<HookArgs.ConnectionRequestReceived> ConnectionRequestReceived;
-        public static readonly HookPoint<HookArgs.DisconnectReceived> DisconnectReceived;
-        public static readonly HookPoint<HookArgs.ServerPassReceived> ServerPassReceived;
-        public static readonly HookPoint<HookArgs.PlayerPassReceived> PlayerPassReceived;
-        public static readonly HookPoint<HookArgs.PlayerDataReceived> PlayerDataReceived;
-        public static readonly HookPoint<HookArgs.PlayerAuthenticationChanging> PlayerAuthenticationChanging;
-        public static readonly HookPoint<HookArgs.PlayerAuthenticationChanged> PlayerAuthenticationChanged;
-        public static readonly HookPoint<HookArgs.StateUpdateReceived> StateUpdateReceived;
-        public static readonly HookPoint<HookArgs.InventoryItemReceived> InventoryItemReceived;
-        public static readonly HookPoint<HookArgs.ObituaryReceived> ObituaryReceived;
-        //public static readonly HookPoint<HookArgs.PlayerTeleport> PlayerTeleport;
-
-        public static readonly HookPoint<HookArgs.PlayerWorldAlteration> PlayerWorldAlteration;
-
-        public static readonly HookPoint<HookArgs.DoorStateChanged> DoorStateChanged;
-
-        public static readonly HookPoint<HookArgs.LiquidFlowReceived> LiquidFlowReceived;
-        public static readonly HookPoint<HookArgs.ProjectileReceived> ProjectileReceived;
-        public static readonly HookPoint<HookArgs.KillProjectileReceived> KillProjectileReceived;
-        public static readonly HookPoint<HookArgs.TileSquareReceived> TileSquareReceived;
-
-        //public static readonly HookPoint<HookArgs.Explosion> Explosion;
-
-        public static readonly HookPoint<HookArgs.ChestBreakReceived> ChestBreakReceived;
-        public static readonly HookPoint<HookArgs.ChestOpenReceived> ChestOpenReceived;
-
-        public static readonly HookPoint<HookArgs.PvpSettingReceived> PvpSettingReceived;
-        public static readonly HookPoint<HookArgs.PartySettingReceived> PartySettingReceived;
-
-        public static readonly HookPoint<HookArgs.PlayerEnteringGame> PlayerEnteringGame;
-        public static readonly HookPoint<HookArgs.PlayerEnteredGame> PlayerEnteredGame;
-        public static readonly HookPoint<HookArgs.PlayerLeftGame> PlayerLeftGame;
-        public static readonly HookPoint<HookArgs.PlayerPreGreeting> PlayerPreGreeting;
-
-        public static readonly HookPoint<HookArgs.SignTextSet> SignTextSet;
-        public static readonly HookPoint<HookArgs.SignTextGet> SignTextGet;
-
-        public static readonly HookPoint<HookArgs.PluginsLoaded> PluginsLoaded;
-        //public static readonly HookPoint<HookArgs.WorldLoaded> WorldLoaded;
-
-        public static readonly HookPoint<HookArgs.PlayerHurt> PlayerHurt;
-        public static readonly HookPoint<HookArgs.NpcHurt> NpcHurt;
-        //public static readonly HookPoint<HookArgs.NpcCreation> NpcCreation;
-        public static readonly HookPoint<HookArgs.PlayerTriggeredEvent> PlayerTriggeredEvent;
-
-        public static readonly HookPoint<HookArgs.PlayerChat> PlayerChat;
-        public static readonly HookPoint<HookArgs.Command> Command;
-        //public static readonly HookPoint<HookArgs.WorldGeneration> WorldGeneration;
-        public static readonly HookPoint<HookArgs.WorldRequestMessage> WorldRequestMessage;
-
-        public static readonly HookPoint<HookArgs.ProgramStart> ProgramStart;
-        public static readonly HookPoint<HookArgs.StartCommandProcessing> StartCommandProcessing;
-
-        public static readonly HookPoint<HookArgs.AddBan> AddBan;
-        public static readonly HookPoint<HookArgs.NPCSpawn> NPCSpawn;
-
-        public static readonly HookPoint<HookArgs.NPCKilled> NPCKilled;
-        public static readonly HookPoint<HookArgs.InvasionWarning> InvasionWarning;
-
-        //public static readonly HookPoint<HookArgs.PatchServer> PatchServer;
-
-        public static readonly HookPoint<HookArgs.ParseCommandLineArguments> ParseCommandLineArguments;
-        public static readonly HookPoint<HookArgs.DeathMessage> DeathMessage;
-        public static readonly HookPoint<HookArgs.PlayerKilled> PlayerKilled;
-
-        //Client hooks
-        #region "Client"
+#if CLIENT
         public static readonly HookPoint<HookArgs.Draw> Draw;
         public static readonly HookPoint<HookArgs.Update> Update;
         public static readonly HookPoint<HookArgs.UpdateClient> UpdateClient;
-        #endregion
+#endif
 
-        #region "Server"
+#if SERVER
+        public static readonly HookPoint<HookArgs.AddBan> AddBan;
+        public static readonly HookPoint<HookArgs.Command> Command;
+        public static readonly HookPoint<HookArgs.ConfigurationLine> ConfigurationLine;
+        public static readonly HookPoint<HookArgs.ConsoleMessageReceived> ConsoleMessageReceived;
+        public static readonly HookPoint<HookArgs.NewConnection> NewConnection;
+        public static readonly HookPoint<HookArgs.ParseCommandLineArguments> ParseCommandLineArguments;
+        public static readonly HookPoint<HookArgs.PlayerAuthenticationChanged> PlayerAuthenticationChanged;
+        public static readonly HookPoint<HookArgs.PlayerAuthenticationChanging> PlayerAuthenticationChanging;
+        public static readonly HookPoint<HookArgs.PlayerEnteredGame> PlayerEnteredGame;
+        public static readonly HookPoint<HookArgs.PlayerEnteringGame> PlayerEnteringGame;
+        public static readonly HookPoint<HookArgs.PlayerLeftGame> PlayerLeftGame;
+        public static readonly HookPoint<HookArgs.PlayerPassReceived> PlayerPassReceived;
+        public static readonly HookPoint<HookArgs.PlayerPreGreeting> PlayerPreGreeting;
+        public static readonly HookPoint<HookArgs.ServerStateChange> ServerStateChange;
+        public static readonly HookPoint<HookArgs.ServerPassReceived> ServerPassReceived;
+        public static readonly HookPoint<HookArgs.StartCommandProcessing> StartCommandProcessing;
         public static readonly HookPoint<HookArgs.WorldAutoSave> WorldAutoSave;
-        #endregion
+#endif
 
-        #region "Multi"
-        #endregion
+#if CLIENT || SERVER
+        public static readonly HookPoint<HookArgs.ChestBreakReceived> ChestBreakReceived;
+        public static readonly HookPoint<HookArgs.ChestOpenReceived> ChestOpenReceived;
+        public static readonly HookPoint<HookArgs.DeathMessage> DeathMessage;
+        public static readonly HookPoint<HookArgs.DoorStateChanged> DoorStateChanged;
+        public static readonly HookPoint<HookArgs.InvasionNPCSpawn> InvasionNPCSpawn;
+        public static readonly HookPoint<HookArgs.InvasionWarning> InvasionWarning;
+        public static readonly HookPoint<HookArgs.LiquidFlowReceived> LiquidFlowReceived;
+        public static readonly HookPoint<HookArgs.NpcHurt> NpcHurt;
+        public static readonly HookPoint<HookArgs.NPCKilled> NPCKilled;
+        public static readonly HookPoint<HookArgs.NPCSpawn> NPCSpawn;
+        public static readonly HookPoint<HookArgs.PlayerChat> PlayerChat;
+        public static readonly HookPoint<HookArgs.PlayerDataReceived> PlayerDataReceived;
+        public static readonly HookPoint<HookArgs.PlayerHurt> PlayerHurt;
+        public static readonly HookPoint<HookArgs.PlayerKilled> PlayerKilled;
+        public static readonly HookPoint<HookArgs.PlayerWorldAlteration> PlayerWorldAlteration;
+        public static readonly HookPoint<HookArgs.PluginLoadRequest> PluginLoadRequest;
+        public static readonly HookPoint<HookArgs.PluginsLoaded> PluginsLoaded;
+        public static readonly HookPoint<HookArgs.ProgramStart> ProgramStart;
+        public static readonly HookPoint<HookArgs.ProjectileKill> ProjectileKill;
+        public static readonly HookPoint<HookArgs.ProjectileReceived> ProjectileReceived;
+        public static readonly HookPoint<HookArgs.ReceiveNetMessage> ReceiveNetMessage;
+        public static readonly HookPoint<HookArgs.SendNetMessage> SendNetMessage;
+        public static readonly HookPoint<HookArgs.SignTextGet> SignTextGet;
+        public static readonly HookPoint<HookArgs.SignTextSet> SignTextSet;
+        public static readonly HookPoint<HookArgs.TileSquareReceived> TileSquareReceived;
+#endif
+
+        //        public static readonly HookPoint<HookArgs.DatabaseInitialise> DatabaseInitialise;
+        //        public static readonly HookPoint<HookArgs.StartDefaultServer> StartDefaultServer;
+        //        public static readonly HookPoint<HookArgs.StatusTextChanged> StatusTextChanged;
+        //        public static readonly HookPoint<HookArgs.UpdateServer> UpdateServer;
+        //        public static readonly HookPoint<HookArgs.ConnectionRequestReceived> ConnectionRequestReceived;
+        //        public static readonly HookPoint<HookArgs.DisconnectReceived> DisconnectReceived;
+        //        public static readonly HookPoint<HookArgs.StateUpdateReceived> StateUpdateReceived;
+        //        public static readonly HookPoint<HookArgs.InventoryItemReceived> InventoryItemReceived;
+        //        public static readonly HookPoint<HookArgs.ObituaryReceived> ObituaryReceived;
+        //        public static readonly HookPoint<HookArgs.PlayerTeleport> PlayerTeleport;
+        //        public static readonly HookPoint<HookArgs.Explosion> Explosion;
+        //        public static readonly HookPoint<HookArgs.PvpSettingReceived> PvpSettingReceived;
+        //        public static readonly HookPoint<HookArgs.PartySettingReceived> PartySettingReceived;
+        //        public static readonly HookPoint<HookArgs.WorldLoaded> WorldLoaded;
+        //        public static readonly HookPoint<HookArgs.NpcCreation> NpcCreation;
+        //        public static readonly HookPoint<HookArgs.PlayerTriggeredEvent> PlayerTriggeredEvent;
+        //        public static readonly HookPoint<HookArgs.WorldGeneration> WorldGeneration;
+        //        public static readonly HookPoint<HookArgs.WorldRequestMessage> WorldRequestMessage;
+
 
         static HookPoints()
         {
-//            DatabaseInitialise = new HookPoint<HookArgs.DatabaseInitialise>("database-initialise");
-            ConsoleMessageReceived = new HookPoint<HookArgs.ConsoleMessageReceived>("console-message-received");
-            //            UnknownReceivedPacket = new HookPoint<HookArgs.UnknownReceivedPacket>("unknown-receive-packet");
-            //            UnknownSendPacket = new HookPoint<HookArgs.UnknownSendPacket>("unknown-send-packet");
-            //PlayerTeleport = new HookPoint<HookArgs.PlayerTeleport>("player-teleport");
-            ServerStateChange = new HookPoint<HookArgs.ServerStateChange>("server-state-change");
-            NewConnection = new HookPoint<HookArgs.NewConnection>("new-connection");
-            PluginLoadRequest = new HookPoint<HookArgs.PluginLoadRequest>("plugin-load-request");
-            ConnectionRequestReceived = new HookPoint<HookArgs.ConnectionRequestReceived>("connection-request-received");
-            DisconnectReceived = new HookPoint<HookArgs.DisconnectReceived>("disconnect-received");
-            ServerPassReceived = new HookPoint<HookArgs.ServerPassReceived>("server-pass-received");
-            PlayerPassReceived = new HookPoint<HookArgs.PlayerPassReceived>("player-pass-received");
-            PlayerDataReceived = new HookPoint<HookArgs.PlayerDataReceived>("player-data-received");
-            StateUpdateReceived = new HookPoint<HookArgs.StateUpdateReceived>("state-update-received");
-            InventoryItemReceived = new HookPoint<HookArgs.InventoryItemReceived>("inventory-item-received");
-            ObituaryReceived = new HookPoint<HookArgs.ObituaryReceived>("obituary-received");
-            PlayerWorldAlteration = new HookPoint<HookArgs.PlayerWorldAlteration>("player-world-alteration");
-            DoorStateChanged = new HookPoint<HookArgs.DoorStateChanged>("door-state-changed");
-            LiquidFlowReceived = new HookPoint<HookArgs.LiquidFlowReceived>("liquid-flow-received");
-            ProjectileReceived = new HookPoint<HookArgs.ProjectileReceived>("projectile-received");
-            KillProjectileReceived = new HookPoint<HookArgs.KillProjectileReceived>("kill-projectile-received");
-            TileSquareReceived = new HookPoint<HookArgs.TileSquareReceived>("tile-square-received");
-            ChestBreakReceived = new HookPoint<HookArgs.ChestBreakReceived>("chest-break-received");
-            ChestOpenReceived = new HookPoint<HookArgs.ChestOpenReceived>("chest-open-received");
-            PvpSettingReceived = new HookPoint<HookArgs.PvpSettingReceived>("pvp-setting-received");
-            PartySettingReceived = new HookPoint<HookArgs.PartySettingReceived>("party-setting-received");
-            PlayerEnteringGame = new HookPoint<HookArgs.PlayerEnteringGame>("player-entering-game");
-            PlayerEnteredGame = new HookPoint<HookArgs.PlayerEnteredGame>("player-entered-game");
-            PlayerLeftGame = new HookPoint<HookArgs.PlayerLeftGame>("player-left-game");
-            PlayerAuthenticationChanging = new HookPoint<HookArgs.PlayerAuthenticationChanging>("player-auth-changing");
-            PlayerAuthenticationChanged = new HookPoint<HookArgs.PlayerAuthenticationChanged>("player-auth-change");
-            //Explosion = new HookPoint<HookArgs.Explosion>("explosion");
-            SignTextSet = new HookPoint<HookArgs.SignTextSet>("sign-text-set");
-            SignTextGet = new HookPoint<HookArgs.SignTextGet>("sign-text-get");
-            PluginsLoaded = new HookPoint<HookArgs.PluginsLoaded>("plugins-loaded");
-            //WorldLoaded = new HookPoint<HookArgs.WorldLoaded>("world-loaded");
-            PlayerHurt = new HookPoint<HookArgs.PlayerHurt>("player-hurt");
-            NpcHurt = new HookPoint<HookArgs.NpcHurt>("npc-hurt");
-            //NpcCreation = new HookPoint<HookArgs.NpcCreation>("npc-creation");
-            PlayerTriggeredEvent = new HookPoint<HookArgs.PlayerTriggeredEvent>("player-triggered-event");
-            PlayerChat = new HookPoint<HookArgs.PlayerChat>("player-chat");
-            Command = new HookPoint<HookArgs.Command>("command");
-            //WorldGeneration = new HookPoint<HookArgs.WorldGeneration>("world-generation");
-            WorldRequestMessage = new HookPoint<HookArgs.WorldRequestMessage>("world-request-message");
-            //            StartDefaultServer = new HookPoint<HookArgs.StartDefaultServer>("start-default-server");
-            //StatusTextChanged = new HookPoint<HookArgs.StatusTextChanged>("status-text-changed");
-            SendNetMessage = new HookPoint<HookArgs.SendNetMessage>("send-net-message");
-            ReceiveNetMessage = new HookPoint<HookArgs.ReceiveNetMessage>("receive-net-message");
-            //UpdateServer = new HookPoint<HookArgs.UpdateServer>("update-server");
-            ProgramStart = new HookPoint<HookArgs.ProgramStart>("program-start");
-            StartCommandProcessing = new HookPoint<HookArgs.StartCommandProcessing>("start-command-processing");
-            ConfigurationLine = new HookPoint<HookArgs.ConfigurationLine>("config-line");
-            AddBan = new HookPoint<HookArgs.AddBan>("add-ban");
-            NPCSpawn = new HookPoint<HookArgs.NPCSpawn>("npc-spawn");
-            InvasionNPCSpawn = new HookPoint<HookArgs.InvasionNPCSpawn>("invasion-npc-spawn");
-            PlayerPreGreeting = new HookPoint<HookArgs.PlayerPreGreeting>("player-pre-greeting");
-
-            NPCKilled = new HookPoint<HookArgs.NPCKilled>("npc-killed");
-            InvasionWarning = new HookPoint<HookArgs.InvasionWarning>("invasion-warning");
-
-            ParseCommandLineArguments = new HookPoint<HookArgs.ParseCommandLineArguments>("parse-cmd-args");
-            DeathMessage = new HookPoint<HookArgs.DeathMessage>("death-message");
-            PlayerKilled = new HookPoint<HookArgs.PlayerKilled>("player-killed");
-
-            //Client hooks
+#if CLIENT
             Draw = new HookPoint<HookArgs.Draw>("draw");
             Update = new HookPoint<HookArgs.Update>("update");
             UpdateClient = new HookPoint<HookArgs.UpdateClient>("update-client");
+#endif
 
+#if SERVER
+            AddBan = new HookPoint<HookArgs.AddBan>("add-ban");
+            Command = new HookPoint<HookArgs.Command>("command");
+            ConfigurationLine = new HookPoint<HookArgs.ConfigurationLine>("config-line");
+            ConsoleMessageReceived = new HookPoint<HookArgs.ConsoleMessageReceived>("console-message-received");
+            NewConnection = new HookPoint<HookArgs.NewConnection>("new-connection");
+            ParseCommandLineArguments = new HookPoint<HookArgs.ParseCommandLineArguments>("parse-cmd-args");
+            PlayerAuthenticationChanged = new HookPoint<HookArgs.PlayerAuthenticationChanged>("player-auth-change");
+            PlayerAuthenticationChanging = new HookPoint<HookArgs.PlayerAuthenticationChanging>("player-auth-changing");
+            PlayerEnteredGame = new HookPoint<HookArgs.PlayerEnteredGame>("player-entered-game");
+            PlayerEnteringGame = new HookPoint<HookArgs.PlayerEnteringGame>("player-entering-game");
+            PlayerLeftGame = new HookPoint<HookArgs.PlayerLeftGame>("player-left-game");
+            PlayerPassReceived = new HookPoint<HookArgs.PlayerPassReceived>("player-pass-received");
+            PlayerPreGreeting = new HookPoint<HookArgs.PlayerPreGreeting>("player-pre-greeting");
+            ServerStateChange = new HookPoint<HookArgs.ServerStateChange>("server-state-change");
+            ServerPassReceived = new HookPoint<HookArgs.ServerPassReceived>("server-pass-received");
+            StartCommandProcessing = new HookPoint<HookArgs.StartCommandProcessing>("start-command-processing");
             WorldAutoSave = new HookPoint<HookArgs.WorldAutoSave>("world-auto-save");
+#endif
+
+#if CLIENT || SERVER
+            ChestBreakReceived = new HookPoint<HookArgs.ChestBreakReceived>("chest-break-received");
+            ChestOpenReceived = new HookPoint<HookArgs.ChestOpenReceived>("chest-open-received");
+            DeathMessage = new HookPoint<HookArgs.DeathMessage>("death-message");
+            DoorStateChanged = new HookPoint<HookArgs.DoorStateChanged>("door-state-changed");
+            InvasionNPCSpawn = new HookPoint<HookArgs.InvasionNPCSpawn>("invasion-npc-spawn");
+            InvasionWarning = new HookPoint<HookArgs.InvasionWarning>("invasion-warning");
+            LiquidFlowReceived = new HookPoint<HookArgs.LiquidFlowReceived>("liquid-flow-received");
+            NpcHurt = new HookPoint<HookArgs.NpcHurt>("npc-hurt");
+            NPCKilled = new HookPoint<HookArgs.NPCKilled>("npc-killed");
+            NPCSpawn = new HookPoint<HookArgs.NPCSpawn>("npc-spawn");
+            PlayerChat = new HookPoint<HookArgs.PlayerChat>("player-chat");
+            PlayerDataReceived = new HookPoint<HookArgs.PlayerDataReceived>("player-data-received");
+            PlayerHurt = new HookPoint<HookArgs.PlayerHurt>("player-hurt");
+            PlayerKilled = new HookPoint<HookArgs.PlayerKilled>("player-killed");
+            PlayerWorldAlteration = new HookPoint<HookArgs.PlayerWorldAlteration>("player-world-alteration");
+            PluginLoadRequest = new HookPoint<HookArgs.PluginLoadRequest>("plugin-load-request");
+            PluginsLoaded = new HookPoint<HookArgs.PluginsLoaded>("plugins-loaded");
+            ProgramStart = new HookPoint<HookArgs.ProgramStart>("program-start");
+            ProjectileKill = new HookPoint<HookArgs.ProjectileKill>("projectile-kill");
+            ProjectileReceived = new HookPoint<HookArgs.ProjectileReceived>("projectile-received");
+            ReceiveNetMessage = new HookPoint<HookArgs.ReceiveNetMessage>("receive-net-message");
+            SendNetMessage = new HookPoint<HookArgs.SendNetMessage>("send-net-message");
+            SignTextGet = new HookPoint<HookArgs.SignTextGet>("sign-text-get");
+            SignTextSet = new HookPoint<HookArgs.SignTextSet>("sign-text-set");
+            TileSquareReceived = new HookPoint<HookArgs.TileSquareReceived>("tile-square-received");
+#endif
         }
     }
 
@@ -195,24 +156,133 @@ namespace OTA.Plugin
 
     public static class HookArgs
     {
-        #region "Client Hooks"
-
+        #if CLIENT
         public struct Draw { public MethodState State { get; set; } }
         public struct Update { public MethodState State { get; set; } }
         public struct UpdateClient { public MethodState State { get; set; } }
-        #endregion
+        #endif
 
-//        public struct DatabaseInitialise
-//        {
-//            public System.Data.Entity.DbModelBuilder Builder { get; set; }
-//        }
-
-        public struct PlayerKilled
+        #if SERVER
+        public struct AddBan
         {
-            public double Damage { get; set; }
-            public int HitDirection { get; set; }
-            public bool PvP { get; set; }
-            public string DeathText { get; set; }
+            public string RemoteAddress { get; set; }
+        }
+
+        public struct ConfigurationLine
+        {
+            public string Key { get; set; }
+            public string Value { get; set; }
+        }
+
+        public struct ConsoleMessageReceived
+        {
+            public string Message { get; set; }
+            public OTA.Logging.SendingLogger Logger { get; set; }
+        }
+
+        public struct Command
+        {
+            public string Prefix { get; internal set; }
+            public ArgumentList Arguments { get; set; }
+            public string ArgumentString { get; set; }
+        }
+
+        public struct NewConnection
+        {
+        }
+
+        public struct ParseCommandLineArguments
+        {
+        }
+
+        public struct PlayerAuthenticationChanged
+        {
+            public string AuthenticatedAs { get; set; }
+            public string AuthenticatedBy { get; set; }
+        }
+
+        public struct PlayerAuthenticationChanging
+        {
+            public string AuthenticatedAs { get; set; }
+            public string AuthenticatedBy { get; set; }
+        }
+
+        public struct PlayerEnteredGame
+        {
+            public int Slot { get; set; }
+        }
+
+        public struct PlayerEnteringGame
+        {
+            public int Slot { get; set; }
+        }
+
+        public struct PlayerLeftGame
+        {
+            public int Slot { get; set; }
+        }
+
+        public struct PlayerPassReceived
+        {
+            public string Password { get; set; }
+        }
+
+        public struct PlayerPreGreeting
+        {
+            public int Slot { get; set; }
+            public string Motd { get; set; }
+            public Color MotdColour { get; set; }
+        }
+
+        public struct ServerStateChange
+        {
+            public ServerState ServerChangeState { get; set; }
+        }
+
+        public struct ServerPassReceived
+        {
+            public string Password { get; set; }
+        }
+
+        public struct StartCommandProcessing
+        {
+        }
+
+        public struct WorldAutoSave { }
+        #endif
+
+        #if CLIENT || SERVER
+        public struct ChestBreakReceived
+        {
+            public int X { get; set; }
+            public int Y { get; set; }
+        }
+
+        public struct ChestOpenReceived
+        {
+            public int X { get; set; }
+            public int Y { get; set; }
+            public int ChestIndex { get; set; }
+        }
+
+        public struct DoorStateChanged
+        {
+            /// <summary>
+            /// Location of the player when the state was changed
+            /// </summary>
+            /// <value>The position.</value>
+            public Vector2 Position { get; set; }
+
+            public int X { get; set; }
+            public int Y { get; set; }
+
+            public int Direction { get; set; }
+
+            /// <summary>
+            /// Type of object being opened
+            /// </summary>
+            /// <value>The kind.</value>
+            public int Kind { get; set; }
         }
 
         public struct DeathMessage
@@ -223,268 +293,90 @@ namespace OTA.Plugin
             public int Other { get; set; }
         }
 
-        public struct ConsoleMessageReceived
-        {
-            public string Message { get; set; }
-
-            public OTA.Logging.SendingLogger Logger { get; set; }
-        }
-
-        public struct NPCSpawn
+        public struct InvasionNPCSpawn
         {
             public int X { get; set; }
-
             public int Y { get; set; }
+        }
 
-            public int Type { get; set; }
+        public struct InvasionWarning
+        {
+        }
 
-            public int Start { get; set; }
+        public struct LiquidFlowReceived
+        {
+            public int X { get; set; }
+            public int Y { get; set; }
+            public byte Amount { get; set; }
+            public bool Lava { get; set; }
+
+            public bool Water
+            {
+                get { return !Lava; }
+                set { Lava = !value; }
+            }
+        }
+
+        public struct NpcHurt
+        {
+#if Full_API
+            public NPC Victim { get; set; }
+#endif
+            public int Damage { get; set; }
+            public int HitDirection { get; set; }
+            public float Knockback { get; set; }
+            public bool Critical { get; set; }
+            public bool FromNet { get; set; }
+            public bool NoEffect { get; set; }
         }
 
         public struct NPCKilled
         {
             public int Type { get; set; }
-
             public int NetId { get; set; }
         }
 
-        public struct PlayerAuthenticationChanging
-        {
-            public string AuthenticatedAs { get; set; }
-
-            public string AuthenticatedBy { get; set; }
-        }
-
-        public struct PlayerAuthenticationChanged
-        {
-            public string AuthenticatedAs { get; set; }
-
-            public string AuthenticatedBy { get; set; }
-        }
-
-        public struct InvasionNPCSpawn
+        public struct NPCSpawn
         {
             public int X { get; set; }
-
             public int Y { get; set; }
-        }
-
-        public struct ParseCommandLineArguments
-        {
-
-        }
-
-        public struct InvasionWarning
-        {
-
-        }
-
-        public struct AddBan
-        {
-            public string RemoteAddress { get; set; }
-        }
-
-        public struct ConfigurationLine
-        {
-            public string Key { get; set; }
-
-            public string Value { get; set; }
-        }
-
-        public struct ReceiveNetMessage
-        {
-            public int BufferId { get; set; }
-
-            public byte PacketId { get; set; }
-
+            public int Type { get; set; }
             public int Start { get; set; }
-
-            public int Length { get; set; }
         }
 
-        public struct SendNetMessage
+        public struct PlayerChat
         {
-            public int MsgType { get; set; }
-
-            public int BufferId { get; set; }
-
-            public int RemoteClient { get; set; }
-
-            public int IgnoreClient { get; set; }
-
-            public string Text { get; set; }
-
-            public int Number { get; set; }
-
-            public float Number2 { get; set; }
-
-            public float Number3 { get; set; }
-
-            public float Number4 { get; set; }
-
-            public int Number5 { get; set; }
-        }
-
-        //public struct StatusTextChanged { }
-        //{
-        //    public string Old { get; set; }
-        //    public string New { get; set; }
-        //}
-
-        //        public struct StartDefaultServer
-        //        {
-        //
-        //        }
-
-        public struct StartCommandProcessing
-        {
-
-        }
-
-        public struct WorldRequestMessage
-        {
-            public int SpawnX { get; set; }
-
-            public int SpawnY { get; set; }
-        }
-
-        public struct UnkownReceivedPacket
-        {
-#if Full_API
-            public ClientConnection Connection { get; set; }
-#endif
-            public byte[] ReadBuffer { get; set; }
-
-            public int Start { get; set; }
-
-            public int Length { get; set; }
-        }
-
-        public struct UnkownSendPacket
-        {
-#if Full_API
-            public NetMessage Message { get; set; }
-#endif
-            public int PacketId { get; set; }
-
-            public int RemoteClient { get; set; }
-
-            public int IgnoreClient { get; set; }
-
-            public string Text { get; set; }
-
-            public int Number { get; set; }
-
-            public float Number2 { get; set; }
-
-            public float Number3 { get; set; }
-
-            public float Number4 { get; set; }
-
-            public int Number5 { get; set; }
-        }
-
-        public struct WorldGeneration
-        {
-
-        }
-
-        public struct NewConnection
-        {
-        }
-
-        //public struct UpdateServer { }
-
-        public struct ServerStateChange
-        {
-            public ServerState ServerChangeState { get; set; }
-        }
-
-        public struct ProgramStart
-        {
-            public string[] Arguments { get; set; }
-        }
-
-        public struct PlayerTeleport
-        {
-            public Vector2 ToLocation { get; set; }
-        }
-
-        public struct PluginLoadRequest
-        {
-            public string Path { get; set; }
-
-            public BasePlugin LoadedPlugin { get; set; }
-        }
-
-        public struct ConnectionRequestReceived
-        {
-            public string Version { get; set; }
-        }
-
-        public struct DisconnectReceived
-        {
-            public string Content { get; set; }
-
-            public string[] Lines { get; set; }
-        }
-
-        public struct ServerPassReceived
-        {
-            public string Password { get; set; }
-        }
-
-        public struct PlayerPassReceived
-        {
-            public string Password { get; set; }
+            public string Message { get; set; }
+            public Color Color { get; set; }
         }
 
         public struct PlayerDataReceived
         {
             public bool IsConnecting { get; set; }
-
             public string Name { get; set; }
-
             public int SkinVariant { get; set; }
-
             public int Hair { get; set; }
-
             public byte HairDye { get; set; }
-
             public bool[] HideVisual { get; set; }
-
             public byte HideMisc { get; set; }
-
             public byte Difficulty { get; set; }
-
             public bool ExtraAccessory { get; set; }
 
-
             public Color HairColor { get; set; }
-
             public Color SkinColor { get; set; }
-
             public Color EyeColor { get; set; }
-
             public Color ShirtColor { get; set; }
-
             public Color UnderShirtColor { get; set; }
-
             public Color PantsColor { get; set; }
-
             public Color ShoeColor { get; set; }
 
-
             public bool NameChecked { get; set; }
-
             public bool BansChecked { get; set; }
-
             public bool WhitelistChecked { get; set; }
 
             public int Parse(System.IO.BinaryReader reader, int at, int length)
             {
 #if Full_API
-
                 reader.ReadByte(); //Ignore player id
 
                 SkinVariant = (int)MathHelper.Clamp((float)(int)reader.ReadByte(), 0, 7);
@@ -523,75 +415,9 @@ namespace OTA.Plugin
 
                 ExtraAccessory = bb[2];
 
-                //                var start = at + 1 /*Skip player id */;
-                //
-                //                //                var playerId = (int)buf[at++];
-                //                //            if (Main.netMode == 2)
-                //                //            {
-                //                //                num6 = bufferId;
-                //                //            }
-                //
-                //                SkinVariant = (int)MathHelper.Clamp((float)buf[start++], 0, 7);
-                //                Hair = (int)buf[start++];
-                //                if (Hair >= 134)
-                //                    Hair = 0;
-                //
-                //                int len = 0;
-                //                while (true)
-                //                {
-                //                    len += buf[start] & 0x7F;
-                //                    if (buf[start++] > 127)
-                //                        len <<= 7;
-                //                    else break;
-                //                }
-                //
-                //                Logging.ProgramLog.Log("len: {0}", len);
-                //
-                ////                start += len;
-                //                Name = System.Text.Encoding.UTF8.GetString(buf, start, len).Trim();
-                //
-                //                HairDye = buf[start++];
-                //                BitsByte bitsByte = buf[start++];
-                //                HideVisual = new bool[10];
-                //                for (int num7 = 0; num7 < 8; num7++)
-                //                {
-                //                    HideVisual[num7] = bitsByte[num7];
-                //                }
-                //                bitsByte = buf[start++];
-                //                for (int num8 = 0; num8 < 2; num8++)
-                //                {
-                //                    HideVisual[num8 + 8] = bitsByte[num8];
-                //                }
-                //                HideMisc = buf[start++];
-                //                HairColor = ParseColor(buf, ref start);
-                //                SkinColor = ParseColor(buf, ref start);
-                //
-                //                Logging.ProgramLog.Log("R: {0},{1},{2}", SkinColor.R, SkinColor.G, SkinColor.B);
-                //
-                //                EyeColor = ParseColor(buf, ref start);
-                //                ShirtColor = ParseColor(buf, ref start);
-                //                UnderShirtColor = ParseColor(buf, ref start);
-                //                PantsColor = ParseColor(buf, ref start);
-                //                ShoeColor = ParseColor(buf, ref start);
-                //                BitsByte bitsByte2 = buf[start++];
-                //                Difficulty = 0;
-                //                if (bitsByte2[0])
-                //                {
-                //                    Difficulty += 1;
-                //                }
-                //                if (bitsByte2[1])
-                //                {
-                //                    Difficulty += 2;
-                //                }
-                //                if (Difficulty > 2)
-                //                {
-                //                    Difficulty = 2;
-                //                }
-                //                ExtraAccessory = bitsByte2[2];
-
-                return 0; //start - at;
-#else
                 return 0;
+#else
+                        return 0;
 #endif
             }
 
@@ -663,186 +489,26 @@ namespace OTA.Plugin
             }
         }
 
-        public struct StateUpdateReceived
+        public struct PlayerHurt
         {
-            public byte FlagsA { get; set; }
-
-            public byte FlagsB { get; set; }
-
-            public byte SelectedItemIndex { get; set; }
-
-            public float X { get; set; }
-
-            public float Y { get; set; }
-
-            public float VX { get; set; }
-
-            public float VY { get; set; }
-
-            public bool ControlUp
-            {
-                get { return (FlagsA & 1) != 0; }
-                set { SetFlagA(1, value); }
-            }
-
-            public bool ControlDown
-            {
-                get { return (FlagsA & 2) != 0; }
-                set { SetFlagA(2, value); }
-            }
-
-            public bool ControlLeft
-            {
-                get { return (FlagsA & 4) != 0; }
-                set { SetFlagA(4, value); }
-            }
-
-            public bool ControlRight
-            {
-                get { return (FlagsA & 8) != 0; }
-                set { SetFlagA(8, value); }
-            }
-
-            public bool ControlJump
-            {
-                get { return (FlagsA & 16) != 0; }
-                set { SetFlagA(16, value); }
-            }
-
-            public bool ControlUseItem
-            {
-                get { return (FlagsA & 32) != 0; }
-                set { SetFlagA(32, value); }
-            }
-
-            public int Direction
-            {
-                get { return ((FlagsA & 64) != 0) ? 1 : -1; }
-                set { SetFlagA(64, value == 1); }
-            }
-
-            public bool Pulley
-            {
-                get { return (FlagsB & 1) != 0; }
-                set { SetFlagB(1, value); }
-            }
-
-            public byte PulleyDirection
-            {
-                get { return (byte)(((FlagsB & 2) != 0) ? 2 : 1); }
-                set { SetFlagB(2, value == 2); }
-            }
-
-            public bool HasVelocity
-            {
-                get { return (FlagsB & 4) != 0; }
-                set { SetFlagB(4, value); }
-            }
-
-            internal void SetFlagA(byte f, bool value)
-            {
-                if (value)
-                    FlagsA |= f;
-                else
-                    FlagsA &= (byte)~f;
-            }
-
-            internal void SetFlagB(byte f, bool value)
-            {
-                if (value)
-                    FlagsB |= f;
-                else
-                    FlagsB &= (byte)~f;
-            }
-
 #if Full_API
-            public void ApplyKeys(Player player)
-            {
-                player.controlUp = ControlUp;
-                player.controlDown = ControlDown;
-                player.controlLeft = ControlLeft;
-                player.controlRight = ControlRight;
-                player.controlJump = ControlJump;
-                player.controlUseItem = ControlUseItem;
-            }
-
-            public void ApplyParams(Player player)
-            {
-                player.selectedItem = SelectedItemIndex;
-                player.direction = Direction;
-                player.position = new Vector2(X, Y);
-
-                if (HasVelocity)
-                    player.velocity = new Vector2(VX, VY);
-
-                player.pulley = Pulley;
-                player.pulleyDir = PulleyDirection;
-            }
+            public Player Victim { get; internal set; }
 #endif
-
-            public void Parse(byte[] buf, int at)
-            {
-                FlagsA = buf[at++];
-                FlagsB = buf[at++];
-
-                SelectedItemIndex = buf[at++];
-
-                X = BitConverter.ToSingle(buf, at);
-                at += 4;
-                Y = BitConverter.ToSingle(buf, at);
-                at += 4;
-                VX = BitConverter.ToSingle(buf, at);
-                at += 4;
-                VY = BitConverter.ToSingle(buf, at);
-            }
-        }
-
-        public struct InventoryItemReceived
-        {
-            public int InventorySlot { get; set; }
-
-            public int Amount { get; set; }
-
-            public string Name { get; set; }
-
-            public int Prefix { get; set; }
-
-            public int NetID { get; set; }
-
-#if Full_API
-            public Item Item { get; set; }
-#endif
-
-            public void SetItem()
-            {
-#if Full_API
-                Item = new Item();
-                Item.netDefaults(NetID);
-                Item.stack = Amount;
-                Item.Prefix(Prefix);
-#endif
-            }
-        }
-
-        public struct ObituaryReceived
-        {
-            public int Direction { get; set; }
-
             public int Damage { get; set; }
-
-            public byte PvpFlag { get; set; }
-
+            public int HitDirection { get; set; }
+            public bool Pvp { get; set; }
+            public bool Quiet { get; set; }
             public string Obituary { get; set; }
+            public bool Critical { get; set; }
+            public int CooldownCounter { get; set; }
         }
 
-        public struct PvpSettingReceived
+        public struct PlayerKilled
         {
-            public bool PvpFlag { get; set; }
-        }
-
-        public struct PartySettingReceived
-        {
-            public byte Party { get; set; }
+            public double Damage { get; set; }
+            public int HitDirection { get; set; }
+            public bool PvP { get; set; }
+            public string DeathText { get; set; }
         }
 
         public struct PlayerWorldAlteration
@@ -901,69 +567,47 @@ namespace OTA.Plugin
             }
 
 #if Full_API && !MemTile && !VANILLACOMPAT
-            public Terraria.Tile Tile => Main.tile[X, Y];
+                    public Terraria.Tile Tile => Main.tile[X, Y];
 #elif Full_API && (MemTile || VANILLACOMPAT) && TileReady
             public OTA.Memory.MemTile Tile => Main.tile[X, Y];
 #endif
         }
 
-        public struct DoorStateChanged
+        public struct PluginLoadRequest
         {
-            /// <summary>
-            /// Location of the player when the state was changed
-            /// </summary>
-            /// <value>The position.</value>
-            public Vector2 Position { get; set; }
-
-            public int X { get; set; }
-
-            public int Y { get; set; }
-
-            public int Direction { get; set; }
-
-            /// <summary>
-            /// Type of object being opened
-            /// </summary>
-            /// <value>The kind.</value>
-            public int Kind { get; set; }
+            public string Path { get; set; }
+            public BasePlugin LoadedPlugin { get; set; }
         }
 
-        public struct LiquidFlowReceived
+        public struct PluginsLoaded
         {
-            public int X { get; set; }
+        }
 
-            public int Y { get; set; }
+        public struct ProgramStart
+        {
+            public string[] Arguments { get; set; }
+        }
 
-            public byte Amount { get; set; }
-
-            public bool Lava { get; set; }
-
-            public bool Water
-            {
-                get { return !Lava; }
-                set { Lava = !value; }
-            }
+        public struct ProjectileKill
+        {
+            public int Index { get; set; }
+            public int Id { get; set; }
+            public int Owner { get; set; }
         }
 
         public struct ProjectileReceived
         {
             public int Id { get; set; }
-
             public Vector2 Position { get; set; }
-
             public Vector2 Velocity { get; set; }
             //public float X { get; set; }
             //public float Y { get; set; }
             //public float VX { get; set; }
             //public float VY { get; set; }
             public float Knockback { get; set; }
-
             public int Damage { get; set; }
-
             public int Owner { get; set; }
-
             public int Type { get; set; }
-
             public float[] AI { get; set; }
 
             public float AI_0
@@ -1035,174 +679,45 @@ namespace OTA.Plugin
 #endif
         }
 
-        public struct KillProjectileReceived
+        public struct ReceiveNetMessage
         {
-            public int Index { get; set; }
-
-            public int Id { get; set; }
-
-            public int Owner { get; set; }
+            public int BufferId { get; set; }
+            public byte PacketId { get; set; }
+            public int Start { get; set; }
+            public int Length { get; set; }
         }
 
-        public struct Explosion
+        public struct SendNetMessage
         {
-#if Full_API
-            public Projectile Source { get; set; }
-#endif
-        }
-
-        public struct ChestBreakReceived
-        {
-            public int X { get; set; }
-
-            public int Y { get; set; }
-        }
-
-        public struct ChestOpenReceived
-        {
-            public int X { get; set; }
-
-            public int Y { get; set; }
-
-            public int ChestIndex { get; set; }
-        }
-
-        public struct PlayerEnteringGame
-        {
-            public int Slot { get; set; }
-        }
-
-        public struct PlayerPreGreeting
-        {
-            public int Slot { get; set; }
-
-            public string Motd { get; set; }
-
-            public Color MotdColour { get; set; }
-        }
-
-        public struct PlayerEnteredGame
-        {
-            public int Slot { get; set; }
-        }
-
-        public struct PlayerLeftGame
-        {
-            public int Slot { get; set; }
+            public int MsgType { get; set; }
+            public int BufferId { get; set; }
+            public int RemoteClient { get; set; }
+            public int IgnoreClient { get; set; }
+            public string Text { get; set; }
+            public int Number { get; set; }
+            public float Number2 { get; set; }
+            public float Number3 { get; set; }
+            public float Number4 { get; set; }
+            public int Number5 { get; set; }
         }
 
         public struct SignTextGet
         {
             public int X { get; set; }
-
             public int Y { get; set; }
-
             public int SignIndex { get; set; }
-
             public string Text { get; set; }
         }
 
         public struct SignTextSet
         {
             public int X { get; set; }
-
             public int Y { get; set; }
-
             public int SignIndex { get; set; }
-
             public string Text { get; set; }
 #if Full_API
             public Sign OldSign { get; set; }
 #endif
-        }
-
-        public struct PluginsLoaded
-        {
-        }
-
-        public struct WorldLoaded
-        {
-            public int Width { get; set; }
-
-            public int Height { get; set; }
-        }
-
-        public struct PlayerHurt
-        {
-#if Full_API
-            public Player Victim { get; internal set; }
-#endif
-            public int Damage { get; set; }
-
-            public int HitDirection { get; set; }
-
-            public bool Pvp { get; set; }
-
-            public bool Quiet { get; set; }
-
-            public string Obituary { get; set; }
-
-            public bool Critical { get; set; }
-
-            public int CooldownCounter { get; set; }
-        }
-
-        public struct NpcHurt
-        {
-#if Full_API
-            public NPC Victim { get; set; }
-#endif
-            public int Damage { get; set; }
-
-            public int HitDirection { get; set; }
-
-            public float Knockback { get; set; }
-
-            public bool Critical { get; set; }
-
-            public bool FromNet { get; set; }
-
-            public bool NoEffect { get; set; }
-        }
-
-        public struct NpcCreation
-        {
-            public int X { get; set; }
-
-            public int Y { get; set; }
-
-            public string Name { get; set; }
-
-#if Full_API
-            public NPC CreatedNpc { get; set; }
-#endif
-        }
-
-        public struct PlayerTriggeredEvent
-        {
-            public int X { get; set; }
-
-            public int Y { get; set; }
-
-            public WorldEventType Type { get; set; }
-
-            public string Name { get; set; }
-        }
-
-        public struct PlayerChat
-        {
-            public string Message { get; set; }
-
-            public Color Color { get; set; }
-        }
-
-        public struct Command
-        {
-            public string Prefix { get; internal set; }
-
-            public ArgumentList Arguments { get; set; }
-
-            public string ArgumentString { get; set; }
         }
 
         public struct TileSquareReceived
@@ -1285,8 +800,328 @@ namespace OTA.Plugin
             //                }
             //            }
         }
+        #endif
 
-        public struct WorldAutoSave { }
+        //        //public struct StatusTextChanged { }
+        //        //{
+        //        //    public string Old { get; set; }
+        //        //    public string New { get; set; }
+        //        //}
+
+        //        //        public struct StartDefaultServer
+        //        //        {
+        //        //
+        //        //        }
+
+
+        //        public struct WorldRequestMessage
+        //        {
+        //            public int SpawnX { get; set; }
+
+        //            public int SpawnY { get; set; }
+        //        }
+
+        //        public struct UnkownReceivedPacket
+        //        {
+        //#if Full_API
+        //            public ClientConnection Connection { get; set; }
+        //#endif
+        //            public byte[] ReadBuffer { get; set; }
+
+        //            public int Start { get; set; }
+
+        //            public int Length { get; set; }
+        //        }
+
+        //        public struct UnkownSendPacket
+        //        {
+        //#if Full_API
+        //            public NetMessage Message { get; set; }
+        //#endif
+        //            public int PacketId { get; set; }
+
+        //            public int RemoteClient { get; set; }
+
+        //            public int IgnoreClient { get; set; }
+
+        //            public string Text { get; set; }
+
+        //            public int Number { get; set; }
+
+        //            public float Number2 { get; set; }
+
+        //            public float Number3 { get; set; }
+
+        //            public float Number4 { get; set; }
+
+        //            public int Number5 { get; set; }
+        //        }
+
+        //        public struct WorldGeneration
+        //        {
+
+        //        }
+
+
+        //        //public struct UpdateServer { }
+
+
+        //        public struct PlayerTeleport
+        //        {
+        //            public Vector2 ToLocation { get; set; }
+        //        }
+
+
+        //        public struct ConnectionRequestReceived
+        //        {
+        //            public string Version { get; set; }
+        //        }
+
+        //        public struct DisconnectReceived
+        //        {
+        //            public string Content { get; set; }
+
+        //            public string[] Lines { get; set; }
+        //        }
+
+
+        ////        public struct DatabaseInitialise
+        ////        {
+        ////            public System.Data.Entity.DbModelBuilder Builder { get; set; }
+        ////        }
+
+        //        public struct StateUpdateReceived
+        //        {
+        //            public byte FlagsA { get; set; }
+
+        //            public byte FlagsB { get; set; }
+
+        //            public byte SelectedItemIndex { get; set; }
+
+        //            public float X { get; set; }
+
+        //            public float Y { get; set; }
+
+        //            public float VX { get; set; }
+
+        //            public float VY { get; set; }
+
+        //            public bool ControlUp
+        //            {
+        //                get { return (FlagsA & 1) != 0; }
+        //                set { SetFlagA(1, value); }
+        //            }
+
+        //            public bool ControlDown
+        //            {
+        //                get { return (FlagsA & 2) != 0; }
+        //                set { SetFlagA(2, value); }
+        //            }
+
+        //            public bool ControlLeft
+        //            {
+        //                get { return (FlagsA & 4) != 0; }
+        //                set { SetFlagA(4, value); }
+        //            }
+
+        //            public bool ControlRight
+        //            {
+        //                get { return (FlagsA & 8) != 0; }
+        //                set { SetFlagA(8, value); }
+        //            }
+
+        //            public bool ControlJump
+        //            {
+        //                get { return (FlagsA & 16) != 0; }
+        //                set { SetFlagA(16, value); }
+        //            }
+
+        //            public bool ControlUseItem
+        //            {
+        //                get { return (FlagsA & 32) != 0; }
+        //                set { SetFlagA(32, value); }
+        //            }
+
+        //            public int Direction
+        //            {
+        //                get { return ((FlagsA & 64) != 0) ? 1 : -1; }
+        //                set { SetFlagA(64, value == 1); }
+        //            }
+
+        //            public bool Pulley
+        //            {
+        //                get { return (FlagsB & 1) != 0; }
+        //                set { SetFlagB(1, value); }
+        //            }
+
+        //            public byte PulleyDirection
+        //            {
+        //                get { return (byte)(((FlagsB & 2) != 0) ? 2 : 1); }
+        //                set { SetFlagB(2, value == 2); }
+        //            }
+
+        //            public bool HasVelocity
+        //            {
+        //                get { return (FlagsB & 4) != 0; }
+        //                set { SetFlagB(4, value); }
+        //            }
+
+        //            internal void SetFlagA(byte f, bool value)
+        //            {
+        //                if (value)
+        //                    FlagsA |= f;
+        //                else
+        //                    FlagsA &= (byte)~f;
+        //            }
+
+        //            internal void SetFlagB(byte f, bool value)
+        //            {
+        //                if (value)
+        //                    FlagsB |= f;
+        //                else
+        //                    FlagsB &= (byte)~f;
+        //            }
+
+        //#if Full_API
+        //            public void ApplyKeys(Player player)
+        //            {
+        //                player.controlUp = ControlUp;
+        //                player.controlDown = ControlDown;
+        //                player.controlLeft = ControlLeft;
+        //                player.controlRight = ControlRight;
+        //                player.controlJump = ControlJump;
+        //                player.controlUseItem = ControlUseItem;
+        //            }
+
+        //            public void ApplyParams(Player player)
+        //            {
+        //                player.selectedItem = SelectedItemIndex;
+        //                player.direction = Direction;
+        //                player.position = new Vector2(X, Y);
+
+        //                if (HasVelocity)
+        //                    player.velocity = new Vector2(VX, VY);
+
+        //                player.pulley = Pulley;
+        //                player.pulleyDir = PulleyDirection;
+        //            }
+        //#endif
+
+        //            public void Parse(byte[] buf, int at)
+        //            {
+        //                FlagsA = buf[at++];
+        //                FlagsB = buf[at++];
+
+        //                SelectedItemIndex = buf[at++];
+
+        //                X = BitConverter.ToSingle(buf, at);
+        //                at += 4;
+        //                Y = BitConverter.ToSingle(buf, at);
+        //                at += 4;
+        //                VX = BitConverter.ToSingle(buf, at);
+        //                at += 4;
+        //                VY = BitConverter.ToSingle(buf, at);
+        //            }
+        //        }
+
+        //        public struct InventoryItemReceived
+        //        {
+        //            public int InventorySlot { get; set; }
+
+        //            public int Amount { get; set; }
+
+        //            public string Name { get; set; }
+
+        //            public int Prefix { get; set; }
+
+        //            public int NetID { get; set; }
+
+        //#if Full_API
+        //            public Item Item { get; set; }
+        //#endif
+
+        //            public void SetItem()
+        //            {
+        //#if Full_API
+        //                Item = new Item();
+        //                Item.netDefaults(NetID);
+        //                Item.stack = Amount;
+        //                Item.Prefix(Prefix);
+        //#endif
+        //            }
+        //        }
+
+        //        public struct ObituaryReceived
+        //        {
+        //            public int Direction { get; set; }
+
+        //            public int Damage { get; set; }
+
+        //            public byte PvpFlag { get; set; }
+
+        //            public string Obituary { get; set; }
+        //        }
+
+        //        public struct PvpSettingReceived
+        //        {
+        //            public bool PvpFlag { get; set; }
+        //        }
+
+        //        public struct PartySettingReceived
+        //        {
+        //            public byte Party { get; set; }
+        //        }
+
+
+
+
+
+
+        //        public struct Explosion
+        //        {
+        //#if Full_API
+        //            public Projectile Source { get; set; }
+        //#endif
+        //        }
+
+
+
+
+
+
+
+
+        //        public struct WorldLoaded
+        //        {
+        //            public int Width { get; set; }
+
+        //            public int Height { get; set; }
+        //        }
+
+
+        //        public struct NpcCreation
+        //        {
+        //            public int X { get; set; }
+
+        //            public int Y { get; set; }
+
+        //            public string Name { get; set; }
+
+        //#if Full_API
+        //            public NPC CreatedNpc { get; set; }
+        //#endif
+        //        }
+
+        //        public struct PlayerTriggeredEvent
+        //        {
+        //            public int X { get; set; }
+
+        //            public int Y { get; set; }
+
+        //            public WorldEventType Type { get; set; }
+
+        //            public string Name { get; set; }
+        //        }
     }
 
     public enum TileSquareForEachResult

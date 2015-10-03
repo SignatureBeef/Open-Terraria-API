@@ -280,10 +280,12 @@ namespace OTA.Callbacks
         /// </summary>
         public static void OnProgramFinished()
         {
+#if ENABLE_NAT
             while (NAT.ShuttingDown)
             {
                 System.Threading.Thread.Sleep(50);
             }
+#endif
 
             var ctx = new HookContext()
             {
@@ -327,7 +329,7 @@ namespace OTA.Callbacks
 
         public static void OnServerTick()
         {
-            #if Full_API
+#if Full_API
             if (Terraria.Netplay.anyClients)
             {
                 for (var i = 0; i < Terraria.Netplay.Clients.Length; i++)
@@ -344,7 +346,7 @@ namespace OTA.Callbacks
             }
 
             if (ServerTick != null) ServerTick(null, EventArgs.Empty);
-            #endif
+#endif
         }
 
         //        private static DateTime? _lastUpdate;
@@ -546,6 +548,7 @@ namespace OTA.Callbacks
             return ctx.Result == HookResult.DEFAULT; //Continue on
         }
 
+#if CLIENT
         /// <summary>
         /// The first call from Terraria.Main.Draw
         /// </summary>
@@ -629,19 +632,20 @@ namespace OTA.Callbacks
 
             HookPoints.UpdateClient.Invoke(ref ctx, ref args);
         }
+#endif
 
         internal static void ResetTileArray()
         {
-            #if Full_API
+#if Full_API
             ResetTileArray(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
-            #endif
+#endif
         }
 
         internal static void ResetTileArray(int x, int y)
         {
-            #if Full_API && TileReady
+#if Full_API && TileReady
             Terraria.Main.tile = new OTA.Memory.TileCollection(x, y);
-            #endif
+#endif
         }
     }
 }
