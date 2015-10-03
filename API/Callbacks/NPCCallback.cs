@@ -33,7 +33,7 @@ namespace OTA.Callbacks
         public static bool CanSpawnNPC(int x, int y, int type, int start = 0)
         {
             var ctx = new HookContext();
-            var args = new HookArgs.NPCSpawn()
+            var args = new HookArgs.NpcSpawn()
             {
                 X = x,
                 Y = y,
@@ -41,7 +41,7 @@ namespace OTA.Callbacks
                 Start = start
             };
 
-            HookPoints.NPCSpawn.Invoke(ref ctx, ref args);
+            HookPoints.NpcSpawn.Invoke(ref ctx, ref args);
 
             return ctx.Result == HookResult.DEFAULT;
         }
@@ -54,13 +54,13 @@ namespace OTA.Callbacks
         public static void OnInvasionNPCSpawn(int x, int y)
         {
             var ctx = new HookContext();
-            var args = new HookArgs.InvasionNPCSpawn()
+            var args = new HookArgs.InvasionNpcSpawn()
             {
                 X = x,
                 Y = y
             };
 
-            HookPoints.InvasionNPCSpawn.Invoke(ref ctx, ref args);
+            HookPoints.InvasionNpcSpawn.Invoke(ref ctx, ref args);
 
 //            return ctx.Result == HookResult.DEFAULT;
         }
@@ -76,13 +76,13 @@ namespace OTA.Callbacks
             {
                 Sender = npc
             };
-            var args = new HookArgs.NPCKilled()
+            var args = new HookArgs.NpcKilled()
             {
                 Type = npc.type,
                 NetId = npc.netID
             };
 
-            HookPoints.NPCKilled.Invoke(ref ctx, ref args);
+            HookPoints.NpcKilled.Invoke(ref ctx, ref args);
         }
         
         #else

@@ -279,10 +279,10 @@ namespace OTA.Patcher
                                     {
                                         var mr = ins.Operand as MemberReference;
 
-                                        if (setCall != null && mr.Name == "Set" && mr.DeclaringType is ArrayType)
-                                        {
-                                            var asd = "";
-                                        }
+                                        //if (setCall != null && mr.Name == "Set" && mr.DeclaringType is ArrayType)
+                                        //{
+                                        //    var asd = "";
+                                        //}
 
                                         if (setCall != null && mr.Name == "Set" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.Name == "MemTile")
                                         {
