@@ -47,12 +47,12 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.ChestOpenReceived> ChestOpenReceived;
         public static readonly HookPoint<HookArgs.DeathMessage> DeathMessage;
         public static readonly HookPoint<HookArgs.DoorStateChanged> DoorStateChanged;
-        public static readonly HookPoint<HookArgs.InvasionNPCSpawn> InvasionNPCSpawn;
+        public static readonly HookPoint<HookArgs.InvasionNpcSpawn> InvasionNpcSpawn;
         public static readonly HookPoint<HookArgs.InvasionWarning> InvasionWarning;
         public static readonly HookPoint<HookArgs.LiquidFlowReceived> LiquidFlowReceived;
         public static readonly HookPoint<HookArgs.NpcHurt> NpcHurt;
-        public static readonly HookPoint<HookArgs.NPCKilled> NPCKilled;
-        public static readonly HookPoint<HookArgs.NPCSpawn> NPCSpawn;
+        public static readonly HookPoint<HookArgs.NpcKilled> NpcKilled;
+        public static readonly HookPoint<HookArgs.NpcSpawn> NpcSpawn;
         public static readonly HookPoint<HookArgs.PlayerChat> PlayerChat;
         public static readonly HookPoint<HookArgs.PlayerDataReceived> PlayerDataReceived;
         public static readonly HookPoint<HookArgs.PlayerHurt> PlayerHurt;
@@ -123,12 +123,12 @@ namespace OTA.Plugin
             ChestOpenReceived = new HookPoint<HookArgs.ChestOpenReceived>("chest-open-received");
             DeathMessage = new HookPoint<HookArgs.DeathMessage>("death-message");
             DoorStateChanged = new HookPoint<HookArgs.DoorStateChanged>("door-state-changed");
-            InvasionNPCSpawn = new HookPoint<HookArgs.InvasionNPCSpawn>("invasion-npc-spawn");
+            InvasionNpcSpawn = new HookPoint<HookArgs.InvasionNpcSpawn>("invasion-npc-spawn");
             InvasionWarning = new HookPoint<HookArgs.InvasionWarning>("invasion-warning");
             LiquidFlowReceived = new HookPoint<HookArgs.LiquidFlowReceived>("liquid-flow-received");
             NpcHurt = new HookPoint<HookArgs.NpcHurt>("npc-hurt");
-            NPCKilled = new HookPoint<HookArgs.NPCKilled>("npc-killed");
-            NPCSpawn = new HookPoint<HookArgs.NPCSpawn>("npc-spawn");
+            NpcKilled = new HookPoint<HookArgs.NpcKilled>("npc-killed");
+            NpcSpawn = new HookPoint<HookArgs.NpcSpawn>("npc-spawn");
             PlayerChat = new HookPoint<HookArgs.PlayerChat>("player-chat");
             PlayerDataReceived = new HookPoint<HookArgs.PlayerDataReceived>("player-data-received");
             PlayerHurt = new HookPoint<HookArgs.PlayerHurt>("player-hurt");
@@ -293,7 +293,7 @@ namespace OTA.Plugin
             public int Other { get; set; }
         }
 
-        public struct InvasionNPCSpawn
+        public struct InvasionNpcSpawn
         {
             public int X { get; set; }
             public int Y { get; set; }
@@ -330,13 +330,13 @@ namespace OTA.Plugin
             public bool NoEffect { get; set; }
         }
 
-        public struct NPCKilled
+        public struct NpcKilled
         {
             public int Type { get; set; }
             public int NetId { get; set; }
         }
 
-        public struct NPCSpawn
+        public struct NpcSpawn
         {
             public int X { get; set; }
             public int Y { get; set; }
@@ -728,9 +728,9 @@ namespace OTA.Plugin
 
             public int Size { get; set; }
 
-            public byte[] readBuffer;
-            public int start;
-            public int applied;
+            public byte[] ReadBuffer;
+            public int Start;
+            public int Applied;
 
             //            public void ForEach(object state, TileSquareForEachFunc func)
             //            {

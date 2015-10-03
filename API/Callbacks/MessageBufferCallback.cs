@@ -465,7 +465,7 @@ namespace OTA.Callbacks
                 X = startX,
                 Y = startY,
                 Size = size,
-                readBuffer = buffer.readBuffer
+                ReadBuffer = buffer.readBuffer
                 //                start = num
             };
 
