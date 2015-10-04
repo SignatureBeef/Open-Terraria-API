@@ -96,31 +96,13 @@ namespace OTA.Callbacks
 
             AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) =>
             {
-                var ex = e.ExceptionObject  as Exception;
+                var ex = e.ExceptionObject as Exception;
                 if (ex != null)
                     ProgramLog.Log(ex, "Unhandled exception");
                 else
                     ProgramLog.Error.Log("Unhandled exception encountered");
             };
         }
-
-        /// <summary>
-        /// The callback to update the console with Terraria.Main.statusText
-        /// </summary>
-        public static Action StatusTextChange;
-
-        /// <summary>
-        /// Game UpdateServer event. Does not occur without players.
-        /// </summary>
-        public static event EventHandler UpdateServer;
-
-        /// <summary>
-        /// Server tick event. Occurs without players.
-        /// </summary>
-        public static event EventHandler ServerTick;
-
-        //public static bool StartEclipse;
-        //public static bool StartBloodMoon;
 
         /// <summary>
         /// The startup call (non vanilla) for both the client and server
@@ -175,10 +157,10 @@ namespace OTA.Callbacks
             //Load plugins
             PluginManager.LoadPlugins();
 
-//            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
-//                .DefinedTypes
-//                .Where(x => x.Name == "OTAContext")
-//                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
+            //            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
+            //                .DefinedTypes
+            //                .Where(x => x.Name == "OTAContext")
+            //                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
             OTA.Data.Storage.IsAvailable = OTA.Data.OTAContext.HasConnection();
 
             if (OTA.Data.Storage.IsAvailable) ProgramLog.Admin.Log("Entity framework has a registered connection.");
@@ -189,10 +171,10 @@ namespace OTA.Callbacks
                 using (var ctx = new OTA.Data.OTAContext())
                 {
                     ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
-                        {
-                            Username = "Test",
-                            Password = "Testing"
-                        });
+                    {
+                        Username = "Test",
+                        Password = "Testing"
+                    });
 
                     ctx.SaveChanges();
                 }
@@ -232,15 +214,15 @@ namespace OTA.Callbacks
                         var data = File.ReadAllBytes(file);
                         AppDomain.CurrentDomain.Load(data);
 
-//                        if (asm.GetName().Name == "EntityFramework")
-//                        {
-////                            OTA.Data.Storage.IsAvailable = true;
-////                            OTA.Data.Storage.IsAvailable = Data.OTAContext.HasConnection();
-//                            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
-//                                .DefinedTypes
-//                                .Where(x => x.Name == "OTAContext")
-//                                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
-//                        }
+                        //                        if (asm.GetName().Name == "EntityFramework")
+                        //                        {
+                        ////                            OTA.Data.Storage.IsAvailable = true;
+                        ////                            OTA.Data.Storage.IsAvailable = Data.OTAContext.HasConnection();
+                        //                            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
+                        //                                .DefinedTypes
+                        //                                .Where(x => x.Name == "OTAContext")
+                        //                                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
+                        //                        }
                     }
                     catch (Exception e)
                     {
@@ -345,7 +327,9 @@ namespace OTA.Callbacks
                 }
             }
 
-            if (ServerTick != null) ServerTick(null, EventArgs.Empty);
+            var ctx = HookContext.Empty;
+            var args = HookArgs.ServerTick.Empty;
+            HookPoints.ServerTick.Invoke(ref ctx, ref args);
 #endif
         }
 
@@ -360,19 +344,20 @@ namespace OTA.Callbacks
             ///* Check tolled tasks */
             //Tasks.CheckTasks();
 
-            if (UpdateServer != null)
-                UpdateServer(null, EventArgs.Empty);
+            var ctx = HookContext.Empty;
+            var args = HookArgs.ServerUpdate.Empty;
+            HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
 
-//            if (_lastUpdate != null)
-//            {
-//                var diff = (DateTime.Now - _lastUpdate.Value);
-//                if (diff.TotalMilliseconds > 50)
-//                {
-//                    ProgramLog.Debug.Log("Update took {0}ms", diff.TotalMilliseconds);
-//                }
-//            }
-//            _lastUpdate = DateTime.Now;
-            
+            //            if (_lastUpdate != null)
+            //            {
+            //                var diff = (DateTime.Now - _lastUpdate.Value);
+            //                if (diff.TotalMilliseconds > 50)
+            //                {
+            //                    ProgramLog.Debug.Log("Update took {0}ms", diff.TotalMilliseconds);
+            //                }
+            //            }
+            //            _lastUpdate = DateTime.Now;
+
             //var ctx = new HookContext()
             //{
             //    Sender = HookContext.ConsoleSender
@@ -380,23 +365,23 @@ namespace OTA.Callbacks
             //var args = new HookArgs.UpdateServer();
             //HookPoints.UpdateServer.Invoke(ref ctx, ref args);
 
-//#if Full_API
-//            try
-//            {
-//                if (MessageBufferCallback.PlayerCommands.Count > 0)
-//                {
-//                    PlayerCommandReceived cmd;
-//                    if (MessageBufferCallback.PlayerCommands.TryDequeue(out cmd))
-//                    {
-//                        MessageBufferCallback.ProcessQueuedPlayerCommand(cmd);
-//                    }
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                ProgramLog.Log(e, "Exception from user chat");
-//            }
-//#endif
+            //#if Full_API
+            //            try
+            //            {
+            //                if (MessageBufferCallback.PlayerCommands.Count > 0)
+            //                {
+            //                    PlayerCommandReceived cmd;
+            //                    if (MessageBufferCallback.PlayerCommands.TryDequeue(out cmd))
+            //                    {
+            //                        MessageBufferCallback.ProcessQueuedPlayerCommand(cmd);
+            //                    }
+            //                }
+            //            }
+            //            catch (Exception e)
+            //            {
+            //                ProgramLog.Log(e, "Exception from user chat");
+            //            }
+            //#endif
         }
 
         /// <summary>
@@ -496,38 +481,18 @@ namespace OTA.Callbacks
                 Tasks.CheckTasks(); //This still may not be the best place for this.
 
 #if Full_API
+                //Since the patcher nurfs this, we implement it here for full and easy control over this mess
                 if (Terraria.Main.oldStatusText != Terraria.Main.statusText)
                 {
-                    if (StatusTextChange != null)
-                        StatusTextChange();
-                    else
+                    var ctx = HookContext.Empty;
+                    var args = HookArgs.StatusTextChange.Empty;
+                    HookPoints.StatusTextChange.Invoke(ref ctx, ref args);
+                    if (ctx.Result == HookResult.DEFAULT)
                     {
                         Terraria.Main.oldStatusText = Terraria.Main.statusText;
                         ProgramLog.Log(Terraria.Main.statusText);
                     }
-                    /*var ctx = new HookContext()
-                {
-                    Sender = HookContext.ConsoleSender
-                };
-                var args = new HookArgs.StatusTextChanged() { };
-                HookPoints.StatusTextChanged.Invoke(ref ctx, ref args);
-
-                if (ctx.Result == HookResult.DEFAULT)
-                {
-                    Terraria.Main.oldStatusText = Terraria.Main.statusText;
-                    Tools.WriteLine(Terraria.Main.statusText);
-                }*/
-                    //_textTimeout = 0;
                 }
-
-                //else if (Terraria.Main.oldStatusText == String.Empty && Terraria.Main.statusText == String.Empty)
-                //{
-                //    if (_textTimeout++ > 1000)
-                //    {
-                //        _textTimeout = 0;
-                //        Terraria.Main.statusText = String.Empty;
-                //    }
-                //}
 #endif
             }
             catch (Exception e)

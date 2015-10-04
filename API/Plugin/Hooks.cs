@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Http.Metadata.Providers;
 using OTA.Sockets;
 
 #if Full_API
@@ -38,6 +39,14 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.PlayerPreGreeting> PlayerPreGreeting;
         public static readonly HookPoint<HookArgs.ServerStateChange> ServerStateChange;
         public static readonly HookPoint<HookArgs.ServerPassReceived> ServerPassReceived;
+        /// <summary>
+        /// Server tick event. Occurs without players.
+        /// </summary>
+        public static readonly HookPoint<HookArgs.ServerTick> ServerTick;
+        /// <summary>
+        /// Game UpdateServer event. Does not occur without players.
+        /// </summary>
+        public static readonly HookPoint<HookArgs.ServerUpdate> ServerUpdate;
         public static readonly HookPoint<HookArgs.StartCommandProcessing> StartCommandProcessing;
         public static readonly HookPoint<HookArgs.WorldAutoSave> WorldAutoSave;
 #endif
@@ -67,6 +76,10 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.SendNetMessage> SendNetMessage;
         public static readonly HookPoint<HookArgs.SignTextGet> SignTextGet;
         public static readonly HookPoint<HookArgs.SignTextSet> SignTextSet;
+        /// <summary>
+        /// The callback to update the console with Terraria.Main.statusText
+        /// </summary>
+        public static readonly HookPoint<HookArgs.StatusTextChange> StatusTextChange;
         public static readonly HookPoint<HookArgs.TileSquareReceived> TileSquareReceived;
 #endif
 
@@ -114,6 +127,8 @@ namespace OTA.Plugin
             PlayerPreGreeting = new HookPoint<HookArgs.PlayerPreGreeting>("player-pre-greeting");
             ServerStateChange = new HookPoint<HookArgs.ServerStateChange>("server-state-change");
             ServerPassReceived = new HookPoint<HookArgs.ServerPassReceived>("server-pass-received");
+            ServerTick = new HookPoint<HookArgs.ServerTick>("server-tick");
+            ServerUpdate = new HookPoint<HookArgs.ServerUpdate>("server-update");
             StartCommandProcessing = new HookPoint<HookArgs.StartCommandProcessing>("start-command-processing");
             WorldAutoSave = new HookPoint<HookArgs.WorldAutoSave>("world-auto-save");
 #endif
@@ -143,7 +158,8 @@ namespace OTA.Plugin
             SendNetMessage = new HookPoint<HookArgs.SendNetMessage>("send-net-message");
             SignTextGet = new HookPoint<HookArgs.SignTextGet>("sign-text-get");
             SignTextSet = new HookPoint<HookArgs.SignTextSet>("sign-text-set");
-            TileSquareReceived = new HookPoint<HookArgs.TileSquareReceived>("tile-square-received");
+            StatusTextChange = new HookPoint<HookArgs.StatusTextChange>("status-text-changed");
+        TileSquareReceived = new HookPoint<HookArgs.TileSquareReceived>("tile-square-received");
 #endif
         }
     }
@@ -156,13 +172,13 @@ namespace OTA.Plugin
 
     public static class HookArgs
     {
-        #if CLIENT
+#if CLIENT
         public struct Draw { public MethodState State { get; set; } }
         public struct Update { public MethodState State { get; set; } }
         public struct UpdateClient { public MethodState State { get; set; } }
-        #endif
+#endif
 
-        #if SERVER
+#if SERVER
         public struct AddBan
         {
             public string RemoteAddress { get; set; }
@@ -244,14 +260,24 @@ namespace OTA.Plugin
             public string Password { get; set; }
         }
 
+        public struct ServerTick
+        {
+            public static readonly ServerTick Empty = new ServerTick();
+        }
+
+        public struct ServerUpdate
+        {
+            public static readonly ServerUpdate Empty = new ServerUpdate();
+        }
+
         public struct StartCommandProcessing
         {
         }
 
         public struct WorldAutoSave { }
-        #endif
+#endif
 
-        #if CLIENT || SERVER
+#if CLIENT || SERVER
         public struct ChestBreakReceived
         {
             public int X { get; set; }
@@ -720,6 +746,11 @@ namespace OTA.Plugin
 #endif
         }
 
+        public struct StatusTextChange
+        {
+            public static readonly StatusTextChange Empty = new StatusTextChange();
+        }
+
         public struct TileSquareReceived
         {
             public int X { get; set; }
@@ -800,328 +831,7 @@ namespace OTA.Plugin
             //                }
             //            }
         }
-        #endif
-
-        //        //public struct StatusTextChanged { }
-        //        //{
-        //        //    public string Old { get; set; }
-        //        //    public string New { get; set; }
-        //        //}
-
-        //        //        public struct StartDefaultServer
-        //        //        {
-        //        //
-        //        //        }
-
-
-        //        public struct WorldRequestMessage
-        //        {
-        //            public int SpawnX { get; set; }
-
-        //            public int SpawnY { get; set; }
-        //        }
-
-        //        public struct UnkownReceivedPacket
-        //        {
-        //#if Full_API
-        //            public ClientConnection Connection { get; set; }
-        //#endif
-        //            public byte[] ReadBuffer { get; set; }
-
-        //            public int Start { get; set; }
-
-        //            public int Length { get; set; }
-        //        }
-
-        //        public struct UnkownSendPacket
-        //        {
-        //#if Full_API
-        //            public NetMessage Message { get; set; }
-        //#endif
-        //            public int PacketId { get; set; }
-
-        //            public int RemoteClient { get; set; }
-
-        //            public int IgnoreClient { get; set; }
-
-        //            public string Text { get; set; }
-
-        //            public int Number { get; set; }
-
-        //            public float Number2 { get; set; }
-
-        //            public float Number3 { get; set; }
-
-        //            public float Number4 { get; set; }
-
-        //            public int Number5 { get; set; }
-        //        }
-
-        //        public struct WorldGeneration
-        //        {
-
-        //        }
-
-
-        //        //public struct UpdateServer { }
-
-
-        //        public struct PlayerTeleport
-        //        {
-        //            public Vector2 ToLocation { get; set; }
-        //        }
-
-
-        //        public struct ConnectionRequestReceived
-        //        {
-        //            public string Version { get; set; }
-        //        }
-
-        //        public struct DisconnectReceived
-        //        {
-        //            public string Content { get; set; }
-
-        //            public string[] Lines { get; set; }
-        //        }
-
-
-        ////        public struct DatabaseInitialise
-        ////        {
-        ////            public System.Data.Entity.DbModelBuilder Builder { get; set; }
-        ////        }
-
-        //        public struct StateUpdateReceived
-        //        {
-        //            public byte FlagsA { get; set; }
-
-        //            public byte FlagsB { get; set; }
-
-        //            public byte SelectedItemIndex { get; set; }
-
-        //            public float X { get; set; }
-
-        //            public float Y { get; set; }
-
-        //            public float VX { get; set; }
-
-        //            public float VY { get; set; }
-
-        //            public bool ControlUp
-        //            {
-        //                get { return (FlagsA & 1) != 0; }
-        //                set { SetFlagA(1, value); }
-        //            }
-
-        //            public bool ControlDown
-        //            {
-        //                get { return (FlagsA & 2) != 0; }
-        //                set { SetFlagA(2, value); }
-        //            }
-
-        //            public bool ControlLeft
-        //            {
-        //                get { return (FlagsA & 4) != 0; }
-        //                set { SetFlagA(4, value); }
-        //            }
-
-        //            public bool ControlRight
-        //            {
-        //                get { return (FlagsA & 8) != 0; }
-        //                set { SetFlagA(8, value); }
-        //            }
-
-        //            public bool ControlJump
-        //            {
-        //                get { return (FlagsA & 16) != 0; }
-        //                set { SetFlagA(16, value); }
-        //            }
-
-        //            public bool ControlUseItem
-        //            {
-        //                get { return (FlagsA & 32) != 0; }
-        //                set { SetFlagA(32, value); }
-        //            }
-
-        //            public int Direction
-        //            {
-        //                get { return ((FlagsA & 64) != 0) ? 1 : -1; }
-        //                set { SetFlagA(64, value == 1); }
-        //            }
-
-        //            public bool Pulley
-        //            {
-        //                get { return (FlagsB & 1) != 0; }
-        //                set { SetFlagB(1, value); }
-        //            }
-
-        //            public byte PulleyDirection
-        //            {
-        //                get { return (byte)(((FlagsB & 2) != 0) ? 2 : 1); }
-        //                set { SetFlagB(2, value == 2); }
-        //            }
-
-        //            public bool HasVelocity
-        //            {
-        //                get { return (FlagsB & 4) != 0; }
-        //                set { SetFlagB(4, value); }
-        //            }
-
-        //            internal void SetFlagA(byte f, bool value)
-        //            {
-        //                if (value)
-        //                    FlagsA |= f;
-        //                else
-        //                    FlagsA &= (byte)~f;
-        //            }
-
-        //            internal void SetFlagB(byte f, bool value)
-        //            {
-        //                if (value)
-        //                    FlagsB |= f;
-        //                else
-        //                    FlagsB &= (byte)~f;
-        //            }
-
-        //#if Full_API
-        //            public void ApplyKeys(Player player)
-        //            {
-        //                player.controlUp = ControlUp;
-        //                player.controlDown = ControlDown;
-        //                player.controlLeft = ControlLeft;
-        //                player.controlRight = ControlRight;
-        //                player.controlJump = ControlJump;
-        //                player.controlUseItem = ControlUseItem;
-        //            }
-
-        //            public void ApplyParams(Player player)
-        //            {
-        //                player.selectedItem = SelectedItemIndex;
-        //                player.direction = Direction;
-        //                player.position = new Vector2(X, Y);
-
-        //                if (HasVelocity)
-        //                    player.velocity = new Vector2(VX, VY);
-
-        //                player.pulley = Pulley;
-        //                player.pulleyDir = PulleyDirection;
-        //            }
-        //#endif
-
-        //            public void Parse(byte[] buf, int at)
-        //            {
-        //                FlagsA = buf[at++];
-        //                FlagsB = buf[at++];
-
-        //                SelectedItemIndex = buf[at++];
-
-        //                X = BitConverter.ToSingle(buf, at);
-        //                at += 4;
-        //                Y = BitConverter.ToSingle(buf, at);
-        //                at += 4;
-        //                VX = BitConverter.ToSingle(buf, at);
-        //                at += 4;
-        //                VY = BitConverter.ToSingle(buf, at);
-        //            }
-        //        }
-
-        //        public struct InventoryItemReceived
-        //        {
-        //            public int InventorySlot { get; set; }
-
-        //            public int Amount { get; set; }
-
-        //            public string Name { get; set; }
-
-        //            public int Prefix { get; set; }
-
-        //            public int NetID { get; set; }
-
-        //#if Full_API
-        //            public Item Item { get; set; }
-        //#endif
-
-        //            public void SetItem()
-        //            {
-        //#if Full_API
-        //                Item = new Item();
-        //                Item.netDefaults(NetID);
-        //                Item.stack = Amount;
-        //                Item.Prefix(Prefix);
-        //#endif
-        //            }
-        //        }
-
-        //        public struct ObituaryReceived
-        //        {
-        //            public int Direction { get; set; }
-
-        //            public int Damage { get; set; }
-
-        //            public byte PvpFlag { get; set; }
-
-        //            public string Obituary { get; set; }
-        //        }
-
-        //        public struct PvpSettingReceived
-        //        {
-        //            public bool PvpFlag { get; set; }
-        //        }
-
-        //        public struct PartySettingReceived
-        //        {
-        //            public byte Party { get; set; }
-        //        }
-
-
-
-
-
-
-        //        public struct Explosion
-        //        {
-        //#if Full_API
-        //            public Projectile Source { get; set; }
-        //#endif
-        //        }
-
-
-
-
-
-
-
-
-        //        public struct WorldLoaded
-        //        {
-        //            public int Width { get; set; }
-
-        //            public int Height { get; set; }
-        //        }
-
-
-        //        public struct NpcCreation
-        //        {
-        //            public int X { get; set; }
-
-        //            public int Y { get; set; }
-
-        //            public string Name { get; set; }
-
-        //#if Full_API
-        //            public NPC CreatedNpc { get; set; }
-        //#endif
-        //        }
-
-        //        public struct PlayerTriggeredEvent
-        //        {
-        //            public int X { get; set; }
-
-        //            public int Y { get; set; }
-
-        //            public WorldEventType Type { get; set; }
-
-        //            public string Name { get; set; }
-        //        }
+#endif
     }
 
     public enum TileSquareForEachResult

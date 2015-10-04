@@ -138,7 +138,7 @@ namespace OTA.Plugin
         /// </param>
         /// </summary>
         protected virtual void Initialized(object state)
-        {   
+        {
         }
 
         /// <summary>
@@ -448,14 +448,14 @@ namespace OTA.Plugin
         {
             var result = false;
             var noreturn = false;
-//            var paused = new LinkedList<HookPoint>();
+            //            var paused = new LinkedList<HookPoint>();
             object savedState = null;
 
             lock (HookPoint.editLock)
             {
                 Tools.NotifyAllPlayers("<Server> Reloading plugin " + Name + ", you may experience lag...", Color.White, true);
 
-//                var signal = new ManualResetEvent(false);
+                //                var signal = new ManualResetEvent(false);
 
                 lock (HookPoint.editLock)
                     try
