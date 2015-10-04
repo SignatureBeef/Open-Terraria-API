@@ -346,31 +346,13 @@ namespace OTA.Callbacks
         /// </summary>
         public static void OnUpdateServerEnd()
         {
-            //            Console.WriteLine("SE");
             ///* Check tolled tasks */
             //Tasks.CheckTasks();
 
             var ctx = HookContext.Empty;
             var args = HookArgs.ServerUpdate.End;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
-
-            //            if (_lastUpdate != null)
-            //            {
-            //                var diff = (DateTime.Now - _lastUpdate.Value);
-            //                if (diff.TotalMilliseconds > 50)
-            //                {
-            //                    ProgramLog.Debug.Log("Update took {0}ms", diff.TotalMilliseconds);
-            //                }
-            //            }
-            //            _lastUpdate = DateTime.Now;
-
-            //var ctx = new HookContext()
-            //{
-            //    Sender = HookContext.ConsoleSender
-            //};
-            //var args = new HookArgs.UpdateServer();
-            //HookPoints.UpdateServer.Invoke(ref ctx, ref args);
-
+            
             //#if Full_API
             //            try
             //            {
@@ -393,7 +375,7 @@ namespace OTA.Callbacks
         public static void OnUpdateBegin()
         {
             var ctx = HookContext.Empty;
-            var args = HookArgs.GameUpdate.End;
+            var args = HookArgs.GameUpdate.Begin;
             HookPoints.GameUpdate.Invoke(ref ctx, ref args);
         }
 
