@@ -334,18 +334,24 @@ namespace OTA.Callbacks
         }
 
         //        private static DateTime? _lastUpdate;
+        public static void OnUpdateServerBegin()
+        {
+            var ctx = HookContext.Empty;
+            var args = HookArgs.ServerUpdate.Begin;
+            HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
+        }
 
         /// <summary>
         /// The call from the end of Terraria.Main.UpdateServer
         /// </summary>
-        public static void UpdateServerEnd()
+        public static void OnUpdateServerEnd()
         {
             //            Console.WriteLine("SE");
             ///* Check tolled tasks */
             //Tasks.CheckTasks();
 
             var ctx = HookContext.Empty;
-            var args = HookArgs.ServerUpdate.Empty;
+            var args = HookArgs.ServerUpdate.End;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
 
             //            if (_lastUpdate != null)
@@ -382,6 +388,20 @@ namespace OTA.Callbacks
             //                ProgramLog.Log(e, "Exception from user chat");
             //            }
             //#endif
+        }
+
+        public static void OnUpdateBegin()
+        {
+            var ctx = HookContext.Empty;
+            var args = HookArgs.GameUpdate.End;
+            HookPoints.GameUpdate.Invoke(ref ctx, ref args);
+        }
+
+        public static void OnUpdateEnd()
+        {
+            var ctx = HookContext.Empty;
+            var args = HookArgs.GameUpdate.End;
+            HookPoints.GameUpdate.Invoke(ref ctx, ref args);
         }
 
         /// <summary>

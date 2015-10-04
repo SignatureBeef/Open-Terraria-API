@@ -1008,17 +1008,17 @@ namespace OTA.Patcher
         //            il.Remove(target);
         //        }
 
-        /// <summary>
-        /// Hooks to the end of Terraria.Main.UpdateServer so we can call extra functionalities in OTA/plugins 
-        /// </summary>
-        public void HookUpdateServer()
-        {
-            var method = Terraria.Main.Methods.Single(x => x.Name == "UpdateServer");
-            var callback = API.MainCallback.Methods.First(m => m.Name == "UpdateServerEnd");
+        ///// <summary>
+        ///// Hooks to the end of Terraria.Main.UpdateServer so we can call extra functionalities in OTA/plugins 
+        ///// </summary>
+        //public void HookUpdateServer()
+        //{
+        //    var method = Terraria.Main.Methods.Single(x => x.Name == "UpdateServer");
+        //    var callback = API.MainCallback.Methods.First(m => m.Name == "UpdateServerEnd");
 
-            var il = method.Body.GetILProcessor();
-            il.InsertBefore(method.Body.Instructions.Last(), il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
-        }
+        //    var il = method.Body.GetILProcessor();
+        //    il.InsertBefore(method.Body.Instructions.Last(), il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
+        //}
 
         /// <summary>
         /// Hooks into the XNA Game.Initialize, so plugins can utilise

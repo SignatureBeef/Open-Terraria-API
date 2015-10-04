@@ -56,6 +56,7 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.ChestOpenReceived> ChestOpenReceived;
         public static readonly HookPoint<HookArgs.DeathMessage> DeathMessage;
         public static readonly HookPoint<HookArgs.DoorStateChanged> DoorStateChanged;
+        public static readonly HookPoint<HookArgs.GameUpdate> GameUpdate;
         public static readonly HookPoint<HookArgs.InvasionNpcSpawn> InvasionNpcSpawn;
         public static readonly HookPoint<HookArgs.InvasionWarning> InvasionWarning;
         public static readonly HookPoint<HookArgs.LiquidFlowReceived> LiquidFlowReceived;
@@ -138,6 +139,7 @@ namespace OTA.Plugin
             ChestOpenReceived = new HookPoint<HookArgs.ChestOpenReceived>("chest-open-received");
             DeathMessage = new HookPoint<HookArgs.DeathMessage>("death-message");
             DoorStateChanged = new HookPoint<HookArgs.DoorStateChanged>("door-state-changed");
+            GameUpdate = new HookPoint<HookArgs.GameUpdate>("game-update");
             InvasionNpcSpawn = new HookPoint<HookArgs.InvasionNpcSpawn>("invasion-npc-spawn");
             InvasionWarning = new HookPoint<HookArgs.InvasionWarning>("invasion-warning");
             LiquidFlowReceived = new HookPoint<HookArgs.LiquidFlowReceived>("liquid-flow-received");
@@ -159,7 +161,7 @@ namespace OTA.Plugin
             SignTextGet = new HookPoint<HookArgs.SignTextGet>("sign-text-get");
             SignTextSet = new HookPoint<HookArgs.SignTextSet>("sign-text-set");
             StatusTextChange = new HookPoint<HookArgs.StatusTextChange>("status-text-changed");
-        TileSquareReceived = new HookPoint<HookArgs.TileSquareReceived>("tile-square-received");
+            TileSquareReceived = new HookPoint<HookArgs.TileSquareReceived>("tile-square-received");
 #endif
         }
     }
@@ -267,7 +269,10 @@ namespace OTA.Plugin
 
         public struct ServerUpdate
         {
-            public static readonly ServerUpdate Empty = new ServerUpdate();
+            public static readonly ServerUpdate Begin = new ServerUpdate() { State = MethodState.Begin };
+            public static readonly ServerUpdate End = new ServerUpdate() { State = MethodState.Begin };
+
+            public MethodState State { get; set; }
         }
 
         public struct StartCommandProcessing
@@ -317,6 +322,14 @@ namespace OTA.Plugin
             public int NPC { get; set; }
             public int Projectile { get; set; }
             public int Other { get; set; }
+        }
+
+        public struct GameUpdate
+        {
+            public static readonly GameUpdate Begin = new GameUpdate() { State = MethodState.Begin };
+            public static readonly GameUpdate End = new GameUpdate() { State = MethodState.Begin };
+
+            public MethodState State { get; set; }
         }
 
         public struct InvasionNpcSpawn

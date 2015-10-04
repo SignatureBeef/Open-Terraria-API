@@ -456,15 +456,70 @@ namespace OTA.Patcher
         //    _asm.MainModule.Architecture = TargetArchitecture.AMD64; //Any CPU
         //}
 
+        /// <summary>
+        /// Wraps Terraria.Main.Update with calls to OTA.Callbacks.MainCallback.OnUpdate[Begin|End]
+        /// </summary>
         [ServerHook]
-        void GetDataTests()
+        void HookUpdate()
         {
-            //Attempt to copy GetData, swap it to static and add all locals as a parameter
+            //Grab the Update method
+            var updateServer = Terraria.Main.Methods.Single(x => x.Name == "Update");
+            //Wrap it with the API calls
+            updateServer.WrapBeginEnd(API.MainCallback, "OnUpdate");
+        }
+
+        /// <summary>
+        /// Wraps Terraria.Main.UpdateServer with calls to OTA.Callbacks.MainCallback.OnUpdateServer[Begin|End]
+        /// </summary>
+        [ServerHook]
+        void HookUpdateServer()
+        {
+            //Grab the UpdateServer method
+            var updateServer = Terraria.Main.Methods.Single(x => x.Name == "UpdateServer");
+            //Wrap it with the API calls
+            updateServer.WrapBeginEnd(API.MainCallback, "OnUpdateServer");
         }
     }
 
     static class CecilMethodExtensions
     {
+        /// <summary>
+        /// Wraps the method after finding the Begin/End variant callbacks of methodName
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="typeDefinition"></param>
+        /// <param name="methodName"></param>
+        public static void WrapBeginEnd(this MethodDefinition method, TypeDefinition typeDefinition, string methodName)
+        {
+            var cbkBegin = typeDefinition.Methods.Single(x => x.Name == methodName + "Begin");
+            var cbkEnd = typeDefinition.Methods.Single(x => x.Name == methodName + "End");
+
+            method.Wrap(cbkBegin, cbkEnd);
+        }
+
+        /// <summary>
+        /// Wraps the method with the specified begin/end calls
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="begin"></param>
+        /// <param name="end"></param>
+        public static void Wrap(this MethodDefinition method, MethodDefinition begin, MethodDefinition end)
+        {
+            if (!method.HasBody) throw new InvalidOperationException("Method must have a body.");
+            if (method.ReturnType.Name == "Void")
+            {
+                //Import the callbacks to the calling methods assembly
+                var impBegin = method.Module.Import(begin);
+                var impEnd = method.Module.Import(end);
+
+                var il = method.Body.GetILProcessor();
+
+                il.InsertBefore(method.Body.Instructions.First(), il.Create(OpCodes.Call, impBegin));
+                il.InsertBefore(method.Body.Instructions.Last(x => x.OpCode == OpCodes.Ret), il.Create(OpCodes.Call, impEnd));
+            }
+            else throw new NotSupportedException("Non Void methods not yet supported");
+        }
+
         public static void EmptyInstructions(this MethodDefinition method)
         {
             if (method.HasBody)

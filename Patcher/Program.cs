@@ -493,8 +493,8 @@ namespace OTA.Patcher
                 patcher.HookStatusText();
                 Console.Write("Ok\nHooking NetMessage...");
                 patcher.HookNetMessage();
-                Console.Write("Ok\nHooking Server events...");
-                patcher.HookUpdateServer();
+                //Console.Write("Ok\nHooking Server events...");
+                //patcher.HookUpdateServer();
                 patcher.HookDedServEnd();
                 Console.Write("Ok\nHooking NPC Spawning...");
                 patcher.HookNPCSpawning();
