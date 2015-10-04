@@ -270,7 +270,7 @@ namespace OTA.Plugin
         public struct ServerUpdate
         {
             public static readonly ServerUpdate Begin = new ServerUpdate() { State = MethodState.Begin };
-            public static readonly ServerUpdate End = new ServerUpdate() { State = MethodState.Begin };
+            public static readonly ServerUpdate End = new ServerUpdate() { State = MethodState.End };
 
             public MethodState State { get; set; }
         }
@@ -327,7 +327,7 @@ namespace OTA.Plugin
         public struct GameUpdate
         {
             public static readonly GameUpdate Begin = new GameUpdate() { State = MethodState.Begin };
-            public static readonly GameUpdate End = new GameUpdate() { State = MethodState.Begin };
+            public static readonly GameUpdate End = new GameUpdate() { State = MethodState.End };
 
             public MethodState State { get; set; }
         }
