@@ -617,10 +617,10 @@ namespace OTA.Patcher
 
             var il = mainCctor.Body.GetILProcessor();
             var ins = mainCctor.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
-                                 && x.Operand is MethodReference
-                                 && (x.Operand as MethodReference).Name == ".ctor"
-                                 && (x.Operand as MethodReference).DeclaringType is ArrayType
-                                 && ((x.Operand as MethodReference).DeclaringType as ArrayType).ElementType.Name == "MemTile");
+                          && x.Operand is MethodReference
+                          && (x.Operand as MethodReference).Name == ".ctor"
+                          && (x.Operand as MethodReference).DeclaringType is ArrayType
+                          && ((x.Operand as MethodReference).DeclaringType as ArrayType).ElementType.Name == "MemTile");
             ins.Operand = constructor;
         }
 
@@ -1505,7 +1505,7 @@ namespace OTA.Patcher
             var initialise = Terraria.Main.Methods.Single(x => x.Name == "Initialize");
             var loc = initialise.Body.Instructions
                 .Where(x => x.OpCode == OpCodes.Ldsfld && x.Operand is FieldDefinition)
-                //.Select(x => x.Operand as FieldDefinition)
+                      //.Select(x => x.Operand as FieldDefinition)
                 .Single(x => (x.Operand as FieldDefinition).Name == "skipMenu");
             var il = initialise.Body.GetILProcessor();
             il.InsertBefore(loc, il.Create(OpCodes.Ret));
@@ -1544,31 +1544,9 @@ namespace OTA.Patcher
             {
                 var mr = oci.Operand as MethodReference;
                 var writeline = API.ProgramLog.Methods.First(m => m.Name == "BareLog"
-                                    && CompareParameters(m.Parameters, mr.Parameters));
+                                    && CecilMethodExtensions.CompareParameters(m.Parameters, mr.Parameters));
                 oci.Operand = _asm.MainModule.Import(writeline);
             }
-        }
-
-        /// <summary>
-        /// Compares the parameters to see if they expect the same.
-        /// </summary>
-        /// <returns><c>true</c>, if parameters was compared, <c>false</c> otherwise.</returns>
-        /// <param name="a">The alpha component.</param>
-        /// <param name="b">The blue component.</param>
-        static bool CompareParameters(Mono.Collections.Generic.Collection<ParameterDefinition> a, Mono.Collections.Generic.Collection<ParameterDefinition> b)
-        {
-            if (a.Count == b.Count)
-            {
-
-                for (var x = 0; x < a.Count; x++)
-                {
-                    if (a[x].ParameterType.FullName != b[x].ParameterType.FullName)
-                        return false;
-                }
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>

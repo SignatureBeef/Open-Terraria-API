@@ -2,6 +2,8 @@
 using Mono.Cecil.Cil;
 using System;
 using System.Linq;
+using System.Collections.Generic;
+using Mono.Cecil.Rocks;
 
 namespace OTA.Patcher
 {
@@ -78,6 +80,7 @@ namespace OTA.Patcher
                 Console.Write(line);
 
                 hooks[x].Invoke(this, null);
+
             }
 
             //Clear ready for the Ok\n
@@ -465,7 +468,7 @@ namespace OTA.Patcher
             //Grab the Update method
             var updateServer = Terraria.Main.Methods.Single(x => x.Name == "Update");
             //Wrap it with the API calls
-            updateServer.WrapBeginEnd(API.MainCallback, "OnUpdate");
+            updateServer.InjectBeginEnd(API.MainCallback, "OnUpdate");
         }
 
         /// <summary>
@@ -477,374 +480,119 @@ namespace OTA.Patcher
             //Grab the UpdateServer method
             var updateServer = Terraria.Main.Methods.Single(x => x.Name == "UpdateServer");
             //Wrap it with the API calls
-            updateServer.WrapBeginEnd(API.MainCallback, "OnUpdateServer");
-        }
-    }
-
-    static class CecilMethodExtensions
-    {
-        /// <summary>
-        /// Wraps the method after finding the Begin/End variant callbacks of methodName
-        /// </summary>
-        /// <param name="method"></param>
-        /// <param name="typeDefinition"></param>
-        /// <param name="methodName"></param>
-        public static void WrapBeginEnd(this MethodDefinition method, TypeDefinition typeDefinition, string methodName)
-        {
-            var cbkBegin = typeDefinition.Methods.Single(x => x.Name == methodName + "Begin");
-            var cbkEnd = typeDefinition.Methods.Single(x => x.Name == methodName + "End");
-
-            method.Wrap(cbkBegin, cbkEnd);
+            updateServer.InjectBeginEnd(API.MainCallback, "OnUpdateServer");
         }
 
-        /// <summary>
-        /// Wraps the method with the specified begin/end calls
-        /// </summary>
-        /// <param name="method"></param>
-        /// <param name="begin"></param>
-        /// <param name="end"></param>
-        public static void Wrap(this MethodDefinition method, MethodDefinition begin, MethodDefinition end)
-        {
-            if (!method.HasBody) throw new InvalidOperationException("Method must have a body.");
-            if (method.ReturnType.Name == "Void")
-            {
-                //Import the callbacks to the calling methods assembly
-                var impBegin = method.Module.Import(begin);
-                var impEnd = method.Module.Import(end);
-
-                var il = method.Body.GetILProcessor();
-
-                il.InsertBefore(method.Body.Instructions.First(), il.Create(OpCodes.Call, impBegin));
-                il.InsertBefore(method.Body.Instructions.Last(x => x.OpCode == OpCodes.Ret), il.Create(OpCodes.Call, impEnd));
-            }
-            else throw new NotSupportedException("Non Void methods not yet supported");
-        }
-
-        public static void EmptyInstructions(this MethodDefinition method)
-        {
-            if (method.HasBody)
-            {
-                //Clear out everything
-                method.Body.Variables.Clear();
-                method.Body.ExceptionHandlers.Clear();
-                method.Body.Instructions.Clear();
-
-                //Now it needs the return instruction.
-                var il = method.Body.GetILProcessor();
-                if (method.ReturnType.IsValueType)
-                {
-                    //return default(<return type>);
-                    method.Body.Instructions.Insert(0, il.Create(OpCodes.Ret));
-
-                    if (method.ReturnType.IsPrimitive)
-                    {
-                        //If a primitive type then pushing this onto the stack will trigger, for example default(bool)
-                        method.Body.Instructions.Insert(0, il.Create(OpCodes.Ldc_I4_0));
-                    }
-                    else
-                    {
-                        //This is not yet tested. But it should, say for example, struct testing {}, create default(testing)
-
-                        //What needs to happen is we need to create a local variable to store the [initobj], then we can safely return it
-                        //It should len decompile to return default(xyz)
-
-                        ///Create the variable - this one goes at index 0
-                        VariableDefinition vr1, vr2;
-                        method.Body.Variables.Add(vr1 = new VariableDefinition(method.ReturnType));
-                        method.Body.Variables.Add(vr2 = new VariableDefinition(method.ReturnType));
-
-                        ////Initialise the variable
-                        method.Body.Instructions.Clear();
-                        method.Body.Instructions.Add(il.Create(OpCodes.Nop));
-                        method.Body.Instructions.Add(il.Create(OpCodes.Ldloca_S, vr1));
-                        method.Body.Instructions.Add(il.Create(OpCodes.Initobj, method.ReturnType));
-                        method.Body.Instructions.Add(il.Create(OpCodes.Ldloc_0));
-                        method.Body.Instructions.Add(il.Create(OpCodes.Stloc_1));
-
-                        var ins = il.Create(OpCodes.Ldloc_1);
-                        method.Body.Instructions.Add(il.Create(OpCodes.Br_S, ins));
-
-                        method.Body.Instructions.Add(ins);
-                        method.Body.Instructions.Add(il.Create(OpCodes.Ret));
-
-                        //Return it
-                    }
-                }
-                else if (method.ReturnType.MetadataType == MetadataType.Void)
-                {
-                    //Behind the scenes there is a return opcode
-                    method.Body.Instructions.Insert(0, il.Create(OpCodes.Ret));
-                }
-                else
-                {
-                    //return null;
-                    method.Body.Instructions.Insert(0, il.Create(OpCodes.Ret));
-                    method.Body.Instructions.Insert(0, il.Create(OpCodes.Ldnull));
-                }
-            }
-        }
-    }
-
-    public class TerrariaOrganiser
-    {
-        private AssemblyDefinition _asm;
-
-        public TerrariaOrganiser(AssemblyDefinition assembly)
-        {
-            this._asm = assembly;
-        }
-
-        public TypeDefinition MessageBuffer
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "MessageBuffer"); }
-        }
-
-        public TypeDefinition NetMessage
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NetMessage"); }
-        }
-
-        public TypeDefinition Main
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Main"); }
-        }
-
-        //        public TypeDefinition ProgramServer
+        //        [ServerHook]
+        //        private void HookHardModeTileUpdates()
         //        {
-        //            get
-        //            { return _asm.MainModule.Types.Single(x => x.Name == "ProgramServer"); }
+        //            //So far I can tell there are 3 different sections.
+        //            //  1) the first WorldGen.PlaceTile, plus the first two Main.tile[....].type calls
+        //            //          - use return
+        //            //  2) The next two Main.tile[....].type
+        //            //          - use continue
+        //            //  3) The rest of the Main.tile[....].type calls that follow
+        //            //          - grab the [flag] that is used in the while loop
+        //            //          - if [flag] then break else continue
+        //
+        //            var hardUpdateWorld = Terraria.WorldGen.Methods.Single(x => x.Name == "hardUpdateWorld");
+        //            var cbkOnTileChange = Terraria.Import(API.WorldGenCallback.Methods.Single(x => x.Name == "OnHardModeTileUpdate"));
+        //
+        //            var placeTiles = hardUpdateWorld.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
+        //                                 && x.Operand is MethodReference
+        //                                 && (x.Operand as MethodReference).Name == "PlaceTile")
+        //                .ToArray();
+        //            var setTiles = hardUpdateWorld.Body.Instructions.Where(x => x.OpCode == OpCodes.Stfld
+        //                               && x.Operand is FieldReference
+        //                               && (x.Operand as FieldReference).Name == "type")
+        //                .ToArray();
+        //
+        //            var il = hardUpdateWorld.Body.GetILProcessor();
+        //
+        //            //Inject a hook before each PlaceTile call
+        //            foreach (var placeTile in placeTiles)
+        //            {
+        //                var start = placeTile.FindInstructionByOpCodeBefore(OpCodes.Ldarg_0);
+        //                if (start == null) throw new InvalidOperationException("Cannot find start point of PlaceTile arguments");
+        //
+        //                var args = start.GetInstructionsUntil(OpCodes.Call);
+        //
+        //                //For the arguments we only care up until the first ldc.i4
+        //                var idx = args.FindIndex(x => x.OpCode == OpCodes.Ldc_I4) + 1 /*Dont remove the one we want to keep (the tile type)*/;
+        //                var totalToRemove = args.Count - idx;
+        //                for (var x = idx; x < idx + totalToRemove; x++)
+        //                {
+        //                    args.RemoveAt(idx);
+        //                }
+        //
+        //                foreach (var arg in args)
+        //                {
+        //                    var ins = arg.Clone();
+        //                    il.InsertBefore(start, ins);
+        //                }
+        //                il.InsertBefore(start, il.Create(OpCodes.Call, cbkOnTileChange));
+        //                il.InsertBefore(start, il.Create(OpCodes.Pop));
+        //
+        //                //Now handle the result of the hook
+        //
+        //            }
+        //
+        //            //Inject a hook before each PlaceTile call
+        //            foreach (var setTile in setTiles)
+        //            {
+        //                var start = setTile.FindInstructionByOpCodeBefore(OpCodes.Ldsfld);
+        //                if (start == null) throw new InvalidOperationException("Cannot find start point of PlaceTile arguments");
+        //
+        //                var args = start.GetInstructionsUntil(OpCodes.Call);
+        //
+        //                //Remove the tile reference since we dont care about it
+        //                args.RemoveAt(0);
+        //
+        //                Instruction firstNewCall = null; //For later use
+        //                foreach (var arg in args)
+        //                {
+        //                    var ins = arg.Clone();
+        //                    il.InsertBefore(start, ins);
+        //
+        //                    if (null == firstNewCall) firstNewCall = ins;
+        //                }
+        //                if (setTile.Previous.Previous.OpCode != OpCodes.Call) throw new InvalidOperationException("Expected only one type value instruction");
+        //                il.InsertBefore(start, setTile.Previous.Clone()); //The tile type
+        //                il.InsertBefore(start, il.Create(OpCodes.Call, cbkOnTileChange));
+        //                il.InsertBefore(start, il.Create(OpCodes.Pop));
+        //
+        //                //Since we could have potentially changed the target instruction for transferring, we must now update it.
+        //                start.ReplaceTransfer(firstNewCall, hardUpdateWorld);
+        //
+        ////                hardUpdateWorld.Body.OptimizeMacros();
+        ////                hardUpdateWorld.Body.ComputeOffsets();
+        //
+        //                //Now handle the result of the hook
+        //                break;
+        //            }
         //        }
 
-        /// <summary>
-        /// Entry class for windows
-        /// </summary>
-        /// <value>The windows launch.</value>
-        public TypeDefinition WindowsLaunch
+        [ServerHook]
+        private void HookItemSetDefaults()
         {
-            get
+            var setDefaults = Terraria.Item.Methods.Where(x => x.Name.StartsWith("SetDefault")).ToArray();
+            foreach (var method in setDefaults)
+            {
 
-            { return _asm.MainModule.Types.Single(x => x.Name == "WindowsLaunch"); }
-        }
+//                method.Body.MaxStackSize = 6;
 
-        /// <summary>
-        /// Entry class for Mac
-        /// </summary>
-        /// <value>The program.</value>
-        public TypeDefinition Program
-        {
-            get
+                var apiMatch = API.ItemCallback.MatchInstanceMethodByParameters("Terraria.Item", method.Parameters, "OnSetDefault");
+                if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching SetDefault Begin/End calls in the API");
 
-            { return _asm.MainModule.Types.Single(x => x.Name == "Program"); }
-        }
+                var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+                var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
 
-        public TypeDefinition NPC
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NPC"); }
-        }
-
-        public TypeDefinition WorldFile
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "WorldFile"); }
-        }
-
-        public TypeDefinition WorldGen
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "WorldGen"); }
-        }
-
-        public TypeDefinition Netplay
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Netplay"); }
-        }
-
-        public TypeDefinition Player
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Player"); }
-        }
-
-        //        public TypeDefinition ServerSock
-        //        {
-        //            get
-        //            { return _asm.MainModule.Types.Single(x => x.Name == "ServerSock"); }
-        //        }
-
-        public TypeDefinition RemoteClient
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "RemoteClient"); }
-        }
-
-        public TypeDefinition RemoteServer
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "RemoteServer"); }
-        }
-
-        public TypeDefinition LaunchInitializer
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "LaunchInitializer"); }
-        }
-
-        public TypeDefinition Lang
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Lang"); }
-        }
-
-        public TypeDefinition Projectile
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Projectile"); }
+                method.Wrap(cbkBegin, cbkEnd, true);
+//                method.Body.OptimizeMacros();
+//                method.Body.ComputeOffsets();
+            }
         }
     }
 
-    public class APIOrganiser
-    {
-        private AssemblyDefinition _asm;
 
-        public APIOrganiser(AssemblyDefinition assembly)
-        {
-            this._asm = assembly;
-        }
-
-        #region "Callbacks"
-
-        public TypeDefinition BasePlayer
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "BasePlayer"); }
-        }
-
-        public TypeDefinition Configuration
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Configuration" && x.Namespace == "OTA.Callbacks"); }
-        }
-
-        public TypeDefinition GameWindow
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "GameWindow"); }
-        }
-
-        public TypeDefinition IAPISocket
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "IAPISocket"); }
-        }
-
-        public TypeDefinition MainCallback
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "MainCallback"); }
-        }
-
-        public TypeDefinition MessageBufferCallback
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "MessageBufferCallback"); }
-        }
-
-        public TypeDefinition NetMessageCallback
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NetMessageCallback"); }
-        }
-
-        public TypeDefinition NetplayCallback
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NetplayCallback"); }
-        }
-
-        public TypeDefinition NPCCallback
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NPCCallback"); }
-        }
-
-        public TypeDefinition Rand
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Rand"); }
-        }
-
-        public TypeDefinition Patches
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Patches"); }
-        }
-
-        public TypeDefinition Tools
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Tools"); }
-        }
-
-        public TypeDefinition ProgramLog
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "ProgramLog"); }
-        }
-
-        public TypeDefinition UserInput
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "UserInput"); }
-        }
-
-        public TypeDefinition WorldFileCallback
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "WorldFileCallback"); }
-        }
-
-        public TypeDefinition VanillaHooks
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "VanillaHooks"); }
-        }
-
-        #endregion
-
-        public TypeDefinition NAT
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NAT"); }
-        }
-
-        public TypeDefinition ClientConnection
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "ClientConnection"); }
-            //{ return _asm.MainModule.Types.Single(x => x.Name == "TemporarySynchSock"); }
-        }
-
-        public TypeDefinition Utilities
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Utilities"); }
-        }
-
-        public TypeDefinition Player
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "PlayerCallback"); }
-        }
-
-        public TypeDefinition WorldSender
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "WorldSender"); }
-        }
-    }
 }

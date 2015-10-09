@@ -43,6 +43,16 @@
     <DefineConstants>XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER</DefineConstants>
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Release|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Server-Release</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;DEBUG;XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|x86' ">
@@ -305,6 +315,8 @@
     <Compile Include="Data\Entity\OTAInitializer.cs" />
     <Compile Include="Misc\FixedConcurrentQueue.cs" />
     <Compile Include="Protection\IpLimiting.cs" />
+    <Compile Include="Callbacks\WorldGenCallback.cs" />
+    <Compile Include="Callbacks\ItemCallback.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

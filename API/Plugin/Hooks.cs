@@ -59,6 +59,8 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.GameUpdate> GameUpdate;
         public static readonly HookPoint<HookArgs.InvasionNpcSpawn> InvasionNpcSpawn;
         public static readonly HookPoint<HookArgs.InvasionWarning> InvasionWarning;
+        public static readonly HookPoint<HookArgs.ItemSetDefaultsByName> ItemSetDefaultsByName;
+        public static readonly HookPoint<HookArgs.ItemSetDefaultsByType> ItemSetDefaultsByType;
         public static readonly HookPoint<HookArgs.LiquidFlowReceived> LiquidFlowReceived;
         public static readonly HookPoint<HookArgs.NpcHurt> NpcHurt;
         public static readonly HookPoint<HookArgs.NpcKilled> NpcKilled;
@@ -142,6 +144,8 @@ namespace OTA.Plugin
             GameUpdate = new HookPoint<HookArgs.GameUpdate>("game-update");
             InvasionNpcSpawn = new HookPoint<HookArgs.InvasionNpcSpawn>("invasion-npc-spawn");
             InvasionWarning = new HookPoint<HookArgs.InvasionWarning>("invasion-warning");
+            ItemSetDefaultsByName = new HookPoint<HookArgs.ItemSetDefaultsByName>("item-set-defaults-by-name");
+            ItemSetDefaultsByType = new HookPoint<HookArgs.ItemSetDefaultsByType>("item-set-defaults-by-type");
             LiquidFlowReceived = new HookPoint<HookArgs.LiquidFlowReceived>("liquid-flow-received");
             NpcHurt = new HookPoint<HookArgs.NpcHurt>("npc-hurt");
             NpcKilled = new HookPoint<HookArgs.NpcKilled>("npc-killed");
@@ -340,6 +344,23 @@ namespace OTA.Plugin
 
         public struct InvasionWarning
         {
+        }
+
+        public struct ItemSetDefaultsByName
+        {
+            public MethodState State { get; set; }
+
+            public Terraria.Item Item { get; set; }
+            public string Name { get; set; }
+        }
+
+        public struct ItemSetDefaultsByType
+        {
+            public MethodState State { get; set; }
+
+            public Terraria.Item Item { get; set; }
+            public int Type { get; set; }
+            public bool NoMatCheck { get; set; }
         }
 
         public struct LiquidFlowReceived
