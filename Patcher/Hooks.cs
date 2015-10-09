@@ -579,7 +579,7 @@ namespace OTA.Patcher
             foreach (var method in setDefaults)
             {
 
-//                method.Body.MaxStackSize = 6;
+                //                method.Body.MaxStackSize = 6;
 
                 var apiMatch = API.ItemCallback.MatchInstanceMethodByParameters("Terraria.Item", method.Parameters, "OnSetDefault");
                 if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching SetDefault Begin/End calls in the API");
@@ -588,11 +588,23 @@ namespace OTA.Patcher
                 var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
 
                 method.Wrap(cbkBegin, cbkEnd, true);
-//                method.Body.OptimizeMacros();
-//                method.Body.ComputeOffsets();
+                //                method.Body.OptimizeMacros();
+                //                method.Body.ComputeOffsets();
             }
         }
+
+        [ServerHook]
+        private void HookItemNetDefaults()
+        {
+            var setDefaults = Terraria.Item.Methods.Single(x => x.Name == "netDefaults");
+
+            var apiMatch = API.ItemCallback.MatchInstanceMethodByParameters("Terraria.Item", setDefaults.Parameters, "OnNetDefaults");
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching netDefaults Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            setDefaults.Wrap(cbkBegin, cbkEnd, true);
+        }
     }
-
-
 }

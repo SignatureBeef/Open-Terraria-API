@@ -59,6 +59,7 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.GameUpdate> GameUpdate;
         public static readonly HookPoint<HookArgs.InvasionNpcSpawn> InvasionNpcSpawn;
         public static readonly HookPoint<HookArgs.InvasionWarning> InvasionWarning;
+        public static readonly HookPoint<HookArgs.ItemNetDefaults> ItemNetDefaults;
         public static readonly HookPoint<HookArgs.ItemSetDefaultsByName> ItemSetDefaultsByName;
         public static readonly HookPoint<HookArgs.ItemSetDefaultsByType> ItemSetDefaultsByType;
         public static readonly HookPoint<HookArgs.LiquidFlowReceived> LiquidFlowReceived;
@@ -144,6 +145,7 @@ namespace OTA.Plugin
             GameUpdate = new HookPoint<HookArgs.GameUpdate>("game-update");
             InvasionNpcSpawn = new HookPoint<HookArgs.InvasionNpcSpawn>("invasion-npc-spawn");
             InvasionWarning = new HookPoint<HookArgs.InvasionWarning>("invasion-warning");
+            ItemNetDefaults = new HookPoint<HookArgs.ItemNetDefaults>("item-net-defaults");
             ItemSetDefaultsByName = new HookPoint<HookArgs.ItemSetDefaultsByName>("item-set-defaults-by-name");
             ItemSetDefaultsByType = new HookPoint<HookArgs.ItemSetDefaultsByType>("item-set-defaults-by-type");
             LiquidFlowReceived = new HookPoint<HookArgs.LiquidFlowReceived>("liquid-flow-received");
@@ -344,6 +346,14 @@ namespace OTA.Plugin
 
         public struct InvasionWarning
         {
+        }
+
+        public struct ItemNetDefaults
+        {
+            public MethodState State { get; set; }
+
+            public Terraria.Item Item { get; set; }
+            public int Type { get; set; }
         }
 
         public struct ItemSetDefaultsByName

@@ -98,5 +98,33 @@ namespace OTA.Callbacks
 
             HookPoints.ItemSetDefaultsByType.Invoke(ref ctx, ref args);
         }
+
+        public static void OnNetDefaultsBegin(Terraria.Item item, int type)
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.ItemNetDefaults()
+            {
+                State = MethodState.Begin,
+                Type = type,
+
+                Item = item
+            };
+
+            HookPoints.ItemNetDefaults.Invoke(ref ctx, ref args);
+        }
+
+        public static void OnNetDefaultsEnd(Terraria.Item item, int type)
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.ItemNetDefaults()
+            {
+                State = MethodState.End,
+                Type = type,
+
+                Item = item
+            };
+
+            HookPoints.ItemNetDefaults.Invoke(ref ctx, ref args);
+        }
     }
 }
