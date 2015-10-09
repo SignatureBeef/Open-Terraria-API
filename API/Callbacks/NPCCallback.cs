@@ -90,5 +90,95 @@ namespace OTA.Callbacks
         {
         }
         #endif
+
+        #region "Creation Calls"
+
+        public static void OnSetDefaultsBegin(Terraria.NPC npc, int type, float scaleOverride = -1)
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.NpcSetDefaultsByType()
+            {
+                State = MethodState.Begin,
+                Type = type,
+                ScaleOverride = scaleOverride,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcSetDefaultsByType.Invoke(ref ctx, ref args);
+        }
+
+        public static void OnSetDefaultsEnd(Terraria.NPC npc, int type, float scaleOverride = -1)
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.NpcSetDefaultsByType()
+            {
+                State = MethodState.End,
+                Type = type,
+                ScaleOverride = scaleOverride,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcSetDefaultsByType.Invoke(ref ctx, ref args);
+        }
+
+        public static void OnSetDefaultsBegin(Terraria.NPC npc, string name)
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.NpcSetDefaultsByName()
+            {
+                State = MethodState.Begin,
+                Name = name,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcSetDefaultsByName.Invoke(ref ctx, ref args);
+        }
+
+        public static void OnSetDefaultsEnd(Terraria.NPC npc, string name)
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.NpcSetDefaultsByName()
+            {
+                State = MethodState.End,
+                Name = name,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcSetDefaultsByName.Invoke(ref ctx, ref args);
+        }
+
+        public static void OnNetDefaultsBegin(Terraria.NPC npc, int type)
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.NpcNetDefaults()
+            {
+                State = MethodState.End,
+                Type = type,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcNetDefaults.Invoke(ref ctx, ref args);
+        }
+
+        public static void OnNetDefaultsEnd(Terraria.NPC npc, int type)
+        {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.NpcNetDefaults()
+                {
+                    State = MethodState.End,
+                    Type = type,
+
+                    Npc = npc
+                };
+
+            HookPoints.NpcNetDefaults.Invoke(ref ctx, ref args);
+        }
+
+        #endregion
     }
 }

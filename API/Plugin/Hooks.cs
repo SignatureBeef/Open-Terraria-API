@@ -65,6 +65,9 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.LiquidFlowReceived> LiquidFlowReceived;
         public static readonly HookPoint<HookArgs.NpcHurt> NpcHurt;
         public static readonly HookPoint<HookArgs.NpcKilled> NpcKilled;
+        public static readonly HookPoint<HookArgs.NpcNetDefaults> NpcNetDefaults;
+        public static readonly HookPoint<HookArgs.NpcSetDefaultsByName> NpcSetDefaultsByName;
+        public static readonly HookPoint<HookArgs.NpcSetDefaultsByType> NpcSetDefaultsByType;
         public static readonly HookPoint<HookArgs.NpcSpawn> NpcSpawn;
         public static readonly HookPoint<HookArgs.PlayerChat> PlayerChat;
         public static readonly HookPoint<HookArgs.PlayerDataReceived> PlayerDataReceived;
@@ -151,6 +154,9 @@ namespace OTA.Plugin
             LiquidFlowReceived = new HookPoint<HookArgs.LiquidFlowReceived>("liquid-flow-received");
             NpcHurt = new HookPoint<HookArgs.NpcHurt>("npc-hurt");
             NpcKilled = new HookPoint<HookArgs.NpcKilled>("npc-killed");
+            NpcNetDefaults = new HookPoint<HookArgs.NpcNetDefaults>("npc-net-defaults");
+            NpcSetDefaultsByName = new HookPoint<HookArgs.NpcSetDefaultsByName>("npc-set-defaults-by-name");
+            NpcSetDefaultsByType = new HookPoint<HookArgs.NpcSetDefaultsByType>("npc-set-defaults-by-type");
             NpcSpawn = new HookPoint<HookArgs.NpcSpawn>("npc-spawn");
             PlayerChat = new HookPoint<HookArgs.PlayerChat>("player-chat");
             PlayerDataReceived = new HookPoint<HookArgs.PlayerDataReceived>("player-data-received");
@@ -404,6 +410,31 @@ namespace OTA.Plugin
         {
             public int Type { get; set; }
             public int NetId { get; set; }
+        }
+
+        public struct NpcNetDefaults
+        {
+            public MethodState State { get; set; }
+
+            public Terraria.NPC Npc { get; set; }
+            public int Type { get; set; }
+        }
+
+        public struct NpcSetDefaultsByName
+        {
+            public MethodState State { get; set; }
+
+            public Terraria.NPC Npc { get; set; }
+            public string Name { get; set; }
+        }
+
+        public struct NpcSetDefaultsByType
+        {
+            public MethodState State { get; set; }
+
+            public Terraria.NPC Npc { get; set; }
+            public int Type { get; set; }
+            public float ScaleOverride { get; set; }
         }
 
         public struct NpcSpawn

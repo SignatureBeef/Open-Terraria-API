@@ -606,5 +606,42 @@ namespace OTA.Patcher
 
             setDefaults.Wrap(cbkBegin, cbkEnd, true);
         }
+
+        private void HookCollisionPressurePlate()
+        {
+            //Step 1: Add the calling object as a parameter to Terraria.Collision.SwitchTiles
+            //Setp 2: Inject cancellable IL before the HitSwitch branch
+        }
+
+        [ServerHook]
+        private void HookNpcSetDefaults()
+        {
+            var setDefaults = Terraria.NPC.Methods.Where(x => x.Name == "SetDefaults").ToArray();
+            foreach (var method in setDefaults)
+            {
+                var apiMatch = API.NPCCallback.MatchInstanceMethodByParameters("Terraria.NPC", method.Parameters, "OnSetDefault");
+                if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching SetDefault Begin/End calls in the API");
+
+                var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+                var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+                method.Wrap(cbkBegin, cbkEnd, true);
+            }
+        }
+
+        [ServerHook]
+        private void HookNpcNetDefaults()
+        {
+            var setDefaults = Terraria.NPC.Methods.Single(x => x.Name == "netDefaults");
+
+            var apiMatch = API.NPCCallback.MatchInstanceMethodByParameters("Terraria.NPC", setDefaults.Parameters, "OnNetDefaults");
+
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching netDefaults Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            setDefaults.Wrap(cbkBegin, cbkEnd, true);
+        }
     }
 }
