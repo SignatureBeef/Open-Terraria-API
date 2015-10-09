@@ -61,6 +61,24 @@ namespace OTA.Patcher
             }
         }
 
+        public static void ReplaceWith(this MethodDefinition method, MethodDefinition replacement)
+        {
+            foreach (var type in method.Module.Types)
+            {
+                foreach (var mth in type.Methods)
+                {
+                    if (mth.HasBody)
+                    {
+                        foreach (var ins in mth.Body.Instructions)
+                        {
+                            if (ins.Operand == method)
+                                ins.Operand = replacement;
+                        }
+                    }
+                }
+            }
+        }
+
         public static void ReplaceTransfer(this Instruction current, Instruction newTarget, MethodDefinition method)
         {
             //If a method has a body then check the instruction targets & exceptions
@@ -200,7 +218,7 @@ namespace OTA.Patcher
 
                 var xstFirst = method.Body.Instructions.First();
                 var xstLast = method.Body.Instructions.Last(x => x.OpCode == OpCodes.Ret);
-                var lastInstruction = method.Body.Instructions.Last();
+//                var lastInstruction = method.Body.Instructions.Last();
 
                 var il = method.Body.GetILProcessor();
 
@@ -292,8 +310,10 @@ namespace OTA.Patcher
 
                 //Create the new replacement method
                 var wrapped = new MethodDefinition(method.Name, MethodAttributes.Public, method.ReturnType);
-                //Rename the vanilla
+
+                //Rename the existing method, and replace it
                 method.Name = method.Name + "_wrapped";
+                method.ReplaceWith(wrapped);
 
                 //Copy over parameters
                 if (method.HasParameters)
