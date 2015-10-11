@@ -297,6 +297,17 @@ namespace OTA.Patcher
         }
 
         /// <summary>
+        /// Inserts method cancelling instructions.
+        /// </summary>
+        /// <param name="processor">Processor.</param>
+        /// <param name="target">Target in which the new instructions will be placed before</param>
+        /// <param name="transferTarget">If not cancelled, the code will continue onto this instruction</param>
+        public static void InsertCancelInstructions(this ILProcessor processor, MethodDefinition method, Instruction target, Instruction transferTarget)
+        {
+
+        }
+
+        /// <summary>
         /// Wraps the method with the specified begin/end calls
         /// </summary>
         /// <param name="method"></param>
@@ -341,20 +352,70 @@ namespace OTA.Patcher
                         il.Emit(OpCodes.Ldarg, method.Parameters[i]);
                 il.Emit(OpCodes.Call, impBegin);
 
-                //If the begin call has a value, pop it for the time being
-                if (impBegin.ReturnType.Name != "Void")
+                Instruction beginResult = null;
+                if (beginIsCancellable)
+                {
+                    beginResult = il.Create(OpCodes.Nop);
+                    il.Append(beginResult);
+
+                    //Emit the cancel handling
+                    if (wrapped.ReturnType.Name == "Void")
+                        il.Emit(OpCodes.Ret);
+                    else
+                    {
+                        throw new NotSupportedException("Not yet required, todo"); //TODO
+//                        //Return a default value
+//                        VariableDefinition vr1;
+//                        wrapped.Body.Variables.Add(vr1 = new VariableDefinition(impBegin.ReturnType));
+//
+//                        ////Initialise the variable
+//                        il.Emit(OpCodes.Ldloca_S, vr1);
+//                        il.Emit(OpCodes.Initobj, impBegin.ReturnType);
+//                        il.Emit(OpCodes.Ldloc, vr1);
+//
+//                        il.Emit(OpCodes.Ret);
+                    }
+                }
+                else if (impBegin.ReturnType.Name != "Void")
                     il.Emit(OpCodes.Pop);
 
                 //Execute the actual code
                 //If the call is an instance method, then ensure the Ldarg_0 is emitted.
                 if (instanceMethod)
-                    il.Emit(OpCodes.Ldarg_0);
+                {
+                    var instance = il.Create(OpCodes.Ldarg_0);
+                    if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
+                    {
+                        beginResult.OpCode = OpCodes.Brtrue_S;
+                        beginResult.Operand = instance;
+                    }
+
+                    il.Append(instance);
+                }
+
                 if (method.HasParameters)
                     for (var i = 0; i < method.Parameters.Count; i++)
-                        il.Emit(OpCodes.Ldarg, method.Parameters[i]);
-                il.Emit(OpCodes.Call, method);
+                    {
+                        var prm = il.Create(OpCodes.Ldarg, method.Parameters[i]);
+                        if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
+                        {
+                            beginResult.OpCode = OpCodes.Brtrue_S;
+                            beginResult.Operand = prm;
+                        }
 
-                //TODO pass the return value onto the end hook
+                        il.Append(prm);
+                    }
+
+                var call = il.Create(OpCodes.Call, method);
+                if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
+                {
+                    beginResult.OpCode = OpCodes.Brtrue_S;
+                    beginResult.Operand = call;
+                }
+
+                il.Append(call);
+
+                //If a value is returned, ensure it's removed from the stack
                 if (method.ReturnType.Name != "Void")
                     il.Emit(OpCodes.Pop);
                 

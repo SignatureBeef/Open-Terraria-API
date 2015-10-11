@@ -79,7 +79,6 @@ namespace OTA.Patcher
                 line = String.Format(Fmt, x + 1, hooks.Length);
                 Console.Write(line);
 
-
                 hooks[x].Invoke(this, null);
             }
 
@@ -587,7 +586,7 @@ namespace OTA.Patcher
                 var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
                 var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
 
-                method.Wrap(cbkBegin, cbkEnd, true);
+                method.Wrap(cbkBegin, cbkEnd);
                 //                method.Body.OptimizeMacros();
                 //                method.Body.ComputeOffsets();
             }
@@ -604,7 +603,7 @@ namespace OTA.Patcher
             var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
             var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
 
-            setDefaults.Wrap(cbkBegin, cbkEnd, true);
+            setDefaults.Wrap(cbkBegin, cbkEnd);
         }
 
         private void HookCollisionPressurePlate()
@@ -625,7 +624,7 @@ namespace OTA.Patcher
                 var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
                 var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
 
-                method.Wrap(cbkBegin, cbkEnd, true);
+                method.Wrap(cbkBegin, cbkEnd);
             }
         }
 
@@ -641,7 +640,7 @@ namespace OTA.Patcher
             var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
             var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
 
-            setDefaults.Wrap(cbkBegin, cbkEnd, true);
+            setDefaults.Wrap(cbkBegin, cbkEnd);
         }
 
         [ServerHook]
@@ -670,6 +669,21 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
             il.InsertBefore(first, il.Create(OpCodes.Ldloc, vrbResult));
             il.InsertBefore(first, il.Create(OpCodes.Ret));
+        }
+
+        [ServerHook]
+        private void HookNpcTransform()
+        {
+            var method = Terraria.NPC.Method("Transform");
+
+            var apiMatch = API.NPCCallback.MatchInstanceMethodByParameters("Terraria.NPC", method.Parameters, "OnTransform");
+
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnTransform Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            method.Wrap(cbkBegin, cbkEnd, true);
         }
     }
 }

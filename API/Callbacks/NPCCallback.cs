@@ -200,5 +200,35 @@ namespace OTA.Callbacks
         }
 
         #endregion
+
+        public static bool OnTransformBegin(Terraria.NPC npc, int newType)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcTransform()
+            {
+                State = MethodState.Begin,
+                NewType = newType,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcTransform.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+
+        public static void OnTransformEnd(Terraria.NPC npc, int newType)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcTransform()
+            {
+                State = MethodState.End,
+                NewType = newType,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcTransform.Invoke(ref ctx, ref args);
+        }
     }
 }
