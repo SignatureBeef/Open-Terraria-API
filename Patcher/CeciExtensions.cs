@@ -352,7 +352,8 @@ namespace OTA.Patcher
                         il.Emit(OpCodes.Ldarg, method.Parameters[i]);
                 il.Emit(OpCodes.Call, impBegin);
 
-                Instruction beginResult = null;
+                //Create the cancel return if required.
+                Instruction beginResult = null; //Will eventually be transformed to a Brtrue_S in order to transfer to the normal code.
                 if (beginIsCancellable)
                 {
                     beginResult = il.Create(OpCodes.Nop);
@@ -383,6 +384,7 @@ namespace OTA.Patcher
                 //If the call is an instance method, then ensure the Ldarg_0 is emitted.
                 if (instanceMethod)
                 {
+                    //Set the instruction to be resumed upon not cancelling, if not already
                     var instance = il.Create(OpCodes.Ldarg_0);
                     if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
                     {
@@ -393,10 +395,13 @@ namespace OTA.Patcher
                     il.Append(instance);
                 }
 
+                //Create parameters - TODO call optimise
                 if (method.HasParameters)
                     for (var i = 0; i < method.Parameters.Count; i++)
                     {
                         var prm = il.Create(OpCodes.Ldarg, method.Parameters[i]);
+
+                        //Set the instruction to be resumed upon not cancelling, if not already
                         if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
                         {
                             beginResult.OpCode = OpCodes.Brtrue_S;
@@ -406,13 +411,14 @@ namespace OTA.Patcher
                         il.Append(prm);
                     }
 
+                //Call the begin hook
                 var call = il.Create(OpCodes.Call, method);
+                //Set the instruction to be resumed upon not cancelling, if not already
                 if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
                 {
                     beginResult.OpCode = OpCodes.Brtrue_S;
                     beginResult.Operand = call;
                 }
-
                 il.Append(call);
 
                 //If a value is returned, ensure it's removed from the stack
