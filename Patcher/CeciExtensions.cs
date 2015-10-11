@@ -8,9 +8,16 @@ namespace OTA.Patcher
 {
     public static class CecilMethodExtensions
     {
+        const String WrappedMethodNameSuffix = "Direct";
+
         public static MethodDefinition Method(this TypeDefinition typeDefinition, string name)
         {
             return typeDefinition.Methods.Single(x => x.Name == name);
+        }
+
+        public static FieldDefinition Field(this TypeDefinition typeDefinition, string name)
+        {
+            return typeDefinition.Fields.Single(x => x.Name == name);
         }
 
         public static IEnumerable<MethodDefinition> MatchMethodByParameters(this TypeDefinition source, 
@@ -296,15 +303,155 @@ namespace OTA.Patcher
             else throw new NotSupportedException("Non Void methods not yet supported");
         }
 
-        /// <summary>
-        /// Inserts method cancelling instructions.
-        /// </summary>
-        /// <param name="processor">Processor.</param>
-        /// <param name="target">Target in which the new instructions will be placed before</param>
-        /// <param name="transferTarget">If not cancelled, the code will continue onto this instruction</param>
-        public static void InsertCancelInstructions(this ILProcessor processor, MethodDefinition method, Instruction target, Instruction transferTarget)
+        public static Instruction InjectBeginCallback(this MethodDefinition method, MethodDefinition begin, bool instanceMethod, bool beginIsCancellable = false)
         {
+            Instruction targetInstruction = null;
 
+            //Import the callbacks to the calling methods assembly
+            var impBegin = method.Module.Import(begin);
+
+//            var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
+
+            //Now, create the IL body
+            var il = method.Body.GetILProcessor();
+
+            //Execute the begin hook
+            if (instanceMethod)
+                il.Emit(OpCodes.Ldarg_0);
+            if (method.HasParameters)
+                for (var i = 0; i < method.Parameters.Count; i++)
+                    il.Emit(OpCodes.Ldarg, method.Parameters[i]);
+            il.Emit(OpCodes.Call, impBegin);
+
+            //Create the cancel return if required.
+            targetInstruction = null; //Will eventually be transformed to a Brtrue_S in order to transfer to the normal code.
+            if (beginIsCancellable)
+            {
+                targetInstruction = il.Create(OpCodes.Nop);
+                il.Append(targetInstruction);
+
+                //Emit the cancel handling
+                if (method.ReturnType.Name == "Void")
+                    il.Emit(OpCodes.Ret);
+                else
+                {
+                    //Return a default value
+                    VariableDefinition vr1;
+                    method.Body.Variables.Add(vr1 = new VariableDefinition(method.ReturnType));
+
+                    //Initialise the variable
+                    il.Emit(OpCodes.Ldloca_S, vr1);
+                    il.Emit(OpCodes.Initobj, method.ReturnType);
+                    il.Emit(OpCodes.Ldloc, vr1);
+
+                    il.Emit(OpCodes.Ret);
+                }
+            }
+            else if (impBegin.ReturnType.Name != "Void")
+            {
+                targetInstruction = il.Create(OpCodes.Pop);
+                il.Append(targetInstruction);
+            }
+
+            return targetInstruction;
+        }
+
+        public static void InjectEndCallback(this MethodDefinition method, MethodDefinition end, bool instanceMethod)
+        {
+            //Import the callbacks to the calling methods assembly
+            var impEnd = method.Module.Import(end);
+
+//            var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
+
+            //Now, create the IL body
+            var il = method.Body.GetILProcessor();
+
+            //Execute the end hook
+            if (instanceMethod)
+                il.Emit(OpCodes.Ldarg_0);
+            if (method.HasParameters)
+                for (var i = 0; i < method.Parameters.Count; i++)
+                    il.Emit(OpCodes.Ldarg, method.Parameters[i]);
+            il.Emit(OpCodes.Call, impEnd);
+
+            //If the end call has a value, pop it for the time being
+            if (impEnd.ReturnType.Name != "Void")
+                il.Emit(OpCodes.Pop);
+        }
+
+        public static void InjectMethodEnd(this MethodDefinition method)
+        {
+            var il = method.Body.GetILProcessor();
+            //Exit the method
+            //If the end call has a value, pop it for the time being
+            if (method.ReturnType.Name != "Void")
+            {
+                VariableDefinition vr1;
+                method.Body.Variables.Add(vr1 = new VariableDefinition("cancelDefault", method.ReturnType));
+
+                //Initialise the variable
+                il.Emit(OpCodes.Ldloca_S, vr1);
+                il.Emit(OpCodes.Initobj, method.ReturnType);
+                il.Emit(OpCodes.Ldloc, vr1);
+            }
+            il.Emit(OpCodes.Ret);
+        }
+
+        public static Instruction InjectMethodCall(this MethodDefinition method, MethodDefinition target, bool instanceMethod, bool emitNonVoidPop = true)
+        {
+            Instruction firstInstruction = null;
+//            var instanceMethod = (target.Attributes & MethodAttributes.Static) == 0;
+
+            //Now, create the IL body
+            var il = method.Body.GetILProcessor();
+
+            //If the call is an instance method, then ensure the Ldarg_0 is emitted.
+            if (instanceMethod)
+            {
+                //Set the instruction to be resumed upon not cancelling, if not already
+                var instance = il.Create(OpCodes.Ldarg_0);
+//                if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
+//                {
+//                    beginResult.OpCode = OpCodes.Brtrue_S;
+//                    beginResult.Operand = instance;
+//                }
+                if (null == firstInstruction) firstInstruction = instance;
+
+                il.Append(instance);
+            }
+
+            //Create parameters - TODO call optimise
+            if (target.HasParameters)
+                for (var i = 0; i < target.Parameters.Count; i++)
+                {
+                    var prm = il.Create(OpCodes.Ldarg, target.Parameters[i]);
+                    if (null == firstInstruction) firstInstruction = prm;
+//                    //Set the instruction to be resumed upon not cancelling, if not already
+//                    if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
+//                    {
+//                        beginResult.OpCode = OpCodes.Brtrue_S;
+//                        beginResult.Operand = prm;
+//                    }
+
+                    il.Append(prm);
+                }
+
+            //Call the begin hook
+            var call = il.Create(OpCodes.Call, target);
+//            //Set the instruction to be resumed upon not cancelling, if not already
+//            if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
+//            {
+//                beginResult.OpCode = OpCodes.Brtrue_S;
+//                beginResult.Operand = call;
+//            }
+            if (null == firstInstruction) firstInstruction = call;
+            il.Append(call);
+
+            //If a value is returned, ensure it's removed from the stack
+            if (emitNonVoidPop && target.ReturnType.Name != "Void")
+                il.Emit(OpCodes.Pop);
+
+            return firstInstruction;
         }
 
         /// <summary>
@@ -318,17 +465,12 @@ namespace OTA.Patcher
             if (!method.HasBody) throw new InvalidOperationException("Method must have a body.");
             if (method.ReturnType.Name == "Void")
             {
-                //Import the callbacks to the calling methods assembly
-                var impBegin = method.Module.Import(begin);
-                var impEnd = method.Module.Import(end);
-
-                var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
-
                 //Create the new replacement method
                 var wrapped = new MethodDefinition(method.Name, MethodAttributes.Public, method.ReturnType);
+                var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
 
                 //Rename the existing method, and replace it
-                method.Name = method.Name + "_wrapped";
+                method.Name = method.Name + WrappedMethodNameSuffix;
                 method.ReplaceWith(wrapped);
 
                 //Copy over parameters
@@ -341,106 +483,19 @@ namespace OTA.Patcher
                 //Place the new method in the declaring type of the method we are cloning
                 method.DeclaringType.Methods.Add(wrapped);
 
-                //Now, create the IL body
-                var il = wrapped.Body.GetILProcessor();
-
-                //Execute the begin hook
-                if (instanceMethod)
-                    il.Emit(OpCodes.Ldarg_0);
-                if (method.HasParameters)
-                    for (var i = 0; i < method.Parameters.Count; i++)
-                        il.Emit(OpCodes.Ldarg, method.Parameters[i]);
-                il.Emit(OpCodes.Call, impBegin);
-
-                //Create the cancel return if required.
-                Instruction beginResult = null; //Will eventually be transformed to a Brtrue_S in order to transfer to the normal code.
-                if (beginIsCancellable)
-                {
-                    beginResult = il.Create(OpCodes.Nop);
-                    il.Append(beginResult);
-
-                    //Emit the cancel handling
-                    if (wrapped.ReturnType.Name == "Void")
-                        il.Emit(OpCodes.Ret);
-                    else
-                    {
-                        throw new NotSupportedException("Not yet required, todo"); //TODO
-//                        //Return a default value
-//                        VariableDefinition vr1;
-//                        wrapped.Body.Variables.Add(vr1 = new VariableDefinition(impBegin.ReturnType));
-//
-//                        ////Initialise the variable
-//                        il.Emit(OpCodes.Ldloca_S, vr1);
-//                        il.Emit(OpCodes.Initobj, impBegin.ReturnType);
-//                        il.Emit(OpCodes.Ldloc, vr1);
-//
-//                        il.Emit(OpCodes.Ret);
-                    }
-                }
-                else if (impBegin.ReturnType.Name != "Void")
-                    il.Emit(OpCodes.Pop);
+                var beginResult = wrapped.InjectBeginCallback(begin, instanceMethod, beginIsCancellable);
 
                 //Execute the actual code
-                //If the call is an instance method, then ensure the Ldarg_0 is emitted.
-                if (instanceMethod)
-                {
-                    //Set the instruction to be resumed upon not cancelling, if not already
-                    var instance = il.Create(OpCodes.Ldarg_0);
-                    if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
-                    {
-                        beginResult.OpCode = OpCodes.Brtrue_S;
-                        beginResult.Operand = instance;
-                    }
-
-                    il.Append(instance);
-                }
-
-                //Create parameters - TODO call optimise
-                if (method.HasParameters)
-                    for (var i = 0; i < method.Parameters.Count; i++)
-                    {
-                        var prm = il.Create(OpCodes.Ldarg, method.Parameters[i]);
-
-                        //Set the instruction to be resumed upon not cancelling, if not already
-                        if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
-                        {
-                            beginResult.OpCode = OpCodes.Brtrue_S;
-                            beginResult.Operand = prm;
-                        }
-
-                        il.Append(prm);
-                    }
-
-                //Call the begin hook
-                var call = il.Create(OpCodes.Call, method);
+                var insFirstForMethod = wrapped.InjectMethodCall(method, instanceMethod);
                 //Set the instruction to be resumed upon not cancelling, if not already
                 if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
                 {
                     beginResult.OpCode = OpCodes.Brtrue_S;
-                    beginResult.Operand = call;
+                    beginResult.Operand = insFirstForMethod;
                 }
-                il.Append(call);
 
-                //If a value is returned, ensure it's removed from the stack
-                if (method.ReturnType.Name != "Void")
-                    il.Emit(OpCodes.Pop);
-                
-                //Execute the end hook
-                if (instanceMethod)
-                    il.Emit(OpCodes.Ldarg_0);
-                if (method.HasParameters)
-                    for (var i = 0; i < method.Parameters.Count; i++)
-                        il.Emit(OpCodes.Ldarg, method.Parameters[i]);
-                il.Emit(OpCodes.Call, impEnd);
-
-                //If the end call has a value, pop it for the time being
-                if (impEnd.ReturnType.Name != "Void")
-                    il.Emit(OpCodes.Pop);
-
-                //Exit the method
-                il.Emit(OpCodes.Ret);
-
-
+                wrapped.InjectEndCallback(end, instanceMethod);
+                wrapped.InjectMethodEnd();
 
                 //                var xstFirst = method.Body.Instructions.First();
                 ////                var xstLast = method.Body.Instructions.Last(x => x.OpCode == OpCodes.Ret);

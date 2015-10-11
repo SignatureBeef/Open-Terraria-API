@@ -108,7 +108,7 @@ namespace OTA.Callbacks
             if (ctx.ResultParam != null && ctx.ResultParam is double)
                 damage = (double)ctx.ResultParam; 
 
-            return ctx.Result == HookResult.DEFAULT; //If default then continue onto vanillacode
+            return ctx.Result == HookResult.DEFAULT; //If default then continue on to vanillacode
         }
 
         #region "Creation Calls"
@@ -229,6 +229,57 @@ namespace OTA.Callbacks
             };
 
             HookPoints.NpcTransform.Invoke(ref ctx, ref args);
+        }
+
+        public static bool OnDropLootBegin(ref int itemId, int x, int y, int width, int height, int type, int stack = 1, bool noBroadcast = false, int prefix = 0, bool noGrabDelay = false, bool reverseLookup = false)
+        {
+            itemId = 0;
+
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcDropLoot()
+            {
+                State = MethodState.Begin,
+
+                X = x,
+                Y = y,
+                Width = width,
+                Height = height,
+                Type = type,
+                Stack = stack,
+                NoBroadcast = noBroadcast,
+                Prefix = prefix,
+                NoGrabDelay = noGrabDelay,
+                ReverseLookup = reverseLookup
+            };
+
+            HookPoints.NpcDropLoot.Invoke(ref ctx, ref args);
+
+            if (ctx.ResultParam != null && ctx.ResultParam is int)
+                itemId = (int)ctx.ResultParam; 
+
+            return ctx.Result == HookResult.DEFAULT; //If default then continue on to vanillacode
+        }
+
+        public static void OnDropLootEnd(int x, int y, int width, int height, int type, int stack = 1, bool noBroadcast = false, int prefix = 0, bool noGrabDelay = false, bool reverseLookup = false)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcDropLoot()
+            {
+                State = MethodState.End,
+
+                X = x,
+                Y = y,
+                Width = width,
+                Height = height,
+                Type = type,
+                Stack = stack,
+                NoBroadcast = noBroadcast,
+                Prefix = prefix,
+                NoGrabDelay = noGrabDelay,
+                ReverseLookup = reverseLookup
+            };
+
+            HookPoints.NpcDropLoot.Invoke(ref ctx, ref args);
         }
     }
 }

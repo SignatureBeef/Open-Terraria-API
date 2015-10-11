@@ -13,6 +13,18 @@ namespace OTA.Patcher
             this._asm = assembly;
         }
 
+        public TypeSystem TypeSystem
+        {
+            get
+            { return _asm.MainModule.TypeSystem; }
+        }
+
+        public TypeDefinition Entity
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "Entity"); }
+        }
+
         public TypeDefinition Item
         {
             get

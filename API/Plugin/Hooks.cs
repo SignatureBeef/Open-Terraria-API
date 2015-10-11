@@ -63,6 +63,7 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.ItemSetDefaultsByName> ItemSetDefaultsByName;
         public static readonly HookPoint<HookArgs.ItemSetDefaultsByType> ItemSetDefaultsByType;
         public static readonly HookPoint<HookArgs.LiquidFlowReceived> LiquidFlowReceived;
+        public static readonly HookPoint<HookArgs.NpcDropLoot> NpcDropLoot;
         public static readonly HookPoint<HookArgs.NpcHurt> NpcHurt;
         public static readonly HookPoint<HookArgs.NpcKilled> NpcKilled;
         public static readonly HookPoint<HookArgs.NpcNetDefaults> NpcNetDefaults;
@@ -154,6 +155,7 @@ namespace OTA.Plugin
             ItemSetDefaultsByName = new HookPoint<HookArgs.ItemSetDefaultsByName>("item-set-defaults-by-name");
             ItemSetDefaultsByType = new HookPoint<HookArgs.ItemSetDefaultsByType>("item-set-defaults-by-type");
             LiquidFlowReceived = new HookPoint<HookArgs.LiquidFlowReceived>("liquid-flow-received");
+            NpcDropLoot = new HookPoint<HookArgs.NpcDropLoot>("npc-drop-loog");
             NpcHurt = new HookPoint<HookArgs.NpcHurt>("npc-hurt");
             NpcKilled = new HookPoint<HookArgs.NpcKilled>("npc-killed");
             NpcNetDefaults = new HookPoint<HookArgs.NpcNetDefaults>("npc-net-defaults");
@@ -395,6 +397,22 @@ namespace OTA.Plugin
                 get { return !Lava; }
                 set { Lava = !value; }
             }
+        }
+
+        public struct NpcDropLoot
+        {
+            public MethodState State { get; set; }
+
+            public int X { get; set; }
+            public int Y { get; set; }
+            public int Width { get; set; }
+            public int Height { get; set; }
+            public int Type { get; set; }
+            public int Stack { get; set; }
+            public bool NoBroadcast { get; set; }
+            public int Prefix { get; set; }
+            public bool NoGrabDelay { get; set; }
+            public bool ReverseLookup { get; set; }
         }
 
         public struct NpcHurt
