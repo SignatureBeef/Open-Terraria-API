@@ -69,6 +69,7 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.NpcSetDefaultsByName> NpcSetDefaultsByName;
         public static readonly HookPoint<HookArgs.NpcSetDefaultsByType> NpcSetDefaultsByType;
         public static readonly HookPoint<HookArgs.NpcSpawn> NpcSpawn;
+        public static readonly HookPoint<HookArgs.NpcStrike> NpcStrike;
         public static readonly HookPoint<HookArgs.PlayerChat> PlayerChat;
         public static readonly HookPoint<HookArgs.PlayerDataReceived> PlayerDataReceived;
         public static readonly HookPoint<HookArgs.PlayerHurt> PlayerHurt;
@@ -158,6 +159,7 @@ namespace OTA.Plugin
             NpcSetDefaultsByName = new HookPoint<HookArgs.NpcSetDefaultsByName>("npc-set-defaults-by-name");
             NpcSetDefaultsByType = new HookPoint<HookArgs.NpcSetDefaultsByType>("npc-set-defaults-by-type");
             NpcSpawn = new HookPoint<HookArgs.NpcSpawn>("npc-spawn");
+            NpcStrike = new HookPoint<HookArgs.NpcStrike>("npc-strike");
             PlayerChat = new HookPoint<HookArgs.PlayerChat>("player-chat");
             PlayerDataReceived = new HookPoint<HookArgs.PlayerDataReceived>("player-data-received");
             PlayerHurt = new HookPoint<HookArgs.PlayerHurt>("player-hurt");
@@ -443,6 +445,12 @@ namespace OTA.Plugin
             public int Y { get; set; }
             public int Type { get; set; }
             public int Start { get; set; }
+        }
+
+        public struct NpcStrike
+        {
+            public Terraria.NPC Npc { get; set; }
+            public double Damage { get; set; }
         }
 
         public struct PlayerChat

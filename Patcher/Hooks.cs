@@ -79,8 +79,8 @@ namespace OTA.Patcher
                 line = String.Format(Fmt, x + 1, hooks.Length);
                 Console.Write(line);
 
-                hooks[x].Invoke(this, null);
 
+                hooks[x].Invoke(this, null);
             }
 
             //Clear ready for the Ok\n
@@ -642,6 +642,34 @@ namespace OTA.Patcher
             var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
 
             setDefaults.Wrap(cbkBegin, cbkEnd, true);
+        }
+
+        [ServerHook]
+        private void HookNpcOnStrike()
+        {
+            var impCall = Terraria.Import(API.NPCCallback.Method("OnStrike"));
+            var target = Terraria.NPC.Method("StrikeNPC");
+
+            var il = target.Body.GetILProcessor();
+
+            var first = target.Body.Instructions.First();
+
+            //TODO cecil extension
+
+            //Create our variable, to hold the modified damage
+            VariableDefinition vrbResult = null;
+            target.Body.Variables.Add(vrbResult = new VariableDefinition("otaResult", (impCall.Parameters[1 /*skip the npc insance*/].ParameterType as ByReferenceType).ElementType));
+
+            //Create the API callback, and return the modified damage variable if cancelled
+            il.InsertBefore(first, il.Create(OpCodes.Ldarg_0)); //NPC instance
+            il.InsertBefore(first, il.Create(OpCodes.Ldloca_S, vrbResult)); //Loads our variable as a reference
+            il.InsertBefore(first, il.Create(OpCodes.Call, impCall)); //Call the hook
+//                il.InsertBefore(first, il.Create(OpCodes.Pop));
+
+            //If the hook cancelled the rest of the code, then we can return our modified damage variable
+            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
+            il.InsertBefore(first, il.Create(OpCodes.Ldloc, vrbResult));
+            il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
     }
 }

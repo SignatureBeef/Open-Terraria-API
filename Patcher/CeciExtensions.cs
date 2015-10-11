@@ -8,6 +8,11 @@ namespace OTA.Patcher
 {
     public static class CecilMethodExtensions
     {
+        public static MethodDefinition Method(this TypeDefinition typeDefinition, string name)
+        {
+            return typeDefinition.Methods.Single(x => x.Name == name);
+        }
+
         public static IEnumerable<MethodDefinition> MatchMethodByParameters(this TypeDefinition source, 
                                                                             IEnumerable<ParameterDefinition> parameters,
                                                                             string methodNameStartWith = null)

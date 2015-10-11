@@ -91,6 +91,26 @@ namespace OTA.Callbacks
         }
         #endif
 
+        public static bool OnStrike(Terraria.NPC npc, ref double damage)
+        {
+            damage = 0;
+
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcStrike()
+            {
+                Npc = npc,
+                Damage = damage
+            };
+
+            HookPoints.NpcStrike.Invoke(ref ctx, ref args);
+
+            damage = args.Damage;
+            if (ctx.ResultParam != null && ctx.ResultParam is double)
+                damage = (double)ctx.ResultParam; 
+
+            return ctx.Result == HookResult.DEFAULT; //If default then continue onto vanillacode
+        }
+
         #region "Creation Calls"
 
         public static void OnSetDefaultsBegin(Terraria.NPC npc, int type, float scaleOverride = -1)
@@ -169,12 +189,12 @@ namespace OTA.Callbacks
         {
             var ctx = HookContext.Empty;
             var args = new HookArgs.NpcNetDefaults()
-                {
-                    State = MethodState.End,
-                    Type = type,
+            {
+                State = MethodState.End,
+                Type = type,
 
-                    Npc = npc
-                };
+                Npc = npc
+            };
 
             HookPoints.NpcNetDefaults.Invoke(ref ctx, ref args);
         }
