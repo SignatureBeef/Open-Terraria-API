@@ -37,6 +37,11 @@ namespace OTA.Plugin
             Major = major;
             Minor = minor;
         }
+
+        public override string ToString()
+        {
+            return $"{Major}.{Minor}";
+        }
     }
 
     /// <summary>
@@ -44,6 +49,14 @@ namespace OTA.Plugin
     /// </summary>
     public abstract class BasePlugin
     {
+        public OTAVersionAttribute OTAVersion
+        {
+            get
+            { 
+                return GetType().GetCustomAttributes().Where(x => x is OTAVersionAttribute).SingleOrDefault() as OTAVersionAttribute;
+            }
+        }
+
         /// <summary>
         /// Name of the plugin
         /// </summary>
@@ -63,11 +76,6 @@ namespace OTA.Plugin
         /// Plugin version
         /// </summary>
         public string Version { get; set; }
-
-        /// <summary>
-        /// Latest compatible TDSM build
-        /// </summary>
-        public int TDSMBuild { get; set; }
 
         /// <summary>
         /// Whether to enable the plugin right after loading, so it could intercept the PluginLoadRequest hook for other plugins

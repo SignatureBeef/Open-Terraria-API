@@ -26,12 +26,16 @@ namespace OTA
     /// </summary>
     public static class Globals
     {
-        public const Int32 Build = 6;
-        public const ReleasePhase BuildPhase = ReleasePhase.Beta;
+        public static class Version
+        {
+            public const Int32 Major = 1;
+            public const Int32 Minor = 0;
+            public const ReleasePhase Phase = ReleasePhase.Beta;
+        }
 
         public static string BuildInfo
         {
-            get { return Build + PhaseToSuffix(BuildPhase); }
+            get { return String.Format("{0}.{1}{2}", Version.Major, Version.Minor, PhaseToSuffix(Version.Phase)); }
         }
 
         public const Int32 TerrariaRelease = 146;

@@ -17,7 +17,7 @@ namespace Microsoft.Xna.Framework
 
         public static void SetTitle(string title)
         {
-            Console.Title = title + " | Open Terraria API build " + Globals.Build + Globals.PhaseToSuffix(Globals.BuildPhase);
+            Console.Title = title + " | Open Terraria API build " + Globals.BuildInfo;
         }
 
         public IntPtr Handle { get; set; }

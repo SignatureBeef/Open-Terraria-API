@@ -167,9 +167,9 @@ namespace OTA
                 foreach (var kv in _plugins)
                 {
                     var plugin = kv.Value;
-                    if (plugin.TDSMBuild != Globals.Build)
+                    if (plugin.OTAVersion.Minor != Globals.Version.Minor) //At this stage all plugins should be the same Major.
                     {
-                        ProgramLog.Error.Log("[WARNING] Plugin build incorrect: " + plugin.Name);
+                        ProgramLog.Error.Log($"[WARNING] Plugin {plugin.Name} may not work correctly as it is built for {plugin.OTAVersion.Minor}");
                     }
                 }
             }
@@ -399,6 +399,20 @@ namespace OTA
 
             if (plugin != null)
             {
+                //20151011 New versioning
+                //  - Ensure they specify the attribute
+                //  - If the major is not the same then it will most likey cause problems
+                if (plugin.OTAVersion == null)
+                {
+                    ProgramLog.Plugin.Log("Cannot load plugin {0} as it does not specify an OTAVersionAtrribute.", plugin.Name);
+                    return null;
+                }
+                else if (plugin.OTAVersion.Major != Globals.Version.Major)
+                {
+                    ProgramLog.Plugin.Log("Cannot load plugin {0} as it is not supported by this version.", plugin.Name);
+                    return null;
+                }
+
                 plugin.Path = file;
                 plugin.PathTimestamp = fileInfo.LastWriteTimeUtc;
                 if (plugin.Name == null)

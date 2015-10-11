@@ -111,9 +111,8 @@ namespace OTA.Callbacks
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            ProgramLog.Log("Open Terraria API build {0}{1} running on {2}",
-                Globals.Build,
-                Globals.PhaseToSuffix(Globals.BuildPhase),
+            ProgramLog.Log("Open Terraria API build {0} running on {1}",
+                Globals.BuildInfo,
                 Tools.RuntimePlatform.ToString()
             );
             Console.ForegroundColor = Command.ConsoleSender.DefaultColour;

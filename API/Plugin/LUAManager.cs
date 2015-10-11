@@ -8,7 +8,7 @@ namespace OTA.Plugin
     /// <summary>
     /// The implementation to get LUA plugins working as an OTA plugin
     /// </summary>
-    [OTAVersion(1, 1)]
+    [OTAVersion(1, 0)]
     public class LUAPlugin : BasePlugin
     {
         private NLua.Lua _ctx;
@@ -50,7 +50,11 @@ namespace OTA.Plugin
 
             if (plg != null)
             {
-                this.TDSMBuild = (int)(double)plg["TDSMBuild"];
+//                this.TDSMBuild = (int)(double)plg["TDSMBuild"];
+                //UNTESTED
+                this.OTAVersion.Major = (int)(double)plg["OTAVersionMajor"];
+                this.OTAVersion.Minor = (int)(double)plg["OTAVersionMinor"];
+
                 this.Author = plg["Author"] as String;
                 this.Description = plg["Description"] as String;
                 this.Name = plg["Name"] as String;
