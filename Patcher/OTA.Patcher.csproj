@@ -98,9 +98,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CeciExtensions.cs" />
-    <Compile Include="TerrariaOrganiser.cs" />
-    <Compile Include="APIOrganiser.cs" />
     <Compile Include="HookInjector.cs" />
+    <Compile Include="Organisers\APIOrganiser.cs" />
+    <Compile Include="Organisers\TerrariaOrganiser.cs" />
+    <Compile Include="Organisers\Organiser.cs" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|x86' ">
@@ -184,4 +185,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Organisers\" />
+  </ItemGroup>
 </Project>

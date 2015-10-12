@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Mono.Cecil.Rocks;
+using OTA.Patcher.Organisers;
 
 namespace OTA.Patcher
 {
@@ -574,10 +575,54 @@ namespace OTA.Patcher
             setDefaults.Wrap(cbkBegin, cbkEnd);
         }
 
+        [ServerHook]
         private void HookCollisionPressurePlate()
         {
             //Step 1: Add the calling object as a parameter to Terraria.Collision.SwitchTiles
             //Setp 2: Inject cancellable IL before the HitSwitch branch
+            var switchTiles = Terraria.Collision.Method("SwitchTiles");
+
+            //--STEP 1
+            //Add the sender parameter
+            ParameterDefinition prmSender;
+            switchTiles.Parameters.Add(prmSender = new ParameterDefinition("sender", ParameterAttributes.None, Terraria.Import(API.Sender))
+                {
+                    HasDefault = true,
+                    IsOptional = true
+                });
+
+            //Update all references to add themselves (currently they are all senders!)
+            Terraria.ForEachInstruction((mth, ins) =>
+                {
+                    if (ins.OpCode == OpCodes.Call && ins.Operand == switchTiles)
+                    {
+                        var cil = mth.Body.GetILProcessor();
+                        cil.InsertBefore(ins, cil.Create(OpCodes.Ldarg_0));
+                    }
+                });
+
+            //--STEP 2
+            //Find where the HitSwitch call is (this is our unique reference)
+            var insHitSwitch = switchTiles.Body.Instructions.Single(x => x.OpCode == OpCodes.Call
+                                   && x.Operand is MethodReference
+                                   && (x.Operand as MethodReference).Name == "HitSwitch");
+            //Find the branch where we will append our code to
+            var insLdLocS = insHitSwitch.FindInstructionByOpCodeBefore(OpCodes.Brfalse_S);
+
+            //Import and get ready for injection
+            var hookCall = Terraria.Import(API.CollisionCallback.Method("OnPressurePlateTriggered"));
+            var il = switchTiles.Body.GetILProcessor();
+
+            //Add our call to the statement, and leave the result on the branch to take affect to the continutation of the statement
+            //These are in reverse order
+            var insSkipTo = insLdLocS.Operand as Instruction;
+            il.InsertAfter(insLdLocS, il.Create(OpCodes.Brfalse_S, insSkipTo)); //If our hook cancels, then we must skip the trigger
+            il.InsertAfter(insLdLocS, il.Create(OpCodes.Call, hookCall)); //Call our code
+            il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Previous.Operand as VariableDefinition)); //Load the Y
+            il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Operand as VariableDefinition)); //Load the X
+            il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldarg, prmSender)); //Load the sender (remember we added this in Step 1)
+
+            switchTiles.Body.OptimizeMacros();
         }
 
         [ServerHook]
@@ -737,6 +782,21 @@ namespace OTA.Patcher
             il.InsertBefore(insColorStart, il.Create(OpCodes.Blt, resumeInstruction));
 
             npcLoot.Body.OptimizeMacros();
+
+//            //Add the instance to DropLoot [still kills the stack]
+//            var dropLootCalls = npcLoot.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
+//                                    && x.Operand is MethodReference
+//                                    && (x.Operand as MethodReference).Name == "DropLoot").ToArray();
+//            dropLoot.Parameters.Add(new ParameterDefinition("npc", ParameterAttributes.None, Terraria.NPC)
+//                {
+//                    HasDefault = true,
+//                    IsOptional = true
+//                });
+//
+//            foreach (var call in dropLootCalls)
+//            {
+//                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
+//            }
         }
     }
 }

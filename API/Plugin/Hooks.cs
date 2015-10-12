@@ -54,6 +54,7 @@ namespace OTA.Plugin
 #if CLIENT || SERVER
         public static readonly HookPoint<HookArgs.ChestBreakReceived> ChestBreakReceived;
         public static readonly HookPoint<HookArgs.ChestOpenReceived> ChestOpenReceived;
+        public static readonly HookPoint<HookArgs.PressurePlateTriggered> PressurePlateTriggered;
         public static readonly HookPoint<HookArgs.DeathMessage> DeathMessage;
         public static readonly HookPoint<HookArgs.DoorStateChanged> DoorStateChanged;
         public static readonly HookPoint<HookArgs.GameUpdate> GameUpdate;
@@ -146,6 +147,7 @@ namespace OTA.Plugin
 #if CLIENT || SERVER
             ChestBreakReceived = new HookPoint<HookArgs.ChestBreakReceived>("chest-break-received");
             ChestOpenReceived = new HookPoint<HookArgs.ChestOpenReceived>("chest-open-received");
+            PressurePlateTriggered = new HookPoint<HookArgs.PressurePlateTriggered>("pressure-plate-triggered");
             DeathMessage = new HookPoint<HookArgs.DeathMessage>("death-message");
             DoorStateChanged = new HookPoint<HookArgs.DoorStateChanged>("door-state-changed");
             GameUpdate = new HookPoint<HookArgs.GameUpdate>("game-update");
@@ -312,6 +314,13 @@ namespace OTA.Plugin
             public int X { get; set; }
             public int Y { get; set; }
             public int ChestIndex { get; set; }
+        }
+
+        public struct PressurePlateTriggered
+        {
+            public Sender Sender { get; set; }
+            public int X { get; set; }
+            public int Y { get; set; }
         }
 
         public struct DoorStateChanged
