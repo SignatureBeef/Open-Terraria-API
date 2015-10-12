@@ -102,6 +102,10 @@
     <Compile Include="Organisers\APIOrganiser.cs" />
     <Compile Include="Organisers\TerrariaOrganiser.cs" />
     <Compile Include="Organisers\Organiser.cs" />
+    <Compile Include="Hooks\NpcHooks.cs" />
+    <Compile Include="Hooks\ItemHooks.cs" />
+    <Compile Include="Hooks\PlayerHooks.cs" />
+    <Compile Include="Hooks\ServerHooks.cs" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|x86' ">
@@ -187,5 +191,6 @@
   -->
   <ItemGroup>
     <Folder Include="Organisers\" />
+    <Folder Include="Hooks\" />
   </ItemGroup>
 </Project>
