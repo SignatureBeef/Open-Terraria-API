@@ -255,7 +255,9 @@ namespace OTA.Callbacks
             HookPoints.NpcDropLoot.Invoke(ref ctx, ref args);
 
             if (ctx.ResultParam != null && ctx.ResultParam is int)
-                itemId = (int)ctx.ResultParam; 
+                itemId = (int)ctx.ResultParam;
+            else if (ctx.Result == HookResult.IGNORE)
+                itemId = -1;
 
             return ctx.Result == HookResult.DEFAULT; //If default then continue on to vanillacode
         }

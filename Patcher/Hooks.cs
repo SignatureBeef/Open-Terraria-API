@@ -56,38 +56,6 @@ namespace OTA.Patcher
             API = new APIOrganiser(_self);
         }
 
-        /// <summary>
-        /// Grabs all available hooks and executes them to hook into the target assembly
-        /// </summary>
-        /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public void InjectHooks<T>()
-        {
-            var hooks = typeof(Injector)
-                .GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.GetCustomAttributes(typeof(T), false).Count() == 1)
-                .ToArray();
-
-            string line = null;
-
-            for (var x = 0; x < hooks.Length; x++)
-            {
-                const String Fmt = "Patching in hooks - {0}/{1}";
-
-                if (line != null)
-                    ConsoleHelper.ClearLine();
-
-                line = String.Format(Fmt, x + 1, hooks.Length);
-                Console.Write(line);
-
-                hooks[x].Invoke(this, null);
-            }
-
-            //Clear ready for the Ok\n
-            if (line != null)
-                ConsoleHelper.ClearLine();
-            Console.Write("Patching in hooks - ");
-        }
-
         [ServerHook]
         void OnPlayerKilled() //OnEntityHurt
         {
@@ -754,7 +722,21 @@ namespace OTA.Patcher
             }
 
 
-            //TODO find the "Main.item [num40].color = this.color;" call, and in the if, add && num40 > 0
+            //This section will add '&& num40 >= 0' to the statement above "Main.item [num40].color = this.color;"
+            var insColour = npcLoot.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldfld && x.Operand == Terraria.NPC.Field("color")); //Grab where the call is located
+            var insColorStart = insColour.FindInstructionByOpCodeBefore(OpCodes.Ldsfld); //Find the first instruction for the color call
+            var resumeInstruction = insColorStart.Previous.Operand as Instruction; //Find the instruction where it should be transferred to if false is evaludated
+
+            il = npcLoot.Body.GetILProcessor();
+
+            //Insert the num40 variable
+            il.InsertBefore(insColorStart, il.Create(OpCodes.Ldloc, (VariableDefinition)insColorStart.Next.Operand));
+            //Place 0 on the stack
+            il.InsertBefore(insColorStart, il.Create(OpCodes.Ldc_I4_0));
+            //Compare the current values on stack, using >=
+            il.InsertBefore(insColorStart, il.Create(OpCodes.Blt, resumeInstruction));
+
+            npcLoot.Body.OptimizeMacros();
         }
     }
 }
