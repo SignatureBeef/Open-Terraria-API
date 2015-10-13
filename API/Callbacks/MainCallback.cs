@@ -170,10 +170,10 @@ namespace OTA.Callbacks
                 using (var ctx = new OTA.Data.OTAContext())
                 {
                     ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
-                    {
-                        Username = "Test",
-                        Password = "Testing"
-                    });
+                        {
+                            Username = "Test",
+                            Password = "Testing"
+                        });
 
                     ctx.SaveChanges();
                 }
@@ -514,7 +514,7 @@ namespace OTA.Callbacks
             return ctx.Result == HookResult.DEFAULT; //Continue on
         }
 
-#if CLIENT
+        #if CLIENT
         /// <summary>
         /// The first call from Terraria.Main.Draw
         /// </summary>
@@ -613,6 +613,32 @@ namespace OTA.Callbacks
             Terraria.Main.tile = new OTA.Memory.TileCollection(x, y);
 #endif
         }
+            
+        //TODO move this out to a CommonCallback class or something?
+        public static bool OnMechSpawn(float x, float y, int type, int num, int num2, int num3, MechSpawnType sender)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.MechSpawn()
+            {
+                X = x,
+                Y = y,
+                Type = type,
+                Num = num,
+                Num2 = num2,
+                Num3 = num3,
+
+                Sender = sender
+            };
+
+            HookPoints.MechSpawn.Invoke(ref ctx, ref args);
+            return ctx.Result == HookResult.DEFAULT; //Continue on
+        }
+    }
+
+    public enum MechSpawnType : int
+    {
+        Item = 1,
+        Npc
     }
 }
 

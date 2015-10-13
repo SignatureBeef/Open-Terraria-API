@@ -221,5 +221,43 @@ namespace OTA.Patcher
 
             switchTiles.Body.OptimizeMacros();
         }
+
+        [ServerHook]
+        private void HookMechSpawn()
+        {
+            foreach (var type in new TypeDefinition[] 
+                {
+                    Terraria.NPC,
+                    Terraria.Item
+                })
+            {
+                var vanilla = type.Methods.Single(x => x.Name == "MechSpawn");
+                var hook = Terraria.Import(API.MainCallback.Method("OnMechSpawn"));
+
+                var insLdLoc1 = vanilla.Body.Instructions.Last(x => x.OpCode == OpCodes.Ldloc_1);
+                var insLdcI40 = vanilla.Body.Instructions.Last(x => x.OpCode == OpCodes.Ldc_I4_0);
+
+                var il = vanilla.Body.GetILProcessor();
+
+                //Add all the parameters
+                foreach (var prm in vanilla.Parameters)
+                    il.InsertBefore(insLdLoc1, il.Create(OpCodes.Ldarg, prm));
+
+                //Add the first three variables
+                for (var x = 0; x < 3; x++)
+                    il.InsertBefore(insLdLoc1, il.Create(OpCodes.Ldloc, vanilla.Body.Variables[x]));
+
+                if (Terraria.Item == vanilla.DeclaringType)
+                    il.InsertBefore(insLdLoc1, il.Create(OpCodes.Ldc_I4_1));
+                else if (Terraria.NPC == vanilla.DeclaringType)
+                    il.InsertBefore(insLdLoc1, il.Create(OpCodes.Ldc_I4_2));
+                else throw new NotSupportedException("Target is not supported");
+
+                il.InsertBefore(insLdLoc1, il.Create(OpCodes.Call, hook));
+                il.InsertBefore(insLdLoc1, il.Create(OpCodes.Brfalse_S, insLdcI40));
+
+                vanilla.Body.OptimizeMacros();
+            }
+        }
     }
 }

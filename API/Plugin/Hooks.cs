@@ -64,6 +64,7 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.ItemSetDefaultsByName> ItemSetDefaultsByName;
         public static readonly HookPoint<HookArgs.ItemSetDefaultsByType> ItemSetDefaultsByType;
         public static readonly HookPoint<HookArgs.LiquidFlowReceived> LiquidFlowReceived;
+        public static readonly HookPoint<HookArgs.MechSpawn> MechSpawn;
         public static readonly HookPoint<HookArgs.NpcDropBossBag> NpcDropBossBag;
         public static readonly HookPoint<HookArgs.NpcDropLoot> NpcDropLoot;
         public static readonly HookPoint<HookArgs.NpcHurt> NpcHurt;
@@ -158,6 +159,7 @@ namespace OTA.Plugin
             ItemSetDefaultsByName = new HookPoint<HookArgs.ItemSetDefaultsByName>("item-set-defaults-by-name");
             ItemSetDefaultsByType = new HookPoint<HookArgs.ItemSetDefaultsByType>("item-set-defaults-by-type");
             LiquidFlowReceived = new HookPoint<HookArgs.LiquidFlowReceived>("liquid-flow-received");
+            MechSpawn = new HookPoint<HookArgs.MechSpawn>("mech-spawn");
             NpcDropBossBag = new HookPoint<HookArgs.NpcDropBossBag>("npc-drop-boss-bag");
             NpcDropLoot = new HookPoint<HookArgs.NpcDropLoot>("npc-drop-loot");
             NpcHurt = new HookPoint<HookArgs.NpcHurt>("npc-hurt");
@@ -408,6 +410,17 @@ namespace OTA.Plugin
                 get { return !Lava; }
                 set { Lava = !value; }
             }
+        }
+
+        public struct MechSpawn
+        {
+            public float X { get; set; }
+            public float Y { get; set; }
+            public int Type { get; set; }
+            public int Num { get; set; }
+            public int Num2 { get; set; }
+            public int Num3 { get; set; }
+            public OTA.Callbacks.MechSpawnType Sender { get; set; }
         }
 
         public struct NpcDropBossBag
