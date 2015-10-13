@@ -283,5 +283,58 @@ namespace OTA.Callbacks
 
             HookPoints.NpcDropLoot.Invoke(ref ctx, ref args);
         }
+
+        public static bool OnDropBossBagBegin(ref int itemId, int x, int y, int width, int height, int type, int stack = 1, bool noBroadcast = false, int prefix = 0, bool noGrabDelay = false, bool reverseLookup = false)
+        {
+            itemId = 0;
+
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcDropBossBag()
+            {
+                State = MethodState.Begin,
+
+                X = x,
+                Y = y,
+                Width = width,
+                Height = height,
+                Type = type,
+                Stack = stack,
+                NoBroadcast = noBroadcast,
+                Prefix = prefix,
+                NoGrabDelay = noGrabDelay,
+                ReverseLookup = reverseLookup
+            };
+
+            HookPoints.NpcDropBossBag.Invoke(ref ctx, ref args);
+
+            if (ctx.ResultParam != null && ctx.ResultParam is int)
+                itemId = (int)ctx.ResultParam;
+            else if (ctx.Result == HookResult.IGNORE)
+                itemId = -1;
+
+            return ctx.Result == HookResult.DEFAULT; //If default then continue on to vanillacode
+        }
+
+        public static void OnDropBossBagEnd(int x, int y, int width, int height, int type, int stack = 1, bool noBroadcast = false, int prefix = 0, bool noGrabDelay = false, bool reverseLookup = false)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcDropBossBag()
+            {
+                State = MethodState.End,
+
+                X = x,
+                Y = y,
+                Width = width,
+                Height = height,
+                Type = type,
+                Stack = stack,
+                NoBroadcast = noBroadcast,
+                Prefix = prefix,
+                NoGrabDelay = noGrabDelay,
+                ReverseLookup = reverseLookup
+            };
+
+            HookPoints.NpcDropBossBag.Invoke(ref ctx, ref args);
+        }
     }
 }

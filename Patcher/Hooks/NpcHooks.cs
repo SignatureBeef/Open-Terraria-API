@@ -199,6 +199,92 @@ namespace OTA.Patcher
             //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
             //            }
         }
+
+        [ServerHook]
+        private void HookDropBossBags()
+        {
+            //Create an empty method with the same parameters as Terraria.Main.NewItem
+            //Then with the method body, add the hooks and the actual call to ""
+            //Replace all calls to NewItem in NPCLoot
+
+            var npcLoot = Terraria.NPC.Method("DropBossBags");
+            var newItem = Terraria.Item.Method("NewItem");
+
+            //Create the new DropLoot call in the Terraria.NPC class
+            var dropLoot = new MethodDefinition("DropBossBagItem", MethodAttributes.Public | MethodAttributes.Static, newItem.ReturnType);
+            Terraria.NPC.Methods.Add(dropLoot);
+
+            //Clone the parameters
+            foreach (var prm in newItem.Parameters)
+                dropLoot.Parameters.Add(prm);
+            //            //Add the this call to the end
+            //            dropLoot.Parameters.Add(new ParameterDefinition("npcId", ParameterAttributes.HasDefault, Terraria.TypeSystem.Int32));
+
+            //Collect the hooks
+            var apiMatch = API.NPCCallback.Methods.Where(x => x.Name.StartsWith("OnDropBossBag"));
+
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnDropBossBag Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            //Create the value to hold the new item id
+            var il = dropLoot.Body.GetILProcessor();
+            var vrbItemId = new VariableDefinition("otaItem", (cbkBegin.Parameters[0].ParameterType as ByReferenceType).ElementType);
+            dropLoot.Body.Variables.Add(vrbItemId);
+
+            il.Emit(OpCodes.Ldloca_S, vrbItemId); //Loads our variable as a reference
+            var beginResult = dropLoot.InjectBeginCallback(cbkBegin, false, false);
+
+            var insFirstForMethod = dropLoot.InjectMethodCall(newItem, false, false);
+            il.Emit(OpCodes.Stloc, vrbItemId);
+
+            //Set the instruction to be resumed upon not cancelling, if not already
+            if (beginResult != null && beginResult.OpCode == OpCodes.Pop)
+            {
+                beginResult.OpCode = OpCodes.Brtrue_S;
+                beginResult.Operand = insFirstForMethod;
+
+                il.InsertAfter(beginResult, il.Create(OpCodes.Ret));
+                il.InsertAfter(beginResult, il.Create(OpCodes.Ldloc, vrbItemId));
+            }
+
+            dropLoot.InjectEndCallback(cbkEnd, false);
+
+            il.Emit(OpCodes.Ldloc, vrbItemId);
+            il.Emit(OpCodes.Ret);
+
+            var itemCalls = npcLoot.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
+                && x.Operand is MethodReference
+                && (x.Operand as MethodReference).Name == "NewItem"
+                && (x.Operand as MethodReference).DeclaringType.Name == "Item").ToArray();
+
+            //            var whoAmI = Terraria.Entity.Field("whoAmI");
+            foreach (var call in itemCalls)
+            {
+                call.Operand = dropLoot;
+                //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
+                //                il.InsertBefore(call, il.Create(OpCodes.Ldfld, whoAmI));
+            }
+
+
+            npcLoot.Body.OptimizeMacros();
+
+            //            //Add the instance to DropLoot [still kills the stack]
+            //            var dropLootCalls = npcLoot.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
+            //                                    && x.Operand is MethodReference
+            //                                    && (x.Operand as MethodReference).Name == "DropLoot").ToArray();
+            //            dropLoot.Parameters.Add(new ParameterDefinition("npc", ParameterAttributes.None, Terraria.NPC)
+            //                {
+            //                    HasDefault = true,
+            //                    IsOptional = true
+            //                });
+            //
+            //            foreach (var call in dropLootCalls)
+            //            {
+            //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
+            //            }
+        }
     }
 }
 
