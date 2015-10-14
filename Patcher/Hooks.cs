@@ -83,12 +83,19 @@ namespace OTA.Patcher
             }
         }
 
-//        [ServerHook]
-//        private void HookHardModeTileUpdates()
-//        {
-//            //Inject a custom PlaceTile, that returns a bool
-//            //If false, then return/break
-//        }
+        [ServerHook]
+        private void ChangeArchitecture()
+        {
+            _asm.MainModule.Attributes = _self.MainModule.Attributes;
+            _asm.MainModule.Architecture = _self.MainModule.Architecture;
+        }
+
+        //        [ServerHook]
+        //        private void HookHardModeTileUpdates()
+        //        {
+        //            //Inject a custom PlaceTile, that returns a bool
+        //            //If false, then return/break
+        //        }
 
         //        [ServerHook]
         //        private void HookHardModeTileUpdates()
