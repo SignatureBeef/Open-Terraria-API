@@ -319,6 +319,26 @@
     <Compile Include="Callbacks\ItemCallback.cs" />
     <Compile Include="Callbacks\CollisionCallback.cs" />
     <Compile Include="Callbacks\ProjectileCallback.cs" />
+    <Compile Include="Plugin\HookArgs\Server\AddBan.cs" />
+    <Compile Include="Plugin\HookArgs\Server\ConfigurationLine.cs" />
+    <Compile Include="Plugin\HookArgs\Server\ConsoleMessageReceived.cs" />
+    <Compile Include="Plugin\HookArgs\Server\Command.cs" />
+    <Compile Include="Plugin\HookArgs\Server\NameConflict.cs" />
+    <Compile Include="Plugin\HookArgs\Server\NewConnection.cs" />
+    <Compile Include="Plugin\HookArgs\Server\ParseCommandLineArguments.cs" />
+    <Compile Include="Plugin\HookArgs\Server\PlayerAuthenticationChanged.cs" />
+    <Compile Include="Plugin\HookArgs\Server\PlayerAuthenticationChanging.cs" />
+    <Compile Include="Plugin\HookArgs\Server\PlayerEnteredGame.cs" />
+    <Compile Include="Plugin\HookArgs\Server\PlayerEnteringGame.cs" />
+    <Compile Include="Plugin\HookArgs\Server\PlayerLeftGame.cs" />
+    <Compile Include="Plugin\HookArgs\Server\PlayerPassReceived.cs" />
+    <Compile Include="Plugin\HookArgs\Server\PlayerPreGreeting.cs" />
+    <Compile Include="Plugin\HookArgs\Server\ServerStateChange.cs" />
+    <Compile Include="Plugin\HookArgs\Server\ServerPassReceived.cs" />
+    <Compile Include="Plugin\HookArgs\Server\ServerTick.cs" />
+    <Compile Include="Plugin\HookArgs\Server\ServerUpdate.cs" />
+    <Compile Include="Plugin\HookArgs\Server\StartCommandProcessing.cs" />
+    <Compile Include="Plugin\HookArgs\Server\WorldAutoSave.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -336,4 +356,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Plugin\HookArgs\" />
+    <Folder Include="Plugin\HookArgs\Server\" />
+    <Folder Include="Plugin\HookArgs\Client\" />
+    <Folder Include="Plugin\HookArgs\Multi\" />
+  </ItemGroup>
 </Project>

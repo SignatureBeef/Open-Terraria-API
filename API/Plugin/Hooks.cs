@@ -202,120 +202,12 @@ namespace OTA.Plugin
         End
     }
 
-    public static class HookArgs
+    public static partial class HookArgs
     {
 #if CLIENT
         public struct Draw { public MethodState State { get; set; } }
         public struct Update { public MethodState State { get; set; } }
         public struct UpdateClient { public MethodState State { get; set; } }
-#endif
-
-#if SERVER
-        public struct AddBan
-        {
-            public string RemoteAddress { get; set; }
-        }
-
-        public struct ConfigurationLine
-        {
-            public string Key { get; set; }
-            public string Value { get; set; }
-        }
-
-        public struct ConsoleMessageReceived
-        {
-            public string Message { get; set; }
-            public OTA.Logging.SendingLogger Logger { get; set; }
-        }
-
-        public struct Command
-        {
-            public string Prefix { get; internal set; }
-            public ArgumentList Arguments { get; set; }
-            public string ArgumentString { get; set; }
-        }
-
-        public struct NameConflict
-        {
-            public Terraria.Player Connectee { get; set; }
-            public int BufferId { get; set; }
-        }
-
-        public struct NewConnection
-        {
-        }
-
-        public struct ParseCommandLineArguments
-        {
-        }
-
-        public struct PlayerAuthenticationChanged
-        {
-            public string AuthenticatedAs { get; set; }
-            public string AuthenticatedBy { get; set; }
-        }
-
-        public struct PlayerAuthenticationChanging
-        {
-            public string AuthenticatedAs { get; set; }
-            public string AuthenticatedBy { get; set; }
-        }
-
-        public struct PlayerEnteredGame
-        {
-            public int Slot { get; set; }
-        }
-
-        public struct PlayerEnteringGame
-        {
-            public int Slot { get; set; }
-        }
-
-        public struct PlayerLeftGame
-        {
-            public int Slot { get; set; }
-        }
-
-        public struct PlayerPassReceived
-        {
-            public string Password { get; set; }
-        }
-
-        public struct PlayerPreGreeting
-        {
-            public int Slot { get; set; }
-            public string Motd { get; set; }
-            public Color MotdColour { get; set; }
-        }
-
-        public struct ServerStateChange
-        {
-            public ServerState ServerChangeState { get; set; }
-        }
-
-        public struct ServerPassReceived
-        {
-            public string Password { get; set; }
-        }
-
-        public struct ServerTick
-        {
-            public static readonly ServerTick Empty = new ServerTick();
-        }
-
-        public struct ServerUpdate
-        {
-            public static readonly ServerUpdate Begin = new ServerUpdate() { State = MethodState.Begin };
-            public static readonly ServerUpdate End = new ServerUpdate() { State = MethodState.End };
-
-            public MethodState State { get; set; }
-        }
-
-        public struct StartCommandProcessing
-        {
-        }
-
-        public struct WorldAutoSave { }
 #endif
 
 #if CLIENT || SERVER
