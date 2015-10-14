@@ -383,6 +383,7 @@
     <Compile Include="Plugin\HookArgs\Multi\SignTextSet.cs" />
     <Compile Include="Plugin\HookArgs\Multi\StatusTextChange.cs" />
     <Compile Include="Plugin\HookArgs\Multi\TileSquareReceived.cs" />
+    <Compile Include="Plugin\HookArgs\Multi\SendClientData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -177,16 +177,34 @@ namespace OTA.Sockets
         void ISocket.AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state)
         {
             #if Full_API
-            Main.ignoreErrors = false;
-            var bt = new byte[size];
-            Buffer.BlockCopy(data, offset, bt, 0, size);
-            this.Send(bt);
-            bt = null;
+//            Main.ignoreErrors = false;
+            var ctx = new HookContext()
+            {
+                Connection = this
+            };
+            var args = new HookArgs.SendClientData()
+            {
+                Data = data,
+                Offset = offset,
+                Size = size,
+                Callback = callback,
+                State = state
+            };
 
-            if (callback != null)
-                callback(state);
+            HookPoints.SendClientData.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.DEFAULT)
+            {
+                var bt = new byte[size];
+                Buffer.BlockCopy(data, offset, bt, 0, size);
+                this.Send(bt);
+                bt = null;
+
+                if (callback != null)
+                    callback(state);
             
-            this.Flush();
+                this.Flush();
+            }
             #endif
         }
 

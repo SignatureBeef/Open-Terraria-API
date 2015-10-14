@@ -78,6 +78,7 @@
         public static readonly HookPoint<HookArgs.ProjectileReceived> ProjectileReceived;
         public static readonly HookPoint<HookArgs.ProjectileSetDefaults> ProjectileSetDefaults;
         public static readonly HookPoint<HookArgs.ReceiveNetMessage> ReceiveNetMessage;
+        public static readonly HookPoint<HookArgs.SendClientData> SendClientData;
         public static readonly HookPoint<HookArgs.SendNetMessage> SendNetMessage;
         public static readonly HookPoint<HookArgs.SignTextGet> SignTextGet;
         public static readonly HookPoint<HookArgs.SignTextSet> SignTextSet;
@@ -176,6 +177,7 @@
             ProjectileReceived = new HookPoint<HookArgs.ProjectileReceived>("projectile-received");
             ProjectileSetDefaults = new HookPoint<HookArgs.ProjectileSetDefaults>("projectile-set-defaults");
             ReceiveNetMessage = new HookPoint<HookArgs.ReceiveNetMessage>("receive-net-message");
+            SendClientData = new HookPoint<HookArgs.SendClientData>("send-client-data");
             SendNetMessage = new HookPoint<HookArgs.SendNetMessage>("send-net-message");
             SignTextGet = new HookPoint<HookArgs.SignTextGet>("sign-text-get");
             SignTextSet = new HookPoint<HookArgs.SignTextSet>("sign-text-set");
