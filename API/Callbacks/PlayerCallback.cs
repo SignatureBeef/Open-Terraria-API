@@ -90,7 +90,7 @@ namespace OTA.Callbacks
             return ctx.Result != HookResult.IGNORE;
         }
         
-#else
+        #else
         public static bool OnPlayerHurt(object player, int damage, int hitDirection, bool pvp = false, bool quiet = false, string deathText = " was slain...", bool crit = false, int cooldownCounter = -1)
         {
             return false;
@@ -101,6 +101,22 @@ namespace OTA.Callbacks
             return false;
         }
         #endif
+
+        public static bool OnNameCollision(Terraria.Player connectee, int bufferId)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NameConflict()
+            {
+                Connectee = connectee,
+                BufferId = bufferId
+            };
+
+            HookPoints.NameConflict.Invoke(ref ctx, ref args);
+
+            if (ctx.CheckForKick()) return false;
+
+            return ctx.Result == HookResult.DEFAULT; //Continue on to kicking
+        }
     }
 }
 

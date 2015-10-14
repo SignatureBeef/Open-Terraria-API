@@ -28,6 +28,7 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.Command> Command;
         public static readonly HookPoint<HookArgs.ConfigurationLine> ConfigurationLine;
         public static readonly HookPoint<HookArgs.ConsoleMessageReceived> ConsoleMessageReceived;
+        public static readonly HookPoint<HookArgs.NameConflict> NameConflict;
         public static readonly HookPoint<HookArgs.NewConnection> NewConnection;
         public static readonly HookPoint<HookArgs.ParseCommandLineArguments> ParseCommandLineArguments;
         public static readonly HookPoint<HookArgs.PlayerAuthenticationChanged> PlayerAuthenticationChanged;
@@ -130,6 +131,7 @@ namespace OTA.Plugin
             ConfigurationLine = new HookPoint<HookArgs.ConfigurationLine>("config-line");
             ConsoleMessageReceived = new HookPoint<HookArgs.ConsoleMessageReceived>("console-message-received");
             NewConnection = new HookPoint<HookArgs.NewConnection>("new-connection");
+            NameConflict = new HookPoint<HookArgs.NameConflict>("name-conflict");
             ParseCommandLineArguments = new HookPoint<HookArgs.ParseCommandLineArguments>("parse-cmd-args");
             PlayerAuthenticationChanged = new HookPoint<HookArgs.PlayerAuthenticationChanged>("player-auth-change");
             PlayerAuthenticationChanging = new HookPoint<HookArgs.PlayerAuthenticationChanging>("player-auth-changing");
@@ -227,6 +229,12 @@ namespace OTA.Plugin
             public string Prefix { get; internal set; }
             public ArgumentList Arguments { get; set; }
             public string ArgumentString { get; set; }
+        }
+
+        public struct NameConflict
+        {
+            public Terraria.Player Connectee { get; set; }
+            public int BufferId { get; set; }
         }
 
         public struct NewConnection

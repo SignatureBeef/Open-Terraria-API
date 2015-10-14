@@ -170,7 +170,7 @@ namespace OTA.Patcher
 
             //This section will add '&& num40 >= 0' to the statement above "Main.item [num40].color = this.color;"
             var insColour = npcLoot.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldfld && x.Operand == Terraria.NPC.Field("color")); //Grab where the call is located
-            var insColorStart = insColour.FindInstructionByOpCodeBefore(OpCodes.Ldsfld); //Find the first instruction for the color call
+            var insColorStart = insColour.FindPreviousInstructionByOpCode(OpCodes.Ldsfld); //Find the first instruction for the color call
             var resumeInstruction = insColorStart.Previous.Operand as Instruction; //Find the instruction where it should be transferred to if false is evaludated
 
             il = npcLoot.Body.GetILProcessor();

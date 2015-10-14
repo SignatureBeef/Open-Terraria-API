@@ -38,8 +38,8 @@ namespace OTA.Patcher
             //Remove the Concat with the Entity name+death-message and leave the message
             //We will reproduce this in the API so plugins can have full control
             var matches = mth.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
-                && x.Operand is MethodReference
-                && (x.Operand as MethodReference).Name == "Concat")
+                              && x.Operand is MethodReference
+                              && (x.Operand as MethodReference).Name == "Concat")
                 .Reverse() /* Remove IL from the bottom up */
                 .ToArray();
 
@@ -176,6 +176,27 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
             il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
             il.InsertBefore(first, il.Create(OpCodes.Ret));
+        }
+
+        [ServerHook]
+        private void OnNameCollision()
+        {
+            var vanilla = Terraria.MessageBuffer.Method("GetData");
+            var callback = Terraria.Import(API.Player.Method("OnNameCollision"));
+            var il = vanilla.Body.GetILProcessor();
+
+            //Find our targets
+            var insNameIsTooLong = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldstr && x.Operand as string == "Name is too long.");
+            var insBrFalseS = insNameIsTooLong.FindPreviousInstructionByOpCode(OpCodes.Brfalse_S); //Where we inject our code after
+            var insPlayer = insNameIsTooLong.FindPreviousInstructionByOpCode(OpCodes.Ldloc_S).Operand as VariableDefinition; //For inserting the connecting player
+            var insReturnTo = insBrFalseS.FindNextInstructionByOpCode(OpCodes.Ldc_I4_2); //Where to resume non-cancelled code
+
+            il.InsertAfter(insBrFalseS, il.Create(OpCodes.Ret));
+            il.InsertAfter(insBrFalseS, il.Create(OpCodes.Brtrue_S, insReturnTo));
+            il.InsertAfter(insBrFalseS, il.Create(OpCodes.Call, callback));
+            il.InsertAfter(insBrFalseS, il.Create(OpCodes.Ldfld, Terraria.MessageBuffer.Field("whoAmI")));
+            il.InsertAfter(insBrFalseS, il.Create(OpCodes.Ldarg_0));
+            il.InsertAfter(insBrFalseS, il.Create(OpCodes.Ldloc_S, insPlayer));
         }
     }
 }

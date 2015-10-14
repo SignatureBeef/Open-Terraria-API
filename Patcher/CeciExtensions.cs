@@ -174,11 +174,22 @@ namespace OTA.Patcher
             return instructions;
         }
 
-        public static Instruction FindInstructionByOpCodeBefore(this Instruction initial, OpCode opCode)
+        public static Instruction FindPreviousInstructionByOpCode(this Instruction initial, OpCode opCode)
         {
             while (initial.Previous != null)
             {
                 if (initial.Previous.OpCode == opCode) return initial.Previous;
+                initial = initial.Previous;
+            }
+
+            return null;
+        }
+
+        public static Instruction FindNextInstructionByOpCode(this Instruction initial, OpCode opCode)
+        {
+            while (initial.Next != null)
+            {
+                if (initial.Next.OpCode == opCode) return initial.Next;
                 initial = initial.Previous;
             }
 

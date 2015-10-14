@@ -204,7 +204,7 @@ namespace OTA.Patcher
                                    && x.Operand is MethodReference
                                    && (x.Operand as MethodReference).Name == "HitSwitch");
             //Find the branch where we will append our code to
-            var insLdLocS = insHitSwitch.FindInstructionByOpCodeBefore(OpCodes.Brfalse_S);
+            var insLdLocS = insHitSwitch.FindPreviousInstructionByOpCode(OpCodes.Brfalse_S);
 
             //Import and get ready for injection
             var hookCall = Terraria.Import(API.CollisionCallback.Method("OnPressurePlateTriggered"));
