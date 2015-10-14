@@ -19,7 +19,7 @@ namespace OTA.Patcher
     /// </summary>
     public class Program
     {
-#if SERVER
+        #if SERVER
         static void Main(string[] args)
         {
             //By default we will patch a server
@@ -43,7 +43,7 @@ namespace OTA.Patcher
             OTAPatcher.DefaultProcess(args);
         }
 
-#elif CLIENT
+        #elif CLIENT
         static void Main(string[] args)
         {
             //By default we will patch a server
@@ -93,11 +93,15 @@ namespace OTA.Patcher
         public const String OTAGuid = "9f7bca2e-4d2e-4244-aaae-fa56ca7797ec";
         public const Int32 Build = 6;
 
-#if CLIENT
+        #if CLIENT
         private const String FolderKind = "Client";
+
+
+
+
 #elif SERVER
         private const String FolderKind = "Server";
-#endif
+        #endif
 
         /// <summary>
         /// Development tools. Copies files into the Debug folder.
@@ -110,7 +114,7 @@ namespace OTA.Patcher
         public static void Copy(DirectoryInfo root, string project, string to, string pluginName = null, bool debugFolder = true, string projectFolder = FolderKind)
         {
             var projectBinary = (pluginName ?? project).Replace("-", ".");
-            var p = debugFolder ? Path.Combine(root.FullName, project, "bin", "x86", projectFolder) : Path.Combine(root.FullName, project);
+            var p = debugFolder ? Path.Combine(root.FullName, project, "bin", "AnyCPU", projectFolder) : Path.Combine(root.FullName, project);
             if (!Directory.Exists(p))
                 p = debugFolder ? Path.Combine(root.FullName, project, "bin", projectFolder) : Path.Combine(root.FullName, project);
 
@@ -361,12 +365,20 @@ namespace OTA.Patcher
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework.SqlServer", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.Core", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.EntityFramework", true);
-                        //                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite", true);
-                        //                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite.EF6", true);
+                        Copy(root, Path.Combine("Binaries", "Libraries"), Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite", false);
+                        Copy(root, Path.Combine("Binaries", "Libraries"), Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite.EF6", false);
 
                         if (!String.IsNullOrEmpty(OTAProjectDirectory))
                         {
                             Copy(new DirectoryInfo(Path.Combine(root.FullName, OTAProjectDirectory)), "API", Environment.CurrentDirectory, "OTA", true);
+                        }
+
+                        var binaries = Path.Combine(root.FullName, "Binaries");
+                        foreach (var item in new string[] { "sqlite3.dll", "sqlite3.def" })
+                        {
+                            var ipath = Path.Combine(binaries, item);
+                            var tpath = Path.Combine(Environment.CurrentDirectory, item);
+                            if (!File.Exists(tpath)) File.Copy(ipath, tpath);
                         }
                     }
 
@@ -384,9 +396,9 @@ namespace OTA.Patcher
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                        {
-                            RootDirectory = root
-                        });
+                            {
+                                RootDirectory = root
+                            });
                 }
 
                 if (!File.Exists(inFile))
@@ -437,9 +449,9 @@ namespace OTA.Patcher
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                        {
-                            RootDirectory = root
-                        });
+                            {
+                                RootDirectory = root
+                            });
                 }
             }
 
@@ -537,9 +549,9 @@ namespace OTA.Patcher
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                    {
-                        Injector = patcher
-                    });
+                        {
+                            Injector = patcher
+                        });
 
                 //TODO repace Terraria's Console.SetTitles
 
@@ -563,9 +575,9 @@ namespace OTA.Patcher
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                    {
-                        Injector = patcher
-                    });
+                        {
+                            Injector = patcher
+                        });
             }
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
