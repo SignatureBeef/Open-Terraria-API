@@ -106,6 +106,7 @@
     <Compile Include="Hooks\ItemHooks.cs" />
     <Compile Include="Hooks\PlayerHooks.cs" />
     <Compile Include="Hooks\ServerHooks.cs" />
+    <Compile Include="Hooks\ProjectileHooks.cs" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|x86' ">

@@ -39,6 +39,7 @@ namespace OTA.Patcher
                 .Where(x => x.HasParameters
                 && CompareParameters(x.Parameters.Where(y => y.ParameterType.FullName != instanceTypeName), parameters)
                 && (methodNameStartWith == null || x.Name.StartsWith(methodNameStartWith)));
+
         }
 
         /// <summary>
@@ -471,7 +472,7 @@ namespace OTA.Patcher
         /// <param name="method"></param>
         /// <param name="begin"></param>
         /// <param name="end"></param>
-        public static void Wrap(this MethodDefinition method, MethodDefinition begin, MethodDefinition end, bool beginIsCancellable = false)
+        public static MethodDefinition Wrap(this MethodDefinition method, MethodDefinition begin, MethodDefinition end, bool beginIsCancellable = false)
         {
             if (!method.HasBody) throw new InvalidOperationException("Method must have a body.");
             if (method.ReturnType.Name == "Void")
@@ -570,6 +571,8 @@ namespace OTA.Patcher
                 //                {
                 //
                 //                }
+
+                return wrapped;
             }
             else throw new NotSupportedException("Non Void methods not yet supported");
         }

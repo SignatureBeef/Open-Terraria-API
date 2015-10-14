@@ -84,8 +84,10 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.PluginLoadRequest> PluginLoadRequest;
         public static readonly HookPoint<HookArgs.PluginsLoaded> PluginsLoaded;
         public static readonly HookPoint<HookArgs.ProgramStart> ProgramStart;
+        public static readonly HookPoint<HookArgs.ProjectileAI> ProjectileAI;
         public static readonly HookPoint<HookArgs.ProjectileKill> ProjectileKill;
         public static readonly HookPoint<HookArgs.ProjectileReceived> ProjectileReceived;
+        public static readonly HookPoint<HookArgs.ProjectileSetDefaults> ProjectileSetDefaults;
         public static readonly HookPoint<HookArgs.ReceiveNetMessage> ReceiveNetMessage;
         public static readonly HookPoint<HookArgs.SendNetMessage> SendNetMessage;
         public static readonly HookPoint<HookArgs.SignTextGet> SignTextGet;
@@ -180,8 +182,10 @@ namespace OTA.Plugin
             PluginLoadRequest = new HookPoint<HookArgs.PluginLoadRequest>("plugin-load-request");
             PluginsLoaded = new HookPoint<HookArgs.PluginsLoaded>("plugins-loaded");
             ProgramStart = new HookPoint<HookArgs.ProgramStart>("program-start");
+            ProjectileAI = new HookPoint<HookArgs.ProjectileAI>("projectile-ai");
             ProjectileKill = new HookPoint<HookArgs.ProjectileKill>("projectile-kill");
             ProjectileReceived = new HookPoint<HookArgs.ProjectileReceived>("projectile-received");
+            ProjectileSetDefaults = new HookPoint<HookArgs.ProjectileSetDefaults>("projectile-set-defaults");
             ReceiveNetMessage = new HookPoint<HookArgs.ReceiveNetMessage>("receive-net-message");
             SendNetMessage = new HookPoint<HookArgs.SendNetMessage>("send-net-message");
             SignTextGet = new HookPoint<HookArgs.SignTextGet>("sign-text-get");
@@ -773,6 +777,13 @@ namespace OTA.Plugin
             public string[] Arguments { get; set; }
         }
 
+        public struct ProjectileAI
+        {
+            public MethodState State { get; set; }
+
+            public Terraria.Projectile Projectile { get; set; }
+        }
+
         public struct ProjectileKill
         {
             public int Index { get; set; }
@@ -862,6 +873,14 @@ namespace OTA.Plugin
                 get { return Main.projectile[Id]; }
             }
 #endif
+        }
+
+        public struct ProjectileSetDefaults
+        {
+            public MethodState State { get; set; }
+
+            public Terraria.Projectile Projectile { get; set; }
+            public int Type { get; set; }
         }
 
         public struct ReceiveNetMessage

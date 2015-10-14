@@ -83,6 +83,13 @@ namespace OTA.Patcher
             }
         }
 
+//        [ServerHook]
+//        private void HookHardModeTileUpdates()
+//        {
+//            //Inject a custom PlaceTile, that returns a bool
+//            //If false, then return/break
+//        }
+
         //        [ServerHook]
         //        private void HookHardModeTileUpdates()
         //        {
@@ -99,13 +106,13 @@ namespace OTA.Patcher
         //            var cbkOnTileChange = Terraria.Import(API.WorldGenCallback.Methods.Single(x => x.Name == "OnHardModeTileUpdate"));
         //
         //            var placeTiles = hardUpdateWorld.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
-        //                                 && x.Operand is MethodReference
-        //                                 && (x.Operand as MethodReference).Name == "PlaceTile")
-        //                .ToArray();
+        //                                         && x.Operand is MethodReference
+        //                                         && (x.Operand as MethodReference).Name == "PlaceTile")
+        //                        .ToArray();
         //            var setTiles = hardUpdateWorld.Body.Instructions.Where(x => x.OpCode == OpCodes.Stfld
-        //                               && x.Operand is FieldReference
-        //                               && (x.Operand as FieldReference).Name == "type")
-        //                .ToArray();
+        //                                       && x.Operand is FieldReference
+        //                                       && (x.Operand as FieldReference).Name == "type")
+        //                        .ToArray();
         //
         //            var il = hardUpdateWorld.Body.GetILProcessor();
         //
@@ -164,8 +171,8 @@ namespace OTA.Patcher
         //                //Since we could have potentially changed the target instruction for transferring, we must now update it.
         //                start.ReplaceTransfer(firstNewCall, hardUpdateWorld);
         //
-        ////                hardUpdateWorld.Body.OptimizeMacros();
-        ////                hardUpdateWorld.Body.ComputeOffsets();
+        //                //                hardUpdateWorld.Body.OptimizeMacros();
+        //                //                hardUpdateWorld.Body.ComputeOffsets();
         //
         //                //Now handle the result of the hook
         //                break;

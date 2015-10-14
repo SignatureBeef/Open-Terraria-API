@@ -84,6 +84,12 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "Patches"); }
         }
 
+        public TypeDefinition ProjectileCallback
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "ProjectileCallback"); }
+        }
+
         public TypeDefinition Rand
         {
             get

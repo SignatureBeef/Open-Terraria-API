@@ -318,6 +318,7 @@
     <Compile Include="Callbacks\WorldGenCallback.cs" />
     <Compile Include="Callbacks\ItemCallback.cs" />
     <Compile Include="Callbacks\CollisionCallback.cs" />
+    <Compile Include="Callbacks\ProjectileCallback.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
