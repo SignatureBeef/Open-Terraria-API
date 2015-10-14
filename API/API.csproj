@@ -175,6 +175,7 @@
     <Compile Include="Callbacks\PlayerCallback.cs" />
     <Compile Include="Callbacks\VanillaHooks.cs" />
     <Compile Include="Callbacks\WorldFileCallback.cs" />
+    <Compile Include="DebugFramework\Assert.cs" />
     <Compile Include="Command\ArgumentList.cs" />
     <Compile Include="Command\CommandParser.cs" />
     <Compile Include="Command\DefaultCommands.cs" />
@@ -400,10 +401,5 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Plugin\HookArgs\" />
-    <Folder Include="Plugin\HookArgs\Server\" />
-    <Folder Include="Plugin\HookArgs\Client\" />
-    <Folder Include="Plugin\HookArgs\Multi\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
