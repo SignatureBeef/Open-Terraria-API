@@ -25,10 +25,10 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <AssemblyName>OTA.Patcher</AssemblyName>
     <PlatformTarget>anycpu</PlatformTarget>
-    <Platform Condition=" '$(Platform)' == '' ">Any CPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Debug|Any CPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -41,7 +41,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Externalconsole>true</Externalconsole>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|Any CPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -54,9 +54,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Externalconsole>true</Externalconsole>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Release|Any CPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Release|AnyCPU' ">
     <Optimize>false</Optimize>
-    <OutputPath>bin\Server-Release</OutputPath>
+    <OutputPath>bin\Server-Release\</OutputPath>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
     <ErrorReport>prompt</ErrorReport>
@@ -108,7 +108,7 @@
     <Compile Include="Hooks\ProjectileHooks.cs" />
   </ItemGroup>
   <Choose>
-    <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|Any CPU' ">
+    <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">
       <ItemGroup>
         <None Include="..\Binaries\Terraria.exe.config">
           <Link>Terraria.exe.config</Link>
