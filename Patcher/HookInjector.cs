@@ -18,6 +18,20 @@ namespace OTA.Patcher
 
             string line = null;
 
+//            for (var x = 0; x < hooks.Length; x++)
+//            {
+//                const String Fmt = "Patching in hooks - {0}/{1}";
+//
+//                if (line != null)
+//                    ConsoleHelper.ClearLine();
+//
+//                line = String.Format(Fmt, x + 1, hooks.Length);
+//                Console.Write(line);
+//
+//                hooks[x].Invoke(this, null);
+//            }
+
+            Console.WriteLine("Patching in hooks...");
             for (var x = 0; x < hooks.Length; x++)
             {
                 const String Fmt = "Patching in hooks - {0}/{1}";
@@ -25,16 +39,12 @@ namespace OTA.Patcher
                 if (line != null)
                     ConsoleHelper.ClearLine();
 
-                line = String.Format(Fmt, x + 1, hooks.Length);
+                line = String.Format("\t{0}/{1} - {2}", x + 1, hooks.Length, hooks[x].Name);
                 Console.Write(line);
 
                 hooks[x].Invoke(this, null);
+                Console.WriteLine(" [OK]");
             }
-
-            //Clear ready for the Ok\n
-            if (line != null)
-                ConsoleHelper.ClearLine();
-            Console.Write("Patching in hooks - ");
         }
     }
 }

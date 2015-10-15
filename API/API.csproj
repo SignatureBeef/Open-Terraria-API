@@ -305,7 +305,6 @@
     <Compile Include="Data\Entity\Models\DataSetting.cs" />
     <Compile Include="Data\Entity\Models\NodePermission.cs" />
     <Compile Include="Data\Entity\OTAContextExtensions.cs" />
-    <Compile Include="Memory\Tile.cs" />
     <Compile Include="Web\API\PublicController.cs" />
     <Compile Include="Web\API\PlayerController.cs" />
     <Compile Include="Web\API\UserController.cs" />
@@ -390,6 +389,9 @@
     <Compile Include="Plugin\HookArgs\Multi\StartHardMode.cs" />
     <Compile Include="Plugin\HookArgs\Multi\CheckChristmas.cs" />
     <Compile Include="Plugin\HookArgs\Multi\CheckHalloween.cs" />
+    <Compile Include="Memory\HeapTile.cs" />
+    <Compile Include="Memory\TileCollection.cs" />
+    <Compile Include="Memory\MemTile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
