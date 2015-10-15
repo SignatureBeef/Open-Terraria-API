@@ -83,6 +83,7 @@
         public static readonly HookPoint<HookArgs.SendNetMessage> SendNetMessage;
         public static readonly HookPoint<HookArgs.SignTextGet> SignTextGet;
         public static readonly HookPoint<HookArgs.SignTextSet> SignTextSet;
+        public static readonly HookPoint<HookArgs.StartHardMode> StartHardMode;
         /// <summary>
         /// The callback to update the console with Terraria.Main.statusText
         /// </summary>
@@ -184,6 +185,7 @@
             SendNetMessage = new HookPoint<HookArgs.SendNetMessage>("send-net-message");
             SignTextGet = new HookPoint<HookArgs.SignTextGet>("sign-text-get");
             SignTextSet = new HookPoint<HookArgs.SignTextSet>("sign-text-set");
+            StartHardMode = new HookPoint<HookArgs.StartHardMode>("start-hard-mode");
             StatusTextChange = new HookPoint<HookArgs.StatusTextChange>("status-text-changed");
             TileSquareReceived = new HookPoint<HookArgs.TileSquareReceived>("tile-square-received");
             WorldSave = new HookPoint<HookArgs.WorldSave>("world-save");

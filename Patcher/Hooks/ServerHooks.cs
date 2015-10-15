@@ -187,7 +187,6 @@ namespace OTA.Patcher
             updateServer.InjectBeginEnd(API.MainCallback, "OnUpdateServer");
         }
 
-        [ClientHook]
         [ServerHook]
         void HookWorldSave()
         {
@@ -201,6 +200,24 @@ namespace OTA.Patcher
             var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
 
             method.Wrap(cbkBegin, cbkEnd, true);
+        }
+
+        [ServerHook]
+        void HookStartHardMode()
+        {
+            var method = Terraria.WorldGen.Method("StartHardmode");
+            var callback = Terraria.Import(API.WorldGenCallback.Method("OnStartHardMode"));
+
+            var insHardMode = method.Body.Instructions.First(x => x.OpCode == OpCodes.Stsfld && x.Operand == Terraria.Main.Field("hardMode"));
+            var insInsertBefore = insHardMode.Previous;
+
+            var il = method.Body.GetILProcessor();
+
+            Instruction insFirst = null;
+            il.InsertBefore(insInsertBefore, insFirst = il.Create(OpCodes.Call, callback));
+            insInsertBefore.ReplaceTransfer(insFirst, method);
+            il.InsertBefore(insInsertBefore, il.Create(OpCodes.Brtrue_S, insInsertBefore));
+            il.InsertBefore(insInsertBefore, il.Create(OpCodes.Ret));
         }
     }
 }
