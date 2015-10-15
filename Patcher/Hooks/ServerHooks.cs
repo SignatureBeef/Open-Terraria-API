@@ -186,6 +186,22 @@ namespace OTA.Patcher
             //Wrap it with the API calls
             updateServer.InjectBeginEnd(API.MainCallback, "OnUpdateServer");
         }
+
+        [ClientHook]
+        [ServerHook]
+        void HookWorldSave()
+        {
+            var method = Terraria.WorldFile.Methods.Single(x => x.Name == "saveWorld" && x.Parameters.Count == 2);
+
+            var apiMatch = API.WorldFileCallback.MatchMethodByParameters(method.Parameters, "OnWorldSave");
+
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnWorldSave Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            method.Wrap(cbkBegin, cbkEnd, true);
+        }
     }
 }
 

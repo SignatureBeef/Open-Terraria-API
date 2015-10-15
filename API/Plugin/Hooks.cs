@@ -88,6 +88,7 @@
         /// </summary>
         public static readonly HookPoint<HookArgs.StatusTextChange> StatusTextChange;
         public static readonly HookPoint<HookArgs.TileSquareReceived> TileSquareReceived;
+        public static readonly HookPoint<HookArgs.WorldSave> WorldSave;
 #endif
 
         //        public static readonly HookPoint<HookArgs.DatabaseInitialise> DatabaseInitialise;
@@ -185,6 +186,7 @@
             SignTextSet = new HookPoint<HookArgs.SignTextSet>("sign-text-set");
             StatusTextChange = new HookPoint<HookArgs.StatusTextChange>("status-text-changed");
             TileSquareReceived = new HookPoint<HookArgs.TileSquareReceived>("tile-square-received");
+            WorldSave = new HookPoint<HookArgs.WorldSave>("world-save");
 #endif
         }
     }

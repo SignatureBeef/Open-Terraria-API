@@ -478,7 +478,7 @@ namespace OTA.Patcher
             if (method.ReturnType.Name == "Void")
             {
                 //Create the new replacement method
-                var wrapped = new MethodDefinition(method.Name, MethodAttributes.Public, method.ReturnType);
+                var wrapped = new MethodDefinition(method.Name, method.Attributes, method.ReturnType);
                 var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
 
                 //Rename the existing method, and replace it

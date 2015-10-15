@@ -1,5 +1,6 @@
 ﻿using System;
 using OTA.Plugin;
+
 #if Full_API
 using Terraria;
 #endif
@@ -41,6 +42,36 @@ namespace OTA.Callbacks
             WorldGen.clearWorld();
 #endif
             GC.Collect();
+        }
+
+        public static bool OnWorldSaveBegin(bool useCloudSaving, bool resetTime = false)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.WorldSave()
+            {
+                State = MethodState.Begin,
+
+                ResetTime = resetTime,
+                UseCloudSaving = useCloudSaving
+            };
+
+            HookPoints.WorldSave.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+
+        public static void OnWorldSaveEnd(bool useCloudSaving, bool resetTime = false)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.WorldSave()
+            {
+                State = MethodState.End,
+
+                ResetTime = resetTime,
+                UseCloudSaving = useCloudSaving
+            };
+
+            HookPoints.WorldSave.Invoke(ref ctx, ref args);
         }
     }
 }
