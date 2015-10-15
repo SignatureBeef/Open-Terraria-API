@@ -231,6 +231,18 @@ namespace OTA.Patcher
 
             il.Replace(insLastLdcI40, il.Create(OpCodes.Call, callback));
         }
+
+        [ServerHook]
+        void HookHalloween()
+        {
+            var method = Terraria.Main.Method("checkHalloween");
+            var callback = Terraria.Import(API.MainCallback.Method("OnHalloweenCheck"));
+
+            var insLastLdcI40 = method.Body.Instructions.Last(x => x.OpCode == OpCodes.Ldc_I4_0);
+            var il = method.Body.GetILProcessor();
+
+            il.Replace(insLastLdcI40, il.Create(OpCodes.Call, callback));
+        }
     }
 }
 

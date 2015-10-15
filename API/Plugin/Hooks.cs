@@ -44,6 +44,7 @@
 
 #if CLIENT || SERVER
         public static readonly HookPoint<HookArgs.CheckChristmas> CheckChristmas;
+        public static readonly HookPoint<HookArgs.CheckHalloween> CheckHalloween;
         public static readonly HookPoint<HookArgs.ChestBreakReceived> ChestBreakReceived;
         public static readonly HookPoint<HookArgs.ChestOpenReceived> ChestOpenReceived;
         public static readonly HookPoint<HookArgs.PressurePlateTriggered> PressurePlateTriggered;
@@ -147,6 +148,7 @@
 
 #if CLIENT || SERVER
             CheckChristmas = new HookPoint<HookArgs.CheckChristmas>("check-christmas");
+            CheckHalloween = new HookPoint<HookArgs.CheckHalloween>("check-halloween");
             ChestBreakReceived = new HookPoint<HookArgs.ChestBreakReceived>("chest-break-received");
             ChestOpenReceived = new HookPoint<HookArgs.ChestOpenReceived>("chest-open-received");
             PressurePlateTriggered = new HookPoint<HookArgs.PressurePlateTriggered>("pressure-plate-triggered");

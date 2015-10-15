@@ -644,7 +644,20 @@ namespace OTA.Callbacks
             if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is Boolean)
                 return (bool)ctx.ResultParam;
 
-            return ctx.Result == HookResult.DEFAULT;
+            return ctx.Result != HookResult.DEFAULT; //Default value is false here
+        }
+
+        public static bool OnHalloweenCheck()
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.CheckHalloween();
+
+            HookPoints.CheckHalloween.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is Boolean)
+                return (bool)ctx.ResultParam;
+
+            return ctx.Result != HookResult.DEFAULT; //Default value is false here
         }
     }
 

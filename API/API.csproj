@@ -389,6 +389,7 @@
     <Compile Include="Plugin\HookArgs\Multi\WorldSave.cs" />
     <Compile Include="Plugin\HookArgs\Multi\StartHardMode.cs" />
     <Compile Include="Plugin\HookArgs\Multi\CheckChristmas.cs" />
+    <Compile Include="Plugin\HookArgs\Multi\CheckHalloween.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
