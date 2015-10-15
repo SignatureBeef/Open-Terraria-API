@@ -633,6 +633,19 @@ namespace OTA.Callbacks
             HookPoints.MechSpawn.Invoke(ref ctx, ref args);
             return ctx.Result == HookResult.DEFAULT; //Continue on
         }
+
+        public static bool OnChristmasCheck()
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.CheckChristmas();
+
+            HookPoints.CheckChristmas.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is Boolean)
+                return (bool)ctx.ResultParam;
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
     }
 
     public enum MechSpawnType : int

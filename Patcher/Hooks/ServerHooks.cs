@@ -219,6 +219,18 @@ namespace OTA.Patcher
             il.InsertBefore(insInsertBefore, il.Create(OpCodes.Brtrue_S, insInsertBefore));
             il.InsertBefore(insInsertBefore, il.Create(OpCodes.Ret));
         }
+
+        [ServerHook]
+        void HookChristmas()
+        {
+            var method = Terraria.Main.Method("checkXMas");
+            var callback = Terraria.Import(API.MainCallback.Method("OnChristmasCheck"));
+
+            var insLastLdcI40 = method.Body.Instructions.Last(x => x.OpCode == OpCodes.Ldc_I4_0);
+            var il = method.Body.GetILProcessor();
+
+            il.Replace(insLastLdcI40, il.Create(OpCodes.Call, callback));
+        }
     }
 }
 
