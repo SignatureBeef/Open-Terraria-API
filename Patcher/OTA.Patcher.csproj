@@ -106,6 +106,7 @@
     <Compile Include="Hooks\PlayerHooks.cs" />
     <Compile Include="Hooks\ServerHooks.cs" />
     <Compile Include="Hooks\ProjectileHooks.cs" />
+    <Compile Include="Hooks\RemoteClientHooks.cs" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">

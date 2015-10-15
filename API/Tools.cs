@@ -107,24 +107,6 @@ namespace OTA
             return false;
         }
 
-        ///// <summary>
-        ///// Checks whether an item is rejected in this server
-        ///// </summary>
-        ///// <param name="item"></param>
-        ///// <returns></returns>
-        //public static bool RejectedItemsContains(string item)
-        //{
-        //    if (!String.IsNullOrEmpty(item))
-        //    {
-        //        foreach (string rItem in RejectedItems)
-        //        {
-        //            if (rItem.Trim().Replace(" ", String.Empty) == item.Trim().Replace(" ", String.Empty))
-        //                return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-
         /// <summary>
         /// Checks online players for a matching name part
         /// </summary>
@@ -151,111 +133,6 @@ namespace OTA
 
             return matches;
         }
-
-        ///// <summary>
-        ///// Tries to find an item by Type or Name via Definitions
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="ItemIdOrName"></param>
-        ///// <param name="ItemList"></param>
-        ///// <returns></returns>
-        //public static bool TryFindItem<T>(T ItemIdOrName, out List<ItemInfo> ItemList)
-        //{
-        //    ItemList = new List<ItemInfo>();
-
-        //    foreach (var pair in Registries.Item.TypesById)
-        //    {
-        //        var items = pair.Value as List<Item>;
-
-        //        if (ItemIdOrName is Int32)
-        //        {
-        //            var itemT = Int32.Parse(ItemIdOrName.ToString());
-
-        //            foreach (var item in items)
-        //            {
-        //                var type = item.Type;
-        //                if (type == itemT && !ItemList.ContainsType(type))
-        //                    ItemList.Add(new ItemInfo()
-        //                    {
-        //                        Type = type,
-        //                        NetID = item.NetID
-        //                    });
-        //            }
-        //        }
-        //        else if (ItemIdOrName is String)
-        //        {
-        //            var findItem = CleanName(ItemIdOrName as String);
-
-        //            foreach (var item in items)
-        //            {
-        //                var type = item.Type;
-        //                var curItem = CleanName(item.Name);
-
-        //                if (curItem == findItem && !ItemList.ContainsType(type))
-        //                    ItemList.Add(new ItemInfo()
-        //                    {
-        //                        Type = type,
-        //                        NetID = item.NetID
-        //                    });
-        //            }
-        //        }
-        //    }
-
-        //    foreach (var pair in Registries.Item.TypesByName)
-        //    {
-        //        var item = pair.Value as Item;
-
-        //        if (ItemIdOrName is Int32)
-        //        {
-        //            var itemT = Int32.Parse(ItemIdOrName.ToString());
-        //            var type = item.Type;
-
-        //            if (type == itemT && !ItemList.ContainsType(type))
-        //                ItemList.Add(new ItemInfo()
-        //                {
-        //                    Type = type,
-        //                    NetID = item.NetID
-        //                });
-        //        }
-        //        else if (ItemIdOrName is String)
-        //        {
-        //            var type = item.Type;
-        //            var findItem = CleanName(ItemIdOrName as String);
-        //            var curItem = CleanName(item.Name);
-
-        //            if (curItem == findItem && !ItemList.ContainsType(type))
-        //                ItemList.Add(new ItemInfo()
-        //                {
-        //                    Type = type,
-        //                    NetID = item.NetID
-        //                });
-        //        }
-        //    }
-
-        //    return ItemList.Count > 0;
-        //}
-
-        ///// <summary>
-        ///// Uses the undefined item method to find an item by Type.
-        ///// </summary>
-        ///// <param name="ItemID"></param>
-        ///// <param name="ItemList"></param>
-        ///// <returns></returns>
-        //public static bool TryFindItemByType(int itemId, out List<ItemInfo> ItemList)
-        //{
-        //    return itemId(ItemID, out ItemList);
-        //}
-
-        ///// <summary>
-        ///// Uses the undefined item method to find an item by Name.
-        ///// </summary>
-        ///// <param name="ItemName"></param>
-        ///// <param name="ItemList"></param>
-        ///// <returns></returns>
-        //public static bool TryFindItemByName(string name, out List<ItemInfo> ItemList)
-        //{
-        //    return TryFindItem(name, out ItemList);
-        //}
 
         /// <summary>
         /// Used to clean the names of Items or NPC's for parsing

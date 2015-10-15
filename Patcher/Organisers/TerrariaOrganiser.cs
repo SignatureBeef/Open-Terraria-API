@@ -28,6 +28,24 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "Item"); }
         }
 
+        public TypeDefinition Lang
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "Lang"); }
+        }
+
+        public TypeDefinition LaunchInitializer
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "LaunchInitializer"); }
+        }
+
+        public TypeDefinition Main
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "Main"); }
+        }
+
         public TypeDefinition MessageBuffer
         {
             get
@@ -40,27 +58,22 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "NetMessage"); }
         }
 
-        public TypeDefinition Main
+        public TypeDefinition Netplay
         {
             get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Main"); }
+            { return _asm.MainModule.Types.Single(x => x.Name == "Netplay"); }
         }
 
-        //        public TypeDefinition ProgramServer
-        //        {
-        //            get
-        //            { return _asm.MainModule.Types.Single(x => x.Name == "ProgramServer"); }
-        //        }
-
-        /// <summary>
-        /// Entry class for windows
-        /// </summary>
-        /// <value>The windows launch.</value>
-        public TypeDefinition WindowsLaunch
+        public TypeDefinition NPC
         {
             get
+            { return _asm.MainModule.Types.Single(x => x.Name == "NPC"); }
+        }
 
-            { return _asm.MainModule.Types.Single(x => x.Name == "WindowsLaunch"); }
+        public TypeDefinition Player
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "Player"); }
         }
 
         /// <summary>
@@ -74,41 +87,11 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "Program"); }
         }
 
-        public TypeDefinition NPC
+        public TypeDefinition Projectile
         {
             get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NPC"); }
+            { return _asm.MainModule.Types.Single(x => x.Name == "Projectile"); }
         }
-
-        public TypeDefinition WorldFile
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "WorldFile"); }
-        }
-
-        public TypeDefinition WorldGen
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "WorldGen"); }
-        }
-
-        public TypeDefinition Netplay
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Netplay"); }
-        }
-
-        public TypeDefinition Player
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Player"); }
-        }
-
-        //        public TypeDefinition ServerSock
-        //        {
-        //            get
-        //            { return _asm.MainModule.Types.Single(x => x.Name == "ServerSock"); }
-        //        }
 
         public TypeDefinition RemoteClient
         {
@@ -122,22 +105,27 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "RemoteServer"); }
         }
 
-        public TypeDefinition LaunchInitializer
+        /// <summary>
+        /// Entry class for windows
+        /// </summary>
+        /// <value>The windows launch.</value>
+        public TypeDefinition WindowsLaunch
         {
             get
-            { return _asm.MainModule.Types.Single(x => x.Name == "LaunchInitializer"); }
+
+            { return _asm.MainModule.Types.Single(x => x.Name == "WindowsLaunch"); }
         }
 
-        public TypeDefinition Lang
+        public TypeDefinition WorldFile
         {
             get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Lang"); }
+            { return _asm.MainModule.Types.Single(x => x.Name == "WorldFile"); }
         }
 
-        public TypeDefinition Projectile
+        public TypeDefinition WorldGen
         {
             get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Projectile"); }
+            { return _asm.MainModule.Types.Single(x => x.Name == "WorldGen"); }
         }
     }
 }

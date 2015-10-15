@@ -96,6 +96,12 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "Rand"); }
         }
 
+        public TypeDefinition RemoteClientCallback
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "RemoteClientCallback"); }
+        }
+
         public TypeDefinition Sender
         {
             get

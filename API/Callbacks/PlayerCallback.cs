@@ -9,9 +9,6 @@ namespace OTA.Callbacks
     /// </summary>
     public static class PlayerCallback
     {
-        //Death message
-        //Player killed
-        //Teleport
         #if Full_API
         /// <summary>
         /// Callde via vanilla code when a player has been hurt

@@ -47,7 +47,6 @@ namespace OTA
         private const String LibrariesDirectory = "Libraries";
         private const String CharacterData = "Characters";
         private const String LogFolder = "Logs";
-        //private const String BackupDirectory = "BackupDirectory";
 
         public static volatile bool Exit = false;
 
@@ -79,12 +78,6 @@ namespace OTA
             get
             { return Path.Combine(SavePath, WorldDirectory); }
         }
-
-        //public static string WorldBackupPath
-        //{
-        //    get
-        //    { return Path.Combine(SavePath, WorldDirectory, BackupDirectory); }
-        //}
 
         /// <summary>
         /// Gets the plugin folder.
@@ -136,16 +129,12 @@ namespace OTA
             get { return Path.Combine(Globals.DataPath, LogFolder); }
         }
 
-        //        public static readonly bool IsMono = Type.GetType("Mono.Runtime") != null;
-
         /// <summary>
         /// Creates default required folders
         /// </summary>
         public static void Touch()
         {
             if (!Directory.Exists(SavePath)) Directory.CreateDirectory(SavePath);
-//            if (!Directory.Exists(WorldPath)) Directory.CreateDirectory(WorldPath);
-            //if (!Directory.Exists(WorldBackupPath)) Directory.CreateDirectory(WorldBackupPath);
             if (!Directory.Exists(PluginPath)) Directory.CreateDirectory(PluginPath);
             if (!Directory.Exists(LibrariesPath)) Directory.CreateDirectory(LibrariesPath);
             if (!Directory.Exists(DataPath)) Directory.CreateDirectory(DataPath);

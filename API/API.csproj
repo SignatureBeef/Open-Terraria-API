@@ -171,7 +171,6 @@
     <Compile Include="Callbacks\Configuration.cs" />
     <Compile Include="Callbacks\NAT.cs" />
     <Compile Include="Callbacks\NPCCallback.cs" />
-    <Compile Include="Callbacks\NetMessageCallback.cs" />
     <Compile Include="Callbacks\PlayerCallback.cs" />
     <Compile Include="Callbacks\VanillaHooks.cs" />
     <Compile Include="Callbacks\WorldFileCallback.cs" />
@@ -258,12 +257,9 @@
     <Compile Include="Command\ConsoleSender.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="Packet.cs" />
-    <Compile Include="IPlayerConnection.cs" />
     <Compile Include="BasePlayer.cs" />
     <Compile Include="ServerState.cs" />
-    <Compile Include="Callbacks\MessageBufferCallback.cs" />
     <Compile Include="Callbacks\MainCallback.cs" />
-    <Compile Include="Callbacks\NetplayCallback.cs" />
     <Compile Include="Sockets\ClientConnection.cs" />
     <Compile Include="Sockets\Connection.cs" />
     <Compile Include="Sockets\ServerSlot.cs" />
@@ -385,6 +381,11 @@
     <Compile Include="Plugin\HookArgs\Multi\StatusTextChange.cs" />
     <Compile Include="Plugin\HookArgs\Multi\TileSquareReceived.cs" />
     <Compile Include="Plugin\HookArgs\Multi\SendClientData.cs" />
+    <Compile Include="Callbacks\Net\MessageBufferCallback.cs" />
+    <Compile Include="Callbacks\Net\NetMessageCallback.cs" />
+    <Compile Include="Callbacks\Net\NetplayCallback.cs" />
+    <Compile Include="Callbacks\Net\RemoteClientCallback.cs" />
+    <Compile Include="Plugin\HookArgs\Server\RemoteClientReset.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -403,4 +404,7 @@
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Callbacks\Net\" />
+  </ItemGroup>
 </Project>

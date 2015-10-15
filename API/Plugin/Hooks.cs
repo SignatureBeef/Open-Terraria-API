@@ -27,6 +27,7 @@
         public static readonly HookPoint<HookArgs.PlayerLeftGame> PlayerLeftGame;
         public static readonly HookPoint<HookArgs.PlayerPassReceived> PlayerPassReceived;
         public static readonly HookPoint<HookArgs.PlayerPreGreeting> PlayerPreGreeting;
+        public static readonly HookPoint<HookArgs.RemoteClientReset> RemoteClientReset;
         public static readonly HookPoint<HookArgs.ServerStateChange> ServerStateChange;
         public static readonly HookPoint<HookArgs.ServerPassReceived> ServerPassReceived;
         /// <summary>
@@ -132,6 +133,7 @@
             PlayerLeftGame = new HookPoint<HookArgs.PlayerLeftGame>("player-left-game");
             PlayerPassReceived = new HookPoint<HookArgs.PlayerPassReceived>("player-pass-received");
             PlayerPreGreeting = new HookPoint<HookArgs.PlayerPreGreeting>("player-pre-greeting");
+            RemoteClientReset = new HookPoint<HookArgs.RemoteClientReset>("remote-client-reset");
             ServerStateChange = new HookPoint<HookArgs.ServerStateChange>("server-state-change");
             ServerPassReceived = new HookPoint<HookArgs.ServerPassReceived>("server-pass-received");
             ServerTick = new HookPoint<HookArgs.ServerTick>("server-tick");

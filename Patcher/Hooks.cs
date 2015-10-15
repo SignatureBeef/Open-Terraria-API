@@ -90,6 +90,13 @@ namespace OTA.Patcher
             _asm.MainModule.Architecture = _self.MainModule.Architecture;
         }
 
+//        [ServerHook]
+//        private void TestNetSwitch()
+//        {
+//            var sendData = Terraria.NetMessage.Method("SendData");
+//            var switchs = sendData.Body.Instructions.First(x => x.OpCode == OpCodes.Switch);
+//        }
+
         //        [ServerHook]
         //        private void HookHardModeTileUpdates()
         //        {
