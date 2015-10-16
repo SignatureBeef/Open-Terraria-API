@@ -322,9 +322,7 @@
     <Compile Include="Memory\TileCollection.cs" />
     <Compile Include="Memory\MemTile.cs" />
     <Compile Include="Plugin\Hooks\Server\AddBan.cs" />
-    <Compile Include="Plugin\Hooks\Server\ConfigurationLine.cs" />
     <Compile Include="Plugin\Hooks\Server\ConsoleMessageReceived.cs" />
-    <Compile Include="Plugin\Hooks\Server\Command.cs" />
     <Compile Include="Plugin\Hooks\Server\NameConflict.cs" />
     <Compile Include="Plugin\Hooks\Server\NewConnection.cs" />
     <Compile Include="Plugin\Hooks\Server\ParseCommandLineArguments.cs" />
@@ -393,6 +391,8 @@
     <Compile Include="Plugin\Hooks\Multi\CheckHalloween.cs" />
     <Compile Include="Plugin\Misc\MethodState.cs" />
     <Compile Include="Plugin\Misc\TileSquareForEachResult.cs" />
+    <Compile Include="Plugin\Hooks\Server\ServerCommand.cs" />
+    <Compile Include="Plugin\Hooks\Server\ConfigurationFileLineRead.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

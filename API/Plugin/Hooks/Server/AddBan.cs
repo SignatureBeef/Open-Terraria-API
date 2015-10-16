@@ -10,8 +10,14 @@ namespace OTA.Plugin
         /// </summary>
         public struct AddBan
         {
+            /// <summary>
+            /// Calling method position
+            /// </summary>
             public MethodState State { get; set; }
 
+            /// <summary>
+            /// The slot of the user to ban
+            /// </summary>
             public int Slot { get; set; }
         }
     }

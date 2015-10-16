@@ -728,7 +728,7 @@ namespace OTA.Command
             ctx.Connection = ctx.Player != null ? ctx.Player.Connection.Socket : null;
 #endif
 
-            var hargs = new HookArgs.Command();
+            var hargs = new HookArgs.ServerCommand();
 
             try
             {
@@ -747,7 +747,7 @@ namespace OTA.Command
                 {
                     hargs.ArgumentString = (firstSpace < line.Length - 1 ? line.Substring(firstSpace + 1, line.Length - firstSpace - 1) : "").Trim();
 
-                    HookPoints.Command.Invoke(ref ctx, ref hargs);
+                    HookPoints.ServerCommand.Invoke(ref ctx, ref hargs);
 
                     if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
                         return;
@@ -807,7 +807,7 @@ namespace OTA.Command
                             }
                         }
 
-                        HookPoints.Command.Invoke(ref ctx, ref hargs);
+                        HookPoints.ServerCommand.Invoke(ref ctx, ref hargs);
 
                         if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
                             return;

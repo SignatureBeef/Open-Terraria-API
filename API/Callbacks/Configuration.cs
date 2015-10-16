@@ -271,7 +271,7 @@ namespace OTA.Callbacks
                                             Value = value
                                         };
 
-                                        HookPoints.ConfigurationLine.Invoke(ref ctx, ref args);
+                                        HookPoints.ConfigurationFileLineRead.Invoke(ref ctx, ref args);
                                         break;
                                 }
 #endif
