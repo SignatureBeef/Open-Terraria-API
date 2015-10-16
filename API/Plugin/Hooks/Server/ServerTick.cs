@@ -5,6 +5,9 @@ namespace OTA.Plugin
 {
     public static partial class HookArgs
     {
+        /// <summary>
+        /// Server tick data.
+        /// </summary>
         public struct ServerTick
         {
             public static readonly ServerTick Empty = new ServerTick();
