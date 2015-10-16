@@ -315,7 +315,7 @@ namespace OTA.Patcher
             else throw new NotSupportedException("Non Void methods not yet supported");
         }
 
-        public static Instruction InjectBeginCallback(this MethodDefinition method, MethodDefinition begin, bool instanceMethod, bool beginIsCancellable = false)
+        public static Instruction InjectBeginCallback(this MethodDefinition method, MethodReference begin, bool instanceMethod, bool beginIsCancellable = false)
         {
             Instruction targetInstruction = null;
 
@@ -368,7 +368,7 @@ namespace OTA.Patcher
             return targetInstruction;
         }
 
-        public static void InjectEndCallback(this MethodDefinition method, MethodDefinition end, bool instanceMethod)
+        public static void InjectEndCallback(this MethodDefinition method, MethodReference end, bool instanceMethod)
         {
             //Import the callbacks to the calling methods assembly
             var impEnd = method.Module.Import(end);
@@ -409,7 +409,7 @@ namespace OTA.Patcher
             il.Emit(OpCodes.Ret);
         }
 
-        public static Instruction InjectMethodCall(this MethodDefinition method, MethodDefinition target, bool instanceMethod, bool emitNonVoidPop = true)
+        public static Instruction InjectMethodCall(this MethodDefinition method, MethodReference target, bool instanceMethod, bool emitNonVoidPop = true)
         {
             Instruction firstInstruction = null;
 //            var instanceMethod = (target.Attributes & MethodAttributes.Static) == 0;
@@ -472,7 +472,7 @@ namespace OTA.Patcher
         /// <param name="method"></param>
         /// <param name="begin"></param>
         /// <param name="end"></param>
-        public static MethodDefinition Wrap(this MethodDefinition method, MethodDefinition begin, MethodDefinition end, bool beginIsCancellable = false)
+        public static MethodDefinition Wrap(this MethodDefinition method, MethodReference begin, MethodReference end = null, bool beginIsCancellable = false)
         {
             if (!method.HasBody) throw new InvalidOperationException("Method must have a body.");
             if (method.ReturnType.Name == "Void")
@@ -506,7 +506,11 @@ namespace OTA.Patcher
                     beginResult.Operand = insFirstForMethod;
                 }
 
-                wrapped.InjectEndCallback(end, instanceMethod);
+                if (end != null)
+                {
+                    wrapped.InjectEndCallback(end, instanceMethod);
+                }
+
                 wrapped.InjectMethodEnd();
 
                 //                var xstFirst = method.Body.Instructions.First();

@@ -641,10 +641,7 @@ namespace OTA.Callbacks
 
             HookPoints.CheckChristmas.Invoke(ref ctx, ref args);
 
-            if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is Boolean)
-                return (bool)ctx.ResultParam;
-
-            return ctx.Result != HookResult.DEFAULT; //Default value is false here
+            return ctx.Result == HookResult.DEFAULT; //Continue onto vanilla
         }
 
         public static bool OnHalloweenCheck()
@@ -654,10 +651,7 @@ namespace OTA.Callbacks
 
             HookPoints.CheckHalloween.Invoke(ref ctx, ref args);
 
-            if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is Boolean)
-                return (bool)ctx.ResultParam;
-
-            return ctx.Result != HookResult.DEFAULT; //Default value is false here
+            return ctx.Result == HookResult.DEFAULT; //Continue onto vanilla
         }
     }
 

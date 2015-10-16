@@ -715,12 +715,8 @@ namespace OTA.Callbacks
                 {
                     Main.recBigList = false;
                 }
-                //Recipe.FindRecipes();
+
                 NetMessage.SendData(80, -1, bufferId, "", bufferId, (float)chestIndex, 0, 0, 0, 0, 0);
-                //if (Main.tile[x, y].frameX >= 36 && Main.tile[x, y].frameX < 72)
-                //{
-                //    AchievementsHelper.HandleSpecialEvent(Main.player[bufferId], 16);
-                //}
             }
         }
 
