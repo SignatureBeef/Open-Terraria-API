@@ -243,6 +243,24 @@ namespace OTA.Patcher
 
             il.Replace(insLastLdcI40, il.Create(OpCodes.Call, callback));
         }
+
+        /// <summary>
+        /// When vanilla requests to ban a slot, this method is called.
+        /// </summary>
+        [ServerHook]
+        void WrapAddBan()
+        {
+            var vanilla = Terraria.Netplay.Methods.Single(x => x.Name == "AddBan");
+
+            var apiMatch = API.NetplayCallback.Methods.Where(x => x.Name.StartsWith("OnAddBan"));
+
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnAddBan Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            vanilla.Wrap(cbkBegin, cbkEnd, true);
+        }
     }
 }
 

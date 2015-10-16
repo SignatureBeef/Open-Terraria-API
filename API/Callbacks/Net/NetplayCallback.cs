@@ -47,36 +47,6 @@ namespace OTA.Callbacks
         }
 
         /// <summary>
-        /// When vanilla requests to ban a slot, this method is called.
-        /// </summary>
-        /// <param name="plr">Plr.</param>
-        public static void AddBan(int plr)
-        {
-#if Full_API
-            var ctx = new HookContext()
-            {
-                Sender = HookContext.ConsoleSender
-            };
-            var args = new HookArgs.AddBan()
-            {
-                RemoteAddress = Terraria.Netplay.Clients[plr].RemoteAddress()
-            };
-
-            HookPoints.AddBan.Invoke(ref ctx, ref args);
-
-            if (ctx.Result == HookResult.DEFAULT)
-            {
-                var remoteAddress = Terraria.Netplay.Clients[plr].Socket.GetRemoteAddress();
-                using (StreamWriter streamWriter = new StreamWriter(Terraria.Netplay.BanFilePath, true))
-                {
-                    streamWriter.WriteLine("//" + Terraria.Main.player[plr].name);
-                    streamWriter.WriteLine(remoteAddress.GetIdentifier());
-                }
-            }
-#endif
-        }
-
-        /// <summary>
         /// Called upon a connection of a new slot
         /// </summary>
         /// <param name="slot">Slot.</param>
@@ -121,6 +91,32 @@ namespace OTA.Callbacks
             var conn = client as ClientConnection;
             conn.Kick("Server is full");
             #endif
+        }
+
+        public static bool OnAddBanBegin(int player)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.AddBan()
+            {
+                State = MethodState.Begin,
+                Slot = player
+            };
+
+            HookPoints.AddBan.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+
+        public static void OnAddBanEnd(int player)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.AddBan()
+            {
+                State = MethodState.End,
+                Slot = player
+            };
+
+            HookPoints.AddBan.Invoke(ref ctx, ref args);
         }
     }
 }

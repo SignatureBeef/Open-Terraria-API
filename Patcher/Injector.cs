@@ -2475,32 +2475,6 @@ namespace OTA.Patcher
         //        }
 
         /// <summary>
-        /// Hooks player banning
-        /// </summary>
-        public void HookBanning()
-        {
-            foreach (var rep in new string[] { /*"SendAnglerQuest,"*/ /*"syncPlayers",*/ "AddBan" })
-            {
-                var toBeReplaced = _asm.MainModule.Types
-                        .SelectMany(x => x.Methods
-                            .Where(y => y.HasBody)
-                                   )
-                        .SelectMany(x => x.Body.Instructions)
-                        .Where(x => x.OpCode == Mono.Cecil.Cil.OpCodes.Call
-                                       && x.Operand is MethodReference
-                                       && (x.Operand as MethodReference).Name == rep
-                                   )
-                        .ToArray();
-
-                var replacement = API.NetplayCallback.Methods.Single(x => x.Name == rep);
-                for (var x = 0; x < toBeReplaced.Length; x++)
-                {
-                    toBeReplaced[x].Operand = _asm.MainModule.Import(replacement);
-                }
-            }
-        }
-
-        /// <summary>
         /// Hooks if NPC's can spawn into OTA
         /// </summary>
         public void HookNPCSpawning()

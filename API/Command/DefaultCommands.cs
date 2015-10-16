@@ -185,7 +185,7 @@ namespace OTA.Command
                 {
                     if (Main.player[i].active && Main.player[i].name.ToLower() == lowered)
                     {
-                        Callbacks.NetplayCallback.AddBan(i);
+                        Terraria.Netplay.AddBan(i);
                         NetMessage.SendData(2, i, -1, "Banned from server.", 0, 0f, 0f, 0f, 0);
                         found = true;
                     }
