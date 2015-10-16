@@ -265,7 +265,7 @@ namespace OTA.Callbacks
                                         {
                                             Sender = HookContext.ConsoleSender
                                         };
-                                        var args = new HookArgs.ConfigurationLine()
+                                        var args = new HookArgs.ConfigurationFileLineRead()
                                         {
                                             Key = key,
                                             Value = value
