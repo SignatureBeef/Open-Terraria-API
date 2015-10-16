@@ -336,5 +336,38 @@ namespace OTA.Callbacks
 
             HookPoints.NpcDropBossBag.Invoke(ref ctx, ref args);
         }
+
+        //OnSpawnInvasionNPC
+
+        public static int OnSpawnInvasionNPC(int x, int y, int type, int start, float ai0, float ai1, float ai2, float ai3, int target)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.InvasionNpcSpawn()
+            {
+                State = MethodState.Begin,
+
+                X = x,
+                Y = y,
+                Type = type,
+                Start = start,
+                AI0 = ai0,
+                AI1 = ai1,
+                AI2 = ai2,
+                AI3 = ai3,
+                Target = target
+            };
+
+            HookPoints.InvasionNpcSpawn.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.IGNORE) return 0;
+            else if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is int) return (int)ctx.ResultParam;
+
+            args.Start = Terraria.NPC.NewNPC(args.X, args.Y, args.Type, args.Start, args.AI0, args.AI1, args.AI2, args.AI3, args.Target);
+            args.State = MethodState.End;
+
+            HookPoints.InvasionNpcSpawn.Invoke(ref ctx, ref args);
+
+            return args.Start;
+        }
     }
 }

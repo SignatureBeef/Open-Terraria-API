@@ -749,33 +749,6 @@ namespace OTA.Patcher
         }
 
         /// <summary>
-        /// Hooks spawning invasion npc's
-        /// </summary>
-        /// <remarks>I don't remember this anymore, but I think SpawnNPC is used for invasions</remarks>
-        public void HookInvasions()
-        {
-            var main = Terraria.NPC.Methods.Single(x => x.Name == "SpawnNPC" && x.IsStatic);
-
-            var il = main.Body.GetILProcessor();
-            var callback = API.NPCCallback.Methods.Single(x => x.Name == "OnInvasionNPCSpawn");
-
-            var ins = main.Body.Instructions.Where(x =>
-                x.OpCode == OpCodes.Ldsfld
-                          && x.Operand is FieldReference
-                          && (x.Operand as FieldReference).Name == "rockLayer").ToArray()[3].Previous.Previous;
-
-            il.InsertBefore(ins, il.Create(OpCodes.Ldloc_2));
-            il.InsertBefore(ins, il.Create(OpCodes.Ldc_I4, 16));
-            il.InsertBefore(ins, il.Create(OpCodes.Mul));
-            il.InsertBefore(ins, il.Create(OpCodes.Ldc_I4_8));
-            il.InsertBefore(ins, il.Create(OpCodes.Add));
-            il.InsertBefore(ins, il.Create(OpCodes.Ldloc_3));
-            il.InsertBefore(ins, il.Create(OpCodes.Ldc_I4, 16));
-            il.InsertBefore(ins, il.Create(OpCodes.Mul));
-            il.InsertBefore(ins, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
-        }
-
-        /// <summary>
         /// This was mean to add the update Terraria.Main.statusText so the saving of the world would clear its line
         /// </summary>
         public void FixStatusTexts()

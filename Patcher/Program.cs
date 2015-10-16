@@ -514,8 +514,6 @@ namespace OTA.Patcher
                 patcher.HookConfig();
                 Console.Write("Ok\nFixing statusText...");
                 patcher.FixStatusTexts();
-                Console.Write("Ok\nHooking invasions...");
-                patcher.HookInvasions();
                 patcher.HookInvasionWarning();
                 //                Console.Write("Ok\nEnabling rain...");
                 //                patcher.EnableRaining();

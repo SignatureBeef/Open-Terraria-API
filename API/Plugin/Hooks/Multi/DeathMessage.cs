@@ -3,6 +3,7 @@ using System;
 
 namespace OTA.Plugin
 {
+    //SUBJECT TO CHANGE
     public static partial class HookArgs
     {
         public struct DeathMessage
