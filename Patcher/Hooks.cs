@@ -90,19 +90,48 @@ namespace OTA.Patcher
             _asm.MainModule.Architecture = _self.MainModule.Architecture;
         }
 
-//        [ServerHook]
-//        private void TestNetSwitch()
-//        {
-//            var sendData = Terraria.NetMessage.Method("SendData");
-//            var switchs = sendData.Body.Instructions.First(x => x.OpCode == OpCodes.Switch);
-//        }
-
         //        [ServerHook]
-        //        private void HookHardModeTileUpdates()
+        //        private void TestNetSwitch()
         //        {
-        //            //Inject a custom PlaceTile, that returns a bool
-        //            //If false, then return/break
+        //            var sendData = Terraria.NetMessage.Method("SendData");
+        //            var switchs = sendData.Body.Instructions.First(x => x.OpCode == OpCodes.Switch);
         //        }
+
+//        [ServerHook]
+//        private void HookHardModeTileUpdates()
+//        {
+//            //Inject a custom PlaceTile, that returns a bool
+//            //If false, then return/break
+//
+//            var hardUpdateWorld = Terraria.WorldGen.Methods.Single(x => x.Name == "hardUpdateWorld");
+//            var cbkOnTileChange = Terraria.Import(API.WorldGenCallback.Methods.Single(x => x.Name == "OnHardModeTileUpdate"));
+//
+//            var setTiles = hardUpdateWorld.Body.Instructions.Where(x => x.OpCode == OpCodes.Stfld
+//                               && x.Operand is FieldReference
+//                               && (x.Operand as FieldReference).Name == "type")
+//                                    .ToArray();
+//
+//            var il = hardUpdateWorld.Body.GetILProcessor();
+//            foreach (var setFld in setTiles.Take(1))
+//            {
+//                var insInsertBefore = setFld.FindPreviousInstructionByOpCode(OpCodes.Ldsfld);
+//
+//                Instruction insTarget;
+//                il.InsertBefore(insInsertBefore, insTarget = il.Create(OpCodes.Call, cbkOnTileChange));
+//                insInsertBefore.ReplaceTransfer(insTarget, hardUpdateWorld);
+////                il.InsertBefore(insInsertBefore, il.Create(OpCodes.Pop));
+//                il.InsertBefore(insInsertBefore, il.Create(OpCodes.Brfalse_S, insInsertBefore));
+//                il.InsertBefore(insInsertBefore, il.Create(OpCodes.Ret));
+//            }
+////            foreach (var setFld in hardUpdateWorld.Body.Instructions.Where(x => x.OpCode==OpCodes.Pop && x.Previous.Operand == cbkOnTileChange).ToArray())
+////            {
+////                var target = setFld.Next;
+////                il.InsertAfter(setFld, il.Create(OpCodes.Ret));
+////                il.Replace(setFld, il.Create(OpCodes.Brfalse, target));
+////            }
+//
+////            hardUpdateWorld.Body.OptimizeMacros();
+//        }
 
         //        [ServerHook]
         //        private void HookHardModeTileUpdates()

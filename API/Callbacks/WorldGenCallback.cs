@@ -5,7 +5,7 @@ namespace OTA.Callbacks
 {
     public static class WorldGenCallback
     {
-        public static bool OnHardModeTileUpdate(int x, int y, int type)
+        public static bool OnHardModeTileUpdate()
         {
 //            Logging.ProgramLog.Admin.Log("Hard mode tile called");
             return true;

@@ -218,6 +218,16 @@ namespace OTA.Plugin
         {
         }
 
+        public HookPoint()
+            : base(NameFromType())
+        {
+        }
+
+        static string NameFromType()
+        {
+            return typeof(T).Name.ToLower();
+        }
+
         internal protected void Hook(BasePlugin plugin, HookAction<T> callback, HookOrder order = HookOrder.NORMAL)
         {
             lock (editLock)
