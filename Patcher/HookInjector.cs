@@ -19,27 +19,32 @@ namespace OTA.Patcher
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
                 .Select(x => new
                 {
-                    Attribute = x
-                                .GetCustomAttributes(typeof(OTAPatchAttribute), false)
-                                .Select(a => a as OTAPatchAttribute)
-                                .SingleOrDefault(y => (y.SupportedTypes & currentType) != 0),
+                    Attribute = x.GetCustomAttribute<OTAPatchAttribute>(false),
                         
                     Method = x
                 })
-                .Where(z => z.Attribute != null)
+                .Where(z => z.Attribute != null && (z.Attribute.SupportedTypes & currentType) != 0)
                 .OrderBy(o => o.Attribute.Order)
                 .ToArray();
 
             //Run the patches
-            Console.WriteLine("Running the patches...");
+            var dbg = new System.Diagnostics.Stopwatch();
+            var col = Console.ForegroundColor;
             for (var x = 0; x < hooks.Length; x++)
             {
+                dbg.Reset();
                 Console.Write("\t{0}/{1} - {2}", x + 1, hooks.Length, hooks[x].Attribute.Text);
 
-                hooks[x].Method.Invoke(this, null);
-                Console.WriteLine(" [OK]");
+                dbg.Start();
+                hooks[x].Method.Invoke(this, null); //TODO get a boolean from this to determine the OK/FAIL
+                dbg.Stop();
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(" [OK] ");
+                Console.ForegroundColor = col;
+                Console.WriteLine("Took {0}ms", dbg.ElapsedMilliseconds);
             }
-            Console.WriteLine("All patches ran.");
+            Console.ResetColor();
         }
     }
 }

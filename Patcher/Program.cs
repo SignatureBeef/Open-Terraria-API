@@ -523,9 +523,11 @@ namespace OTA.Patcher
                 //                patcher.HookWorldFile_DEBUG();
 
                 Console.Write("Ok\n");
+                Console.WriteLine("Running the patches...");
                 patcher.InjectHooks(SupportType.Server);
+                Console.WriteLine("All patches ran.");
 
-                Console.Write("Injection complete.\nUpdating to .NET v4.5.1...");
+                Console.Write("Updating to .NET v4.5.1...");
                 patcher.SwitchFramework("4.5.1");
                 Console.Write("Ok\nPatching Newtonsoft.Json...");
                 patcher.PatchJSON();
@@ -559,8 +561,9 @@ namespace OTA.Patcher
                 //                patcher.InjectTileSet();
 
                 Console.Write("Ok\nInjecting hooks");
+                Console.WriteLine("Running the patches...");
                 patcher.InjectHooks(SupportType.Client);
-                Console.Write("Injection complete.\n");
+                Console.WriteLine("All patches ran.");
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
