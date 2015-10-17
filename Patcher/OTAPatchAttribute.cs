@@ -9,14 +9,14 @@ namespace OTA.Patcher
     public sealed class OTAPatchAttribute : Attribute
     {
         /// <summary>
-        /// The text to be displayed in the console
+        /// The text to be displayed in the console when the method is being executed.
         /// </summary>
         public string Text { get; set; }
 
         /// <summary>
-        /// What modes the patch method supports
+        /// What modes the patch method supports.
         /// </summary>
-        public SupportType SupportTypes { get; set; }
+        public SupportType SupportedTypes { get; set; }
 
         /// <summary>
         /// This allows you to lead or lag the call of the patch method.
@@ -25,7 +25,7 @@ namespace OTA.Patcher
 
         public OTAPatchAttribute(SupportType supportedTypes, string text, int order = 100)
         {
-            this.SupportTypes = supportedTypes;
+            this.SupportedTypes = supportedTypes;
             this.Text = text;
             this.Order = order;
         }

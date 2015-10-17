@@ -22,7 +22,7 @@ namespace OTA.Patcher
                     Attribute = x
                                 .GetCustomAttributes(typeof(OTAPatchAttribute), false)
                                 .Select(a => a as OTAPatchAttribute)
-                                .SingleOrDefault(y => (y.SupportTypes & currentType) != 0),
+                                .SingleOrDefault(y => (y.SupportedTypes & currentType) != 0),
                         
                     Method = x
                 })
