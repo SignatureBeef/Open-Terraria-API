@@ -8,7 +8,7 @@ namespace OTA.Patcher
 {
     public partial class Injector
     {
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Wrapping Projectile.SetDefaults")]
         private void HookProjectileSetDefaults()
         {
             var method = Terraria.Projectile.Method("SetDefaults");
@@ -27,7 +27,7 @@ namespace OTA.Patcher
             il.Replace(insPop, il.Create(OpCodes.Starg, wrapped.Parameters.Single(x => x.Name == "Type")));
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Wrapping Projectile.AI")]
         private void HookProjectileAI()
         {
             var method = Terraria.Projectile.Method("AI");

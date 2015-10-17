@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 
 namespace OTA.Patcher
 {
@@ -8,43 +9,37 @@ namespace OTA.Patcher
         /// <summary>
         /// Grabs all available hooks and executes them to hook into the target assembly
         /// </summary>
-        /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public void InjectHooks<T>()
+        public void InjectHooks(SupportType currentType)
         {
+            /*
+             * Gather all methods marked with the OTAPatchAttribute.
+             * These must then be fitered with the current SupportType, and order as appropriate.
+             */
             var hooks = typeof(Injector)
-                .GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.GetCustomAttributes(typeof(T), false).Count() == 1)
+                .GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
+                .Select(x => new
+                {
+                    Attribute = x
+                                .GetCustomAttributes(typeof(OTAPatchAttribute), false)
+                                .Select(a => a as OTAPatchAttribute)
+                                .SingleOrDefault(y => (y.SupportTypes & currentType) != 0),
+                        
+                    Method = x
+                })
+                .Where(z => z.Attribute != null)
+                .OrderBy(o => o.Attribute.Order)
                 .ToArray();
 
-            string line = null;
-
-//            for (var x = 0; x < hooks.Length; x++)
-//            {
-//                const String Fmt = "Patching in hooks - {0}/{1}";
-//
-//                if (line != null)
-//                    ConsoleHelper.ClearLine();
-//
-//                line = String.Format(Fmt, x + 1, hooks.Length);
-//                Console.Write(line);
-//
-//                hooks[x].Invoke(this, null);
-//            }
-
-            Console.WriteLine("Patching in hooks...");
+            //Run the patches
+            Console.WriteLine("Running the patches...");
             for (var x = 0; x < hooks.Length; x++)
             {
-                const String Fmt = "Patching in hooks - {0}/{1}";
+                Console.Write("\t{0}/{1} - {2}", x + 1, hooks.Length, hooks[x].Attribute.Text);
 
-                if (line != null)
-                    ConsoleHelper.ClearLine();
-
-                line = String.Format("\t{0}/{1} - {2}", x + 1, hooks.Length, hooks[x].Name);
-                Console.Write(line);
-
-                hooks[x].Invoke(this, null);
+                hooks[x].Method.Invoke(this, null);
                 Console.WriteLine(" [OK]");
             }
+            Console.WriteLine("All patches ran.");
         }
     }
 }

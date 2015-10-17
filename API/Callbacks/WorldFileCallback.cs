@@ -32,18 +32,6 @@ namespace OTA.Callbacks
             return ctx.Result == HookResult.DEFAULT;
         }
 
-        /// <summary>
-        /// Clears the world, and is a direct replacement of Terraria.WorldGen.clearWorld.
-        /// </summary>
-        public static void ClearWorld()
-        {
-            MainCallback.ResetTileArray();
-#if Full_API
-            WorldGen.clearWorld();
-#endif
-            GC.Collect();
-        }
-
         public static bool OnWorldSaveBegin(bool useCloudSaving, bool resetTime = false)
         {
             var ctx = new HookContext();

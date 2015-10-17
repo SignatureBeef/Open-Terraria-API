@@ -8,7 +8,7 @@ namespace OTA.Patcher
 {
     public partial class Injector
     {
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking NPC kill")]
         private void OnNPCKilled()
         {
             var oca = Terraria.NPC.Methods.Single(x => x.Name == "checkDead");
@@ -26,7 +26,7 @@ namespace OTA.Patcher
             il.InsertAfter(ins, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Wrapping NPC.SetDefaults")]
         private void HookNpcSetDefaults()
         {
             var setDefaults = Terraria.NPC.Methods.Where(x => x.Name == "SetDefaults").ToArray();
@@ -42,7 +42,7 @@ namespace OTA.Patcher
             }
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Wrapping NPC.netDefaults")]
         private void HookNpcNetDefaults()
         {
             var setDefaults = Terraria.NPC.Methods.Single(x => x.Name == "netDefaults");
@@ -57,7 +57,7 @@ namespace OTA.Patcher
             setDefaults.Wrap(cbkBegin, cbkEnd);
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking NPC strike")]
         private void HookNpcOnStrike()
         {
             var impCall = Terraria.Import(API.NPCCallback.Method("OnStrike"));
@@ -85,7 +85,7 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Wrapping NPC Transform")]
         private void HookNpcTransform()
         {
             var method = Terraria.NPC.Method("Transform");
@@ -100,7 +100,7 @@ namespace OTA.Patcher
             method.Wrap(cbkBegin, cbkEnd, true);
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking NPC DropLoot calls")]
         private void HookNpcLoot()
         {
             //Create an empty method with the same parameters as Terraria.Main.NewItem
@@ -200,7 +200,7 @@ namespace OTA.Patcher
             //            }
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking NPC DropBossBag calls")]
         private void HookDropBossBags()
         {
             //Create an empty method with the same parameters as Terraria.Main.NewItem
@@ -286,7 +286,7 @@ namespace OTA.Patcher
             //            }
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking invasion NPC spawning")]
         private void HookSpawnNPC()
         {
             //Create an empty method with the same parameters as Terraria.Main.NewItem

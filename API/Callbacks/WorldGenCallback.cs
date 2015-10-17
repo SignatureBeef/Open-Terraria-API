@@ -20,6 +20,34 @@ namespace OTA.Callbacks
 
             return ctx.Result == HookResult.DEFAULT;
         }
+
+        public static bool OnWorldClearBegin()
+        {
+            MainCallback.ResetTileArray();
+
+            var ctx = new HookContext();
+            var args = new HookArgs.WorldClear()
+            {
+                State = MethodState.Begin
+            };
+
+            HookPoints.WorldClear.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+
+        public static void OnWorldClearEnd()
+        {
+            GC.Collect();
+
+            var ctx = new HookContext();
+            var args = new HookArgs.WorldClear()
+            {
+                State = MethodState.End
+            };
+
+            HookPoints.WorldClear.Invoke(ref ctx, ref args);
+        }
     }
 }
 

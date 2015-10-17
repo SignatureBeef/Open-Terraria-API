@@ -7,12 +7,9 @@ namespace OTA.Patcher
 {
     public partial class Injector
     {
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking player kill messages")]
         void OnPlayerKilled() //OnEntityHurt
         {
-            //Routing all instances because i'm yet again in another rush
-            //Anyone, feel free to swap out to pure IL directly in the deathMsg body ;)
-
             var mth = Terraria.Player.Methods.Single(x => x.Name == "KillMe");
             var hook = _asm.MainModule.Import(API.Player.Methods.Single(x => x.Name == "OnPlayerKilled"));
 
@@ -23,8 +20,6 @@ namespace OTA.Patcher
 
             //Arguments
             il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
-            //            il.InsertBefore(first, il.Create(OpCodes.Ldarg_1));
-            //            il.InsertBefore(first, il.Create(OpCodes.Ldarg_2));
             il.InsertBefore(first, il.Create(OpCodes.Ldarga_S, mth.Parameters.Single(x => x.Name == "dmg")));
             il.InsertBefore(first, il.Create(OpCodes.Ldarga_S, mth.Parameters.Single(x => x.Name == "hitDirection")));
             il.InsertBefore(first, il.Create(OpCodes.Ldarga_S, mth.Parameters.Single(x => x.Name == "pvp")));
@@ -51,8 +46,7 @@ namespace OTA.Patcher
             }
         }
 
-        [ClientHook]
-        [ServerHook]
+        [OTAPatch(SupportType.Client | SupportType.Server, "Hooking player damage")]
         void OnPlayerHurt() //OnEntityHurt
         {
             //Routing all instances because i'm yet again in another rush
@@ -83,7 +77,7 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Routing player death messages")]
         void OnDeathMessage()
         {
             //Routing all instances because i'm yet again in another rush
@@ -109,7 +103,7 @@ namespace OTA.Patcher
             }
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking player server enter")]
         private void OnPlayerEntering()
         {
             var getData = Terraria.MessageBuffer.Methods.Single(x => x.Name == "GetData");
@@ -142,7 +136,7 @@ namespace OTA.Patcher
             il.InsertBefore(match, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking player quit")]
         private void OnPlayerLeave()
         {
             var clientReset = Terraria.RemoteClient.Methods.Single(x => x.Name == "Reset");
@@ -163,7 +157,7 @@ namespace OTA.Patcher
             il.InsertBefore(ins, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking player greet message")]
         private void OnGreetPlayer()
         {
             var greetPlayer = Terraria.NetMessage.Methods.Single(x => x.Name == "greetPlayer");
@@ -178,7 +172,7 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking player name collisions")]
         private void OnNameCollision()
         {
             var vanilla = Terraria.MessageBuffer.Method("GetData");

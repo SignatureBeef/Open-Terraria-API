@@ -8,7 +8,7 @@ namespace OTA.Patcher
 {
     public partial class Injector
     {
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Wrapping Item.SetDefaults")]
         private void HookItemSetDefaults()
         {
             var setDefaults = Terraria.Item.Methods.Where(x => x.Name.StartsWith("SetDefault")).ToArray();
@@ -29,7 +29,7 @@ namespace OTA.Patcher
             }
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Wrapping Item.netDefaults")]
         private void HookItemNetDefaults()
         {
             var setDefaults = Terraria.Item.Methods.Single(x => x.Name == "netDefaults");

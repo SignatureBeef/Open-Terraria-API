@@ -7,7 +7,7 @@ namespace OTA.Patcher
 {
     public partial class Injector
     {
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking connection acceptance")]
         private void OnConnectionAccepted()
         {
             var oca = Terraria.Netplay.Methods.Single(x => x.Name == "OnConnectionAccepted");
@@ -22,30 +22,25 @@ namespace OTA.Patcher
         /// <summary>
         /// Hooks Begin and End of Terraria.WorldGen.clearWorld
         /// </summary>
-        [ServerHook]
-        [ClientHook]
+        [OTAPatch(SupportType.Client | SupportType.Server, "Hooking world clearing")]
         private void HookClearWorld()
         {
-            var method = Terraria.WorldGen.Methods.Single(x => x.Name == "clearWorld");
-            var replacement = API.WorldFileCallback.Methods.First(m => m.Name == "ClearWorld");
+            var vanilla = Terraria.WorldGen.Methods.Single(x => x.Name == "clearWorld");
 
-            var calls = _asm.MainModule.Types
-                .SelectMany(x => x.Methods)
-                .Where(y => y.HasBody)
-                .SelectMany(z => z.Body.Instructions)
-                .Where(ins => ins.OpCode == OpCodes.Call && ins.Operand is MethodReference && (ins.Operand as MethodReference).Name == "clearWorld")
-                .ToArray();
+            var apiMatch = API.WorldGenCallback.Methods.Where(x => x.Name.StartsWith("OnWorldClear"));
 
-            foreach (var ins in calls)
-            {
-                ins.Operand = _asm.MainModule.Import(replacement);
-            }
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnWorldSave Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            vanilla.Wrap(cbkBegin, cbkEnd, true);
         }
 
         /// <summary>
         /// Called on every server update tick, regardless of connections
         /// </summary>
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking server tick")]
         private void HookServerTick()
         {
             var method = Terraria.Main.Methods.Single(x => x.Name == "DedServ");
@@ -68,7 +63,7 @@ namespace OTA.Patcher
         /// <summary>
         /// Replaces the world save with OTA's custom one
         /// </summary>
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Routing all autosave calls")]
         private void HookWorldAutoSave()
         {
             var method = Terraria.WorldGen.Methods.Single(x => x.Name == "saveAndPlay");
@@ -100,7 +95,7 @@ namespace OTA.Patcher
         /// <summary>
         /// Replaces Main.worldPathName with OTA's
         /// </summary>
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Routing the world save path")]
         private void PatchInSavePath()
         {
             var method = Terraria.WorldFile.Methods.Single(x => x.Name == "saveWorld" && x.Parameters.Count == 2);
@@ -119,7 +114,7 @@ namespace OTA.Patcher
             }
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Fixing connection code to check if it's full")]
         private void FixNetplayServerFull()
         {
             var method = Terraria.Netplay.Methods.Single(x => x.Name == "OnConnectionAccepted");
@@ -135,7 +130,7 @@ namespace OTA.Patcher
             il.InsertBefore(toReplace, il.Create(OpCodes.Ldarg_0));
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Nurfing the WorldMap as it uses useless ram")]
         private void NurfWorldMap() //wip, dumped a lot of code in place of cecil extensions
         {
             var wm = _asm.MainModule.Types.Single(x => x.Name == "WorldMap");
@@ -166,7 +161,7 @@ namespace OTA.Patcher
         /// <summary>
         /// Wraps Terraria.Main.Update with calls to OTA.Callbacks.MainCallback.OnUpdate[Begin|End]
         /// </summary>
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking update")]
         void HookUpdate()
         {
             //Grab the Update method
@@ -178,7 +173,7 @@ namespace OTA.Patcher
         /// <summary>
         /// Wraps Terraria.Main.UpdateServer with calls to OTA.Callbacks.MainCallback.OnUpdateServer[Begin|End]
         /// </summary>
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking server update")]
         void HookUpdateServer()
         {
             //Grab the UpdateServer method
@@ -187,7 +182,7 @@ namespace OTA.Patcher
             updateServer.InjectBeginEnd(API.MainCallback, "OnUpdateServer");
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Wrapping world saving")]
         void HookWorldSave()
         {
             var method = Terraria.WorldFile.Methods.Single(x => x.Name == "saveWorld" && x.Parameters.Count == 2);
@@ -202,7 +197,7 @@ namespace OTA.Patcher
             method.Wrap(cbkBegin, cbkEnd, true);
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking the transition to hard mode")]
         void HookStartHardMode()
         {
             var method = Terraria.WorldGen.Method("StartHardmode");
@@ -244,7 +239,7 @@ namespace OTA.Patcher
         //            il.Replace(insLastLdcI40, il.Create(OpCodes.Call, callback));
         //        }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking the christmas seasonal event")]
         void HookChristmas()
         {
             var method = Terraria.Main.Method("checkXMas");
@@ -253,31 +248,13 @@ namespace OTA.Patcher
             method.Wrap(callback, null, true);
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking the halloween seasonal event")]
         void HookHalloween()
         {
             var method = Terraria.Main.Method("checkHalloween");
             var callback = Terraria.Import(API.MainCallback.Method("OnHalloweenCheck"));
 
             method.Wrap(callback, null, true);
-        }
-
-        /// <summary>
-        /// When vanilla requests to ban a slot, this method is called.
-        /// </summary>
-        [ServerHook]
-        void WrapAddBan()
-        {
-            var vanilla = Terraria.Netplay.Methods.Single(x => x.Name == "AddBan");
-
-            var apiMatch = API.NetplayCallback.Methods.Where(x => x.Name.StartsWith("OnAddBan"));
-
-            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnAddBan Begin/End calls in the API");
-
-            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
-            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
-
-            vanilla.Wrap(cbkBegin, cbkEnd, true);
         }
     }
 }

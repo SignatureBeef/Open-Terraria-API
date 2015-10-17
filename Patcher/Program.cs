@@ -6,15 +6,6 @@ using System.Linq;
 namespace OTA.Patcher
 {
     /// <summary>
-    /// Patch mode.
-    /// </summary>
-    public enum PatchMode
-    {
-        Server,
-        Client
-    }
-
-    /// <summary>
     /// The startup class for the OTA Injector program.
     /// </summary>
     public class Program
@@ -23,7 +14,7 @@ namespace OTA.Patcher
         static void Main(string[] args)
         {
             //By default we will patch a server
-            OTAPatcher.PatchMode = PatchMode.Server;
+            OTAPatcher.PatchMode = SupportType.Server;
 
             //Specifiy the official file name
             OTAPatcher.InputFileName = "TerrariaServer.exe";
@@ -182,7 +173,7 @@ namespace OTA.Patcher
         /// Gets or sets the patch mode.
         /// </summary>
         /// <value>The patch mode.</value>
-        public static PatchMode PatchMode { get; set; }
+        public static SupportType PatchMode { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the input file.
@@ -341,7 +332,7 @@ namespace OTA.Patcher
 
             Console.WriteLine("Root directory: " + root.FullName);
 
-            if (PatchMode == PatchMode.Server)
+            if (PatchMode == SupportType.Server)
             {
                 if (CopyProjectFiles)
                 {
@@ -433,7 +424,7 @@ namespace OTA.Patcher
                 }
 
             }
-            else if (PatchMode == PatchMode.Client)
+            else if (PatchMode == SupportType.Client)
             {
                 if (CopyProjectFiles)
                 {
@@ -457,7 +448,7 @@ namespace OTA.Patcher
 
             var patcher = new Injector(inFile, patchFile);
 
-            if (PatchMode == PatchMode.Server)
+            if (PatchMode == SupportType.Server)
             {
                 var noVersionCheck = args != null && args.Where(x => x.ToLower() == "-nover").Count() > 0;
                 if (noVersionCheck != true)
@@ -532,7 +523,7 @@ namespace OTA.Patcher
                 //                patcher.HookWorldFile_DEBUG();
 
                 Console.Write("Ok\n");
-                patcher.InjectHooks<ServerHookAttribute>();
+                patcher.InjectHooks(SupportType.Server);
 
                 Console.Write("Injection complete.\nUpdating to .NET v4.5.1...");
                 patcher.SwitchFramework("4.5.1");
@@ -554,7 +545,7 @@ namespace OTA.Patcher
                 //TODO repace Terraria's Console.SetTitles
 
             }
-            else if (PatchMode == PatchMode.Client)
+            else if (PatchMode == SupportType.Client)
             {
                 Console.Write("Hooking start...");
                 patcher.HookProgramStart(PatchMode);
@@ -568,7 +559,7 @@ namespace OTA.Patcher
                 //                patcher.InjectTileSet();
 
                 Console.Write("Ok\nInjecting hooks");
-                patcher.InjectHooks<ClientHookAttribute>();
+                patcher.InjectHooks(SupportType.Client);
                 Console.Write("Injection complete.\n");
 
                 if (PerformPatch != null)
@@ -633,14 +624,14 @@ namespace OTA.Patcher
         {
             if (!isMono)
             {
-                if (PatchMode == PatchMode.Server)
+                if (PatchMode == SupportType.Server)
                 {
                     if (File.Exists(configFile))
                         System.Diagnostics.Process.Start(file, "-config " + configFile);
                     else
                         System.Diagnostics.Process.Start(file);
                 }
-                else if (PatchMode == PatchMode.Client)
+                else if (PatchMode == SupportType.Client)
                 {
                     System.Diagnostics.Process.Start(file);
                 }
@@ -668,7 +659,7 @@ namespace OTA.Patcher
                     var asm = domain.Load(ms.ToArray());
                     try
                     {
-                        if (PatchMode == PatchMode.Server)
+                        if (PatchMode == SupportType.Server)
                         {
                             if (File.Exists(configFile))
                                 asm.EntryPoint.Invoke(null, new object[]
@@ -679,7 +670,7 @@ namespace OTA.Patcher
                                 asm.EntryPoint.Invoke(null, new object[] { new string[] { } });
 
                         }
-                        else if (PatchMode == PatchMode.Client)
+                        else if (PatchMode == SupportType.Client)
                         {
                             asm.EntryPoint.Invoke(null, new object[] { new string[] { } });
                         }

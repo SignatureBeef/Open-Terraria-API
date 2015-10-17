@@ -393,6 +393,7 @@
     <Compile Include="Plugin\Misc\TileSquareForEachResult.cs" />
     <Compile Include="Plugin\Hooks\Server\ServerCommand.cs" />
     <Compile Include="Plugin\Hooks\Server\ConfigurationFileLineRead.cs" />
+    <Compile Include="Plugin\Hooks\Multi\WorldClear.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

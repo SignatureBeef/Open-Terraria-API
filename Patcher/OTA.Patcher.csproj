@@ -107,6 +107,9 @@
     <Compile Include="Hooks\ServerHooks.cs" />
     <Compile Include="Hooks\ProjectileHooks.cs" />
     <Compile Include="Hooks\RemoteClientHooks.cs" />
+    <Compile Include="OTAPatchAttribute.cs" />
+    <Compile Include="SupportType.cs" />
+    <Compile Include="ConsoleHelper.cs" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">

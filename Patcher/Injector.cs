@@ -914,9 +914,9 @@ namespace OTA.Patcher
         /// Hooks start of the application for plugins to be loaded
         /// </summary>
         /// <param name="mode">Mode.</param>
-        public void HookProgramStart(PatchMode mode)
+        public void HookProgramStart(SupportType mode)
         {
-            if (mode == PatchMode.Server)
+            if (mode == SupportType.Server)
             {
                 var method = Terraria.WindowsLaunch.Methods.Single(x => x.Name == "Main");
                 var callback = API.MainCallback.Methods.First(m => m.Name == "OnProgramStarted");
@@ -932,7 +932,7 @@ namespace OTA.Patcher
                 il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
                 il.InsertBefore(first, ret);
             }
-            else if (mode == PatchMode.Client)
+            else if (mode == SupportType.Client)
             {
                 var method = Terraria.Program.Methods.Single(x => x.Name == "LaunchGame");
                 var callback = API.MainCallback.Methods.First(m => m.Name == "OnProgramStarted");
@@ -1472,9 +1472,9 @@ namespace OTA.Patcher
         /// Onward from this specific instruction is client code, and code afterwards returns for the server. (Odd i know)
         /// However, if we dont return and skipMenu is set, the server will crash
         /// </summary>
-        public void SkipMenu(PatchMode mode)
+        public void SkipMenu(SupportType mode)
         {
-            if (mode != PatchMode.Server) throw new Exception("SkipMenu is a server-only fix");
+            if (mode != SupportType.Server) throw new Exception("SkipMenu is a server-only fix");
             var initialise = Terraria.Main.Methods.Single(x => x.Name == "Initialize");
             var loc = initialise.Body.Instructions
                 .Where(x => x.OpCode == OpCodes.Ldsfld && x.Operand is FieldDefinition)
@@ -2585,9 +2585,9 @@ namespace OTA.Patcher
         /// <param name="tdsmUID">Tdsm user interface.</param>
         /// <param name="name">Name.</param>
         /// <param name="swapOTA">If set to <c>true</c> swap OT.</param>
-        public void Save(PatchMode mode, string fileName, int apiBuild, string tdsmUID, string name, bool swapOTA = false)
+        public void Save(SupportType mode, string fileName, int apiBuild, string tdsmUID, string name, bool swapOTA = false)
         {
-            if (mode == PatchMode.Server)
+            if (mode == SupportType.Server)
             {
                 //Ensure the name is updated to the new one
                 _asm.Name = new AssemblyNameDefinition(name, new Version(0, 0, apiBuild, 0));

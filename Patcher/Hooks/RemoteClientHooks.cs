@@ -6,7 +6,7 @@ namespace OTA.Patcher
 {
     public partial class Injector
     {
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking socket resetting")]
         private void HookRemoteClientReset()
         {
             var reset = Terraria.RemoteClient.Method("Reset");

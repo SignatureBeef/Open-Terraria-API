@@ -9,39 +9,6 @@ using OTA.Patcher.Organisers;
 namespace OTA.Patcher
 {
     /// <summary>
-    /// Console helper.
-    /// </summary>
-    public static class ConsoleHelper
-    {
-        /// <summary>
-        /// Clears the current console line
-        /// </summary>
-        public static void ClearLine()
-        {
-            var current = System.Console.CursorTop;
-            System.Console.SetCursorPosition(0, System.Console.CursorTop);
-            System.Console.Write(new string(' ', System.Console.WindowWidth));
-            System.Console.SetCursorPosition(0, current);
-        }
-    }
-
-    /// <summary>
-    /// Server specific hook
-    /// </summary>
-    public sealed class ServerHookAttribute : Attribute
-    {
-
-    }
-
-    /// <summary>
-    /// Client specific hook
-    /// </summary>
-    public sealed class ClientHookAttribute : Attribute
-    {
-
-    }
-
-    /// <summary>
     /// This file is specifically for Vanilla hooks.
     /// When Terraria is released for multi-platforms our core server class will not be of service anymore, or atleast we can reuse the Packet code from vanilla.
     /// What this class will do is expose the hooks we need for plugins. E.g. OnPlayerJoined
@@ -61,7 +28,7 @@ namespace OTA.Patcher
         /// <summary>
         /// Hooks Begin and End of Terraria.Main.[Draw/Update]
         /// </summary>
-        [ClientHook]
+        [OTAPatch(SupportType.Client, "Hooking XNA events")]
         private void HookXNAEvents()
         {
             foreach (var mth in new string[] { "Draw", "Update", "UpdateClient" })
@@ -83,7 +50,7 @@ namespace OTA.Patcher
             }
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Changing the architecture to match OTA")]
         private void ChangeArchitecture()
         {
             _asm.MainModule.Attributes = _self.MainModule.Attributes;
@@ -97,41 +64,41 @@ namespace OTA.Patcher
         //            var switchs = sendData.Body.Instructions.First(x => x.OpCode == OpCodes.Switch);
         //        }
 
-//        [ServerHook]
-//        private void HookHardModeTileUpdates()
-//        {
-//            //Inject a custom PlaceTile, that returns a bool
-//            //If false, then return/break
-//
-//            var hardUpdateWorld = Terraria.WorldGen.Methods.Single(x => x.Name == "hardUpdateWorld");
-//            var cbkOnTileChange = Terraria.Import(API.WorldGenCallback.Methods.Single(x => x.Name == "OnHardModeTileUpdate"));
-//
-//            var setTiles = hardUpdateWorld.Body.Instructions.Where(x => x.OpCode == OpCodes.Stfld
-//                               && x.Operand is FieldReference
-//                               && (x.Operand as FieldReference).Name == "type")
-//                                    .ToArray();
-//
-//            var il = hardUpdateWorld.Body.GetILProcessor();
-//            foreach (var setFld in setTiles.Take(1))
-//            {
-//                var insInsertBefore = setFld.FindPreviousInstructionByOpCode(OpCodes.Ldsfld);
-//
-//                Instruction insTarget;
-//                il.InsertBefore(insInsertBefore, insTarget = il.Create(OpCodes.Call, cbkOnTileChange));
-//                insInsertBefore.ReplaceTransfer(insTarget, hardUpdateWorld);
-////                il.InsertBefore(insInsertBefore, il.Create(OpCodes.Pop));
-//                il.InsertBefore(insInsertBefore, il.Create(OpCodes.Brfalse_S, insInsertBefore));
-//                il.InsertBefore(insInsertBefore, il.Create(OpCodes.Ret));
-//            }
-////            foreach (var setFld in hardUpdateWorld.Body.Instructions.Where(x => x.OpCode==OpCodes.Pop && x.Previous.Operand == cbkOnTileChange).ToArray())
-////            {
-////                var target = setFld.Next;
-////                il.InsertAfter(setFld, il.Create(OpCodes.Ret));
-////                il.Replace(setFld, il.Create(OpCodes.Brfalse, target));
-////            }
-//
-////            hardUpdateWorld.Body.OptimizeMacros();
-//        }
+        //        [ServerHook]
+        //        private void HookHardModeTileUpdates()
+        //        {
+        //            //Inject a custom PlaceTile, that returns a bool
+        //            //If false, then return/break
+        //
+        //            var hardUpdateWorld = Terraria.WorldGen.Methods.Single(x => x.Name == "hardUpdateWorld");
+        //            var cbkOnTileChange = Terraria.Import(API.WorldGenCallback.Methods.Single(x => x.Name == "OnHardModeTileUpdate"));
+        //
+        //            var setTiles = hardUpdateWorld.Body.Instructions.Where(x => x.OpCode == OpCodes.Stfld
+        //                               && x.Operand is FieldReference
+        //                               && (x.Operand as FieldReference).Name == "type")
+        //                                    .ToArray();
+        //
+        //            var il = hardUpdateWorld.Body.GetILProcessor();
+        //            foreach (var setFld in setTiles.Take(1))
+        //            {
+        //                var insInsertBefore = setFld.FindPreviousInstructionByOpCode(OpCodes.Ldsfld);
+        //
+        //                Instruction insTarget;
+        //                il.InsertBefore(insInsertBefore, insTarget = il.Create(OpCodes.Call, cbkOnTileChange));
+        //                insInsertBefore.ReplaceTransfer(insTarget, hardUpdateWorld);
+        ////                il.InsertBefore(insInsertBefore, il.Create(OpCodes.Pop));
+        //                il.InsertBefore(insInsertBefore, il.Create(OpCodes.Brfalse_S, insInsertBefore));
+        //                il.InsertBefore(insInsertBefore, il.Create(OpCodes.Ret));
+        //            }
+        ////            foreach (var setFld in hardUpdateWorld.Body.Instructions.Where(x => x.OpCode==OpCodes.Pop && x.Previous.Operand == cbkOnTileChange).ToArray())
+        ////            {
+        ////                var target = setFld.Next;
+        ////                il.InsertAfter(setFld, il.Create(OpCodes.Ret));
+        ////                il.Replace(setFld, il.Create(OpCodes.Brfalse, target));
+        ////            }
+        //
+        ////            hardUpdateWorld.Body.OptimizeMacros();
+        //        }
 
         //        [ServerHook]
         //        private void HookHardModeTileUpdates()
@@ -222,7 +189,7 @@ namespace OTA.Patcher
         //            }
         //        }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking pressure plate triggers")]
         private void HookCollisionPressurePlate()
         {
             //Step 1: Add the calling object as a parameter to Terraria.Collision.SwitchTiles
@@ -272,7 +239,7 @@ namespace OTA.Patcher
             switchTiles.Body.OptimizeMacros();
         }
 
-        [ServerHook]
+        [OTAPatch(SupportType.Server, "Hooking MechSpawn")]
         private void HookMechSpawn()
         {
             foreach (var type in new TypeDefinition[] 
