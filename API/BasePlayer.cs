@@ -13,41 +13,17 @@ namespace OTA
     /// <summary>
     /// This is what Terraria.Player is forced to inherit
     /// </summary>
-    public partial class BasePlayer : Sender
+    public partial class BasePlayer : Terraria.Entity, ISender
     {
+        /// <summary>
+        /// Get or set if the player is considered an operator of the server
+        /// </summary>
+        public bool Op { get; set; }
+
         /// <summary>
         /// Gets or sets the clients globally unique identifier.
         /// </summary>
         public string ClientUUId { get; set; }
-
-        /// <summary>
-        /// Gets who the player is authenticated as
-        /// </summary>
-        /// <value>The authenticated as.</value>
-        public string AuthenticatedAs { get; private set; }
-
-        /// <summary>
-        /// Gets the authenticator
-        /// </summary>
-        public string AuthenticatedBy { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating whether this player is authenticated.
-        /// </summary>
-        /// <value><c>true</c> if this instance is authenticated; otherwise, <c>false</c>.</value>
-        public bool IsAuthenticated
-        {
-            get { return !String.IsNullOrEmpty(AuthenticatedAs) && AuthenticatedBy != Name; }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this player is self authenticated.
-        /// </summary>
-        /// <remarks>This is not for real authentication, rather to prevent self authentications being included</remarks>
-        public bool IsSelfAuthenticated
-        {
-            get { return AuthenticatedBy == Name; }
-        }
 
         /// <summary>
         /// Storage for plugins for on a per-player basis
@@ -106,53 +82,12 @@ namespace OTA
         }
 
         /// <summary>
-        /// Sets the authentication of this user
-        /// </summary>
-        /// <param name="auth">Auth.</param>
-        /// <param name="by">By.</param>
-        public void SetAuthentication(string auth, string by)
-        {
-            #if Full_API
-            var ctx = new Plugin.HookContext()
-            {
-                Player = this as Terraria.Player,
-                Connection = this.Connection.Socket
-            };
-            var changing = new Plugin.HookArgs.PlayerAuthenticationChanging()
-            {
-                AuthenticatedAs = auth,
-                AuthenticatedBy = by
-            };
-
-            Plugin.HookPoints.PlayerAuthenticationChanging.Invoke(ref ctx, ref changing);
-            if (ctx.Result != Plugin.HookResult.DEFAULT)
-                return;
-
-            this.AuthenticatedAs = auth;
-            this.AuthenticatedBy = by;
-
-            ctx = new Plugin.HookContext()
-            {
-                Player = this as Terraria.Player,
-                Connection = this.Connection.Socket
-            };
-            var changed = new Plugin.HookArgs.PlayerAuthenticationChanged()
-            {
-                AuthenticatedAs = this.AuthenticatedAs,
-                AuthenticatedBy = this.AuthenticatedBy
-            };
-
-            Plugin.HookPoints.PlayerAuthenticationChanged.Invoke(ref ctx, ref changed);
-            #endif
-        }
-
-        /// <summary>
         /// Gets the name of this player
         /// </summary>
         /// <returns>Sending entity name</returns>
         /// <value>The name.</value>
         /// <remarks>This is for compatibility</remarks>
-        public override string Name
+        public string SenderName
         {
             get
             {
@@ -177,7 +112,7 @@ namespace OTA
         /// <param name="B">Blue text color value</param>
         /// <param name="message">Message.</param>
         /// <param name="sender">Sender.</param>
-        public override void SendMessage(string message, int sender = 255, byte R = 255, byte G = 255, byte B = 255)
+        public void SendMessage(string message, int sender = 255, byte R = 255, byte G = 255, byte B = 255)
         {
 #if Full_API
             Terraria.NetMessage.SendData((int)Packet.PLAYER_CHAT, ((Terraria.Player)this).whoAmI, -1, message, sender, R, G, B);
@@ -209,11 +144,6 @@ namespace OTA
         /// The players IP Address
         /// </summary>
         public string IPAddress;
-
-        /// <summary>
-        /// The reason of disconnection
-        /// </summary>
-        public string DisconnectReason;
 
         #if Full_API
         /// <summary>
@@ -308,7 +238,7 @@ namespace OTA
                     Terraria.Main.item[index].Prefix(prefix);
 
                 if (notifyOps)
-                    Tools.NotifyAllOps("Giving " + this.Name + " some " + Terraria.Main.item[index].name + " (" + itemId.ToString() + ") [" + sender.SenderName + "]", true);
+                    Tools.NotifyAllOps("Giving " + this.name + " some " + Terraria.Main.item[index].name + " (" + itemId.ToString() + ") [" + sender.SenderName + "]", true);
 
                 return 0;
             }

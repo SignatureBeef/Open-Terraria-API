@@ -18,7 +18,7 @@ namespace OTA.Web.API
             #if Full_API
             return this.Request.CreateResponse(HttpStatusCode.OK,
                 Terraria.Main.player
-                .Where(x => x != null && x.active && x.Name == name)
+                .Where(x => x != null && x.active && x.name == name)
                 .Select(x => new { Name = x.name, Position = x.position })
                 .FirstOrDefault()
             );

@@ -5,7 +5,7 @@ namespace OTA.Callbacks
 {
     public static class CollisionCallback
     {
-        public static bool OnPressurePlateTriggered(OTA.Command.Sender sender, int x, int y)
+        public static bool OnPressurePlateTriggered(Terraria.Entity sender, int x, int y)
         {
             var ctx = new HookContext();
             var args = new HookArgs.PressurePlateTriggered()

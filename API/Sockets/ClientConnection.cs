@@ -15,11 +15,63 @@ using Terraria;
 using Terraria.Net.Sockets;
 using Terraria.Net;
 
+
+
+
+
+
+
+
+
 #else
 using OTA.Callbacks;
 #endif
 namespace OTA.Sockets
 {
+    #if !Full_API
+    public interface ISocket
+    {
+        void AsyncReceive(byte[] data, int offset, int size, SocketReceiveCallback callback, object state);
+
+        void AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state);
+
+        void Close();
+
+        void Connect(RemoteAddress address);
+
+        RemoteAddress GetRemoteAddress();
+
+        bool StartListening(SocketConnectionAccepted callback);
+
+        void StopListening();
+
+        bool IsConnected();
+
+        bool IsDataAvailable();
+    }
+
+    public class RemoteAddress
+    {
+
+    }
+
+    public class TcpAddress : RemoteAddress
+    {
+        public IPAddress Address;
+
+        public int Port;
+
+        public TcpAddress(IPAddress addr, int port)
+        {
+        }
+    }
+
+    public delegate void SocketConnectionAccepted(ISocket client);
+    public delegate void SocketReceiveCallback(object state,int size);
+    public delegate void SocketSendCallback(object state);
+
+    #endif
+
     /// <summary>
     /// A tcp client implementation that directly bolts into the Terrarian socket implementation
     /// </summary>
@@ -80,59 +132,6 @@ namespace OTA.Sockets
 
             _isReceiving = true; //The connection was established, so we can begin reading
         }
-
-        //        public void ResetTimeout()
-        //        {
-        //            timeout = 0;
-        //        }
-
-        /*static void TimeoutLoop()
-        {
-            try
-            {
-                while (true)
-                {
-                    Thread.Sleep(5000);
-
-                    if (Netplay.Clients != null)
-                    {
-                        for (var i = 0; i < Netplay.Clients.Length; i++)
-                        {
-                            var client = Netplay.Clients[i];
-                            if (client != null)
-                            {
-                                client.TimeOutTimer += 5;
-
-                                if (client.State >= 0) //== SlotState.QUEUED)
-                                {
-                                    if (client.TimeOutTimer >= Main.MaxTimeout / 2)
-                                    {
-                                        NetMessage.SendData((int)Packet.SEND_TILE_LOADING, client.Id);
-                                        client.TimeOutTimer = 0;
-                                    }
-                                }
-                                else if (client.TimeOutTimer >= Main.MaxTimeout)
-                                {
-                                    try
-                                    {
-                                        client.Kick("Timed out.");
-                                        client.TimeOutTimer = 0;
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Tools.WriteLine("Exception timing out client @{1}: {0}", e, i);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                ProgramLog.Error.Log("Exception in timeout thread: {0}", e);
-            }
-        }*/
 
         class AsyncCallback //: IDisposable
         {

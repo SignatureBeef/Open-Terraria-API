@@ -945,14 +945,14 @@ namespace OTA.Callbacks
             data.Apply(player);
 
             {
-                var lname = player.Name.ToLower();
+                var lname = player.name.ToLower();
 
                 foreach (var otherPlayer in Main.player)
                 {
                     //                            var otherSlot = Terraria.Netplay.Clients[otherPlayer.whoAmI];
-                    if (otherPlayer.Name != null && lname == otherPlayer.Name.ToLower() && otherPlayer.whoAmI != bufferId) // && otherSlot.State >= SlotState.CONNECTED)
+                    if (otherPlayer.name != null && lname == otherPlayer.name.ToLower() && otherPlayer.whoAmI != bufferId) // && otherSlot.State >= SlotState.CONNECTED)
                     {
-                        player.Kick("A \"" + otherPlayer.Name + "\" is already on this server.");
+                        player.Kick("A \"" + otherPlayer.name + "\" is already on this server.");
                         return;
                     }
                 }

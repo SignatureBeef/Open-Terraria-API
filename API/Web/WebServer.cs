@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Net;
 using System.Data.Entity;
-using OTA.Data.Entity.Models;
 using OTA.Data;
 using System.Collections.Concurrent;
 using OTA.Misc;
@@ -39,7 +38,6 @@ namespace OTA.Web
     /// </summary>
     public static class WebServer
     {
-
         #if WEBSERVER
         public static System.Web.Http.HttpConfiguration Config { get; private set; }
 
@@ -118,96 +116,16 @@ namespace OTA.Web
     //        }
     //    }
 
-    static class AccountManager
-    {
-        public static async Task<APIAccount> FindByName(string name)
-        {
-            using (var ctx = new OTAContext())
-            {
-                return await ctx.APIAccounts.FirstOrDefaultAsync(x => x.Username == name);
-            }
-        }
 
-        public static async Task<APIAccountRole[]> GetRolesForAccount(int accountId)
-        {
-            using (var ctx = new OTAContext())
-            {
-                return await ctx.APIAccountsRoles.Where(x => x.AccountId == accountId).ToArrayAsync();
-            }
-        }
-    }
 
     class OWINServer
     {
-        class PermissionsOAuthProvider : Microsoft.Owin.Security.OAuth.OAuthAuthorizationServerProvider
-        {
-            //            public override async System.Threading.Tasks.Task ValidateClientAuthentication(Microsoft.Owin.Security.OAuth.OAuthValidateClientAuthenticationContext context)
-            //            {
-            //                await Task.FromResult(context.Validated());
-            //                //                return base.ValidateClientAuthentication(context);
-            //            }
+        
 
-            public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
-            {
-                context.Validated();
-            }
-
-            public override async Task GrantResourceOwnerCredentials(Microsoft.Owin.Security.OAuth.OAuthGrantResourceOwnerCredentialsContext context)
-            {
-                context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-
-                if (String.IsNullOrEmpty(context.UserName))
-                {
-                    context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    context.Rejected();
-                    return;
-                }
-
-                if (OTA.Protection.IpLimiting.Register(context.Request.RemoteIpAddress, WebServer.MaxRequestsPerLapse, WebServer.RequestLockoutDuration))
-                {
-                    //Prevent console spamming
-                    if (OTA.Protection.IpLimiting.GetJustLockedOut(context.Request.RemoteIpAddress))
-                    {
-                        ProgramLog.Web.Log("API client reached request limit for user/ip {0}", context.UserName, context.Request.RemoteIpAddress);
-                    }
-
-                    context.SetError("request_limit", "You have reached the service limit");
-                    context.Rejected();
-                    return;
-                }
-
-                var user = await AccountManager.FindByName(context.UserName);
-                if (user != null && user.ComparePassword(context.Password))
-                {
-                    var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-                    identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-
-                    //Load permissions for user
-                    foreach (var role in await AccountManager.GetRolesForAccount(user.Id))
-                    {
-                        identity.AddClaim(new Claim(role.Type, role.Value));
-                        //                    identity.AddClaim(new Claim(ClaimTypes.Role, "player"));
-                    }
-
-                    //                    var ticket = new AuthenticationTicket(identity, new AuthenticationProperties()
-                    //                        {
-                    //                            IsPersistent = true,
-                    //                            IssuedUtc = DateTime.UtcNow
-                    //                        });
-                    context.Validated(identity);
-                }
-                else
-                {
-                    context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    context.Rejected();
-                }
-            }
-        }
-
-        static OAuthAuthorizationServerOptions ServerOptions = new OAuthAuthorizationServerOptions()
+        public static OAuthAuthorizationServerOptions ServerOptions = new OAuthAuthorizationServerOptions()
         {
             TokenEndpointPath = new Microsoft.Owin.PathString("/token"),
-            Provider = new PermissionsOAuthProvider(),
+//            Provider = new PermissionsOAuthProvider(),
 
             AccessTokenExpireTimeSpan = TimeSpan.FromHours(WebServer.SessionTimeoutHours),
 
@@ -227,7 +145,7 @@ namespace OTA.Web
             ApplicationCanDisplayErrors = true
         };
 
-        static OAuthBearerAuthenticationOptions BearerOptions = new OAuthBearerAuthenticationOptions()
+        public static OAuthBearerAuthenticationOptions BearerOptions = new OAuthBearerAuthenticationOptions()
         {
             AccessTokenFormat =
                 new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,

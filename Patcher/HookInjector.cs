@@ -13,17 +13,16 @@ namespace OTA.Patcher
         {
             /*
              * Gather all methods marked with the OTAPatchAttribute.
-             * These must then be fitered with the current SupportType, and order as appropriate.
+             * These must then be fitered with the current SupportType and ordered as appropriate.
              */
             var hooks = typeof(Injector)
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
-                .Select(x => new
+                .Select(mth => new
                 {
-                    Attribute = x.GetCustomAttribute<OTAPatchAttribute>(false),
-                        
-                    Method = x
+                    Attribute = mth.GetCustomAttribute<OTAPatchAttribute>(false),
+                    Method = mth
                 })
-                .Where(z => z.Attribute != null && (z.Attribute.SupportedTypes & currentType) != 0)
+                .Where(patch => patch.Attribute != null && (patch.Attribute.SupportedTypes & currentType) != 0)
                 .OrderBy(o => o.Attribute.Order)
                 .ToArray();
 
@@ -36,13 +35,28 @@ namespace OTA.Patcher
                 Console.Write("\t{0}/{1} - {2}", x + 1, hooks.Length, hooks[x].Attribute.Text);
 
                 dbg.Start();
-                hooks[x].Method.Invoke(this, null); //TODO get a boolean from this to determine the OK/FAIL
-                dbg.Stop();
+                try
+                {
+                    hooks[x].Method.Invoke(this, null); //TODO get a boolean from this to determine the OK/FAIL
 
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(" [OK] ");
-                Console.ForegroundColor = col;
-                Console.WriteLine("Took {0}ms", dbg.ElapsedMilliseconds);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(" [OK] ");
+                    Console.ForegroundColor = col;
+                    dbg.Stop();
+
+                    Console.WriteLine("Took {0}ms", dbg.ElapsedMilliseconds);
+                }
+                catch (Exception e)
+                {
+                    dbg.Stop();
+
+                    if (e is TargetInvocationException) e = (e as TargetInvocationException).InnerException;
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(" [FAIL]\n");
+                    Console.WriteLine("\t\t{0}", e.Message);
+                    Console.ForegroundColor = col;
+                }
             }
             Console.ResetColor();
         }

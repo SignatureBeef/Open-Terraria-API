@@ -34,13 +34,13 @@ namespace OTA.Plugin
             //    .First());
 
             //Access level enum
-            _ctx.NewTable("AccessLevel");
-            var ac = _ctx.GetTable("AccessLevel");
-            foreach (var val in Enum.GetValues(typeof(OTA.Command.AccessLevel)))
-            {
-                var al = (OTA.Command.AccessLevel)val;
-                ac[al.ToString()] = (int)val;
-            }
+//            _ctx.NewTable("AccessLevel");
+//            var ac = _ctx.GetTable("AccessLevel");
+//            foreach (var val in Enum.GetValues(typeof(OTA.Command.AccessLevel)))
+//            {
+//                var al = (OTA.Command.AccessLevel)val;
+//                ac[al.ToString()] = (int)val;
+//            }
 
             _ctx.DoFile(Path);
 
@@ -115,15 +115,15 @@ namespace OTA.Plugin
             //}
         }
 
-        /// <summary>
-        /// Adds a command into the server
-        /// </summary>
-        /// <returns>The command.</returns>
-        /// <param name="prefix">Prefix.</param>
-        public new Command.CommandInfo AddCommand(string prefix)
-        {
-            return base.AddCommand(prefix);
-        }
+//        /// <summary>
+//        /// Adds a command into the server
+//        /// </summary>
+//        /// <returns>The command.</returns>
+//        /// <param name="prefix">Prefix.</param>
+//        public new Command.CommandInfo AddCommand(string prefix)
+//        {
+//            return base.AddCommand(prefix);
+//        }
 
         /// <summary>
         /// Calls a LUA command

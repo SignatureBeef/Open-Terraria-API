@@ -41,7 +41,7 @@ namespace OTA.Plugin
         public Player Player { get; set; }
         
         #else
-        public OTA.Callbacks.ISocket Connection { get; set; }
+        public OTA.Sockets.ISocket Connection { get; set; }
         #endif
 
         public object ResultParam { get; private set; }

@@ -94,6 +94,11 @@ namespace OTA.Plugin
         internal Assembly Assembly { get; set; }
         //internal AppDomain _domain;
 
+        public string FilePath
+        {
+            get { return Path; }
+        }
+
         /// <summary>
         /// Whether this plugin is enabled or not
         /// </summary>
@@ -107,20 +112,11 @@ namespace OTA.Plugin
             get { return disposed == 1; }
         }
 
-        internal bool HasRunningCommands
-        {
-            get { return (runningCommands - pausedCommands - threadInCommand) > 0; }
-        }
-
         internal volatile bool initialized;
         internal int disposed;
         internal int enabled;
         internal int informedOfWorld;
-        internal int runningCommands;
-        internal int pausedCommands;
-        internal ManualResetEvent commandPauseSignal;
 
-        internal Dictionary<string, CommandInfo> commands = new Dictionary<string, CommandInfo>();
         internal HashSet<HookPoint> hooks = new HashSet<HookPoint>();
 
         internal struct HookEntry
@@ -266,30 +262,7 @@ namespace OTA.Plugin
             }
         }
 
-        /// <summary>
-        /// Adds new command to the server's command list
-        /// </summary>
-        /// <param name="prefix">Command text</param>
-        /// <returns>New Command</returns>
-        protected CommandInfo AddCommand(string prefix)
-        {
-            if (commands.ContainsKey(prefix))
-                throw new ApplicationException("AddCommand: duplicate command: " + prefix);
-
-            var cmd = new CommandInfo(prefix);
-            cmd.BeforeEvent += NotifyBeforeCommand;
-            cmd.AfterEvent += NotifyAfterCommand;
-
-            lock (commands)
-            {
-                commands[prefix] = cmd;
-                commands[string.Concat(Name.ToLower(), ".", prefix)] = cmd;
-            }
-
-            return cmd;
-        }
-
-        internal bool Enable()
+        public bool Enable()
         {
             if (Interlocked.CompareExchange(ref this.enabled, 1, 0) == 0)
             {
@@ -306,7 +279,7 @@ namespace OTA.Plugin
             return true;
         }
 
-        internal bool Disable()
+        public bool Disable()
         {
             if (Interlocked.CompareExchange(ref this.enabled, 0, 1) == 1)
             {
@@ -323,7 +296,7 @@ namespace OTA.Plugin
             return true;
         }
 
-        internal bool InitializeAndHookUp(object state = null)
+        public bool InitializeAndHookUp(object state = null)
         {
             if (!Initialize(state))
                 return false;
@@ -336,7 +309,7 @@ namespace OTA.Plugin
             return true;
         }
 
-        internal bool Initialize(object state = null)
+        public bool Initialize(object state = null)
         {
             if (initialized)
             {
@@ -432,7 +405,12 @@ namespace OTA.Plugin
                 result = false;
             }
 
-            commands.Clear();
+            var ctx = new HookContext();
+            var args = new HookArgs.PluginDisposed()
+            {
+                Plugin = this
+            };
+            HookPoints.PluginDisposed.Invoke(ref ctx, ref args);
 
             var hooks = new HookPoint[this.hooks.Count];
             this.hooks.CopyTo(hooks, 0, hooks.Length);
@@ -487,52 +465,14 @@ namespace OTA.Plugin
                             // because it's time to dispose the old plugin
                             noreturn = true;
 
-                            // use command objects from the old plugin, because command invocations
-                            // may be paused inside them, this way when they unpause
-                            // they run the new plugin's methods
-                            lock (commands)
+                            var ctx = new HookContext();
+                            var args = new HookArgs.PluginReplacing()
                             {
-                                ProgramLog.Debug.Log("Replacing commands...");
-
-                                var prefixes = newPlugin.commands.Keys.ToArray();
-
-                                var done = new HashSet<CommandInfo>();
-
-                                foreach (var prefix in prefixes)
-                                {
-                                    CommandInfo oldCmd;
-                                    if (commands.TryGetValue(prefix, out oldCmd))
-                                    {
-                                        //								Tools.WriteLine ("Replacing command {0}.", prefix);
-                                        var newCmd = newPlugin.commands[prefix];
-
-                                        newPlugin.commands[prefix] = oldCmd;
-                                        commands.Remove(prefix);
-
-                                        if (done.Contains(oldCmd))
-                                            continue;
-
-                                        oldCmd.InitFrom(newCmd);
-                                        done.Add(oldCmd);
-
-                                        oldCmd.AfterEvent += newPlugin.NotifyAfterCommand;
-                                        oldCmd.BeforeEvent += newPlugin.NotifyBeforeCommand;
-
-                                        // garbage
-                                        newCmd.ClearCallbacks();
-                                        newCmd.ClearEvents();
-                                    }
-                                }
-
-                                foreach (var kv in commands)
-                                {
-                                    var cmd = kv.Value;
-                                    ProgramLog.Debug.Log("Clearing command {0}.", kv.Key);
-                                    cmd.ClearCallbacks();
-                                }
-                                commands.Clear();
-                            }
-
+                                OldPlugin = this,
+                                NewPlugin = newPlugin
+                            };
+                            HookPoints.PluginReplacing.Invoke(ref ctx, ref args);
+                            
                             // replace hook subscriptions from the old plugin with new ones
                             // in the exact same spots in the invocation chains
                             lock (newPlugin.desiredHooks)
@@ -612,18 +552,17 @@ namespace OTA.Plugin
 
                 Monitor.Enter(HookPoint.editLock);
 
-                // commands or hooks that begin running after this get paused
-                plugin.commandPauseSignal = signal;
+                var ctx = new HookContext();
+                var args = new HookArgs.PluginPausing()
+                {
+                    Plugin = plugin,
+                    Signal = signal
+                };
+                HookPoints.PluginPausing.Invoke(ref ctx, ref args);
 
                 foreach (var hook in plugin.hooks)
                 {
                     hook.Pause(signal);
-                }
-
-                // wait for commands that may have already been running to finish
-                while (plugin.HasRunningCommands)
-                {
-                    Thread.Sleep(10);
                 }
 
                 ProgramLog.Debug.Log("Plugin {0} commands paused...", plugin.Name ?? "???");
@@ -662,7 +601,12 @@ namespace OTA.Plugin
             {
                 ProgramLog.Debug.Log("Unpausing everything related to plugin {0}...", plugin.Name ?? "???");
 
-                plugin.commandPauseSignal = null;
+                var ctx = new HookContext();
+                var args = new HookArgs.PluginPauseComplete()
+                {
+                    Plugin = plugin
+                };
+                HookPoints.PluginPauseComplete.Invoke(ref ctx, ref args);
 
                 foreach (var hook in paused)
                 {
@@ -693,30 +637,6 @@ namespace OTA.Plugin
             }
 
             return true;
-        }
-
-        [ThreadStatic]
-        internal static int threadInCommand;
-
-        internal void NotifyBeforeCommand(CommandInfo cmd)
-        {
-            Interlocked.Increment(ref runningCommands);
-
-            var signal = commandPauseSignal;
-            if (signal != null)
-            {
-                Interlocked.Increment(ref pausedCommands);
-                signal.WaitOne();
-                Interlocked.Decrement(ref pausedCommands);
-            }
-
-            threadInCommand = 1;
-        }
-
-        internal void NotifyAfterCommand(CommandInfo cmd)
-        {
-            Interlocked.Decrement(ref runningCommands);
-            threadInCommand = 0;
         }
 
         internal bool NotifyDatabaseInitialising(System.Data.Entity.DbModelBuilder builder)

@@ -160,23 +160,6 @@ namespace OTA.Callbacks
             //                .DefinedTypes
             //                .Where(x => x.Name == "OTAContext")
             //                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
-            OTA.Data.Storage.IsAvailable = OTA.Data.OTAContext.HasConnection();
-
-            if (OTA.Data.Storage.IsAvailable) ProgramLog.Admin.Log("Entity framework has a registered connection.");
-            else ProgramLog.Admin.Log("Entity framework has no registered connection.");
-
-
-            if (OTA.Data.Storage.IsAvailable)
-                using (var ctx = new OTA.Data.OTAContext())
-                {
-                    ctx.APIAccounts.Add(new OTA.Data.Entity.Models.APIAccount()
-                        {
-                            Username = "Test",
-                            Password = "Testing"
-                        });
-
-                    ctx.SaveChanges();
-                }
 
             //            if (!Permissions.PermissionsManager.IsSet)
             //            {
@@ -652,6 +635,24 @@ namespace OTA.Callbacks
             HookPoints.CheckHalloween.Invoke(ref ctx, ref args);
 
             return ctx.Result == HookResult.DEFAULT; //Continue onto vanilla
+        }
+
+        /// <summary>
+        /// The request from vanilla code to start listening for commands
+        /// </summary>
+        public static void ListenForCommands()
+        {
+            var ctx = new HookContext()
+                {
+                    Sender = HookContext.ConsoleSender
+                };
+            var args = new HookArgs.StartCommandProcessing();
+            HookPoints.StartCommandProcessing.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.DEFAULT)
+            {
+                Terraria.Main.startDedInput();
+            }
         }
     }
 

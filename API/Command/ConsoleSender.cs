@@ -7,11 +7,22 @@ namespace OTA.Command
     /// <summary>
     /// ConsoleSender extension of Sender.  Allows for new ConsoleCommandEvents
     /// </summary>
-    public class ConsoleSender : Sender
+    public class ConsoleSender : ISender
     {
         static Action<String, Byte, Byte, Byte> _consoleMethod;
 
         public static ConsoleColor DefaultColour = ConsoleColor.Gray;
+
+        public bool Op
+        {
+            get { return true; }
+            set { } 
+        }
+
+        public string SenderName
+        {
+            get { return "CONSOLE"; }
+        }
 
         /// <summary>
         /// Set the Console WriteLine method
@@ -20,16 +31,6 @@ namespace OTA.Command
         public static void SetMethod(Action<String, Byte, Byte, Byte> method)
         {
             _consoleMethod = method;
-        }
-
-        /// <summary>
-        /// ConsoleSender constructor
-        /// </summary>
-        public ConsoleSender()
-        {
-            Op = true;
-            Name = "CONSOLE";
-            // I don't know what the hell was the deal with this
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace OTA.Command
         /// <summary>
         /// Sends a message to the console
         /// </summary>
-        public override void SendMessage(string message, int A = 255, byte R = 255, byte G = 255, byte B = 255)
+        public void SendMessage(string message, int A = 255, byte R = 255, byte G = 255, byte B = 255)
         {
             if (_consoleMethod == null)
             {

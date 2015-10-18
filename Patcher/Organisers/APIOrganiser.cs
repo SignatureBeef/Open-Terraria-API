@@ -120,12 +120,6 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "ProgramLog"); }
         }
 
-        public TypeDefinition UserInput
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "UserInput"); }
-        }
-
         public TypeDefinition WorldFileCallback
         {
             get

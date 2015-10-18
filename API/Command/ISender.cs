@@ -14,8 +14,6 @@ namespace OTA.Command
         string SenderName { get; }
 
         void SendMessage(string message, int sender = 255, byte R = 255, byte G = 255, byte B = 255);
-
-        Dictionary<string, CommandInfo> GetAvailableCommands();
     }
 
     /// <summary>
@@ -75,54 +73,5 @@ namespace OTA.Command
         {
             recpt.SendMessage(String.Format(fmt, args), sender, color.R, color.G, color.B);
         }
-
-        /// <summary>
-        /// Determines if is sender the specified sender type.
-        /// </summary>
-        /// <returns><c>true</c> if is sender the specified sender type; otherwise, <c>false</c>.</returns>
-        /// <param name="sender">Sender.</param>
-        /// <param name="type">Type.</param>
-        public static bool IsSender(this ISender sender, SenderType type)
-        {
-            switch (type)
-            {
-                case SenderType.CONSOLE:
-                    return sender is ConsoleSender;// && !(sender is RemoteConsole.RConSender);
-#if Full_API
-                case SenderType.PLAYER:
-                    return sender is Terraria.Player;
-#endif
-            //case SenderType.RCON:
-            //    return sender is RemoteConsole.RConSender;
-                default:
-                    throw new InvalidOperationException("No such sender.");
-            }
-        }
-
-        public static SenderType GetSenderType(this ISender sender)
-        {
-            if (sender is ConsoleSender) // && !(sender is RemoteConsole.RConSender))
-                return SenderType.CONSOLE;
-            #if Full_API
-            else if (sender is Terraria.Player)
-                return SenderType.PLAYER;
-            #endif
-//            else if (sender is RemoteConsole.RConSender)
-//                return SenderType.RCON;
-
-            return SenderType.UNKNOWN;
-        }
-    }
-
-    /// <summary>
-    /// Default expected Sender Types.
-    /// </summary>
-    [Obsolete("This is not extensible")]
-    public enum SenderType
-    {
-        CONSOLE,
-        PLAYER,
-        RCON,
-        UNKNOWN
     }
 }

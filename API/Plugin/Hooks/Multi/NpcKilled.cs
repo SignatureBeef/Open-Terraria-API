@@ -10,6 +10,8 @@ namespace OTA.Plugin
             public int Type { get; set; }
 
             public int NetId { get; set; }
+
+            public Terraria.NPC Npc { get; set; }
         }
     }
 

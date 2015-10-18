@@ -199,7 +199,7 @@ namespace OTA.Patcher
             //--STEP 1
             //Add the sender parameter
             ParameterDefinition prmSender;
-            switchTiles.Parameters.Add(prmSender = new ParameterDefinition("sender", ParameterAttributes.None, Terraria.Import(API.Sender))
+            switchTiles.Parameters.Add(prmSender = new ParameterDefinition("sender", ParameterAttributes.None, Terraria.Entity)
                 {
                     HasDefault = true,
                     IsOptional = true

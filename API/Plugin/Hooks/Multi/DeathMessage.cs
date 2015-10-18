@@ -9,9 +9,14 @@ namespace OTA.Plugin
         public struct DeathMessage
         {
             public int Player { get; set; }
+
             public int NPC { get; set; }
+
             public int Projectile { get; set; }
+
             public int Other { get; set; }
+
+            public Terraria.Entity Sender { get; set; }
         }
     }
 

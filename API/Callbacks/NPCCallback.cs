@@ -72,14 +72,12 @@ namespace OTA.Callbacks
         /// <param name="npc">Npc.</param>
         public static void OnNPCKilled(Terraria.NPC npc)
         {
-            var ctx = new HookContext()
-            {
-                Sender = npc
-            };
+            var ctx = new HookContext();
             var args = new HookArgs.NpcKilled()
             {
                 Type = npc.type,
-                NetId = npc.netID
+                NetId = npc.netID,
+                Npc = npc
             };
 
             HookPoints.NpcKilled.Invoke(ref ctx, ref args);

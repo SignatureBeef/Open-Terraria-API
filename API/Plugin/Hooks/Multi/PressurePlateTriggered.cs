@@ -7,7 +7,7 @@ namespace OTA.Plugin
     {
         public struct PressurePlateTriggered
         {
-            public OTA.Command.Sender Sender { get; set; }
+            public Terraria.Entity Sender { get; set; }
 
             public int X { get; set; }
 

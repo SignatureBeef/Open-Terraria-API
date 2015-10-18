@@ -113,7 +113,7 @@ namespace OTA.Callbacks
                         if (list == "")
                             list += Main.player[i].name;
                         else
-                            list = list + ", " + Main.player[i].Name;
+                            list = list + ", " + Main.player[i].name;
                     }
                 }
 
@@ -153,23 +153,23 @@ namespace OTA.Callbacks
                 Player = plr,
                 NPC = npc,
                 Projectile = proj,
-                Other = other
+                Other = other,
+
+                    Sender = null
             };
 
             Terraria.Player player = null;
-            OTA.Command.ISender sender = null;
 
             if (plr > -1 && plr < Terraria.Main.player.Length)
             {
                 player = Terraria.Main.player[plr];
-                sender = player;
+                args.Sender = player;
             }
-            if (npc > -1 && npc < Terraria.Main.npc.Length) sender = Terraria.Main.npc[npc];
-            if (proj > -1 && proj < Terraria.Main.projectile.Length) sender = Terraria.Main.projectile[proj];
+            if (npc > -1 && npc < Terraria.Main.npc.Length) args.Sender = Terraria.Main.npc[npc];
+            if (proj > -1 && proj < Terraria.Main.projectile.Length) args.Sender = Terraria.Main.projectile[proj];
 
             var ctx = new HookContext()
             {
-                Sender = sender,
                 Player = player
             };
 

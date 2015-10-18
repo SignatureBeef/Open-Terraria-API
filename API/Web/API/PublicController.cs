@@ -32,8 +32,8 @@ namespace OTA.Web.API
                 //Allocations
                 MaxPlayers = Terraria.Main.maxNetPlayers,
                 Player = Terraria.Main.player
-                    .Where(x => x != null && x.active && !String.IsNullOrEmpty(x.Name))
-                    .Select(x => x.Name)
+                    .Where(x => x != null && x.active && !String.IsNullOrEmpty(x.name))
+                    .Select(x => x.name)
                     .OrderBy(x => x)
                     .ToArray(),
 

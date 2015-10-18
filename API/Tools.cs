@@ -65,7 +65,7 @@ namespace OTA
             string lowercaseName = name.ToLower();
             foreach (Player player in Main.player)
             {
-                if (player != null && player.active && player.Name.ToLower().Equals(lowercaseName))
+                if (player != null && player.active && player.name.ToLower().Equals(lowercaseName))
                     return player;
             }
             return null;
@@ -119,10 +119,10 @@ namespace OTA
 
             foreach (var player in Main.player)
             {
-                if (player == null || player.Name == null)
+                if (player == null || player.name == null)
                     continue;
 
-                string playerName = player.Name;
+                string playerName = player.name;
 
                 if (ignoreCase)
                     playerName = playerName.ToLower();
@@ -158,7 +158,7 @@ namespace OTA
                 for (var i = 0; i < Main.player.Length; i++)
                 {
                     var ply = Main.player[i];
-                    if (ply != null && ply.active && ply.Name.Trim() != String.Empty)
+                    if (ply != null && ply.active && ply.name.Trim() != String.Empty)
                     {
                         player = ply;
                         return true;
@@ -310,7 +310,7 @@ namespace OTA
             {
                 return (from p in Terraria.Main.player
                                     where p != null && p.active
-                                    select p.Name).Count();
+                                    select p.name).Count();
             }
         }
 
