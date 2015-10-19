@@ -7,9 +7,9 @@
 			// Name of configuration; appears in the launch configuration drop down menu.
 			"name": "Launch app.js",
 			// Type of configuration. Possible values: "node", "mono".
-			"type": "node",
+			"type": "mono",
 			// Workspace relative or absolute path to the program.
-			"program": "app.js",
+			"program": "Patcher/bin/AnyCPU/Server/TerrariaServer.exe",
 			// Automatically stop program after launch.
 			"stopOnEntry": true,
 			// Command line arguments passed to the program.

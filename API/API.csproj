@@ -309,15 +309,11 @@
     <Compile Include="Plugin\Hooks\Server\NameConflict.cs" />
     <Compile Include="Plugin\Hooks\Server\NewConnection.cs" />
     <Compile Include="Plugin\Hooks\Server\ParseCommandLineArguments.cs" />
-    <Compile Include="Plugin\Hooks\Server\PlayerAuthenticationChanged.cs" />
-    <Compile Include="Plugin\Hooks\Server\PlayerAuthenticationChanging.cs" />
     <Compile Include="Plugin\Hooks\Server\PlayerEnteredGame.cs" />
     <Compile Include="Plugin\Hooks\Server\PlayerEnteringGame.cs" />
     <Compile Include="Plugin\Hooks\Server\PlayerLeftGame.cs" />
-    <Compile Include="Plugin\Hooks\Server\PlayerPassReceived.cs" />
     <Compile Include="Plugin\Hooks\Server\PlayerPreGreeting.cs" />
     <Compile Include="Plugin\Hooks\Server\ServerStateChange.cs" />
-    <Compile Include="Plugin\Hooks\Server\ServerPassReceived.cs" />
     <Compile Include="Plugin\Hooks\Server\ServerTick.cs" />
     <Compile Include="Plugin\Hooks\Server\ServerUpdate.cs" />
     <Compile Include="Plugin\Hooks\Server\StartCommandProcessing.cs" />
@@ -326,9 +322,7 @@
     <Compile Include="Plugin\Hooks\Client\UpdateClient.cs" />
     <Compile Include="Plugin\Hooks\Client\Update.cs" />
     <Compile Include="Plugin\Hooks\Multi\ChestBreakReceived.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ChestOpenReceived.cs" />
     <Compile Include="Plugin\Hooks\Multi\PressurePlateTriggered.cs" />
-    <Compile Include="Plugin\Hooks\Multi\DoorStateChanged.cs" />
     <Compile Include="Plugin\Hooks\Multi\DeathMessage.cs" />
     <Compile Include="Plugin\Hooks\Multi\GameUpdate.cs" />
     <Compile Include="Plugin\Hooks\Multi\InvasionNpcSpawn.cs" />
@@ -336,11 +330,9 @@
     <Compile Include="Plugin\Hooks\Multi\ItemNetDefaults.cs" />
     <Compile Include="Plugin\Hooks\Multi\ItemSetDefaultsByName.cs" />
     <Compile Include="Plugin\Hooks\Multi\ItemSetDefaultsByType.cs" />
-    <Compile Include="Plugin\Hooks\Multi\LiquidFlowReceived.cs" />
     <Compile Include="Plugin\Hooks\Multi\MechSpawn.cs" />
     <Compile Include="Plugin\Hooks\Multi\NpcDropBossBag.cs" />
     <Compile Include="Plugin\Hooks\Multi\NpcDropLoot.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcHurt.cs" />
     <Compile Include="Plugin\Hooks\Multi\NpcKilled.cs" />
     <Compile Include="Plugin\Hooks\Multi\NpcNetDefaults.cs" />
     <Compile Include="Plugin\Hooks\Multi\NpcSetDefaultsByName.cs" />
@@ -348,24 +340,17 @@
     <Compile Include="Plugin\Hooks\Multi\NpcSpawn.cs" />
     <Compile Include="Plugin\Hooks\Multi\NpcTransform.cs" />
     <Compile Include="Plugin\Hooks\Multi\NpcStrike.cs" />
-    <Compile Include="Plugin\Hooks\Multi\PlayerChat.cs" />
-    <Compile Include="Plugin\Hooks\Multi\PlayerDataReceived.cs" />
     <Compile Include="Plugin\Hooks\Multi\PlayerHurt.cs" />
     <Compile Include="Plugin\Hooks\Multi\PlayerKilled.cs" />
-    <Compile Include="Plugin\Hooks\Multi\PlayerWorldAlteration.cs" />
     <Compile Include="Plugin\Hooks\Multi\PluginLoadRequest.cs" />
     <Compile Include="Plugin\Hooks\Multi\PluginsLoaded.cs" />
     <Compile Include="Plugin\Hooks\Multi\ProgramStart.cs" />
     <Compile Include="Plugin\Hooks\Multi\ProjectileAI.cs" />
     <Compile Include="Plugin\Hooks\Multi\ProjectileKill.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ProjectileReceived.cs" />
     <Compile Include="Plugin\Hooks\Multi\ProjectileSetDefaults.cs" />
     <Compile Include="Plugin\Hooks\Multi\ReceiveNetMessage.cs" />
     <Compile Include="Plugin\Hooks\Multi\SendNetMessage.cs" />
-    <Compile Include="Plugin\Hooks\Multi\SignTextGet.cs" />
-    <Compile Include="Plugin\Hooks\Multi\SignTextSet.cs" />
     <Compile Include="Plugin\Hooks\Multi\StatusTextChange.cs" />
-    <Compile Include="Plugin\Hooks\Multi\TileSquareReceived.cs" />
     <Compile Include="Plugin\Hooks\Multi\SendClientData.cs" />
     <Compile Include="Plugin\Hooks\Server\RemoteClientReset.cs" />
     <Compile Include="Plugin\Hooks\Multi\WorldSave.cs" />
@@ -382,6 +367,7 @@
     <Compile Include="Plugin\Hooks\PluginPausing.cs" />
     <Compile Include="Plugin\Hooks\PluginPauseComplete.cs" />
     <Compile Include="Callbacks\Patches.cs" />
+    <Compile Include="Plugin\Hooks\Multi\CheckBufferState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
