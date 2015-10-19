@@ -24,7 +24,7 @@
         PLAYER_HEALTH_UPDATE = 16,
         TILE_BREAK = 17,
         TIME_SUN_MOON_UPDATE = 18,
-        BARRIER_STATE_UPDATE = 19,
+        BARRIER_STATE_CHANGE = 19,
         TILE_SQUARE = 20,
         ITEM_INFO = 21,
         ITEM_OWNER_INFO = 22,
