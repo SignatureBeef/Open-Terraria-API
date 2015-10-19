@@ -23,6 +23,7 @@ namespace OTA
         //private static string _libraryPath = String.Empty;
 
         public static Dictionary<String, BasePlugin> _plugins;
+        public static List<Type> _sources = new List<Type>();
 
         /// <summary>
         /// Gets the plugin count.
@@ -30,18 +31,23 @@ namespace OTA
         /// <value>The plugin count.</value>
         public static int PluginCount { get { return _plugins.Count; } }
 
-        private static Type _hookPointSource;
-
-        public static void SetHookSource(Type hpt)
+        public static void RegisterHookSource(Type hookPoint)
         {
-            _hookPointSource = hpt;
+            lock (_sources)
+                _sources.Add(hookPoint);
         }
 
         public static HookPoint GetHookPoint(string name)
         {
-            var fld = _hookPointSource.GetField(name);
-            if (fld != null)
-                return fld.GetValue(null) as HookPoint;
+            lock (_sources)
+            {
+                foreach (var hookPoint in _sources)
+                {
+                    var fld = hookPoint.GetField(name);
+                    if (fld != null)
+                        return fld.GetValue(null) as HookPoint;
+                }
+            }
 
             return null;
         }

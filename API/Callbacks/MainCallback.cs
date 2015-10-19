@@ -141,7 +141,7 @@ namespace OTA.Callbacks
 
             //This will setup the assembly resolves
             PluginManager.Initialize(Globals.PluginPath);
-            PluginManager.SetHookSource(typeof(HookPoints));
+            PluginManager.RegisterHookSource(typeof(HookPoints));
 
             //Load the logs
             //TODO Why on earth did I put the log opening here?
