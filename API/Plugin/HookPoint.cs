@@ -81,10 +81,10 @@ namespace OTA.Plugin
             return false;
         }
 
-        public void SetResult(HookResult result, bool conclude = true)
+        public void SetResult(HookResult result, bool conclude = true, object resultParam = null)
         {
             Result = result;
-            ResultParam = null;
+            ResultParam = resultParam;
             Conclude = conclude;
         }
 
@@ -93,6 +93,11 @@ namespace OTA.Plugin
             Result = HookResult.KICK;
             ResultParam = reason;
             Conclude = conclude;
+        }
+
+        public void SetParam(object result)
+        {
+            ResultParam = result;
         }
     }
 

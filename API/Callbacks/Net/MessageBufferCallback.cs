@@ -80,15 +80,7 @@ namespace OTA.Callbacks
             if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is bool)
             {
                 return (bool)ctx.ResultParam;
-//#if Full_API
-//            var res = ;
-//            if (Netplay.Clients[bufferId].State == -2)
-//                return false;
-//
-//            return res;
-//#else
             }
-
 
             return Main.netMode == 2 && Netplay.Clients[bufferId].State < 10
             && packetId > 12 && packetId != 93 && packetId != 16 && packetId != 42
