@@ -2,8 +2,7 @@ language: csharp
 solution: Open Terraria API.sln
 install:
   - mozroots --import --sync
-  - mono .nuget/NuGet.exe
-  - mono .nuget/NuGet.exe restore API/packages.config -PackagesDirectory packages/ -source "https://www.nuget.org/api/v2;https://www.myget.org/F/nuget"
-  - mono .nuget/NuGet.exe restore Patcher/packages.config -PackagesDirectory packages/ -source "https://www.nuget.org/api/v2;https://www.myget.org/F/nuget"
+  - mono .nuget/NuGet.exe restore API/packages.config -PackagesDirectory packages/ -source "https://api.nuget.org/v3/index.json;https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet/"
+  - mono .nuget/NuGet.exe restore Patcher/packages.config -PackagesDirectory packages/ -source "https://api.nuget.org/v3/index.json;https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet/"
 script:
   - xbuild /p:Configuration=Server-Debug "Open Terraria API.sln"
