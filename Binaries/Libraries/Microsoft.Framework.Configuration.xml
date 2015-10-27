@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Framework.Configuration</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.Framework.Configuration.ConfigurationBuilder.Add(Microsoft.Framework.Configuration.IConfigurationProvider)">
+            <summary>
+            Adds a new configuration provider.
+            </summary>
+            <param name="configurationProvider">The configuration provider to add.</param>
+            <returns>The same configuration provider.</returns>
+        </member>
+        <member name="M:Microsoft.Framework.Configuration.ConfigurationBuilder.Add(Microsoft.Framework.Configuration.IConfigurationProvider,System.Boolean)">
+            <summary>
+            Adds a new configuration provider.
+            </summary>
+            <param name="configurationProvider">The configuration provider to add.</param>
+            <param name="load">If true, the configuration provider's <see cref="M:Microsoft.Framework.Configuration.IConfigurationProvider.Load"/> method will
+             be called.</param>
+            <returns>The same configuration provider.</returns>
+            <remarks>This method is intended only for test scenarios.</remarks>
+        </member>
+        <member name="M:Microsoft.Framework.Configuration.MemoryConfigurationExtensions.AddInMemoryCollection(Microsoft.Framework.Configuration.IConfigurationBuilder)">
+            <summary>
+            Adds the memory configuration provider to <paramref name="configuraton"/>.
+            </summary>
+            <param name="configuration">The <see cref="T:Microsoft.Framework.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <returns>The <see cref="T:Microsoft.Framework.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Framework.Configuration.MemoryConfigurationExtensions.AddInMemoryCollection(Microsoft.Framework.Configuration.IConfigurationBuilder,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Adds the memory configuration provider to <paramref name="configuraton"/>.
+            </summary>
+            <param name="configuration">The <see cref="T:Microsoft.Framework.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <param name="initialData">The data to add to memory configuration provider.</param>
+            <returns>The <see cref="T:Microsoft.Framework.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="P:Microsoft.Framework.Configuration.Resources.Error_EmptyKey">
+            <summary>
+            Empty key is not allowed. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.Configuration.Resources.FormatError_EmptyKey">
+            <summary>
+            Empty key is not allowed. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.Configuration.Resources.Error_InvalidReload">
+            <summary>
+            Reload can only be called on top-level configuration element
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.Configuration.Resources.FormatError_InvalidReload">
+            <summary>
+            Reload can only be called on top-level configuration element
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.Configuration.Resources.Error_MissingBasePath">
+            <summary>
+            Unable to resolve path '{0}'; construct this {1} with a non-null {2}.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.Configuration.Resources.FormatError_MissingBasePath(System.Object,System.Object,System.Object)">
+            <summary>
+            Unable to resolve path '{0}'; construct this {1} with a non-null {2}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.Configuration.Resources.Error_NoSources">
+            <summary>
+            A configuration provider is not registered. Please register one before setting a value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.Configuration.Resources.FormatError_NoSources">
+            <summary>
+            A configuration provider is not registered. Please register one before setting a value.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -52,7 +52,7 @@ namespace OTA.Plugin
         public OTAVersionAttribute OTAVersion
         {
             get
-            { 
+            {
                 return GetType().GetCustomAttributes().Where(x => x is OTAVersionAttribute).SingleOrDefault() as OTAVersionAttribute;
             }
         }
@@ -178,12 +178,14 @@ namespace OTA.Plugin
         {
         }
 
+#if ENTITY_FRAMEWORK_6
         /// <summary>
         /// Here the first ever DbContext should be called. It is used in order for the DbContext to join OTA's database model.
         /// </summary>
         protected virtual void DatabaseInitialising(System.Data.Entity.DbModelBuilder builder)
         {
         }
+#endif
 
         /// <summary>
         /// Called upon the database being created and ready for default values if required.
@@ -472,7 +474,7 @@ namespace OTA.Plugin
                                 NewPlugin = newPlugin
                             };
                             HookPoints.PluginReplacing.Invoke(ref ctx, ref args);
-                            
+
                             // replace hook subscriptions from the old plugin with new ones
                             // in the exact same spots in the invocation chains
                             lock (newPlugin.desiredHooks)
@@ -639,6 +641,7 @@ namespace OTA.Plugin
             return true;
         }
 
+#if ENTITY_FRAMEWORK_6
         internal bool NotifyDatabaseInitialising(System.Data.Entity.DbModelBuilder builder)
         {
             try
@@ -653,6 +656,7 @@ namespace OTA.Plugin
 
             return true;
         }
+#endif
 
         internal bool NotifyDatabaseCreated()
         {

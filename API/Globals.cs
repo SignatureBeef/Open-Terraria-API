@@ -63,9 +63,9 @@ namespace OTA
 
         //public static bool IsPatching { get; set; }
 
-        #if Full_API
+#if Full_API
         public const bool FullAPIDefined = true;
-        #else
+#else
         public const bool FullAPIDefined = false;
 #endif
 
@@ -73,61 +73,38 @@ namespace OTA
         /// Gets the world save path.
         /// </summary>
         /// <value>The world path.</value>
-        public static string WorldPath
-        {
-            get
-            { return Path.Combine(SavePath, WorldDirectory); }
-        }
+        public static string WorldPath { get; } = Path.Combine(SavePath, WorldDirectory);
 
         /// <summary>
         /// Gets the plugin folder.
         /// </summary>
         /// <value>The plugin path.</value>
-        public static string PluginPath
-        {
-            get
-            { return Path.Combine(SavePath, PluginDirectory); }
-        }
+        public static string PluginPath { get; } = Path.Combine(SavePath, PluginDirectory);
 
         /// <summary>
         /// Gets the libraries folder.
         /// </summary>
         /// <value>The libraries path.</value>
-        public static string LibrariesPath
-        {
-            get
-            { return Path.Combine(SavePath, LibrariesDirectory); }
-        }
+        public static string LibrariesPath { get; } = Path.Combine(SavePath, LibrariesDirectory);
 
         /// <summary>
         /// Gets the data folder.
         /// </summary>
         /// <value>The data path.</value>
-        public static string DataPath
-        {
-            get
-            { return Path.Combine(SavePath, DataDirectory); }
-        }
+        public static string DataPath { get; } = Path.Combine(SavePath, DataDirectory);
 
         /// <summary>
         /// Gets the character data folder.
         /// </summary>
         /// <value>The character data path.</value>
-        public static string CharacterDataPath
-        {
-            get
-            { return Path.Combine(SavePath, DataDirectory, CharacterData); }
-        }
+        public static string CharacterDataPath { get; } = Path.Combine(SavePath, DataDirectory, CharacterData);
 
 
         /// <summary>
         /// Gets the log folder.
         /// </summary>
         /// <value>The log folder.</value>
-        public static string LogFolderPath
-        {
-            get { return Path.Combine(Globals.DataPath, LogFolder); }
-        }
+        public static string LogFolderPath { get; } = Path.Combine(Globals.DataPath, LogFolder);
 
         /// <summary>
         /// Creates default required folders

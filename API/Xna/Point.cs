@@ -8,7 +8,7 @@ namespace Microsoft.Xna.Framework
         public int X;
         public int Y;
 
-        private static readonly Point _zero;
+        private static readonly Point _zero = new Point();
         public static Point Zero
         {
             get

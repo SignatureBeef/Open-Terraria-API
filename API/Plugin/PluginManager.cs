@@ -7,6 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 using OTA.Command;
 using OTA.Plugin;
 using OTA.Logging;
@@ -175,7 +177,7 @@ namespace OTA
                     var plugin = kv.Value;
                     if (plugin.OTAVersion.Minor != Globals.Version.Minor) //At this stage all plugins should be the same Major.
                     {
-                        ProgramLog.Error.Log($"[WARNING] Plugin {plugin.Name} may not work correctly as it is built for {plugin.OTAVersion.Minor}");
+                        ProgramLog.Error.Log($"[WARNING] Plugin {plugin.Name} may not work correctly as it is built for version {plugin.OTAVersion.ToString()}");
                     }
                 }
             }
@@ -260,7 +262,7 @@ namespace OTA
             try
             {
                 Assembly assembly = null;
-//                Type type = typeof(BasePlugin);
+                //                Type type = typeof(BasePlugin);
 
                 using (FileStream fs = File.Open(PluginPath, FileMode.Open))
                 {
@@ -316,7 +318,7 @@ namespace OTA
             var directory = Path.GetDirectoryName(us.Location);
             par.CompilerOptions = String.Format("/lib:{0}", Globals.LibrariesPath, directory);
 
-//            var execs = GetFiles(directory, "*.dll|*.exe");
+            //            var execs = GetFiles(directory, "*.dll|*.exe");
             foreach (var asn in us.GetReferencedAssemblies())
             {
                 var name = asn.Name;
@@ -524,6 +526,7 @@ namespace OTA
                 }
             }
 
+#if ENTITY_FRAMEWORK_6
             //Init the db here so:
             //  1) Plugins can create a context
             //  2) The database is ready before and normal plugins are enabled
@@ -539,6 +542,7 @@ namespace OTA
             {
                 ProgramLog.Log(e, "Database probe failed.");
             }
+#endif
 
             EnablePlugins();
         }

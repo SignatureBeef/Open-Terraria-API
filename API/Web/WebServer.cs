@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Net;
 using System.Data.Entity;
-using OTA.Data;
 using System.Collections.Concurrent;
 using OTA.Misc;
 
@@ -24,9 +23,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.Owin.Security.OAuth;
-using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
-using Microsoft.AspNet.Identity.Owin;
 #endif
 
 //Note to self, roles are to be kept at a minimum as the roles build the bearer token
@@ -171,7 +168,6 @@ namespace OTA.Web
                     FileSystem = new Microsoft.Owin.FileSystems.PhysicalFileSystem(WebServer.StaticFileDirectory),
                     EnableDirectoryBrowsing = false
                 });
-
         }
 
         /// <summary>

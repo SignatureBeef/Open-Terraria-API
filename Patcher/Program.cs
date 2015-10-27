@@ -352,12 +352,12 @@ namespace OTA.Patcher
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Net.Http.Formatting", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http.Owin", true);
-                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework", true);
-                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework.SqlServer", true);
+                        //Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework", true);
+                        //Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework.SqlServer", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.Core", true);
-                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.EntityFramework", true);
-                        Copy(root, Path.Combine("Binaries", "Libraries"), Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite", false);
-                        Copy(root, Path.Combine("Binaries", "Libraries"), Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite.EF6", false);
+                        //Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.EntityFramework", true);
+                        //Copy(root, Path.Combine("Binaries", "Libraries"), Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite", false);
+                        //Copy(root, Path.Combine("Binaries", "Libraries"), Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite.EF6", false);
 
                         if (!String.IsNullOrEmpty(OTAProjectDirectory))
                         {
