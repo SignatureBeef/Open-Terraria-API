@@ -1653,7 +1653,7 @@ namespace OTA.Patcher
         /// <summary>
         /// Updates the Newtonsoft binaries to what Owin supports
         /// </summary>
-        public void PatchJSON()
+        public void PatchJSON(string version)
         {
             var xnaFramework = _asm.MainModule.AssemblyReferences
                 .Where(x => x.Name.StartsWith("Newtonsoft"))
@@ -1661,7 +1661,7 @@ namespace OTA.Patcher
 
             for (var x = 0; x < xnaFramework.Length; x++)
             {
-                xnaFramework[x].Version = new Version("7.0.0.0");
+                xnaFramework[x].Version = new Version(version);
             }
         }
 

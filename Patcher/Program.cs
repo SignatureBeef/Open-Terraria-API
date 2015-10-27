@@ -529,8 +529,10 @@ namespace OTA.Patcher
 
                 Console.Write("Updating to .NET v4.5.1...");
                 patcher.SwitchFramework("4.5.1");
-                Console.Write("Ok\nPatching Newtonsoft.Json...");
-                patcher.PatchJSON();
+
+                var jsonVersion = "7.0.0.0";
+                Console.Write($"Ok\nPatching Newtonsoft.Json to {jsonVersion}...");
+                patcher.PatchJSON(jsonVersion);
 
                 Console.Write("Ok\nPutting Terraria on a diet...");
                 patcher.SwapToVanillaTile(); //Holy shit batman! it works
@@ -545,7 +547,6 @@ namespace OTA.Patcher
                         });
 
                 //TODO repace Terraria's Console.SetTitles
-
             }
             else if (PatchMode == SupportType.Client)
             {
