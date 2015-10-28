@@ -1,0 +1,10 @@
+{
+	"solution-file": "Open Terraria API.sln",
+
+	"pre-build": [
+		"{mono-path} .nuget/NuGet.exe restore API/packages.config -PackagesDirectory packages/ -source 'https://api.nuget.org/v3/index.json;https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet/'",
+		"{mono-path} .nuget/NuGet.exe restore Patcher/packages.config -PackagesDirectory packages/ -source 'https://api.nuget.org/v3/index.json;https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet/'"
+	],
+
+	"build-args": "/p:Configuration=Server-Debug 'Open Terraria API.sln'"
+}
