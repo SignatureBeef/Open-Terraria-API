@@ -354,7 +354,7 @@ namespace OTA.Patcher
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Web.Http.Owin", true);
                         //Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework", true);
                         //Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "EntityFramework.SqlServer", true);
-                        Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.Core", true);
+                        //Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.Core", true);
                         //Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.AspNet.Identity.EntityFramework", true);
                         //Copy(root, Path.Combine("Binaries", "Libraries"), Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite", false);
                         //Copy(root, Path.Combine("Binaries", "Libraries"), Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "System.Data.SQLite.EF6", false);
@@ -530,7 +530,7 @@ namespace OTA.Patcher
                 Console.Write("Updating to .NET v4.5.1...");
                 patcher.SwitchFramework("4.5.1");
 
-                var jsonVersion = "7.0.0.0";
+                var jsonVersion = "7.0.1";
                 Console.Write($"Ok\nPatching Newtonsoft.Json to {jsonVersion}...");
                 patcher.PatchJSON(jsonVersion);
 

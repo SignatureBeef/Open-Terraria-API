@@ -117,8 +117,6 @@ namespace OTA.Web
 
     class OWINServer
     {
-        
-
         public static OAuthAuthorizationServerOptions ServerOptions = new OAuthAuthorizationServerOptions()
         {
             TokenEndpointPath = new Microsoft.Owin.PathString("/token"),

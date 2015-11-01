@@ -7,8 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
 using OTA.Command;
 using OTA.Plugin;
 using OTA.Logging;
@@ -532,11 +530,11 @@ namespace OTA
             //  2) The database is ready before and normal plugins are enabled
             try
             {
-                using (var ctx = new OTA.Data.OTAContext())
+                using (var ctx = new OTA.Data.EF6.OTAContext())
                 {
                     ctx.Database.Initialize(false);
                 }
-                OTA.Data.OTAContext.ProbeSuccess = true;
+                OTA.Data.EF6.OTAContext.ProbeSuccess = true;
             }
             catch (Exception e)
             {

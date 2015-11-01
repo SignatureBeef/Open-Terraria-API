@@ -8,7 +8,6 @@ using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Core.Mapping;
-using OTA.Data.Entity;
 
 namespace OTA.Data.EF6.Config.SQLite
 {

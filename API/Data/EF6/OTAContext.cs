@@ -85,12 +85,12 @@ namespace OTA.Data.EF6
 
             if (this.Database.Connection.GetType().Name == "SQLiteConnection") //Since we support SQLite as default, let's use this hack...
             {
-                Database.SetInitializer(new OTA.Data.Entity.SQLite.SqliteContextInitializer<OTAContext>(builder));
+                Database.SetInitializer(new OTA.Data.EF6.Config.SQLite.SqliteContextInitializer<OTAContext>(builder));
                 IsSQLite = true;
             }
             else
             {
-                Database.SetInitializer(new OTA.Data.Entity.OTAInitializer<OTAContext>());
+                Database.SetInitializer(new OTA.Data.EF6.Config.OTAInitializer<OTAContext>());
                 IsSQLite = false;
             }
 
