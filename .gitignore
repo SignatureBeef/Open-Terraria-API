@@ -1,5 +1,6 @@
 *.suo
 *.csproj.user
+*.DotSettings.user
 *.pidb
 *.userprefs
 

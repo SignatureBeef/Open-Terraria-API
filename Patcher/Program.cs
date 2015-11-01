@@ -530,7 +530,7 @@ namespace OTA.Patcher
                 Console.Write("Updating to .NET v4.5.1...");
                 patcher.SwitchFramework("4.5.1");
 
-                var jsonVersion = "7.0.1";
+                var jsonVersion = "7.0.0.0"; //Ensure this is correct, otherwise mono will have a compiler crash
                 Console.Write($"Ok\nPatching Newtonsoft.Json to {jsonVersion}...");
                 patcher.PatchJSON(jsonVersion);
 

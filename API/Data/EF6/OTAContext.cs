@@ -14,7 +14,7 @@ namespace OTA.Data.EF6
 
         internal static bool ProbeSuccess { get; set; }
 
-        public static bool HasConnection() => ProbeSuccess && System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionNameOrString] != null;
+        public static bool HasConnection => ProbeSuccess && System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionNameOrString] != null;
 
         //TODO fix this hack - seems there is no IndexOf function in SQLite, so we need something in the ADO/EF dll for this.
         //Maybe EF7 solves this (?)
@@ -52,7 +52,6 @@ namespace OTA.Data.EF6
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = true;
         }
-
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {

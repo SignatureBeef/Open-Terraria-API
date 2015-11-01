@@ -287,7 +287,7 @@ namespace OTA.Patcher
                                         if (setCall != null && mr.Name == "Set" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.Name == "MemTile")
                                         {
                                             //Swap
-                                            var il = mth.Body.GetILProcessor();
+//                                            var il = mth.Body.GetILProcessor();
 
                                             //                                            if (ins.Previous != null && ins.Previous.OpCode == OpCodes.Ldnull)
                                             //                                            {
@@ -331,7 +331,7 @@ namespace OTA.Patcher
                                         if (getCall != null && mr.Name == "Get" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.Name == "MemTile")
                                         {
                                             //Swap
-                                            var il = mth.Body.GetILProcessor();
+//                                            var il = mth.Body.GetILProcessor();
                                             //Remove previous instructions to remove the array instance
 
                                             //bool remove = true;
@@ -615,7 +615,7 @@ namespace OTA.Patcher
             var mainCctor = Terraria.Main.Methods.Single(x => x.Name == ".cctor");
             var constructor = _asm.MainModule.Import(_self.MainModule.Types.Single(x => x.Name == "TileCollection").Methods.Single(y => y.Name == ".ctor"));
 
-            var il = mainCctor.Body.GetILProcessor();
+//            var il = mainCctor.Body.GetILProcessor();
             var ins = mainCctor.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
                           && x.Operand is MethodReference
                           && (x.Operand as MethodReference).Name == ".ctor"

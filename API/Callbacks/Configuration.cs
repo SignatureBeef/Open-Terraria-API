@@ -5,7 +5,6 @@ using System.Diagnostics;
 using OTA.Logging;
 using OTA.Command;
 
-
 #if Full_API
 using Terraria;
 using Terraria.Initializers;

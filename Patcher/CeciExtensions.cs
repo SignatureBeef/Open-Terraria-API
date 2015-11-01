@@ -615,9 +615,9 @@ namespace OTA.Patcher
                         //It should len decompile to return default(xyz)
 
                         ///Create the variable - this one goes at index 0
-                        VariableDefinition vr1, vr2;
+                        VariableDefinition vr1;//, vr2;
                         method.Body.Variables.Add(vr1 = new VariableDefinition(method.ReturnType));
-                        method.Body.Variables.Add(vr2 = new VariableDefinition(method.ReturnType));
+                        method.Body.Variables.Add(new VariableDefinition(method.ReturnType));
 
                         ////Initialise the variable
                         method.Body.Instructions.Clear();
