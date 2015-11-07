@@ -292,6 +292,10 @@
     <Compile Include="Plugin\Hooks\PluginPauseComplete.cs" />
     <Compile Include="Callbacks\Patches.cs" />
     <Compile Include="Plugin\Hooks\Multi\CheckBufferState.cs" />
+    <Compile Include="Data\Extensions\LinqExtensions.cs" />
+    <Compile Include="Misc\ColorHelper.cs" />
+    <Compile Include="RuntimePlatform.cs" />
+    <Compile Include="Misc\Encoding.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,6 @@
-﻿using Mono.Cecil;
+﻿//#define SAVE_PROGRESS
+
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System;
 using System.Linq;
@@ -23,7 +25,6 @@ namespace OTA.Patcher
             Terraria = new TerrariaOrganiser(_asm);
             API = new APIOrganiser(_self);
         }
-
 
         /// <summary>
         /// Hooks Begin and End of Terraria.Main.[Draw/Update]
@@ -276,5 +277,70 @@ namespace OTA.Patcher
                 vanilla.Body.OptimizeMacros();
             }
         }
+
+        #if SAVE_PROGRESS
+        [OTAPatch(SupportType.Server, "Hooking world save tiles progress")]
+        private void PatchWorldSaveTileProgress()
+        {
+            var callback = Terraria.Import(API.WorldFileCallback.Method("OnSaveWorldTiles_Progress"));
+            var method = Terraria.WorldFile.Method("SaveWorldTiles");
+
+            var il = method.Body.GetILProcessor();
+            var st = method.Body.Instructions.Single(x => x.OpCode == OpCodes.Call
+                         && x.Operand is MethodReference
+                         && (x.Operand as MethodReference).Name == "Concat"
+                         && x.Next.OpCode == OpCodes.Stsfld
+                         && (x.Next.Operand is FieldReference)
+                         && (x.Next.Operand as FieldReference).Name == "statusText");
+
+            st.Operand = callback;
+            il.Remove(st.Next);
+
+            var index = method.Body.Variables.First(x => x.VariableType.Name == "Int32");
+            il.InsertAfter(st.Previous, il.Create(OpCodes.Ldloc, index));
+        }
+
+        [OTAPatch(SupportType.Server, "Hooking world validating progress")]
+        private void PatchValidateWorldProgress()
+        {
+            var callback = Terraria.Import(API.WorldFileCallback.Method("OnValidateWorld_Progress"));
+            var method = Terraria.WorldFile.Method("validateWorld");
+
+            var il = method.Body.GetILProcessor();
+            var st = method.Body.Instructions.Single(x => x.OpCode == OpCodes.Call
+                         && x.Operand is MethodReference
+                         && (x.Operand as MethodReference).Name == "Concat"
+                         && x.Next.OpCode == OpCodes.Stsfld
+                         && (x.Next.Operand is FieldReference)
+                         && (x.Next.Operand as FieldReference).Name == "statusText");
+
+            st.Operand = callback;
+            il.Remove(st.Next);
+
+            var index = method.Body.Instructions
+                .Single(x => x.Operand is FieldReference
+                            && (x.Operand as FieldReference).Name == "maxTilesX")
+                .Previous.Previous.Operand as VariableDefinition;
+            il.InsertAfter(st.Previous, il.Create(OpCodes.Ldloc, index));
+        }
+
+        [OTAPatch(SupportType.Server, "Hooking world saving text", 50)]
+        private void PatchSaveWorldStatusTexts()
+        {
+            var callback = Terraria.Import(API.WorldFileCallback.Method("OnSaveWorldDirect_StatusText"));
+            var method = Terraria.WorldFile.Methods.Single(x => x.Name == "saveWorld" && x.Parameters.Count == 2);
+
+            var il = method.Body.GetILProcessor();
+
+            var statusTexts = method.Body.Instructions
+                .Where(x => x.Operand is FieldReference
+                                  && (x.Operand as FieldReference).Name == "statusText");
+
+            foreach (var st in statusTexts.ToArray())
+            {
+                il.Replace(st, il.Create(OpCodes.Call, callback));
+            }
+        }
+        #endif
     }
 }

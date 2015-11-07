@@ -61,5 +61,41 @@ namespace OTA.Callbacks
 
             HookPoints.WorldSave.Invoke(ref ctx, ref args);
         }
+
+        static Logging.ProgressLogger _logger;
+
+        public static void OnSaveWorldTiles_Progress(object[] args, int index)
+        {
+            if (null == _logger || index == 0)
+            {
+                if (_logger != null) _logger.Dispose();
+                _logger = new OTA.Logging.ProgressLogger(100, Terraria.Lang.gen[49]);
+            }
+
+            float num = (float)index / (float)Terraria.Main.maxTilesX;
+            _logger.Value = (int)(num * 100 + 1);
+        }
+
+        public static void OnValidateWorld_Progress(object[] args, int index)
+        {
+            if (null == _logger || index == 0)
+            {
+                if (_logger != null) _logger.Dispose();
+                _logger = new OTA.Logging.ProgressLogger(100, Terraria.Lang.gen[73]);
+            }
+
+            float num = (float)index / (float)Terraria.Main.maxTilesX;
+            _logger.Value = (int)(num * 100 + 1);
+        }
+
+        public static void OnSaveWorldDirect_StatusText(string text)
+        {
+            if (_logger != null) _logger.Dispose();
+
+            if (!String.IsNullOrEmpty(text))
+            {
+                Logging.ProgramLog.Log(text);
+            }
+        }
     }
 }
