@@ -25,7 +25,7 @@ namespace OTA.Memory
             }
         }
 
-        public unsafe MemTile GetTile(int x, int y)
+        public MemTile GetTile(int x, int y)
         {
             if (tileData == null)
             {
@@ -43,7 +43,7 @@ namespace OTA.Memory
             return new HeapTile(tileData, x, y);
         }
 
-        public unsafe void SetTile(int x, int y, MemTile tile)
+        public void SetTile(int x, int y, MemTile tile)
         {
             HeapTile heapTile = new HeapTile(tileData, x, y);
             heapTile.CopyFrom(tile);

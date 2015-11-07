@@ -4,6 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Server-Debug</Configuration>
     <ProjectGuid>{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}</ProjectGuid>
+    <OutputPath>bin\x86\Server\</OutputPath>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OTA</RootNamespace>
@@ -39,7 +40,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release %28Server%29|AnyCPU'">
-    <OutputPath>bin\AnyCPU\Release %28Server%29\</OutputPath>
+    <OutputPath>bin\Server-Release\</OutputPath>
     <DefineConstants>XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER</DefineConstants>
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
