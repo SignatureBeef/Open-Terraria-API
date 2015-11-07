@@ -112,7 +112,7 @@ namespace OTA
         /// <param name="B">Blue text color value</param>
         /// <param name="message">Message.</param>
         /// <param name="sender">Sender.</param>
-        public void SendMessage(string message, int sender = 255, byte R = 255, byte G = 255, byte B = 255)
+        public virtual void SendMessage(string message, int sender = 255, byte R = 255, byte G = 255, byte B = 255)
         {
 #if Full_API
             Terraria.NetMessage.SendData((int)Packet.PLAYER_CHAT, ((Terraria.Player)this).whoAmI, -1, message, sender, R, G, B);
@@ -124,7 +124,7 @@ namespace OTA
         /// </summary>
         /// <param name="message">Message.</param>
         /// <param name="color">Color.</param>
-        public void SendMessage(string message, Color color)
+        public virtual void SendMessage(string message, Color color)
         {
             SendMessage(message, 255, color.R, color.G, color.B);
         }
@@ -151,7 +151,7 @@ namespace OTA
         /// </summary>
         /// <param name="target"></param>
         /// <param name="style"></param>
-        public void Teleport(Terraria.Player target, int style = 0)
+        public virtual void Teleport(Terraria.Player target, int style = 0)
         {
             if (this is Terraria.Player)
             {
@@ -169,7 +169,7 @@ namespace OTA
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="style"></param>
-        public void Teleport(float x, float y, int style = 0)
+        public virtual void Teleport(float x, float y, int style = 0)
         {
             if (this is Terraria.Player)
             {
@@ -187,7 +187,7 @@ namespace OTA
         /// </summary>
         /// <param name="reason"></param>
         /// <param name="announce"></param>
-        public void Kick(string reason)
+        public virtual void Kick(string reason)
         {
             Connection.Kick(reason);
         }
@@ -202,7 +202,7 @@ namespace OTA
         /// <param name="notifyOps"></param>
         /// <param name="prefix"></param>
         /// <returns></returns>
-        public int GiveItem(int itemId, int stack, int maxStack, ISender sender, int netId, bool notifyOps = true, int prefix = 0)
+        public virtual int GiveItem(int itemId, int stack, int maxStack, ISender sender, int netId, bool notifyOps = true, int prefix = 0)
         {
             if (this is Terraria.Player)
             {
