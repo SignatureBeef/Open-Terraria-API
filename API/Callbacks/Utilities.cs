@@ -15,7 +15,7 @@ namespace OTA.Callbacks
         public static bool RemoveFile(string path)
         {
             #if Full_API && (SERVER || WINDOWS)
-            if (Tools.RuntimePlatform == RuntimePlatform.Mono)
+            if (Tools.RuntimePlatform == Misc.RuntimePlatform.Mono)
             {
                 try
                 {

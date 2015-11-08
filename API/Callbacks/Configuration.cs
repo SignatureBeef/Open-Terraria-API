@@ -25,7 +25,7 @@ namespace OTA.Callbacks
         public static void StartupConfig(Microsoft.Xna.Framework.Game game)
         {
             #if Full_API
-            if (Tools.RuntimePlatform != RuntimePlatform.Mono)
+            if (Tools.RuntimePlatform != Misc.RuntimePlatform.Mono)
             {
                 try
                 {
@@ -139,7 +139,7 @@ namespace OTA.Callbacks
                                     case "priority":
                                         if (!Program.LaunchParameters.ContainsKey("-forcepriority"))
                                         {
-                                            if (Tools.RuntimePlatform != RuntimePlatform.Mono)
+                                            if (Tools.RuntimePlatform != Misc.RuntimePlatform.Mono)
                                             {
                                                 try
                                                 {
@@ -245,7 +245,7 @@ namespace OTA.Callbacks
                                         break;
                                     case "upnp":
                                         Terraria.Netplay.UseUPNP = value == "1";
-                                        if (Terraria.Netplay.UseUPNP && Tools.RuntimePlatform == RuntimePlatform.Mono)
+                                        if (Terraria.Netplay.UseUPNP && Tools.RuntimePlatform == Misc.RuntimePlatform.Mono)
                                         {
                                             ProgramLog.Log("[Warning] uPNP is only available on Windows platforms.");
                                         }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OTA
+namespace OTA.Misc
 {
     /// <summary>
     /// Runtime platform enumeration.

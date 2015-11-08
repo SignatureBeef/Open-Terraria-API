@@ -1,7 +1,7 @@
 ﻿#if Full_API
 using Terraria;
 
-namespace OTA
+namespace OTA.Extensions
 {
     /// <summary>
     /// Projectile extensions.
@@ -16,9 +16,9 @@ namespace OTA
         public static bool IsHighExplosive(this Projectile prj)
         {
             return prj.type == 29 ||
-                    prj.type == 102 ||
-                    prj.type == 37 ||
-                    prj.type == 108;
+                prj.type == 102 ||
+                prj.type == 37 ||
+                prj.type == 108;
         }
 
         /// <summary>
@@ -29,8 +29,8 @@ namespace OTA
         public static bool IsExplosive(this Projectile prj)
         {
             return IsHighExplosive(prj) ||
-                    prj.type == 30 ||
-                    prj.type == 41;
+                prj.type == 30 ||
+                prj.type == 41;
         }
     }
 }

@@ -116,9 +116,7 @@
     <Compile Include="Plugin\HookPoint.cs" />
     <Compile Include="Plugin\LUAManager.cs" />
     <Compile Include="Plugin\PluginManager.cs" />
-    <Compile Include="ProjectileExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScheduledNotification.cs" />
     <Compile Include="Xna\Audio\AudioStopOptions.cs" />
     <Compile Include="Xna\Audio\SoundState.cs" />
     <Compile Include="Xna\Audio\SoundEffectInstance.cs" />
@@ -290,13 +288,15 @@
     <Compile Include="Plugin\Hooks\Multi\CheckBufferState.cs" />
     <Compile Include="Data\Extensions\LinqExtensions.cs" />
     <Compile Include="Misc\ColorHelper.cs" />
-    <Compile Include="RuntimePlatform.cs" />
     <Compile Include="Misc\Encoding.cs" />
     <Compile Include="Web\Internals\PluginServiceResolver.cs" />
     <Compile Include="Web\Internals\MonoDataProtector.cs" />
     <Compile Include="Extensions\LinqRandomExtensions.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\RemoteExtensions.cs" />
+    <Compile Include="Extensions\ProjectileExtensions.cs" />
+    <Compile Include="Misc\RuntimePlatform.cs" />
+    <Compile Include="Misc\ScheduledNotification.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

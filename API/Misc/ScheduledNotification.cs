@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OTA.Misc;
 using OTA.Logging;
 
-namespace OTA
+namespace OTA.Misc
 {
     /// <summary>
     /// Scheduled notification for players or the console

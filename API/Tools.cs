@@ -304,10 +304,10 @@ namespace OTA
         /// Gets the runtime platform.
         /// </summary>
         /// <value>The runtime platform.</value>
-        public static RuntimePlatform RuntimePlatform
+        public static Misc.RuntimePlatform RuntimePlatform
         {
             get
-            { return Type.GetType("Mono.Runtime") != null ? RuntimePlatform.Mono : RuntimePlatform.Microsoft; }
+            { return Type.GetType("Mono.Runtime") != null ? Misc.RuntimePlatform.Mono : Misc.RuntimePlatform.Microsoft; }
         }
     }
 }
