@@ -1,7 +1,6 @@
 ﻿using System;
 using OTA.Logging;
 
-
 namespace OTA.Command
 {
     /// <summary>

@@ -297,6 +297,10 @@
     <Compile Include="Extensions\ProjectileExtensions.cs" />
     <Compile Include="Misc\RuntimePlatform.cs" />
     <Compile Include="Misc\ScheduledNotification.cs" />
+    <Compile Include="Plugin\HookContext.cs" />
+    <Compile Include="Plugin\HookOrder.cs" />
+    <Compile Include="Plugin\HookResult.cs" />
+    <Compile Include="Plugin\HookAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
