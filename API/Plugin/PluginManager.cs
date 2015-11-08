@@ -12,7 +12,7 @@ using OTA.Plugin;
 using OTA.Logging;
 using OTA.Extensions;
 
-namespace OTA
+namespace OTA.Plugin
 {
     /// <summary>
     /// PluginManager class.  Handles all input/output, loading, enabling, disabling, and hook processing for plugins

@@ -1,6 +1,7 @@
 ﻿#if ENTITY_FRAMEWORK_6
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using OTA.Plugin;
 
 namespace OTA.Data.EF6
 {
