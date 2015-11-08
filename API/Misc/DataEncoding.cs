@@ -6,7 +6,7 @@ namespace OTA.Misc
     /// <summary>
     /// Generic encoding for some OTA functions
     /// </summary>
-    public static class Encoding
+    public static class DataEncoding
     {
         public const Int32 BitsPerByte = 8;
 
