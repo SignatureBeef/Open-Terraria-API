@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using OTA;
 using OTA.Command;
+using OTA.Extensions;
 
 #if Full_API
 using Terraria.Net.Sockets;

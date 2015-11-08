@@ -1,36 +1,22 @@
 ﻿using System;
-using System.Net.Http;
-using System.Net;
-using System.Data.Entity;
-using System.Collections.Concurrent;
-using OTA.Misc;
-using OTA.Web.Internals;
-
-#if WEBSERVER
-using System.Threading;
 using System.IO;
-using OTA.Logging;
-using Owin;
+using System.Threading;
 using System.Web.Http;
+
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler;
 using Microsoft.Owin.Security.DataHandler.Encoder;
-using Microsoft.Owin.Security;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.DataHandler.Serializer;
-using System.Security;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Security.Claims;
 using Microsoft.Owin.Security.OAuth;
-using Microsoft.Owin;
-#endif
+using Owin;
 
-//Note to self, roles are to be kept at a minimum as the roles build the bearer token
+using OTA.Logging;
+using OTA.Web.Internals;
 
 namespace OTA.Web
 {
+    //Note to self, roles are to be kept at a minimum as the roles build the bearer token
+
     /// <summary>
     /// OTA web server for plugins. Currently based around OWIN
     /// </summary>

@@ -187,7 +187,6 @@
     <Compile Include="Sockets\ClientConnection.cs" />
     <Compile Include="Sockets\Connection.cs" />
     <Compile Include="Sockets\ServerSlot.cs" />
-    <Compile Include="Extensions.cs" />
     <Compile Include="Logging\LogChannel.cs" />
     <Compile Include="Logging\LogTarget.cs" />
     <Compile Include="Logging\LogTraceListener.cs" />
@@ -295,6 +294,9 @@
     <Compile Include="Misc\Encoding.cs" />
     <Compile Include="Web\Internals\PluginServiceResolver.cs" />
     <Compile Include="Web\Internals\MonoDataProtector.cs" />
+    <Compile Include="Extensions\LinqRandomExtensions.cs" />
+    <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\RemoteExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -369,5 +371,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Web\Internals\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

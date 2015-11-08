@@ -2,6 +2,7 @@
 using OTA;
 using OTA.Command;
 using OTA.Logging;
+using OTA.Extensions;
 
 #if Full_API
 using Terraria;
