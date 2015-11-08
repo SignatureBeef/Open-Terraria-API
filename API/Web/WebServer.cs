@@ -141,6 +141,8 @@ namespace OTA.Web
 
         public WebServer()
         {
+            this.InitialiseOptions();
+
             WebApiConfig.Routes.MapHttpRoute
             (
                 name: "DefaultApi",
