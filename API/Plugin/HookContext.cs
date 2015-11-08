@@ -55,19 +55,19 @@ namespace OTA.Plugin
         #endif
 
         /// <summary>
-        /// The result parameter that the hook may use after completely called.
+        /// The result parameter that the initiator may use after completely called.
         /// </summary>
         /// <value>The result parameter.</value>
         public object ResultParam { get; private set; }
 
         /// <summary>
-        /// The action the hook must do when after the hook is completed.
+        /// The action the initiator must do when after the hook is completed.
         /// </summary>
         /// <value>The result.</value>
         public HookResult Result { get; private set; }
 
         /// <summary>
-        /// This will immediately stop further hook execution, and will return to the hook caller.
+        /// This will immediately stop further hook execution and will return to the initiator
         /// </summary>
         /// <value><c>true</c> if conclude; otherwise, <c>false</c>.</value>
         public bool Conclude { get; set; }
@@ -77,7 +77,7 @@ namespace OTA.Plugin
         /// <summary>
         /// This will check if the current Result is set to KICK. 
         /// If so it will perform the kick to remove the player from the server, and will use
-        /// the ResultParam value as the disconnect readon.
+        /// the ResultParam value as the disconnect reason.
         /// </summary>
         /// <returns><c>true</c>, if the connection/player was kicked, <c>false</c> otherwise.</returns>
         public bool CheckForKick()
@@ -110,7 +110,7 @@ namespace OTA.Plugin
         }
 
         /// <summary>
-        /// Sets the result for the hook and by default will return to the hook initiator for appropriate processing.
+        /// Sets the result for the hook and by default will immediatley return to the hook initiator for appropriate processing.
         /// </summary>
         /// <param name="result">Result for the intiator to action</param>
         /// <param name="conclude">If set to <c>true</c> conclude (no further plugins will receive the hook).</param>
