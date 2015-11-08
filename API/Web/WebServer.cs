@@ -4,6 +4,7 @@ using System.Net;
 using System.Data.Entity;
 using System.Collections.Concurrent;
 using OTA.Misc;
+using OTA.Web.Internals;
 
 #if WEBSERVER
 using System.Threading;
@@ -33,214 +34,220 @@ namespace OTA.Web
     /// <summary>
     /// OTA web server for plugins. Currently based around OWIN
     /// </summary>
-    public static class WebServer
+    public class WebServer
     {
-        #if WEBSERVER
-        public static System.Web.Http.HttpConfiguration Config { get; private set; }
+        /// <summary>
+        /// Gets or sets the Web API configuration.
+        /// </summary>
+        /// <value>The config.</value>
+        public HttpConfiguration WebApiConfig { get; set; } = new HttpConfiguration();
 
-        public static string StaticFileDirectory = "Web";
-        public static bool AllowInsecureHttp = true;
-        public static string ServerKey = Guid.NewGuid().ToString();
-        public static int SessionTimeoutHours = 12;
+        /// <summary>
+        /// Gets or sets the static file directory when using the file server.
+        /// </summary>
+        /// <value>The static file directory.</value>
+        public string StaticFileDirectory  { get; set; } = "Web";
 
-        public static int RequestLockoutDuration = 10;
-        public static int MaxRequestsPerLapse = 15;
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="OTA.Web.WebServer"/> is allowed to use insecure http requests.
+        /// </summary>
+        /// <value><c>true</c> if to allow insecure http; otherwise, <c>false</c>.</value>
+        public bool AllowInsecureHttp { get; set; } = true;
 
-        internal static readonly AutoResetEvent Switch = new AutoResetEvent(false);
+        /// <summary>
+        /// Gets or sets the server key for use with data protection.
+        /// </summary>
+        /// <value>The server key.</value>
+        public string ServerKey { get; set; } = Guid.NewGuid().ToString();
 
-        static WebServer()
+        /// <summary>
+        /// Gets or sets the session timeout in hours.
+        /// </summary>
+        /// <value>The session timeout hours.</value>
+        public int SessionTimeoutHours  { get; set; } = 12;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="OTA.Web.WebServer"/> uses OAuth.
+        /// </summary>
+        /// <value><c>true</c> if to use OAuth; otherwise, <c>false</c>.</value>
+        public bool UseOAuth { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="OTA.Web.WebServer"/> use the web API.
+        /// </summary>
+        /// <value><c>true</c> if to use the web API; otherwise, <c>false</c>.</value>
+        public bool UseWebApi { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="OTA.Web.WebServer"/> is used as a static file server
+        /// </summary>
+        /// <value><c>true</c> if you wish to use static files; otherwise, <c>false</c>.</value>
+        public bool UseFileServer { get; set; } = true;
+
+        /// <summary>
+        /// Occurs before any configurations has been applied to the IAppBuilder
+        /// </summary>
+        public event EventHandler PreConfigure;
+
+        /// <summary>
+        /// Occurs after alls configurations have been applied to the IAppBuilder
+        /// </summary>
+        public event EventHandler PostConfigure;
+
+        /// <summary>
+        /// Occurs when the server has started.
+        /// </summary>
+        public event EventHandler Started;
+
+        /// <summary>
+        /// Occurs when the server has stopped
+        /// </summary>
+        public event EventHandler Stopped;
+
+        /// <summary>
+        /// Gets or sets the server options for OAuth.
+        /// </summary>
+        /// <value>The server options.</value>
+        public OAuthAuthorizationServerOptions ServerOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bearer options for OAuth.
+        /// </summary>
+        /// <value>The bearer options.</value>
+        public OAuthBearerAuthenticationOptions BearerOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the OAuth token endpoint.
+        /// </summary>
+        /// <value>The OAuth token endpoint.</value>
+        public string OAuthTokenEndpoint { get; set; } = "/token";
+
+        /// <summary>
+        /// If set this will stop the web server.
+        /// </summary>
+        internal readonly AutoResetEvent Switch = new AutoResetEvent(false);
+
+        /// <summary>
+        /// This will be called by OWIN to prepare the configuration for use.
+        /// </summary>
+        /// <param name="app">App.</param>
+        public void Configuration(Owin.IAppBuilder app)
         {
-            Config = new System.Web.Http.HttpConfiguration();
+            if (PreConfigure != null) PreConfigure.Invoke(this, EventArgs.Empty);
 
-            Config.Routes.MapHttpRoute(
+            if (UseOAuth)
+            {
+                app.UseOAuthAuthorizationServer(ServerOptions);
+                app.UseOAuthBearerAuthentication(BearerOptions);
+            }
+
+            if (UseWebApi) app.UseWebApi(this.WebApiConfig);
+
+            if (UseFileServer) app.UseFileServer(new Microsoft.Owin.StaticFiles.FileServerOptions()
+                    {
+                        RequestPath = new Microsoft.Owin.PathString("/web"),
+                        FileSystem = new Microsoft.Owin.FileSystems.PhysicalFileSystem(this.StaticFileDirectory),
+                        EnableDirectoryBrowsing = false
+                    });
+            
+            if (PostConfigure != null) PostConfigure.Invoke(this, EventArgs.Empty);
+        }
+
+        public WebServer()
+        {
+            WebApiConfig.Routes.MapHttpRoute
+            (
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = System.Web.Http.RouteParameter.Optional }
             );
 
-            //            Config.DependencyResolver = new AssembliesResolver();
-            Config.Services.Replace(typeof(System.Web.Http.Dispatcher.IAssembliesResolver), new PluginServiceResolver());
+            //Ensure the plugin resolver is added
+            WebApiConfig.Services.Replace(typeof(System.Web.Http.Dispatcher.IAssembliesResolver), new PluginServiceResolver());
 
-            Config.MapHttpAttributeRoutes();
-            //            Config.Formatters.Add(new System.Net.Http.Formatting.JsonMediaTypeFormatter());
+            WebApiConfig.MapHttpAttributeRoutes();
         }
-        #endif
 
         /// <summary>
         /// Start the web server at the specified address
         /// </summary>
         /// <param name="baseAddress">Base address.</param>
-        public static void Start(string baseAddress)
+        public void Start(string baseAddress)
         {
-#if WEBSERVER
             Switch.Reset();
-            (new Thread(OWINServer.StartServer)).Start(baseAddress);
-#endif
+            (new Thread(StartServer)).Start(baseAddress);
         }
 
         /// <summary>
-        /// Stop the server.
+        /// Stop the web serverserver.
         /// </summary>
-        public static void Stop()
+        public void Stop()
         {
-#if WEBSERVER
             Switch.Set();
-#endif
-        }
-    }
-
-    #if WEBSERVER
-    class PluginServiceResolver : System.Web.Http.Dispatcher.DefaultAssembliesResolver
-    {
-        public override System.Collections.Generic.ICollection<System.Reflection.Assembly> GetAssemblies()
-        {
-            return AppDomain.CurrentDomain.GetAssemblies();
-        }
-    }
-
-    //    public class ApplicationRoleManager : RoleManager<IdentityRole>
-    //    {
-    //        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
-    //            : base(roleStore)
-    //        {
-    //        }
-    //
-    //        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
-    //        {
-    //            var appRoleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<OTAContext>()));
-    //
-    //            return appRoleManager;
-    //        }
-    //    }
-
-
-
-    class OWINServer
-    {
-        public static OAuthAuthorizationServerOptions ServerOptions = new OAuthAuthorizationServerOptions()
-        {
-            TokenEndpointPath = new Microsoft.Owin.PathString("/token"),
-//            Provider = new PermissionsOAuthProvider(),
-
-            AccessTokenExpireTimeSpan = TimeSpan.FromHours(WebServer.SessionTimeoutHours),
-
-            AllowInsecureHttp = true, //WebServer.AllowInsecureHttp,
-
-            /* Use app.SetDataProtectionProvider ? */
-            RefreshTokenFormat =
-                new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
-                new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
-            AccessTokenFormat =
-                new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
-                new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
-            AuthorizationCodeFormat =
-                new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
-                new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
-
-            ApplicationCanDisplayErrors = true
-        };
-
-        public static OAuthBearerAuthenticationOptions BearerOptions = new OAuthBearerAuthenticationOptions()
-        {
-            AccessTokenFormat =
-                new SecureDataFormat<AuthenticationTicket>(DataSerializers.Ticket,
-                new MonoDataProtector(WebServer.ServerKey), TextEncodings.Base64),
-            AuthenticationMode = AuthenticationMode.Active,
-            AuthenticationType = "Bearer"
-        };
-
-        public void Configuration(Owin.IAppBuilder app)
-        {
-            //app.UseErrorPage();
-            app.UseOAuthAuthorizationServer(ServerOptions);
-            app.UseOAuthBearerAuthentication(BearerOptions);
-            //            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
-
-            app.UseWebApi(WebServer.Config);
-
-            //            app.SetDataProtectionProvider( TODO
-
-            app.UseFileServer(new Microsoft.Owin.StaticFiles.FileServerOptions()
-                {
-                    RequestPath = new Microsoft.Owin.PathString("/web"),
-                    FileSystem = new Microsoft.Owin.FileSystems.PhysicalFileSystem(WebServer.StaticFileDirectory),
-                    EnableDirectoryBrowsing = false
-                });
         }
 
         /// <summary>
-        /// A mono compatible data protector for use with OWIN
+        /// Initialises default server options
         /// </summary>
-        internal class MonoDataProtector : IDataProtector
+        private void InitialiseOptions()
         {
-            private string[] _purposes;
-            const String DefaultPurpose = "ota-web-dp";
-
-            public MonoDataProtector()
+            ServerOptions = new OAuthAuthorizationServerOptions()
             {
-                _purposes = null;
-            }
+                TokenEndpointPath = new Microsoft.Owin.PathString(OAuthTokenEndpoint),
 
-            //            public MonoDataProtector(string[] purposes)
-            //            {
-            //                _purposes = purposes;
-            //            }
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(SessionTimeoutHours),
 
-            public MonoDataProtector(params string[] purposes)
+                AllowInsecureHttp = AllowInsecureHttp,
+
+                RefreshTokenFormat = new SecureDataFormat<AuthenticationTicket>(
+                    DataSerializers.Ticket,
+                    new MonoDataProtector(ServerKey),
+                    TextEncodings.Base64
+                ),
+                AccessTokenFormat = new SecureDataFormat<AuthenticationTicket>(
+                    DataSerializers.Ticket,
+                    new MonoDataProtector(ServerKey),
+                    TextEncodings.Base64
+                ),
+                AuthorizationCodeFormat = new SecureDataFormat<AuthenticationTicket>(
+                    DataSerializers.Ticket,
+                    new MonoDataProtector(ServerKey),
+                    TextEncodings.Base64
+                ),
+
+                ApplicationCanDisplayErrors = true
+            };
+
+            BearerOptions = new OAuthBearerAuthenticationOptions()
             {
-                _purposes = purposes;
-            }
-
-            public byte[] Protect(byte[] data)
-            {
-                return System.Security.Cryptography.ProtectedData.Protect(data, this.GenerateEntropy(), DataProtectionScope.CurrentUser);
-            }
-
-            public byte[] Unprotect(byte[] data)
-            {
-                return System.Security.Cryptography.ProtectedData.Unprotect(data, this.GenerateEntropy(), DataProtectionScope.CurrentUser);
-            }
-
-            byte[] GenerateEntropy()
-            {
-                using (var hasher = SHA256.Create())
-                {
-                    using (var ms = new MemoryStream())
-                    using (var cr = new CryptoStream(ms, hasher, CryptoStreamMode.Write))
-                    using (var sw = new StreamWriter(cr))
-                    {
-                        //Default purpose 
-                        sw.Write(DefaultPurpose);
-
-                        if (_purposes != null)
-                            foreach (var purpose in _purposes)
-                            {
-                                sw.Write(purpose);
-                            }
-                    }
-
-                    return hasher.Hash;
-                }
-            }
+                AccessTokenFormat = new SecureDataFormat<AuthenticationTicket>(
+                    DataSerializers.Ticket,
+                    new MonoDataProtector(ServerKey),
+                    TextEncodings.Base64
+                ),
+                AuthenticationMode = AuthenticationMode.Active,
+                AuthenticationType = "Bearer"
+            };
         }
 
-        internal static void StartServer(object baseAddress)
+        /// <summary>
+        /// This is the thread that the OWIN server will run on
+        /// </summary>
+        /// <param name="baseAddress">Address to listen on.</param>
+        private void StartServer(object baseAddress)
         {
             System.Threading.Thread.CurrentThread.Name = "Web";
 
-            ProgramLog.Web.Log("Initialising web server");
-
-            if (!Directory.Exists(WebServer.StaticFileDirectory))
-            {
-                Directory.CreateDirectory(WebServer.StaticFileDirectory);
-            }
+            if (!Directory.Exists(StaticFileDirectory))
+                Directory.CreateDirectory(StaticFileDirectory);
 
             try
             {
-                using (Microsoft.Owin.Hosting.WebApp.Start<OWINServer>(url: baseAddress as String))
+                using (Microsoft.Owin.Hosting.WebApp.Start<WebServer>(url: baseAddress as String))
                 {
-                    ProgramLog.Web.Log("Web server started listening on {0}", baseAddress);
-                    WebServer.Switch.WaitOne();
+                    if (Started != null) Started.Invoke(this, EventArgs.Empty);
+                    Switch.WaitOne();
+                    if (Stopped != null) Stopped.Invoke(this, EventArgs.Empty);
                 }
             }
             catch (Exception e)
@@ -249,6 +256,5 @@ namespace OTA.Web
             }
         }
     }
-    #endif
 }
 

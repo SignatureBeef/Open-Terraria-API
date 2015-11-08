@@ -14,15 +14,6 @@ using OTA.Logging;
 using Terraria;
 using Terraria.Net.Sockets;
 using Terraria.Net;
-
-
-
-
-
-
-
-
-
 #else
 using OTA.Callbacks;
 #endif
