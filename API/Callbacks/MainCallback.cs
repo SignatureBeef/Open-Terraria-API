@@ -120,11 +120,7 @@ namespace OTA.Callbacks
             Globals.Touch();
             ID.Lookup.Initialise();
 
-            //            OTA.Data.Entity.ConnectionManager.ConnectionString = "Server=127.0.0.1;Database=tdsm;Uid=root;Pwd=;";
-            //            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("MySql.Data", true);
 
-            //            OTA.Data.Entity.ConnectionManager.ConnectionString = "Data Source=database.sqlite;Version=3;";
-            //            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("System.Data.SQLite", true);
 
             try
             {
@@ -143,37 +139,17 @@ namespace OTA.Callbacks
             PluginManager.Initialize(Globals.PluginPath);
             PluginManager.RegisterHookSource(typeof(HookPoints));
 
-            //Load the logs
-            //TODO Why on earth did I put the log opening here?
-            if (!ProgramLog.IsOpen)
             {
                 if (!Directory.Exists(Globals.LogFolderPath)) Directory.CreateDirectory(Globals.LogFolderPath);
                 var logFile = Path.Combine(Globals.LogFolderPath, "server.log");
                 ProgramLog.OpenLogFile(logFile);
                 ConsoleSender.DefaultColour = ConsoleColor.Gray;
             }
-
             //Load plugins
             PluginManager.LoadPlugins();
 
-            //            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
-            //                .DefinedTypes
-            //                .Where(x => x.Name == "OTAContext")
-            //                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
 
-            //            if (!Permissions.PermissionsManager.IsSet)
-            //            {
-            //                var file = System.IO.Path.Combine(Globals.DataPath, "permissions.xml");
-            //                //if (System.IO.File.Exists(file)) System.IO.File.Delete(file);
-            //                if (System.IO.File.Exists(file))
-            //                {
-            //                    var handler = new Permissions.XmlSupplier(file);
-            //                    if (handler.Load())
-            //                        Permissions.PermissionsManager.SetHandler(handler);
-            //                }
-            //            }
 
-            //            Web.WebServer.Start("http://localhost:8448/");
         }
 
         /// <summary>
@@ -643,9 +619,6 @@ namespace OTA.Callbacks
         public static void ListenForCommands()
         {
             var ctx = new HookContext()
-                {
-                    Sender = HookContext.ConsoleSender
-                };
             var args = new HookArgs.StartCommandProcessing();
             HookPoints.StartCommandProcessing.Invoke(ref ctx, ref args);
 
