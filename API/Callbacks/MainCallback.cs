@@ -27,10 +27,6 @@ namespace OTA.Callbacks
                 {
                     if (a.Name == "Terraria" || a.Name == "TerrariaServer")
                         return Assembly.GetEntryAssembly();
-                    //                    else if (a.Name.StartsWith("System.Data.Entity"))
-                    //                    {
-                    //                        Console.WriteLine("FIND ENTITY");
-                    //                    }
 
                     if (PluginManager._plugins != null)
                     {
@@ -38,10 +34,6 @@ namespace OTA.Callbacks
                             .Where(x => x != null && x.Assembly != null && x.Assembly.FullName == a.Name)
                             .Select(x => x.Assembly)
                                 .FirstOrDefault();
-                        //if (items == null)
-                        //{
-                        //    Tools.WriteLine("[Fatal] Unable to load {0}, was this plugin removed or do you need to repatch?", a.Name);
-                        //}
 
                         if (items != null)
                             return items;
@@ -77,14 +69,6 @@ namespace OTA.Callbacks
                             return Assembly.Load(ms.ToArray());
                         }
                     }
-
-                    //Console.WriteLine(a.Name);
-
-                    //                    //Try currently loaded
-                    //                    var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                    //                            .Where(x => x.DefinedTypes.Where(y => y.Namespace == prefix).Count() > 0).ToList();
-                    //
-                    //                    if (null != assemblies && assemblies.Any()) return assemblies.First();  
                 }
                 catch (Exception e)
                 {
@@ -120,11 +104,12 @@ namespace OTA.Callbacks
             Globals.Touch();
             ID.Lookup.Initialise();
 
-            //            OTA.Data.Entity.ConnectionManager.ConnectionString = "Server=127.0.0.1;Database=tdsm;Uid=root;Pwd=;";
-            //            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("MySql.Data", true);
+            //This will setup the assembly resolves
+            PluginManager.Initialize(Globals.PluginPath);
+            PluginManager.RegisterHookSource(typeof(HookPoints));
 
-            //            OTA.Data.Entity.ConnectionManager.ConnectionString = "Data Source=database.sqlite;Version=3;";
-            //            OTA.Data.Entity.ConnectionManager.PrepareFromAssembly("System.Data.SQLite", true);
+            //Load plugins
+            PluginManager.LoadPlugins();
 
             try
             {
@@ -139,41 +124,15 @@ namespace OTA.Callbacks
                 Console.WriteLine(e);
             }
 
-            //This will setup the assembly resolves
-            PluginManager.Initialize(Globals.PluginPath);
-            PluginManager.RegisterHookSource(typeof(HookPoints));
-
-            //Load the logs
-            //TODO Why on earth did I put the log opening here?
-            if (!ProgramLog.IsOpen)
+            //Prepare log for use
+            if (!ProgramLog.IsFileOpen)
             {
                 if (!Directory.Exists(Globals.LogFolderPath)) Directory.CreateDirectory(Globals.LogFolderPath);
                 var logFile = Path.Combine(Globals.LogFolderPath, "server.log");
+
                 ProgramLog.OpenLogFile(logFile);
                 ConsoleSender.DefaultColour = ConsoleColor.Gray;
             }
-
-            //Load plugins
-            PluginManager.LoadPlugins();
-
-            //            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
-            //                .DefinedTypes
-            //                .Where(x => x.Name == "OTAContext")
-            //                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
-
-            //            if (!Permissions.PermissionsManager.IsSet)
-            //            {
-            //                var file = System.IO.Path.Combine(Globals.DataPath, "permissions.xml");
-            //                //if (System.IO.File.Exists(file)) System.IO.File.Delete(file);
-            //                if (System.IO.File.Exists(file))
-            //                {
-            //                    var handler = new Permissions.XmlSupplier(file);
-            //                    if (handler.Load())
-            //                        Permissions.PermissionsManager.SetHandler(handler);
-            //                }
-            //            }
-
-            //            Web.WebServer.Start("http://localhost:8448/");
         }
 
         /// <summary>
@@ -195,16 +154,6 @@ namespace OTA.Callbacks
                     {
                         var data = File.ReadAllBytes(file);
                         AppDomain.CurrentDomain.Load(data);
-
-                        //                        if (asm.GetName().Name == "EntityFramework")
-                        //                        {
-                        ////                            OTA.Data.Storage.IsAvailable = true;
-                        ////                            OTA.Data.Storage.IsAvailable = Data.OTAContext.HasConnection();
-                        //                            OTA.Data.Storage.IsAvailable = (bool)Assembly.GetExecutingAssembly()
-                        //                                .DefinedTypes
-                        //                                .Where(x => x.Name == "OTAContext")
-                        //                                .Select(y => y.GetMethod("HasConnection")).First().Invoke(null, null);
-                        //                        }
                     }
                     catch (Exception e)
                     {
@@ -265,8 +214,6 @@ namespace OTA.Callbacks
 
             //Close the logging if set
             ProgramLog.Close();
-            //            if (Tools.WriteClose != null)
-            //                Tools.WriteClose.Invoke();
         }
 
         /// <summary>
@@ -334,24 +281,6 @@ namespace OTA.Callbacks
             var ctx = HookContext.Empty;
             var args = HookArgs.ServerUpdate.End;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
-            
-            //#if Full_API
-            //            try
-            //            {
-            //                if (MessageBufferCallback.PlayerCommands.Count > 0)
-            //                {
-            //                    PlayerCommandReceived cmd;
-            //                    if (MessageBufferCallback.PlayerCommands.TryDequeue(out cmd))
-            //                    {
-            //                        MessageBufferCallback.ProcessQueuedPlayerCommand(cmd);
-            //                    }
-            //                }
-            //            }
-            //            catch (Exception e)
-            //            {
-            //                ProgramLog.Log(e, "Exception from user chat");
-            //            }
-            //#endif
         }
 
         public static void OnUpdateBegin()
@@ -643,9 +572,9 @@ namespace OTA.Callbacks
         public static void ListenForCommands()
         {
             var ctx = new HookContext()
-                {
-                    Sender = HookContext.ConsoleSender
-                };
+            {
+                Sender = HookContext.ConsoleSender
+            };
             var args = new HookArgs.StartCommandProcessing();
             HookPoints.StartCommandProcessing.Invoke(ref ctx, ref args);
 

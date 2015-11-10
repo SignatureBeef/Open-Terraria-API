@@ -1500,7 +1500,8 @@ namespace OTA.Patcher
 
             var ignore = new string[]
             {
-                "Terraria.Main.DedServ"
+                "Terraria.Main.DedServ",
+                "Terraria.Main.startDedInputCallBack"
             };
 
             //Patch Console.WriteLines

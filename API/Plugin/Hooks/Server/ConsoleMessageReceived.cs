@@ -14,11 +14,6 @@ namespace OTA.Plugin
             /// The message to be written to the console
             /// </summary>
             public string Message { get; set; }
-
-            /// <summary>
-            /// The source of the message
-            /// </summary>
-            public OTA.Logging.SendingLogger Logger { get; set; }
         }
     }
 

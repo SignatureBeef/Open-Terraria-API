@@ -186,11 +186,9 @@
     <Compile Include="Sockets\Connection.cs" />
     <Compile Include="Sockets\ServerSlot.cs" />
     <Compile Include="Logging\LogChannel.cs" />
-    <Compile Include="Logging\LogTarget.cs" />
     <Compile Include="Logging\LogTraceListener.cs" />
     <Compile Include="Logging\ProgramLog.cs" />
     <Compile Include="Logging\ProgressLogger.cs" />
-    <Compile Include="Logging\SendingLogger.cs" />
     <Compile Include="Misc\Affix.cs" />
     <Compile Include="Misc\ArrayDequeue.cs" />
     <Compile Include="Misc\DataRegister.cs" />
@@ -301,6 +299,11 @@
     <Compile Include="Plugin\HookResult.cs" />
     <Compile Include="Plugin\HookAction.cs" />
     <Compile Include="Misc\DataEncoding.cs" />
+    <Compile Include="Logging\Targets\LogTarget.cs" />
+    <Compile Include="Logging\Targets\StandardOutputTarget.cs" />
+    <Compile Include="Logging\Targets\InteractiveLogTarget.cs" />
+    <Compile Include="Logging\Targets\FileOutputTarget.cs" />
+    <Compile Include="Logging\OutputEntry.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -376,5 +379,6 @@
   <ItemGroup>
     <Folder Include="Web\Internals\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Logging\Targets\" />
   </ItemGroup>
 </Project>
