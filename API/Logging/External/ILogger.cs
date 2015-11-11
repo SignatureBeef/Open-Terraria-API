@@ -5,7 +5,7 @@ namespace OTA.Logging
 {
     public interface ILogger
     {
-        void Log(string category, TraceLevel level, string message);
+        void Log(string category, TraceLevel level, string message, ConsoleColor? colour = null);
     }
 }
 

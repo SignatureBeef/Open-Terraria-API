@@ -17,7 +17,7 @@ namespace OTA.Logging
                 .ToDictionary(k => k.Name, v => v);
         }
 
-        void ILogger.Log(string category, TraceLevel level, string message)
+        void ILogger.Log(string category, TraceLevel level, string message, ConsoleColor? colour)
         {
             if (_channels != null && _channels.ContainsKey(category))
                 _channels[category].Log(message);

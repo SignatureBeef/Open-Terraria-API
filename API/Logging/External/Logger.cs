@@ -119,6 +119,16 @@ namespace OTA.Logging
         /// <summary>
         /// Logs vanilla messages
         /// </summary>
+        /// <param name="colour">Desired colour.</param>
+        public static void Info(string message, ConsoleColor colour)
+        {
+            foreach (var logger in _loggers)
+                logger.Log(Categories.Info, TraceLevel.Info, message, colour);
+        }
+
+        /// <summary>
+        /// Logs vanilla messages
+        /// </summary>
         /// <param name="message">Message.</param>
         public static void Debug(string message, params object[] args)
         {
