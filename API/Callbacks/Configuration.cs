@@ -281,7 +281,7 @@ namespace OTA.Callbacks
                     }
                 }
             else
-                ProgramLog.Log($"Configuration `{file}` was specified but does not exist.");
+                Logger.Warning($"Configuration `{file}` was specified but does not exist.");
         }
     }
 }

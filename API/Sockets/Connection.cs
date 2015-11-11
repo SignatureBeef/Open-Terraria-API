@@ -480,7 +480,7 @@ namespace OTA.Sockets
                     txCount -= count;
                     txPrepared -= count;
                     if (txPrepared < 0 || txCount < 0)
-                        ProgramLog.Error.Log("{0} {1}", txCount, txPrepared);
+                        Logger.Error("{0} {1}", txCount, txPrepared);
                 }
             }
             if (txCount == 0)
@@ -508,7 +508,7 @@ namespace OTA.Sockets
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception in connection send callback");
+                Logger.Log(e, "Exception in connection send callback");
             }
 
             try
@@ -539,7 +539,7 @@ namespace OTA.Sockets
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception in connection send callback");
+                Logger.Log(e, "Exception in connection send callback");
             }
         }
 
@@ -622,7 +622,7 @@ namespace OTA.Sockets
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception in connection receive callback");
+                Logger.Log(e, "Exception in connection receive callback");
             }
         }
 
@@ -659,7 +659,7 @@ namespace OTA.Sockets
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception in connection disconnect callback");
+                Logger.Log(e, "Exception in connection disconnect callback");
             }
         }
 
@@ -727,7 +727,7 @@ namespace OTA.Sockets
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception while handling connection closure");
+                Logger.Log(e, "Exception while handling connection closure");
             }
         }
 
@@ -748,7 +748,7 @@ namespace OTA.Sockets
                     else
                     {
                         total += 1;
-                        ProgramLog.Debug.Log("ArgsPool<{0}> capacity is now: {1}.", typeof(T).Name, total);
+                        Logger.Debug("ArgsPool<{0}> capacity is now: {1}.", typeof(T).Name, total);
                         args = new T();
                     }
                 }
@@ -761,7 +761,7 @@ namespace OTA.Sockets
                 //              ProgramLog.Debug.Log ("Put");
                 if (!(args is T))
                 {
-                    ProgramLog.Error.Log("ArgsPool type mismatch.");
+                    Logger.Error("ArgsPool type mismatch.");
                     return;
                 }
 
@@ -769,7 +769,7 @@ namespace OTA.Sockets
                 {
                     if (args.conn == null)
                     {
-                        ProgramLog.Error.Log("{0} freed twice.", typeof(T).Name);
+                        Logger.Error("{0} freed twice.", typeof(T).Name);
                         return;
                     }
 

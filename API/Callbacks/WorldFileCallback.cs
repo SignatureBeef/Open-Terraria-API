@@ -94,7 +94,7 @@ namespace OTA.Callbacks
 
             if (!String.IsNullOrEmpty(text))
             {
-                Logging.ProgramLog.Log(text);
+                Logging.Logger.Vanilla(text);
             }
         }
     }

@@ -232,11 +232,11 @@ namespace OTA.Plugin
                 {
                     if (e.IsNetException && e.InnerException != null)
                     {
-                        ProgramLog.Log(e.InnerException, String.Format("Plugin {0} crashed in hook {1}", this.Name, function));
+                        Logger.Log(e.InnerException, String.Format("Plugin {0} crashed in hook {1}", this.Name, function));
                     }
                     else
                     {
-                        ProgramLog.Log(e, String.Format("Plugin {0} crashed in hook {1}", this.Name, function));
+                        Logger.Log(e, String.Format("Plugin {0} crashed in hook {1}", this.Name, function));
                     }
                 }
                 catch

@@ -44,6 +44,7 @@ namespace OTA.Logging
             public const String Error = "Error";
             public const String Debug = "Debug";
             public const String Plugin = "Plugin";
+            public const String Web = "Web";
         }
 
         public static readonly LogChannel Users = new LogChannel(Categories.User, ConsoleColor.Magenta, System.Diagnostics.TraceLevel.Info);
@@ -51,6 +52,7 @@ namespace OTA.Logging
         public static readonly LogChannel Error = new LogChannel(Categories.Error, ConsoleColor.Red, System.Diagnostics.TraceLevel.Error);
         public static readonly LogChannel Debug = new LogChannel(Categories.Debug, ConsoleColor.Gray, System.Diagnostics.TraceLevel.Verbose);
         public static readonly LogChannel Plugin = new LogChannel(Categories.Plugin, ConsoleColor.Blue, System.Diagnostics.TraceLevel.Info);
+        public static readonly LogChannel Web = new LogChannel(Categories.Web, ConsoleColor.DarkBlue, System.Diagnostics.TraceLevel.Info);
 
         struct LogEntry
         {

@@ -27,7 +27,7 @@ namespace OTA.Misc
             base.Trigger = seconds;
             base.Method = (tsk) =>
             {
-                if (ConsoleOnly) ProgramLog.Log(_message);
+                if (ConsoleOnly) Logger.Log(_message);
                 else Tools.NotifyAllPlayers(_message, _colour);
             };
             Tasks.Schedule(this);

@@ -82,9 +82,11 @@ namespace OTA.Callbacks
             {
                 var ex = e.ExceptionObject as Exception;
                 if (ex != null)
-                    ProgramLog.Log(ex, "Unhandled exception");
+                    Logger.Log(ex, "Unhandled exception");
+                else if (e.ExceptionObject != null)
+                    Logger.Error("Unhandled exception: " + e.ExceptionObject.ToString());
                 else
-                    ProgramLog.Error.Log("Unhandled exception encountered");
+                    Logger.Error("Unhandled exception encountered");
             };
         }
 
@@ -95,7 +97,7 @@ namespace OTA.Callbacks
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            ProgramLog.Log("Open Terraria API build {0} running on {1}",
+            Console.WriteLine("Open Terraria API build {0} running on {1}",
                 Globals.BuildInfo,
                 Tools.RuntimePlatform.ToString()
             );
@@ -111,27 +113,33 @@ namespace OTA.Callbacks
             //Load plugins
             PluginManager.LoadPlugins();
 
-            try
+            //Initialise the default logging system if a plugin has not overridden it.
+            if (Logger.UseDefaultLogger)
             {
-                var lis = new Logging.LogTraceListener();
-                System.Diagnostics.Trace.Listeners.Clear();
-                System.Diagnostics.Trace.Listeners.Add(lis);
-                System.Diagnostics.Debug.Listeners.Clear();
-                System.Diagnostics.Debug.Listeners.Add(lis);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+                Logger.AddLogger(new DefaultLogger());
 
-            //Prepare log for use
-            if (!ProgramLog.IsFileOpen)
-            {
-                if (!Directory.Exists(Globals.LogFolderPath)) Directory.CreateDirectory(Globals.LogFolderPath);
-                var logFile = Path.Combine(Globals.LogFolderPath, "server.log");
+                try
+                {
+                    var lis = new Logging.LogTraceListener();
+                    System.Diagnostics.Trace.Listeners.Clear();
+                    System.Diagnostics.Trace.Listeners.Add(lis);
+                    System.Diagnostics.Debug.Listeners.Clear();
+                    System.Diagnostics.Debug.Listeners.Add(lis);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
 
-                ProgramLog.OpenLogFile(logFile);
-                ConsoleSender.DefaultColour = ConsoleColor.Gray;
+                //Prepare log for use
+                if (!ProgramLog.IsFileOpen)
+                {
+                    if (!Directory.Exists(Globals.LogFolderPath)) Directory.CreateDirectory(Globals.LogFolderPath);
+                    var logFile = Path.Combine(Globals.LogFolderPath, "server.log");
+
+                    ProgramLog.OpenLogFile(logFile);
+                    ConsoleSender.DefaultColour = ConsoleColor.Gray;
+                }
             }
         }
 
@@ -403,14 +411,14 @@ namespace OTA.Callbacks
                     if (ctx.Result == HookResult.DEFAULT)
                     {
                         Terraria.Main.oldStatusText = Terraria.Main.statusText;
-                        ProgramLog.Log(Terraria.Main.statusText);
+                        Logger.Vanilla(Terraria.Main.statusText);
                     }
                 }
 #endif
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "OnStatusTextChange error");
+                Logger.Log(e, "OnStatusTextChange error");
             }
         }
 

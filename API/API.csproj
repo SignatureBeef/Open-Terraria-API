@@ -304,6 +304,9 @@
     <Compile Include="Logging\Targets\InteractiveLogTarget.cs" />
     <Compile Include="Logging\Targets\FileOutputTarget.cs" />
     <Compile Include="Logging\OutputEntry.cs" />
+    <Compile Include="Logging\External\ILogger.cs" />
+    <Compile Include="Logging\External\Logger.cs" />
+    <Compile Include="Logging\DefaultLogger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -380,5 +383,6 @@
     <Folder Include="Web\Internals\" />
     <Folder Include="Extensions\" />
     <Folder Include="Logging\Targets\" />
+    <Folder Include="Logging\External\" />
   </ItemGroup>
 </Project>

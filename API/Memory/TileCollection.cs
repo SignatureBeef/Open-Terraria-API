@@ -36,8 +36,11 @@ namespace OTA.Memory
                  * -Wolfje
                  */
                 int size = HeapTile.kHeapTileSize * (Terraria.Main.maxTilesX + 1) * (Terraria.Main.maxTilesY + 1);
-                Logging.ProgramLog.Log("Creating tile array of {0}x{1}, {2}MB", Terraria.Main.maxTilesX,
-                    Terraria.Main.maxTilesY, HeapTile.kHeapTileSize * Terraria.Main.maxTilesX * Terraria.Main.maxTilesY / 1024 / 1024);
+                Logging.Logger.Info("Creating tile array of {0}x{1}, {2}MB", 
+                    Terraria.Main.maxTilesX,
+                    Terraria.Main.maxTilesY, 
+                    HeapTile.kHeapTileSize * Terraria.Main.maxTilesX * Terraria.Main.maxTilesY / 1024 / 1024
+                );
                 tileData = new byte[size];
             }
             return new HeapTile(tileData, x, y);

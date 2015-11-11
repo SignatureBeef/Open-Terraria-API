@@ -81,7 +81,7 @@ namespace OTA.Plugin
             {
                 var num = currentlyExecuting - currentlyPaused;
                 if (num < 0)
-                    ProgramLog.Debug.Log("Oops, currentlyExecuting < currentlyPaused!?");
+                    Logger.Debug("Oops, currentlyExecuting < currentlyPaused!?");
                 return num <= 0;
             }
         }
@@ -200,7 +200,7 @@ namespace OTA.Plugin
                     }
                     catch (Exception e)
                     {
-                        ProgramLog.Log(e, "Exception removing hook from plugin's hook list");
+                        Logger.Log(e, "Exception removing hook from plugin's hook list");
                     }
                 }
             }
@@ -239,13 +239,13 @@ namespace OTA.Plugin
             if (signal != null)
             {
                 pauseSignal = null;
-                ProgramLog.Debug.Log("Paused hook point {0}.", Name);
+                Logger.Debug("Paused hook point {0}.", Name);
                 //Interlocked.Decrement (ref currentlyExecuting);
                 Interlocked.Increment(ref currentlyPaused);
                 signal.WaitOne();
                 Interlocked.Decrement(ref currentlyPaused);
                 //Interlocked.Increment (ref currentlyExecuting);
-                ProgramLog.Debug.Log("Unpaused hook point {0}.", Name);
+                Logger.Debug("Unpaused hook point {0}.", Name);
             }
 
             try
@@ -282,11 +282,11 @@ namespace OTA.Plugin
                             {
                                 if (e.IsNetException && e.InnerException != null)
                                 {
-                                    ProgramLog.Log(e.InnerException, String.Format("Plugin {0} crashed in hook {1}", hooks[i].plugin.Name, Name));
+                                    Logger.Log(e.InnerException, String.Format("Plugin {0} crashed in hook {1}", hooks[i].plugin.Name, Name));
                                 }
                                 else
                                 {
-                                    ProgramLog.Log(e, String.Format("Plugin {0} crashed in hook {1}", hooks[i].plugin.Name, Name));
+                                    Logger.Log(e, String.Format("Plugin {0} crashed in hook {1}", hooks[i].plugin.Name, Name));
                                 }
                             }
                             catch
@@ -295,7 +295,7 @@ namespace OTA.Plugin
                         }
                         catch (Exception e)
                         {
-                            ProgramLog.Log(e, String.Format("Plugin {0} crashed in hook {1}", hooks[i].plugin.Name, Name));
+                            Logger.Log(e, String.Format("Plugin {0} crashed in hook {1}", hooks[i].plugin.Name, Name));
                         }
                     }
                 }

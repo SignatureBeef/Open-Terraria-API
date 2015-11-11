@@ -202,7 +202,7 @@ namespace OTA.Misc
             }
             catch (System.Exception e)
             {
-                ProgramLog.Log(e, "Failure saving data list.");
+                Logger.Log(e, "Failure saving data list.");
                 return false;
             }
         }

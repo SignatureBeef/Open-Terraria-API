@@ -12,6 +12,7 @@ using Owin;
 
 using OTA.Logging;
 using OTA.Web.Internals;
+using System.Diagnostics;
 
 namespace OTA.Web
 {
@@ -240,7 +241,7 @@ namespace OTA.Web
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e);
+                Logger.Log(ProgramLog.Categories.Web, e);
             }
         }
     }

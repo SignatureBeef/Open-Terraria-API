@@ -60,7 +60,7 @@ namespace OTA.Command
                 else
                 {
                     //Console.ForegroundColor = FromColor(R, G, B);
-                    ProgramLog.Log(message, FromColor(R, G, B));
+                    Logger.Info(message, FromColor(R, G, B));
                     Console.ForegroundColor = DefaultColour;
                 }
             }

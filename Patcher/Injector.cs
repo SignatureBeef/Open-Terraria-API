@@ -1517,7 +1517,8 @@ namespace OTA.Patcher
             foreach (var oci in cwi)
             {
                 var mr = oci.Operand as MethodReference;
-                var writeline = API.ProgramLog.Methods.First(m => m.Name == "BareLog"
+
+                var writeline = API.Logger.Methods.First(m => m.Name == "Vanilla"
                                     && CecilMethodExtensions.CompareParameters(m.Parameters, mr.Parameters));
                 oci.Operand = _asm.MainModule.Import(writeline);
             }

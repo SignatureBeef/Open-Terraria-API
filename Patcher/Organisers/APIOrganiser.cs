@@ -114,10 +114,10 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "Tools"); }
         }
 
-        public TypeDefinition ProgramLog
+        public TypeDefinition Logger
         {
             get
-            { return _asm.MainModule.Types.Single(x => x.Name == "ProgramLog"); }
+            { return _asm.MainModule.Types.Single(x => x.Name == "Logger"); }
         }
 
         public TypeDefinition WorldFileCallback

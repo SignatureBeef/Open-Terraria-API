@@ -14,6 +14,7 @@ using OTA.Logging;
 using Terraria;
 using Terraria.Net.Sockets;
 using Terraria.Net;
+
 #else
 using OTA.Callbacks;
 #endif
@@ -240,15 +241,15 @@ namespace OTA.Sockets
                 var cbOffset = _callback == null ? "<null>" : _callback.Offset.ToString();
                 var cbSize = _callback == null ? "<null>" : _callback.Size.ToString();
 
-                ProgramLog.Error.Log("Read exception caught.");
-                ProgramLog.Error.Log("Debug Values: {0},{1},{2},{3},{4}", buffLength, callbackExists, cbBufferExists, cbOffset, cbSize);
-                ProgramLog.Error.Log("Error: {0}", e);
+                Logger.Error("Read exception caught.");
+                Logger.Error("Debug Values: {0},{1},{2},{3},{4}", buffLength, callbackExists, cbBufferExists, cbOffset, cbSize);
+                Logger.Error("Error: {0}", e);
             }
         }
 
         protected override void HandleClosure(SocketError err)
         {
-            ProgramLog.Users.Log("{0}: connection closed ({1}).", RemoteAddress, err);
+            Logger.Log(ProgramLog.Categories.User, TraceLevel.Info, "{0}: connection closed ({1}).", RemoteAddress, err);
             _isReceiving = false;
 
             //Issue a 0 byte response, Terraria will close the connection :)

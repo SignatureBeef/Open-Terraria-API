@@ -178,14 +178,14 @@ namespace OTA.Plugin
         {
         }
 
-#if ENTITY_FRAMEWORK_6
+        #if ENTITY_FRAMEWORK_6
         /// <summary>
         /// Here the first ever DbContext should be called. It is used in order for the DbContext to join OTA's database model.
         /// </summary>
         protected virtual void DatabaseInitialising(System.Data.Entity.DbModelBuilder builder)
         {
         }
-#endif
+        #endif
 
         /// <summary>
         /// Called upon the database being created and ready for default values if required.
@@ -274,7 +274,7 @@ namespace OTA.Plugin
                 }
                 catch (Exception e)
                 {
-                    ProgramLog.Log(e, "Exception while enabling plugin " + Name);
+                    Logger.Log(e, "Exception while enabling plugin " + Name);
                     return false;
                 }
             }
@@ -291,7 +291,7 @@ namespace OTA.Plugin
                 }
                 catch (Exception e)
                 {
-                    ProgramLog.Log(e, "Exception while disabling plugin " + Name);
+                    Logger.Log(e, "Exception while disabling plugin " + Name);
                     return false;
                 }
             }
@@ -315,7 +315,7 @@ namespace OTA.Plugin
         {
             if (initialized)
             {
-                ProgramLog.Error.Log("Double initialize of plugin {0}.", Name);
+                Logger.Error("Double initialize of plugin {0}.", Name);
                 return true;
             }
 
@@ -325,7 +325,7 @@ namespace OTA.Plugin
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception in initialization handler of plugin " + Name);
+                Logger.Log(e, "Exception in initialization handler of plugin " + Name);
                 return false;
             }
 
@@ -371,7 +371,7 @@ namespace OTA.Plugin
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception while saving plugin state of " + Name);
+                Logger.Log(e, "Exception while saving plugin state of " + Name);
                 return null;
             }
         }
@@ -385,7 +385,7 @@ namespace OTA.Plugin
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception while saving plugin state of " + Name);
+                Logger.Log(e, "Exception while saving plugin state of " + Name);
                 return false;
             }
         }
@@ -403,7 +403,7 @@ namespace OTA.Plugin
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception in disposal handler of plugin " + Name);
+                Logger.Log(e, "Exception in disposal handler of plugin " + Name);
                 result = false;
             }
 
@@ -424,7 +424,7 @@ namespace OTA.Plugin
 
             if (this.hooks.Count > 0)
             {
-                ProgramLog.Error.Log("Warning: failed to clean up {0} hooks of plugin {1}.", this.hooks.Count, Name);
+                Logger.Warning("Failed to clean up {0} hooks of plugin {1}.", this.hooks.Count, Name);
                 this.hooks.Clear();
             }
 
@@ -454,7 +454,7 @@ namespace OTA.Plugin
                             if (saveState)
                                 savedState = Suspend();
 
-                            ProgramLog.Debug.Log("Initializing new plugin instance...");
+                            Logger.Debug("Initializing new plugin instance...");
                             if (!newPlugin.Initialize(savedState))
                             {
                                 if (saveState)
@@ -479,7 +479,7 @@ namespace OTA.Plugin
                             // in the exact same spots in the invocation chains
                             lock (newPlugin.desiredHooks)
                             {
-                                ProgramLog.Debug.Log("Replacing hooks...");
+                                Logger.Debug("Replacing hooks...");
 
                                 foreach (var h in newPlugin.desiredHooks)
                                 {
@@ -497,10 +497,10 @@ namespace OTA.Plugin
                                 }
                             }
 
-                            ProgramLog.Debug.Log("Disabling old plugin instance...");
+                            Logger.Debug("Disabling old plugin instance...");
                             Disable();
 
-                            ProgramLog.Debug.Log("Enabling new plugin instance...");
+                            Logger.Debug("Enabling new plugin instance...");
                             if (newPlugin.Enable())
                             {
                                 result = true;
@@ -514,7 +514,7 @@ namespace OTA.Plugin
                         // clean up remaining hooks
                         if (noreturn)
                         {
-                            ProgramLog.Debug.Log("Disposing of old plugin instance...");
+                            Logger.Debug("Disposing of old plugin instance...");
                             Dispose();
                         }
                     }
@@ -567,7 +567,7 @@ namespace OTA.Plugin
                     hook.Pause(signal);
                 }
 
-                ProgramLog.Debug.Log("Plugin {0} commands paused...", plugin.Name ?? "???");
+                Logger.Debug("Plugin {0} commands paused...", plugin.Name ?? "???");
 
                 // wait for hooks that may have already been running to finish
                 var pausing = new LinkedList<HookPoint>(plugin.hooks);
@@ -596,12 +596,12 @@ namespace OTA.Plugin
                     }
                 }
 
-                ProgramLog.Debug.Log("Plugin {0} hooks paused...", plugin.Name ?? "???");
+                Logger.Debug("Plugin {0} hooks paused...", plugin.Name ?? "???");
             }
 
             public void Dispose()
             {
-                ProgramLog.Debug.Log("Unpausing everything related to plugin {0}...", plugin.Name ?? "???");
+                Logger.Debug("Unpausing everything related to plugin {0}...", plugin.Name ?? "???");
 
                 var ctx = new HookContext();
                 var args = new HookArgs.PluginPauseComplete()
@@ -634,14 +634,14 @@ namespace OTA.Plugin
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception in world load handler of plugin " + Name);
+                Logger.Log(e, "Exception in world load handler of plugin " + Name);
                 return false;
             }
 
             return true;
         }
 
-#if ENTITY_FRAMEWORK_6
+        #if ENTITY_FRAMEWORK_6
         internal bool NotifyDatabaseInitialising(System.Data.Entity.DbModelBuilder builder)
         {
             try
@@ -656,7 +656,7 @@ namespace OTA.Plugin
 
             return true;
         }
-#endif
+        #endif
 
         internal bool NotifyDatabaseCreated()
         {
@@ -666,7 +666,7 @@ namespace OTA.Plugin
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Exception in database created handler of plugin " + Name);
+                Logger.Log(e, "Exception in database created handler of plugin " + Name);
                 return false;
             }
 

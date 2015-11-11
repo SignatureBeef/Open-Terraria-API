@@ -176,7 +176,7 @@ namespace OTA.Plugin
                     var plugin = kv.Value;
                     if (plugin.OTAVersion.Minor != Globals.Version.Minor) //At this stage all plugins should be the same Major.
                     {
-                        ProgramLog.Error.Log($"[WARNING] Plugin {plugin.Name} may not work correctly as it is built for version {plugin.OTAVersion.ToString()}");
+                        Logger.Warning($"Plugin {plugin.Name} may not work correctly as it is built for version {plugin.OTAVersion.ToString()}");
                     }
                 }
             }
@@ -211,7 +211,7 @@ namespace OTA.Plugin
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e);
+                Logger.Log(e);
             }
         }
 
@@ -282,7 +282,7 @@ namespace OTA.Plugin
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Error loading plugin assembly " + PluginPath);
+                Logger.Log(e, "Error loading plugin assembly " + PluginPath);
             }
 
             return null;
@@ -333,13 +333,13 @@ namespace OTA.Plugin
             if (errors != null)
             {
                 if (errors.HasErrors)
-                    ProgramLog.Error.Log("Failed to compile source plugin:");
+                    Logger.Error("Failed to compile source plugin:");
                 foreach (System.CodeDom.Compiler.CompilerError error in errors)
                 {
                     if (error.IsWarning)
-                        ProgramLog.BareLog(ProgramLog.Debug, error.ToString());
+                        Logger.Debug(error.ToString());
                     else
-                        ProgramLog.BareLog(ProgramLog.Error, error.ToString());
+                        Logger.Error(error.ToString());
                 }
                 if (errors.HasErrors)
                     return null;
@@ -377,29 +377,29 @@ namespace OTA.Plugin
             {
                 if (ext == ".dll")
                 {
-                    ProgramLog.Plugin.Log("Loading plugin from {0}.", fileInfo.Name);
+                    Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Loading plugin from {0}.", fileInfo.Name);
                     plugin = LoadPluginFromDLL(file);
 
                     if (null == plugin)
                     {
-                        ProgramLog.Error.Log("Failed to load {0}.", fileInfo.Name);
+                        Logger.Error("Failed to load {0}.", fileInfo.Name);
                     }
                 }
                 else if (ext == ".cs")
                 {
-                    ProgramLog.Plugin.Log("Compiling and loading plugin from {0}.", fileInfo.Name);
+                    Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Compiling and loading plugin from {0}.", fileInfo.Name);
                     plugin = LoadSourcePlugin(file);
 
                     if (null == plugin)
                     {
-                        ProgramLog.Error.Log("Failed to load {0}.", fileInfo.Name);
+                        Logger.Error("Failed to load {0}.", fileInfo.Name);
                     }
                 }
                 else if (ext == ".lua")
                 {
                     if (!_enableLUA)
                         _enableLUA = true;
-                    ProgramLog.Plugin.Log("Loading plugin from {0}.", fileInfo.Name);
+                    Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Loading plugin from {0}.", fileInfo.Name);
                     plugin = new LUAPlugin();
                 }
             }
@@ -411,12 +411,12 @@ namespace OTA.Plugin
                 //  - If the major is not the same then it will most likey cause problems
                 if (plugin.OTAVersion == null)
                 {
-                    ProgramLog.Plugin.Log("Cannot load plugin {0} as it does not specify an OTAVersionAtrribute.", plugin.Name);
+                    Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Cannot load plugin {0} as it does not specify an OTAVersionAtrribute.", plugin.Name);
                     return null;
                 }
                 else if (plugin.OTAVersion.Major != Globals.Version.Major)
                 {
-                    ProgramLog.Plugin.Log("Cannot load plugin {0} as it is not supported by this version.", plugin.Name);
+                    Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Cannot load plugin {0} as it is not supported by this version.", plugin.Name);
                     return null;
                 }
 
@@ -478,12 +478,12 @@ namespace OTA.Plugin
             if (fi.LastWriteTimeUtc > oldPlugin.PathTimestamp)
             {
                 // plugin updated
-                ProgramLog.Plugin.Log("Plugin {0} is being updated from file.", oldPlugin.Name);
+                Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Plugin {0} is being updated from file.", oldPlugin.Name);
                 newPlugin = LoadPluginFromPath(oldPlugin.Path);
             }
             else
             {
-                ProgramLog.Plugin.Log("Plugin {0} not updated, reinitializing.", oldPlugin.Name);
+                Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Plugin {0} not updated, reinitializing.", oldPlugin.Name);
                 newPlugin = CreatePluginInstance(oldPlugin.GetType());
                 newPlugin.Path = oldPlugin.Path;
                 newPlugin.PathTimestamp = oldPlugin.PathTimestamp;
@@ -692,14 +692,14 @@ namespace OTA.Plugin
         {
             if (!plugin.InitializeAndHookUp())
             {
-                ProgramLog.Plugin.Log("Failed to initialize new plugin instance.", Color.DodgerBlue);
+                Logger.Error("Failed to initialize new plugin instance.", Color.DodgerBlue);
             }
 
             _plugins.Add(plugin.Name.ToLower().Trim(), plugin);
 
             if (!plugin.Enable())
             {
-                ProgramLog.Plugin.Log("Failed to enable new plugin instance.", Color.DodgerBlue);
+                Logger.Error("Failed to enable new plugin instance.", Color.DodgerBlue);
             }
         }
 
@@ -714,13 +714,13 @@ namespace OTA.Plugin
 
             if (rPlg == null)
             {
-                ProgramLog.Error.Log("Plugin failed to load!");
+                Logger.Error("Plugin failed to load!");
                 return PluginLoadStatus.FAIL_LOAD;
             }
 
             if (!rPlg.InitializeAndHookUp())
             {
-                ProgramLog.Error.Log("Failed to initialize plugin.");
+                Logger.Error("Failed to initialize plugin.");
                 return PluginLoadStatus.FAIL_INIT;
             }
 
@@ -728,7 +728,7 @@ namespace OTA.Plugin
 
             if (!rPlg.Enable())
             {
-                ProgramLog.Error.Log("Failed to enable plugin.");
+                Logger.Error("Failed to enable plugin.");
                 return PluginLoadStatus.FAIL_ENABLE;
             }
 
