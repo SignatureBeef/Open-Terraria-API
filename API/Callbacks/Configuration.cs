@@ -97,6 +97,19 @@ namespace OTA.Callbacks
         /// <param name="file">File.</param>
         public static void Load(string file)
         {
+            var lctx = new HookContext();
+            var largs = new HookArgs.LoadConfigurationFile()
+            {
+                File = file
+            };
+
+            HookPoints.LoadConfigurationFile.Invoke(ref lctx, ref largs);
+
+            if (lctx.Result == HookResult.IGNORE)
+                return;
+
+            file = largs.File;
+
             ConfigUpdater.SourceFile = file;
             if (File.Exists(file))
                 using (var sr = new StreamReader(file))

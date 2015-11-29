@@ -307,6 +307,7 @@
     <Compile Include="Logging\External\ILogger.cs" />
     <Compile Include="Logging\External\Logger.cs" />
     <Compile Include="Logging\DefaultLogger.cs" />
+    <Compile Include="Plugin\Hooks\Multi\LoadConfigurationFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
