@@ -21,6 +21,7 @@ namespace OTA.Callbacks
     /// <remarks>TODO: Split these out into their relevant callback classes
     public static class VanillaHooks
     {
+        #if SERVER
         /// <summary>
         /// The call from vanilla code when a player is entering the world/game
         /// </summary>
@@ -69,7 +70,8 @@ namespace OTA.Callbacks
             ctx.SetResult(HookResult.DEFAULT, false);
             HookPoints.PlayerLeftGame.Invoke(ref ctx, ref args);
             #endif
-        }
+    }
+        #endif
 
         /// <summary>
         /// The replacement call for greeting a player
@@ -77,7 +79,7 @@ namespace OTA.Callbacks
         /// <param name="playerId">Player identifier.</param>
         public static bool OnGreetPlayer(int playerId)
         {
-            #if Full_API
+            #if Full_API && SERVER
             var player = Main.player[playerId];
 
             var ctx = new HookContext

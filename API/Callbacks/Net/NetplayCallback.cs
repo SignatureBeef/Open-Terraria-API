@@ -26,7 +26,7 @@ namespace OTA.Callbacks
         /// <param name="state">State.</param>
         public static void StartServer(object state)
         {
-#if Full_API
+#if Full_API && SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -65,7 +65,7 @@ namespace OTA.Callbacks
         /// </summary>
         public static bool Initialise()
         {
-            #if Full_API
+            #if Full_API && SERVER
             if (Terraria.Main.dedServ)
             {
                 var ctx = new HookContext()
@@ -93,6 +93,7 @@ namespace OTA.Callbacks
             #endif
         }
 
+        #if SERVER
         public static bool OnAddBanBegin(int player)
         {
             var ctx = new HookContext();
@@ -118,5 +119,6 @@ namespace OTA.Callbacks
 
             HookPoints.AddBan.Invoke(ref ctx, ref args);
         }
+        #endif
     }
 }

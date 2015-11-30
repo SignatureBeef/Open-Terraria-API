@@ -38,7 +38,7 @@ namespace OTA.Patcher
         static void Main(string[] args)
         {
             //By default we will patch a server
-            OTAPatcher.PatchMode = PatchMode.Client;
+            OTAPatcher.PatchMode = SupportType.Client;
 
             //Specifiy the official file name
             OTAPatcher.InputFileName = "Terraria.exe";
@@ -437,6 +437,7 @@ namespace OTA.Patcher
                             Copy(new DirectoryInfo(Path.Combine(root.FullName, OTAProjectDirectory)), "API", Environment.CurrentDirectory, "OTA", true);
                         }
                     }
+                    Copy(root, "Official", Environment.CurrentDirectory, "Terraria", false);
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()

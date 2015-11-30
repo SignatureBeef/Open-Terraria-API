@@ -99,6 +99,7 @@ namespace OTA.Callbacks
         }
         #endif
 
+        #if SERVER
         public static bool OnNameCollision(Terraria.Player connectee, int bufferId)
         {
             var ctx = new HookContext();
@@ -114,6 +115,7 @@ namespace OTA.Callbacks
 
             return ctx.Result == HookResult.DEFAULT; //Continue on to kicking
         }
+        #endif
     }
 }
 

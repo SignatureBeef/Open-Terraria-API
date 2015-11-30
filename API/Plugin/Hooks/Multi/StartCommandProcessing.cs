@@ -1,4 +1,4 @@
-﻿#if SERVER
+﻿#if SERVER || CLIENT
 using System;
 
 namespace OTA.Plugin

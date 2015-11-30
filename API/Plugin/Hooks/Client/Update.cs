@@ -10,7 +10,7 @@ namespace OTA.Plugin
 
     public static partial class HookPoints
     {
-        public static readonly HookPoint<HookArgs.Update> Update = HookPoint<HookArgs.Update>();
+        public static readonly HookPoint<HookArgs.Update> Update = new HookPoint<HookArgs.Update>();
     }
 }
 #endif

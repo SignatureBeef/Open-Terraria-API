@@ -208,6 +208,7 @@ namespace OTA.Callbacks
             }
 #endif
 
+            #if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -217,6 +218,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.Stopping)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
+            #endif 
 
             PluginManager.DisablePlugins();
 
@@ -230,7 +232,7 @@ namespace OTA.Callbacks
         /// <remarks>This could have been in the XNA shims, but the client uses FNA/XNA and if our client is to work they require CIL modifications</remarks>
         public static void Initialise()
         {
-#if Full_API
+#if Full_API && SERVER
             if (Terraria.Main.dedServ)
             {
                 var ctx = new HookContext()
@@ -248,7 +250,7 @@ namespace OTA.Callbacks
 
         public static void OnServerTick()
         {
-#if Full_API
+#if Full_API && SERVER
             if (Terraria.Netplay.anyClients)
             {
                 for (var i = 0; i < Terraria.Netplay.Clients.Length; i++)
@@ -270,12 +272,15 @@ namespace OTA.Callbacks
 #endif
         }
 
+        #if SERVER
         //        private static DateTime? _lastUpdate;
         public static void OnUpdateServerBegin()
         {
+            #if SERVER
             var ctx = HookContext.Empty;
             var args = HookArgs.ServerUpdate.Begin;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
+            #endif
         }
 
         /// <summary>
@@ -290,6 +295,7 @@ namespace OTA.Callbacks
             var args = HookArgs.ServerUpdate.End;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
         }
+        #endif
 
         public static void OnUpdateBegin()
         {
@@ -315,6 +321,7 @@ namespace OTA.Callbacks
             Terraria.Main.statusText = String.Empty;
 #endif
 
+            #if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -324,6 +331,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.WorldLoading)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
+            #endif
         }
 
         /// <summary>
@@ -336,6 +344,7 @@ namespace OTA.Callbacks
             Terraria.Main.statusText = String.Empty;
 #endif
 
+            #if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -345,6 +354,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.WorldLoaded)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
+            #endif
         }
 
         /// <summary>
@@ -358,6 +368,7 @@ namespace OTA.Callbacks
             Terraria.Main.statusText = String.Empty;
 #endif
 
+            #if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -367,6 +378,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.WorldGenerating)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
+            #endif
         }
 
         /// <summary>
@@ -379,6 +391,7 @@ namespace OTA.Callbacks
             Terraria.Main.statusText = String.Empty;
 #endif
 
+            #if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -388,6 +401,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.WorldGenerated)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
+            #endif
         }
 
         //private static int _textTimeout = 0;
@@ -461,34 +475,6 @@ namespace OTA.Callbacks
             };
 
             HookPoints.Draw.Invoke(ref ctx, ref args);
-        }
-
-        /// <summary>
-        /// The first call from Terraria.Main.Update
-        /// </summary>
-        public static void OnUpdateBegin()
-        {
-            var ctx = HookContext.Empty;
-            var args = new HookArgs.Update()
-            {
-                State = MethodState.Begin
-            };
-
-            HookPoints.Update.Invoke(ref ctx, ref args);
-        }
-
-        /// <summary>
-        /// The end call from Terraria.Main.Update
-        /// </summary>
-        public static void OnUpdateEnd()
-        {
-            var ctx = HookContext.Empty;
-            var args = new HookArgs.Update()
-            {
-                State = MethodState.End
-            };
-
-            HookPoints.Update.Invoke(ref ctx, ref args);
         }
 
         /// <summary>

@@ -114,13 +114,15 @@ namespace OTA.Sockets
             {
                 Connection = this
             };
-            
+
+            #if SERVER
             var args = new HookArgs.NewConnection();
             
             HookPoints.NewConnection.Invoke(ref ctx, ref args);
 
             if (ctx.CheckForKick())
                 return;
+            #endif
 
             _isReceiving = true; //The connection was established, so we can begin reading
         }
