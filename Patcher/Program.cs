@@ -23,7 +23,7 @@ namespace OTA.Patcher
             OTAPatcher.OutputName = "TerrariaServer";
 
             //Debugging :)
-            OTAPatcher.CopyProjectFiles = true;
+            OTAPatcher.CopyProjectFiles = args != null && args.Where(x => x == "-projectfiles").Count() > 0;
 
             //Allow auto running
             OTAPatcher.PromptToRun = true;
@@ -34,7 +34,8 @@ namespace OTA.Patcher
             OTAPatcher.DefaultProcess(args);
         }
 
-        #elif CLIENT
+        
+#elif CLIENT
         static void Main(string[] args)
         {
             //By default we will patch a server
@@ -47,7 +48,7 @@ namespace OTA.Patcher
             OTAPatcher.OutputName = "Terraria";
 
             //Debugging :)
-            OTAPatcher.CopyProjectFiles = true;
+            OTAPatcher.CopyProjectFiles = args != null && args.Where(x => x == "-projectfiles").Count() > 0;
 
             //Allow auto running
             OTAPatcher.PromptToRun = true;
@@ -57,7 +58,7 @@ namespace OTA.Patcher
 
             OTAPatcher.DefaultProcess(args);
         }
-#endif
+        #endif
 
         //        public static void Main(string[] args)
         //        {
@@ -90,7 +91,7 @@ namespace OTA.Patcher
 
 
 
-#elif SERVER
+        #elif SERVER
         private const String FolderKind = "Server";
         #endif
 
@@ -296,41 +297,44 @@ namespace OTA.Patcher
                 root = new DirectoryInfo(SolutionDirectory);
             }
 
-            if (null == root)
+            if (CopyProjectFiles)
             {
-                root = new DirectoryInfo(Environment.CurrentDirectory);
-                while (root.GetDirectories().Where(x => x.Name == "Patcher").Count() == 0)
-                {
-                    if (root.Parent == null)
-                    {
-                        if (String.IsNullOrEmpty(OTAProjectDirectory))
-                        {
-                            Console.WriteLine("Failed to find root project directory");
-                            Environment.Exit(1);
-                            return;
-                        }
-                        break;
-                    }
-                    root = root.Parent;
-                }
-
-                if (!String.IsNullOrEmpty(OTAProjectDirectory))
+                if (null == root)
                 {
                     root = new DirectoryInfo(Environment.CurrentDirectory);
-                    while (root.GetDirectories().Where(x => x.Name == OTAProjectDirectory).Count() == 0)
+                    while (root.GetDirectories().Where(x => x.Name == "Patcher").Count() == 0)
                     {
                         if (root.Parent == null)
                         {
-                            Console.WriteLine("Failed to find root project directory using hint: " + OTAProjectDirectory);
-                            Environment.Exit(1);
-                            return;
+                            if (String.IsNullOrEmpty(OTAProjectDirectory))
+                            {
+                                Console.WriteLine("Failed to find root project directory");
+                                Environment.Exit(1);
+                                return;
+                            }
+                            break;
                         }
                         root = root.Parent;
                     }
-                }
-            }
 
-            Console.WriteLine("Root directory: " + root.FullName);
+                    if (!String.IsNullOrEmpty(OTAProjectDirectory))
+                    {
+                        root = new DirectoryInfo(Environment.CurrentDirectory);
+                        while (root.GetDirectories().Where(x => x.Name == OTAProjectDirectory).Count() == 0)
+                        {
+                            if (root.Parent == null)
+                            {
+                                Console.WriteLine("Failed to find root project directory using hint: " + OTAProjectDirectory);
+                                Environment.Exit(1);
+                                return;
+                            }
+                            root = root.Parent;
+                        }
+                    }
+                }
+
+                Console.WriteLine("Root directory: " + root.FullName);
+            }
 
             if (PatchMode == SupportType.Server)
             {
