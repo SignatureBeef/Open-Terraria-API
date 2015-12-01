@@ -1,13 +1,14 @@
 using OTA.Plugin;
 using OTA.Command;
+using OTA.Logging;
 
 namespace BareBones
 {
+	[OTAVersion(1, 0)]
     public class YourPlugin : BasePlugin
     {
         public YourPlugin()
         {
-            this.TDSMBuild = 1;
             this.Version = "1";
             this.Author = "TDSM";
             this.Name = "Simple name";
@@ -16,22 +17,11 @@ namespace BareBones
 
         protected override void Initialized(object state)
         {
-            AddCommand("commandname")
-                .WithAccessLevel(AccessLevel.PLAYER)
-                .WithDescription("My command description")
-                .WithHelpText("<name>")
-                .WithHelpText("<something else> <maybe more>")
-                .WithPermissionNode("BareBones.commandname")
-                .Calls(MyCustomCommandCallback);
-        }
-
-        void MyCustomCommandCallback(ISender sender, ArgumentList args)
-        {
-            //Your implementation
+			ProgramLog.Plugin.Log ("Your plugin is initialising");
         }
 
         [Hook(HookOrder.NORMAL)]
-        void MyFunctionNameThatDoesntMatter(ref HookContext ctx, ref HookArgs.PlayerEnteredGame args)
+        void MyFunctionNameThatDoesntMatter(ref HookContext ctx, ref HookArgs.NpcKilled args)
         {
             //Your implementation
         }

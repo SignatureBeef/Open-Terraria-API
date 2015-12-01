@@ -1,9 +1,9 @@
 ﻿Imports OTA.Command
 Imports OTA.Plugin
 
+<OTAVersion(1, 0)>
 Public Class YourPlugin : Inherits BasePlugin
     Public Sub New()
-        MyBase.TDSMBuild = 1
         MyBase.Version = "1"
         MyBase.Author = "TDSM"
         MyBase.Name = "Simple name"
@@ -11,17 +11,7 @@ Public Class YourPlugin : Inherits BasePlugin
     End Sub
 
     Protected Overrides Sub Initialized(state As Object)
-        AddCommand("commandname") _
-        .WithAccessLevel(AccessLevel.PLAYER) _
-        .WithDescription("My command description") _
-        .WithHelpText("<name>") _
-        .WithHelpText("<something else> <maybe more>") _
-        .WithPermissionNode("BareBones.commandname") _
-        .Calls(AddressOf MyCustomCommandCallback)
-    End Sub
-
-    Sub MyCustomCommandCallback(sender As ISender, args As ArgumentList)
-        'Your implementation
+    	ProgramLog.Plugin.Log ("Your plugin is initialising")
     End Sub
 
     <Hook(HookOrder.NORMAL)> _

@@ -3,12 +3,14 @@
 open System
 open OTA.Plugin
 open OTA.Command
+open OTA.Logging
+open Terraria
 
+[<OTAVersion(1, 0)>]
 type Class1() =
     inherit BasePlugin()
     
     do
-        base.TDSMBuild <- 1
         base.Version <- "1"
         base.Author <- "TDSM"
         base.Name <- "Simple name"
@@ -16,22 +18,13 @@ type Class1() =
         
     override this.Initialized(state) =
         do
-            this.AddCommand("commandname")
-                .WithAccessLevel(AccessLevel.PLAYER)
-                .WithDescription("My command description")
-                .WithHelpText("<name>")
-                .WithHelpText("<something else> <maybe more>")
-                .WithPermissionNode("BareBones.commandname")
-                .Calls(new Action<ISender, ArgumentList>(this.MyCustomCommandCallback))
-                |> ignore
+            ProgramLog.Plugin.Log("Your plugin is initialising")
+            |> ignore
         |> ignore
-    
-    member this.MyCustomCommandCallback(sender:ISender)(args:ArgumentList) =
-        sender.Message("Hello from F#")
 
     
     [<Hook(HookOrder.NORMAL)>]
-    member this.MyFunctionNameThatDoesntMatter(ctx: HookContext byref, args: HookArgs.PlayerEnteredGame byref) =
+    member this.MyFunctionNameThatDoesntMatter(ctx: HookContext byref, args: HookArgs.PlayerKilled byref) =
         do
             //Your implementation
             ctx.Player.SendMessage("Hello from F#", Microsoft.Xna.Framework.Color.Green)
