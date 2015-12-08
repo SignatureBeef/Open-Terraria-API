@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if CLIENT
+using System;
 
 namespace OTA.Client.Npc
 {
@@ -9,4 +10,4 @@ namespace OTA.Client.Npc
         public int TypeId { get; set; }
     }
 }
-
+#endif

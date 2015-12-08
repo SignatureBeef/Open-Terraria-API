@@ -172,7 +172,6 @@ namespace OTA.Patcher.Organisers
         }
 
         #if CLIENT
-
         public TypeDefinition NpcModRegister
         {
             get

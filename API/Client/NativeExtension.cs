@@ -1,10 +1,11 @@
-﻿using System;
+﻿#if CLIENT
+using System;
 
 namespace OTA.Client
 {
     public interface INativeMod
     {
-        
+
     }
 
     [AttributeUsage(AttributeTargets.Class)]
@@ -18,4 +19,4 @@ namespace OTA.Client
         }
     }
 }
-
+#endif

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if CLIENT
+using System;
 using OTA.Plugin;
 using OTA.Client.Npc;
 
@@ -178,4 +179,4 @@ namespace OTA.Client
         //            }
     }
 }
-
+#endif

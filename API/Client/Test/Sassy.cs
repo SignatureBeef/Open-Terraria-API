@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if CLIENT
+using System;
 using OTA.Client.Npc;
 
 namespace OTA.Client.Test
@@ -24,4 +25,4 @@ namespace OTA.Client.Test
         }
     }
 }
-
+#endif

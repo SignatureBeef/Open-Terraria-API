@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if CLIENT
+using System;
 using OTA.Plugin;
 using Terraria;
 using System.IO;
@@ -12,7 +13,7 @@ namespace OTA.Client.Npc
 
         public OTANpc()
         {
-            
+
         }
 
         public virtual bool OnAI()
@@ -150,9 +151,9 @@ namespace OTA.Client.Npc
                 Array.Resize(ref NPC.killCount, length);
                 Array.Resize(ref Main.NPCLoaded, length);
                 Array.Resize(ref Main.npcName, length);
-                #if CLIENT
+#if CLIENT
                 Array.Resize(ref Main.npcTexture, length);
-                #endif
+#endif
 
                 Array.Resize(ref Terraria.GameContent.UI.EmoteBubble.CountNPCs, length);
 
@@ -175,4 +176,4 @@ namespace OTA.Client.Npc
         #endregion
     }
 }
-
+#endif

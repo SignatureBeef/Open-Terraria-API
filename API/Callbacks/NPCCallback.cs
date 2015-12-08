@@ -385,6 +385,7 @@ namespace OTA.Callbacks
             return npc;
         }
 
+        #if CLIENT
         public static bool OnDrawNPCBegin(Terraria.Main game, int i, bool behindTiles)
         {
             var ctx = new HookContext();
@@ -513,5 +514,6 @@ namespace OTA.Callbacks
 
             return (ctx.ResultParam as string) ?? npc.GetChatDirect();
         }
+        #endif
     }
 }

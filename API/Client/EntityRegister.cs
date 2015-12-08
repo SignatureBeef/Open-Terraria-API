@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if CLIENT
+using System;
 using System.Collections.Concurrent;
 using OTA.Client.Npc;
 using System.Linq;
@@ -37,3 +38,4 @@ namespace OTA.Client
         }
     }
 }
+#endif

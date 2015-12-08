@@ -36,6 +36,7 @@ namespace OTA.Patcher
             method.Wrap(cbkBegin, cbkEnd, true);
         }
 
+        #if CLIENT
         [OTAPatch(SupportType.Client, "Allowing custom NPC's to be drawn")]
         private void AllowMoreNPCDrawing()
         {
@@ -47,6 +48,7 @@ namespace OTA.Patcher
             ldLoc_540.OpCode = OpCodes.Ldsfld;
             ldLoc_540.Operand = Terraria.Import(replacement);
         }
+        #endif
 
         [OTAPatch(SupportType.Client, "Hooking Npc texture loading")]
         private void HookNpcLoad()
