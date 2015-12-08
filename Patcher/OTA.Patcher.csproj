@@ -92,6 +92,7 @@
     <Compile Include="OTAPatchAttribute.cs" />
     <Compile Include="SupportType.cs" />
     <Compile Include="ConsoleHelper.cs" />
+    <Compile Include="Hooks\GameHooks.cs" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">

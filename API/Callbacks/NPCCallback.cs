@@ -367,5 +367,151 @@ namespace OTA.Callbacks
 
             return args.Start;
         }
+
+        public static Terraria.NPC OnNewNpc(int type)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NewNpc()
+            {
+                Type = type
+            };
+
+            HookPoints.NewNpc.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is Terraria.NPC) return (Terraria.NPC)ctx.ResultParam;
+
+            var npc = new Terraria.NPC();
+            npc.SetDefaults(type, -1);
+            return npc;
+        }
+
+        public static bool OnDrawNPCBegin(Terraria.Main game, int i, bool behindTiles)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcDraw()
+            {
+                State = MethodState.Begin,
+
+                Npc = Terraria.Main.npc[i],
+                BehindTiles = behindTiles
+            };
+
+            HookPoints.NpcDraw.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+
+        public static void OnDrawNPCEnd(Terraria.Main game, int i, bool behindTiles)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcDraw()
+            {
+                State = MethodState.End,
+
+                Npc = Terraria.Main.npc[i],
+                BehindTiles = behindTiles
+            };
+
+            HookPoints.NpcDraw.Invoke(ref ctx, ref args);
+        }
+
+        public static bool OnUpdateNPCBegin(Terraria.NPC npc, int i)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcUpdate()
+            {
+                State = MethodState.Begin,
+
+                Npc = Terraria.Main.npc[i],
+                NpcIndex = i
+            };
+
+            HookPoints.NpcUpdate.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+
+        public static void OnUpdateNPCEnd(Terraria.NPC npc, int i)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcUpdate()
+            {
+                State = MethodState.End,
+
+                Npc = Terraria.Main.npc[i],
+                NpcIndex = i
+            };
+
+            HookPoints.NpcUpdate.Invoke(ref ctx, ref args);
+        }
+
+        public static bool OnAIBegin(Terraria.NPC npc)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcAI()
+            {
+                State = MethodState.Begin,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcAI.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+
+        public static void OnAIEnd(Terraria.NPC npc)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcAI()
+            {
+                State = MethodState.End,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcAI.Invoke(ref ctx, ref args);
+        }
+
+        public static bool OnFindFrameBegin(Terraria.NPC npc)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcFindFrame()
+            {
+                State = MethodState.Begin,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcFindFrame.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+
+        public static void OnFindFrameEnd(Terraria.NPC npc)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcFindFrame()
+            {
+                State = MethodState.End,
+
+                Npc = npc
+            };
+
+            HookPoints.NpcFindFrame.Invoke(ref ctx, ref args);
+        }
+
+        public static string OnGetChat(Terraria.NPC npc)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcGetChat()
+            {
+                Npc = npc
+            };
+
+            HookPoints.NpcGetChat.Invoke(ref ctx, ref args);
+
+            return (ctx.ResultParam as string) ?? npc.GetChatDirect();
+        }
     }
 }

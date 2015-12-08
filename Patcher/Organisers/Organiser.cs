@@ -28,6 +28,11 @@ namespace OTA.Patcher
             return _asm.MainModule.Import(methodReference);
         }
 
+        public FieldReference Import(FieldReference fieldReference)
+        {
+            return _asm.MainModule.Import(fieldReference);
+        }
+
         public void ForEachInstruction(Action<MethodDefinition, Mono.Cecil.Cil.Instruction> callback)
         {
             foreach (var type in _asm.MainModule.Types)

@@ -270,6 +270,17 @@ namespace OTA.Plugin
             {
                 try
                 {
+                    var ctx = new HookContext
+                    {
+                    };
+
+                    var args = new HookArgs.PluginEnabled
+                    {
+                        Plugin = this
+                    };
+
+                    HookPoints.PluginEnabled.Invoke(ref ctx, ref args);
+
                     Enabled();
                 }
                 catch (Exception e)

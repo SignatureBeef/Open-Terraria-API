@@ -993,19 +993,19 @@ namespace OTA.Patcher
         //    il.InsertBefore(method.Body.Instructions.Last(), il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         //}
 
-        /// <summary>
-        /// Hooks into the XNA Game.Initialize, so plugins can utilise
-        /// </summary>
-        public void HookInitialise()
-        {
-            var method = Terraria.Main.Methods.Single(x => x.Name == "Initialize");
-            var callback = API.MainCallback.Methods.First(m => m.Name == "Initialise");
-
-            var il = method.Body.GetILProcessor();
-            var first = method.Body.Instructions.First();
-
-            il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
-        }
+//        /// <summary>
+//        /// Hooks into the XNA Game.Initialize, so plugins can utilise
+//        /// </summary>
+//        public void HookInitialise()
+//        {
+//            var method = Terraria.Main.Methods.Single(x => x.Name == "Initialize");
+//            var callback = API.MainCallback.Methods.First(m => m.Name == "Initialise");
+//
+//            var il = method.Body.GetILProcessor();
+//            var first = method.Body.Instructions.First();
+//
+//            il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
+//        }
 
         /// <summary>
         /// Hooks into Terraria.Netplay.Initialize so we can fire the server starting event

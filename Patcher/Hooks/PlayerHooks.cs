@@ -192,6 +192,18 @@ namespace OTA.Patcher
             il.InsertAfter(insBrFalseS, il.Create(OpCodes.Ldarg_0));
             il.InsertAfter(insBrFalseS, il.Create(OpCodes.Ldloc_S, insPlayer));
         }
+
+        [OTAPatch(SupportType.Client, "Hooking player world enter")]
+        private void OnClientEnterWorld()
+        {
+            var vanilla = Terraria.Player.Method("EnterWorld");
+            var callback = Terraria.Import(API.Player.Method("OnClientEnterWorld"));
+            var il = vanilla.Body.GetILProcessor();
+
+            var first = vanilla.Body.Instructions.First();
+            il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
+            il.InsertBefore(first, il.Create(OpCodes.Call, callback));
+        }
     }
 }
 

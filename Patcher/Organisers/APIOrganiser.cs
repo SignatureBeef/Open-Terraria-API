@@ -170,6 +170,15 @@ namespace OTA.Patcher.Organisers
             get
             { return _asm.MainModule.Types.Single(x => x.Name == "WorldSender"); }
         }
+
+        #if CLIENT
+
+        public TypeDefinition NpcModRegister
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "NpcModRegister"); }
+        }
+        #endif
     }
 }
 

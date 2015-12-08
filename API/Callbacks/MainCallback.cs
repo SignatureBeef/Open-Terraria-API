@@ -226,26 +226,44 @@ namespace OTA.Callbacks
             ProgramLog.Close();
         }
 
+        public static void OnInitialiseBegin(Terraria.Main game)
+        {
+            #if Full_API && SERVER
+            if (Terraria.Main.dedServ)
+            {
+            var ctx = new HookContext()
+            {
+            Sender = HookContext.ConsoleSender
+            };
+            var args = new HookArgs.ServerStateChange()
+            {
+            ServerChangeState = (Globals.CurrentState = ServerState.Initialising)
+            };
+            HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
+            }
+            #elif CLIENT
+            try
+            {
+                Plugin.PluginManager.RegisterPlugin(new Client.ClientEventManager());
+            }
+            catch (Exception e)
+            {
+                ProgramLog.Log(e);
+            }
+            #endif
+        }
+
+        public static void OnInitialiseEnd(Terraria.Main game)
+        {
+
+        }
+
         /// <summary>
         /// The call from the XNA Game initialise
         /// </summary>
         /// <remarks>This could have been in the XNA shims, but the client uses FNA/XNA and if our client is to work they require CIL modifications</remarks>
         public static void Initialise()
         {
-#if Full_API && SERVER
-            if (Terraria.Main.dedServ)
-            {
-                var ctx = new HookContext()
-                {
-                    Sender = HookContext.ConsoleSender
-                };
-                var args = new HookArgs.ServerStateChange()
-                {
-                    ServerChangeState = (Globals.CurrentState = ServerState.Initialising)
-                };
-                HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
-            }
-#endif
         }
 
         public static void OnServerTick()
@@ -276,7 +294,20 @@ namespace OTA.Callbacks
         //        private static DateTime? _lastUpdate;
         public static void OnUpdateServerBegin()
         {
-            #if SERVER
+            
+
+
+
+
+
+
+
+
+
+
+
+
+#if SERVER
             var ctx = HookContext.Empty;
             var args = HookArgs.ServerUpdate.Begin;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
@@ -504,7 +535,7 @@ namespace OTA.Callbacks
 
             HookPoints.UpdateClient.Invoke(ref ctx, ref args);
         }
-#endif
+        #endif
 
         internal static void ResetTileArray()
         {
@@ -577,6 +608,31 @@ namespace OTA.Callbacks
                 Terraria.Main.startDedInput();
             }
         }
+
+        #if CLIENT
+        public static void OnLoadContentBegin()
+        {
+
+        }
+
+        public static void OnLoadContentEbd()
+        {
+
+        }
+
+        public static bool OnLoadNPC(Terraria.Main game, int i)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcLoadTexture()
+            {
+                NpcTypeId = i
+            };
+
+            HookPoints.NpcLoadTexture.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+        #endif
     }
 
     public enum MechSpawnType : int

@@ -87,10 +87,6 @@ namespace OTA.Patcher
 
         #if CLIENT
         private const String FolderKind = "Client";
-
-
-
-
         #elif SERVER
         private const String FolderKind = "Server";
         #endif
@@ -330,6 +326,7 @@ namespace OTA.Patcher
                             }
                             root = root.Parent;
                         }
+                        root = new DirectoryInfo(System.IO.Path.Combine(root.FullName, OTAProjectDirectory));
                     }
                 }
 
@@ -492,8 +489,6 @@ namespace OTA.Patcher
                 patcher.PatchSteam();
                 Console.Write("Ok\nHooking start...");
                 patcher.HookProgramStart(PatchMode);
-                Console.Write("Ok\nHooking initialise...");
-                patcher.HookInitialise();
                 patcher.HookNetplayInitialise();
                 Console.Write("Ok\nHooking into world events...");
                 patcher.HookWorldEvents();

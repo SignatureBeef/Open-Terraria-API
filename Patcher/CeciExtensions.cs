@@ -391,12 +391,12 @@ namespace OTA.Patcher
                 il.Emit(OpCodes.Pop);
         }
 
-        public static void InjectMethodEnd(this MethodDefinition method)
+        public static void InjectMethodEnd(this MethodDefinition method, bool noHandling = false)
         {
             var il = method.Body.GetILProcessor();
             //Exit the method
             //If the end call has a value, pop it for the time being
-            if (method.ReturnType.Name != "Void")
+            if (false == noHandling && method.ReturnType.Name != "Void")
             {
                 VariableDefinition vr1;
                 method.Body.Variables.Add(vr1 = new VariableDefinition("cancelDefault", method.ReturnType));
@@ -472,10 +472,13 @@ namespace OTA.Patcher
         /// <param name="method"></param>
         /// <param name="begin"></param>
         /// <param name="end"></param>
-        public static MethodDefinition Wrap(this MethodDefinition method, MethodReference begin, MethodReference end = null, bool beginIsCancellable = false)
+        public static MethodDefinition Wrap(this MethodDefinition method, MethodReference begin, 
+                                            MethodReference end = null, 
+                                            bool beginIsCancellable = false,
+                                            bool noEndHandling = false)
         {
             if (!method.HasBody) throw new InvalidOperationException("Method must have a body.");
-            if (method.ReturnType.Name == "Void")
+            if (method.ReturnType.Name == "Void" || method.ReturnType.Name == "String")
             {
                 //Create the new replacement method
                 var wrapped = new MethodDefinition(method.Name, method.Attributes, method.ReturnType);
@@ -498,12 +501,24 @@ namespace OTA.Patcher
                 var beginResult = wrapped.InjectBeginCallback(begin, instanceMethod, beginIsCancellable);
 
                 //Execute the actual code
-                var insFirstForMethod = wrapped.InjectMethodCall(method, instanceMethod);
+                var insFirstForMethod = wrapped.InjectMethodCall(method, instanceMethod, method.ReturnType.Name != "String");
                 //Set the instruction to be resumed upon not cancelling, if not already
                 if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
                 {
-                    beginResult.OpCode = OpCodes.Brtrue_S;
-                    beginResult.Operand = insFirstForMethod;
+                    if (method.ReturnType.Name == "Void")
+                    {
+                        beginResult.OpCode = OpCodes.Brtrue_S;
+                        beginResult.Operand = insFirstForMethod;
+                    }
+                    else if (method.ReturnType.Name == "String")
+                    {
+                        var il = wrapped.Body.GetILProcessor();
+
+                        //                        il.InsertBefore(beginResult, il.Create(OpCodes.
+
+                        beginResult.OpCode = OpCodes.Brtrue;
+                        beginResult.Operand = insFirstForMethod;
+                    }
                 }
 
                 if (end != null)
@@ -511,7 +526,12 @@ namespace OTA.Patcher
                     wrapped.InjectEndCallback(end, instanceMethod);
                 }
 
-                wrapped.InjectMethodEnd();
+                wrapped.InjectMethodEnd(noEndHandling);
+
+                if (method.IsVirtual)
+                {
+                    method.IsVirtual = false;
+                }
 
                 //                var xstFirst = method.Body.Instructions.First();
                 ////                var xstLast = method.Body.Instructions.Last(x => x.OpCode == OpCodes.Ret);
@@ -575,6 +595,42 @@ namespace OTA.Patcher
                 //                {
                 //
                 //                }
+
+                return wrapped;
+            }
+            else throw new NotSupportedException("Non Void methods not yet supported");
+        }
+
+        public static MethodDefinition ReplaceInstanceMethod(this MethodDefinition method, MethodReference newMethod)
+        {
+            if (!method.HasBody) throw new InvalidOperationException("Method must have a body.");
+            if (method.ReturnType.Name == "Void" || method.ReturnType.Name == "String")
+            {
+                //Create the new replacement method
+                var wrapped = new MethodDefinition(method.Name, method.Attributes, method.ReturnType);
+                var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
+
+                //Rename the existing method, and replace it
+                method.Name = method.Name + WrappedMethodNameSuffix;
+                method.ReplaceWith(wrapped);
+
+                //Copy over parameters
+                if (method.HasParameters)
+                    foreach (var prm in method.Parameters)
+                    {
+                        wrapped.Parameters.Add(prm);
+                    }
+
+                //Place the new method in the declaring type of the method we are cloning
+                method.DeclaringType.Methods.Add(wrapped);
+
+                var beginResult = wrapped.InjectBeginCallback(newMethod, instanceMethod, false);
+                beginResult.OpCode = OpCodes.Ret;
+
+                if (method.IsVirtual)
+                {
+                    method.IsVirtual = false;
+                }
 
                 return wrapped;
             }

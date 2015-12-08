@@ -26,7 +26,7 @@ namespace OTA.Patcher
             il.InsertAfter(ins, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         }
 
-        [OTAPatch(SupportType.Server, "Wrapping NPC.SetDefaults")]
+        [OTAPatch(SupportType.ClientServer, "Wrapping NPC.SetDefaults")]
         private void HookNpcSetDefaults()
         {
             var setDefaults = Terraria.NPC.Methods.Where(x => x.Name == "SetDefaults").ToArray();
@@ -42,7 +42,7 @@ namespace OTA.Patcher
             }
         }
 
-        [OTAPatch(SupportType.Server, "Wrapping NPC.netDefaults")]
+        [OTAPatch(SupportType.ClientServer, "Wrapping NPC.netDefaults")]
         private void HookNpcNetDefaults()
         {
             var setDefaults = Terraria.NPC.Methods.Single(x => x.Name == "netDefaults");
@@ -369,6 +369,107 @@ namespace OTA.Patcher
 //
 //
 //            spawnNPC.Body.OptimizeMacros();
+        }
+
+        [OTAPatch(SupportType.Client, "Hooking NPC creation")]
+        private void HookNPCCreation()
+        {
+            var method = Terraria.NPC.Method("NewNPC");
+            var replacement = API.NPCCallback.Method("OnNewNpc");
+
+            var ctor = method.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
+                           && x.Operand is MethodReference
+                           && (x.Operand as MethodReference).DeclaringType.Name == "NPC");
+
+            ctor.OpCode = OpCodes.Call;
+            ctor.Operand = Terraria.Import(replacement);
+
+            //Remove <npc>.SetDefault() as we do something custom
+            var remFrom = ctor.Next;
+            var il = method.Body.GetILProcessor();
+            while (remFrom.Next.Next.OpCode != OpCodes.Call) //Remove until TypeToNum
+            {
+                il.Remove(remFrom.Next);
+            }
+
+            //Add Type to our callback
+            il.InsertBefore(ctor, il.Create(OpCodes.Ldarg_2));
+        }
+
+        [OTAPatch(SupportType.Client, "Hooking Npc Updating")]
+        private void HookNpcUpdate()
+        {
+            var method = Terraria.NPC.Method("UpdateNPC");
+
+            var apiMatch = API.NPCCallback.Methods.Where(x => x.Name.StartsWith("OnUpdateNPC"));
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnInitialise Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            method.Wrap(cbkBegin, cbkEnd, true);
+        }
+
+        [OTAPatch(SupportType.Client, "Hooking Npc AI")]
+        private void HookNpcAI()
+        {
+            var method = Terraria.NPC.Method("AI");
+
+            var apiMatch = API.NPCCallback.Methods.Where(x => x.Name.StartsWith("OnAI"));
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnAI Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            method.Wrap(cbkBegin, cbkEnd, true);
+        }
+
+        [OTAPatch(SupportType.Client, "Hooking Npc FindFrame")]
+        private void HookNpcFindFrame()
+        {
+            var method = Terraria.NPC.Method("FindFrame");
+
+            var apiMatch = API.NPCCallback.Methods.Where(x => x.Name.StartsWith("OnFindFrame"));
+            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnFindFrame Begin/End calls in the API");
+
+            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+
+            method.Wrap(cbkBegin, cbkEnd, true);
+        }
+
+        [OTAPatch(SupportType.Client, "Altering NPC.FindFrame", 50)]
+        private void HookAlterNpcFindFrame()
+        {
+            var method = Terraria.NPC.Method("FindFrame");
+
+            //Include a IsTownNPC flag
+            var isTownNpc = new FieldDefinition("IsTownNpc", FieldAttributes.Public, Terraria.TypeSystem.Boolean);
+            Terraria.NPC.Fields.Add(isTownNpc);
+
+            var typeCmp = method.Body.Instructions.First(x => x.OpCode == OpCodes.Ldfld
+                              && x.Operand is FieldReference
+                              && (x.Operand as FieldReference).Name == "type"
+                              && x.Next.OpCode == OpCodes.Ldc_I4
+                              && x.Next.Operand.Equals(338));
+
+            var il = method.Body.GetILProcessor();
+
+            //Allow FindFrame to determine if the Npc is a town npc
+
+            il.InsertBefore(typeCmp, il.Create(OpCodes.Ldfld, isTownNpc));
+            il.InsertBefore(typeCmp, il.Create(OpCodes.Ldc_I4_1));
+            il.InsertBefore(typeCmp, il.Create(OpCodes.Beq, typeCmp.Next.Next.Operand as Instruction));
+            il.InsertBefore(typeCmp, il.Create(OpCodes.Ldarg_0));
+        }
+
+        [OTAPatch(SupportType.Client, "Hooking NPC Chat")]
+        private void HookNpcGetChat()
+        {
+            var method = Terraria.NPC.Method("GetChat");
+            var call = API.NPCCallback.Method("OnGetChat");
+
+            method.ReplaceInstanceMethod(call);
         }
     }
 }

@@ -116,6 +116,25 @@ namespace OTA.Callbacks
             return ctx.Result == HookResult.DEFAULT; //Continue on to kicking
         }
         #endif
+
+        #if CLIENT
+        public static void OnClientEnterWorld(Terraria.Player player)
+        {
+            var ctx = new HookContext()
+                {
+                    Player = player,
+                    Sender = player
+                };
+            var args = new HookArgs.PlayerEnteredGame
+                {
+                    Slot = player.whoAmI
+                };
+
+            ctx.SetResult(HookResult.DEFAULT, false);
+            HookPoints.PlayerEnteredGame.Invoke(ref ctx, ref args);
+            ctx.CheckForKick();
+        }
+        #endif
     }
 }
 

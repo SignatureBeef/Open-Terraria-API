@@ -394,6 +394,21 @@
     <Compile Include="Plugin\Hooks\Multi\WorldAutoSave.cs" />
     <Compile Include="Plugin\Hooks\Multi\StartCommandProcessing.cs" />
     <Compile Include="Plugin\Hooks\Multi\ConsoleMessageReceived.cs" />
+    <Compile Include="Client\Npc\OTANpc.cs" />
+    <Compile Include="Client\EntityRegister.cs" />
+    <Compile Include="Client\NativeExtension.cs" />
+    <Compile Include="Plugin\Hooks\Multi\NewNPC.cs" />
+    <Compile Include="Plugin\Hooks\Client\NpcDraw.cs" />
+    <Compile Include="Plugin\Hooks\Client\NpcUpdate.cs" />
+    <Compile Include="Plugin\Hooks\Client\NpcAI.cs" />
+    <Compile Include="Plugin\Hooks\Client\NpcLoadTexture.cs" />
+    <Compile Include="Plugin\Hooks\Client\NpcFindFrame.cs" />
+    <Compile Include="Client\Npc\NpcModRegister.cs" />
+    <Compile Include="Client\Npc\NpcDefinition.cs" />
+    <Compile Include="Client\ClientEventManager.cs" />
+    <Compile Include="Plugin\Hooks\PluginEnabled.cs" />
+    <Compile Include="Client\Test\Sassy.cs" />
+    <Compile Include="Plugin\Hooks\Client\NpcGetChat.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -413,5 +428,8 @@
     <Folder Include="Extensions\" />
     <Folder Include="Logging\Targets\" />
     <Folder Include="Logging\External\" />
+    <Folder Include="Client\" />
+    <Folder Include="Client\Npc\" />
+    <Folder Include="Client\Test\" />
   </ItemGroup>
 </Project>

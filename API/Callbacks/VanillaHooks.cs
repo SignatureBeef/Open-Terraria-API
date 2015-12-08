@@ -28,7 +28,11 @@ namespace OTA.Callbacks
         /// <param name="player">Player.</param>
         public static void OnPlayerEntering(Player player)
         {
-            #if Full_API
+            
+
+
+
+#if Full_API
             var ctx = new HookContext
             {
                 Player = player,
@@ -55,7 +59,11 @@ namespace OTA.Callbacks
         /// <param name="player">Player.</param>
         public static void OnPlayerLeave(Player player)
         {
-            #if Full_API
+            
+
+
+
+#if Full_API
             var ctx = new HookContext
             {
                 Player = player,
@@ -157,7 +165,7 @@ namespace OTA.Callbacks
                 Projectile = proj,
                 Other = other,
 
-                    Sender = null
+                Sender = null
             };
 
             Terraria.Player player = null;
