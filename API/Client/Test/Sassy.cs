@@ -64,8 +64,8 @@ namespace OTA.Client.Test
         {
             Main.playerInventory = true;
             Main.npcChatText = string.Empty;
-            Main.npcShop = shopId; //TODO: shop hooks
-            Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
+            Main.npcShop = shopId;
+            Main.instance.shop[Main.npcShop].SetupShop(shopId);
             Main.PlaySound(12, -1, -1, 1);
         }
 
