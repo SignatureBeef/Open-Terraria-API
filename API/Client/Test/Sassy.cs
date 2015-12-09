@@ -2,13 +2,27 @@
 using System;
 using OTA.Client.Npc;
 using Terraria;
+using OTA.Client.Chest;
 
 namespace OTA.Client.Test
 {
+    public class SassyFoodsShop : OTAShop
+    {
+        public override void OnInitialise(Terraria.Chest chest)
+        {
+            base.OnInitialise(chest);
+
+//            int i = 0;
+//            chest.item[i++].SetDefaults("Trippa Snippa");
+        }
+    }
+
     [NativeMod(SassyName)]
     public class Sassy : OTANpc
     {
         const string SassyName = "Sassy";
+
+        int shopId;
 
         public override void OnSetDefaults()
         {
@@ -20,6 +34,8 @@ namespace OTA.Client.Test
 
             this.name = SassyName;
             this.displayName = SassyName;
+
+            shopId = EntityRegistrar.Shops.Register(new SassyFoodsShop());
         }
 
         public override string OnChat()
@@ -43,14 +59,16 @@ namespace OTA.Client.Test
         }
 
         #region "Sassy foods"
+
         private void OpenSassyFoods()
         {
             Main.playerInventory = true;
             Main.npcChatText = string.Empty;
-            Main.npcShop = 1; //TODO: shop hooks
-            Main.instance.shop [Main.npcShop].SetupShop (Main.npcShop);
-            Main.PlaySound (12, -1, -1, 1);
+            Main.npcShop = shopId; //TODO: shop hooks
+            Main.instance.shop[Main.npcShop].SetupShop(Main.npcShop);
+            Main.PlaySound(12, -1, -1, 1);
         }
+
         #endregion
     }
 }

@@ -18,6 +18,12 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "BasePlayer"); }
         }
 
+        public TypeDefinition ChestCallback
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "ChestCallback"); }
+        }
+
         public TypeDefinition CollisionCallback
         {
             get

@@ -4,12 +4,15 @@ using System.Collections.Concurrent;
 using OTA.Client.Npc;
 using System.Linq;
 using System.Reflection;
+using OTA.Client.Chest;
 
 namespace OTA.Client
 {
     public static class EntityRegistrar
     {
         public static NpcModRegister Npcs { get; } = new NpcModRegister();
+
+        public static ShopModRegister Shops { get; } = new ShopModRegister();
 
         internal static void ScanAssembly(Assembly asm)
         {

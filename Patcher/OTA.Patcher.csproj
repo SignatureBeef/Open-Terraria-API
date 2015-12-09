@@ -93,6 +93,7 @@
     <Compile Include="SupportType.cs" />
     <Compile Include="ConsoleHelper.cs" />
     <Compile Include="Hooks\GameHooks.cs" />
+    <Compile Include="Hooks\ChestHooks.cs" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">

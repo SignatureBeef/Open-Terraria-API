@@ -411,6 +411,10 @@
     <Compile Include="Plugin\Hooks\Client\NpcGetChat.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcGetChatButtons.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcChatButtonClick.cs" />
+    <Compile Include="Callbacks\ChestCallback.cs" />
+    <Compile Include="Plugin\Hooks\Client\ChestSetupShop.cs" />
+    <Compile Include="Client\Chest\ShopModRegister.cs" />
+    <Compile Include="Client\Chest\OTAShop.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -433,5 +437,6 @@
     <Folder Include="Client\" />
     <Folder Include="Client\Npc\" />
     <Folder Include="Client\Test\" />
+    <Folder Include="Client\Chest\" />
   </ItemGroup>
 </Project>

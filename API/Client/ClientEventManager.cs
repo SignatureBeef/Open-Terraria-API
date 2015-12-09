@@ -163,6 +163,16 @@ namespace OTA.Client
                 }
             }
         }
+
+        [Hook]
+        void OnChestSetupShop(ref HookContext ctx, ref Plugin.HookArgs.ChestSetupShop args)
+        {
+            if (args.State == MethodState.End)
+            {
+                var shop = EntityRegistrar.Shops.Find(args.Type);
+                if (shop != null) shop.OnInitialise(args.Chest);
+            }
+        }
         
         //            static int testId;
         //

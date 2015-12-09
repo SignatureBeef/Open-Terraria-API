@@ -10,6 +10,12 @@ namespace OTA.Patcher.Organisers
         {
         }
 
+        public TypeDefinition Chest
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "Chest"); }
+        }
+
         public TypeDefinition Collision
         {
             get
