@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if CLIENT
+using System;
 using OTA.Plugin;
 
 namespace OTA.Callbacks
@@ -32,4 +33,4 @@ namespace OTA.Callbacks
         }
     }
 }
-
+#endif
