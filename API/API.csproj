@@ -409,6 +409,8 @@
     <Compile Include="Plugin\Hooks\PluginEnabled.cs" />
     <Compile Include="Client\Test\Sassy.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcGetChat.cs" />
+    <Compile Include="Plugin\Hooks\Client\NpcGetChatButtons.cs" />
+    <Compile Include="Plugin\Hooks\Client\NpcChatButtonClick.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

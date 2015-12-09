@@ -120,7 +120,10 @@ namespace OTA.Client
         [Hook]
         void OnPlayerEnter(ref HookContext ctx, ref Plugin.HookArgs.PlayerEnteredGame args)
         {
-            Terraria.NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs["Sassy"]);
+//            Terraria.NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), Terraria.ID.NPCID.Merchant);
+            var x = Terraria.NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs["Sassy"]);
+
+            Logging.ProgramLog.Debug.Log("Sassy index: " + x);
         }
 
         [Hook]
@@ -130,6 +133,34 @@ namespace OTA.Client
             if (ota != null)
             {
                 ctx.SetResult(HookResult.IGNORE, true, ota.OnChat());
+            }
+        }
+
+        [Hook]
+        void OnNpcChatButtons(ref HookContext ctx, ref Plugin.HookArgs.NpcGetChatButtons args)
+        {
+            var ota = args.Npc as OTANpc;
+            if (ota != null)
+            {
+                var buttons = ota.OnGetChatButtons();
+                if (buttons != null)
+                {
+                    ctx.SetResult(HookResult.RECTIFY, true, buttons);
+                }
+            }
+        }
+
+        [Hook]
+        void OnNpcChatButtonClicked(ref HookContext ctx, ref Plugin.HookArgs.NpcChatButtonClick args)
+        {
+            var ota = args.Npc as OTANpc;
+            if (ota != null)
+            {
+                var proceed = ota.OnChatButtonClick(args.Button);
+                if (!proceed)
+                {
+                    ctx.SetResult(HookResult.IGNORE);
+                }
             }
         }
         

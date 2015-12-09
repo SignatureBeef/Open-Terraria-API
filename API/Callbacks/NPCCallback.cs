@@ -514,6 +514,78 @@ namespace OTA.Callbacks
 
             return (ctx.ResultParam as string) ?? npc.GetChatDirect();
         }
+
+        public static void OnGetChatButtons(ref string text, ref string text2)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcGetChatButtons()
+            {
+                Npc = Terraria.Main.npc[Terraria.Main.player[Terraria.Main.myPlayer].talkNPC],
+                Buttons = new string[] { text, text2 }
+            };
+
+            HookPoints.NpcGetChatButtons.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.RECTIFY)
+            {
+                var arr = ctx.ResultParam as string[];
+                if (arr != null)
+                {
+                    if (arr.Length == 1)
+                    {
+                        text = arr[0] ?? string.Empty;
+                        text2 = string.Empty;
+                    }
+                    else if (arr.Length == 2)
+                    {
+                        text = arr[0] ?? string.Empty;
+                        text2 = arr[1] ?? string.Empty;
+                    }
+                }
+            }
+        }
+
+        public static bool OnChatButtonClicked()
+        {
+            var res = NpcChatButton.None;
+
+            if (Terraria.Main.npcChatFocus1)
+            {
+                res = NpcChatButton.Second;
+            }
+            else if (Terraria.Main.npcChatFocus2)
+            {
+                res = NpcChatButton.First;
+            }
+            else if (Terraria.Main.npcChatFocus3)
+            {
+                res = NpcChatButton.Third;
+            }
+
+            if (res != NpcChatButton.None)
+            {
+                var ctx = new HookContext();
+                var args = new HookArgs.NpcChatButtonClick()
+                {
+                    Npc = Terraria.Main.npc[Terraria.Main.player[Terraria.Main.myPlayer].talkNPC],
+                    Button = res
+                };
+
+                HookPoints.NpcChatButtonClick.Invoke(ref ctx, ref args);
+
+                return ctx.Result == HookResult.DEFAULT;
+            }
+
+            return true;
+        }
         #endif
+    }
+
+    public enum NpcChatButton : byte
+    {
+        None = 0,
+        First,
+        Second,
+        Third
     }
 }

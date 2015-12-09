@@ -35,6 +35,16 @@ namespace OTA.Client.Npc
             return null;
         }
 
+        public virtual string[] OnGetChatButtons()
+        {
+            return null;
+        }
+
+        public virtual bool OnChatButtonClick(OTA.Callbacks.NpcChatButton button)
+        {
+            return true;
+        }
+
         public virtual void OnAfterDraw(bool behindTiles)
         {
         }
@@ -108,12 +118,13 @@ namespace OTA.Client.Npc
         #region Textures
 
         /// <summary>
-        /// Load the NPC texture for the current instance if it's not already been done.
+        /// Load a NPC texture using an asset name for the current instance if it's not already been done.
         /// </summary>
         /// <param name="assetName">Asset name.</param>
-        public void LoadTexture(string assetName)
+        /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
+        public void LoadTexture(string assetName, bool force = false)
         {
-            if (null == Main.npcTexture[this.type])
+            if (force || null == Main.npcTexture[this.type])
             {
                 Main.npcTexture[this.type] = Main.instance.Content.Load<Texture2D>(assetName);
                 Main.NPCLoaded[this.type] = true;
@@ -121,14 +132,29 @@ namespace OTA.Client.Npc
         }
 
         /// <summary>
-        /// Load the NPC texture for the current instance if it's not already been done.
+        /// Loads an existing NPC's texture using its NPC Type Id.
         /// </summary>
-        /// <param name="assetName">Asset name.</param>
-        public void LoadTexture(int targetNPCType)
+        /// <param name="targetNPCType">The target NPC type you wish to clone.</param>
+        /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
+        public void LoadTexture(int targetNPCType, bool force = false)
         {
-            if (null == Main.npcTexture[this.type])
+            if (force || null == Main.npcTexture[this.type])
             {
                 Main.npcTexture[this.type] = Main.instance.Content.Load<Texture2D>($"Images{Path.DirectorySeparatorChar}NPC_{targetNPCType}");
+                Main.NPCLoaded[this.type] = true;
+            }
+        }
+
+        /// <summary>
+        /// Load the NPC texture for the current instance if it's not already been done.
+        /// </summary>
+        /// <param name="texture">Texture to be assigned.</param>
+        /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
+        public void LoadTexture(Texture2D texture, bool force = false)
+        {
+            if (force || null == Main.npcTexture[this.type])
+            {
+                Main.npcTexture[this.type] = texture;
                 Main.NPCLoaded[this.type] = true;
             }
         }
@@ -173,6 +199,7 @@ namespace OTA.Client.Npc
                 }
             }
         }
+
         #endregion
     }
 }
