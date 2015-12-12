@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
+# Visual Studio 2012
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}"
@@ -24,6 +24,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{D8
 		Binaries\start-server.cmd = Binaries\start-server.cmd
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{43BEEED9-DD45-4258-B977-F422109190B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{A5F1A16C-E624-440D-A620-C8786991DEBD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C#", "C#", "{381BF7B9-8697-404E-9FF7-290F6DA2CC2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLS", "PluginExamples\Client\CSharp\BLS\BLS.csproj", "{B8B28830-08B7-4E3F-A37F-58794414129D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{1313A952-89EF-4B2A-A14F-7199043B0A5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C#", "C#", "{33C1612C-0E8C-4677-AD8A-931A9A33BBE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BareBones", "PluginExamples\Server\CSharp\BareBones\BareBones.csproj", "{61CDB3B7-4961-477B-B241-917030680C60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "F#", "F#", "{EC693395-B052-403A-A0C7-24D56B6723C8}"
+EndProject
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "BareBones", "PluginExamples\Server\FSharp\BareBones\BareBones.fsproj", "{143CF1D6-EA78-428B-8FA7-AEF32BD1DF26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LUA", "LUA", "{B29E2051-7F47-413E-BFAD-60A3E64C285F}"
+	ProjectSection(SolutionItems) = preProject
+		PluginExamples\Server\LUA\bare-bones.lua = PluginExamples\Server\LUA\bare-bones.lua
+		PluginExamples\Server\LUA\welcome-waypoint.lua = PluginExamples\Server\LUA\welcome-waypoint.lua
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VB", "VB", "{299D01BB-5E08-49B6-BDC5-A3BCEC2C17AE}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BareBones", "PluginExamples\Server\VB\BareBones\BareBones.vbproj", "{85470995-F363-4B78-B5A4-E3DB2CA68001}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Client-Debug|AnyCPU = Client-Debug|AnyCPU
@@ -31,24 +59,52 @@ Global
 		Server-Release|AnyCPU = Server-Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|AnyCPU.ActiveCfg = Client-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|AnyCPU.Build.0 = Client-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.ActiveCfg = Server-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.Build.0 = Server-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Release|AnyCPU.ActiveCfg = Server-Release|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Release|AnyCPU.Build.0 = Server-Release|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Client-Debug|AnyCPU.ActiveCfg = Client-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Client-Debug|AnyCPU.Build.0 = Client-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Server-Debug|AnyCPU.ActiveCfg = Server-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Server-Debug|AnyCPU.Build.0 = Server-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Server-Release|AnyCPU.ActiveCfg = Server-Release|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Server-Release|AnyCPU.Build.0 = Server-Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		{143CF1D6-EA78-428B-8FA7-AEF32BD1DF26}.Client-Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{143CF1D6-EA78-428B-8FA7-AEF32BD1DF26}.Server-Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{143CF1D6-EA78-428B-8FA7-AEF32BD1DF26}.Server-Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{143CF1D6-EA78-428B-8FA7-AEF32BD1DF26}.Server-Release|AnyCPU.ActiveCfg = Debug|Any CPU
+		{143CF1D6-EA78-428B-8FA7-AEF32BD1DF26}.Server-Release|AnyCPU.Build.0 = Debug|Any CPU
+		{61CDB3B7-4961-477B-B241-917030680C60}.Client-Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{61CDB3B7-4961-477B-B241-917030680C60}.Server-Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{61CDB3B7-4961-477B-B241-917030680C60}.Server-Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{61CDB3B7-4961-477B-B241-917030680C60}.Server-Release|AnyCPU.ActiveCfg = Debug|Any CPU
+		{61CDB3B7-4961-477B-B241-917030680C60}.Server-Release|AnyCPU.Build.0 = Debug|Any CPU
+		{85470995-F363-4B78-B5A4-E3DB2CA68001}.Client-Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{85470995-F363-4B78-B5A4-E3DB2CA68001}.Server-Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{85470995-F363-4B78-B5A4-E3DB2CA68001}.Server-Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{85470995-F363-4B78-B5A4-E3DB2CA68001}.Server-Release|AnyCPU.ActiveCfg = Debug|Any CPU
+		{85470995-F363-4B78-B5A4-E3DB2CA68001}.Server-Release|AnyCPU.Build.0 = Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|AnyCPU.ActiveCfg = Client-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|AnyCPU.Build.0 = Client-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.ActiveCfg = Server-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.Build.0 = Server-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Release|AnyCPU.ActiveCfg = Server-Release|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Release|AnyCPU.Build.0 = Server-Release|Any CPU
+		{B8B28830-08B7-4E3F-A37F-58794414129D}.Client-Debug|AnyCPU.ActiveCfg = Client-Debug|Any CPU
+		{B8B28830-08B7-4E3F-A37F-58794414129D}.Client-Debug|AnyCPU.Build.0 = Client-Debug|Any CPU
+		{B8B28830-08B7-4E3F-A37F-58794414129D}.Server-Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{B8B28830-08B7-4E3F-A37F-58794414129D}.Server-Release|AnyCPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D87DBA58-1E96-43CC-BD55-A7F30CAEE90E} = {EED99527-E456-4B5C-8079-D4DC60410DFE}
+		{43BEEED9-DD45-4258-B977-F422109190B1} = {EED99527-E456-4B5C-8079-D4DC60410DFE}
+		{A5F1A16C-E624-440D-A620-C8786991DEBD} = {43BEEED9-DD45-4258-B977-F422109190B1}
+		{1313A952-89EF-4B2A-A14F-7199043B0A5F} = {43BEEED9-DD45-4258-B977-F422109190B1}
+		{381BF7B9-8697-404E-9FF7-290F6DA2CC2F} = {A5F1A16C-E624-440D-A620-C8786991DEBD}
+		{B8B28830-08B7-4E3F-A37F-58794414129D} = {381BF7B9-8697-404E-9FF7-290F6DA2CC2F}
+		{33C1612C-0E8C-4677-AD8A-931A9A33BBE7} = {1313A952-89EF-4B2A-A14F-7199043B0A5F}
+		{EC693395-B052-403A-A0C7-24D56B6723C8} = {1313A952-89EF-4B2A-A14F-7199043B0A5F}
+		{B29E2051-7F47-413E-BFAD-60A3E64C285F} = {1313A952-89EF-4B2A-A14F-7199043B0A5F}
+		{299D01BB-5E08-49B6-BDC5-A3BCEC2C17AE} = {1313A952-89EF-4B2A-A14F-7199043B0A5F}
+		{61CDB3B7-4961-477B-B241-917030680C60} = {33C1612C-0E8C-4677-AD8A-931A9A33BBE7}
+		{143CF1D6-EA78-428B-8FA7-AEF32BD1DF26} = {EC693395-B052-403A-A0C7-24D56B6723C8}
+		{85470995-F363-4B78-B5A4-E3DB2CA68001} = {299D01BB-5E08-49B6-BDC5-A3BCEC2C17AE}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -83,5 +139,8 @@ Global
 		$2.inheritsSet = Mono
 		$2.inheritsScope = text/x-csharp
 		$2.scope = text/x-csharp
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
