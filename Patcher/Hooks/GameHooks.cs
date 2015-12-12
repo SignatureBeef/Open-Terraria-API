@@ -129,7 +129,7 @@ namespace OTA.Patcher
                                     && (x.Operand as FieldReference).Name == "npcChatFocus3"
                                     && x.Next.OpCode == OpCodes.Brfalse
                                     && x.Offset > mouseLeftRelease.Offset);
-            
+
             var ins3 = npcChatFocus3.Next.Operand as Instruction;
             var ins2 = npcChatFocus2.Next.Operand as Instruction;
             var ins1 = npcChatFocus1.Next.Operand as Instruction;
@@ -143,6 +143,23 @@ namespace OTA.Patcher
             il.InsertAfter(npcChatFocus1.Next, il.Create(OpCodes.Brfalse, ins1));
             il.InsertAfter(npcChatFocus1.Next, il.Create(OpCodes.Call, callback));
         }
+
+        #if CLIENT
+        [OTAPatch(SupportType.Client, "Hooking INativeMod")]
+        private void HookInINativeMod()
+        {
+            //Rather than tracking what MOD object is attatched to what vanilla object
+            //It's easier to just attatch a new "Mod" field.
+            foreach (var type in new [] {
+                Terraria.Chest,
+                Terraria.Item,
+                Terraria.NPC
+            })
+            {
+                type.Fields.Add(new FieldDefinition("Mod", FieldAttributes.Public, Terraria.Import(API.INativeMod)));
+            }
+        }
+        #endif
     }
 }
 

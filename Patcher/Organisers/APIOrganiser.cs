@@ -48,6 +48,14 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "IAPISocket"); }
         }
 
+        #if CLIENT
+        public TypeDefinition INativeMod
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "INativeMod"); }
+        }
+        #endif
+
         public TypeDefinition ItemCallback
         {
             get
@@ -152,6 +160,14 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "NAT"); }
         }
 
+        #if CLIENT
+        public TypeDefinition NpcModRegister
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "NpcModRegister"); }
+        }
+        #endif
+
         public TypeDefinition ClientConnection
         {
             get
@@ -176,14 +192,6 @@ namespace OTA.Patcher.Organisers
             get
             { return _asm.MainModule.Types.Single(x => x.Name == "WorldSender"); }
         }
-
-        #if CLIENT
-        public TypeDefinition NpcModRegister
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NpcModRegister"); }
-        }
-        #endif
     }
 }
 

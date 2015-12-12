@@ -3,6 +3,7 @@ using System;
 using OTA.Client.Npc;
 using Terraria;
 using OTA.Client.Chest;
+using OTA.Client.Item;
 
 namespace OTA.Client.Test
 {
@@ -12,8 +13,35 @@ namespace OTA.Client.Test
         {
             base.OnInitialise(chest);
 
-//            int i = 0;
-//            chest.item[i++].SetDefaults("Trippa Snippa");
+            int i = 0;
+            chest.item[i++].SetDefaults("Trippa Snippa");
+            chest.item[i++].SetDefaults("Mining Helmet");
+        }
+    }
+
+    [NativeMod(TrippaSnippaName)]
+    public class TrippaSnippa : OTAItem
+    {
+        public const string TrippaSnippaName = "Trippa Snippa";
+
+        public override void OnSetDefaults()
+        {
+            LoadTexture("trippasnippa", true);
+
+            Item.name = TrippaSnippaName;
+            Item.healLife = 0;
+
+            Item.useSound = 3;
+            Item.useStyle = 2;
+            Item.useTurn = true;
+            Item.useAnimation = 17;
+            Item.useTime = 17;
+            Item.maxStack = 30;
+            Item.consumable = true;
+            Item.width = 14;
+            Item.height = 24;
+            Item.potion = true;
+            Item.value = 1500;
         }
     }
 
@@ -30,10 +58,10 @@ namespace OTA.Client.Test
 
             EmulateNPC(Terraria.ID.NPCID.Merchant, true);
 
-            this.IsTownNpc = true;
+            Npc.IsTownNpc = true;
 
-            this.name = SassyName;
-            this.displayName = SassyName;
+            Npc.name = SassyName;
+            Npc.displayName = SassyName;
 
             shopId = EntityRegistrar.Shops.Register(new SassyFoodsShop());
         }

@@ -11,6 +11,7 @@ namespace OTA.Callbacks
             var ctx = new HookContext();
             var args = new HookArgs.ChestSetupShop()
             {
+                State = MethodState.Begin,
                 Chest = chest,
                 Type = type
             };
@@ -25,6 +26,7 @@ namespace OTA.Callbacks
             var ctx = HookContext.Empty;
             var args = new HookArgs.ChestSetupShop()
             {
+                State = MethodState.End,
                 Chest = chest,
                 Type = type
             };

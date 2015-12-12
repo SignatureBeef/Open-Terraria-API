@@ -17,27 +17,54 @@ namespace OTA.Client.Npc
         public int Register<T>(string name) where T : OTANpc
         {
             var def = new NpcDefinition()
-                {
-                    InstanceType = typeof(T)
-                };
+            {
+                InstanceType = typeof(T)
+            };
             if (_npcs.TryAdd(name, def))
             {
                 def.TypeId = System.Threading.Interlocked.Increment(ref _nextId);
 
                 if (MaxNpcId < def.TypeId) MaxNpcId = def.TypeId + 1;
 
+                OTANpc.ResizeArrays();
+
                 return def.TypeId;
             }
             return 0;
         }
 
+        public OTANpc Create(Terraria.NPC npc)
+        {
+            var mod = Create(npc.type);
+            if (mod != null)
+            {
+                mod.Npc = npc;
+                npc.Mod = mod;
+            }
+            return mod;
+        }
+
         public OTANpc Create(int type)
         {
-            var npc = _npcs
-                .Where(x => x.Value.TypeId == type)
-                .Select(v => v.Value)
-                .SingleOrDefault();
-            if (npc != null) return (OTANpc)Activator.CreateInstance(npc.InstanceType);
+            var def = Find(type);
+            if (def != null)
+            {
+                var mod = (OTANpc)Activator.CreateInstance(def.InstanceType);
+                mod.TypeId = type;
+                return mod;
+            }
+            return null;
+        }
+
+        public OTANpc Create(string name)
+        {
+            var def = Find(name);
+            if (def != null)
+            {
+                var mod = (OTANpc)Activator.CreateInstance(def.InstanceType);
+                mod.TypeId = def.TypeId;
+                return mod;
+            }
             return null;
         }
 

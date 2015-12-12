@@ -53,7 +53,7 @@ namespace OTA.Plugin
         {
             get
             {
-                return GetType().GetCustomAttributes().Where(x => x is OTAVersionAttribute).SingleOrDefault() as OTAVersionAttribute;
+                return GetType().GetCustomAttributes(true).Where(x => x is OTAVersionAttribute).SingleOrDefault() as OTAVersionAttribute;
             }
         }
 

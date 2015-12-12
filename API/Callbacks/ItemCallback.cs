@@ -1,7 +1,4 @@
-﻿using System;
-
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using OTA.Callbacks;
 using System;
 using Terraria.Graphics.Shaders;
@@ -13,7 +10,7 @@ namespace OTA.Callbacks
 {
     public static class ItemCallback
     {
-        public static void OnSetDefaultsBegin(Terraria.Item item, int type = 0, bool noMatCheck = false)
+        public static bool OnSetDefaultsBegin(Terraria.Item item, int type = 0, bool noMatCheck = false)
         {
             var ctx = HookContext.Empty;
             var args = new HookArgs.ItemSetDefaultsByType()
@@ -26,6 +23,8 @@ namespace OTA.Callbacks
             };
 
             HookPoints.ItemSetDefaultsByType.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
         }
 
         public static void OnSetDefaultsEnd(Terraria.Item item, int type = 0, bool noMatCheck = false)
@@ -43,7 +42,7 @@ namespace OTA.Callbacks
             HookPoints.ItemSetDefaultsByType.Invoke(ref ctx, ref args);
         }
 
-        public static void OnSetDefaultsBegin(Terraria.Item item, string itemName)
+        public static bool OnSetDefaultsBegin(Terraria.Item item, string itemName)
         {
             var ctx = HookContext.Empty;
             var args = new HookArgs.ItemSetDefaultsByName()
@@ -55,6 +54,8 @@ namespace OTA.Callbacks
             };
 
             HookPoints.ItemSetDefaultsByName.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
         }
 
         public static void OnSetDefaultsEnd(Terraria.Item item, string itemName)
@@ -71,7 +72,7 @@ namespace OTA.Callbacks
             HookPoints.ItemSetDefaultsByName.Invoke(ref ctx, ref args);
         }
 
-        public static void OnSetDefaultsBegin(Terraria.Item item, int type)
+        public static bool OnSetDefaultsBegin(Terraria.Item item, int type)
         {
             var ctx = HookContext.Empty;
             var args = new HookArgs.ItemSetDefaultsByType()
@@ -83,6 +84,8 @@ namespace OTA.Callbacks
             };
 
             HookPoints.ItemSetDefaultsByType.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
         }
 
         public static void OnSetDefaultsEnd(Terraria.Item item, int type)
@@ -99,7 +102,7 @@ namespace OTA.Callbacks
             HookPoints.ItemSetDefaultsByType.Invoke(ref ctx, ref args);
         }
 
-        public static void OnNetDefaultsBegin(Terraria.Item item, int type)
+        public static bool OnNetDefaultsBegin(Terraria.Item item, int type)
         {
             var ctx = HookContext.Empty;
             var args = new HookArgs.ItemNetDefaults()
@@ -111,6 +114,8 @@ namespace OTA.Callbacks
             };
 
             HookPoints.ItemNetDefaults.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
         }
 
         public static void OnNetDefaultsEnd(Terraria.Item item, int type)
@@ -126,5 +131,26 @@ namespace OTA.Callbacks
 
             HookPoints.ItemNetDefaults.Invoke(ref ctx, ref args);
         }
+
+        #if CLIENT
+
+        public static Terraria.Item OnNewItem(int type)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NewItem()
+            {
+                Type = type
+            };
+
+            HookPoints.NewItem.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is Terraria.Item) return (Terraria.Item)ctx.ResultParam;
+
+            var item = new Terraria.Item();
+            item.SetDefaults(type, false);
+            return item;
+        }
+
+        #endif
     }
 }

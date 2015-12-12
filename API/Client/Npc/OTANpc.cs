@@ -7,9 +7,50 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace OTA.Client.Npc
 {
-    public abstract class OTANpc : Terraria.NPC, INativeMod
+    public abstract class OTANpc : INativeMod
     {
+        #region Privates
+
+        private int _typeId;
+        private Terraria.NPC _npc;
+
         private int _emulateNPCTypeId;
+
+        #endregion
+
+        public Terraria.NPC Npc
+        { 
+            get { return _npc; }
+            internal set
+            {
+                _npc = value;
+
+                if (_npc != null)
+                {
+                    if (_npc.type != 0) this.TypeId = _npc.type;
+                    if (_npc.type == 0) _npc.type = this.TypeId;
+                }
+            }
+        }
+
+        public int TypeId
+        { 
+            get
+            { 
+                if (Npc != null && Npc.type != 0) return Npc.type;
+                return _typeId;
+            } 
+            set
+            {
+                if (Npc != null) Npc.type = value;
+                _typeId = value;
+            }
+        }
+
+        internal void Initialise()
+        {
+            OnSetDefaults();
+        }
 
         public OTANpc()
         {
@@ -55,14 +96,14 @@ namespace OTA.Client.Npc
             {
                 try
                 {
-                    var t = this.type;
-                    this.type = _emulateNPCTypeId;
-                    Main.npc[this.whoAmI].UpdateNPCDirect(this.whoAmI);
-                    this.type = t;
+                    var t = Npc.type;
+                    Npc.type = _emulateNPCTypeId;
+                    Main.npc[Npc.whoAmI].UpdateNPCDirect(Npc.whoAmI);
+                    Npc.type = t;
                 }
                 catch (Exception e)
                 {
-                    Logging.ProgramLog.Log(e, $"Failed to update NPC {this.whoAmI}");
+                    Logging.ProgramLog.Log(e, $"Failed to update NPC {Npc.whoAmI}");
                 }
                 return false;
             }
@@ -88,15 +129,15 @@ namespace OTA.Client.Npc
 
             LoadTexture(npcTypeId);
 
-            var initialType = this.type;
-            base.SetDefaultsDirect(npcTypeId);
-            this.type = initialType;
+            var initialType = Npc.type;
+            Npc.SetDefaultsDirect(npcTypeId);
+            Npc.type = initialType;
 
             //Copy properties
-            Main.npcCatchable[this.type] = Main.npcCatchable[npcTypeId];
-            Main.npcFrameCount[this.type] = Main.npcFrameCount[npcTypeId];
-            NPC.killCount[this.type] = NPC.killCount[npcTypeId];
-            Main.npcName[this.type] = Main.npcName[npcTypeId];
+            Main.npcCatchable[Npc.type] = Main.npcCatchable[npcTypeId];
+            Main.npcFrameCount[Npc.type] = Main.npcFrameCount[npcTypeId];
+            NPC.killCount[Npc.type] = NPC.killCount[npcTypeId];
+            Main.npcName[Npc.type] = Main.npcName[npcTypeId];
 
             //Resize ID sets
             foreach (var field in typeof(Terraria.ID.NPCID.Sets).GetFields())
@@ -107,7 +148,7 @@ namespace OTA.Client.Npc
                     var arr = field.GetValue(null) as Array;
 
                     //Set the custom npc to the vanilla npc value
-                    arr.SetValue(arr.GetValue(npcTypeId), this.type);
+                    arr.SetValue(arr.GetValue(npcTypeId), Npc.type);
 
                     //Reupdate the instance
                     field.SetValue(null, arr);
@@ -124,10 +165,10 @@ namespace OTA.Client.Npc
         /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
         public void LoadTexture(string assetName, bool force = false)
         {
-            if (force || null == Main.npcTexture[this.type])
+            if (force || null == Main.npcTexture[TypeId])
             {
-                Main.npcTexture[this.type] = Main.instance.Content.Load<Texture2D>(assetName);
-                Main.NPCLoaded[this.type] = true;
+                Main.npcTexture[TypeId] = Main.instance.Content.Load<Texture2D>(assetName);
+                Main.NPCLoaded[TypeId] = true;
             }
         }
 
@@ -138,10 +179,10 @@ namespace OTA.Client.Npc
         /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
         public void LoadTexture(int targetNPCType, bool force = false)
         {
-            if (force || null == Main.npcTexture[this.type])
+            if (force || null == Main.npcTexture[TypeId])
             {
-                Main.npcTexture[this.type] = Main.instance.Content.Load<Texture2D>($"Images{Path.DirectorySeparatorChar}NPC_{targetNPCType}");
-                Main.NPCLoaded[this.type] = true;
+                Main.npcTexture[TypeId] = Main.instance.Content.Load<Texture2D>($"Images{Path.DirectorySeparatorChar}NPC_{targetNPCType}");
+                Main.NPCLoaded[TypeId] = true;
             }
         }
 
@@ -152,10 +193,10 @@ namespace OTA.Client.Npc
         /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
         public void LoadTexture(Texture2D texture, bool force = false)
         {
-            if (force || null == Main.npcTexture[this.type])
+            if (force || null == Main.npcTexture[TypeId])
             {
-                Main.npcTexture[this.type] = texture;
-                Main.NPCLoaded[this.type] = true;
+                Main.npcTexture[TypeId] = texture;
+                Main.NPCLoaded[TypeId] = true;
             }
         }
 
@@ -163,7 +204,7 @@ namespace OTA.Client.Npc
 
         #region "Handlers"
 
-        internal static void ResizeNPCArrays()
+        internal static void ResizeArrays()
         {
             //This is an expensive method so we are issuing blocks of space
             const Int32 BlockIssueSize = 50;

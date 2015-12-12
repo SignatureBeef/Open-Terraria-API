@@ -5,7 +5,7 @@ namespace OTA.Client
 {
     public interface INativeMod
     {
-
+        
     }
 
     [AttributeUsage(AttributeTargets.Class)]

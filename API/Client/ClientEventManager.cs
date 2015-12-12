@@ -20,7 +20,7 @@ namespace OTA.Client
         {
             base.Enabled();
 
-            OTANpc.ResizeNPCArrays();
+            OTANpc.ResizeArrays();
             ScanExistingPlugins();
             EntityRegistrar.ScanAssembly(typeof(ClientEventManager).Assembly);
         }
@@ -42,14 +42,45 @@ namespace OTA.Client
         }
 
         [Hook]
+        void OnNewItem(ref HookContext ctx, ref Plugin.HookArgs.NewItem args)
+        {
+            var mod = EntityRegistrar.Items.Create(args.Type);
+            if (mod != null)
+            {
+                var item = new Terraria.Item();
+                item.Mod = mod;
+                mod.Item = item;
+                mod.Initialise();
+                ctx.SetResult(HookResult.RECTIFY, true, item);
+            }
+        }
+
+        [Hook]
+        void OnItemSetDefaultsByName(ref HookContext ctx, ref Plugin.HookArgs.ItemSetDefaultsByName args)
+        {
+            if (args.State == MethodState.Begin)
+            {
+                var mod = EntityRegistrar.Items.Create(args.Name);
+                if (mod != null)
+                {
+                    args.Item.Mod = mod;
+                    mod.Item = args.Item;
+                    mod.Initialise();
+                    ctx.SetResult(HookResult.RECTIFY);
+                }
+            }
+        }
+
+        [Hook]
         void OnNewNpc(ref HookContext ctx, ref Plugin.HookArgs.NewNpc args)
         {
-            var npc = EntityRegistrar.Npcs.Create(args.Type);
-            if (npc != null)
+            var mod = EntityRegistrar.Npcs.Create(args.Type);
+            if (mod != null)
             {
-                npc.type = args.Type;
-                npc.OnSetDefaults();
-                npc.type = args.Type;
+                var npc = new Terraria.NPC();
+                npc.Mod = mod;
+                mod.Npc = npc;
+                mod.Initialise();
                 ctx.SetResult(HookResult.RECTIFY, true, npc);
             }
         }
@@ -58,7 +89,7 @@ namespace OTA.Client
         void OnNpcDraw(ref HookContext ctx, ref Plugin.HookArgs.NpcDraw args)
         {
             Terraria.Main.ignoreErrors = false;
-            var ota = args.Npc as OTANpc;
+            var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
             {
                 if (args.State == MethodState.Begin)
@@ -78,10 +109,10 @@ namespace OTA.Client
         [Hook]
         void OnNpcUpdate(ref HookContext ctx, ref Plugin.HookArgs.NpcUpdate args)
         {
-            var ota = args.Npc as OTANpc;
+            var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
             {
-                ota.whoAmI = args.NpcIndex;
+                args.Npc.whoAmI = args.NpcIndex;
 
                 if (args.State == MethodState.Begin)
                 {
@@ -100,7 +131,7 @@ namespace OTA.Client
         [Hook]
         void OnNpcAI(ref HookContext ctx, ref Plugin.HookArgs.NpcAI args)
         {
-            var ota = args.Npc as OTANpc;
+            var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
             {
                 if (args.State == MethodState.Begin)
@@ -120,16 +151,13 @@ namespace OTA.Client
         [Hook]
         void OnPlayerEnter(ref HookContext ctx, ref Plugin.HookArgs.PlayerEnteredGame args)
         {
-//            Terraria.NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), Terraria.ID.NPCID.Merchant);
-            var x = Terraria.NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs["Sassy"]);
-
-            Logging.ProgramLog.Debug.Log("Sassy index: " + x);
+            Terraria.NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs["Sassy"]);
         }
 
         [Hook]
         void OnNpcChat(ref HookContext ctx, ref Plugin.HookArgs.NpcGetChat args)
         {
-            var ota = args.Npc as OTANpc;
+            var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
             {
                 ctx.SetResult(HookResult.IGNORE, true, ota.OnChat());
@@ -139,7 +167,7 @@ namespace OTA.Client
         [Hook]
         void OnNpcChatButtons(ref HookContext ctx, ref Plugin.HookArgs.NpcGetChatButtons args)
         {
-            var ota = args.Npc as OTANpc;
+            var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
             {
                 var buttons = ota.OnGetChatButtons();
@@ -153,7 +181,7 @@ namespace OTA.Client
         [Hook]
         void OnNpcChatButtonClicked(ref HookContext ctx, ref Plugin.HookArgs.NpcChatButtonClick args)
         {
-            var ota = args.Npc as OTANpc;
+            var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
             {
                 var proceed = ota.OnChatButtonClick(args.Button);
@@ -170,7 +198,11 @@ namespace OTA.Client
             if (args.State == MethodState.End)
             {
                 var shop = EntityRegistrar.Shops.Find(args.Type);
-                if (shop != null) shop.OnInitialise(args.Chest);
+                if (shop != null)
+                {
+                    args.Chest.Mod = shop;
+                    shop.OnInitialise(args.Chest);
+                }
             }
         }
         

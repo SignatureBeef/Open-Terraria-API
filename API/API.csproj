@@ -107,6 +107,7 @@
         <Reference Include="System.Security" />
         <Reference Include="System.Data.Entity" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Drawing" />
         <Reference Include="System.Configuration" />
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -415,6 +416,10 @@
     <Compile Include="Plugin\Hooks\Client\ChestSetupShop.cs" />
     <Compile Include="Client\Chest\ShopModRegister.cs" />
     <Compile Include="Client\Chest\OTAShop.cs" />
+    <Compile Include="Client\Item\OTAItem.cs" />
+    <Compile Include="Client\Item\ItemModRegister.cs" />
+    <Compile Include="Client\Item\ItemDefinition.cs" />
+    <Compile Include="Plugin\Hooks\Multi\NewItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -438,5 +443,6 @@
     <Folder Include="Client\Npc\" />
     <Folder Include="Client\Test\" />
     <Folder Include="Client\Chest\" />
+    <Folder Include="Client\Item\" />
   </ItemGroup>
 </Project>
