@@ -11,7 +11,6 @@ namespace BLS
 
             int i = 0;
             chest.item[i++].SetDefaults("Trippa Snippa");
-            chest.item[i++].SetDefaults("Mining Helmet");
         }
     }
 }

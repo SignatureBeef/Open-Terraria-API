@@ -72,6 +72,38 @@ namespace OTA.Client
         }
 
         [Hook]
+        void OnItemSetDefaultsByType(ref HookContext ctx, ref Plugin.HookArgs.ItemSetDefaultsByType args)
+        {
+            if (args.State == MethodState.Begin)
+            {
+                var mod = EntityRegistrar.Items.Create(args.Type);
+                if (mod != null)
+                {
+                    args.Item.Mod = mod;
+                    mod.Item = args.Item;
+                    mod.Initialise();
+                    ctx.SetResult(HookResult.RECTIFY);
+                }
+            }
+        }
+
+        [Hook]
+        void OnItemNetDefaults(ref HookContext ctx, ref Plugin.HookArgs.ItemNetDefaults args)
+        {
+            if (args.State == MethodState.Begin)
+            {
+                var mod = EntityRegistrar.Items.Create(args.Type);
+                if (mod != null)
+                {
+                    args.Item.Mod = mod;
+                    mod.Item = args.Item;
+                    mod.Initialise();
+                    ctx.SetResult(HookResult.RECTIFY);
+                }
+            }
+        }
+
+        [Hook]
         void OnNewNpc(ref HookContext ctx, ref Plugin.HookArgs.NewNpc args)
         {
             var mod = EntityRegistrar.Npcs.Create(args.Type);
