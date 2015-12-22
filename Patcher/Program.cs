@@ -42,7 +42,7 @@ namespace OTA.Patcher
             OTAPatcher.PatchMode = SupportType.Client;
 
             //Specifiy the official file name
-            OTAPatcher.InputFileName = "Terraria.exe";
+            OTAPatcher.InputFileName = "Terraria.MAC.exe";
 
             //Specify the output assembly[name]
             OTAPatcher.OutputName = "Terraria";

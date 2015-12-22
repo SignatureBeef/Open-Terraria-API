@@ -103,8 +103,8 @@
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Include="packages.config" />
-        <None Include="..\Official\Terraria.exe">
-          <Link>Terraria.exe</Link>
+        <None Include="..\Official\Terraria.MAC.exe">
+          <Link>Terraria.MAC.exe</Link>
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Include="..\External\FNA.dll">
