@@ -56,11 +56,11 @@ namespace OTA.Client.Item
             {
                 Item.owner = Main.myPlayer;
             }
-            Item.ResetStats (this.TypeId);
+            Item.ResetStats(this.TypeId);
 
             Item.netID = Item.type;
-            Item.name = Lang.itemName (Item.netID, false);
-            Item.CheckTip ();
+            Item.name = Lang.itemName(Item.netID, false);
+            Item.CheckTip();
 
             OnSetDefaults();
         }
@@ -135,7 +135,7 @@ namespace OTA.Client.Item
             //This is an expensive method so we are issuing blocks of space
             const Int32 BlockIssueSize = 50;
 
-            if (ItemModRegister.MaxItemId + 1 < Main.itemTexture.Length + BlockIssueSize)
+            if (ItemModRegister.MaxItemId + 1 >= Main.itemTexture.Length)
             {
                 var length = Main.itemTexture.Length + BlockIssueSize;
 
@@ -149,6 +149,9 @@ namespace OTA.Client.Item
 //                Array.Resize(ref Main.itemText, length);
                 Array.Resize(ref Main.itemTexture, length);
                 Array.Resize(ref Main.extraTexture, length);
+                Array.Resize(ref Main.glowMaskTexture, length);
+                Array.Resize(ref Terraria.Item.staff, length);
+                Array.Resize(ref Terraria.Item.claw, length);
 
                 //Resize ID sets
                 foreach (var field in typeof(Terraria.ID.ItemID.Sets).GetFields())
@@ -164,6 +167,8 @@ namespace OTA.Client.Item
                         field.SetValue(null, args[0]);
                     }
                 }
+
+                Logging.ProgramLog.Debug.Log($"Item slots changed to: {length}");
             }
         }
     }

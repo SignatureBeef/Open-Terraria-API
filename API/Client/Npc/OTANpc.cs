@@ -209,7 +209,7 @@ namespace OTA.Client.Npc
             //This is an expensive method so we are issuing blocks of space
             const Int32 BlockIssueSize = 50;
 
-            if (NpcModRegister.MaxNpcId + 1 < Main.npcTexture.Length + BlockIssueSize)
+            if (NpcModRegister.MaxNpcId + 1 >= Main.npcTexture.Length)
             {
                 var length = Main.npcTexture.Length + BlockIssueSize;
 

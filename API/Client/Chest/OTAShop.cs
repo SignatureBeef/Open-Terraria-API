@@ -15,7 +15,7 @@ namespace OTA.Client.Chest
             //This is an expensive method so we are issuing blocks of space
             const Int32 BlockIssueSize = 50;
 
-            if (EntityRegistrar.Shops.CurrentType + 1 < Main.instance.shop.Length + BlockIssueSize)
+            if (EntityRegistrar.Shops.CurrentType + 1 >= Main.instance.shop.Length)
             {
                 Array.Resize(ref Main.instance.shop, Main.instance.shop.Length + BlockIssueSize);
 
