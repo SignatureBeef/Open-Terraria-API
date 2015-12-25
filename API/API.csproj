@@ -420,6 +420,8 @@
     <Compile Include="Client\Item\ItemModRegister.cs" />
     <Compile Include="Client\Item\ItemDefinition.cs" />
     <Compile Include="Plugin\Hooks\Multi\NewItem.cs" />
+    <Compile Include="Plugin\PluginDependency.cs" />
+    <Compile Include="Plugin\PluginLoadResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

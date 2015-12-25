@@ -20,18 +20,24 @@ namespace OTA.Logging
         public static bool HasLoggers { get; } = _loggers.Count > 0;
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="OTA.Logging.Logger"/> should use the default logging system.
-        /// </summary>
-        /// <value><c>true</c> if use default logget; otherwise, <c>false</c>.</value>
-        public static bool UseDefaultLogger { get; set; } = true;
-
-        /// <summary>
         /// Add a logger to be called for Vanilla & OTA functions
         /// </summary>
         /// <param name="logger">Logger.</param>
         public static void AddLogger(ILogger logger)
         {
             _loggers.Add(logger);
+        }
+
+        /// <summary>
+        /// Clears all registered loggers.
+        /// </summary>
+        public static void ClearLoggers()
+        {
+            while (!_loggers.IsEmpty)
+            {
+                ILogger logger;
+                if (!_loggers.TryPeek(out logger)) break;
+            }
         }
 
         /// <summary>

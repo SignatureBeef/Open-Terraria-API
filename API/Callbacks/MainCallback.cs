@@ -106,40 +106,41 @@ namespace OTA.Callbacks
             Globals.Touch();
             ID.Lookup.Initialise();
 
+            SetDefaultLogger();
+
             //This will setup the assembly resolves
             PluginManager.Initialize(Globals.PluginPath);
             PluginManager.RegisterHookSource(typeof(HookPoints));
 
             //Load plugins
             PluginManager.LoadPlugins();
+        }
 
-            //Initialise the default logging system if a plugin has not overridden it.
-            if (Logger.UseDefaultLogger)
+        static void SetDefaultLogger()
+        {
+            Logger.AddLogger(new DefaultLogger());
+
+            try
             {
-                Logger.AddLogger(new DefaultLogger());
+                var lis = new Logging.LogTraceListener();
+                System.Diagnostics.Trace.Listeners.Clear();
+                System.Diagnostics.Trace.Listeners.Add(lis);
+                System.Diagnostics.Debug.Listeners.Clear();
+                System.Diagnostics.Debug.Listeners.Add(lis);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
-                try
-                {
-                    var lis = new Logging.LogTraceListener();
-                    System.Diagnostics.Trace.Listeners.Clear();
-                    System.Diagnostics.Trace.Listeners.Add(lis);
-                    System.Diagnostics.Debug.Listeners.Clear();
-                    System.Diagnostics.Debug.Listeners.Add(lis);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+            //Prepare log for use
+            if (!ProgramLog.IsFileOpen)
+            {
+                if (!Directory.Exists(Globals.LogFolderPath)) Directory.CreateDirectory(Globals.LogFolderPath);
+                var logFile = Path.Combine(Globals.LogFolderPath, "server.log");
 
-                //Prepare log for use
-                if (!ProgramLog.IsFileOpen)
-                {
-                    if (!Directory.Exists(Globals.LogFolderPath)) Directory.CreateDirectory(Globals.LogFolderPath);
-                    var logFile = Path.Combine(Globals.LogFolderPath, "server.log");
-
-                    ProgramLog.OpenLogFile(logFile);
-                    ConsoleSender.DefaultColour = ConsoleColor.Gray;
-                }
+                ProgramLog.OpenLogFile(logFile);
+                ConsoleSender.DefaultColour = ConsoleColor.Gray;
             }
         }
 
@@ -231,15 +232,15 @@ namespace OTA.Callbacks
             #if Full_API && SERVER
             if (Terraria.Main.dedServ)
             {
-            var ctx = new HookContext()
-            {
-            Sender = HookContext.ConsoleSender
-            };
-            var args = new HookArgs.ServerStateChange()
-            {
-            ServerChangeState = (Globals.CurrentState = ServerState.Initialising)
-            };
-            HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
+                var ctx = new HookContext()
+                {
+                    Sender = HookContext.ConsoleSender
+                };
+                var args = new HookArgs.ServerStateChange()
+                {
+                    ServerChangeState = (Globals.CurrentState = ServerState.Initialising)
+                };
+                HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
             }
             #elif CLIENT
             try

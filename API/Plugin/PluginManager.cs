@@ -170,6 +170,7 @@ namespace OTA.Plugin
             lock (_plugins)
             {
                 LoadPluginsInternal();
+                LoadScheduled(false);
 
                 foreach (var kv in _plugins)
                 {
@@ -192,10 +193,6 @@ namespace OTA.Plugin
             HookPoints.PluginsLoaded.Invoke(ref ctx, ref args);
         }
 
-        public static void CheckPlugins()
-        {
-        }
-
         static void SetPluginProperty<T>(BasePlugin plugin, string name, string target)
         {
             try
@@ -215,11 +212,100 @@ namespace OTA.Plugin
             }
         }
 
-        static BasePlugin LoadPluginAssembly(Assembly assembly)
+        public struct DeferredPlugin
         {
+            public Assembly Assembly;
+            public string FilePath;
+            public string[] Dependencies;
+        }
+
+        static List<DeferredPlugin> _deferedPlugins;
+
+        static bool CanLoadPlugin(Assembly assembly, string[] types)
+        {
+            foreach (var type in types)
+            {
+                if (_plugins.Where(x => x.Value.Assembly.GetName().Name == type).Count() == 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        static void LoadScheduled(bool silent)
+        {
+            for(var x = 0; x < _deferedPlugins.Count; x++)
+            {
+                var scheduled = _deferedPlugins[x];
+                if (CanLoadPlugin(scheduled.Assembly, scheduled.Dependencies))
+                {
+                    BasePlugin plugin;
+                    var res = TryLoadPluginAssembly(scheduled.Assembly, out plugin, scheduled.FilePath, false);
+
+                    if (res == PluginLoadResult.Loaded && plugin != null)
+                    {
+                        plugin = PreparePlugin(plugin, scheduled.FilePath);
+
+                        if (plugin != null)
+                        {
+                            if (plugin.InitializeAndHookUp())
+                            {
+                                _plugins.Add(plugin.Name.ToLower().Trim(), plugin);
+
+                                if (plugin.EnableEarly)
+                                    plugin.Enable();
+
+                                _deferedPlugins.RemoveAt(x);
+                                x--;
+                            }
+                        }
+                    }
+
+                    if (plugin == null && !silent)
+                    {
+                        Logger.Error("Failed to load {0}.", Path.GetFileNameWithoutExtension(scheduled.FilePath));
+                    }
+                }
+            }
+        }
+
+        static PluginLoadResult TryLoadPluginAssembly(Assembly assembly, out BasePlugin plugin, string filePath, bool schedule = true)
+        {
+            plugin = null;
+
+            if (schedule)
+            {
+                //Check to see if the assembly contains marked plugin dependencies
+                var dependencies = Attribute.GetCustomAttributes(assembly, typeof(PluginDependencyAttribute), false);
+                if (dependencies != null && dependencies.Length > 0)
+                {
+                    var types = dependencies.Select(x => (x as PluginDependencyAttribute).Dependency).ToArray();
+
+                    if (!CanLoadPlugin(assembly, types))
+                    {
+                        var sh = new DeferredPlugin()
+                        {
+                            Assembly = assembly,
+                            Dependencies = types,
+                            FilePath = filePath
+                        };
+                        if (null == _deferedPlugins) _deferedPlugins = new List<DeferredPlugin>()
+                            {
+                                sh
+                            };
+                        else _deferedPlugins.Add(sh);
+
+                        Logger.Debug("Plugin is scheduled to load");
+                        return PluginLoadResult.Scheduled;
+                    }
+                }
+            }
+
             foreach (var type in assembly.GetTypesLoaded().Where(x => typeof(BasePlugin).IsAssignableFrom(x) && !x.IsAbstract))
             {
-                var plugin = CreatePluginInstance(type);
+                plugin = CreatePluginInstance(type);
                 if (plugin == null)
                 {
                     throw new Exception("Could not create plugin instance");
@@ -227,11 +313,11 @@ namespace OTA.Plugin
                 else
                 {
                     plugin.Assembly = assembly;
-                    return plugin;
+                    return PluginLoadResult.Loaded;
                 }
             }
 
-            return null;
+            return PluginLoadResult.Failed;
         }
 
         static BasePlugin CreatePluginInstance(System.Type type)
@@ -254,16 +340,18 @@ namespace OTA.Plugin
         /// Load the plugin located at the specified path.
         /// This only loads one plugin.
         /// </summary>
-        /// <param name="PluginPath">Path to plugin</param>
+        /// <param name="path">Path to the plugin</param>
         /// <returns>Instance of the successfully loaded plugin, otherwise null</returns>
-        public static BasePlugin LoadPluginFromDLL(string PluginPath)
+        public static PluginLoadResult TryLoadPluginFromDLL(string path, out BasePlugin plugin)
         {
+            plugin = null;
+            PluginLoadResult result = PluginLoadResult.Failed;
             try
             {
                 Assembly assembly = null;
                 //                Type type = typeof(BasePlugin);
 
-                using (FileStream fs = File.Open(PluginPath, FileMode.Open))
+                using (FileStream fs = File.Open(path, FileMode.Open))
                 {
                     using (MemoryStream ms = new MemoryStream())
                     {
@@ -278,14 +366,15 @@ namespace OTA.Plugin
                     }
                 }
 
-                return LoadPluginAssembly(assembly);
+                result = TryLoadPluginAssembly(assembly, out plugin, path);
             }
             catch (Exception e)
             {
-                Logger.Log(e, "Error loading plugin assembly " + PluginPath);
+                Logger.Log(e, "Error loading plugin assembly " + path);
+                result = PluginLoadResult.Failed;
             }
 
-            return null;
+            return result;
         }
 
         static string[] GetFiles(string directory, string pattern)
@@ -300,8 +389,9 @@ namespace OTA.Plugin
             { "CompilerVersion", "v4.0" },
         };
 
-        public static BasePlugin LoadSourcePlugin(string path)
+        public static PluginLoadResult LoadSourcePlugin(string path, out BasePlugin plugin)
         {
+            plugin = null;
             var cp = new Microsoft.CSharp.CSharpCodeProvider(compilerOptions);
             var par = new System.CodeDom.Compiler.CompilerParameters();
             par.GenerateExecutable = false;
@@ -342,10 +432,12 @@ namespace OTA.Plugin
                         Logger.Error(error.ToString());
                 }
                 if (errors.HasErrors)
-                    return null;
+                {
+                    return PluginLoadResult.Failed;
+                }
             }
 
-            return LoadPluginAssembly(result.CompiledAssembly);
+            return TryLoadPluginAssembly(result.CompiledAssembly, out plugin, path);
         }
 
         /// <summary>
@@ -365,7 +457,7 @@ namespace OTA.Plugin
 
             var args = new HookArgs.PluginLoadRequest
             {
-                Path = file,
+                Path = file
             };
 
             HookPoints.PluginLoadRequest.Invoke(ref ctx, ref args);
@@ -378,9 +470,9 @@ namespace OTA.Plugin
                 if (ext == ".dll")
                 {
                     Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Loading plugin from {0}.", fileInfo.Name);
-                    plugin = LoadPluginFromDLL(file);
+                    var res = TryLoadPluginFromDLL(file, out plugin);
 
-                    if (null == plugin)
+                    if (res != PluginLoadResult.Scheduled && (null == plugin || res != PluginLoadResult.Loaded))
                     {
                         Logger.Error("Failed to load {0}.", fileInfo.Name);
                     }
@@ -388,9 +480,9 @@ namespace OTA.Plugin
                 else if (ext == ".cs")
                 {
                     Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Compiling and loading plugin from {0}.", fileInfo.Name);
-                    plugin = LoadSourcePlugin(file);
+                    var res = LoadSourcePlugin(file, out plugin);
 
-                    if (null == plugin)
+                    if (res != PluginLoadResult.Scheduled && (null == plugin || res != PluginLoadResult.Loaded))
                     {
                         Logger.Error("Failed to load {0}.", fileInfo.Name);
                     }
@@ -406,25 +498,32 @@ namespace OTA.Plugin
 
             if (plugin != null)
             {
-                //20151011 New versioning
-                //  - Ensure they specify the attribute
-                //  - If the major is not the same then it will most likey cause problems
-                if (plugin.OTAVersion == null)
-                {
-                    Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Cannot load plugin {0} as it does not specify an OTAVersionAtrribute.", plugin.Name);
-                    return null;
-                }
-                else if (plugin.OTAVersion.Major != Globals.Version.Major)
-                {
-                    Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Cannot load plugin {0} as it is not supported by this version.", plugin.Name);
-                    return null;
-                }
-
-                plugin.Path = file;
-                plugin.PathTimestamp = fileInfo.LastWriteTimeUtc;
-                if (plugin.Name == null)
-                    plugin.Name = Path.GetFileNameWithoutExtension(file);
+                plugin = PreparePlugin(plugin, file, fileInfo);
             }
+
+            return plugin;
+        }
+
+        static BasePlugin PreparePlugin(BasePlugin plugin, string file, FileInfo fileInfo = null)
+        {
+            //20151011 New versioning
+            //  - Ensure they specify the attribute
+            //  - If the major is not the same then it will most likey cause problems
+            if (plugin.OTAVersion == null)
+            {
+                Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Cannot load plugin {0} as it does not specify an OTAVersionAtrribute.", plugin.Name);
+                return null;
+            }
+            else if (plugin.OTAVersion.Major != Globals.Version.Major)
+            {
+                Logger.Log(ProgramLog.Categories.Plugin, System.Diagnostics.TraceLevel.Info, "Cannot load plugin {0} as it is not supported by this version.", plugin.Name);
+                return null;
+            }
+
+            plugin.Path = file;
+            plugin.PathTimestamp = (fileInfo ?? new FileInfo(file)).LastWriteTimeUtc;
+            if (plugin.Name == null)
+                plugin.Name = Path.GetFileNameWithoutExtension(file);
 
             return plugin;
         }
@@ -521,6 +620,8 @@ namespace OTA.Plugin
 
                         if (plugin.EnableEarly)
                             plugin.Enable();
+
+                        LoadScheduled(true);
                     }
                 }
             }
@@ -707,43 +808,34 @@ namespace OTA.Plugin
         /// Loads and initialoses a plugin
         /// </summary>
         /// <returns>The and init plugin.</returns>
-        /// <param name="Path">Path.</param>
-        public static PluginLoadStatus LoadAndInitPlugin(string Path)
+        /// <param name="filePath">Path to the plugin file.</param>
+        public static PluginLoadResult LoadAndInitPlugin(string filePath)
         {
-            var rPlg = LoadPluginFromDLL(Path);
+            BasePlugin plugin;
+            var res = TryLoadPluginFromDLL(filePath, out plugin);
 
-            if (rPlg == null)
+            if (plugin == null || res != PluginLoadResult.Loaded)
             {
-                Logger.Error("Plugin failed to load!");
-                return PluginLoadStatus.FAIL_LOAD;
+                if (res != PluginLoadResult.Scheduled)
+                    Logger.Error("Plugin failed to load!");
+                return res;
             }
 
-            if (!rPlg.InitializeAndHookUp())
+            if (!plugin.InitializeAndHookUp())
             {
                 Logger.Error("Failed to initialize plugin.");
-                return PluginLoadStatus.FAIL_INIT;
+                return PluginLoadResult.InitialiseFailed;
             }
 
-            _plugins.Add(rPlg.Name.ToLower().Trim(), rPlg);
+            _plugins.Add(plugin.Name.ToLower().Trim(), plugin);
 
-            if (!rPlg.Enable())
+            if (!plugin.Enable())
             {
                 Logger.Error("Failed to enable plugin.");
-                return PluginLoadStatus.FAIL_ENABLE;
+                return PluginLoadResult.EnableFailed;
             }
 
-            return PluginLoadStatus.SUCCESS;
+            return res;
         }
-    }
-
-    /// <summary>
-    /// Plugin load status.
-    /// </summary>
-    public enum PluginLoadStatus : int
-    {
-        FAIL_ENABLE,
-        FAIL_INIT,
-        FAIL_LOAD,
-        SUCCESS
     }
 }
