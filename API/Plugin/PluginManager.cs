@@ -281,7 +281,7 @@ namespace OTA.Plugin
                 var dependencies = Attribute.GetCustomAttributes(assembly, typeof(PluginDependencyAttribute), false);
                 if (dependencies != null && dependencies.Length > 0)
                 {
-                    var types = dependencies.Select(x => (x as PluginDependencyAttribute).Dependency).ToArray();
+                    var types = dependencies.Select(x => (x as PluginDependencyAttribute).AssemblyName).ToArray();
 
                     if (!CanLoadPlugin(assembly, types))
                     {

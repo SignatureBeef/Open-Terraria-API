@@ -8,11 +8,11 @@ namespace OTA.Plugin
     [AttributeUsage(AttributeTargets.Assembly)]
     public class PluginDependencyAttribute : Attribute
     {
-        public string Dependency { get; set; }
+        public string AssemblyName { get; set; }
 
-        public PluginDependencyAttribute(string dependencyType)
+        public PluginDependencyAttribute(string assemblyName)
         {
-            this.Dependency = dependencyType;
+            this.AssemblyName = assemblyName;
         }
     }
 }

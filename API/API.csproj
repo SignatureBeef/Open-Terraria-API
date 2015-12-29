@@ -408,7 +408,6 @@
     <Compile Include="Client\Npc\NpcDefinition.cs" />
     <Compile Include="Client\ClientEventManager.cs" />
     <Compile Include="Plugin\Hooks\PluginEnabled.cs" />
-    <Compile Include="Client\Test\Sassy.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcGetChat.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcGetChatButtons.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcChatButtonClick.cs" />
@@ -443,8 +442,8 @@
     <Folder Include="Logging\External\" />
     <Folder Include="Client\" />
     <Folder Include="Client\Npc\" />
-    <Folder Include="Client\Test\" />
     <Folder Include="Client\Chest\" />
     <Folder Include="Client\Item\" />
+    <Folder Include="Client\Projectile\" />
   </ItemGroup>
 </Project>
