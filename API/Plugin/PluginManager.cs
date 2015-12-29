@@ -236,36 +236,39 @@ namespace OTA.Plugin
 
         static void LoadScheduled(bool silent)
         {
-            for(var x = 0; x < _deferedPlugins.Count; x++)
+            if (_deferedPlugins != null)
             {
-                var scheduled = _deferedPlugins[x];
-                if (CanLoadPlugin(scheduled.Assembly, scheduled.Dependencies))
+                for (var x = 0; x < _deferedPlugins.Count; x++)
                 {
-                    BasePlugin plugin;
-                    var res = TryLoadPluginAssembly(scheduled.Assembly, out plugin, scheduled.FilePath, false);
-
-                    if (res == PluginLoadResult.Loaded && plugin != null)
+                    var scheduled = _deferedPlugins[x];
+                    if (CanLoadPlugin(scheduled.Assembly, scheduled.Dependencies))
                     {
-                        plugin = PreparePlugin(plugin, scheduled.FilePath);
+                        BasePlugin plugin;
+                        var res = TryLoadPluginAssembly(scheduled.Assembly, out plugin, scheduled.FilePath, false);
 
-                        if (plugin != null)
+                        if (res == PluginLoadResult.Loaded && plugin != null)
                         {
-                            if (plugin.InitializeAndHookUp())
+                            plugin = PreparePlugin(plugin, scheduled.FilePath);
+
+                            if (plugin != null)
                             {
-                                _plugins.Add(plugin.Name.ToLower().Trim(), plugin);
+                                if (plugin.InitializeAndHookUp())
+                                {
+                                    _plugins.Add(plugin.Name.ToLower().Trim(), plugin);
 
-                                if (plugin.EnableEarly)
-                                    plugin.Enable();
+                                    if (plugin.EnableEarly)
+                                        plugin.Enable();
 
-                                _deferedPlugins.RemoveAt(x);
-                                x--;
+                                    _deferedPlugins.RemoveAt(x);
+                                    x--;
+                                }
                             }
                         }
-                    }
 
-                    if (plugin == null && !silent)
-                    {
-                        Logger.Error("Failed to load {0}.", Path.GetFileNameWithoutExtension(scheduled.FilePath));
+                        if (plugin == null && !silent)
+                        {
+                            Logger.Error("Failed to load {0}.", Path.GetFileNameWithoutExtension(scheduled.FilePath));
+                        }
                     }
                 }
             }
