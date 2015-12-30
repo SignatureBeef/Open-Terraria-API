@@ -68,6 +68,12 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "MainCallback"); }
         }
 
+        public TypeDefinition MapCallback
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "MapCallback"); }
+        }
+
         public TypeDefinition MessageBufferCallback
         {
             get
@@ -154,11 +160,7 @@ namespace OTA.Patcher.Organisers
 
         #endregion
 
-        public TypeDefinition NAT
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NAT"); }
-        }
+        #region Client Registers
 
         #if CLIENT
         public TypeDefinition NpcModRegister
@@ -166,7 +168,20 @@ namespace OTA.Patcher.Organisers
             get
             { return _asm.MainModule.Types.Single(x => x.Name == "NpcModRegister"); }
         }
+
+        public TypeDefinition TileModRegister
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "TileModRegister"); }
+        }
         #endif
+        #endregion
+
+        public TypeDefinition NAT
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "NAT"); }
+        }
 
         public TypeDefinition ClientConnection
         {

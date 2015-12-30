@@ -43,7 +43,6 @@ namespace OTA.Patcher
             setDefaults.Wrap(cbkBegin, cbkEnd, true);
         }
 
-
         [OTAPatch(SupportType.Client, "Hooking Item creation")]
         private void HookItemCreation()
         {

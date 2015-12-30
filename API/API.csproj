@@ -405,7 +405,6 @@
     <Compile Include="Plugin\Hooks\Client\NpcLoadTexture.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcFindFrame.cs" />
     <Compile Include="Client\Npc\NpcModRegister.cs" />
-    <Compile Include="Client\Npc\NpcDefinition.cs" />
     <Compile Include="Client\ClientEventManager.cs" />
     <Compile Include="Plugin\Hooks\PluginEnabled.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcGetChat.cs" />
@@ -417,10 +416,15 @@
     <Compile Include="Client\Chest\OTAShop.cs" />
     <Compile Include="Client\Item\OTAItem.cs" />
     <Compile Include="Client\Item\ItemModRegister.cs" />
-    <Compile Include="Client\Item\ItemDefinition.cs" />
     <Compile Include="Plugin\Hooks\Multi\NewItem.cs" />
     <Compile Include="Plugin\PluginDependency.cs" />
     <Compile Include="Plugin\PluginLoadResult.cs" />
+    <Compile Include="Client\Tile\TileModRegister.cs" />
+    <Compile Include="Client\TypeDefinition.cs" />
+    <Compile Include="Client\Tile\OTATile.cs" />
+    <Compile Include="Callbacks\MapCallback.cs" />
+    <Compile Include="Plugin\Hooks\Client\MapHelperInitialize.cs" />
+    <Compile Include="Plugin\Hooks\Multi\GameInitialize.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -445,5 +449,8 @@
     <Folder Include="Client\Chest\" />
     <Folder Include="Client\Item\" />
     <Folder Include="Client\Projectile\" />
+    <Folder Include="Client\Net\" />
+    <Folder Include="Client\Tile\" />
+    <Folder Include="Client\Buff\" />
   </ItemGroup>
 </Project>

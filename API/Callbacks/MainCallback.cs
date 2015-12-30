@@ -252,11 +252,24 @@ namespace OTA.Callbacks
                 ProgramLog.Log(e);
             }
             #endif
+
+            var ctx = new HookContext();
+            var args = new HookArgs.GameInitialize()
+            {
+                State = MethodState.Begin
+            };
+            HookPoints.GameInitialize.Invoke(ref ctx, ref args);
         }
 
         public static void OnInitialiseEnd(Terraria.Main game)
         {
 
+            var ctx = new HookContext();
+            var args = new HookArgs.GameInitialize()
+            {
+                State = MethodState.End
+            };
+            HookPoints.GameInitialize.Invoke(ref ctx, ref args);
         }
 
         /// <summary>
@@ -296,6 +309,8 @@ namespace OTA.Callbacks
         public static void OnUpdateServerBegin()
         {
             
+
+
 
 
 

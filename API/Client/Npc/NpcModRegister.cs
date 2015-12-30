@@ -9,14 +9,14 @@ namespace OTA.Client.Npc
     {
         const int MaxNpcIds = Terraria.Main.maxNPCTypes;
 
-        private readonly ConcurrentDictionary<String, NpcDefinition> _npcs = new ConcurrentDictionary<String, NpcDefinition>();
+        private readonly ConcurrentDictionary<String, TypeDefinition> _npcs = new ConcurrentDictionary<String, TypeDefinition>();
         private int _nextId = MaxNpcIds + 1;
 
         public static int MaxNpcId = MaxNpcIds + 1;
 
         public int Register<T>(string name) where T : OTANpc
         {
-            var def = new NpcDefinition()
+            var def = new TypeDefinition()
             {
                 InstanceType = typeof(T)
             };
@@ -68,12 +68,12 @@ namespace OTA.Client.Npc
             return null;
         }
 
-        public NpcDefinition Find(int type)
+        public TypeDefinition Find(int type)
         {
             return _npcs.Where(x => x.Value.TypeId == type).Select(y => y.Value).FirstOrDefault();
         }
 
-        public NpcDefinition Find(string name)
+        public TypeDefinition Find(string name)
         {
             if (_npcs.ContainsKey(name)) return _npcs[name];
             return null;

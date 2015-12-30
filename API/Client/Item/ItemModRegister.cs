@@ -10,7 +10,7 @@ namespace OTA.Client.Item
     {
         const int MaxItemIds = Terraria.Main.maxItemTypes;
 
-        private readonly ConcurrentDictionary<String, ItemDefinition> _items = new ConcurrentDictionary<String, ItemDefinition>();
+        private readonly ConcurrentDictionary<String, TypeDefinition> _items = new ConcurrentDictionary<String, TypeDefinition>();
 
         private int _nextId = MaxItemIds + 1;
 
@@ -18,7 +18,7 @@ namespace OTA.Client.Item
 
         public int Register<T>(string name) where T : OTAItem
         {
-            var def = new ItemDefinition()
+            var def = new TypeDefinition()
             {
                 InstanceType = typeof(T)
             };
@@ -75,12 +75,12 @@ namespace OTA.Client.Item
             return null;
         }
 
-        public ItemDefinition Find(int type)
+        public TypeDefinition Find(int type)
         {
             return _items.Where(x => x.Value.TypeId == type).Select(y => y.Value).FirstOrDefault();
         }
 
-        public ItemDefinition Find(string name)
+        public TypeDefinition Find(string name)
         {
             if (_items.ContainsKey(name)) return _items[name];
             return null;

@@ -154,6 +154,7 @@ namespace OTA.Patcher
                 Terraria.Chest,
                 Terraria.Item,
                 Terraria.NPC
+                //Terraria.Tile
             })
             {
                 type.Fields.Add(new FieldDefinition("Mod", FieldAttributes.Public, Terraria.Import(API.INativeMod)));

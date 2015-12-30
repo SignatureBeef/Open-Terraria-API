@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using OTA.Client.Chest;
 using OTA.Client.Item;
+using OTA.Client.Tile;
 
 namespace OTA.Client
 {
@@ -16,6 +17,8 @@ namespace OTA.Client
         public static NpcModRegister Npcs { get; } = new NpcModRegister();
 
         public static ShopModRegister Shops { get; } = new ShopModRegister();
+
+        public static TileModRegister Tiles { get; } = new TileModRegister();
 
         internal static void ScanAssembly(Assembly asm)
         {
@@ -28,9 +31,11 @@ namespace OTA.Client
 
             var npc = typeof(OTANpc);
             var item = typeof(OTAItem);
+            var tile = typeof(OTATile);
 
             var npcRegister = typeof(NpcModRegister).GetMethod("Register");
             var itemRegister = typeof(ItemModRegister).GetMethod("Register");
+            var tileRegister = typeof(TileModRegister).GetMethod("Register");
 
             if (null != asm.ExportedTypes)
                 foreach (var nativeMod in asm.ExportedTypes.Where(x => Attribute.IsDefined(x, nm)))
@@ -47,6 +52,11 @@ namespace OTA.Client
                     {
                         Logging.ProgramLog.Debug.Log($"Detected custom ITEM {nativeMod.Name}");
                         itemRegister.MakeGenericMethod(nativeMod).Invoke(Items, new object[] { attr.EntityName });
+                    }
+                    else if (tile.IsAssignableFrom(nativeMod))
+                    {
+                        Logging.ProgramLog.Debug.Log($"Detected custom TILE {nativeMod.Name}");
+                        tileRegister.MakeGenericMethod(nativeMod).Invoke(Tiles, new object[] { attr.EntityName });
                     }
                 }
         }

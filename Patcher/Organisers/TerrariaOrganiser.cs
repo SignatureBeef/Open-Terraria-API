@@ -52,6 +52,12 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "Main"); }
         }
 
+        public TypeDefinition MapHelper
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "MapHelper"); }
+        }
+
         public TypeDefinition MessageBuffer
         {
             get
@@ -109,6 +115,12 @@ namespace OTA.Patcher.Organisers
         {
             get
             { return _asm.MainModule.Types.Single(x => x.Name == "RemoteServer"); }
+        }
+
+        public TypeDefinition Tile
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "Tile"); }
         }
 
         /// <summary>
