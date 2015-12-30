@@ -229,18 +229,23 @@ namespace OTA.Callbacks
 
         public static void OnInitialiseBegin(Terraria.Main game)
         {
+            var ctx = new HookContext()
+            {
+                Sender = HookContext.ConsoleSender
+            };
             #if Full_API && SERVER
             if (Terraria.Main.dedServ)
             {
-                var ctx = new HookContext()
-                {
-                    Sender = HookContext.ConsoleSender
-                };
                 var args = new HookArgs.ServerStateChange()
                 {
                     ServerChangeState = (Globals.CurrentState = ServerState.Initialising)
                 };
                 HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
+
+                ctx = new HookContext()
+                {
+                    Sender = HookContext.ConsoleSender
+                };
             }
             #elif CLIENT
             try
@@ -253,12 +258,11 @@ namespace OTA.Callbacks
             }
             #endif
 
-            var ctx = new HookContext();
-            var args = new HookArgs.GameInitialize()
+            var gi = new HookArgs.GameInitialize()
             {
                 State = MethodState.Begin
             };
-            HookPoints.GameInitialize.Invoke(ref ctx, ref args);
+            HookPoints.GameInitialize.Invoke(ref ctx, ref gi);
         }
 
         public static void OnInitialiseEnd(Terraria.Main game)
