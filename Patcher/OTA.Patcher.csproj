@@ -96,6 +96,7 @@
     <Compile Include="Hooks\ChestHooks.cs" />
     <Compile Include="Hooks\MapHooks.cs" />
     <Compile Include="Hooks\WorldGenHooks.cs" />
+    <Compile Include="Hooks\WorldFile.cs" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">

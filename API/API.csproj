@@ -317,7 +317,6 @@
     <Compile Include="Plugin\Hooks\Server\ServerStateChange.cs" />
     <Compile Include="Plugin\Hooks\Server\ServerTick.cs" />
     <Compile Include="Plugin\Hooks\Server\ServerUpdate.cs" />
-    <Compile Include="Plugin\Hooks\Client\Draw.cs" />
     <Compile Include="Plugin\Hooks\Client\UpdateClient.cs" />
     <Compile Include="Plugin\Hooks\Client\Update.cs" />
     <Compile Include="Plugin\Hooks\Multi\ChestBreakReceived.cs" />
@@ -425,6 +424,8 @@
     <Compile Include="Callbacks\MapCallback.cs" />
     <Compile Include="Plugin\Hooks\Client\MapHelperInitialize.cs" />
     <Compile Include="Plugin\Hooks\Multi\GameInitialize.cs" />
+    <Compile Include="Plugin\Hooks\Client\GameDraw.cs" />
+    <Compile Include="Client\Tile\TileDefinition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

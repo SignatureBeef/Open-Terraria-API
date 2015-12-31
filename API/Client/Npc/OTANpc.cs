@@ -118,6 +118,8 @@ namespace OTA.Client.Npc
         {
         }
 
+        #region Helpers
+
         public void StopEmulatingNPC()
         {
             _emulateNPCTypeId = 0;
@@ -155,6 +157,49 @@ namespace OTA.Client.Npc
                 }
             }
         }
+
+        /// <summary>
+        /// Sets the name of the npc.
+        /// </summary>
+        /// <param name="name">Name.</param>
+        public void SetName(string name)
+        {
+            Npc.name = name;
+            Npc.displayName = name;
+            Main.npcName[TypeId] = name;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="OTA.Client.Npc.OTANpc"/> is catchable.
+        /// </summary>
+        /// <value><c>true</c> if catchable; otherwise, <c>false</c>.</value>
+        public bool Catchable
+        {
+            get { return Main.npcCatchable[TypeId]; }
+            set { Main.npcCatchable[TypeId] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the frame count.
+        /// </summary>
+        /// <value>The frame count.</value>
+        public int FrameCount
+        {
+            get { return Main.npcFrameCount[TypeId]; }
+            set { Main.npcFrameCount[TypeId] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the kill count.
+        /// </summary>
+        /// <value>The kill count.</value>
+        public int KillCount
+        {
+            get { return NPC.killCount[TypeId]; }
+            set { NPC.killCount[TypeId] = value; }
+        }
+
+        #endregion
 
         #region Textures
 

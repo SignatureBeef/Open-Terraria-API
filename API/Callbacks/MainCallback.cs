@@ -506,12 +506,12 @@ namespace OTA.Callbacks
         public static void OnDrawBegin()
         {
             var ctx = HookContext.Empty;
-            var args = new HookArgs.Draw()
+            var args = new HookArgs.GameDraw()
             {
                 State = MethodState.Begin
             };
 
-            HookPoints.Draw.Invoke(ref ctx, ref args);
+            HookPoints.GameDraw.Invoke(ref ctx, ref args);
         }
 
         /// <summary>
@@ -520,12 +520,12 @@ namespace OTA.Callbacks
         public static void OnDrawEnd()
         {
             var ctx = HookContext.Empty;
-            var args = new HookArgs.Draw()
+            var args = new HookArgs.GameDraw()
             {
                 State = MethodState.End
             };
 
-            HookPoints.Draw.Invoke(ref ctx, ref args);
+            HookPoints.GameDraw.Invoke(ref ctx, ref args);
         }
 
         /// <summary>

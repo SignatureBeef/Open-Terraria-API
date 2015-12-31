@@ -7,18 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace OTA.Client.Tile
 {
-//    [NativeMod(TestTileName)]
-//    public class TestTile : OTATile
-//    {
-//        public const String TestTileName = "Test tile";
-//
-//        public override void OnSetDefaults()
-//        {
-//            Console.WriteLine($"Initialising {TestTileName}");
-//            EmulateTile(Terraria.ID.TileID.Cloud);
-//        }
-//    }
-
     public abstract class OTATile : INativeMod
     {
         public ushort TypeId { get; set; }

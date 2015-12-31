@@ -5,11 +5,6 @@ using System.Linq;
 
 namespace OTA.Client.Tile
 {
-    public class TileDefinition : TypeDefinition
-    {
-        public OTATile Tile { get; set; }
-    }
-
     public class TileModRegister
     {
         const int MaxIds = Terraria.Main.maxTileSets;

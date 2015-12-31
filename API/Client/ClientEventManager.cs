@@ -192,55 +192,6 @@ namespace OTA.Client
             }
         }
 
-//        bool state;
-
-//        [Hook]
-//        void OnUpdate(ref HookContext ctx, ref Plugin.HookArgs.GameUpdate args)
-//        {
-//            Main.ignoreErrors = false;
-//            if (args.State == MethodState.Begin)
-//            {
-//                var mouse = Terraria.Main.mouseState;
-//
-//                if (mouse.RightButton == ButtonState.Pressed)
-//                {
-//                    if (!state)
-//                    {
-//                        state = true;
-//
-//                        if (Terraria.Main.myPlayer > -1 && Terraria.Main.myPlayer < 10 && Terraria.Main.player[Terraria.Main.myPlayer] != null)
-//                        {
-//                            var player = Terraria.Main.player[Terraria.Main.myPlayer];
-//                            var tileType = EntityRegistrar.Tiles[OTA.Client.Tile.TestTile.TestTileName];
-//
-//                            var playerX = (int)(player.position.X / 16f);
-//                            var playerY = (int)(player.position.Y / 16f) - 4;
-//
-//                            Console.WriteLine($"Tiles near: {playerX},{playerY}");
-//
-////                            Main.tile[playerX, playerY] = new Terraria.Tile();
-////                            Main.tile[playerX, playerY].type = (ushort)tileType;
-////                            Main.tile[playerX, playerY].active(true);
-////                            WorldGen.SquareTileFrame(playerX, playerY, true);
-//
-//                            Terraria.WorldGen.PlaceTile(playerX, playerY, tileType);
-//                            Terraria.WorldGen.PlaceTile(playerX + 1, playerY, Terraria.ID.TileID.Stone);
-//
-//                            Terraria.Main.dayTime = true;
-//                            Terraria.Main.time = OTA.Command.WorldTime.Parse("8:00am").Value.GameTime;
-//                        }
-//                    }
-//                }
-//                else state = false;
-//            }
-//        }
-
-        [Hook]
-        void OnPlayerEnter(ref HookContext ctx, ref Plugin.HookArgs.PlayerEnteredGame args)
-        {
-//            Terraria.NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs["Sassy"]);
-        }
-
         [Hook]
         void OnNpcChat(ref HookContext ctx, ref Plugin.HookArgs.NpcGetChat args)
         {
