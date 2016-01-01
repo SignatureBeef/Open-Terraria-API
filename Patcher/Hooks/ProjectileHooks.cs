@@ -40,6 +40,32 @@ namespace OTA.Patcher
 
             method.Wrap(cbkBegin, cbkEnd);
         }
+
+        [OTAPatch(SupportType.ClientServer, "Hooking projectile creation")]
+        private void HookProjectileCreation()
+        {
+            var method = Terraria.Projectile.Method("NewProjectile");
+            var callback = API.ProjectileCallback.Method("GetProjectile");
+
+            //Find the second Main.projectile reference
+            var insIndex = method.Body.Instructions.Where(x => x.OpCode == OpCodes.Ldsfld
+                               && x.Operand is FieldReference
+                               && (x.Operand as FieldReference).Name == "projectile").Skip(1).First()
+                .Next;
+
+            var il = method.Body.GetILProcessor();
+
+            il.Remove(insIndex.Previous);
+            il.Remove(insIndex.Next);
+
+            il.InsertAfter(insIndex, il.Create(OpCodes.Call, Terraria.Import(callback)));
+
+            //Add all parameters
+            foreach (var prm in method.Parameters.Reverse())
+            {
+                il.InsertAfter(insIndex, il.Create(OpCodes.Ldarg, prm));
+            }
+        }
     }
 }
 

@@ -153,7 +153,8 @@ namespace OTA.Patcher
             foreach (var type in new [] {
                 Terraria.Chest,
                 Terraria.Item,
-                Terraria.NPC
+                Terraria.NPC,
+                Terraria.Projectile
                 //Terraria.Tile
             })
             {

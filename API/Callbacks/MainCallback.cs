@@ -327,6 +327,7 @@ namespace OTA.Callbacks
 
 
 
+
 #if SERVER
             var ctx = HookContext.Empty;
             var args = HookArgs.ServerUpdate.Begin;
@@ -632,12 +633,24 @@ namespace OTA.Callbacks
         #if CLIENT
         public static void OnLoadContentBegin()
         {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.GameLoadContent()
+            {
+                State = MethodState.Begin
+            };
 
+            HookPoints.GameLoadContent.Invoke(ref ctx, ref args);
         }
 
         public static void OnLoadContentEbd()
         {
+            var ctx = HookContext.Empty;
+            var args = new HookArgs.GameLoadContent()
+            {
+                State = MethodState.End
+            };
 
+            HookPoints.GameLoadContent.Invoke(ref ctx, ref args);
         }
 
         public static bool OnLoadNPC(Terraria.Main game, int i)

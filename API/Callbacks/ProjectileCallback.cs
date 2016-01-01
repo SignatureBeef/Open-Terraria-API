@@ -61,5 +61,35 @@ namespace OTA.Callbacks
             };
             HookPoints.ProjectileAI.Invoke(ref ctx, ref args);
         }
+
+        public static Terraria.Projectile GetProjectile(int index, 
+                                                        float x, float y,
+                                                        float speedX, float speedY,
+                                                        int type, int damage, float knockBack, int owner, 
+                                                        float ai0, float ai1)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NewProjectile()
+            {
+                Projectile = Terraria.Main.projectile[index],
+                Index = index,
+
+                X = x,
+                Y = y,
+                SpeedX = speedX,
+                SpeedY = speedY,
+                Type = type,
+                Damage = damage,
+                KnockBack = knockBack,
+                Owner = owner,
+                ai0 = ai0,
+                ai1 = ai1
+            };
+            HookPoints.NewProjectile.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.RECTIFY)
+                return ctx.ResultParam as Terraria.Projectile;
+            else return Terraria.Main.projectile[index];
+        }
     }
 }

@@ -81,7 +81,7 @@ namespace OTA.Client.Item
         }
 
         /// <summary>
-        /// Loads an existing Item's texture using its NPC Type Id.
+        /// Loads an existing Item's texture using its Item Type Id.
         /// </summary>
         /// <param name="targetNPCType">The target Item type you wish to clone.</param>
         /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
@@ -91,7 +91,7 @@ namespace OTA.Client.Item
         }
 
         /// <summary>
-        /// Loads an existing Item's texture using its NPC Type Id to the mods'.
+        /// Loads an existing Item's texture using its Item Type Id to the mods'.
         /// </summary>
         /// <param name="targetNPCType">The target Item type you wish to clone.</param>
         /// <param name="modTypeId">The type id assigned to the mod.</param>

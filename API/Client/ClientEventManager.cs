@@ -1,9 +1,10 @@
 ﻿#if CLIENT
 using System;
+
+using Terraria;
+
 using OTA.Plugin;
 using OTA.Client.Npc;
-using Terraria;
-using Microsoft.Xna.Framework.Input;
 
 namespace OTA.Client
 {
@@ -42,6 +43,18 @@ namespace OTA.Client
             if (null != args.Plugin.Assembly)
                 EntityRegistrar.ScanAssembly(args.Plugin.Assembly);
         }
+
+        [Hook]
+        void OnInitialised(ref HookContext ctx, ref Plugin.HookArgs.GameInitialize args)
+        {
+            if (args.State == MethodState.End)
+            {
+                Client.Tile.OTATile.ResizeArrays(true, false);
+                EntityRegistrar.Tiles.InitialiseTiles();
+            }
+        }
+
+        #region Item
 
         [Hook]
         void OnNewItem(ref HookContext ctx, ref Plugin.HookArgs.NewItem args)
@@ -104,6 +117,10 @@ namespace OTA.Client
                 }
             }
         }
+
+        #endregion
+
+        #region Npc
 
         [Hook]
         void OnNewNpc(ref HookContext ctx, ref Plugin.HookArgs.NewNpc args)
@@ -183,16 +200,6 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnInitialised(ref HookContext ctx, ref Plugin.HookArgs.GameInitialize args)
-        {
-            if (args.State == MethodState.End)
-            {
-                Client.Tile.OTATile.ResizeArrays(true, false);
-                EntityRegistrar.Tiles.InitialiseTiles();
-            }
-        }
-
-        [Hook]
         void OnNpcChat(ref HookContext ctx, ref Plugin.HookArgs.NpcGetChat args)
         {
             var ota = args.Npc.Mod as OTANpc;
@@ -230,6 +237,10 @@ namespace OTA.Client
             }
         }
 
+        #endregion
+
+        #region Shop
+
         [Hook]
         void OnChestSetupShop(ref HookContext ctx, ref Plugin.HookArgs.ChestSetupShop args)
         {
@@ -243,51 +254,29 @@ namespace OTA.Client
                 }
             }
         }
-        
-        //            static int testId;
-        //
-        //            [Hook]
-        //            void OnUpdate(ref HookContext ctx, ref Plugin.HookArgs.GameUpdate args)
-        //            {
-        //                if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
-        //                {
-        //                    var npc = Terraria.Main.npc[testId];
-        //                    if (npc.type != 542)
-        //                    {
-        //                        Logging.ProgramLog.Debug.Log("NPC type is now 542");
-        //                        npc.type = 542;
-        //                        Logging.ProgramLog.Log("Main.npcFrameCount: " + Main.npcFrameCount[npc.type]);
-        //                    }
-        //                }
-        //                else if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
-        //                {
-        //                    var npc = Terraria.Main.npc[testId];
-        //                    if (npc.type != Terraria.ID.NPCID.Guide)
-        //                    {
-        //                        Logging.ProgramLog.Debug.Log("NPC type is now Terraria.ID.NPCID.Guide");
-        //                        npc.type = Terraria.ID.NPCID.Guide;
-        //                        Logging.ProgramLog.Log("Main.npcFrameCount: " + Main.npcFrameCount[npc.type]);
-        //                    }
-        //                }
-        //                else if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
-        //                {
-        //                    var npc = Terraria.Main.npc[testId] as OTANpc;
-        //                    if (npc != null && npc._emulateNPCTypeId != Terraria.ID.NPCID.Guide)
-        //                    {
-        //                        Logging.ProgramLog.Debug.Log("Now emulating Guide");
-        //                        npc._emulateNPCTypeId = Terraria.ID.NPCID.Guide;
-        //                    }
-        //                }
-        //                else if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R))
-        //                {
-        //                    var npc = Terraria.Main.npc[testId] as OTANpc;
-        //                    if (npc != null && npc._emulateNPCTypeId != 0)
-        //                    {
-        //                        Logging.ProgramLog.Debug.Log("Not emulating Guide");
-        //                        npc._emulateNPCTypeId = 0;
-        //                    }
-        //                }
-        //            }
+
+        #endregion
+
+        #region Projectile
+
+        [Hook]
+        void OnNewProjectile(ref HookContext ctx, ref Plugin.HookArgs.NewProjectile args)
+        {
+            var mod = EntityRegistrar.Projectiles.Create(args.Type);
+            if (mod != null)
+            {
+                var proj = new Terraria.Projectile();
+                proj.Mod = mod;
+                mod.Projectile = proj;
+                mod.Initialise();
+
+                Terraria.Main.projectile[args.Index] = proj;
+
+                ctx.SetResult(HookResult.RECTIFY, true, proj);
+            }
+        }
+
+        #endregion
     }
 }
 #endif

@@ -11,6 +11,53 @@ namespace OTA.Client.Tile
     {
         public ushort TypeId { get; set; }
 
+        #region Textures
+
+        /// <summary>
+        /// Load a Tile texture using an asset name for the current instance if it's not already been done.
+        /// </summary>
+        /// <param name="assetName">Asset name.</param>
+        /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
+        public void LoadTexture(string assetName, bool force = false)
+        {
+            if (force || null == Main.tileTexture[TypeId])
+            {
+                Main.tileTexture[TypeId] = Main.instance.Content.Load<Texture2D>(assetName);
+                Main.tileSetsLoaded[TypeId] = true;
+            }
+        }
+
+        /// <summary>
+        /// Loads an existing Tiles's texture using its Tile Type Id.
+        /// </summary>
+        /// <param name="targetNPCType">The target NPC type you wish to clone.</param>
+        /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
+        public void LoadTexture(int targetTileType, bool force = false)
+        {
+            if (force || null == Main.tileTexture[TypeId])
+            {
+                Main.tileTexture[TypeId] = Main.instance.Content.Load<Texture2D>($"Images{Path.DirectorySeparatorChar}Tiles_{targetTileType}");
+                Main.tileSetsLoaded[TypeId] = true;
+            }
+        }
+
+        /// <summary>
+        /// Load the Tile texture for the current instance if it's not already been done.
+        /// </summary>
+        /// <param name="texture">Texture to be assigned.</param>
+        /// <param name="force">Ignore an existing loaded texture and load the one specified.</param>
+        public void LoadTexture(Texture2D texture, bool force = false)
+        {
+            if (force || null == Main.tileTexture[TypeId])
+            {
+                Main.tileTexture[TypeId] = texture;
+                Main.tileSetsLoaded[TypeId] = true;
+            }
+        }
+
+        #endregion
+
+
         public void EmulateTile(int cloneFromTypeId)
         {
             if (!Terraria.Main.tileSetsLoaded[cloneFromTypeId])

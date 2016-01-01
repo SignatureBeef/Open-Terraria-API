@@ -426,6 +426,10 @@
     <Compile Include="Plugin\Hooks\Multi\GameInitialize.cs" />
     <Compile Include="Plugin\Hooks\Client\GameDraw.cs" />
     <Compile Include="Client\Tile\TileDefinition.cs" />
+    <Compile Include="Plugin\Hooks\Client\GameLoadContent.cs" />
+    <Compile Include="Plugin\Hooks\Multi\NewProjectile.cs" />
+    <Compile Include="Client\Projectile\ProjectileModRegister.cs" />
+    <Compile Include="Client\Projectile\OTAProjectile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
