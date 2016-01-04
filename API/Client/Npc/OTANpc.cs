@@ -81,7 +81,7 @@ namespace OTA.Client.Npc
             return null;
         }
 
-        public virtual bool OnChatButtonClick(OTA.Callbacks.NpcChatButton button)
+        public virtual bool OnChatButtonClick(OTA.Client.Npc.NpcChatButton button)
         {
             return true;
         }

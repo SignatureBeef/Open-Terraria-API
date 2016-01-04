@@ -4,6 +4,7 @@ using OTA.Plugin;
 using System.Diagnostics;
 using OTA.Logging;
 using OTA.Command;
+using OTA.Plugin;
 
 #if Full_API
 using Terraria;

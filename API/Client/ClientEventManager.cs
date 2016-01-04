@@ -5,6 +5,7 @@ using Terraria;
 
 using OTA.Plugin;
 using OTA.Client.Npc;
+using OTA.Plugin;
 
 namespace OTA.Client
 {
@@ -38,14 +39,14 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnPluginLoad(ref HookContext ctx, ref Plugin.HookArgs.PluginEnabled args)
+        void OnPluginLoad(ref HookContext ctx, ref HookArgs.PluginEnabled args)
         {
             if (null != args.Plugin.Assembly)
                 EntityRegistrar.ScanAssembly(args.Plugin.Assembly);
         }
 
         [Hook]
-        void OnInitialised(ref HookContext ctx, ref Plugin.HookArgs.GameInitialize args)
+        void OnInitialised(ref HookContext ctx, ref HookArgs.GameInitialize args)
         {
             if (args.State == MethodState.End)
             {
@@ -54,10 +55,20 @@ namespace OTA.Client
             }
         }
 
+        [Hook]
+        void OnGUIChatBoxOpen(ref HookContext ctx, ref HookArgs.GUIChatBoxOpen args)
+        {
+            ctx.SetResult(HookResult.RECTIFY, true, 
+                args.IsEnterDown
+                && !args.IsLeftAltDown
+                && !args.IsRightAltDown
+                && Terraria.Main.hasFocus);
+        }
+
         #region Item
 
         [Hook]
-        void OnNewItem(ref HookContext ctx, ref Plugin.HookArgs.NewItem args)
+        void OnNewItem(ref HookContext ctx, ref HookArgs.NewItem args)
         {
             var mod = EntityRegistrar.Items.Create(args.Type);
             if (mod != null)
@@ -71,7 +82,7 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnItemSetDefaultsByName(ref HookContext ctx, ref Plugin.HookArgs.ItemSetDefaultsByName args)
+        void OnItemSetDefaultsByName(ref HookContext ctx, ref HookArgs.ItemSetDefaultsByName args)
         {
             if (args.State == MethodState.Begin)
             {
@@ -87,7 +98,7 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnItemSetDefaultsByType(ref HookContext ctx, ref Plugin.HookArgs.ItemSetDefaultsByType args)
+        void OnItemSetDefaultsByType(ref HookContext ctx, ref HookArgs.ItemSetDefaultsByType args)
         {
             if (args.State == MethodState.Begin)
             {
@@ -103,7 +114,7 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnItemNetDefaults(ref HookContext ctx, ref Plugin.HookArgs.ItemNetDefaults args)
+        void OnItemNetDefaults(ref HookContext ctx, ref HookArgs.ItemNetDefaults args)
         {
             if (args.State == MethodState.Begin)
             {
@@ -123,7 +134,7 @@ namespace OTA.Client
         #region Npc
 
         [Hook]
-        void OnNewNpc(ref HookContext ctx, ref Plugin.HookArgs.NewNpc args)
+        void OnNewNpc(ref HookContext ctx, ref HookArgs.NewNpc args)
         {
             var mod = EntityRegistrar.Npcs.Create(args.Type);
             if (mod != null)
@@ -137,7 +148,7 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnNpcDraw(ref HookContext ctx, ref Plugin.HookArgs.NpcDraw args)
+        void OnNpcDraw(ref HookContext ctx, ref HookArgs.NpcDraw args)
         {
             Terraria.Main.ignoreErrors = false;
             var ota = args.Npc.Mod as OTANpc;
@@ -158,7 +169,7 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnNpcUpdate(ref HookContext ctx, ref Plugin.HookArgs.NpcUpdate args)
+        void OnNpcUpdate(ref HookContext ctx, ref HookArgs.NpcUpdate args)
         {
             var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
@@ -180,7 +191,7 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnNpcAI(ref HookContext ctx, ref Plugin.HookArgs.NpcAI args)
+        void OnNpcAI(ref HookContext ctx, ref HookArgs.NpcAI args)
         {
             var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
@@ -200,7 +211,7 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnNpcChat(ref HookContext ctx, ref Plugin.HookArgs.NpcGetChat args)
+        void OnNpcChat(ref HookContext ctx, ref HookArgs.NpcGetChat args)
         {
             var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
@@ -210,7 +221,7 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnNpcChatButtons(ref HookContext ctx, ref Plugin.HookArgs.NpcGetChatButtons args)
+        void OnNpcChatButtons(ref HookContext ctx, ref HookArgs.NpcGetChatButtons args)
         {
             var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
@@ -224,7 +235,7 @@ namespace OTA.Client
         }
 
         [Hook]
-        void OnNpcChatButtonClicked(ref HookContext ctx, ref Plugin.HookArgs.NpcChatButtonClick args)
+        void OnNpcChatButtonClicked(ref HookContext ctx, ref HookArgs.NpcChatButtonClick args)
         {
             var ota = args.Npc.Mod as OTANpc;
             if (ota != null)
@@ -237,12 +248,18 @@ namespace OTA.Client
             }
         }
 
+        [Hook]
+        void OnNpcPreSpawn(ref HookContext ctx, ref HookArgs.NpcPreSpawn args)
+        {
+            //Test whether to spawn a OTANpc or let vanilla spawn it's own.
+        }
+
         #endregion
 
         #region Shop
 
         [Hook]
-        void OnChestSetupShop(ref HookContext ctx, ref Plugin.HookArgs.ChestSetupShop args)
+        void OnChestSetupShop(ref HookContext ctx, ref HookArgs.ChestSetupShop args)
         {
             if (args.State == MethodState.End)
             {
@@ -260,7 +277,7 @@ namespace OTA.Client
         #region Projectile
 
         [Hook]
-        void OnNewProjectile(ref HookContext ctx, ref Plugin.HookArgs.NewProjectile args)
+        void OnNewProjectile(ref HookContext ctx, ref HookArgs.NewProjectile args)
         {
             var mod = EntityRegistrar.Projectiles.Create(args.Type);
             if (mod != null)

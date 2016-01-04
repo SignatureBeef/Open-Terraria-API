@@ -1,5 +1,6 @@
 ﻿using System;
 using OTA.Plugin;
+using OTA.Plugin;
 
 #if Full_API
 using Terraria;

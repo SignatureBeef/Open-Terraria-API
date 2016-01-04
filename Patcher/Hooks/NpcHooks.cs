@@ -3,6 +3,7 @@ using System.Linq;
 using Mono.Cecil.Cil;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
+using System.Collections.Generic;
 
 namespace OTA.Patcher
 {
@@ -470,6 +471,116 @@ namespace OTA.Patcher
             var call = API.NPCCallback.Method("OnGetChat");
 
             method.ReplaceInstanceMethod(call);
+        }
+
+        [OTAPatch(SupportType.Client, "Hooking NPC pre spawn")]
+        private void HookNPCPreSpawn()
+        {
+            var method = Terraria.NPC.Method("SpawnNPC");
+            var call = Terraria.Import(API.NPCCallback.Method("OnPreSpawn"));
+
+            //The insertion point is located above the second player.ZoneTowerNebula
+            var insEntry = method.Body.Instructions.Where(x => x.OpCode == OpCodes.Callvirt
+                               && x.Operand is MethodReference
+                               && (x.Operand as MethodReference).Name == "get_ZoneTowerNebula")
+                .Skip(1)
+                .First()
+                .FindPreviousInstructionByOpCode(OpCodes.Ldsfld);
+
+            var il = method.Body.GetILProcessor();
+
+            var insCall = method.InsertCancellableMethodBefore(insEntry, call);
+
+            var localVariables = method.Body.Instructions
+                .Where(x => (new OpCode []
+                { 
+                    OpCodes.Ldloc,
+//                    OpCodes.Ldloca,
+                    OpCodes.Ldloc_S,
+                    OpCodes.Ldloca_S,
+
+                    OpCodes.Stloc,
+                    OpCodes.Stloc_S
+                }).Contains(x.OpCode)
+                                     && x.Offset < insEntry.Offset)
+                .Select(y => y.Operand as VariableDefinition)
+
+
+                .Union(
+                                     method.Body.Instructions
+                    .Where(x => (new OpCode []
+                    { 
+                        OpCodes.Ldloc_0,
+                        OpCodes.Stloc_0
+                    }).Contains(x.OpCode)
+                                         && x.Offset < insEntry.Offset)
+                    .Select(y => method.Body.Variables[0])
+                                 )
+
+                .Union(
+                                     method.Body.Instructions
+                .Where(x => (new OpCode []
+                    { 
+                        OpCodes.Ldloc_1,
+                        OpCodes.Stloc_1
+                    }).Contains(x.OpCode)
+                                         && x.Offset < insEntry.Offset)
+                    .Select(y => method.Body.Variables[1])
+                                 )
+
+                .Union(
+                                     method.Body.Instructions
+                    .Where(x => (new OpCode []
+                    { 
+                        OpCodes.Ldloc_2,
+                        OpCodes.Stloc_2
+                    }).Contains(x.OpCode)
+                                         && x.Offset < insEntry.Offset)
+                    .Select(y => method.Body.Variables[2])
+                                 )
+
+                .Union(
+                                     method.Body.Instructions
+                    .Where(x => (new OpCode []
+                    { 
+                        OpCodes.Ldloc_3,
+                        OpCodes.Stloc_3
+                    }).Contains(x.OpCode)
+                                         && x.Offset < insEntry.Offset)
+                    .Select(y => method.Body.Variables[3])
+                                 )
+
+                .Distinct()
+                .OrderBy(z => z.Index);
+
+            var variables = localVariables.OrderBy(x => x.VariableType.ToString()).ToArray();
+
+//            int prmIdx = 0;
+//            foreach (var local in variables)
+//            {
+//                if (prmIdx > 0) Console.Write(",\n");
+//                Console.Write("{0} prm{1}", local.VariableType, prmIdx++);
+////                Console.Write("/*" + local.Value.Name + "*/");
+//            }
+
+            foreach (var pair in variables)
+            {
+                /*if (pair.Value == OpCodes.Ldloc_0)
+                {
+                    il.InsertBefore(insCall, il.Create(OpCodes.Ldloc_0));
+                }
+                else if (pair.Value == OpCodes.Ldloc_1)
+                {
+                    il.InsertBefore(insCall, il.Create(OpCodes.Ldloc_1));
+                }
+                else if (pair.Value == OpCodes.Ldloc_2)
+                {
+                    il.InsertBefore(insCall, il.Create(OpCodes.Ldloc_2));
+                }
+                else*/
+
+                il.InsertBefore(insCall, il.Create(OpCodes.Ldloc, pair));
+            }
         }
     }
 }

@@ -164,9 +164,9 @@ namespace BLS
 			return new string[] { "Sassy Foods" };
 		}
 
-		public override bool OnChatButtonClick (OTA.Callbacks.NpcChatButton button)
+		public override bool OnChatButtonClick (NpcChatButton button)
 		{
-			if (button == OTA.Callbacks.NpcChatButton.First)
+			if (button == NpcChatButton.First)
 			{
 				OpenSassyFoods ();
 			}

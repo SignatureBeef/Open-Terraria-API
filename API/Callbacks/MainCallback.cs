@@ -7,6 +7,8 @@ using OTA.Command;
 using System.Reflection;
 using System.Linq;
 using System.IO;
+using OTA.Plugin;
+using Terraria;
 
 namespace OTA.Callbacks
 {
@@ -312,27 +314,9 @@ namespace OTA.Callbacks
         //        private static DateTime? _lastUpdate;
         public static void OnUpdateServerBegin()
         {
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#if SERVER
             var ctx = HookContext.Empty;
             var args = HookArgs.ServerUpdate.Begin;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
-            #endif
         }
 
         /// <summary>

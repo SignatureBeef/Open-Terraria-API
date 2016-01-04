@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading;
 using OTA.Command;
 using OTA.Logging;
+using OTA.Plugin;
 
 namespace OTA.Plugin
 {
@@ -270,10 +271,7 @@ namespace OTA.Plugin
             {
                 try
                 {
-                    var ctx = new HookContext
-                    {
-                    };
-
+                    var ctx = new HookContext();
                     var args = new HookArgs.PluginEnabled
                     {
                         Plugin = this

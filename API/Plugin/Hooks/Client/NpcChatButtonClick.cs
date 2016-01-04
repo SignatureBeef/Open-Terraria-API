@@ -9,7 +9,7 @@ namespace OTA.Plugin
         {
             public Terraria.NPC Npc { get; set; }
 
-            public OTA.Callbacks.NpcChatButton Button { get; set; }
+            public OTA.Client.Npc.NpcChatButton Button { get; set; }
         }
     }
 

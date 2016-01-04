@@ -705,6 +705,19 @@ namespace OTA.Patcher
                 }
             }
         }
+
+        public static Instruction InsertCancellableMethodBefore(this MethodDefinition method, Instruction ins, MethodReference callback)
+        {
+            var il = method.Body.GetILProcessor();
+
+            Instruction call;
+            il.InsertBefore(ins, call = il.Create(OpCodes.Call, callback));
+//            il.InsertBefore(ins, il.Create(OpCodes.Pop));
+            il.InsertBefore(ins, il.Create(OpCodes.Brtrue, ins));
+            il.InsertBefore(ins, il.Create(OpCodes.Ret));
+
+            return call;
+        }
     }
 }
 

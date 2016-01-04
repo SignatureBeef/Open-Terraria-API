@@ -1,5 +1,6 @@
 ﻿using OTA.Plugin;
 using OTA.Command;
+using OTA.Plugin;
 
 namespace OTA.Callbacks
 {
@@ -547,22 +548,22 @@ namespace OTA.Callbacks
 
         public static bool OnChatButtonClicked()
         {
-            var res = NpcChatButton.None;
+            var res = OTA.Client.Npc.NpcChatButton.None;
 
             if (Terraria.Main.npcChatFocus1)
             {
-                res = NpcChatButton.Second;
+                res = OTA.Client.Npc.NpcChatButton.Second;
             }
             else if (Terraria.Main.npcChatFocus2)
             {
-                res = NpcChatButton.First;
+                res = OTA.Client.Npc.NpcChatButton.First;
             }
             else if (Terraria.Main.npcChatFocus3)
             {
-                res = NpcChatButton.Third;
+                res = OTA.Client.Npc.NpcChatButton.Third;
             }
 
-            if (res != NpcChatButton.None)
+            if (res != OTA.Client.Npc.NpcChatButton.None)
             {
                 var ctx = new HookContext();
                 var args = new HookArgs.NpcChatButtonClick()
@@ -578,21 +579,110 @@ namespace OTA.Callbacks
 
             return true;
         }
-        #endif
-    }
 
-    /// <summary>
-    /// Npc chat buttons in order of display.
-    /// </summary>
-    /// <example>For the Guide:
-    ///     Help = First
-    ///     Close = Second
-    ///     Crafting = Third</example>
-    public enum NpcChatButton : byte
-    {
-        None = 0,
-        First,
-        Second,
-        Third
+        public static bool OnPreSpawn
+        (
+            Microsoft.Xna.Framework.Rectangle prm0,//prm
+            Microsoft.Xna.Framework.Rectangle prm1,//rectangle
+            Microsoft.Xna.Framework.Vector2 prm2,//center
+            Microsoft.Xna.Framework.Vector2 prm3,//center2
+            Microsoft.Xna.Framework.Vector2 prm4,//center3
+            Microsoft.Xna.Framework.Vector2 prm5,//bottom
+            System.Boolean prm6,//flag13
+            System.Boolean sky,//flag
+            System.Boolean lihzahrdBrickWall,//flag2
+            System.Boolean playerSafe,//flag3
+            System.Boolean invasion,//flag4
+            System.Boolean water,//flag5
+            System.Boolean prm12,//flag6
+            System.Boolean granite,//flag7
+            System.Boolean marble,//flag8
+            System.Boolean spiderCave,//flag9
+            System.Boolean playerInTown,//flag10
+            System.Boolean desertCave,//flag11
+            System.Boolean planteraDefeated,//flag12
+            System.Boolean safeRangeX,//flag14
+            System.Int32 spawnTileX,//num
+            System.Int32 spawnTileY,//num2
+            System.Int32 prm22,//num3
+            System.Int32 prm23,//num4
+            System.Int32 prm24,//i
+            System.Int32 playerId,//j
+            System.Int32 prm26,//num5
+            System.Int32 prm27,//k
+            System.Int32 prm28,//num6
+            System.Int32 prm29,//num7
+            System.Int32 prm30,//num9
+            System.Int32 prm31,//nunm10
+            System.Int32 prm32,//num11
+            System.Int32 prm33,//num12
+            System.Int32 prm34,//num13
+            System.Int32 prm35,//num14
+            System.Int32 prm36,//num15
+            System.Int32 prm37,//num16
+            System.Int32 prm38,//l
+            System.Int32 prm39,//num17
+            System.Int32 prm40,//num18
+            System.Int32 prm41,//m
+            System.Int32 prm42,//num19
+            System.Int32 prm43,//num20
+            System.Int32 prm44,//num21
+            System.Int32 prm45,//num22
+            System.Int32 prm46,//n
+            System.Int32 prm47,//num23
+            System.Int32 prm48,//num24
+            System.Int32 playerFloorX,//num25
+            System.Int32 playerFloorY,//num26
+            System.Int32 prm51,//num27
+            System.Int32 prm52,//num28
+            System.Int32 prm53,//num29
+            System.Int32 prm54,//num30
+            System.Int32 prm55,//num31
+            System.Int32 prm56,//num32
+            System.Int32 prm57,//num33
+            System.Int32 prm58,//num34
+            System.Int32 prm59,//num35
+            System.Int32 prm60,//num36
+            System.Int32 prm61,//num37
+            System.Int32 prm62,//num38
+            System.Int32 prm63,//num39
+            System.Int32 prm64,//num40
+            System.Int32 prm65,//num41
+            System.Int32 prm66,//num42
+            System.Int32 prm67,//num43
+            System.Int32 prm68,//num44
+            System.Int32 prm69,//num45
+            System.Int32 prm70,//num46
+            System.Single prm71//num8
+        )
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.NpcPreSpawn()
+            {
+                Sky = sky,
+                LihzahrdBrickWall = lihzahrdBrickWall,
+                PlayerSafe = playerSafe,
+                Invasion = invasion,
+                Water = water,
+                Granite = granite,
+                Marble = marble,
+                SpiderCave = spiderCave,
+                PlayerInTown = playerInTown,
+                DesertCave = desertCave,
+                PlanteraDefeated = planteraDefeated,
+                SafeRangeX = safeRangeX,
+                SpawnTileX = spawnTileX,
+                SpawnTileY = spawnTileY,
+                PlayerFloorX = playerFloorX,
+                PlayerFloorY = playerFloorY
+            };
+
+            System.Console.WriteLine(args.ToString());
+
+            HookPoints.NpcPreSpawn.Invoke(ref ctx, ref args);
+
+            return ctx.Result == HookResult.DEFAULT;
+        }
+        #endif
     }
 }

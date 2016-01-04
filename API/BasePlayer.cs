@@ -116,7 +116,11 @@ namespace OTA
         public virtual void SendMessage(string message, int sender = 255, byte R = 255, byte G = 255, byte B = 255)
         {
 #if Full_API
+            #if CLIENT
+            Terraria.Main.NewText(message, R, G, B);
+            #elif SERVER
             Terraria.NetMessage.SendData((int)Packet.PLAYER_CHAT, ((Terraria.Player)this).whoAmI, -1, message, sender, R, G, B);
+            #endif
 #endif
         }
 

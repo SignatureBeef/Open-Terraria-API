@@ -54,6 +54,12 @@ namespace OTA.Patcher.Organisers
             get
             { return _asm.MainModule.Types.Single(x => x.Name == "INativeMod"); }
         }
+
+        public TypeDefinition InterfaceCallback
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "InterfaceCallback"); }
+        }
         #endif
 
         public TypeDefinition ItemCallback

@@ -430,6 +430,11 @@
     <Compile Include="Plugin\Hooks\Multi\NewProjectile.cs" />
     <Compile Include="Client\Projectile\ProjectileModRegister.cs" />
     <Compile Include="Client\Projectile\OTAProjectile.cs" />
+    <Compile Include="Client\Npc\NpcChatButton.cs" />
+    <Compile Include="Callbacks\InterfaceCallback.cs" />
+    <Compile Include="Plugin\Hooks\Client\GUIChatBoxOpen.cs" />
+    <Compile Include="Plugin\Hooks\Client\GUIChatBoxSend.cs" />
+    <Compile Include="Plugin\Hooks\Multi\NpcPreSpawn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -457,5 +462,8 @@
     <Folder Include="Client\Net\" />
     <Folder Include="Client\Tile\" />
     <Folder Include="Client\Buff\" />
+    <Folder Include="Client\Wall\" />
+    <Folder Include="Client\Mount\" />
+    <Folder Include="Callbacks\Enums\" />
   </ItemGroup>
 </Project>

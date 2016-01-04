@@ -161,6 +161,52 @@ namespace OTA.Patcher
                 type.Fields.Add(new FieldDefinition("Mod", FieldAttributes.Public, Terraria.Import(API.INativeMod)));
             }
         }
+
+        [OTAPatch(SupportType.Client, "Hooking chat box")]
+        private void HookChatBox()
+        {
+            var method = Terraria.Main.Method("Update");
+
+            var startInstruction = method.Body.Instructions.Single(
+                                       x => x.OpCode == OpCodes.Ldc_I4_S && x.Operand.Equals((sbyte)13)
+                                       && x.Next.Next.Next.OpCode == OpCodes.Ldsfld
+                                       && x.Next.Next.Next.Operand is FieldReference
+                                       && (x.Next.Next.Next.Operand as FieldReference).Name == "netMode"
+                                   ).Previous;
+
+            startInstruction.OpCode = OpCodes.Call;
+            startInstruction.Operand = Terraria.Import(API.InterfaceCallback.Method("CanOpenChat"));
+
+            var il = method.Body.GetILProcessor();
+
+            while (!(startInstruction.Next.Next.OpCode == OpCodes.Ldsfld
+                   && startInstruction.Next.Next.Operand is FieldReference
+                   && (startInstruction.Next.Next.Operand as FieldReference).Name == "chatRelease"))
+            {
+                il.Remove(startInstruction.Next);
+            }
+        }
+
+        [OTAPatch(SupportType.Client, "Hooking chat box text")]
+        private void HookChatText()
+        {
+            var method = Terraria.Main.Method("Update");
+            var callback = Terraria.Import(API.InterfaceCallback.Method("OnChatTextSend"));
+
+            var insEntry = method.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldsfld
+                               && x.Operand is FieldReference
+                               && (x.Operand as FieldReference).Name == "chatRelease"
+
+                               && x.Previous.Previous.OpCode == OpCodes.Ldsfld
+                               && x.Previous.Previous.Operand is FieldReference
+                               && (x.Previous.Previous.Operand as FieldReference).Name == "inputTextEnter"
+                           ).Next;
+
+            var il = method.Body.GetILProcessor();
+
+            il.InsertAfter(insEntry, il.Create(OpCodes.Brfalse, insEntry.Operand as Instruction));
+            il.InsertAfter(insEntry, il.Create(OpCodes.Call, callback));
+        }
         #endif
     }
 }
