@@ -184,6 +184,25 @@ namespace BLS
 			Main.PlaySound (12, -1, -1, 1);
 		}
 
+		public override double OnPreSpawn (HookArgs.NpcPreSpawn info)
+		{
+			//Spawn during day
+			if (!Main.dayTime) return 0;
+
+//			const Int32 SpawnRange = 5;
+//			if (info.SpawnTileX > Main.spawnTileX + SpawnRange
+//				|| info.SpawnTileX < Main.spawnTileX - SpawnRange
+//				|| info.SpawnTileY < Main.spawnTileY - SpawnRange
+//				|| info.SpawnTileY > Main.spawnTileY + SpawnRange) return 0;
+
+			if (WorldGen.numIslandHouses > 0)
+			{
+
+			}
+
+			return 0.25;
+		}
+
 		#endregion
 	}
 }

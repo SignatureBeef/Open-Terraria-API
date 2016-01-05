@@ -9,7 +9,7 @@ namespace OTA.Extensions
     /// </summary>
     public static class LinqExtensions
     {
-        static readonly Random _rand = new Random();
+        private static readonly Random _rand = new Random();
 
         /// <summary>
         /// Selects a random item from the list
@@ -44,6 +44,54 @@ namespace OTA.Extensions
             }  
 
             return data;
+        }
+
+        /// <summary>
+        /// Finds a random element using a chance value as weighting
+        /// </summary>
+        /// <returns>The random element.</returns>
+        /// <param name="list">List.</param>
+        /// <param name="fncChance">Fnc chance.</param>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
+        public static T WeightedRandom<T>(this System.Collections.Generic.IEnumerable<T> list, Func<T, double> fncChance)
+        {
+            var totalWeight = 0.0;
+            T selection = default(T);
+
+            foreach (var item in list)
+            {
+                //Calculate how many chances this item has
+                var chance = fncChance(item);
+                //If there are zero chances then move on to the next item
+                if (chance <= 0) continue;
+
+                /*
+                     * Calculate the random item weight. If the random item weight is in the chance range then use it.
+                     * e.g.
+                     *  [totalWeight]   + [chance]  = [current weight range | chance range]
+                     *  123             + 4         = 127
+                     *  if [randWeight] >= 123 && [randWeight] <= 127 then the chance suceeded
+                     *  else do nothing and continue to the next item (can be an unordered list)
+                     */
+                var randWeight = _rand.Next((int)((totalWeight + chance) * 100.0)) / 100.0;
+                if (randWeight >= totalWeight) selection = item;
+
+                totalWeight += chance;
+            }
+
+            //If there are multiple items for the same chance then we must find a random element
+            //otherwise it's possible that only one of these items will ever be used.
+            if (!selection.Equals(default(T)))
+            {
+                var matches = list.Where(x => fncChance(x) == fncChance(selection));
+                if (matches.Count() > 1)
+                {
+                    var index = _rand.Next(0, matches.Count());
+                    selection = matches.ElementAt(index);
+                }
+            }
+
+            return selection;
         }
     }
 }

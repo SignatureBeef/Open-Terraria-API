@@ -582,6 +582,25 @@ namespace OTA.Patcher
                 il.InsertBefore(insCall, il.Create(OpCodes.Ldloc, pair));
             }
         }
+
+        #if CLIENT
+        [OTAPatch(SupportType.Client, "Hooking Npc saving")]
+        private void HookNpcSaving()
+        {
+            var method = Terraria.WorldFile.Method("SaveWorldHeader");
+            var field = Terraria.Import(API.NpcModRegister.Field("MaxNpcId"));
+
+            var npcCount = method.Body.Instructions
+                .Where(x => x.OpCode == OpCodes.Ldc_I4 && x.Operand.Equals(540))
+                .ToArray();
+
+            foreach (var npc in npcCount)
+            {
+                npc.OpCode = OpCodes.Ldsfld;
+                npc.Operand = field;
+            }
+        }
+        #endif
     }
 }
 

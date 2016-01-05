@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace OTA.Client.Npc
 {
@@ -9,7 +10,9 @@ namespace OTA.Client.Npc
     {
         const int MaxNpcIds = Terraria.Main.maxNPCTypes;
 
-        private readonly ConcurrentDictionary<String, TypeDefinition> _npcs = new ConcurrentDictionary<String, TypeDefinition>();
+        private readonly ConcurrentDictionary<String, TypeDefinition> _entities = new ConcurrentDictionary<String, TypeDefinition>();
+        private readonly List<OTANpc> _instances = new List<OTANpc>();
+
         private int _nextId = MaxNpcIds + 1;
 
         public static int MaxNpcId = MaxNpcIds + 1;
@@ -20,13 +23,18 @@ namespace OTA.Client.Npc
             {
                 InstanceType = typeof(T)
             };
-            if (_npcs.TryAdd(name, def))
+            if (_entities.TryAdd(name, def))
             {
                 def.TypeId = System.Threading.Interlocked.Increment(ref _nextId);
 
                 if (MaxNpcId < def.TypeId) MaxNpcId = def.TypeId + 1;
 
                 OTANpc.ResizeArrays();
+
+                //Create a non-npc related definition in order for us to call simple non-instance events
+                var npc = (OTANpc)Activator.CreateInstance<T>();
+                npc.TypeId = def.TypeId;
+                _instances.Add(npc);
 
                 return def.TypeId;
             }
@@ -70,18 +78,23 @@ namespace OTA.Client.Npc
 
         public TypeDefinition Find(int type)
         {
-            return _npcs.Where(x => x.Value.TypeId == type).Select(y => y.Value).FirstOrDefault();
+            return _entities.Where(x => x.Value.TypeId == type).Select(y => y.Value).FirstOrDefault();
         }
 
         public TypeDefinition Find(string name)
         {
-            if (_npcs.ContainsKey(name)) return _npcs[name];
+            if (_entities.ContainsKey(name)) return _entities[name];
             return null;
         }
 
         public int this [string name]
         {
             get { return Find(name).TypeId; }
+        }
+
+        internal IEnumerable<T> Select<T>(Func<OTANpc, T> ex)
+        {
+            return _instances.Select(ex);
         }
 
         //        public NpcDef this [string name]

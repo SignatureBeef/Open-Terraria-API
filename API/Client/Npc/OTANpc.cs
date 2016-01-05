@@ -90,6 +90,20 @@ namespace OTA.Client.Npc
         {
         }
 
+        /// <summary>
+        /// Determines how many chances the NPC has to spawn.
+        /// </summary>
+        /// <returns>
+        ///     0 to never spawn
+        ///     1 to have the same chance as a vanilla NPC
+        ///     2 to have twice as many chances as a vanilla NPC
+        ///     .5 to be half as common as a vanilla NPC
+        /// </returns>
+        public virtual double OnPreSpawn(HookArgs.NpcPreSpawn args)
+        {
+            return 0;
+        }
+
         public virtual bool OnUpdate()
         {
             if (_emulateNPCTypeId > 0)
