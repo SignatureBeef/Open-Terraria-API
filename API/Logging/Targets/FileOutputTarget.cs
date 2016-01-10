@@ -9,19 +9,19 @@ namespace OTA.Logging
         ProgramThread thread;
         StreamWriter file;
 
-        public FileOutputTarget (string path)
+        public FileOutputTarget(string path)
         {
-            file = new StreamWriter (path, true);
-            thread = new ProgramThread ("LogF", OutputThread);
+            file = new StreamWriter(path, true);
+            thread = new ProgramThread("LogF", OutputThread);
             thread.IsBackground = false;
-            thread.Start ();
+            thread.Start();
         }
 
-        void OutputThread ()
+        void OutputThread()
         {
             try
             {
-                var list = new OutputEntry [ProgramLog.LOG_THREAD_BATCH_SIZE];
+                var list = new OutputEntry[ProgramLog.LOG_THREAD_BATCH_SIZE];
 
                 while (exit == false || EntryCount() > 0)
                 {
@@ -31,7 +31,7 @@ namespace OTA.Logging
                     {
                         while (entries.Count > 0)
                         {
-                            list[items++] = entries.Dequeue ();
+                            list[items++] = entries.Dequeue();
                             if (items == ProgramLog.LOG_THREAD_BATCH_SIZE) break;
                         }
                     }
@@ -41,7 +41,7 @@ namespace OTA.Logging
                         if (exit)
                             break;
                         else
-                            signal.WaitForIt ();
+                            signal.WaitForIt();
                     }
 
                     for (int i = 0; i < items; i++)
@@ -51,49 +51,49 @@ namespace OTA.Logging
 
                         if (entry.prefix != null)
                         {
-                            file.Write (entry.prefix);
+                            file.Write(entry.prefix);
                         }
 
                         if (entry.message is string)
                         {
-                            var str = (string) entry.message;
-                            file.WriteLine (str);
-                            file.Flush ();
+                            var str = (string)entry.message;
+                            file.WriteLine(str);
+                            file.Flush();
                         }
                         else if (entry.message is ProgressLogger)
                         {
-                            var prog = (ProgressLogger) entry.message;
+                            var prog = (ProgressLogger)entry.message;
                             var str = "";
 
                             if (entry.arg == -1) // new one
                             {
-                                str = String.Format ("{0}: started.", prog.Message);
+                                str = String.Format("{0}: started.", prog.Message);
                             }
                             else if (entry.arg == -2) // finished one
                             {
-                                str = prog.Format (true);
+                                str = prog.Format(true);
                             }
                             else // update
                             {
-                                str = prog.Format (prog.Max != 100, entry.arg);
+                                str = prog.Format(prog.Max != 100, entry.arg);
                             }
 
-                            file.WriteLine (str);
-                            file.Flush ();
+                            file.WriteLine(str);
+                            file.Flush();
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine (e.ToString());
+                SafeConsole.Error.WriteLine(e.ToString());
             }
 
             try
             {
-                file.Close ();
+                file.Close();
             }
-            catch {}
+            catch { }
         }
     }
 }

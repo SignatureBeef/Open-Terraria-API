@@ -8,14 +8,14 @@ namespace OTA.Patcher
     public static class ConsoleHelper
     {
         /// <summary>
-        /// Blanks out the current line based on the width of the console.
+        /// Blanks out the current line based on the width of the Console.
         /// </summary>
         public static void ClearLine()
         {
-            var current = System.Console.CursorTop;
-            System.Console.SetCursorPosition(0, System.Console.CursorTop);
-            System.Console.Write(new string(' ', System.Console.WindowWidth));
-            System.Console.SetCursorPosition(0, current);
+            var current = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, current);
         }
     }
 }

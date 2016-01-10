@@ -7,7 +7,6 @@ using OTA.Command;
 using System.Reflection;
 using System.Linq;
 using System.IO;
-using OTA.Plugin;
 using Terraria;
 
 namespace OTA.Callbacks
@@ -97,13 +96,24 @@ namespace OTA.Callbacks
         /// </summary>
         static void ProgramStart()
         {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Open Terraria API build {0} running on {1}",
-                Globals.BuildInfo,
-                Tools.RuntimePlatform.ToString()
-            );
-            Console.ForegroundColor = Command.ConsoleSender.DefaultColour;
+            if (!Environment.UserInteractive)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Open Terraria API build {0} running on {1}",
+                    Globals.BuildInfo,
+                    Tools.RuntimePlatform.ToString()
+                );
+                Console.ForegroundColor = Command.ConsoleSender.DefaultColour;
+            }
+
+#if CLIENT
+            (new System.Threading.Thread(() =>
+            {
+                var dw = new OTA.Client.Debug.ConsoleWindow();
+                dw.ShowDialog();
+            })).Start();
+#endif
 
             Globals.Touch();
             ID.Lookup.Initialise();
@@ -154,7 +164,7 @@ namespace OTA.Callbacks
         public static bool OnProgramStarted(string[] cmd)
         {
             System.Threading.Thread.CurrentThread.Name = "Run";
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             //Preload our Libraries before we attempt anything
             if (Directory.Exists(Globals.LibrariesPath))
@@ -211,7 +221,7 @@ namespace OTA.Callbacks
             }
 #endif
 
-            #if SERVER
+#if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -221,7 +231,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.Stopping)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
-            #endif 
+#endif
 
             PluginManager.DisablePlugins();
 
@@ -235,7 +245,7 @@ namespace OTA.Callbacks
             {
                 Sender = HookContext.ConsoleSender
             };
-            #if Full_API && SERVER
+#if Full_API && SERVER
             if (Terraria.Main.dedServ)
             {
                 var args = new HookArgs.ServerStateChange()
@@ -249,7 +259,7 @@ namespace OTA.Callbacks
                     Sender = HookContext.ConsoleSender
                 };
             }
-            #elif CLIENT
+#elif CLIENT
             try
             {
                 Plugin.PluginManager.RegisterPlugin(new Client.ClientEventManager());
@@ -258,7 +268,7 @@ namespace OTA.Callbacks
             {
                 ProgramLog.Log(e);
             }
-            #endif
+#endif
 
             var gi = new HookArgs.GameInitialize()
             {
@@ -310,7 +320,7 @@ namespace OTA.Callbacks
 #endif
         }
 
-        #if SERVER
+#if SERVER
         //        private static DateTime? _lastUpdate;
         public static void OnUpdateServerBegin()
         {
@@ -331,7 +341,7 @@ namespace OTA.Callbacks
             var args = HookArgs.ServerUpdate.End;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
         }
-        #endif
+#endif
 
         public static void OnUpdateBegin()
         {
@@ -357,7 +367,7 @@ namespace OTA.Callbacks
             Terraria.Main.statusText = String.Empty;
 #endif
 
-            #if SERVER
+#if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -367,7 +377,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.WorldLoading)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
-            #endif
+#endif
         }
 
         /// <summary>
@@ -380,7 +390,7 @@ namespace OTA.Callbacks
             Terraria.Main.statusText = String.Empty;
 #endif
 
-            #if SERVER
+#if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -390,7 +400,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.WorldLoaded)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
-            #endif
+#endif
         }
 
         /// <summary>
@@ -404,7 +414,7 @@ namespace OTA.Callbacks
             Terraria.Main.statusText = String.Empty;
 #endif
 
-            #if SERVER
+#if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -414,7 +424,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.WorldGenerating)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
-            #endif
+#endif
         }
 
         /// <summary>
@@ -427,7 +437,7 @@ namespace OTA.Callbacks
             Terraria.Main.statusText = String.Empty;
 #endif
 
-            #if SERVER
+#if SERVER
             var ctx = new HookContext()
             {
                 Sender = HookContext.ConsoleSender
@@ -437,7 +447,7 @@ namespace OTA.Callbacks
                 ServerChangeState = (Globals.CurrentState = ServerState.WorldGenerated)
             };
             HookPoints.ServerStateChange.Invoke(ref ctx, ref args);
-            #endif
+#endif
         }
 
         //private static int _textTimeout = 0;
@@ -484,7 +494,7 @@ namespace OTA.Callbacks
             return ctx.Result == HookResult.DEFAULT; //Continue on
         }
 
-        #if CLIENT
+#if CLIENT
         /// <summary>
         /// The first call from Terraria.Main.Draw
         /// </summary>
@@ -540,7 +550,7 @@ namespace OTA.Callbacks
 
             HookPoints.UpdateClient.Invoke(ref ctx, ref args);
         }
-        #endif
+#endif
 
         internal static void ResetTileArray()
         {
@@ -555,7 +565,7 @@ namespace OTA.Callbacks
             Terraria.Main.tile = new OTA.Memory.TileCollection(x, y);
 #endif
         }
-            
+
         //TODO move this out to a CommonCallback class or something?
         public static bool OnMechSpawn(float x, float y, int type, int num, int num2, int num3, MechSpawnType sender)
         {
@@ -614,7 +624,7 @@ namespace OTA.Callbacks
             }
         }
 
-        #if CLIENT
+#if CLIENT
         public static void OnLoadContentBegin()
         {
             var ctx = HookContext.Empty;
@@ -649,7 +659,7 @@ namespace OTA.Callbacks
 
             return ctx.Result == HookResult.DEFAULT;
         }
-        #endif
+#endif
     }
 
     public enum MechSpawnType : int

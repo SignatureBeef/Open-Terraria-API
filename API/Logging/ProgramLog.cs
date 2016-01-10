@@ -316,8 +316,8 @@ namespace OTA.Logging
             {
                 try
                 {
-                    System.Console.WriteLine("Error writing log entry:");
-                    System.Console.WriteLine(error.ToString());
+                    SafeConsole.WriteLine("Error writing log entry:");
+                    SafeConsole.WriteLine(error.ToString());
                 }
                 catch (Exception)
                 {
@@ -434,7 +434,7 @@ namespace OTA.Logging
             }
             catch (Exception e)
             {
-                System.Console.WriteLine(e.ToString());
+                SafeConsole.WriteLine(e.ToString());
             }
 
             lock (logTargets)

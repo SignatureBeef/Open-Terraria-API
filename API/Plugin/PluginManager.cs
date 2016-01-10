@@ -11,7 +11,6 @@ using OTA.Command;
 using OTA.Plugin;
 using OTA.Logging;
 using OTA.Extensions;
-using OTA.Plugin;
 
 namespace OTA.Plugin
 {
@@ -295,7 +294,8 @@ namespace OTA.Plugin
                             Dependencies = types,
                             FilePath = filePath
                         };
-                        if (null == _deferedPlugins) _deferedPlugins = new List<DeferredPlugin>()
+                        if (null == _deferedPlugins)
+                            _deferedPlugins = new List<DeferredPlugin>()
                             {
                                 sh
                             };
@@ -395,6 +395,11 @@ namespace OTA.Plugin
 
         public static PluginLoadResult LoadSourcePlugin(string path, out BasePlugin plugin)
         {
+            return LoadSourcePlugin(out plugin, false, path);
+        }
+
+        public static PluginLoadResult LoadSourcePlugin(out BasePlugin plugin, bool source, params string[] files)
+        {
             plugin = null;
             var cp = new Microsoft.CSharp.CSharpCodeProvider(compilerOptions);
             var par = new System.CodeDom.Compiler.CompilerParameters();
@@ -409,7 +414,7 @@ namespace OTA.Plugin
 
             //Add the libraries path as well as where TDSM is located
             var directory = Path.GetDirectoryName(us.Location);
-            par.CompilerOptions = String.Format("/lib:{0}", Globals.LibrariesPath, directory);
+            par.CompilerOptions = String.Format("/lib:\"{0}\"", Globals.LibrariesPath, directory);
 
             //            var execs = GetFiles(directory, "*.dll|*.exe");
             foreach (var asn in us.GetReferencedAssemblies())
@@ -421,7 +426,9 @@ namespace OTA.Plugin
                 par.ReferencedAssemblies.Add(name);
             }
 
-            var result = cp.CompileAssemblyFromFile(par, path);
+            System.CodeDom.Compiler.CompilerResults result;
+            if (source) result = cp.CompileAssemblyFromSource(par, files);
+            else result = cp.CompileAssemblyFromFile(par, files);
 
             var errors = result.Errors;
             if (errors != null)
@@ -441,7 +448,7 @@ namespace OTA.Plugin
                 }
             }
 
-            return TryLoadPluginAssembly(result.CompiledAssembly, out plugin, path);
+            return TryLoadPluginAssembly(result.CompiledAssembly, out plugin, files.First());
         }
 
         /// <summary>

@@ -10,9 +10,9 @@ namespace OTA.Client.Tile
         const int MaxIds = Terraria.Main.maxTileSets;
 
         private readonly ConcurrentDictionary<String, TileDefinition> _entities = new ConcurrentDictionary<String, TileDefinition>();
-        private int _nextId = MaxIds + 1;
+        private int _nextId = MaxIds;
 
-        public static int MaxId = MaxIds + 1;
+        public static int MaxId = MaxIds;
 
         public int Register<T>(string name) where T : OTATile
         {

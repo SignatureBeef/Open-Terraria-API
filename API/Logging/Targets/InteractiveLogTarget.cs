@@ -27,7 +27,7 @@ namespace OTA.Logging
         {
             try
             {
-                var list = new OutputEntry [ProgramLog.LOG_THREAD_BATCH_SIZE];
+                var list = new OutputEntry[ProgramLog.LOG_THREAD_BATCH_SIZE];
                 var progs = new List<ProgressLogger>();
                 var backspace = 0;
 
@@ -138,7 +138,7 @@ namespace OTA.Logging
             catch (Exception e)
             {
                 if (!passExceptions)
-                    Console.Error.WriteLine(e.ToString());
+                    SafeConsole.Error.WriteLine(e.ToString());
                 else
                     throw;
             }
@@ -148,7 +148,7 @@ namespace OTA.Logging
         {
             var ctx = new HookContext()
             {
-                Sender = HookContext.ConsoleSender              
+                Sender = HookContext.ConsoleSender
             };
 
             var args = new HookArgs.ConsoleMessageReceived()

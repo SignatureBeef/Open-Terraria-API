@@ -10,7 +10,7 @@ namespace OTA.Patcher
     /// </summary>
     public class Program
     {
-        #if SERVER
+#if SERVER
         static void Main(string[] args)
         {
             //By default we will patch a server
@@ -42,7 +42,8 @@ namespace OTA.Patcher
             OTAPatcher.PatchMode = SupportType.Client;
 
             //Specifiy the official file name
-            OTAPatcher.InputFileName = "Terraria.MAC.exe";
+            OTAPatcher.Platform = "Windows";
+            OTAPatcher.InputFileName = "Terraria." + OTAPatcher.Platform + ".exe";
 
             //Specify the output assembly[name]
             OTAPatcher.OutputName = "Terraria";
@@ -58,7 +59,7 @@ namespace OTA.Patcher
 
             OTAPatcher.DefaultProcess(args);
         }
-        #endif
+#endif
 
         //        public static void Main(string[] args)
         //        {
@@ -85,11 +86,11 @@ namespace OTA.Patcher
         public const String OTAGuid = "9f7bca2e-4d2e-4244-aaae-fa56ca7797ec";
         public const Int32 Build = 6;
 
-        #if CLIENT
+#if CLIENT
         private const String FolderKind = "Client";
-        #elif SERVER
+#elif SERVER
         private const String FolderKind = "Server";
-        #endif
+#endif
 
         /// <summary>
         /// Development tools. Copies files into the Debug folder.
@@ -226,6 +227,8 @@ namespace OTA.Patcher
         /// </summary>
         /// <value><c>true</c> if swap OTA references; otherwise, <c>false</c>.</value>
         public static bool SwapOTAReferences { get; set; }
+
+        public static string Platform { get; set; }
 
         static OTAPatcher()
         {
@@ -388,9 +391,9 @@ namespace OTA.Patcher
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                            {
-                                RootDirectory = root
-                            });
+                        {
+                            RootDirectory = root
+                        });
                 }
 
                 if (!File.Exists(inFile))
@@ -438,13 +441,14 @@ namespace OTA.Patcher
                             Copy(new DirectoryInfo(Path.Combine(root.FullName, OTAProjectDirectory)), "API", Environment.CurrentDirectory, "OTA", true);
                         }
                     }
-                    Copy(root, "Official", Environment.CurrentDirectory, "Terraria", false);
+
+                    Copy(root, "Official", Environment.CurrentDirectory, "Terraria." + Platform, false);
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                            {
-                                RootDirectory = root
-                            });
+                        {
+                            RootDirectory = root
+                        });
                 }
             }
 
@@ -542,9 +546,9 @@ namespace OTA.Patcher
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                        {
-                            Injector = patcher
-                        });
+                    {
+                        Injector = patcher
+                    });
 
                 //TODO repace Terraria's Console.SetTitles
             }
@@ -566,11 +570,14 @@ namespace OTA.Patcher
                 patcher.InjectHooks(SupportType.Client);
                 Console.WriteLine("All patches ran.");
 
+                Console.Write("Updating to .NET v4.5.1...");
+                patcher.SwitchFramework("4.5.1");
+
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                        {
-                            Injector = patcher
-                        });
+                    {
+                        Injector = patcher
+                    });
             }
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;

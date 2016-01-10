@@ -12,9 +12,9 @@ namespace OTA.Client.Projectile
 
         private readonly ConcurrentDictionary<String, TypeDefinition> _entities = new ConcurrentDictionary<String, TypeDefinition>();
 
-        private int _nextId = MaxIds + 1;
+        private int _nextId = MaxIds;
 
-        public static int MaxId = MaxIds + 1;
+        public static int MaxId = MaxIds;
 
         public int Register<T>(string name) where T : OTAProjectile
         {

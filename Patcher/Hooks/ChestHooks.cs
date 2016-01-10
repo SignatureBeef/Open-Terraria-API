@@ -21,6 +21,15 @@ namespace OTA.Patcher
 
             target.Wrap(cbkBegin, cbkEnd, true);
         }
+        [OTAPatch(SupportType.Client, "ABC")]
+        private void PatchWIndows()
+        {
+            var target = Terraria.Program.Method("<LaunchGame>b__0");
+            target.Body.Instructions.Clear();
+            var il = target.Body.GetILProcessor();
+
+            il.Append(il.Create(OpCodes.Ret));
+        }
     }
 }
 

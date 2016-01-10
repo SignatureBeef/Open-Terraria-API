@@ -6,7 +6,7 @@ namespace OTA.Client.Chest
 {
     public class ShopModRegister
     {
-        private int _type = Terraria.Main.numShops + 1;
+        private int _type = Terraria.Main.numShops;
 
         private readonly ConcurrentDictionary<Int32, OTAShop> _shops = new ConcurrentDictionary<Int32, OTAShop>();
 

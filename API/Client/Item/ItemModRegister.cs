@@ -12,9 +12,9 @@ namespace OTA.Client.Item
 
         private readonly ConcurrentDictionary<String, TypeDefinition> _items = new ConcurrentDictionary<String, TypeDefinition>();
 
-        private int _nextId = MaxItemIds + 1;
+        private int _nextId = MaxItemIds;
 
-        public static int MaxItemId = MaxItemIds + 1;
+        public static int MaxItemId = MaxItemIds;
 
         public int Register<T>(string name) where T : OTAItem
         {
@@ -86,7 +86,7 @@ namespace OTA.Client.Item
             return null;
         }
 
-        public int this [string name]
+        public int this[string name]
         {
             get { return Find(name).TypeId; }
         }

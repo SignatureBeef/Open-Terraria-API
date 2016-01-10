@@ -1,7 +1,6 @@
 ﻿using System;
 using OTA.Plugin;
 using OTA.Logging;
-using OTA.Plugin;
 
 namespace OTA.Callbacks
 {

@@ -13,9 +13,9 @@ namespace OTA.Client.Npc
         private readonly ConcurrentDictionary<String, TypeDefinition> _entities = new ConcurrentDictionary<String, TypeDefinition>();
         private readonly List<OTANpc> _instances = new List<OTANpc>();
 
-        private int _nextId = MaxNpcIds + 1;
+        private int _nextId = MaxNpcIds;
 
-        public static int MaxNpcId = MaxNpcIds + 1;
+        public static int MaxNpcId = MaxNpcIds;
 
         public int Register<T>(string name) where T : OTANpc
         {
@@ -87,7 +87,7 @@ namespace OTA.Client.Npc
             return null;
         }
 
-        public int this [string name]
+        public int this[string name]
         {
             get { return Find(name).TypeId; }
         }

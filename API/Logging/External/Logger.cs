@@ -36,7 +36,7 @@ namespace OTA.Logging
             while (!_loggers.IsEmpty)
             {
                 ILogger logger;
-                if (!_loggers.TryPeek(out logger)) break;
+                if (!_loggers.TryTake(out logger)) break;
             }
         }
 

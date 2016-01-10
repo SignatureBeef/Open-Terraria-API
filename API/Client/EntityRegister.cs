@@ -8,6 +8,7 @@ using OTA.Client.Chest;
 using OTA.Client.Item;
 using OTA.Client.Tile;
 using OTA.Client.Projectile;
+using OTA.Logging;
 
 namespace OTA.Client
 {
@@ -27,7 +28,7 @@ namespace OTA.Client
         {
             DebugFramework.Assert.Expression(() => asm == null);
 
-            Logging.ProgramLog.Debug.Log($"Scanning assemby {asm.FullName}");
+            Logger.Log($"Scanning assemby {asm.FullName}");
 
             //Look for INativeMod
             var nm = typeof(NativeModAttribute);
@@ -47,25 +48,25 @@ namespace OTA.Client
                 {
                     var attr = (NativeModAttribute)Attribute.GetCustomAttribute(nativeMod, nm);
 
-                    Logging.ProgramLog.Debug.Log($"Flagged class {nativeMod.Name}");
+                    Logger.Log($"Flagged class {nativeMod.Name}");
                     if (npc.IsAssignableFrom(nativeMod))
                     {
-                        Logging.ProgramLog.Debug.Log($"Detected custom NPC {nativeMod.Name}");
+                        Logger.Log($"Detected custom NPC {nativeMod.Name}");
                         npcRegister.MakeGenericMethod(nativeMod).Invoke(Npcs, new object[] { attr.EntityName });
                     }
                     else if (item.IsAssignableFrom(nativeMod))
                     {
-                        Logging.ProgramLog.Debug.Log($"Detected custom ITEM {nativeMod.Name}");
+                        Logger.Log($"Detected custom ITEM {nativeMod.Name}");
                         itemRegister.MakeGenericMethod(nativeMod).Invoke(Items, new object[] { attr.EntityName });
                     }
                     else if (tile.IsAssignableFrom(nativeMod))
                     {
-                        Logging.ProgramLog.Debug.Log($"Detected custom TILE {nativeMod.Name}");
+                        Logger.Log($"Detected custom TILE {nativeMod.Name}");
                         tileRegister.MakeGenericMethod(nativeMod).Invoke(Tiles, new object[] { attr.EntityName });
                     }
                     else if (projectile.IsAssignableFrom(nativeMod))
                     {
-                        Logging.ProgramLog.Debug.Log($"Detected custom PROJECTILE {nativeMod.Name}");
+                        Logger.Log($"Detected custom PROJECTILE {nativeMod.Name}");
                         projectileRegister.MakeGenericMethod(nativeMod).Invoke(Tiles, new object[] { attr.EntityName });
                     }
                 }

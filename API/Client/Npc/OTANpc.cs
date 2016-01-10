@@ -19,7 +19,7 @@ namespace OTA.Client.Npc
         #endregion
 
         public Terraria.NPC Npc
-        { 
+        {
             get { return _npc; }
             internal set
             {
@@ -34,12 +34,12 @@ namespace OTA.Client.Npc
         }
 
         public int TypeId
-        { 
+        {
             get
-            { 
+            {
                 if (Npc != null && Npc.type != 0) return Npc.type;
                 return _typeId;
-            } 
+            }
             set
             {
                 if (Npc != null) Npc.type = value;
@@ -244,6 +244,24 @@ namespace OTA.Client.Npc
                 Main.NPCLoaded[TypeId] = true;
             }
         }
+
+        //public void LoadTexture(string filePath, bool force = false)
+        //{
+        //    if (force || null == Main.npcTexture[TypeId])
+        //    {
+        //        filePath = Path.Combine("Content", filePath);
+        //        if (!File.Exists(filePath) && File.Exists(filePath + ".png"))
+        //        {
+        //            filePath += ".png";
+        //        }
+
+        //        using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+        //        {
+        //            Main.npcTexture[TypeId] = Texture2D.FromStream(Terraria.Main.graphics.GraphicsDevice, fileStream);
+        //            Main.NPCLoaded[TypeId] = true;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Load the NPC texture for the current instance if it's not already been done.

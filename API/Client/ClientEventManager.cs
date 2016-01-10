@@ -5,7 +5,6 @@ using Terraria;
 
 using OTA.Plugin;
 using OTA.Client.Npc;
-using OTA.Plugin;
 using System.Linq;
 using OTA.Extensions;
 
@@ -29,6 +28,10 @@ namespace OTA.Client
             OTANpc.ResizeArrays();
             ScanExistingPlugins();
             EntityRegistrar.ScanAssembly(typeof(ClientEventManager).Assembly);
+            
+            var pkg = Packages.PackageBuilder.CreateFromDirectory("TBLS", "TBLS");
+
+            pkg.Run();
         }
 
         void ScanExistingPlugins()
@@ -60,7 +63,7 @@ namespace OTA.Client
         [Hook]
         void OnGUIChatBoxOpen(ref HookContext ctx, ref HookArgs.GUIChatBoxOpen args)
         {
-            ctx.SetResult(HookResult.RECTIFY, true, 
+            ctx.SetResult(HookResult.RECTIFY, true,
                 args.IsEnterDown
                 && !args.IsLeftAltDown
                 && !args.IsRightAltDown
@@ -269,25 +272,25 @@ namespace OTA.Client
             var item = EntityRegistrar.Npcs
                 .Select(x => new WeightableItem() { Npc = x, Chance = x.OnPreSpawn(info) })
                 .Where(y => y.Chance > 0)
-                       
-                       //Add the vanilla NPC chance
-                .Union(new WeightableItem[] { new WeightableItem() { Chance = 1 } })
 
-                       //Find the item to spawn
+                //Add the vanilla NPC chance
+                .Union(new WeightableItem[] { new WeightableItem() { Chance = VanillaNPCWeight } })
+
+                //Find the item to spawn
                 .WeightedRandom(x => x.Chance);
-            
+
             if (item != null && item.Npc != null)
             {
                 ctx.SetResult(HookResult.IGNORE);
 
                 NPC.NewNPC((int)(args.SpawnTileX * 16f), (int)(args.SpawnTileY * 16f), item.Npc.TypeId);
 
-//                Main.NewText("Spawning custom npc: " + item.Npc.TypeId, R: 0, B: 0);
+                //                Main.NewText("Spawning custom npc: " + item.Npc.TypeId, R: 0, B: 0);
             }
-//            else
-//            {
-//                Main.NewText("Spawning vanilla npc");
-//            }
+            //            else
+            //            {
+            //                Main.NewText("Spawning vanilla npc");
+            //            }
         }
 
         #endregion

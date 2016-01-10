@@ -36,7 +36,7 @@ namespace OTA.Patcher
             method.Wrap(cbkBegin, cbkEnd, true);
         }
 
-        #if CLIENT
+#if CLIENT
         [OTAPatch(SupportType.Client, "Allowing custom NPC's to be drawn")]
         private void AllowMoreNPCDrawing()
         {
@@ -48,7 +48,7 @@ namespace OTA.Patcher
             ldLoc_540.OpCode = OpCodes.Ldsfld;
             ldLoc_540.Operand = Terraria.Import(replacement);
         }
-        #endif
+#endif
 
         [OTAPatch(SupportType.Client, "Hooking Npc texture loading")]
         private void HookNpcLoad()
@@ -117,17 +117,17 @@ namespace OTA.Patcher
             var npcChatFocus1 = method.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldsfld
                                     && x.Operand is FieldReference
                                     && (x.Operand as FieldReference).Name == "npcChatFocus1"
-                                    && x.Next.OpCode == OpCodes.Brfalse
+                                    && (x.Next.OpCode == OpCodes.Brfalse/*Mac*/ || x.Next.OpCode == OpCodes.Brfalse_S/*Windows*/)
                                     && x.Offset > mouseLeftRelease.Offset);
             var npcChatFocus2 = method.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldsfld
                                     && x.Operand is FieldReference
                                     && (x.Operand as FieldReference).Name == "npcChatFocus2"
-                                    && x.Next.OpCode == OpCodes.Brfalse
+                                    && (x.Next.OpCode == OpCodes.Brfalse/*Mac*/ || x.Next.OpCode == OpCodes.Brfalse_S/*Windows*/)
                                     && x.Offset > mouseLeftRelease.Offset);
             var npcChatFocus3 = method.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldsfld
                                     && x.Operand is FieldReference
                                     && (x.Operand as FieldReference).Name == "npcChatFocus3"
-                                    && x.Next.OpCode == OpCodes.Brfalse
+                                    && (x.Next.OpCode == OpCodes.Brfalse/*Mac*/ || x.Next.OpCode == OpCodes.Brfalse_S/*Windows*/)
                                     && x.Offset > mouseLeftRelease.Offset);
 
             var ins3 = npcChatFocus3.Next.Operand as Instruction;
@@ -144,13 +144,13 @@ namespace OTA.Patcher
             il.InsertAfter(npcChatFocus1.Next, il.Create(OpCodes.Call, callback));
         }
 
-        #if CLIENT
+#if CLIENT
         [OTAPatch(SupportType.Client, "Hooking INativeMod")]
         private void HookInINativeMod()
         {
             //Rather than tracking what MOD object is attatched to what vanilla object
             //It's easier to just attatch a new "Mod" field.
-            foreach (var type in new [] {
+            foreach (var type in new[] {
                 Terraria.Chest,
                 Terraria.Item,
                 Terraria.NPC,
@@ -207,7 +207,7 @@ namespace OTA.Patcher
             il.InsertAfter(insEntry, il.Create(OpCodes.Brfalse, insEntry.Operand as Instruction));
             il.InsertAfter(insEntry, il.Create(OpCodes.Call, callback));
         }
-        #endif
+#endif
     }
 }
 
