@@ -42,7 +42,23 @@ namespace OTA.Patcher
             OTAPatcher.PatchMode = SupportType.Client;
 
             //Specifiy the official file name
-            OTAPatcher.Platform = "Windows";
+            if (args != null && args.Where(x => x == "-platform").Count() == 1) OTAPatcher.Platform = args.Where(x => x == "-platform").Select((a, b) => args[b + 1]).First();
+            else
+            {
+                var platform = OTA.Misc.Platform.Type;
+                switch (OTA.Misc.Platform.Type)
+                {
+                    case Misc.Platform.PlatformType.LINUX:
+                        OTAPatcher.Platform = "Linux";
+                        break;
+                    case Misc.Platform.PlatformType.MAC:
+                        OTAPatcher.Platform = "MAC";
+                        break;
+                    case Misc.Platform.PlatformType.WINDOWS:
+                        OTAPatcher.Platform = "Windows";
+                        break;
+                }
+            }
             OTAPatcher.InputFileName = "Terraria." + OTAPatcher.Platform + ".exe";
 
             //Specify the output assembly[name]
@@ -443,6 +459,12 @@ namespace OTA.Patcher
                     }
 
                     Copy(root, "Official", Environment.CurrentDirectory, "Terraria." + Platform, false);
+
+                    foreach (var fileInfo in root.GetDirectories().Single(x => x.Name == "External").EnumerateFiles())
+                    {
+                        if (File.Exists(fileInfo.Name)) File.Delete(fileInfo.Name);
+                        fileInfo.CopyTo(fileInfo.Name);
+                    }
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
