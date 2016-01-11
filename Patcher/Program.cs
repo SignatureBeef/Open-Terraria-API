@@ -346,6 +346,7 @@ namespace OTA.Patcher
                     if (CopyAPI)
                     {
                         Copy(root, "API", Environment.CurrentDirectory, "OTA", true);
+                        Copy(root, "OTA.Commands", Environment.CurrentDirectory, "OTA.Commands", true, "Server-Debug");
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.Diagnostics", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.FileSystems", true);
@@ -392,9 +393,12 @@ namespace OTA.Patcher
                     //            Copy(root, "tdsm-mysql-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-mysql-connector", true);
                     //            Copy(root, "tdsm-sqlite-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-sqlite-connector", true);
 
-                    var otaOutput = Path.Combine(Platform, "OTA.dll");
-                    if (File.Exists(otaOutput)) File.Delete(otaOutput);
-                    File.Copy("OTA.dll", otaOutput);
+                    foreach (var item in new [] { "OTA.dll", "OTA.Commands.dll" })
+                    {
+                        var otaOutput = Path.Combine(Platform, item);
+                        if (File.Exists(otaOutput)) File.Delete(otaOutput);
+                        File.Copy(item, otaOutput);
+                    }
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
@@ -450,6 +454,7 @@ namespace OTA.Patcher
                     }
 
                     Copy(root, "Official", Environment.CurrentDirectory, "Terraria." + Platform, false);
+                    Copy(root, "OTA.Commands", Environment.CurrentDirectory, "OTA.Commands", true, "Server-Debug");
 
                     foreach (var fileInfo in root.GetDirectories().Single(x => x.Name == "External").EnumerateFiles())
                     {
@@ -457,9 +462,12 @@ namespace OTA.Patcher
                         fileInfo.CopyTo(fileInfo.Name);
                     }
 
-                    var otaOutput = Path.Combine(Platform, "OTA.dll");
-                    if (File.Exists(otaOutput)) File.Delete(otaOutput);
-                    File.Copy("OTA.dll", otaOutput);
+                    foreach (var item in new [] { "OTA.dll", "OTA.Commands.dll" })
+                    {
+                        var otaOutput = Path.Combine(Platform, item);
+                        if (File.Exists(otaOutput)) File.Delete(otaOutput);
+                        File.Copy(item, otaOutput);
+                    }
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
