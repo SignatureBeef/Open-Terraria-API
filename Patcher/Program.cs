@@ -10,40 +10,33 @@ namespace OTA.Patcher
     /// </summary>
     public class Program
     {
-#if SERVER
         static void Main(string[] args)
         {
-            //By default we will patch a server
-            OTAPatcher.PatchMode = SupportType.Server;
-
             //Specifiy the official file name
-            OTAPatcher.InputFileName = "TerrariaServer.exe";
+            if (args != null)
+            {
+                var ix = Array.FindIndex(args, x => x == "-platform");
+                if (ix > -1)
+                    OTAPatcher.Platform = args[ix + 1];
+            }
 
-            //Specify the output assembly[name]
-            OTAPatcher.OutputName = "TerrariaServer";
+            if (args != null)
+            {
+                var ix = Array.FindIndex(args, x => x == "-patchmode");
+                if (ix > -1)
+                    OTAPatcher.PatchMode = (SupportType)Enum.Parse(typeof(SupportType), args[ix + 1]);
+            }
+            if (0 == OTAPatcher.PatchMode)
+            {
+                #if CLIENT
+                OTAPatcher.PatchMode = SupportType.Client;
+                #else
+                OTAPatcher.PatchMode = SupportType.Server;
+                OTAPatcher.Platform = "Server";
+                #endif
+            }
 
-            //Debugging :)
-            OTAPatcher.CopyProjectFiles = args != null && args.Where(x => x == "-projectfiles").Count() > 0;
-
-            //Allow auto running
-            OTAPatcher.PromptToRun = true;
-
-            //Allow the copy of the API from it's bin folder
-            OTAPatcher.CopyAPI = true;
-
-            OTAPatcher.DefaultProcess(args);
-        }
-
-        
-#elif CLIENT
-        static void Main(string[] args)
-        {
-            //By default we will patch a server
-            OTAPatcher.PatchMode = SupportType.Client;
-
-            //Specifiy the official file name
-            if (args != null && args.Where(x => x == "-platform").Count() == 1) OTAPatcher.Platform = args.Where(x => x == "-platform").Select((a, b) => args[b + 1]).First();
-            else
+            if (String.IsNullOrEmpty(OTAPatcher.Platform))
             {
                 var platform = OTA.Misc.Platform.Type;
                 switch (OTA.Misc.Platform.Type)
@@ -52,7 +45,7 @@ namespace OTA.Patcher
                         OTAPatcher.Platform = "Linux";
                         break;
                     case Misc.Platform.PlatformType.MAC:
-                        OTAPatcher.Platform = "MAC";
+                        OTAPatcher.Platform = "Mac";
                         break;
                     case Misc.Platform.PlatformType.WINDOWS:
                         OTAPatcher.Platform = "Windows";
@@ -62,7 +55,7 @@ namespace OTA.Patcher
             OTAPatcher.InputFileName = "Terraria." + OTAPatcher.Platform + ".exe";
 
             //Specify the output assembly[name]
-            OTAPatcher.OutputName = "Terraria";
+            OTAPatcher.OutputName = OTAPatcher.PatchMode == SupportType.Client ? "Terraria" : "TerrariaServer";
 
             //Debugging :)
             OTAPatcher.CopyProjectFiles = args != null && args.Where(x => x == "-projectfiles").Count() > 0;
@@ -75,23 +68,6 @@ namespace OTA.Patcher
 
             OTAPatcher.DefaultProcess(args);
         }
-#endif
-
-        //        public static void Main(string[] args)
-        //        {
-        //            //By default we will patch a server
-        //            OTAPatcher.PatchMode = OTA.Patcher.PatchMode.Client;
-        //
-        //            //Specifiy the official file name
-        //            OTAPatcher.InputFileName = "Terraria.exe";
-        //
-        //            //Specify the output assembly[name]
-        //            OTAPatcher.OutputName = "Terraria";
-        //
-        //            OTAPatcher.CopyProjectFiles = true;
-        //
-        //            OTAPatcher.DefaultProcess(args);
-        //        }
     }
 
     /// <summary>
@@ -102,11 +78,15 @@ namespace OTA.Patcher
         public const String OTAGuid = "9f7bca2e-4d2e-4244-aaae-fa56ca7797ec";
         public const Int32 Build = 6;
 
-#if CLIENT
-        private const String FolderKind = "Client";
-#elif SERVER
-        private const String FolderKind = "Server";
-#endif
+        //        #if CLIENT
+        //        private const String FolderKind = "Client";
+        //        #elif SERVER
+        //        private const String FolderKind = "Server";
+        //        #endif
+        private static string FolderKind
+        {
+            get { return PatchMode == SupportType.Client ? "Client" : "Server"; }
+        }
 
         /// <summary>
         /// Development tools. Copies files into the Debug folder.
@@ -116,8 +96,10 @@ namespace OTA.Patcher
         /// <param name="to">To.</param>
         /// <param name="pluginName">Plugin name.</param>
         /// <param name="debugFolder">If set to <c>true</c> debug folder.</param>
-        public static void Copy(DirectoryInfo root, string project, string to, string pluginName = null, bool debugFolder = true, string projectFolder = FolderKind)
+        public static void Copy(DirectoryInfo root, string project, string to, string pluginName = null, bool debugFolder = true, string projectFolder = null)
         {
+            if (projectFolder == null) projectFolder = FolderKind;
+
             var projectBinary = (pluginName ?? project).Replace("-", ".");
             var p = debugFolder ? Path.Combine(root.FullName, project, "bin", "AnyCPU", projectFolder) : Path.Combine(root.FullName, project);
             if (!Directory.Exists(p))
@@ -246,6 +228,8 @@ namespace OTA.Patcher
 
         public static string Platform { get; set; }
 
+        public static string PlatformType { get; set; }
+
         static OTAPatcher()
         {
             LibrariesFolder = DefaultLibrariesFolder;
@@ -290,8 +274,11 @@ namespace OTA.Patcher
 
             var inFile = InputFileName;
             var fileName = OutputName;
-            var output = fileName + ".exe";
+            var output = Path.Combine(Platform, fileName + ".exe");
             var patchFile = "OTA.dll";
+
+            if (!String.IsNullOrEmpty(Platform) && !Directory.Exists(Platform)) Directory.CreateDirectory(Platform);
+
             //            if (!File.Exists(inFile))
             //            {
             //                var bin = Path.Combine(Environment.CurrentDirectory, "bin", "x86", "Debug", inFile);
@@ -407,9 +394,9 @@ namespace OTA.Patcher
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                        {
-                            RootDirectory = root
-                        });
+                            {
+                                RootDirectory = root
+                            });
                 }
 
                 if (!File.Exists(inFile))
@@ -466,11 +453,15 @@ namespace OTA.Patcher
                         fileInfo.CopyTo(fileInfo.Name);
                     }
 
+                    var otaOutput = Path.Combine(Platform, "OTA.dll");
+                    if (File.Exists(otaOutput)) File.Delete(otaOutput);
+                    File.Copy("OTA.dll", otaOutput);
+
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                        {
-                            RootDirectory = root
-                        });
+                            {
+                                RootDirectory = root
+                            });
                 }
             }
 
@@ -568,9 +559,9 @@ namespace OTA.Patcher
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                    {
-                        Injector = patcher
-                    });
+                        {
+                            Injector = patcher
+                        });
 
                 //TODO repace Terraria's Console.SetTitles
             }
@@ -597,9 +588,9 @@ namespace OTA.Patcher
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                    {
-                        Injector = patcher
-                    });
+                        {
+                            Injector = patcher
+                        });
             }
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -888,8 +879,23 @@ namespace OTA.Patcher
                 return;
             }
 
-            BinariesFiles.Add(OutputName + ".exe");
-            BinariesFiles.Add(OutputName + ".exe.config");
+//            BinariesFiles.Add(OutputName + ".exe");
+//            BinariesFiles.Add(OutputName + ".exe.config");
+            var dir = new DirectoryInfo(Path.Combine(Platform));
+            if (dir.Exists)
+            {
+                var targetDir = Path.Combine(pathToBinaries.FullName, Platform);
+
+                if (Directory.Exists(targetDir)) Directory.Delete(targetDir, true);
+                Directory.CreateDirectory(targetDir);
+
+                foreach (var file in dir.EnumerateFileSystemInfos())
+                {
+                    var relative = file.FullName.Remove(0, dir.FullName.Length).TrimStart(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+                    if (File.Exists(relative)) File.Delete(relative);
+                    File.Copy(file.FullName, Path.Combine(targetDir, relative));
+                }
+            }
 
             foreach (var rel in BinariesFiles)
             {

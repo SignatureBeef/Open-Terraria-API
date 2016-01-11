@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +10,7 @@ using OTA.Command;
 using OTA.Plugin;
 using OTA.Logging;
 using OTA.Extensions;
+using Microsoft.Xna.Framework;
 
 namespace OTA.Plugin
 {

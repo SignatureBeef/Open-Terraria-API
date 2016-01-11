@@ -9,7 +9,6 @@ namespace OTA.Patcher
 {
     public partial class Injector
     {
-        #if CLIENT
         [OTAPatch(SupportType.Client, "Allowing custom Tiles's to be saved")]
         private void AllowCustomTileSaving()
         {
@@ -21,7 +20,6 @@ namespace OTA.Patcher
             ldLoc_419.OpCode = OpCodes.Ldsfld;
             ldLoc_419.Operand = Terraria.Import(replacement);
         }
-        #endif
     }
 }
 

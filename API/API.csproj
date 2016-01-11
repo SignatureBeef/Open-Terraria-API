@@ -1,509 +1,551 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Server-Debug</Configuration>
-    <ProjectGuid>{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}</ProjectGuid>
-    <OutputPath>bin\x86\Server\</OutputPath>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OTA</RootNamespace>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <AssemblyName>OTA</AssemblyName>
-    <PlatformTarget>anycpu</PlatformTarget>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\AnyCPU\Server\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER;ENTITY_FRAMEWORK_6</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\AnyCPU\Client\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release %28Server%29|AnyCPU'">
-    <OutputPath>bin\Server-Release\</OutputPath>
-    <DefineConstants>XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER</DefineConstants>
-    <Optimize>true</Optimize>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Release|AnyCPU' ">
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Server-Release</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;DEBUG;XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <Choose>
-    <When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">
-      <ItemGroup>
-        <Reference Include="EntityFramework">
-          <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-        </Reference>
-        <Reference Include="EntityFramework.SqlServer">
-          <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-        </Reference>
-        <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.Net.Http.Formatting">
-          <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Net.Http" />
-        <Reference Include="System.Web.Http">
-          <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-        </Reference>
-        <Reference Include="Owin">
-          <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Web.Http.Owin">
-          <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
-        </Reference>
-        <Reference Include="Terraria">
-          <HintPath>..\Binaries\Terraria.exe</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin">
-          <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.Security">
-          <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.Security.OAuth">
-          <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.FileSystems">
-          <HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.1\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.StaticFiles">
-          <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.1\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
-        </Reference>
-        <Reference Include="NLua">
-          <HintPath>..\External\NLua.dll</HintPath>
-        </Reference>
-        <!--<Reference Include="FNA">
-          <HintPath>..\External\FNA.dll</HintPath>
-        </Reference>-->
-        <Reference Include="System.Net" />
-        <Reference Include="System" />
-        <Reference Include="System.Security" />
-        <Reference Include="System.Data.Entity" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Drawing" />
-        <Reference Include="System.Configuration" />
-        <Reference Include="Newtonsoft.Json">
-          <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.Host.HttpListener">
-          <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.3.0.1\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.Hosting">
-          <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\External\Microsoft.Xna.Framework.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="EntityFramework">
-          <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-        </Reference>
-        <Reference Include="EntityFramework.SqlServer">
-          <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-        </Reference>
-        <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.Net.Http.Formatting">
-          <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Net.Http" />
-        <Reference Include="System.Web.Http">
-          <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-        </Reference>
-        <Reference Include="Owin">
-          <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Web.Http.Owin">
-          <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
-        </Reference>
-        <Reference Include="TerrariaServer">
-          <HintPath>..\Binaries\TerrariaServer.exe</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin">
-          <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.Security">
-          <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.Security.OAuth">
-          <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.FileSystems">
-          <HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.1\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.StaticFiles">
-          <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.1\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
-        </Reference>
-        <Reference Include="NLua">
-          <HintPath>..\External\NLua.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Net" />
-        <Reference Include="System" />
-        <Reference Include="System.Security" />
-        <Reference Include="System.Data.Entity" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Configuration" />
-        <Reference Include="Newtonsoft.Json">
-          <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.Host.HttpListener">
-          <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.3.0.1\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Owin.Hosting">
-          <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <ItemGroup>
-    <Compile Include="Callbacks\Configuration.cs" />
-    <Compile Include="Callbacks\NAT.cs" />
-    <Compile Include="Callbacks\NPCCallback.cs" />
-    <Compile Include="Callbacks\PlayerCallback.cs" />
-    <Compile Include="Callbacks\VanillaHooks.cs" />
-    <Compile Include="Callbacks\WorldFileCallback.cs" />
-    <Compile Include="Client\Debug\ConsoleWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Client\Debug\ConsoleWindow.Designer.cs">
-      <DependentUpon>ConsoleWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Client\Packages\PackageBuilder.cs" />
-    <Compile Include="Data\EF7\Extensions\DbContextOptionsBuilderExtensions.cs" />
-    <Compile Include="Data\EF7\Extensions\MigrationExtensions.cs" />
-    <Compile Include="Data\EF7\OTAContext.cs" />
-    <Compile Include="DebugFramework\Assert.cs" />
-    <Compile Include="Command\ArgumentList.cs" />
-    <Compile Include="Command\ISender.cs" />
-    <Compile Include="Command\Sender.cs" />
-    <Compile Include="Globals.cs" />
-    <Compile Include="ID\ActionType.cs" />
-    <Compile Include="ID\Lookup.cs" />
-    <Compile Include="Misc\SafeConsole.cs" />
-    <Compile Include="Misc\StringCache.cs" />
-    <Compile Include="Plugin\HookAttribute.cs" />
-    <Compile Include="Plugin\HookPoint.cs" />
-    <Compile Include="Plugin\LUAManager.cs" />
-    <Compile Include="Plugin\PluginManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Xna\Audio\AudioStopOptions.cs" />
-    <Compile Include="Xna\Audio\SoundState.cs" />
-    <Compile Include="Xna\Audio\SoundEffectInstance.cs" />
-    <Compile Include="Xna\Audio\SoundEffect.cs" />
-    <Compile Include="Xna\Audio\WaveBank.cs" />
-    <Compile Include="Xna\Audio\Cue.cs" />
-    <Compile Include="Xna\Audio\SoundBank.cs" />
-    <Compile Include="Xna\Audio\AudioEngine.cs" />
-    <Compile Include="Xna\Color.cs" />
-    <Compile Include="Xna\ContentManager.cs" />
-    <Compile Include="Xna\Game.cs" />
-    <Compile Include="Xna\Graphics\RenderTargetUsage.cs" />
-    <Compile Include="Xna\Graphics\RenderTarget2D.cs" />
-    <Compile Include="Xna\Graphics\GraphicsAdapter.cs" />
-    <Compile Include="Xna\Graphics\DisplayMode.cs" />
-    <Compile Include="Xna\Graphics\DisplayModeCollection.cs" />
-    <Compile Include="Xna\Graphics\Effect.cs" />
-    <Compile Include="Xna\Graphics\EffectTechnique.cs" />
-    <Compile Include="Xna\Graphics\EffectPass.cs" />
-    <Compile Include="Xna\Graphics\EffectPassCollection.cs" />
-    <Compile Include="Xna\Graphics\BlendState.cs" />
-    <Compile Include="Xna\Graphics\SamplerState.cs" />
-    <Compile Include="Xna\Graphics\GraphicsDevice.cs" />
-    <Compile Include="Xna\Graphics\DepthStencilState.cs" />
-    <Compile Include="Xna\Graphics\GraphicsResource.cs" />
-    <Compile Include="Xna\Graphics\PresentationParameters.cs" />
-    <Compile Include="Xna\Graphics\SpriteSortMode.cs" />
-    <Compile Include="Xna\Graphics\SpriteEffects.cs" />
-    <Compile Include="Xna\Graphics\SpriteBatch.cs" />
-    <Compile Include="Xna\Graphics\SurfaceFormat.cs" />
-    <Compile Include="Xna\Input\Keys.cs" />
-    <Compile Include="Xna\Input\GamePadTriggers.cs" />
-    <Compile Include="Xna\Input\GamePadThumbSticks.cs" />
-    <Compile Include="Xna\Input\GamePadDPad.cs" />
-    <Compile Include="Xna\Input\GamePadState.cs" />
-    <Compile Include="Xna\Input\GamePad.cs" />
-    <Compile Include="Xna\Input\MouseState.cs" />
-    <Compile Include="Xna\Input\Mouse.cs" />
-    <Compile Include="Xna\Input\KeyboardState.cs" />
-    <Compile Include="Xna\Input\Keyboard.cs" />
-    <Compile Include="Xna\Input\ButtonState.cs" />
-    <Compile Include="Xna\IPackedVector.cs" />
-    <Compile Include="Xna\GameTime.cs" />
-    <Compile Include="Xna\GameWindow.cs" />
-    <Compile Include="Xna\Point.cs" />
-    <Compile Include="Xna\MathHelper.cs" />
-    <Compile Include="Xna\Matrix.cs" />
-    <Compile Include="Xna\Vector2.cs" />
-    <Compile Include="Xna\Vector3.cs" />
-    <Compile Include="Xna\Vector4.cs" />
-    <Compile Include="Xna\Rectangle.cs" />
-    <Compile Include="Xna\GraphicsDeviceManager.cs" />
-    <Compile Include="Xna\PlayerIndex.cs" />
-    <Compile Include="Xna\Graphics\Viewport.cs" />
-    <Compile Include="Xna\Graphics\DepthFormat.cs" />
-    <Compile Include="Xna\Graphics\RasterizerState.cs" />
-    <Compile Include="Xna\Graphics\SpriteFont.cs" />
-    <Compile Include="Xna\Graphics\Texture2D.cs" />
-    <Compile Include="Plugin\BasePlugin.cs" />
-    <Compile Include="Command\ConsoleSender.cs" />
-    <Compile Include="Tools.cs" />
-    <Compile Include="Packet.cs" />
-    <Compile Include="BasePlayer.cs" />
-    <Compile Include="ServerState.cs" />
-    <Compile Include="Callbacks\MainCallback.cs" />
-    <Compile Include="Sockets\ClientConnection.cs" />
-    <Compile Include="Sockets\Connection.cs" />
-    <Compile Include="Sockets\ServerSlot.cs" />
-    <Compile Include="Logging\LogChannel.cs" />
-    <Compile Include="Logging\LogTraceListener.cs" />
-    <Compile Include="Logging\ProgramLog.cs" />
-    <Compile Include="Logging\ProgressLogger.cs" />
-    <Compile Include="Misc\Affix.cs" />
-    <Compile Include="Misc\ArrayDequeue.cs" />
-    <Compile Include="Misc\DataRegister.cs" />
-    <Compile Include="Misc\ExitException.cs" />
-    <Compile Include="Misc\InvasionType.cs" />
-    <Compile Include="Misc\Platform.cs" />
-    <Compile Include="Misc\ProducerConsumerSignal.cs" />
-    <Compile Include="Misc\ProgramThread.cs" />
-    <Compile Include="Misc\ProgressWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Misc\PropertiesFile.cs" />
-    <Compile Include="Misc\Tasks.cs" />
-    <Compile Include="Callbacks\Utilities.cs" />
-    <Compile Include="Steam\Steamworks.cs" />
-    <Compile Include="Misc\ConfigUpdater.cs" />
-    <Compile Include="Web\WebServer.cs" />
-    <Compile Include="Data\EF6\Config\SQLite\SqliteContextInitializer.cs" />
-    <Compile Include="Data\EF6\ConnectionManager.cs" />
-    <Compile Include="Data\EF6\Config\OTAInitializer.cs" />
-    <Compile Include="Misc\FixedConcurrentQueue.cs" />
-    <Compile Include="Protection\IpLimiting.cs" />
-    <Compile Include="Callbacks\WorldGenCallback.cs" />
-    <Compile Include="Callbacks\ItemCallback.cs" />
-    <Compile Include="Callbacks\CollisionCallback.cs" />
-    <Compile Include="Callbacks\ProjectileCallback.cs" />
-    <Compile Include="Callbacks\Net\MessageBufferCallback.cs" />
-    <Compile Include="Callbacks\Net\NetMessageCallback.cs" />
-    <Compile Include="Callbacks\Net\NetplayCallback.cs" />
-    <Compile Include="Callbacks\Net\RemoteClientCallback.cs" />
-    <Compile Include="Memory\HeapTile.cs" />
-    <Compile Include="Memory\TileCollection.cs" />
-    <Compile Include="Memory\MemTile.cs" />
-    <Compile Include="Plugin\Hooks\Server\AddBan.cs" />
-    <Compile Include="Plugin\Hooks\Server\NameConflict.cs" />
-    <Compile Include="Plugin\Hooks\Server\NewConnection.cs" />
-    <Compile Include="Plugin\Hooks\Server\PlayerEnteredGame.cs" />
-    <Compile Include="Plugin\Hooks\Server\PlayerEnteringGame.cs" />
-    <Compile Include="Plugin\Hooks\Server\PlayerLeftGame.cs" />
-    <Compile Include="Plugin\Hooks\Server\PlayerPreGreeting.cs" />
-    <Compile Include="Plugin\Hooks\Server\ServerStateChange.cs" />
-    <Compile Include="Plugin\Hooks\Server\ServerTick.cs" />
-    <Compile Include="Plugin\Hooks\Server\ServerUpdate.cs" />
-    <Compile Include="Plugin\Hooks\Client\UpdateClient.cs" />
-    <Compile Include="Plugin\Hooks\Client\Update.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ChestBreakReceived.cs" />
-    <Compile Include="Plugin\Hooks\Multi\PressurePlateTriggered.cs" />
-    <Compile Include="Plugin\Hooks\Multi\DeathMessage.cs" />
-    <Compile Include="Plugin\Hooks\Multi\GameUpdate.cs" />
-    <Compile Include="Plugin\Hooks\Multi\InvasionNpcSpawn.cs" />
-    <Compile Include="Plugin\Hooks\Multi\InvasionWarning.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ItemNetDefaults.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ItemSetDefaultsByName.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ItemSetDefaultsByType.cs" />
-    <Compile Include="Plugin\Hooks\Multi\MechSpawn.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcDropBossBag.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcDropLoot.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcKilled.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcNetDefaults.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcSetDefaultsByName.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcSetDefaultsByType.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcSpawn.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcTransform.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcStrike.cs" />
-    <Compile Include="Plugin\Hooks\Multi\PlayerHurt.cs" />
-    <Compile Include="Plugin\Hooks\Multi\PlayerKilled.cs" />
-    <Compile Include="Plugin\Hooks\Multi\PluginLoadRequest.cs" />
-    <Compile Include="Plugin\Hooks\Multi\PluginsLoaded.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ProgramStart.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ProjectileAI.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ProjectileKill.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ProjectileSetDefaults.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ReceiveNetMessage.cs" />
-    <Compile Include="Plugin\Hooks\Multi\SendNetMessage.cs" />
-    <Compile Include="Plugin\Hooks\Multi\StatusTextChange.cs" />
-    <Compile Include="Plugin\Hooks\Multi\SendClientData.cs" />
-    <Compile Include="Plugin\Hooks\Server\RemoteClientReset.cs" />
-    <Compile Include="Plugin\Hooks\Multi\WorldSave.cs" />
-    <Compile Include="Plugin\Hooks\Multi\StartHardMode.cs" />
-    <Compile Include="Plugin\Hooks\Multi\CheckChristmas.cs" />
-    <Compile Include="Plugin\Hooks\Multi\CheckHalloween.cs" />
-    <Compile Include="Plugin\Misc\MethodState.cs" />
-    <Compile Include="Plugin\Misc\TileSquareForEachResult.cs" />
-    <Compile Include="Plugin\Hooks\Multi\WorldClear.cs" />
-    <Compile Include="Data\EF6\OTAContext.cs" />
-    <Compile Include="Plugin\Hooks\PluginReplacing.cs" />
-    <Compile Include="Plugin\Hooks\PluginDisposed.cs" />
-    <Compile Include="Plugin\Hooks\PluginPausing.cs" />
-    <Compile Include="Plugin\Hooks\PluginPauseComplete.cs" />
-    <Compile Include="Callbacks\Patches.cs" />
-    <Compile Include="Plugin\Hooks\Multi\CheckBufferState.cs" />
-    <Compile Include="Data\Extensions\LinqExtensions.cs" />
-    <Compile Include="Misc\ColorHelper.cs" />
-    <Compile Include="Web\Internals\PluginServiceResolver.cs" />
-    <Compile Include="Web\Internals\MonoDataProtector.cs" />
-    <Compile Include="Extensions\LinqRandomExtensions.cs" />
-    <Compile Include="Extensions\AssemblyExtensions.cs" />
-    <Compile Include="Extensions\RemoteExtensions.cs" />
-    <Compile Include="Extensions\ProjectileExtensions.cs" />
-    <Compile Include="Misc\RuntimePlatform.cs" />
-    <Compile Include="Misc\ScheduledNotification.cs" />
-    <Compile Include="Plugin\HookContext.cs" />
-    <Compile Include="Plugin\HookOrder.cs" />
-    <Compile Include="Plugin\HookResult.cs" />
-    <Compile Include="Plugin\HookAction.cs" />
-    <Compile Include="Misc\DataEncoding.cs" />
-    <Compile Include="Logging\Targets\LogTarget.cs" />
-    <Compile Include="Logging\Targets\StandardOutputTarget.cs" />
-    <Compile Include="Logging\Targets\InteractiveLogTarget.cs" />
-    <Compile Include="Logging\Targets\FileOutputTarget.cs" />
-    <Compile Include="Logging\OutputEntry.cs" />
-    <Compile Include="Logging\External\ILogger.cs" />
-    <Compile Include="Logging\External\Logger.cs" />
-    <Compile Include="Logging\DefaultLogger.cs" />
-    <Compile Include="Plugin\Hooks\Multi\LoadConfigurationFile.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ParseCommandLineArguments.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ConfigurationFileLineRead.cs" />
-    <Compile Include="Plugin\Hooks\Multi\WorldAutoSave.cs" />
-    <Compile Include="Plugin\Hooks\Multi\StartCommandProcessing.cs" />
-    <Compile Include="Plugin\Hooks\Multi\ConsoleMessageReceived.cs" />
-    <Compile Include="Client\Npc\OTANpc.cs" />
-    <Compile Include="Client\EntityRegister.cs" />
-    <Compile Include="Client\NativeExtension.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NewNPC.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcDraw.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcUpdate.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcAI.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcLoadTexture.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcFindFrame.cs" />
-    <Compile Include="Client\Npc\NpcModRegister.cs" />
-    <Compile Include="Client\ClientEventManager.cs" />
-    <Compile Include="Plugin\Hooks\PluginEnabled.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcGetChat.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcGetChatButtons.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcChatButtonClick.cs" />
-    <Compile Include="Callbacks\ChestCallback.cs" />
-    <Compile Include="Plugin\Hooks\Client\ChestSetupShop.cs" />
-    <Compile Include="Client\Chest\ShopModRegister.cs" />
-    <Compile Include="Client\Chest\OTAShop.cs" />
-    <Compile Include="Client\Item\OTAItem.cs" />
-    <Compile Include="Client\Item\ItemModRegister.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NewItem.cs" />
-    <Compile Include="Plugin\PluginDependency.cs" />
-    <Compile Include="Plugin\PluginLoadResult.cs" />
-    <Compile Include="Client\Tile\TileModRegister.cs" />
-    <Compile Include="Client\TypeDefinition.cs" />
-    <Compile Include="Client\Tile\OTATile.cs" />
-    <Compile Include="Callbacks\MapCallback.cs" />
-    <Compile Include="Plugin\Hooks\Client\MapHelperInitialize.cs" />
-    <Compile Include="Plugin\Hooks\Multi\GameInitialize.cs" />
-    <Compile Include="Plugin\Hooks\Client\GameDraw.cs" />
-    <Compile Include="Client\Tile\TileDefinition.cs" />
-    <Compile Include="Plugin\Hooks\Client\GameLoadContent.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NewProjectile.cs" />
-    <Compile Include="Client\Projectile\ProjectileModRegister.cs" />
-    <Compile Include="Client\Projectile\OTAProjectile.cs" />
-    <Compile Include="Client\Npc\NpcChatButton.cs" />
-    <Compile Include="Callbacks\InterfaceCallback.cs" />
-    <Compile Include="Plugin\Hooks\Client\GUIChatBoxOpen.cs" />
-    <Compile Include="Plugin\Hooks\Client\GUIChatBoxSend.cs" />
-    <Compile Include="Plugin\Hooks\Multi\NpcPreSpawn.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Server-Debug</Configuration>
+		<ProjectGuid>{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}</ProjectGuid>
+		<OutputPath>bin\x86\Server\</OutputPath>
+		<OutputType>Library</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>OTA</RootNamespace>
+		<FileAlignment>512</FileAlignment>
+		<SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+		<RestorePackages>true</RestorePackages>
+		<TargetFrameworkProfile />
+		<PlatformTarget>anycpu</PlatformTarget>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\AnyCPU\Server\</OutputPath>
+		<DefineConstants>TRACE;DEBUG;XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER;ENTITY_FRAMEWORK_6</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyName>OTA</AssemblyName>
+		<TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\AnyCPU\Client\</OutputPath>
+		<DefineConstants>TRACE;DEBUG;CLIENT;Full_API</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyName>OTA</AssemblyName>
+		<TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release %28Server%29|AnyCPU'">
+		<OutputPath>bin\Server-Release\</OutputPath>
+		<DefineConstants>XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER</DefineConstants>
+		<Optimize>true</Optimize>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<WarningLevel>4</WarningLevel>
+		<AssemblyName>OTA</AssemblyName>
+		<TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Release|AnyCPU' ">
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Server-Release</OutputPath>
+		<WarningLevel>4</WarningLevel>
+		<Optimize>true</Optimize>
+		<DefineConstants>TRACE;DEBUG;XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyName>OTA</AssemblyName>
+		<TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'FNA-Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Client</OutputPath>
+		<DefineConstants>TRACE;DEBUG;CLIENT;Full_API</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyName>OTA</AssemblyName>
+		<TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'XNA-Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Client</OutputPath>
+		<DefineConstants>TRACE;DEBUG;CLIENT;Full_API</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyName>OTA</AssemblyName>
+		<TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+	</PropertyGroup>
+	<Choose>
+		<When Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' Or '$(Configuration)|$(Platform)' == 'FNA-Debug|AnyCPU' Or '$(Configuration)|$(Platform)' == 'XNA-Debug|AnyCPU'">
+			<ItemGroup>
+				<Reference Include="EntityFramework">
+					<HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+				</Reference>
+				<Reference Include="EntityFramework.SqlServer">
+					<HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+				</Reference>
+				<Reference Include="System.ComponentModel.DataAnnotations" />
+				<Reference Include="System.Net.Http.Formatting">
+					<HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+				</Reference>
+				<Reference Include="System.Net.Http" />
+				<Reference Include="System.Web.Http">
+					<HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+				</Reference>
+				<Reference Include="Owin">
+					<HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+				</Reference>
+				<Reference Include="System.Web.Http.Owin">
+					<HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin">
+					<HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.Security">
+					<HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.Security.OAuth">
+					<HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.FileSystems">
+					<HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.1\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.StaticFiles">
+					<HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.1\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
+				</Reference>
+				<Reference Include="NLua">
+					<HintPath>..\External\NLua.dll</HintPath>
+				</Reference>
+				<Reference Include="System.Net" />
+				<Reference Include="System" />
+				<Reference Include="System.Security" />
+				<Reference Include="System.Data.Entity" />
+				<Reference Include="System.Data" />
+				<Reference Include="System.Drawing" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="Newtonsoft.Json">
+					<HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.Host.HttpListener">
+					<HintPath>..\packages\Microsoft.Owin.Host.HttpListener.3.0.1\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.Hosting">
+					<HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+		<Otherwise>
+			<ItemGroup>
+				<Reference Include="EntityFramework">
+					<HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+				</Reference>
+				<Reference Include="EntityFramework.SqlServer">
+					<HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+				</Reference>
+				<Reference Include="System.ComponentModel.DataAnnotations" />
+				<Reference Include="System.Net.Http.Formatting">
+					<HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+				</Reference>
+				<Reference Include="System.Net.Http" />
+				<Reference Include="System.Web.Http">
+					<HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+				</Reference>
+				<Reference Include="Owin">
+					<HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+				</Reference>
+				<Reference Include="System.Web.Http.Owin">
+					<HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+				</Reference>
+				<Reference Include="TerrariaServer">
+					<HintPath>..\Binaries\TerrariaServer.exe</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin">
+					<HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.Security">
+					<HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.Security.OAuth">
+					<HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.FileSystems">
+					<HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.1\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.StaticFiles">
+					<HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.1\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
+				</Reference>
+				<Reference Include="NLua">
+					<HintPath>..\External\NLua.dll</HintPath>
+				</Reference>
+				<Reference Include="System.Net" />
+				<Reference Include="System" />
+				<Reference Include="System.Security" />
+				<Reference Include="System.Data.Entity" />
+				<Reference Include="System.Data" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="Newtonsoft.Json">
+					<HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.Host.HttpListener">
+					<HintPath>..\packages\Microsoft.Owin.Host.HttpListener.3.0.1\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Owin.Hosting">
+					<HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</Otherwise>
+	</Choose>
+	<Choose>
+		<When Condition=" '$(Configuration)' == 'FNA-Debug' ">
+			<ItemGroup>
+				<Reference Include="FNA">
+					<HintPath>..\External\FNA.dll</HintPath>
+				</Reference>
+				<Reference Include="Terraria">
+					<HintPath>..\Binaries\MAC\Terraria.exe</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+		<When Condition=" '$(Configuration)|$(Platform)' == 'XNA-Debug|AnyCPU' ">
+			<ItemGroup>
+				<Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+					<SpecificVersion>False</SpecificVersion>
+					<HintPath>..\External\Microsoft.Xna.Framework.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+					<SpecificVersion>False</SpecificVersion>
+					<HintPath>..\External\Microsoft.Xna.Framework.Game.dll</HintPath>
+				</Reference>
+				<Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+					<SpecificVersion>False</SpecificVersion>
+					<HintPath>..\External\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+				</Reference>
+				<Reference Include="Terraria">
+					<HintPath>..\Binaries\Windows\Terraria.exe</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+	</Choose>
+	<ItemGroup>
+		<Compile Include="Callbacks\Configuration.cs" />
+		<Compile Include="Callbacks\NAT.cs" />
+		<Compile Include="Callbacks\NPCCallback.cs" />
+		<Compile Include="Callbacks\PlayerCallback.cs" />
+		<Compile Include="Callbacks\VanillaHooks.cs" />
+		<Compile Include="Callbacks\WorldFileCallback.cs" />
+		<Compile Include="Client\Debug\ConsoleWindow.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Include="Client\Debug\ConsoleWindow.Designer.cs">
+			<DependentUpon>ConsoleWindow.cs</DependentUpon>
+		</Compile>
+		<Compile Include="Client\Packages\PackageBuilder.cs" />
+		<Compile Include="Data\EF7\Extensions\DbContextOptionsBuilderExtensions.cs" />
+		<Compile Include="Data\EF7\Extensions\MigrationExtensions.cs" />
+		<Compile Include="Data\EF7\OTAContext.cs" />
+		<Compile Include="DebugFramework\Assert.cs" />
+		<Compile Include="Command\ArgumentList.cs" />
+		<Compile Include="Command\ISender.cs" />
+		<Compile Include="Command\Sender.cs" />
+		<Compile Include="Globals.cs" />
+		<Compile Include="ID\ActionType.cs" />
+		<Compile Include="ID\Lookup.cs" />
+		<Compile Include="Misc\SafeConsole.cs" />
+		<Compile Include="Misc\StringCache.cs" />
+		<Compile Include="Plugin\HookAttribute.cs" />
+		<Compile Include="Plugin\HookPoint.cs" />
+		<Compile Include="Plugin\LUAManager.cs" />
+		<Compile Include="Plugin\PluginManager.cs" />
+		<Compile Include="Properties\AssemblyInfo.cs" />
+		<Compile Include="Xna\Audio\AudioStopOptions.cs" />
+		<Compile Include="Xna\Audio\SoundState.cs" />
+		<Compile Include="Xna\Audio\SoundEffectInstance.cs" />
+		<Compile Include="Xna\Audio\SoundEffect.cs" />
+		<Compile Include="Xna\Audio\WaveBank.cs" />
+		<Compile Include="Xna\Audio\Cue.cs" />
+		<Compile Include="Xna\Audio\SoundBank.cs" />
+		<Compile Include="Xna\Audio\AudioEngine.cs" />
+		<Compile Include="Xna\Color.cs" />
+		<Compile Include="Xna\ContentManager.cs" />
+		<Compile Include="Xna\Game.cs" />
+		<Compile Include="Xna\Graphics\RenderTargetUsage.cs" />
+		<Compile Include="Xna\Graphics\RenderTarget2D.cs" />
+		<Compile Include="Xna\Graphics\GraphicsAdapter.cs" />
+		<Compile Include="Xna\Graphics\DisplayMode.cs" />
+		<Compile Include="Xna\Graphics\DisplayModeCollection.cs" />
+		<Compile Include="Xna\Graphics\Effect.cs" />
+		<Compile Include="Xna\Graphics\EffectTechnique.cs" />
+		<Compile Include="Xna\Graphics\EffectPass.cs" />
+		<Compile Include="Xna\Graphics\EffectPassCollection.cs" />
+		<Compile Include="Xna\Graphics\BlendState.cs" />
+		<Compile Include="Xna\Graphics\SamplerState.cs" />
+		<Compile Include="Xna\Graphics\GraphicsDevice.cs" />
+		<Compile Include="Xna\Graphics\DepthStencilState.cs" />
+		<Compile Include="Xna\Graphics\GraphicsResource.cs" />
+		<Compile Include="Xna\Graphics\PresentationParameters.cs" />
+		<Compile Include="Xna\Graphics\SpriteSortMode.cs" />
+		<Compile Include="Xna\Graphics\SpriteEffects.cs" />
+		<Compile Include="Xna\Graphics\SpriteBatch.cs" />
+		<Compile Include="Xna\Graphics\SurfaceFormat.cs" />
+		<Compile Include="Xna\Input\Keys.cs" />
+		<Compile Include="Xna\Input\GamePadTriggers.cs" />
+		<Compile Include="Xna\Input\GamePadThumbSticks.cs" />
+		<Compile Include="Xna\Input\GamePadDPad.cs" />
+		<Compile Include="Xna\Input\GamePadState.cs" />
+		<Compile Include="Xna\Input\GamePad.cs" />
+		<Compile Include="Xna\Input\MouseState.cs" />
+		<Compile Include="Xna\Input\Mouse.cs" />
+		<Compile Include="Xna\Input\KeyboardState.cs" />
+		<Compile Include="Xna\Input\Keyboard.cs" />
+		<Compile Include="Xna\Input\ButtonState.cs" />
+		<Compile Include="Xna\IPackedVector.cs" />
+		<Compile Include="Xna\GameTime.cs" />
+		<Compile Include="Xna\GameWindow.cs" />
+		<Compile Include="Xna\Point.cs" />
+		<Compile Include="Xna\MathHelper.cs" />
+		<Compile Include="Xna\Matrix.cs" />
+		<Compile Include="Xna\Vector2.cs" />
+		<Compile Include="Xna\Vector3.cs" />
+		<Compile Include="Xna\Vector4.cs" />
+		<Compile Include="Xna\Rectangle.cs" />
+		<Compile Include="Xna\GraphicsDeviceManager.cs" />
+		<Compile Include="Xna\PlayerIndex.cs" />
+		<Compile Include="Xna\Graphics\Viewport.cs" />
+		<Compile Include="Xna\Graphics\DepthFormat.cs" />
+		<Compile Include="Xna\Graphics\RasterizerState.cs" />
+		<Compile Include="Xna\Graphics\SpriteFont.cs" />
+		<Compile Include="Xna\Graphics\Texture2D.cs" />
+		<Compile Include="Plugin\BasePlugin.cs" />
+		<Compile Include="Command\ConsoleSender.cs" />
+		<Compile Include="Tools.cs" />
+		<Compile Include="Packet.cs" />
+		<Compile Include="BasePlayer.cs" />
+		<Compile Include="ServerState.cs" />
+		<Compile Include="Callbacks\MainCallback.cs" />
+		<Compile Include="Sockets\ClientConnection.cs" />
+		<Compile Include="Sockets\Connection.cs" />
+		<Compile Include="Sockets\ServerSlot.cs" />
+		<Compile Include="Logging\LogChannel.cs" />
+		<Compile Include="Logging\LogTraceListener.cs" />
+		<Compile Include="Logging\ProgramLog.cs" />
+		<Compile Include="Logging\ProgressLogger.cs" />
+		<Compile Include="Misc\Affix.cs" />
+		<Compile Include="Misc\ArrayDequeue.cs" />
+		<Compile Include="Misc\DataRegister.cs" />
+		<Compile Include="Misc\ExitException.cs" />
+		<Compile Include="Misc\InvasionType.cs" />
+		<Compile Include="Misc\Platform.cs" />
+		<Compile Include="Misc\ProducerConsumerSignal.cs" />
+		<Compile Include="Misc\ProgramThread.cs" />
+		<Compile Include="Misc\ProgressWebClient.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Include="Misc\PropertiesFile.cs" />
+		<Compile Include="Misc\Tasks.cs" />
+		<Compile Include="Callbacks\Utilities.cs" />
+		<Compile Include="Steam\Steamworks.cs" />
+		<Compile Include="Misc\ConfigUpdater.cs" />
+		<Compile Include="Web\WebServer.cs" />
+		<Compile Include="Data\EF6\Config\SQLite\SqliteContextInitializer.cs" />
+		<Compile Include="Data\EF6\ConnectionManager.cs" />
+		<Compile Include="Data\EF6\Config\OTAInitializer.cs" />
+		<Compile Include="Misc\FixedConcurrentQueue.cs" />
+		<Compile Include="Protection\IpLimiting.cs" />
+		<Compile Include="Callbacks\WorldGenCallback.cs" />
+		<Compile Include="Callbacks\ItemCallback.cs" />
+		<Compile Include="Callbacks\CollisionCallback.cs" />
+		<Compile Include="Callbacks\ProjectileCallback.cs" />
+		<Compile Include="Callbacks\Net\MessageBufferCallback.cs" />
+		<Compile Include="Callbacks\Net\NetMessageCallback.cs" />
+		<Compile Include="Callbacks\Net\NetplayCallback.cs" />
+		<Compile Include="Callbacks\Net\RemoteClientCallback.cs" />
+		<Compile Include="Memory\HeapTile.cs" />
+		<Compile Include="Memory\TileCollection.cs" />
+		<Compile Include="Memory\MemTile.cs" />
+		<Compile Include="Plugin\Hooks\Server\AddBan.cs" />
+		<Compile Include="Plugin\Hooks\Server\NameConflict.cs" />
+		<Compile Include="Plugin\Hooks\Server\NewConnection.cs" />
+		<Compile Include="Plugin\Hooks\Server\PlayerEnteredGame.cs" />
+		<Compile Include="Plugin\Hooks\Server\PlayerEnteringGame.cs" />
+		<Compile Include="Plugin\Hooks\Server\PlayerLeftGame.cs" />
+		<Compile Include="Plugin\Hooks\Server\PlayerPreGreeting.cs" />
+		<Compile Include="Plugin\Hooks\Server\ServerStateChange.cs" />
+		<Compile Include="Plugin\Hooks\Server\ServerTick.cs" />
+		<Compile Include="Plugin\Hooks\Server\ServerUpdate.cs" />
+		<Compile Include="Plugin\Hooks\Client\UpdateClient.cs" />
+		<Compile Include="Plugin\Hooks\Client\Update.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ChestBreakReceived.cs" />
+		<Compile Include="Plugin\Hooks\Multi\PressurePlateTriggered.cs" />
+		<Compile Include="Plugin\Hooks\Multi\DeathMessage.cs" />
+		<Compile Include="Plugin\Hooks\Multi\GameUpdate.cs" />
+		<Compile Include="Plugin\Hooks\Multi\InvasionNpcSpawn.cs" />
+		<Compile Include="Plugin\Hooks\Multi\InvasionWarning.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ItemNetDefaults.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ItemSetDefaultsByName.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ItemSetDefaultsByType.cs" />
+		<Compile Include="Plugin\Hooks\Multi\MechSpawn.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcDropBossBag.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcDropLoot.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcKilled.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcNetDefaults.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcSetDefaultsByName.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcSetDefaultsByType.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcSpawn.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcTransform.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcStrike.cs" />
+		<Compile Include="Plugin\Hooks\Multi\PlayerHurt.cs" />
+		<Compile Include="Plugin\Hooks\Multi\PlayerKilled.cs" />
+		<Compile Include="Plugin\Hooks\Multi\PluginLoadRequest.cs" />
+		<Compile Include="Plugin\Hooks\Multi\PluginsLoaded.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ProgramStart.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ProjectileAI.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ProjectileKill.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ProjectileSetDefaults.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ReceiveNetMessage.cs" />
+		<Compile Include="Plugin\Hooks\Multi\SendNetMessage.cs" />
+		<Compile Include="Plugin\Hooks\Multi\StatusTextChange.cs" />
+		<Compile Include="Plugin\Hooks\Multi\SendClientData.cs" />
+		<Compile Include="Plugin\Hooks\Server\RemoteClientReset.cs" />
+		<Compile Include="Plugin\Hooks\Multi\WorldSave.cs" />
+		<Compile Include="Plugin\Hooks\Multi\StartHardMode.cs" />
+		<Compile Include="Plugin\Hooks\Multi\CheckChristmas.cs" />
+		<Compile Include="Plugin\Hooks\Multi\CheckHalloween.cs" />
+		<Compile Include="Plugin\Misc\MethodState.cs" />
+		<Compile Include="Plugin\Misc\TileSquareForEachResult.cs" />
+		<Compile Include="Plugin\Hooks\Multi\WorldClear.cs" />
+		<Compile Include="Data\EF6\OTAContext.cs" />
+		<Compile Include="Plugin\Hooks\PluginReplacing.cs" />
+		<Compile Include="Plugin\Hooks\PluginDisposed.cs" />
+		<Compile Include="Plugin\Hooks\PluginPausing.cs" />
+		<Compile Include="Plugin\Hooks\PluginPauseComplete.cs" />
+		<Compile Include="Callbacks\Patches.cs" />
+		<Compile Include="Plugin\Hooks\Multi\CheckBufferState.cs" />
+		<Compile Include="Data\Extensions\LinqExtensions.cs" />
+		<Compile Include="Misc\ColorHelper.cs" />
+		<Compile Include="Web\Internals\PluginServiceResolver.cs" />
+		<Compile Include="Web\Internals\MonoDataProtector.cs" />
+		<Compile Include="Extensions\LinqRandomExtensions.cs" />
+		<Compile Include="Extensions\AssemblyExtensions.cs" />
+		<Compile Include="Extensions\RemoteExtensions.cs" />
+		<Compile Include="Extensions\ProjectileExtensions.cs" />
+		<Compile Include="Misc\RuntimePlatform.cs" />
+		<Compile Include="Misc\ScheduledNotification.cs" />
+		<Compile Include="Plugin\HookContext.cs" />
+		<Compile Include="Plugin\HookOrder.cs" />
+		<Compile Include="Plugin\HookResult.cs" />
+		<Compile Include="Plugin\HookAction.cs" />
+		<Compile Include="Misc\DataEncoding.cs" />
+		<Compile Include="Logging\Targets\LogTarget.cs" />
+		<Compile Include="Logging\Targets\StandardOutputTarget.cs" />
+		<Compile Include="Logging\Targets\InteractiveLogTarget.cs" />
+		<Compile Include="Logging\Targets\FileOutputTarget.cs" />
+		<Compile Include="Logging\OutputEntry.cs" />
+		<Compile Include="Logging\External\ILogger.cs" />
+		<Compile Include="Logging\External\Logger.cs" />
+		<Compile Include="Logging\DefaultLogger.cs" />
+		<Compile Include="Plugin\Hooks\Multi\LoadConfigurationFile.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ParseCommandLineArguments.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ConfigurationFileLineRead.cs" />
+		<Compile Include="Plugin\Hooks\Multi\WorldAutoSave.cs" />
+		<Compile Include="Plugin\Hooks\Multi\StartCommandProcessing.cs" />
+		<Compile Include="Plugin\Hooks\Multi\ConsoleMessageReceived.cs" />
+		<Compile Include="Client\Npc\OTANpc.cs" />
+		<Compile Include="Client\EntityRegister.cs" />
+		<Compile Include="Client\NativeExtension.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NewNPC.cs" />
+		<Compile Include="Plugin\Hooks\Client\NpcDraw.cs" />
+		<Compile Include="Plugin\Hooks\Client\NpcUpdate.cs" />
+		<Compile Include="Plugin\Hooks\Client\NpcAI.cs" />
+		<Compile Include="Plugin\Hooks\Client\NpcLoadTexture.cs" />
+		<Compile Include="Plugin\Hooks\Client\NpcFindFrame.cs" />
+		<Compile Include="Client\Npc\NpcModRegister.cs" />
+		<Compile Include="Client\ClientEventManager.cs" />
+		<Compile Include="Plugin\Hooks\PluginEnabled.cs" />
+		<Compile Include="Plugin\Hooks\Client\NpcGetChat.cs" />
+		<Compile Include="Plugin\Hooks\Client\NpcGetChatButtons.cs" />
+		<Compile Include="Plugin\Hooks\Client\NpcChatButtonClick.cs" />
+		<Compile Include="Callbacks\ChestCallback.cs" />
+		<Compile Include="Plugin\Hooks\Client\ChestSetupShop.cs" />
+		<Compile Include="Client\Chest\ShopModRegister.cs" />
+		<Compile Include="Client\Chest\OTAShop.cs" />
+		<Compile Include="Client\Item\OTAItem.cs" />
+		<Compile Include="Client\Item\ItemModRegister.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NewItem.cs" />
+		<Compile Include="Plugin\PluginDependency.cs" />
+		<Compile Include="Plugin\PluginLoadResult.cs" />
+		<Compile Include="Client\Tile\TileModRegister.cs" />
+		<Compile Include="Client\TypeDefinition.cs" />
+		<Compile Include="Client\Tile\OTATile.cs" />
+		<Compile Include="Callbacks\MapCallback.cs" />
+		<Compile Include="Plugin\Hooks\Client\MapHelperInitialize.cs" />
+		<Compile Include="Plugin\Hooks\Multi\GameInitialize.cs" />
+		<Compile Include="Plugin\Hooks\Client\GameDraw.cs" />
+		<Compile Include="Client\Tile\TileDefinition.cs" />
+		<Compile Include="Plugin\Hooks\Client\GameLoadContent.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NewProjectile.cs" />
+		<Compile Include="Client\Projectile\ProjectileModRegister.cs" />
+		<Compile Include="Client\Projectile\OTAProjectile.cs" />
+		<Compile Include="Client\Npc\NpcChatButton.cs" />
+		<Compile Include="Callbacks\InterfaceCallback.cs" />
+		<Compile Include="Plugin\Hooks\Client\GUIChatBoxOpen.cs" />
+		<Compile Include="Plugin\Hooks\Client\GUIChatBoxSend.cs" />
+		<Compile Include="Plugin\Hooks\Multi\NpcPreSpawn.cs" />
+	</ItemGroup>
+	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Callbacks\Enums\" />
-    <Folder Include="Client\Buff\" />
-    <Folder Include="Client\Mount\" />
-    <Folder Include="Client\Net\" />
-    <Folder Include="Client\Wall\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External\Microsoft.Xna.Framework.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External\Microsoft.Xna.Framework.Graphics.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Client\Debug\ConsoleWindow.resx">
-      <DependentUpon>ConsoleWindow.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
+	<Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+	<ItemGroup>
+		<None Include="app.config" />
+		<None Include="packages.config" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Callbacks\Enums\" />
+		<Folder Include="Client\Buff\" />
+		<Folder Include="Client\Mount\" />
+		<Folder Include="Client\Net\" />
+		<Folder Include="Client\Wall\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.IO.Compression" />
+		<Reference Include="System.IO.Compression.FileSystem" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Xml" />
+		<Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+			<HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.dll</HintPath>
+		</Reference>
+		<Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+			<HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+		</Reference>
+		<Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+			<HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+		</Reference>
+		<Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+			<HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Client\Debug\ConsoleWindow.resx">
+			<DependentUpon>ConsoleWindow.cs</DependentUpon>
+		</EmbeddedResource>
+	</ItemGroup>
 </Project>
