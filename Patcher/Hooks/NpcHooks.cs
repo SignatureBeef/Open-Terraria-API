@@ -297,7 +297,6 @@ namespace OTA.Patcher
             var spawnNPC = Terraria.NPC.Method("SpawnNPC");
             var newNPC = Terraria.Import(API.NPCCallback.Method("OnSpawnInvasionNPC"));
 
-
             var itemCalls = spawnNPC.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
                                 && x.Operand is MethodReference
                                 && (x.Operand as MethodReference).Name == "NewNPC"
@@ -372,7 +371,7 @@ namespace OTA.Patcher
 //            spawnNPC.Body.OptimizeMacros();
         }
 
-        [OTAPatch(SupportType.Client, "Hooking NPC creation")]
+        [OTAPatch(SupportType.ClientServer, "Hooking NPC creation")]
         private void HookNPCCreation()
         {
             var method = Terraria.NPC.Method("NewNPC");
@@ -393,8 +392,14 @@ namespace OTA.Patcher
                 il.Remove(remFrom.Next);
             }
 
-            //Add Type to our callback
-            il.InsertBefore(ctor, il.Create(OpCodes.Ldarg_2));
+//            //Add Type to our callback
+//            il.InsertBefore(ctor, il.Create(OpCodes.Ldarg_2));
+
+            il.InsertBefore(ctor, il.Create(OpCodes.Ldloc_0));
+            foreach (var prm in method.Parameters)
+            {
+                il.InsertBefore(ctor, il.Create(OpCodes.Ldarg, prm));
+            }
         }
 
         [OTAPatch(SupportType.Client, "Hooking Npc Updating")]

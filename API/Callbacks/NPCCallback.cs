@@ -368,12 +368,21 @@ namespace OTA.Callbacks
             return args.Start;
         }
 
-        public static Terraria.NPC OnNewNpc(int type)
+        public static Terraria.NPC OnNewNpc(int index, int x, int y, int type, int start, float ai0, float ai1, float ai2, float ai3, int target)
         {
             var ctx = new HookContext();
             var args = new HookArgs.NewNpc()
             {
-                Type = type
+                Type = type,
+                NpcIndex = index,
+                X = x,
+                Y = y,
+                Start = start,
+                AI0 = ai0,
+                AI1 = ai1,
+                AI2 = ai2,
+                AI3 = ai3,
+                Target = target
             };
 
             HookPoints.NewNpc.Invoke(ref ctx, ref args);
