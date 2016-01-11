@@ -52,7 +52,7 @@ namespace OTA.Patcher
                         break;
                 }
             }
-            OTAPatcher.InputFileName = "Terraria." + OTAPatcher.Platform + ".exe";
+            OTAPatcher.InputFileName = OTAPatcher.PatchMode == SupportType.Client ? "Terraria." + OTAPatcher.Platform + ".exe" : "TerrariaServer.exe";
 
             //Specify the output assembly[name]
             OTAPatcher.OutputName = OTAPatcher.PatchMode == SupportType.Client ? "Terraria" : "TerrariaServer";
@@ -391,6 +391,10 @@ namespace OTA.Patcher
                     //            Copy(root, "tdsm-web", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-web", true);
                     //            Copy(root, "tdsm-mysql-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-mysql-connector", true);
                     //            Copy(root, "tdsm-sqlite-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-sqlite-connector", true);
+
+                    var otaOutput = Path.Combine(Platform, "OTA.dll");
+                    if (File.Exists(otaOutput)) File.Delete(otaOutput);
+                    File.Copy("OTA.dll", otaOutput);
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
