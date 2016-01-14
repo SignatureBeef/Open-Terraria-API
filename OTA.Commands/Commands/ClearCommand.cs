@@ -17,7 +17,7 @@ namespace OTA.Commands
 
         public void Clear(ISender sender, ArgumentList args)
         {
-            if (sender is ConsoleSender)
+            if (sender is ConsoleSender && !Environment.UserInteractive)
             {
                 Console.Clear();
             }
@@ -26,4 +26,3 @@ namespace OTA.Commands
         }
     }
 }
-

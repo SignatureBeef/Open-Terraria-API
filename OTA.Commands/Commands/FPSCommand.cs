@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if SERVER
+using System;
 using Terraria;
 using OTA.Command;
 
@@ -36,4 +37,4 @@ namespace OTA.Commands
         }
     }
 }
-
+#endif

@@ -120,11 +120,14 @@ namespace OTA.Callbacks
             }
 
 #if CLIENT
-            (new System.Threading.Thread(() =>
+            if (Platform.Type == Platform.PlatformType.WINDOWS)
             {
-                var dw = new OTA.Client.Debug.ConsoleWindow();
-                dw.ShowDialog();
-            })).Start();
+                (new System.Threading.Thread(() =>
+                    {
+                        var dw = new OTA.Client.Debug.ConsoleWindow();
+                        dw.ShowDialog();
+                    })).Start();
+            }
 #endif
 
             Globals.Touch();
@@ -562,7 +565,7 @@ namespace OTA.Callbacks
 
             HookPoints.UpdateClient.Invoke(ref ctx, ref args);
         }
-#endif
+        #endif
 
         internal static void ResetTileArray()
         {
@@ -671,7 +674,7 @@ namespace OTA.Callbacks
 
             return ctx.Result == HookResult.DEFAULT;
         }
-#endif
+        #endif
     }
 
     public enum MechSpawnType : int

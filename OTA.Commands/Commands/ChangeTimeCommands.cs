@@ -39,7 +39,9 @@ namespace OTA.Commands
         {
             Main.dayTime = true;
             Main.time = 0.0;
+            #if SERVER
             NetMessage.SendData(7, -1, -1, String.Empty, 0, 0f, 0f, 0f, 0);
+            #endif
 
             sender.Message("Time set to dawn");
         }
@@ -53,7 +55,9 @@ namespace OTA.Commands
         {
             Main.dayTime = true;
             Main.time = 27000.0;
+            #if SERVER
             NetMessage.SendData(7, -1, -1, String.Empty, 0, 0f, 0f, 0f, 0);
+            #endif
 
             sender.Message("Time set to noon");
         }
@@ -67,7 +71,9 @@ namespace OTA.Commands
         {
             Main.dayTime = false;
             Main.time = 0.0;
+            #if SERVER
             NetMessage.SendData(7, -1, -1, String.Empty, 0, 0f, 0f, 0f, 0);
+            #endif
 
             sender.Message("Time set to dusk");
         }
@@ -81,10 +87,11 @@ namespace OTA.Commands
         {
             Main.dayTime = false;
             Main.time = 16200.0;
+            #if SERVER
             NetMessage.SendData(7, -1, -1, String.Empty, 0, 0f, 0f, 0f, 0);
+            #endif
 
             sender.Message("Time set to midnight");
         }
     }
 }
-

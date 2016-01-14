@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Open Terraria API")]
 [assembly: AssemblyProduct("OTA")]
-[assembly: AssemblyCopyright("Copyright © TDSM.org 2015")]
+[assembly: AssemblyCopyright("Copyright © openterraria.com 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
