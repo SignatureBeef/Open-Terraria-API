@@ -189,6 +189,12 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "NAT"); }
         }
 
+        public TypeDefinition Connection
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "Connection"); }
+        }
+
         public TypeDefinition ClientConnection
         {
             get

@@ -528,8 +528,6 @@ namespace OTA.Patcher
                 //Console.Write("Ok\nHooking Server events...");
                 //patcher.HookUpdateServer();
                 patcher.HookDedServEnd();
-                Console.Write("Ok\nHooking NPC Spawning...");
-                patcher.HookNPCSpawning();
                 Console.Write("Ok\nHooking config...");
                 patcher.HookConfig();
                 Console.Write("Ok\nFixing statusText...");

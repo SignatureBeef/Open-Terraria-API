@@ -155,15 +155,33 @@ namespace OTA.Patcher
             il.Emit(OpCodes.Ldloc, vrbItemId);
             il.Emit(OpCodes.Ret);
 
+
+//            var instanceCalls = dropLoot.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
+//                                    && x.Operand is MethodReference
+//                                    && (x.Operand as MethodReference).Name == "NewItem"
+//                                    && (x.Operand as MethodReference).DeclaringType.Name == "Item").ToArray();
+//
+//            //            var whoAmI = Terraria.Entity.Field("whoAmI");
+//            foreach (var call in instanceCalls)
+//            {
+//                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
+//                //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
+//                //                il.InsertBefore(call, il.Create(OpCodes.Ldfld, whoAmI));
+//            }
+
+
             var itemCalls = npcLoot.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
                                 && x.Operand is MethodReference
                                 && (x.Operand as MethodReference).Name == "NewItem"
                                 && (x.Operand as MethodReference).DeclaringType.Name == "Item").ToArray();
 
             //            var whoAmI = Terraria.Entity.Field("whoAmI");
+//            var vanillaIL = npcLoot.Body.GetILProcessor();
             foreach (var call in itemCalls)
             {
                 call.Operand = dropLoot;
+
+//                vanillaIL.InsertBefore(call, vanillaIL.Create(OpCodes.Ldarg_0));
                 //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
                 //                il.InsertBefore(call, il.Create(OpCodes.Ldfld, whoAmI));
             }
@@ -606,6 +624,63 @@ namespace OTA.Patcher
             }
         }
         #endif
+
+        //        [OTAPatch(SupportType.ClientServer, "Hooking Npc Loot")]
+        //        private void HookNpcInstanceLoot()
+        //        {
+        //            var method = Terraria.NPC.Method("NPCLoot");
+        //            var callback = Terraria.Import(API.NPCCallback.Method("DropLoot"));
+        //
+        //            var il = method.Body.GetILProcessor();
+        //
+        //            var methods = method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
+        //                              && x.Operand is MethodReference
+        //                              && (x.Operand as MethodReference).Name == "DropLoot")
+        //                .ToArray();
+        //            foreach (var call in methods)
+        //            {
+        //                call.Operand = callback;
+        //
+        //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
+        //            }
+        //        }
+
+        [OTAPatch(SupportType.ClientServer, "Hooking Npc Spawning")]
+        private void HookNpcSpawning()
+        {
+            var newNPC = Terraria.NPC.Method("NewNPC");
+            var method = API.NPCCallback.Method("CanSpawnNPC");
+
+            var il = newNPC.Body.GetILProcessor();
+            var first = newNPC.Body.Instructions.First();
+
+            il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
+            il.InsertBefore(first, il.Create(OpCodes.Ldarg_1));
+            il.InsertBefore(first, il.Create(OpCodes.Ldarg_2));
+            il.InsertBefore(first, il.Create(OpCodes.Ldarg_3));
+            il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(method)));
+
+            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
+            il.InsertBefore(first, il.Create(OpCodes.Ldc_I4, 200));
+            il.InsertBefore(first, il.Create(OpCodes.Ret));
+        }
+
+//        [OTAPatch(SupportType.ClientServer, "TEST NPC")]
+//        private void TestNPC()
+//        {
+//            //Make everything virtual
+//            foreach (var method in Terraria.NPC.Methods)
+//            {
+//                if (!method.IsStatic && !method.IsGetter && !method.IsSetter && method.IsPublic)
+//                {
+//                    if (method.Overrides.Count == 0)
+//                    {
+//                        method.IsVirtual = true;
+//                        method.IsNewSlot = true;
+//                    }
+//                }
+//            }
+//        }
     }
 }
 

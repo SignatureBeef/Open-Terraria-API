@@ -32,8 +32,8 @@ namespace OTA.Callbacks
                     if (PluginManager._plugins != null)
                     {
                         var items = PluginManager._plugins.Values
-                            .Where(x => x != null && x.Assembly != null && x.Assembly.FullName == a.Name)
-                            .Select(x => x.Assembly)
+                                .Where(x => x != null && x.Assembly != null && x.Assembly.FullName == a.Name)
+                                .Select(x => x.Assembly)
                                 .FirstOrDefault();
 
                         if (items != null)
@@ -47,6 +47,18 @@ namespace OTA.Callbacks
                     {
                         prefix = a.Name.Substring(0, ix);
                         filename = Path.Combine(Globals.LibrariesPath, prefix + ".dll");
+
+                        //Check if we have a plugin of this name
+                        if (PluginManager._plugins != null)
+                        {
+                            var items = PluginManager._plugins.Values
+                                    .Where(x => x != null && x.Assembly != null && x.Assembly.GetName().Name == prefix)
+                                    .Select(x => x.Assembly)
+                                    .FirstOrDefault();
+
+                            if (items != null)
+                                return items;
+                        }
                     }
                     else
                     {
@@ -320,7 +332,7 @@ namespace OTA.Callbacks
 #endif
         }
 
-#if SERVER
+        #if SERVER
         //        private static DateTime? _lastUpdate;
         public static void OnUpdateServerBegin()
         {
@@ -341,7 +353,7 @@ namespace OTA.Callbacks
             var args = HookArgs.ServerUpdate.End;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
         }
-#endif
+        #endif
 
         public static void OnUpdateBegin()
         {
@@ -494,7 +506,7 @@ namespace OTA.Callbacks
             return ctx.Result == HookResult.DEFAULT; //Continue on
         }
 
-#if CLIENT
+        #if CLIENT
         /// <summary>
         /// The first call from Terraria.Main.Draw
         /// </summary>
@@ -624,7 +636,7 @@ namespace OTA.Callbacks
             }
         }
 
-#if CLIENT
+        #if CLIENT
         public static void OnLoadContentBegin()
         {
             var ctx = HookContext.Empty;

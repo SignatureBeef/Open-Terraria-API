@@ -2215,27 +2215,27 @@ namespace OTA.Patcher
         //            //            }
         //        }
 
-        /// <summary>
-        /// Hooks if NPC's can spawn into OTA
-        /// </summary>
-        public void HookNPCSpawning()
-        {
-            var newNPC = Terraria.NPC.Methods.Single(x => x.Name == "NewNPC");
-            var method = API.NPCCallback.Methods.Single(x => x.Name == "CanSpawnNPC");
-
-            var il = newNPC.Body.GetILProcessor();
-            var first = newNPC.Body.Instructions.First();
-
-            il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
-            il.InsertBefore(first, il.Create(OpCodes.Ldarg_1));
-            il.InsertBefore(first, il.Create(OpCodes.Ldarg_2));
-            il.InsertBefore(first, il.Create(OpCodes.Ldarg_3));
-            il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(method)));
-
-            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
-            il.InsertBefore(first, il.Create(OpCodes.Ldc_I4, 200));
-            il.InsertBefore(first, il.Create(OpCodes.Ret));
-        }
+//        /// <summary>
+//        /// Hooks if NPC's can spawn into OTA
+//        /// </summary>
+//        public void HookNPCSpawning()
+//        {
+//            var newNPC = Terraria.NPC.Methods.Single(x => x.Name == "NewNPC");
+//            var method = API.NPCCallback.Methods.Single(x => x.Name == "CanSpawnNPC");
+//
+//            var il = newNPC.Body.GetILProcessor();
+//            var first = newNPC.Body.Instructions.First();
+//
+//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
+//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_1));
+//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_2));
+//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_3));
+//            il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(method)));
+//
+//            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
+//            il.InsertBefore(first, il.Create(OpCodes.Ldc_I4, 200));
+//            il.InsertBefore(first, il.Create(OpCodes.Ret));
+//        }
 
         /// <summary>
         /// Hooks the invasion warning call into OTA
