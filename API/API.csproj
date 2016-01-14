@@ -493,6 +493,8 @@
     <Compile Include="Plugin\Hooks\Client\GUIChatBoxSend.cs" />
     <Compile Include="Plugin\Hooks\Multi\NpcPreSpawn.cs" />
     <Compile Include="NpcTest.cs" />
+    <Compile Include="Permissions\IPermissionHandler.cs" />
+    <Compile Include="Permissions\Permissions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -513,6 +515,7 @@
     <Folder Include="Client\Mount\" />
     <Folder Include="Client\Net\" />
     <Folder Include="Client\Wall\" />
+    <Folder Include="Permissions\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />

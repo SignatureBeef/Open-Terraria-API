@@ -357,6 +357,11 @@ namespace OTA.Commands
                 .Where(x => x.Value.Plugin != null && (plugin != null && x.Value.Plugin == plugin))
                 .Select(x => x.Value);
         }
+
+        public IEnumerable<CommandInfo> GetCommandsForSender(ISender sender)
+        {
+            return commands.Where(x => sender.HasPermission(x.Value.node)).Select(x => x.Value);
+        }
     }
 }
 

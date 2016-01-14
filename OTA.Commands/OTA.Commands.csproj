@@ -59,13 +59,33 @@
     <Compile Include="CommandInfo.cs" />
     <Compile Include="Events\CommandIssued.cs" />
     <Compile Include="CommandPlugin.cs" />
-    <Compile Include="BasePluginExtensions.cs" />
     <Compile Include="CommandManager.cs" />
     <Compile Include="Events\Listening.cs" />
+    <Compile Include="Commands\OTACommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Extensions\BasePluginExtensions.cs" />
+    <Compile Include="Commands\SaveCommand.cs" />
+    <Compile Include="Commands\FPSCommand.cs" />
+    <Compile Include="Commands\SettleCommand.cs" />
+    <Compile Include="Commands\PortCommand.cs" />
+    <Compile Include="Commands\TimeCommand.cs" />
+    <Compile Include="Commands\ChangeTimeCommands.cs" />
+    <Compile Include="Commands\MaxPlayersCommand.cs" />
+    <Compile Include="Commands\VersionCommand.cs" />
+    <Compile Include="Commands\PasswordCommand.cs" />
+    <Compile Include="Commands\BanCommand.cs" />
+    <Compile Include="Commands\KickCommand.cs" />
+    <Compile Include="Commands\PluginsCommand.cs" />
+    <Compile Include="Commands\PlayingCommand.cs" />
+    <Compile Include="Commands\MotdCommand.cs" />
+    <Compile Include="Commands\ExitCommands.cs" />
+    <Compile Include="Commands\ClearCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Events\" />
+    <Folder Include="Commands\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'FNA-Debug|AnyCPU' ">

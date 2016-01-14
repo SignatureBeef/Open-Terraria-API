@@ -21,6 +21,8 @@ namespace OTA.Commands
         {
             base.Enabled();
 
+            OTACommand.Initialise(this);
+
             ProgramLog.Plugin.Log(this.Name + " initialised");
         }
 
