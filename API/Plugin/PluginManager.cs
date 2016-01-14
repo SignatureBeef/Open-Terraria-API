@@ -252,15 +252,16 @@ namespace OTA.Plugin
 
                             if (plugin != null)
                             {
+                                //Plugin met requirements, remove it now otherwise it might initialise more than once
+                                _deferedPlugins.RemoveAt(x);
+                                x--;
+
                                 if (plugin.InitializeAndHookUp())
                                 {
                                     _plugins.Add(plugin.Name.ToLower().Trim(), plugin);
 
                                     if (plugin.EnableEarly)
                                         plugin.Enable();
-
-                                    _deferedPlugins.RemoveAt(x);
-                                    x--;
                                 }
                             }
                         }

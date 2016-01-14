@@ -902,8 +902,9 @@ namespace OTA.Patcher
                 foreach (var file in dir.EnumerateFileSystemInfos())
                 {
                     var relative = file.FullName.Remove(0, dir.FullName.Length).TrimStart(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
-                    if (File.Exists(relative)) File.Delete(relative);
-                    File.Copy(file.FullName, Path.Combine(targetDir, relative));
+                    var target = Path.Combine(targetDir, relative);
+                    if (File.Exists(target)) File.Delete(target);
+                    File.Copy(file.FullName, target);
                 }
             }
 

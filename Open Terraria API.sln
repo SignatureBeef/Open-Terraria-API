@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}"
@@ -29,12 +29,22 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Client-Debug|AnyCPU = Client-Debug|AnyCPU
+		FNA-Debug|AnyCPU = FNA-Debug|AnyCPU
 		Server-Debug|AnyCPU = Server-Debug|AnyCPU
 		Server-Release|AnyCPU = Server-Release|AnyCPU
-		FNA-Debug|AnyCPU = FNA-Debug|AnyCPU
 		XNA-Debug|AnyCPU = XNA-Debug|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|AnyCPU.ActiveCfg = Client-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|AnyCPU.Build.0 = Client-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.FNA-Debug|AnyCPU.ActiveCfg = FNA-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.FNA-Debug|AnyCPU.Build.0 = FNA-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.ActiveCfg = Server-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.Build.0 = Server-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Release|AnyCPU.ActiveCfg = Server-Release|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Release|AnyCPU.Build.0 = Server-Release|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.XNA-Debug|AnyCPU.ActiveCfg = XNA-Debug|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.XNA-Debug|AnyCPU.Build.0 = XNA-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Client-Debug|AnyCPU.ActiveCfg = Client-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Client-Debug|AnyCPU.Build.0 = Client-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.FNA-Debug|AnyCPU.ActiveCfg = FNA-Debug|Any CPU
@@ -55,16 +65,9 @@ Global
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Server-Release|AnyCPU.Build.0 = Server-Release|Any CPU
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.XNA-Debug|AnyCPU.ActiveCfg = XNA-Debug|Any CPU
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.XNA-Debug|AnyCPU.Build.0 = XNA-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|AnyCPU.ActiveCfg = Client-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|AnyCPU.Build.0 = Client-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.FNA-Debug|AnyCPU.ActiveCfg = FNA-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.FNA-Debug|AnyCPU.Build.0 = FNA-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.ActiveCfg = Server-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.Build.0 = Server-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Release|AnyCPU.ActiveCfg = Server-Release|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Release|AnyCPU.Build.0 = Server-Release|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.XNA-Debug|AnyCPU.ActiveCfg = XNA-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.XNA-Debug|AnyCPU.Build.0 = XNA-Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D87DBA58-1E96-43CC-BD55-A7F30CAEE90E} = {EED99527-E456-4B5C-8079-D4DC60410DFE}
@@ -102,8 +105,5 @@ Global
 		$2.inheritsSet = Mono
 		$2.inheritsScope = text/x-csharp
 		$2.scope = text/x-csharp
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
