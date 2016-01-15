@@ -56,25 +56,41 @@ namespace OTA.Commands
         
 
 
+
 #elif SERVER
         [Hook]
         void OnPlayerCommand(ref HookContext ctx, ref HookArgs.ReceiveNetMessage args)
         {
             if (args.PacketId == (int)Packet.PLAYER_CHAT)
             {
+                ctx.SetResult(HookResult.IGNORE);
                 try
                 {
                     var buffer = NetMessage.buffer[args.BufferId];
+                    var player = Terraria.Main.player[args.BufferId];
 
                     //Discard
                     buffer.reader.ReadByte();
-                    buffer.reader.ReadRGB();
+                    var color = buffer.reader.ReadRGB();
 
                     var message = buffer.reader.ReadString();
 
-                    if (CommandManager.Parser.ParsePlayerCommand(Terraria.Main.player[args.BufferId], message))
+                    if (!CommandManager.Parser.ParsePlayerCommand(player, message))
                     {
-                        ctx.SetResult(HookResult.IGNORE);
+                        if (player.difficulty == 2)
+                        {
+                            color = Main.hcColor;
+                        }
+                        else if (player.difficulty == 1)
+                        {
+                            color = Main.mcColor;
+                        }
+                        NetMessage.SendData(25, -1, -1, message, args.BufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
+                        if (Main.dedServ)
+                        {
+                            Logger.Vanilla("<" + player.name + "> " + message);
+                            return;
+                        }
                     }
                 }
                 catch (Exception e)
