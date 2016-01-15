@@ -17,6 +17,10 @@ namespace OTA.Commands
     {
         public static ConsoleSender ConsoleSender { get; } = new ConsoleSender();
 
+        #if SERVER
+        public char PlayerCommandPrefix = '/';
+        #endif
+
         /// <summary>
         /// Parses new console command
         /// </summary>
@@ -39,7 +43,7 @@ namespace OTA.Commands
         /// <param name="line">Command to parse</param>
         public bool ParsePlayerCommand(ISender player, string line)
         {
-            if (line.StartsWith("/"))
+            if (!String.IsNullOrEmpty(line) && line[0] == PlayerCommandPrefix)
             {
                 line = line.Remove(0, 1);
 

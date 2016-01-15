@@ -53,26 +53,33 @@ namespace OTA.Commands
                 ctx.SetResult(HookResult.RECTIFY, false);
             }
         }
-        #elif SERVER
+        
+
+
+#elif SERVER
         [Hook]
         void OnPlayerCommand(ref HookContext ctx, ref HookArgs.ReceiveNetMessage args)
         {
             if (args.PacketId == (int)Packet.PLAYER_CHAT)
             {
-                var buffer = NetMessage.buffer[args.BufferId];
-
-                //Discard
-                buffer.reader.ReadByte();
-                buffer.reader.ReadRGB();
-
-                var message = buffer.reader.ReadString();
-
-                if (message != null & message.Length > 0 && message[0] == '/')
+                try
                 {
+                    var buffer = NetMessage.buffer[args.BufferId];
+
+                    //Discard
+                    buffer.reader.ReadByte();
+                    buffer.reader.ReadRGB();
+
+                    var message = buffer.reader.ReadString();
+
                     if (CommandManager.Parser.ParsePlayerCommand(Terraria.Main.player[args.BufferId], message))
                     {
-                        ctx.SetResult(HookResult.RECTIFY, false);
+                        ctx.SetResult(HookResult.IGNORE);
                     }
+                }
+                catch (Exception e)
+                {
+                    ProgramLog.Log(e, "Failed to parse player chat");
                 }
             }
         }
