@@ -4,6 +4,10 @@ using System;
 using OTA.Commands.Events;
 using OTA.Misc;
 
+#if SERVER
+using Terraria;
+#endif
+
 namespace OTA.Commands
 {
     [OTAVersion(1, 0)]
@@ -47,6 +51,29 @@ namespace OTA.Commands
             if (CommandManager.Parser.ParsePlayerCommand(Terraria.Main.player[Terraria.Main.myPlayer], args.Message))
             {
                 ctx.SetResult(HookResult.RECTIFY, false);
+            }
+        }
+        #elif SERVER
+        [Hook]
+        void OnPlayerCommand(ref HookContext ctx, ref HookArgs.ReceiveNetMessage args)
+        {
+            if (args.PacketId == (int)Packet.PLAYER_CHAT)
+            {
+                var buffer = NetMessage.buffer[args.BufferId];
+
+                //Discard
+                buffer.reader.ReadByte();
+                buffer.reader.ReadRGB();
+
+                var message = buffer.reader.ReadString();
+
+                if (message != null & message.Length > 0 && message[0] == '/')
+                {
+                    if (CommandManager.Parser.ParsePlayerCommand(Terraria.Main.player[args.BufferId], message))
+                    {
+                        ctx.SetResult(HookResult.RECTIFY, false);
+                    }
+                }
             }
         }
         #endif
