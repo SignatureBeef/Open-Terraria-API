@@ -36,7 +36,7 @@ namespace OTA.Patcher
             method.Wrap(cbkBegin, cbkEnd, true);
         }
 
-#if CLIENT
+        #if CLIENT
         [OTAPatch(SupportType.Client, "Allowing custom NPC's to be drawn")]
         private void AllowMoreNPCDrawing()
         {
@@ -48,7 +48,7 @@ namespace OTA.Patcher
             ldLoc_540.OpCode = OpCodes.Ldsfld;
             ldLoc_540.Operand = Terraria.Import(replacement);
         }
-#endif
+        #endif
 
         [OTAPatch(SupportType.Client, "Hooking Npc texture loading")]
         private void HookNpcLoad()
@@ -144,7 +144,7 @@ namespace OTA.Patcher
             il.InsertAfter(npcChatFocus1.Next, il.Create(OpCodes.Call, callback));
         }
 
-#if CLIENT
+        #if CLIENT
         [OTAPatch(SupportType.Client, "Hooking INativeMod")]
         private void HookInINativeMod()
         {
@@ -207,7 +207,50 @@ namespace OTA.Patcher
             il.InsertAfter(insEntry, il.Create(OpCodes.Brfalse, insEntry.Operand as Instruction));
             il.InsertAfter(insEntry, il.Create(OpCodes.Call, callback));
         }
-#endif
+        #endif
+
+        [OTAPatch(SupportType.ClientServer, "Replacing XNA SetTitle")]
+        private void ReplaceSetTitle()
+        {
+            var callback = Terraria.Import(API.MainCallback.Method("SetWindowTitle"));
+
+            var instructions = Terraria.Types
+                .Where(a => a.HasMethods)
+                .SelectMany(x => x.Methods)
+                .Where(b => b.HasBody && b.Body.Instructions != null)
+                .Select(y => new MethodInstructions()
+                {
+                    Method = y,
+                    Instructions = y.Body.Instructions
+                        .Where(z => z.Operand is MethodReference
+                        && (z.Operand as MethodReference).Name == "set_Title")
+                            .ToArray()
+                }
+                               ).ToArray();
+            foreach (var mth in instructions)
+            {
+                var il = mth.Method.Body.GetILProcessor();
+                foreach (var ins in mth.Instructions)
+                {
+                    var mr = ins.Operand as MethodReference;
+                    if (mr.HasThis)
+                    {
+                        var prev = ins.FindPreviousInstructionByOpCode(OpCodes.Call);
+                        il.Remove(prev.Previous);
+                        il.Remove(prev);
+                    }
+
+                    ins.Operand = callback;
+                    ins.OpCode = OpCodes.Call;
+                }
+            }
+        }
+
+        private struct MethodInstructions
+        {
+            public MethodDefinition Method;
+            public Instruction[] Instructions;
+        }
     }
 }
 

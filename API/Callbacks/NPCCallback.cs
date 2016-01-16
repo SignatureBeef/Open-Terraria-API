@@ -386,6 +386,7 @@ namespace OTA.Callbacks
             if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is Terraria.NPC) return (Terraria.NPC)ctx.ResultParam;
 
             var npc = new Terraria.NPC();
+//            var npc = new NpcTest();
             npc.SetDefaults(type, -1);
             return npc;
         }

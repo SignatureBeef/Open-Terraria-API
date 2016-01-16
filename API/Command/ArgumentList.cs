@@ -8,29 +8,6 @@ using Terraria;
 namespace OTA.Command
 {
     /// <summary>
-    /// A OTA exception for throwing a command error to the sender with the help usage + message
-    /// </summary>
-    public class CommandError : ApplicationException
-    {
-        /// <summary>
-        /// Sends a message with the help text
-        /// </summary>
-        /// <param name="message">Message.</param>
-        public CommandError(string message) : base(message)
-        {
-        }
-
-        /// <summary>
-        /// Sends a formatted message
-        /// </summary>
-        /// <param name="fmt">Fmt.</param>
-        /// <param name="args">Arguments.</param>
-        public CommandError(string fmt, params object[] args) : base(String.Format(fmt, args))
-        {
-        }
-    }
-
-    /// <summary>
     /// The list of arguments received from a command sender
     /// </summary>
     public class ArgumentList : List<string>
@@ -1038,9 +1015,4 @@ namespace OTA.Command
         }
         #endif
     }
-
-    /// <summary>
-    /// Argument converter callback.
-    /// </summary>
-    public delegate bool ArgumentConverter<T>(ArgumentList list,int position,out T converted);
 }

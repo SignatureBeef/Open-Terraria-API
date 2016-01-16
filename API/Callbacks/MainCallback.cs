@@ -675,12 +675,26 @@ namespace OTA.Callbacks
             return ctx.Result == HookResult.DEFAULT;
         }
         #endif
-    }
 
-    public enum MechSpawnType : int
-    {
-        Item = 1,
-        Npc
+        public static void SetWindowTitle(string title)
+        {
+            var ctx = new HookContext();
+            var args = new HookArgs.SetWindowTitle()
+            {
+                Title = title
+            };
+
+            HookPoints.SetWindowTitle.Invoke(ref ctx, ref args);
+
+            if (ctx.Result == HookResult.DEFAULT)
+            {
+                Console.Title = title + " | Open Terraria API build " + Globals.BuildInfo;
+            }
+            else if (ctx.Result == HookResult.RECTIFY)
+            {
+                Console.Title = (string)ctx.ResultParam;
+            }
+        }
     }
 }
 

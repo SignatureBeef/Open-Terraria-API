@@ -665,22 +665,45 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
 
-//        [OTAPatch(SupportType.ClientServer, "TEST NPC")]
-//        private void TestNPC()
-//        {
-//            //Make everything virtual
-//            foreach (var method in Terraria.NPC.Methods)
-//            {
-//                if (!method.IsStatic && !method.IsGetter && !method.IsSetter && method.IsPublic)
-//                {
-//                    if (method.Overrides.Count == 0)
-//                    {
-//                        method.IsVirtual = true;
-//                        method.IsNewSlot = true;
-//                    }
-//                }
-//            }
-//        }
+        [OTAPatch(SupportType.ClientServer, "TEST NPC", 2000)]
+        private void TestNPC()
+        {
+            //Make everything virtual
+            foreach (var method in Terraria.NPC.Methods.Where(x=> !x.IsStatic 
+                && !x.IsGetter 
+                && !x.IsSetter 
+                && x.IsPublic 
+                && !x.IsVirtual 
+                && !x.IsNewSlot
+                && x.Overrides.Count == 0
+                && x.Name != ".ctor"
+                && x.Name != ".cctor"))
+            {
+                method.IsVirtual = true;
+                method.IsNewSlot = true;
+
+                var instructions = Terraria.Types
+                            .Where(a => a.HasMethods)
+                            .SelectMany(x => x.Methods)
+                            .Where(b => b.HasBody && b.Body.Instructions != null)
+                            .SelectMany(y => y.Body.Instructions)
+                    .Where(z => z.Operand == method);
+
+                foreach (var ins in instructions)
+                {
+                    if (ins.OpCode == OpCodes.Callvirt) break;
+                            
+                    if (ins.OpCode == OpCodes.Call)
+                    {
+                        ins.OpCode = OpCodes.Callvirt;
+                    }
+                    else
+                    {
+                        throw new NotSupportedException();
+                    }
+                }
+            }
+        }
     }
 }
 

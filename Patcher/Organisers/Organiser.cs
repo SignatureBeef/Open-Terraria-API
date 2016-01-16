@@ -7,6 +7,11 @@ namespace OTA.Patcher
     {
         protected AssemblyDefinition _asm;
 
+        public Mono.Collections.Generic.Collection<TypeDefinition> Types
+        {
+            get { return _asm.MainModule.Types; }
+        }
+
         public Organiser(AssemblyDefinition assembly)
         {
             this._asm = assembly;
