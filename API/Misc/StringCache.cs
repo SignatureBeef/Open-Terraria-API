@@ -5,8 +5,6 @@ namespace OTA.Misc
 {
     public static class StringCache
     {
-        static HashSet<string> test = new HashSet<string>();
-
 #if FALSE
 		// This is half a trie implementation, I bet it's fast
 		// but it takes 630KB for 461 entries, which is pointless wastefulness

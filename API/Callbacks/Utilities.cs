@@ -47,7 +47,7 @@ namespace OTA.Callbacks
     /// A checked random instance
     /// </summary>
     /// <remarks>This is mainly used to fix a bug in Terraria.Player.Ghost</remarks>
-    // [TODO, enumer-ize this]
+    // [TODO, enumer-ize this] [update: wtf does this mean]
     public class Rand : Random
     {
         /// <summary>

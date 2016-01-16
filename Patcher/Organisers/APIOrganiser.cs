@@ -168,7 +168,7 @@ namespace OTA.Patcher.Organisers
 
         #region Client Registers
 
-//        #if CLIENT
+        //        #if CLIENT
         public TypeDefinition NpcModRegister
         {
             get
@@ -180,7 +180,8 @@ namespace OTA.Patcher.Organisers
             get
             { return _asm.MainModule.Types.Single(x => x.Name == "TileModRegister"); }
         }
-//        #endif
+        //        #endif
+
         #endregion
 
         public TypeDefinition NAT
@@ -217,7 +218,7 @@ namespace OTA.Patcher.Organisers
         public TypeDefinition WorldSender
         {
             get
-            { return _asm.MainModule.Types.Single(x => x.Name == "WorldSender"); }
+            { return _asm.MainModule.Types.Single(x => x.Name == "WorldSender" && x.IsAbstract); }
         }
     }
 }

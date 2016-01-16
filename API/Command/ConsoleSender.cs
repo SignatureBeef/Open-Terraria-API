@@ -12,12 +12,6 @@ namespace OTA.Command
 
         public static ConsoleColor DefaultColour = ConsoleColor.Gray;
 
-        public bool Op
-        {
-            get { return true; }
-            set { } 
-        }
-
         public string SenderName
         {
             get { return "CONSOLE"; }
@@ -56,10 +50,9 @@ namespace OTA.Command
             if (_consoleMethod == null)
             {
                 if (R == 255 && G == 255 && B == 255)
-                    Console.WriteLine(message); //ProgramLog.Console.Print(message);
+                    Console.WriteLine(message);
                 else
                 {
-                    //Console.ForegroundColor = FromColor(R, G, B);
                     Logger.Info(message, FromColor(R, G, B));
                     Console.ForegroundColor = DefaultColour;
                 }

@@ -61,8 +61,6 @@ namespace OTA.Callbacks
             };
 
             HookPoints.InvasionNpcSpawn.Invoke(ref ctx, ref args);
-
-//            return ctx.Result == HookResult.DEFAULT;
         }
 
         #if Full_API
@@ -334,8 +332,6 @@ namespace OTA.Callbacks
 
             HookPoints.NpcDropBossBag.Invoke(ref ctx, ref args);
         }
-
-        //OnSpawnInvasionNPC
 
         public static int OnSpawnInvasionNPC(int x, int y, int type, int start, float ai0, float ai1, float ai2, float ai3, int target)
         {

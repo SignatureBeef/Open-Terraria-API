@@ -17,9 +17,7 @@ namespace OTA.Commands
     {
         public static ConsoleSender ConsoleSender { get; } = new ConsoleSender();
 
-        #if SERVER
         public char PlayerCommandPrefix = '/';
-        #endif
 
         /// <summary>
         /// Parses new console command

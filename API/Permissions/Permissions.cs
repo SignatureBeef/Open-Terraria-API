@@ -31,14 +31,3 @@ namespace OTA.Permissions
         Denied = 3
     }
 }
-
-namespace OTA
-{
-    public static class ISenderExtensions
-    {
-        public static bool HasPermission(this ISender sender, string node)
-        {
-            return OTA.Permissions.Permissions.GetPermission(sender, node) == OTA.Permissions.Permission.Permitted;
-        }
-    }
-}

@@ -159,7 +159,7 @@
           <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
         </Reference>
         <Reference Include="TerrariaServer">
-          <HintPath>..\Binaries\TerrariaServer.exe</HintPath>
+          <HintPath>..\Binaries\Server\TerrariaServer.exe</HintPath>
         </Reference>
         <Reference Include="Microsoft.Owin">
           <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -247,12 +247,9 @@
     <Compile Include="Data\EF7\OTAContext.cs" />
     <Compile Include="DebugFramework\Assert.cs" />
     <Compile Include="Command\ArgumentList.cs" />
-    <Compile Include="Command\ISender.cs" />
-    <Compile Include="Command\Sender.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="ID\ActionType.cs" />
     <Compile Include="ID\Lookup.cs" />
-    <Compile Include="Misc\SafeConsole.cs" />
     <Compile Include="Misc\StringCache.cs" />
     <Compile Include="Plugin\HookAttribute.cs" />
     <Compile Include="Plugin\HookPoint.cs" />
@@ -333,7 +330,6 @@
     <Compile Include="Logging\ProgressLogger.cs" />
     <Compile Include="Misc\Affix.cs" />
     <Compile Include="Misc\ArrayDequeue.cs" />
-    <Compile Include="Misc\DataRegister.cs" />
     <Compile Include="Misc\ExitException.cs" />
     <Compile Include="Misc\InvasionType.cs" />
     <Compile Include="Misc\Platform.cs" />
@@ -342,11 +338,9 @@
     <Compile Include="Misc\ProgressWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Misc\PropertiesFile.cs" />
     <Compile Include="Misc\Tasks.cs" />
     <Compile Include="Callbacks\Utilities.cs" />
     <Compile Include="Steam\Steamworks.cs" />
-    <Compile Include="Misc\ConfigUpdater.cs" />
     <Compile Include="Web\WebServer.cs" />
     <Compile Include="Data\EF6\Config\SQLite\SqliteContextInitializer.cs" />
     <Compile Include="Data\EF6\ConnectionManager.cs" />
@@ -436,7 +430,6 @@
     <Compile Include="Plugin\HookOrder.cs" />
     <Compile Include="Plugin\HookResult.cs" />
     <Compile Include="Plugin\HookAction.cs" />
-    <Compile Include="Misc\DataEncoding.cs" />
     <Compile Include="Logging\Targets\LogTarget.cs" />
     <Compile Include="Logging\Targets\StandardOutputTarget.cs" />
     <Compile Include="Logging\Targets\InteractiveLogTarget.cs" />
@@ -495,6 +488,17 @@
     <Compile Include="NpcTest.cs" />
     <Compile Include="Permissions\IPermissionHandler.cs" />
     <Compile Include="Permissions\Permissions.cs" />
+    <Compile Include="Entity\ISender.cs" />
+    <Compile Include="Extensions\ISenderExtensions.cs" />
+    <Compile Include="Entity\WorldSender.cs" />
+    <Compile Include="Misc\Extensions\AffixExtensions.cs" />
+    <Compile Include="Misc\GameTask.cs" />
+    <Compile Include="Config\ConfigUpdater.cs" />
+    <Compile Include="Data\DataEncoding.cs" />
+    <Compile Include="Config\DataRegister.cs" />
+    <Compile Include="Config\PairFileRegister.cs" />
+    <Compile Include="Config\PropertiesFile.cs" />
+    <Compile Include="SafeConsole.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -516,6 +520,9 @@
     <Folder Include="Client\Net\" />
     <Folder Include="Client\Wall\" />
     <Folder Include="Permissions\" />
+    <Folder Include="Entity\" />
+    <Folder Include="Misc\Extensions\" />
+    <Folder Include="Config\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />

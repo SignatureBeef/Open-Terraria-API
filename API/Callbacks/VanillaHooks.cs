@@ -154,8 +154,6 @@ namespace OTA.Callbacks
         /// <remarks>This may not work yet</remarks>
         public static string OnDeathMessage(int plr = -1, int npc = -1, int proj = -1, int other = -1)
         {
-//            ProgramLog.Log("DEATH");
-//            return "DEATH";
             #if Full_API
             var args = new HookArgs.DeathMessage()
             {

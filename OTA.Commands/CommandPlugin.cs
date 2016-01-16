@@ -44,7 +44,7 @@ namespace OTA.Commands
             (new OTA.Misc.ProgramThread("Command", ListenForCommands)).Start();
         }
 
-        #if CLIENT
+#if CLIENT
         [Hook]
         void OnGUIChatBoxSend(ref HookContext ctx, ref HookArgs.GUIChatBoxSend args)
         {
@@ -53,12 +53,8 @@ namespace OTA.Commands
                 ctx.SetResult(HookResult.RECTIFY, false);
             }
         }
-        
-
-
-
 #elif SERVER
-        [Hook]
+        [Hook(HookOrder.LATE)]
         void OnPlayerCommand(ref HookContext ctx, ref HookArgs.ReceiveNetMessage args)
         {
             if (args.PacketId == (int)Packet.PLAYER_CHAT)
@@ -99,7 +95,7 @@ namespace OTA.Commands
                 }
             }
         }
-        #endif
+#endif
 
         private void ListenForCommands()
         {
