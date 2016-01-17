@@ -10,6 +10,12 @@ namespace OTA.Extensions
     public static class LinqExtensions
     {
         private static readonly Random _rand = new Random();
+        private static readonly object _randLock = new object();
+
+        public static int Next(int min = 0, int max = Int32.MaxValue)
+        {
+            lock (_randLock) return _rand.Next(min, max); 
+        }
 
         /// <summary>
         /// Selects a random item from the list
@@ -22,7 +28,7 @@ namespace OTA.Extensions
             var count = list.Count;
             if (count == 0)
                 return default(T);
-            return list.ElementAt(_rand.Next(0, count));
+            return list.ElementAt(Next(max: count));
         }
 
         /// <summary>
@@ -37,7 +43,7 @@ namespace OTA.Extensions
             while (n > 1)
             {  
                 n--;  
-                var j = _rand.Next(n + 1);
+                var j = Next(max: n + 1);
                 T value = data[j];  
                 data[j] = data[n];  
                 data[n] = value;  
@@ -73,7 +79,7 @@ namespace OTA.Extensions
                      *  if [randWeight] >= 123 && [randWeight] <= 127 then the chance suceeded
                      *  else do nothing and continue to the next item (can be an unordered list)
                      */
-                var randWeight = _rand.Next((int)((totalWeight + chance) * 100.0)) / 100.0;
+                var randWeight = Next(max: (int)((totalWeight + chance) * 100.0)) / 100.0;
                 if (randWeight >= totalWeight) selection = item;
 
                 totalWeight += chance;
@@ -86,7 +92,7 @@ namespace OTA.Extensions
                 var matches = list.Where(x => fncChance(x) == fncChance(selection));
                 if (matches.Count() > 1)
                 {
-                    var index = _rand.Next(0, matches.Count());
+                    var index = Next(max: matches.Count());
                     selection = matches.ElementAt(index);
                 }
             }

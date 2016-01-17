@@ -99,6 +99,9 @@ namespace OTA.Logging
         /// <param name="message">Message.</param>
         public static void Log(string category, Exception exception, string message = null)
         {
+            OTA.DebugFramework.Assert.Expression(() => category == null);
+            OTA.DebugFramework.Assert.Expression(() => exception == null);
+
             if (null == message) message = exception.ToString();
             else message += Environment.NewLine + exception.ToString();
             Log(category, TraceLevel.Error, message);

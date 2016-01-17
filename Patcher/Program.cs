@@ -395,9 +395,13 @@ namespace OTA.Patcher
 
                     foreach (var item in new [] { "OTA.dll", "OTA.Commands.dll" })
                     {
-                        var otaOutput = Path.Combine(Platform, item);
-                        if (File.Exists(otaOutput)) File.Delete(otaOutput);
-                        File.Copy(item, otaOutput);
+                        if (File.Exists(item))
+                        {
+                            var otaOutput = Path.Combine(Platform, item);
+                            if (File.Exists(otaOutput)) File.Delete(otaOutput);
+                            File.Copy(item, otaOutput);
+                        }
+                        else Console.WriteLine($"{item} is missing locally");
                     }
 
                     if (CopyDependencies != null)

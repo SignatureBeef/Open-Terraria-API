@@ -21,12 +21,11 @@ namespace OTA.Commands
             this.Version = "1b";
         }
 
-        protected override void Enabled()
+        protected override void Initialized(object state)
         {
-            base.Enabled();
+            base.Initialized(state);
 
             OTACommand.Initialise(this);
-
             ProgramLog.Plugin.Log(this.Name + " initialised");
         }
 

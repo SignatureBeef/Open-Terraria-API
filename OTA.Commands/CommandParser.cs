@@ -45,7 +45,7 @@ namespace OTA.Commands
             {
                 line = line.Remove(0, 1);
 
-                if(log) 
+                if (log)
                     OTA.Logging.ProgramLog.Log(player.SenderName + " sent command: " + line);
 
                 return ParseAndProcess(player, line);
@@ -304,14 +304,18 @@ namespace OTA.Commands
             return false;
         }
 
-        internal CommandInfo FindOrCreate(string prefix)
+        internal T FindOrCreate<T>(string prefix, bool replaceExisting = false)  where T : CommandDefinition
         {
             if (commands.ContainsKey(prefix))
             {
-                throw new ApplicationException("AddCommand: duplicate command: " + prefix);
+                if (!replaceExisting)
+                    throw new ApplicationException("AddCommand: duplicate command: " + prefix);
+
+                if(!Remove(prefix))
+                    throw new ApplicationException("AddCommand: failed to replace command: " + prefix);
             }
 
-            var cmd = new CommandInfo(prefix);
+            var cmd = (T)Activator.CreateInstance(typeof(T), prefix);
             cmd.BeforeEvent += NotifyBeforeCommand;
             cmd.AfterEvent += NotifyAfterCommand;
 
@@ -337,7 +341,7 @@ namespace OTA.Commands
 
                 lock (commands)
                 {
-                    commands.Remove(prefix);
+                    return commands.Remove(prefix);
                 }
             }
 

@@ -21,9 +21,19 @@ namespace OTA.Commands
         /// </summary>
         /// <param name="prefix">Command text</param>
         /// <returns>New Command</returns>
-        public static CommandInfo AddCommand(this BasePlugin plugin, string prefix)
+        public static CommandInfo AddCommand(this BasePlugin plugin, string prefix, bool replaceExisting = false)
         {
-            var cmd = CommandManager.Parser.FindOrCreate(prefix);
+            return plugin.AddCommand<CommandInfo>(prefix, replaceExisting);
+        }
+
+        /// <summary>
+        /// Adds a new command to the server's command list
+        /// </summary>
+        /// <param name="prefix">Command text</param>
+        /// <returns>New Command</returns>
+        public static T AddCommand<T>(this BasePlugin plugin, string prefix, bool replaceExisting = false) where T : CommandDefinition
+        {
+            var cmd = CommandManager.Parser.FindOrCreate<T>(prefix, replaceExisting);
             cmd.Plugin = plugin;
 
             return cmd;

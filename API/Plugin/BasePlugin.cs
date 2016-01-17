@@ -134,6 +134,7 @@ namespace OTA.Plugin
             Description = "";
             Author = "";
             Version = "";
+            Name = "";
         }
 
         /// <summary>
