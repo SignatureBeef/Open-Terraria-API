@@ -49,7 +49,7 @@ namespace OTA.Commands
 
                 if (page >= 0 && page < maxPages)
                 {
-                    var cmds = new List<CommandInfo>();
+                    var cmds = new List<CommandDefinition>();
                     var sorted = commands
                         .OrderBy(x => x.Prefix)
                         .ToArray();

@@ -13,7 +13,7 @@ namespace OTA.Commands
     /// <summary>
     /// Functionality to process sender commands, and the default vanilla commands as an OTA version.
     /// </summary>
-    public class CommandParser : CommandManager<CommandInfo>
+    public class CommandParser : CommandManager<CommandDefinition>
     {
         public static ConsoleSender ConsoleSender { get; } = new ConsoleSender();
 
@@ -71,7 +71,7 @@ namespace OTA.Commands
 
             try
             {
-                CommandInfo info;
+                CommandDefinition info;
 
                 var firstSpace = line.IndexOf(' ');
 
@@ -271,7 +271,7 @@ namespace OTA.Commands
             return args;
         }
 
-        public bool FindStringCommand(string prefix, out CommandInfo info)
+        public bool FindStringCommand(string prefix, out CommandDefinition info)
         {
             info = null;
         
@@ -286,7 +286,7 @@ namespace OTA.Commands
             return false;
         }
 
-        public bool FindTokenCommand(string prefix, out CommandInfo info)
+        public bool FindTokenCommand(string prefix, out CommandDefinition info)
         {
             info = null;
         
@@ -356,14 +356,14 @@ namespace OTA.Commands
             }
         }
 
-        internal IEnumerable<CommandInfo> GetPluginCommands(BasePlugin plugin = null)
+        internal IEnumerable<CommandDefinition> GetPluginCommands(BasePlugin plugin = null)
         {
             return commands
                 .Where(x => x.Value.Plugin != null && (plugin != null && x.Value.Plugin == plugin))
                 .Select(x => x.Value);
         }
 
-        public IEnumerable<CommandInfo> GetCommandsForSender(ISender sender)
+        public IEnumerable<CommandDefinition> GetCommandsForSender(ISender sender)
         {
             return commands.Where(x => sender.HasPermission(x.Value.node)).Select(x => x.Value);
         }

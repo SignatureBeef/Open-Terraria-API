@@ -120,7 +120,7 @@
     <Otherwise>
       <ItemGroup>
         <Reference Include="TerrariaServer">
-          <HintPath>..\Binaries\TerrariaServer.exe</HintPath>
+          <HintPath>..\Binaries\Server\TerrariaServer.exe</HintPath>
         </Reference>
       </ItemGroup>
     </Otherwise>
