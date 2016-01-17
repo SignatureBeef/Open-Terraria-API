@@ -28,7 +28,7 @@ namespace OTA.Commands
         /// <param name="args">Arguments sent with command</param>
         public void Exit(ISender sender, ArgumentList args)
         {
-            Tools.NotifyAllOps("Exiting...");
+            Logging.Logger.Log("Exiting...");
 
             Terraria.IO.WorldFile.saveWorld(false);
             Netplay.disconnect = true;
@@ -41,7 +41,7 @@ namespace OTA.Commands
         /// <param name="args">Arguments sent with command</param>
         public void ExitNoSave(ISender sender, ArgumentList args)
         {
-            Tools.NotifyAllOps("Exiting without saving...");
+            Logging.Logger.Log("Exiting without saving...");
             Netplay.disconnect = true;
         }
     }

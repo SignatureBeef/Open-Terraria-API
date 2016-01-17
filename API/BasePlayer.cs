@@ -17,11 +17,6 @@ namespace OTA
     public partial class BasePlayer : Terraria.Entity, ISender
     {
         /// <summary>
-        /// Get or set if the player is considered an operator of the server
-        /// </summary>
-        public bool Op { get; set; }
-
-        /// <summary>
         /// Gets or sets the clients globally unique identifier.
         /// </summary>
         public string ClientUUId { get; set; }
@@ -207,7 +202,7 @@ namespace OTA
         /// <param name="notifyOps"></param>
         /// <param name="prefix"></param>
         /// <returns></returns>
-        public virtual int GiveItem(int itemId, int stack, int maxStack, ISender sender, int netId, bool notifyOps = true, int prefix = 0)
+        public virtual int GiveItem(int itemId, int stack, int maxStack, int netId, int prefix = 0)
         {
             if (this is Terraria.Player)
             {
@@ -241,9 +236,6 @@ namespace OTA
 
                 if (prefix > 0)
                     Terraria.Main.item[index].Prefix(prefix);
-
-                if (notifyOps)
-                    Tools.NotifyAllOps("Giving " + this.name + " some " + Terraria.Main.item[index].name + " (" + itemId.ToString() + ") [" + sender.SenderName + "]", true);
 
                 return 0;
             }

@@ -35,25 +35,6 @@ namespace OTA
 #endif
         }
 
-        /// <summary>
-        /// Notifies all ops.
-        /// </summary>
-        /// <param name="message">Message.</param>
-        /// <param name="writeToConsole">If set to <c>true</c> write to console.</param>
-        public static void NotifyAllOps(string message, bool writeToConsole = true) //, SendingLogger Logger = SendingLogger.CONSOLE)
-        {
-#if Full_API
-            foreach (var player in Main.player)
-            {
-                if (player != null && player.active && player.Op)
-                    NetMessage.SendData((int)Packet.PLAYER_CHAT, player.whoAmI, -1, message, 255 /* PlayerId */, 176f, 196, 222f);
-            }
-
-            if (writeToConsole)
-                ProgramLog.Log(message);
-#endif
-        }
-
         #if Full_API
         /// <summary>
         /// Gets a specified Online Player

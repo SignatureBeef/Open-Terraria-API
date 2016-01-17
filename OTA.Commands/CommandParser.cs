@@ -39,11 +39,14 @@ namespace OTA.Commands
         /// </summary>
         /// <param name="player">Sending player</param>
         /// <param name="line">Command to parse</param>
-        public bool ParsePlayerCommand(ISender player, string line)
+        public bool ParsePlayerCommand(ISender player, string line, bool log = true)
         {
             if (!String.IsNullOrEmpty(line) && line[0] == PlayerCommandPrefix)
             {
                 line = line.Remove(0, 1);
+
+                if(log) 
+                    OTA.Logging.ProgramLog.Log(player.SenderName + " sent command: " + line);
 
                 return ParseAndProcess(player, line);
             }
