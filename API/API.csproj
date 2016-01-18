@@ -324,10 +324,6 @@
     <Compile Include="Sockets\ClientConnection.cs" />
     <Compile Include="Sockets\Connection.cs" />
     <Compile Include="Sockets\ServerSlot.cs" />
-    <Compile Include="Logging\LogChannel.cs" />
-    <Compile Include="Logging\LogTraceListener.cs" />
-    <Compile Include="Logging\ProgramLog.cs" />
-    <Compile Include="Logging\ProgressLogger.cs" />
     <Compile Include="Misc\Affix.cs" />
     <Compile Include="Misc\ArrayDequeue.cs" />
     <Compile Include="Misc\ExitException.cs" />
@@ -430,14 +426,6 @@
     <Compile Include="Plugin\HookOrder.cs" />
     <Compile Include="Plugin\HookResult.cs" />
     <Compile Include="Plugin\HookAction.cs" />
-    <Compile Include="Logging\Targets\LogTarget.cs" />
-    <Compile Include="Logging\Targets\StandardOutputTarget.cs" />
-    <Compile Include="Logging\Targets\InteractiveLogTarget.cs" />
-    <Compile Include="Logging\Targets\FileOutputTarget.cs" />
-    <Compile Include="Logging\OutputEntry.cs" />
-    <Compile Include="Logging\External\ILogger.cs" />
-    <Compile Include="Logging\External\Logger.cs" />
-    <Compile Include="Logging\DefaultLogger.cs" />
     <Compile Include="Plugin\Hooks\Multi\LoadConfigurationFile.cs" />
     <Compile Include="Plugin\Hooks\Multi\ParseCommandLineArguments.cs" />
     <Compile Include="Plugin\Hooks\Multi\ConfigurationFileLineRead.cs" />
@@ -503,6 +491,18 @@
     <Compile Include="Command\CommandError.cs" />
     <Compile Include="Command\ArgumentConverter.cs" />
     <Compile Include="Plugin\Hooks\Multi\SetWindowTitle.cs" />
+    <Compile Include="Logging\ProgramLog\DefaultLogger.cs" />
+    <Compile Include="Logging\ProgramLog\LogChannel.cs" />
+    <Compile Include="Logging\ProgramLog\LogTraceListener.cs" />
+    <Compile Include="Logging\ProgramLog\OutputEntry.cs" />
+    <Compile Include="Logging\ProgramLog\ProgramLog.cs" />
+    <Compile Include="Logging\ProgramLog\ProgressLogger.cs" />
+    <Compile Include="Logging\ProgramLog\Targets\FileOutputTarget.cs" />
+    <Compile Include="Logging\ProgramLog\Targets\InteractiveLogTarget.cs" />
+    <Compile Include="Logging\ProgramLog\Targets\LogTarget.cs" />
+    <Compile Include="Logging\ProgramLog\Targets\StandardOutputTarget.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -527,6 +527,8 @@
     <Folder Include="Entity\" />
     <Folder Include="Misc\Extensions\" />
     <Folder Include="Config\" />
+    <Folder Include="Logging\ProgramLog\" />
+    <Folder Include="Logging\ProgramLog\Targets\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />
