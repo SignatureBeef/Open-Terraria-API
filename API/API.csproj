@@ -490,7 +490,6 @@
     <Compile Include="Mods\EntityRegister.cs" />
     <Compile Include="Mods\NativeExtension.cs" />
     <Compile Include="Mods\Npc\NpcModRegister.cs" />
-    <Compile Include="Mods\ClientEventManager.cs" />
     <Compile Include="Mods\Chest\ShopModRegister.cs" />
     <Compile Include="Mods\Chest\OTAShop.cs" />
     <Compile Include="Mods\Item\OTAItem.cs" />
@@ -502,6 +501,7 @@
     <Compile Include="Mods\Projectile\ProjectileModRegister.cs" />
     <Compile Include="Mods\Projectile\OTAProjectile.cs" />
     <Compile Include="Mods\Npc\NpcChatButton.cs" />
+    <Compile Include="Mods\ModEventManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -60,10 +60,12 @@ namespace OTA.Mod.Tile
 
         public void EmulateTile(int cloneFromTypeId)
         {
+            #if CLIENT
             if (!Terraria.Main.tileSetsLoaded[cloneFromTypeId])
             {
                 Terraria.Main.instance.LoadTiles(cloneFromTypeId);
             }
+            #endif
 
             var newTypeId = TypeId;
             Terraria.Main.tileAlch[newTypeId] = Terraria.Main.tileAlch[cloneFromTypeId];
@@ -139,6 +141,7 @@ namespace OTA.Mod.Tile
                 else
                 {
                     Console.WriteLine("Array was being decreased when it should not");
+                    Console.WriteLine(Environment.StackTrace);
                 }
             }
         }

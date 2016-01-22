@@ -1,10 +1,11 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using OTA.Mod.Npc;
 using System.Linq;
 using System.Reflection;
+#if CLIENT
 using OTA.Mod.Chest;
+#endif
 using OTA.Mod.Item;
 using OTA.Mod.Tile;
 using OTA.Mod.Projectile;
@@ -18,7 +19,9 @@ namespace OTA.Mod
 
         public static NpcModRegister Npcs { get; } = new NpcModRegister();
 
+        #if CLIENT
         public static ShopModRegister Shops { get; } = new ShopModRegister();
+        #endif
 
         public static TileModRegister Tiles { get; } = new TileModRegister();
 
@@ -73,4 +76,3 @@ namespace OTA.Mod
         }
     }
 }
-#endif

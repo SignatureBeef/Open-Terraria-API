@@ -274,16 +274,16 @@ namespace OTA.Callbacks
                     Sender = HookContext.ConsoleSender
                 };
             }
-#elif CLIENT
+#endif
+
             try
             {
-                Plugin.PluginManager.RegisterPlugin(new OTA.Mod.ClientEventManager());
+                Plugin.PluginManager.RegisterPlugin(new OTA.Mod.ModEventManager());
             }
             catch (Exception e)
             {
                 ProgramLog.Log(e);
             }
-#endif
 
             var gi = new HookArgs.GameInitialize()
             {
