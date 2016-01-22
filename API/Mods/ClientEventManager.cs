@@ -7,6 +7,7 @@ using OTA.Plugin;
 using OTA.Mod.Npc;
 using System.Linq;
 using OTA.Extensions;
+using OTA.Mod.Tile;
 
 namespace OTA.Mod
 {
@@ -55,7 +56,7 @@ namespace OTA.Mod
         {
             if (args.State == MethodState.End)
             {
-                Client.Tile.OTATile.ResizeArrays(true, false);
+                OTATile.ResizeArrays(true, false);
                 EntityRegistrar.Tiles.InitialiseTiles();
             }
         }

@@ -277,7 +277,7 @@ namespace OTA.Callbacks
 #elif CLIENT
             try
             {
-                Plugin.PluginManager.RegisterPlugin(new Client.ClientEventManager());
+                Plugin.PluginManager.RegisterPlugin(new OTA.Mod.ClientEventManager());
             }
             catch (Exception e)
             {
