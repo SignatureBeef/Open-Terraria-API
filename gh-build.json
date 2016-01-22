@@ -12,7 +12,7 @@
 		"build-args": "/p:Configuration=Server-Debug 'Open Terraria API.sln'"
 	},
 	{
-		"build-name": "Server",
+		"build-name": "XNA",
 		
 		"solution-file": "Open Terraria API.sln",
 	
@@ -24,7 +24,7 @@
 		"build-args": "/p:Configuration=XNA-Debug 'Open Terraria API.sln'"
 	},
 	{
-		"build-name": "Server",
+		"build-name": "FNA",
 		
 		"solution-file": "Open Terraria API.sln",
 	
