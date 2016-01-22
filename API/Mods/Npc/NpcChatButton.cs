@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OTA.Client.Npc
+namespace OTA.Mod.Npc
 {
     /// <summary>
     /// Npc chat buttons in order of display.

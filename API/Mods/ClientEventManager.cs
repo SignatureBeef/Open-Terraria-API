@@ -4,11 +4,11 @@ using System;
 using Terraria;
 
 using OTA.Plugin;
-using OTA.Client.Npc;
+using OTA.Mod.Npc;
 using System.Linq;
 using OTA.Extensions;
 
-namespace OTA.Client
+namespace OTA.Mod
 {
     [OTAVersion(1, 0)]
     public class ClientEventManager : BasePlugin

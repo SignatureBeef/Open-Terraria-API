@@ -1,9 +1,8 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
 
-namespace OTA.Client.Tile
+namespace OTA.Mod.Tile
 {
     public class TileModRegister
     {
@@ -58,4 +57,3 @@ namespace OTA.Client.Tile
         }
     }
 }
-#endif

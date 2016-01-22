@@ -8,7 +8,7 @@ namespace OTA.Logging
     /// <summary>
     /// InteractiveLogTarget defines the basis of a common LogTarget for use with the .NET TextWriters.
     /// This class can be used for writing to the Console (see Console.Out), or even to custom TextWriters 
-    /// (see <see cref="OTA.Client.Debug.ConsoleWindow.RichTextboxWriter"/>.
+    /// (see <see cref="OTA.Mod.Debug.ConsoleWindow.RichTextboxWriter"/>.
     /// </summary>
     public abstract class InteractiveLogTarget : LogTarget
     {

@@ -1,10 +1,9 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace OTA.Client.Npc
+namespace OTA.Mod.Npc
 {
     public class NpcModRegister
     {
@@ -113,4 +112,3 @@ namespace OTA.Client.Npc
         //        }
     }
 }
-#endif

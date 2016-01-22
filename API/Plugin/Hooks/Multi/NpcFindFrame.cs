@@ -1,5 +1,4 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 
 namespace OTA.Plugin
 {
@@ -18,4 +17,3 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.NpcFindFrame> NpcFindFrame = new HookPoint<HookArgs.NpcFindFrame>();
     }
 }
-#endif

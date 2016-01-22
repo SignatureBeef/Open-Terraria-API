@@ -2,7 +2,7 @@
 using System;
 using Terraria;
 
-namespace OTA.Client.Chest
+namespace OTA.Mod.Chest
 {
     public abstract class OTAShop : INativeMod
     {

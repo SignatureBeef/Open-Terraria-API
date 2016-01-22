@@ -30,7 +30,7 @@ namespace OTA.Misc
                 if (ConsoleOnly) Logger.Log(_message);
                 else Tools.NotifyAllPlayers(_message, _colour);
             };
-            Tasks.Schedule(this);
+            GameTasks.Schedule(this);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 
 namespace OTA.Plugin
 {
@@ -20,4 +19,3 @@ namespace OTA.Plugin
         public static readonly HookPoint<HookArgs.NpcUpdate> NpcUpdate = new HookPoint<HookArgs.NpcUpdate>();
     }
 }
-#endif

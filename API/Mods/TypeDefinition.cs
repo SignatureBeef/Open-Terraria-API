@@ -1,7 +1,6 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 
-namespace OTA.Client
+namespace OTA.Mod
 {
     public class TypeDefinition
     {
@@ -10,4 +9,3 @@ namespace OTA.Client
         public int TypeId { get; set; }
     }
 }
-#endif

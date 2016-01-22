@@ -421,6 +421,7 @@ namespace OTA.Callbacks
 
             HookPoints.NpcDraw.Invoke(ref ctx, ref args);
         }
+        #endif
 
         public static bool OnUpdateNPCBegin(Terraria.NPC npc, int i)
         {
@@ -508,6 +509,7 @@ namespace OTA.Callbacks
             HookPoints.NpcFindFrame.Invoke(ref ctx, ref args);
         }
 
+        #if CLIENT
         public static string OnGetChat(Terraria.NPC npc)
         {
             var ctx = new HookContext();
@@ -553,22 +555,22 @@ namespace OTA.Callbacks
 
         public static bool OnChatButtonClicked()
         {
-            var res = OTA.Client.Npc.NpcChatButton.None;
+            var res = OTA.Mod.Npc.NpcChatButton.None;
 
             if (Terraria.Main.npcChatFocus1)
             {
-                res = OTA.Client.Npc.NpcChatButton.Second;
+                res = OTA.Mod.Npc.NpcChatButton.Second;
             }
             else if (Terraria.Main.npcChatFocus2)
             {
-                res = OTA.Client.Npc.NpcChatButton.First;
+                res = OTA.Mod.Npc.NpcChatButton.First;
             }
             else if (Terraria.Main.npcChatFocus3)
             {
-                res = OTA.Client.Npc.NpcChatButton.Third;
+                res = OTA.Mod.Npc.NpcChatButton.Third;
             }
 
-            if (res != OTA.Client.Npc.NpcChatButton.None)
+            if (res != OTA.Mod.Npc.NpcChatButton.None)
             {
                 var ctx = new HookContext();
                 var args = new HookArgs.NpcChatButtonClick()
@@ -584,6 +586,7 @@ namespace OTA.Callbacks
 
             return true;
         }
+        #endif
 
         public static bool OnPreSpawn
         (
@@ -688,7 +691,6 @@ namespace OTA.Callbacks
 
             return ctx.Result == HookResult.DEFAULT;
         }
-        #endif
 
         public static int DropLoot(int X, int Y, int Width, int Height, int Type, int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup, int npc)
         {

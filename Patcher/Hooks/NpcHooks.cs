@@ -420,7 +420,7 @@ namespace OTA.Patcher
             }
         }
 
-        [OTAPatch(SupportType.Client, "Hooking Npc Updating")]
+        [OTAPatch(SupportType.ClientServer, "Hooking Npc Updating")]
         private void HookNpcUpdate()
         {
             var method = Terraria.NPC.Method("UpdateNPC");
@@ -434,7 +434,7 @@ namespace OTA.Patcher
             method.Wrap(cbkBegin, cbkEnd, true);
         }
 
-        [OTAPatch(SupportType.Client, "Hooking Npc AI")]
+        [OTAPatch(SupportType.ClientServer, "Hooking Npc AI")]
         private void HookNpcAI()
         {
             var method = Terraria.NPC.Method("AI");
@@ -448,7 +448,7 @@ namespace OTA.Patcher
             method.Wrap(cbkBegin, cbkEnd, true);
         }
 
-        [OTAPatch(SupportType.Client, "Hooking Npc FindFrame")]
+        [OTAPatch(SupportType.ClientServer, "Hooking Npc FindFrame")]
         private void HookNpcFindFrame()
         {
             var method = Terraria.NPC.Method("FindFrame");
@@ -462,7 +462,7 @@ namespace OTA.Patcher
             method.Wrap(cbkBegin, cbkEnd, true);
         }
 
-        [OTAPatch(SupportType.Client, "Altering NPC.FindFrame", 50)]
+        [OTAPatch(SupportType.ClientServer, "Altering NPC.FindFrame", 50)]
         private void HookAlterNpcFindFrame()
         {
             var method = Terraria.NPC.Method("FindFrame");
@@ -496,7 +496,7 @@ namespace OTA.Patcher
             method.ReplaceInstanceMethod(call);
         }
 
-        [OTAPatch(SupportType.Client, "Hooking NPC pre spawn")]
+        [OTAPatch(SupportType.ClientServer, "Hooking NPC pre spawn")]
         private void HookNPCPreSpawn()
         {
             var method = Terraria.NPC.Method("SpawnNPC");
@@ -606,8 +606,8 @@ namespace OTA.Patcher
             }
         }
 
-        #if CLIENT
-        [OTAPatch(SupportType.Client, "Hooking Npc saving")]
+        //        #if CLIENT
+        [OTAPatch(SupportType.ClientServer, "Hooking Npc saving")]
         private void HookNpcSaving()
         {
             var method = Terraria.WorldFile.Method("SaveWorldHeader");
@@ -623,7 +623,7 @@ namespace OTA.Patcher
                 npc.Operand = field;
             }
         }
-        #endif
+        //        #endif
 
         //        [OTAPatch(SupportType.ClientServer, "Hooking Npc Loot")]
         //        private void HookNpcInstanceLoot()
@@ -663,46 +663,6 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
             il.InsertBefore(first, il.Create(OpCodes.Ldc_I4, 200));
             il.InsertBefore(first, il.Create(OpCodes.Ret));
-        }
-
-        [OTAPatch(SupportType.ClientServer, "TEST NPC", 2000)]
-        private void TestNPC()
-        {
-            //Make everything virtual
-            foreach (var method in Terraria.NPC.Methods.Where(x=> !x.IsStatic 
-                && !x.IsGetter 
-                && !x.IsSetter 
-                && x.IsPublic 
-                && !x.IsVirtual 
-                && !x.IsNewSlot
-                && x.Overrides.Count == 0
-                && x.Name != ".ctor"
-                && x.Name != ".cctor"))
-            {
-                method.IsVirtual = true;
-                method.IsNewSlot = true;
-
-                var instructions = Terraria.Types
-                            .Where(a => a.HasMethods)
-                            .SelectMany(x => x.Methods)
-                            .Where(b => b.HasBody && b.Body.Instructions != null)
-                            .SelectMany(y => y.Body.Instructions)
-                    .Where(z => z.Operand == method);
-
-                foreach (var ins in instructions)
-                {
-                    if (ins.OpCode == OpCodes.Callvirt) break;
-                            
-                    if (ins.OpCode == OpCodes.Call)
-                    {
-                        ins.OpCode = OpCodes.Callvirt;
-                    }
-                    else
-                    {
-                        throw new NotSupportedException();
-                    }
-                }
-            }
         }
     }
 }

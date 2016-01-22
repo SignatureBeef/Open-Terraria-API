@@ -1,7 +1,6 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 
-namespace OTA.Client
+namespace OTA.Mod
 {
     public interface INativeMod
     {
@@ -19,4 +18,3 @@ namespace OTA.Client
         }
     }
 }
-#endif

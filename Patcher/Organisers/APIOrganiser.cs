@@ -48,13 +48,13 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "IAPISocket"); }
         }
 
-        #if CLIENT
         public TypeDefinition INativeMod
         {
             get
             { return _asm.MainModule.Types.Single(x => x.Name == "INativeMod"); }
         }
 
+        #if CLIENT
         public TypeDefinition InterfaceCallback
         {
             get

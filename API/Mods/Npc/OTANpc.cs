@@ -1,11 +1,10 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 using OTA.Plugin;
 using Terraria;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace OTA.Client.Npc
+namespace OTA.Mod.Npc
 {
     public abstract class OTANpc : INativeMod
     {
@@ -66,6 +65,7 @@ namespace OTA.Client.Npc
         {
         }
 
+        #if CLIENT
         public virtual bool OnDraw(bool behindTiles)
         {
             return true;
@@ -81,7 +81,7 @@ namespace OTA.Client.Npc
             return null;
         }
 
-        public virtual bool OnChatButtonClick(OTA.Client.Npc.NpcChatButton button)
+        public virtual bool OnChatButtonClick(OTA.Mod.Npc.NpcChatButton button)
         {
             return true;
         }
@@ -89,6 +89,7 @@ namespace OTA.Client.Npc
         public virtual void OnAfterDraw(bool behindTiles)
         {
         }
+        #endif
 
         /// <summary>
         /// Determines how many chances the NPC has to spawn.
@@ -143,7 +144,9 @@ namespace OTA.Client.Npc
         {
             if (!onlySetInfo) _emulateNPCTypeId = npcTypeId;
 
+            #if CLIENT
             LoadTexture(npcTypeId);
+            #endif
 
             var initialType = Npc.type;
             Npc.SetDefaultsDirect(npcTypeId);
@@ -184,7 +187,7 @@ namespace OTA.Client.Npc
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="OTA.Client.Npc.OTANpc"/> is catchable.
+        /// Gets or sets a value indicating whether this <see cref="OTA.Mod.Npc.OTANpc"/> is catchable.
         /// </summary>
         /// <value><c>true</c> if catchable; otherwise, <c>false</c>.</value>
         public bool Catchable
@@ -214,6 +217,8 @@ namespace OTA.Client.Npc
         }
 
         #endregion
+
+        #if CLIENT
 
         #region Textures
 
@@ -278,6 +283,7 @@ namespace OTA.Client.Npc
         }
 
         #endregion
+        #endif
 
         #region "Handlers"
 
@@ -321,4 +327,3 @@ namespace OTA.Client.Npc
         #endregion
     }
 }
-#endif

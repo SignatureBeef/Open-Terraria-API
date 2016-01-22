@@ -1,10 +1,9 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace OTA.Client.Item
+namespace OTA.Mod.Item
 {
     public class ItemModRegister
     {
@@ -92,4 +91,3 @@ namespace OTA.Client.Item
         }
     }
 }
-#endif

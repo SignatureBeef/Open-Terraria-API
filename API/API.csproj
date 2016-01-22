@@ -235,13 +235,6 @@
     <Compile Include="Callbacks\PlayerCallback.cs" />
     <Compile Include="Callbacks\VanillaHooks.cs" />
     <Compile Include="Callbacks\WorldFileCallback.cs" />
-    <Compile Include="Client\Debug\ConsoleWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Client\Debug\ConsoleWindow.Designer.cs">
-      <DependentUpon>ConsoleWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Client\Packages\PackageBuilder.cs" />
     <Compile Include="Data\EF7\Extensions\DbContextOptionsBuilderExtensions.cs" />
     <Compile Include="Data\EF7\Extensions\MigrationExtensions.cs" />
     <Compile Include="Data\EF7\OTAContext.cs" />
@@ -334,7 +327,6 @@
     <Compile Include="Misc\ProgressWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Misc\Tasks.cs" />
     <Compile Include="Callbacks\Utilities.cs" />
     <Compile Include="Steam\Steamworks.cs" />
     <Compile Include="Web\WebServer.cs" />
@@ -432,48 +424,28 @@
     <Compile Include="Plugin\Hooks\Multi\WorldAutoSave.cs" />
     <Compile Include="Plugin\Hooks\Multi\StartCommandProcessing.cs" />
     <Compile Include="Plugin\Hooks\Multi\ConsoleMessageReceived.cs" />
-    <Compile Include="Client\Npc\OTANpc.cs" />
-    <Compile Include="Client\EntityRegister.cs" />
-    <Compile Include="Client\NativeExtension.cs" />
     <Compile Include="Plugin\Hooks\Multi\NewNPC.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcDraw.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcUpdate.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcAI.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcLoadTexture.cs" />
-    <Compile Include="Plugin\Hooks\Client\NpcFindFrame.cs" />
-    <Compile Include="Client\Npc\NpcModRegister.cs" />
-    <Compile Include="Client\ClientEventManager.cs" />
     <Compile Include="Plugin\Hooks\PluginEnabled.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcGetChat.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcGetChatButtons.cs" />
     <Compile Include="Plugin\Hooks\Client\NpcChatButtonClick.cs" />
     <Compile Include="Callbacks\ChestCallback.cs" />
     <Compile Include="Plugin\Hooks\Client\ChestSetupShop.cs" />
-    <Compile Include="Client\Chest\ShopModRegister.cs" />
-    <Compile Include="Client\Chest\OTAShop.cs" />
-    <Compile Include="Client\Item\OTAItem.cs" />
-    <Compile Include="Client\Item\ItemModRegister.cs" />
     <Compile Include="Plugin\Hooks\Multi\NewItem.cs" />
     <Compile Include="Plugin\PluginDependency.cs" />
     <Compile Include="Plugin\PluginLoadResult.cs" />
-    <Compile Include="Client\Tile\TileModRegister.cs" />
-    <Compile Include="Client\TypeDefinition.cs" />
-    <Compile Include="Client\Tile\OTATile.cs" />
     <Compile Include="Callbacks\MapCallback.cs" />
     <Compile Include="Plugin\Hooks\Client\MapHelperInitialize.cs" />
     <Compile Include="Plugin\Hooks\Multi\GameInitialize.cs" />
     <Compile Include="Plugin\Hooks\Client\GameDraw.cs" />
-    <Compile Include="Client\Tile\TileDefinition.cs" />
     <Compile Include="Plugin\Hooks\Client\GameLoadContent.cs" />
     <Compile Include="Plugin\Hooks\Multi\NewProjectile.cs" />
-    <Compile Include="Client\Projectile\ProjectileModRegister.cs" />
-    <Compile Include="Client\Projectile\OTAProjectile.cs" />
-    <Compile Include="Client\Npc\NpcChatButton.cs" />
     <Compile Include="Callbacks\InterfaceCallback.cs" />
     <Compile Include="Plugin\Hooks\Client\GUIChatBoxOpen.cs" />
     <Compile Include="Plugin\Hooks\Client\GUIChatBoxSend.cs" />
     <Compile Include="Plugin\Hooks\Multi\NpcPreSpawn.cs" />
-    <Compile Include="NpcTest.cs" />
     <Compile Include="Permissions\IPermissionHandler.cs" />
     <Compile Include="Permissions\Permissions.cs" />
     <Compile Include="Entity\ISender.cs" />
@@ -503,6 +475,33 @@
     <Compile Include="Logging\ProgramLog\Targets\StandardOutputTarget.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Misc\GameTasks.cs" />
+    <Compile Include="Plugin\Hooks\Multi\NpcAI.cs" />
+    <Compile Include="Plugin\Hooks\Multi\NpcFindFrame.cs" />
+    <Compile Include="Plugin\Hooks\Multi\NpcUpdate.cs" />
+    <Compile Include="Mods\Debug\ConsoleWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mods\Debug\ConsoleWindow.Designer.cs">
+      <DependentUpon>ConsoleWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mods\Packages\PackageBuilder.cs" />
+    <Compile Include="Mods\Npc\OTANpc.cs" />
+    <Compile Include="Mods\EntityRegister.cs" />
+    <Compile Include="Mods\NativeExtension.cs" />
+    <Compile Include="Mods\Npc\NpcModRegister.cs" />
+    <Compile Include="Mods\ClientEventManager.cs" />
+    <Compile Include="Mods\Chest\ShopModRegister.cs" />
+    <Compile Include="Mods\Chest\OTAShop.cs" />
+    <Compile Include="Mods\Item\OTAItem.cs" />
+    <Compile Include="Mods\Item\ItemModRegister.cs" />
+    <Compile Include="Mods\Tile\TileModRegister.cs" />
+    <Compile Include="Mods\TypeDefinition.cs" />
+    <Compile Include="Mods\Tile\OTATile.cs" />
+    <Compile Include="Mods\Tile\TileDefinition.cs" />
+    <Compile Include="Mods\Projectile\ProjectileModRegister.cs" />
+    <Compile Include="Mods\Projectile\OTAProjectile.cs" />
+    <Compile Include="Mods\Npc\NpcChatButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -519,16 +518,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Callbacks\Enums\" />
-    <Folder Include="Client\Buff\" />
-    <Folder Include="Client\Mount\" />
-    <Folder Include="Client\Net\" />
-    <Folder Include="Client\Wall\" />
     <Folder Include="Permissions\" />
     <Folder Include="Entity\" />
     <Folder Include="Misc\Extensions\" />
     <Folder Include="Config\" />
     <Folder Include="Logging\ProgramLog\" />
     <Folder Include="Logging\ProgramLog\Targets\" />
+    <Folder Include="Mods\Buff\" />
+    <Folder Include="Mods\Mount\" />
+    <Folder Include="Mods\Net\" />
+    <Folder Include="Mods\Wall\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />
@@ -550,7 +549,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Client\Debug\ConsoleWindow.resx">
+    <EmbeddedResource Include="Mods\Debug\ConsoleWindow.resx">
       <DependentUpon>ConsoleWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

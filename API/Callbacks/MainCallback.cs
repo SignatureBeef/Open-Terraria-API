@@ -124,7 +124,7 @@ namespace OTA.Callbacks
             {
                 (new System.Threading.Thread(() =>
                     {
-                        var dw = new OTA.Client.Debug.ConsoleWindow();
+                        var dw = new OTA.Mod.Debug.ConsoleWindow();
                         dw.ShowDialog();
                     })).Start();
             }
@@ -474,7 +474,7 @@ namespace OTA.Callbacks
             try
             {
                 /* Check tolled tasks - OnStatusTextChanged is called without clients connected */
-                Tasks.CheckTasks(); //This still may not be the best place for this.
+                GameTasks.CheckTasks(); //This still may not be the best place for this.
 
 #if Full_API
                 //Since the patcher nurfs this, we implement it here for full and easy control over this mess

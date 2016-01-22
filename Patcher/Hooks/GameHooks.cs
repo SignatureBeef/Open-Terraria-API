@@ -144,8 +144,7 @@ namespace OTA.Patcher
             il.InsertAfter(npcChatFocus1.Next, il.Create(OpCodes.Call, callback));
         }
 
-        #if CLIENT
-        [OTAPatch(SupportType.Client, "Hooking INativeMod")]
+        [OTAPatch(SupportType.ClientServer, "Hooking INativeMod")]
         private void HookInINativeMod()
         {
             //Rather than tracking what MOD object is attatched to what vanilla object
@@ -162,6 +161,7 @@ namespace OTA.Patcher
             }
         }
 
+        #if CLIENT
         [OTAPatch(SupportType.Client, "Hooking chat box")]
         private void HookChatBox()
         {
@@ -242,6 +242,56 @@ namespace OTA.Patcher
 
                     ins.Operand = callback;
                     ins.OpCode = OpCodes.Call;
+                }
+            }
+        }
+
+        [OTAPatch(SupportType.ClientServer, "Making entities virtual", 2000/*
+            This is a requirement to be last, as every method may be changed and it will ruin other IL
+        */)] 
+        private void MakeEntitiesVirtual()
+        {
+            foreach (var type in new [] 
+                {
+                    Terraria.NPC,
+                    Terraria.Projectile,
+                    Terraria.Item
+                })
+            {
+                //Make everything virtual
+                foreach (var method in type.Methods.Where(x=> !x.IsStatic 
+                    && !x.IsGetter 
+                    && !x.IsSetter 
+                    && x.IsPublic 
+                    && !x.IsVirtual 
+                    && !x.IsNewSlot
+                    && x.Overrides.Count == 0
+                    && x.Name != ".ctor"
+                    && x.Name != ".cctor"))
+                {
+                    method.IsVirtual = true;
+                    method.IsNewSlot = true;
+
+                    var instructions = Terraria.Types
+                        .Where(a => a.HasMethods)
+                        .SelectMany(x => x.Methods)
+                        .Where(b => b.HasBody && b.Body.Instructions != null)
+                        .SelectMany(y => y.Body.Instructions)
+                        .Where(z => z.Operand == method);
+
+                    foreach (var ins in instructions)
+                    {
+                        if (ins.OpCode == OpCodes.Callvirt) break;
+
+                        if (ins.OpCode == OpCodes.Call)
+                        {
+                            ins.OpCode = OpCodes.Callvirt;
+                        }
+                        else
+                        {
+                            throw new NotSupportedException();
+                        }
+                    }
                 }
             }
         }

@@ -1,16 +1,16 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 using OTA.Plugin;
 using Terraria;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace OTA.Client.Tile
+namespace OTA.Mod.Tile
 {
     public abstract class OTATile : INativeMod
     {
         public ushort TypeId { get; set; }
 
+        #if CLIENT
         #region Textures
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace OTA.Client.Tile
         }
 
         #endregion
-
+        #endif
 
         public void EmulateTile(int cloneFromTypeId)
         {
@@ -224,4 +224,3 @@ namespace OTA.Client.Tile
         #endregion
     }
 }
-#endif

@@ -1,12 +1,11 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 using System.IO;
 using Terraria;
 using Microsoft.Xna.Framework.Graphics;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace OTA.Client.Projectile
+namespace OTA.Mod.Projectile
 {
     public abstract class OTAProjectile : INativeMod
     {
@@ -51,6 +50,7 @@ namespace OTA.Client.Projectile
             OnSetDefaults();
         }
 
+        #if CLIENT
         #region Textures
 
         /// <summary>
@@ -106,6 +106,7 @@ namespace OTA.Client.Projectile
         }
 
         #endregion
+        #endif
 
         public virtual void OnSetDefaults()
         {
@@ -142,4 +143,3 @@ namespace OTA.Client.Projectile
         }
     }
 }
-#endif

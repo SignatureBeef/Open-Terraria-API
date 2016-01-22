@@ -1,16 +1,16 @@
 ﻿#if CLIENT
 using System;
 using System.Collections.Concurrent;
-using OTA.Client.Npc;
+using OTA.Mod.Npc;
 using System.Linq;
 using System.Reflection;
-using OTA.Client.Chest;
-using OTA.Client.Item;
-using OTA.Client.Tile;
-using OTA.Client.Projectile;
+using OTA.Mod.Chest;
+using OTA.Mod.Item;
+using OTA.Mod.Tile;
+using OTA.Mod.Projectile;
 using OTA.Logging;
 
-namespace OTA.Client
+namespace OTA.Mod
 {
     public static class EntityRegistrar
     {

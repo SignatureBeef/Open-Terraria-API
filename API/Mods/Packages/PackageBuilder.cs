@@ -6,7 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 
-namespace OTA.Client.Packages
+namespace OTA.Mod.Packages
 {
     public class PackageBuilder
     {

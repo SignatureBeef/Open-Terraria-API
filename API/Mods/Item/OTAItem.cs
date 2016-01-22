@@ -1,12 +1,11 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 using System.IO;
 using Terraria;
 using Microsoft.Xna.Framework.Graphics;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace OTA.Client.Item
+namespace OTA.Mod.Item
 {
     public abstract class OTAItem : INativeMod
     {
@@ -65,6 +64,7 @@ namespace OTA.Client.Item
             OnSetDefaults();
         }
 
+        #if CLIENT
         #region Textures
 
         /// <summary>
@@ -125,6 +125,7 @@ namespace OTA.Client.Item
         }
 
         #endregion
+        #endif
 
         public virtual void OnSetDefaults()
         {
@@ -173,4 +174,3 @@ namespace OTA.Client.Item
         }
     }
 }
-#endif

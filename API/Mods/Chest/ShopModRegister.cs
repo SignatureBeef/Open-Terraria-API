@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 
-namespace OTA.Client.Chest
+namespace OTA.Mod.Chest
 {
     public class ShopModRegister
     {

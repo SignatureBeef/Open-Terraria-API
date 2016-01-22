@@ -1,4 +1,4 @@
-﻿namespace OTA.Client.Debug
+﻿namespace OTA.Mod.Debug
 {
     partial class ConsoleWindow
     {

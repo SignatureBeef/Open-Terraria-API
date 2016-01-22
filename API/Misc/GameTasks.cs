@@ -6,12 +6,12 @@ namespace OTA.Misc
     /// <summary>
     /// Task manager
     /// </summary>
-    public static class Tasks
+    public static class GameTasks
     {
         static Stack<GameTask> _tasks;
         static DateTime _lastCheck;
 
-        static Tasks()
+        static GameTasks()
         {
             _tasks = new Stack<GameTask>();
         }

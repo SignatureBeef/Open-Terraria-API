@@ -1,11 +1,9 @@
-﻿#if CLIENT
-using System;
+﻿using System;
 
-namespace OTA.Client.Tile
+namespace OTA.Mod.Tile
 {
     public class TileDefinition : TypeDefinition
     {
         public OTATile Tile { get; set; }
     }
 }
-#endif
