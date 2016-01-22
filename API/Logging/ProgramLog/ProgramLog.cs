@@ -120,23 +120,13 @@ namespace OTA.Logging
 
         public static void OpenLogFile(string path)
         {
-            var newpath = path;
-
-            if (LogRotation)
-            {
-                var absolute = Path.GetFullPath(path);
-                var dir = Path.GetDirectoryName(absolute);
-                var name = Path.GetFileNameWithoutExtension(path);
-                var ext = Path.GetExtension(path);
-                newpath = Path.Combine(dir, String.Format("{0}_{1:yyyyMMdd_HHmm}{2}", name, DateTime.Now, ext));
-            }
-
-            logFile = new FileOutputTarget(newpath);
+            var lf = new FileOutputTarget(path, LogRotation);
 
             lock (logTargets)
-                logTargets.Add(logFile);
+                logTargets.Add(lf);
 
-            Log("Logging started to file \"{0}\".", newpath);
+            Log("Logging started to file \"{0}\".", lf.FilePath);
+            logFile = lf;
         }
 
         /// <summary>
@@ -211,9 +201,9 @@ namespace OTA.Logging
             Write(new LogEntry(format, args, TraceLevel.Info, colour));
         }
 
-        public static void Log(LogChannel channel, string text, bool multi = false)
+        public static void Log(LogChannel channel, string text, bool multipleLines = false)
         {
-            if (!multi)
+            if (!multipleLines)
                 Write(new LogEntry(text, null, channel.Level) { channel = channel, target = channel.Target });
             else
             {
@@ -234,9 +224,19 @@ namespace OTA.Logging
             Write(new LogEntry(e, null, Error.Level) { channel = Error, target = Error.Target });
         }
 
+        public static void Log(LogChannel channel, Exception e)
+        {
+            Write(new LogEntry(e, null, channel.Level) { channel = channel, target = channel.Target ?? Error.Target });
+        }
+
         public static void Log(Exception e, string text)
         {
             Write(new LogEntry(e, text, Error.Level) { channel = Error, target = Error.Target });
+        }
+
+        public static void Log(LogChannel channel, Exception e, string text)
+        {
+            Write(new LogEntry(e, text, channel.Level) { channel = channel, target = channel.Target ?? Error.Target });
         }
 
         public static void AddProgressLogger(ProgressLogger prog)
@@ -375,15 +375,16 @@ namespace OTA.Logging
 
         static void Send(LogTarget target, OutputEntry output)
         {
-            if (target == null)
-            {
-                lock (logTargets)
-                    foreach (var tar in logTargets)
-                    {
-                        tar.Send(output);
-                    }
-            }
-            else
+//            if (target == null)
+//            {
+            lock (logTargets)
+                foreach (var tar in logTargets)
+                {
+                    tar.Send(output);
+                }
+//            }
+//            else
+            if (target != null)
                 target.Send(output);
         }
 

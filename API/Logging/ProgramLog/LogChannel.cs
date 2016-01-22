@@ -12,6 +12,11 @@ namespace OTA.Logging
     public class LogChannel
     {
         /// <summary>
+        /// A flag to inform the ProgramLog thread to clean up the internals of this class when it's completed
+        /// </summary>
+        internal bool _closed;
+
+        /// <summary>
         /// Defines the colour of the message
         /// </summary>
         /// <value>The color.</value>
@@ -27,7 +32,7 @@ namespace OTA.Logging
         /// This can be a custom LogTarget which will receive messages from only this channel
         /// </summary>
         /// <value>The target.</value>
-        public LogTarget Target { get; private set; }
+        public LogTarget Target { get; set; }
 
         /// <summary>
         /// Defines the logging trace level
@@ -51,19 +56,44 @@ namespace OTA.Logging
             Level = level;
         }
 
-        public void Log(string text, bool multi = false)
+        public void Log(string text, bool multipleLines = false)
         {
-            ProgramLog.Log(this, text, multi);
+            if (_closed) throw new InvalidOperationException("This channel is closed");
+
+            ProgramLog.Log(this, text, multipleLines);
         }
 
         public void Log(string text)
         {
+            if (_closed) throw new InvalidOperationException("This channel is closed");
+
             ProgramLog.Log(this, text);
         }
 
         public void Log(string fmt, params object[] args)
         {
+            if (_closed) throw new InvalidOperationException("This channel is closed");
+
             ProgramLog.Log(this, fmt, args);
+        }
+
+        public void Log(Exception e)
+        {
+            if (_closed) throw new InvalidOperationException("This channel is closed");
+
+            ProgramLog.Log(this, e);
+        }
+
+        public void Log(Exception e, string message)
+        {
+            if (_closed) throw new InvalidOperationException("This channel is closed");
+
+            ProgramLog.Log(this, e, message);
+        }
+
+        public void Close()
+        {
+            if (!_closed) _closed = true;
         }
     }
 }

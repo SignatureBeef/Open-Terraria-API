@@ -48,7 +48,13 @@ namespace OTA.Logging
         /// </summary>
         private static readonly object _loggersLock = new object();
 
-        public static bool HasLoggers { get; } = _loggers.Count > 0;
+        public static bool HasLoggers
+        { 
+            get
+            {
+                lock (_loggersLock) return _loggers.Count > 0;
+            }
+        }
 
         /// <summary>
         /// Add a logger to be called for Vanilla & OTA functions

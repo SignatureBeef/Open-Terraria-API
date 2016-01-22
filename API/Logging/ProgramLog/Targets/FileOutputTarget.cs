@@ -13,9 +13,22 @@ namespace OTA.Logging
         ProgramThread thread;
         StreamWriter file;
 
-        public FileOutputTarget(string path)
+        public string FilePath  { get; private set; }
+
+        public FileOutputTarget(string path, bool rotation = true)
         {
-            file = new StreamWriter(path, true);
+            FilePath = path;
+
+            if (rotation)
+            {
+                var absolute = Path.GetFullPath(path);
+                var dir = Path.GetDirectoryName(absolute);
+                var name = Path.GetFileNameWithoutExtension(path);
+                var ext = Path.GetExtension(path);
+                FilePath = Path.Combine(dir, String.Format("{0}_{1:yyyyMMdd_HHmm}{2}", name, DateTime.Now, ext));
+            }
+
+            file = new StreamWriter(FilePath, true);
             thread = new ProgramThread("LogF", OutputThread);
             thread.IsBackground = false;
             thread.Start();
@@ -97,7 +110,9 @@ namespace OTA.Logging
             {
                 file.Close();
             }
-            catch { }
+            catch
+            {
+            }
         }
     }
 }
