@@ -590,6 +590,7 @@ namespace OTA.Callbacks
 
         public static bool OnPreSpawn
         (
+            #if CLIENT
             Microsoft.Xna.Framework.Rectangle prm0,//prm
             Microsoft.Xna.Framework.Rectangle prm1,//rectangle
             Microsoft.Xna.Framework.Vector2 prm2,//center
@@ -662,6 +663,76 @@ namespace OTA.Callbacks
             System.Int32 prm69,//num45
             System.Int32 prm70,//num46
             System.Single prm71//num8
+            #elif SERVER
+            Microsoft.Xna.Framework.Rectangle prm0/*prm*/,
+            Microsoft.Xna.Framework.Rectangle prm1/*prm2*/,
+            System.Boolean prm2/*flag13*/,
+            System.Boolean sky/*flag*/,
+            System.Boolean lihzahrdBrickWall/*flag2*/,
+            System.Boolean playerSafe/*flag3*/,
+            System.Boolean invasion/*flag4*/,
+            System.Boolean water/*flag5*/,
+            System.Boolean prm8/*flag6*/,
+            System.Boolean granite/*flag7*/,
+            System.Boolean marble/*flag8*/,
+            System.Boolean spiderCave/*flag9*/,
+            System.Boolean playerInTown/*flag10*/,
+            System.Boolean desertCave/*flag11*/,
+            System.Boolean planteraDefeated/*flag12*/,
+            System.Boolean safeRangeX/*flag14*/,
+            System.Int32 spawnTileX/*num*/,
+            System.Int32 spawnTileY/*num2*/,
+            System.Int32 prm18/*num3*/,
+            System.Int32 prm19/*num4*/,
+            System.Int32 prm20/*i*/,
+            System.Int32 prm21/*j*/,
+            System.Int32 prm22/*num5*/,
+            System.Int32 prm23/*k*/,
+            System.Int32 prm24/*num6*/,
+            System.Int32 prm25/*num7*/,
+            System.Int32 prm26/*num9*/,
+            System.Int32 prm27/*num10*/,
+            System.Int32 prm28/*num11*/,
+            System.Int32 prm29/*num12*/,
+            System.Int32 prm30/*num13*/,
+            System.Int32 prm31/*num14*/,
+            System.Int32 prm32/*num15*/,
+            System.Int32 prm33/*num16*/,
+            System.Int32 prm34/*l*/,
+            System.Int32 prm35/*num17*/,
+            System.Int32 prm36/*num18*/,
+            System.Int32 prm37/*m*/,
+            System.Int32 prm38/*num19*/,
+            System.Int32 prm39/*num20*/,
+            System.Int32 prm40/*num21*/,
+            System.Int32 prm41/*num22*/,
+            System.Int32 prm42/*n*/,
+            System.Int32 prm43/*num23*/,
+            System.Int32 prm44/*num24*/,
+            System.Int32 playerFloorX/*num25*/,
+            System.Int32 playerFloorY/*num26*/,
+            System.Int32 prm47/*num27*/,
+            System.Int32 prm48/*num28*/,
+            System.Int32 prm49/*num29*/,
+            System.Int32 prm50/*num30*/,
+            System.Int32 prm51/*num31*/,
+            System.Int32 prm52/*num32*/,
+            System.Int32 prm53/*num33*/,
+            System.Int32 prm54/*num34*/,
+            System.Int32 prm55/*num35*/,
+            System.Int32 prm56/*num36*/,
+            System.Int32 prm57/*num37*/,
+            System.Int32 prm58/*num38*/,
+            System.Int32 prm59/*num39*/,
+            System.Int32 prm60/*num40*/,
+            System.Int32 prm61/*num41*/,
+            System.Int32 prm62/*num42*/,
+            System.Int32 prm63/*num43*/,
+            System.Int32 prm64/*num44*/,
+            System.Int32 prm65/*num45*/,
+            System.Int32 prm66/*num46*/,
+            System.Single prm67/*num8*/
+            #endif
         )
         {
             var ctx = new HookContext();
@@ -684,8 +755,6 @@ namespace OTA.Callbacks
                 PlayerFloorX = playerFloorX,
                 PlayerFloorY = playerFloorY
             };
-
-            System.Console.WriteLine(args.ToString());
 
             HookPoints.NpcPreSpawn.Invoke(ref ctx, ref args);
 

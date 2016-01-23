@@ -35,6 +35,16 @@ namespace OTA.Mod
 //            pkg.Run();
         }
 
+        #if SERVER
+        [Hook]
+        void OnPlayerEnter(ref HookContext ctx, ref HookArgs.PlayerEnteredGame args)
+        {
+            OTA.Logging.ProgramLog.Log($"Spawning {NpcTest.test}");
+            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs[NpcTest.test]);
+//            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), 77);
+        }
+        #endif
+
         void ScanExistingPlugins()
         {
             foreach (var plg in PluginManager.EnumeratePlugins)
@@ -260,6 +270,7 @@ namespace OTA.Mod
             var mod = EntityRegistrar.Npcs.Create(args.Type);
             if (mod != null)
             {
+                Logging.Logger.Error("Creating new type of: " + args.Type);
                 var npc = new Terraria.NPC();
                 npc.Mod = mod;
                 mod.Npc = npc;
@@ -401,6 +412,7 @@ namespace OTA.Mod
 
             if (item != null && item.Npc != null)
             {
+                Console.WriteLine("Spawning replacement npc");
                 ctx.SetResult(HookResult.IGNORE);
 
                 NPC.NewNPC((int)(args.SpawnTileX * 16f), (int)(args.SpawnTileY * 16f), item.Npc.TypeId);
@@ -416,41 +428,8 @@ namespace OTA.Mod
         #endregion
 
         #if CLIENT
-        
+        #region Shop
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#region Shop
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         [Hook]
         void OnChestSetupShop(ref HookContext ctx, ref HookArgs.ChestSetupShop args)
         {
@@ -465,41 +444,8 @@ namespace OTA.Mod
             }
         }
 
-        
+        #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#endregion
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         #endif
 
         #region Projectile

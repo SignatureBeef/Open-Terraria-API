@@ -6,6 +6,55 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace OTA.Mod.Npc
 {
+    #if SERVER
+    [NativeMod(test)]
+    public class NpcTest : OTANpc
+    {
+        public const string test = "Test";
+
+        public override bool OnUpdate()
+        {
+            Npc.type = 77;
+            return base.OnUpdate();
+        }
+
+        public override void OnSetDefaults()
+        {
+            base.OnSetDefaults();
+
+//            EmulateNPC(Terraria.ID.NPCID.ArmoredSkeleton, true);
+
+
+            Npc.IsTownNpc = false;
+            Npc.townNPC = false;
+            Npc.friendly = false;
+            Npc.type = 77;
+            Npc.width = 18;
+            Npc.height = 40;
+            Npc.aiStyle = 3;
+            Npc.damage = 40;
+            Npc.defense = 28;
+            Npc.lifeMax = 260;
+            Npc.soundHit = 2;
+            Npc.soundKilled = 2;
+            Npc.knockBackResist = 0.4f;
+            Npc.value = 400;
+            Npc.buffImmune[20] = true;
+            Npc.buffImmune[31] = false;
+
+            SetName(test);
+        }
+
+        public override double OnPreSpawn(HookArgs.NpcPreSpawn info)
+        {
+//            //Spawn during day
+//            if (!Main.dayTime) return 0;
+
+            return 0.25;
+        }
+    }
+    #endif
+
     public abstract class OTANpc : INativeMod
     {
         #region Privates
@@ -219,9 +268,12 @@ namespace OTA.Mod.Npc
         #endregion
 
         #if CLIENT
+        
+        
 
-        #region Textures
+#region Textures
 
+        
         /// <summary>
         /// Load a NPC texture using an asset name for the current instance if it's not already been done.
         /// </summary>
@@ -282,7 +334,10 @@ namespace OTA.Mod.Npc
             }
         }
 
-        #endregion
+        
+
+#endregion
+
         #endif
 
         #region "Handlers"

@@ -583,7 +583,7 @@ namespace OTA.Patcher
 //            {
 //                if (prmIdx > 0) Console.Write(",\n");
 //                Console.Write("{0} prm{1}", local.VariableType, prmIdx++);
-////                Console.Write("/*" + local.Value.Name + "*/");
+////                Console.Write("/*" + local.Name + "*/");
 //            }
 
             foreach (var pair in variables)

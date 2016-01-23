@@ -248,7 +248,8 @@ namespace OTA.Patcher
 
         [OTAPatch(SupportType.ClientServer, "Making entities virtual", 2000/*
             This is a requirement to be last, as every method may be changed and it will ruin other IL
-        */)] 
+        */
+        )] 
         private void MakeEntitiesVirtual()
         {
             foreach (var type in new [] 
@@ -295,6 +296,33 @@ namespace OTA.Patcher
                 }
             }
         }
+
+//        [OTAPatch(SupportType.ClientServer, "Test")] 
+//        private void Test()
+//        {
+//            var methods = _asm.MainModule.Types
+//                .SelectMany(t => t.Methods)
+//                .Where(m => m.HasBody);
+//            
+//            var field = Terraria.Import(API.NpcModRegister.Field("MaxNpcId"));
+//
+//            foreach (var mth in methods)
+//            {
+//                var ins = mth.Body.Instructions
+//                    .Where(x => x.Operand != null && x.Operand.Equals(540)).ToArray();
+//
+//                if (ins.Length > 0)
+//                {
+//                    Console.WriteLine(mth.FullName);
+////                    var asd = "";
+//                    foreach (var npc in ins)
+//                    {
+//                        npc.OpCode = OpCodes.Ldsfld;
+//                        npc.Operand = field;
+//                    }
+//                }
+//            }
+//        }
 
         private struct MethodInstructions
         {
