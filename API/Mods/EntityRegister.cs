@@ -70,7 +70,7 @@ namespace OTA.Mod
                     else if (projectile.IsAssignableFrom(nativeMod))
                     {
                         Logger.Log($"Detected custom PROJECTILE {nativeMod.Name}");
-                        projectileRegister.MakeGenericMethod(nativeMod).Invoke(Tiles, new object[] { attr.EntityName });
+                        projectileRegister.MakeGenericMethod(nativeMod).Invoke(Projectiles, new object[] { attr.EntityName });
                     }
                 }
         }

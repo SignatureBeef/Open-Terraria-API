@@ -502,6 +502,8 @@
     <Compile Include="Mods\Projectile\OTAProjectile.cs" />
     <Compile Include="Mods\Npc\NpcChatButton.cs" />
     <Compile Include="Mods\ModEventManager.cs" />
+    <Compile Include="Mods\Net\MessageBuilder.cs" />
+    <Compile Include="Mods\Net\NetworkMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

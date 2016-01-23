@@ -592,6 +592,13 @@ namespace OTA.Patcher
                 patcher.MakeEverythingAccessible();
                 Console.Write("Ok\nHooking senders...");
                 patcher.HookSenders();
+                Console.Write("Ok\nHooking NetMessage...");
+                patcher.HookNetMessage();
+                Console.Write("Ok\nHooking receive buffer...");
+                patcher.HookMessageBuffer();
+                Console.Write("Ok\nRouting network message validity...");
+                patcher.HookValidPacketState();
+
                 //                Console.Write("Ok\nPutting Terraria on a diet...");
                 //                patcher.SwapToVanillaTile(); //Holy shit batman! it works
                 //                patcher.InjectTileSet();

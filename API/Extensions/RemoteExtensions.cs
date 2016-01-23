@@ -107,6 +107,16 @@ namespace OTA.Extensions
             {
             }
         }
+
+        /// <summary>
+        /// Determines if the client is using an OTA client mod.
+        /// </summary>
+        /// <returns><c>true</c> if is OTA client the specified client; otherwise, <c>false</c>.</returns>
+        /// <param name="client">Client.</param>
+        public static bool IsOTAClient(this Terraria.RemoteClient client)
+        {
+            return (client.Socket as OTA.Sockets.ClientConnection).IsOTAClient;
+        }
     }
 }
 

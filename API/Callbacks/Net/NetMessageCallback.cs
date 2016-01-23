@@ -1,6 +1,7 @@
 ﻿using OTA.Plugin;
 using Microsoft.Xna.Framework;
 using System.IO;
+using System;
 
 #if Full_API
 using Terraria;
@@ -99,7 +100,26 @@ namespace OTA.Callbacks
                     writer.Write((short)endOfMessage);
                     writer.BaseStream.Position = (long)endOfMessage;
 
-                    if (remoteClient == -1)
+                    if (Main.netMode == 1)
+                    {
+                        if (Netplay.Connection.Socket.IsConnected ())
+                        {
+                            try
+                            {
+                                NetMessage.buffer [bufferId].spamCount++;
+                                Main.txMsg++;
+                                Main.txData += endOfMessage;
+                                Main.txMsgType [msgType]++;
+                                Main.txDataType [msgType] += endOfMessage;
+                                Netplay.Connection.Socket.AsyncSend (NetMessage.buffer [bufferId].writeBuffer, 0, endOfMessage, new SocketSendCallback (Netplay.Connection.ClientWriteCallBack), null);
+                            }
+                            catch(Exception e)
+                            {
+                                Logging.Logger.Error("Send data error: {0}", e);
+                            }
+                        }
+                    }
+                    else if (remoteClient == -1)
                     {
                         switch ((Packet)msgType)
                         {

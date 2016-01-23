@@ -79,6 +79,8 @@ namespace OTA.Sockets
 
         public int SlotId;
 
+        public bool IsOTAClient { get; internal set; }
+
         public void Set(int value)
         {
             this.SlotId = value;
@@ -110,12 +112,12 @@ namespace OTA.Sockets
             sock.LingerState = new LingerOption(true, 10);
             sock.NoDelay = true;
 
+            #if SERVER
             var ctx = new HookContext
             {
                 Connection = this
             };
 
-            #if SERVER
             var args = new HookArgs.NewConnection();
             
             HookPoints.NewConnection.Invoke(ref ctx, ref args);

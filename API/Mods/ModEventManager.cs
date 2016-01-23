@@ -7,6 +7,7 @@ using OTA.Mod.Npc;
 using System.Linq;
 using OTA.Extensions;
 using OTA.Mod.Tile;
+using OTA.Mods.Net;
 
 namespace OTA.Mod
 {
@@ -55,9 +56,122 @@ namespace OTA.Mod
         {
             if (args.State == MethodState.End)
             {
-                OTATile.ResizeArrays(true, false);
+//                OTATile.ResizeArrays(true, false);
                 EntityRegistrar.Tiles.InitialiseTiles();
             }
+        }
+
+        [Hook]
+        void OnNetMessage(ref HookContext ctx, ref HookArgs.ReceiveNetMessage args)
+        {
+            if (args.PacketId == PacketRegister.BasePacket)
+            {
+                Logging.Logger.Error("Incoming placeholder packet");
+
+                if (PacketRegister.ProcessPacket(args.BufferId))
+                {
+                    ctx.SetResult(HookResult.IGNORE);
+                }
+            }
+            #if SERVER
+            if (args.PacketId == (int)Packet.CONNECTION_REQUEST)
+            {
+                Logging.Logger.Debug("Incoming connection, determining if an OTAPI client");
+                ctx.SetResult(HookResult.IGNORE);
+
+                if (Main.netMode != 2)
+                    return;
+
+                var client = Netplay.Clients[args.BufferId];
+
+                if (Main.dedServ && Netplay.IsBanned(client.Socket.GetRemoteAddress()))
+                {
+                    NetMessage.SendData(2, args.BufferId, -1, Lang.mp[3], 0, 0, 0, 0, 0, 0, 0);
+                }
+                else if (client.State == 0)
+                {
+                    var reader = NetMessage.buffer[args.BufferId].reader;
+                    var clientVersion = reader.ReadString();
+
+                    var connection = client.Socket as OTA.Sockets.ClientConnection;
+                    connection.IsOTAClient = false;
+                    if (args.Length - 2 > clientVersion.Length)
+                    {
+                        var otaVersion = reader.ReadString();
+                        Logging.Logger.Debug($"Client OTAPI version: {otaVersion}");
+
+                        if (!String.IsNullOrEmpty(otaVersion) && otaVersion.StartsWith("OTAPI"))
+                        {
+                            connection.IsOTAClient = true;
+                        }
+                    }
+
+                    if (clientVersion == "Terraria" + Main.curRelease)
+                    {
+                        if (String.IsNullOrEmpty(Netplay.ServerPassword))
+                        {
+                            if (connection.IsOTAClient)
+                            {
+                                SyncOTAClient(args.BufferId);
+                            }
+                            else
+                            {
+                                client.State = 1;
+                                NetMessage.SendData(3, args.BufferId);
+                            }
+                        }
+                        else
+                        {
+                            client.State = -1;
+                            NetMessage.SendData(37, args.BufferId);
+                        }
+                    }
+                    else
+                    {
+                        NetMessage.SendData(2, args.BufferId, -1, Lang.mp[4]);
+                    }
+                }
+            }
+            #endif
+        }
+
+        #if SERVER
+        public static readonly System.Collections.Concurrent.ConcurrentDictionary<Int32, String> NpcTextures = new System.Collections.Concurrent.ConcurrentDictionary<Int32, String>();
+
+        void SyncOTAClient(int remoteClient)
+        {
+            var builder = PacketRegister.Write<SyncPackets>();
+
+            foreach (var item in NpcTextures)
+                builder = builder.Append<SyncNpcTexture>(item);
+
+            builder.SendTo(remoteClient);
+
+            //Temporary. This is to get the client to finish connecting.
+            //The real solution will send the below after everything has been synced
+            //on the client and it has sent a confirmation
+            Netplay.Clients[remoteClient].State = 1;
+            NetMessage.SendData(3, remoteClient);
+        }
+        #endif
+
+        [Hook]
+        void OnSendMessage(ref HookContext ctx, ref HookArgs.SendNetMessage args)
+        {
+            #if CLIENT
+            if (args.MsgType == (int)Packet.CONNECTION_REQUEST)
+            {
+                Logging.Logger.Debug("Requesting connection");
+
+                ctx.SetResult(HookResult.IGNORE);
+
+                var writer = NetMessage.buffer[args.BufferId].writer;
+                writer.Write("Terraria" + Main.curRelease);
+                writer.Write("OTAPI" + Globals.BuildInfo);
+            }
+
+            #elif SERVER
+            #endif
         }
 
         #if CLIENT
@@ -279,10 +393,10 @@ namespace OTA.Mod
                 .Select(x => new WeightableItem() { Npc = x, Chance = x.OnPreSpawn(info) })
                 .Where(y => y.Chance > 0)
 
-                //Add the vanilla NPC chance
+                       //Add the vanilla NPC chance
                 .Union(new WeightableItem[] { new WeightableItem() { Chance = VanillaNPCWeight } })
 
-                //Find the item to spawn
+                       //Find the item to spawn
                 .WeightedRandom(x => x.Chance);
 
             if (item != null && item.Npc != null)
@@ -302,8 +416,41 @@ namespace OTA.Mod
         #endregion
 
         #if CLIENT
-        #region Shop
+        
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#region Shop
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         [Hook]
         void OnChestSetupShop(ref HookContext ctx, ref HookArgs.ChestSetupShop args)
         {
@@ -318,7 +465,41 @@ namespace OTA.Mod
             }
         }
 
-        #endregion
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endregion
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         #endif
 
         #region Projectile
