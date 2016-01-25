@@ -12,29 +12,22 @@ namespace OTA.Mod.Npc
     {
         public const string test = "Test";
 
-        public override bool OnUpdate()
-        {
-            Npc.type = 77;
-            return base.OnUpdate();
-        }
-
         public override void OnSetDefaults()
         {
             base.OnSetDefaults();
 
-//            EmulateNPC(Terraria.ID.NPCID.ArmoredSkeleton, true);
-
+            EmulateNPC(Terraria.ID.NPCID.ArmoredSkeleton);
 
             Npc.IsTownNpc = false;
             Npc.townNPC = false;
             Npc.friendly = false;
-            Npc.type = 77;
             Npc.width = 18;
             Npc.height = 40;
             Npc.aiStyle = 3;
             Npc.damage = 40;
             Npc.defense = 28;
-            Npc.lifeMax = 260;
+            Npc.life = 5000;
+            Npc.lifeMax = 5000;
             Npc.soundHit = 2;
             Npc.soundKilled = 2;
             Npc.knockBackResist = 0.4f;
@@ -62,7 +55,7 @@ namespace OTA.Mod.Npc
         private int _typeId;
         private Terraria.NPC _npc;
 
-        private int _emulateNPCTypeId;
+//        private int _emulateNPCTypeId;
 
         #endregion
 
@@ -156,21 +149,21 @@ namespace OTA.Mod.Npc
 
         public virtual bool OnUpdate()
         {
-            if (_emulateNPCTypeId > 0)
-            {
-                try
-                {
-                    var t = Npc.type;
-                    Npc.type = _emulateNPCTypeId;
-                    Main.npc[Npc.whoAmI].UpdateNPCDirect(Npc.whoAmI);
-                    Npc.type = t;
-                }
-                catch (Exception e)
-                {
-                    Logging.ProgramLog.Log(e, $"Failed to update NPC {Npc.whoAmI}");
-                }
-                return false;
-            }
+//            if (_emulateNPCTypeId > 0)
+//            {
+//                try
+//                {
+//                    var t = Npc.type;
+//                    Npc.type = _emulateNPCTypeId;
+//                    Main.npc[Npc.whoAmI].UpdateNPCDirect(Npc.whoAmI);
+//                    Npc.type = t;
+//                }
+//                catch (Exception e)
+//                {
+//                    Logging.ProgramLog.Log(e, $"Failed to update NPC {Npc.whoAmI}");
+//                }
+//                return false;
+//            }
             return true;
         }
 
@@ -183,23 +176,17 @@ namespace OTA.Mod.Npc
         }
 
         #region Helpers
-
-        public void StopEmulatingNPC()
+        public void EmulateNPC(int npcTypeId)
         {
-            _emulateNPCTypeId = 0;
-        }
-
-        public void EmulateNPC(int npcTypeId, bool onlySetInfo = false)
-        {
-            if (!onlySetInfo) _emulateNPCTypeId = npcTypeId;
+            this.TypeId = npcTypeId;
 
             #if CLIENT
             LoadTexture(npcTypeId);
             #endif
 
-            var initialType = Npc.type;
+//            var initialType = Npc.type;
             Npc.SetDefaultsDirect(npcTypeId);
-            Npc.type = initialType;
+//            Npc.type = initialType;
 
             //Copy properties
             Main.npcCatchable[Npc.type] = Main.npcCatchable[npcTypeId];
@@ -271,8 +258,14 @@ namespace OTA.Mod.Npc
         
         
 
+
+
+
+
 #region Textures
 
+        
+        
         
         /// <summary>
         /// Load a NPC texture using an asset name for the current instance if it's not already been done.
@@ -336,8 +329,14 @@ namespace OTA.Mod.Npc
 
         
 
+
+
+
+
 #endregion
 
+        
+        
         #endif
 
         #region "Handlers"

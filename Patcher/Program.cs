@@ -85,7 +85,7 @@ namespace OTA.Patcher
         //        #endif
         private static string FolderKind
         {
-            get { return PatchMode == SupportType.Client ? "Client" : "Server"; }
+            get { return PatchMode == SupportType.Client ? OTAPatcher.Platform.ToString() : "Server"; }
         }
 
         /// <summary>
@@ -104,6 +104,8 @@ namespace OTA.Patcher
             var p = debugFolder ? Path.Combine(root.FullName, project, "bin", "AnyCPU", projectFolder) : Path.Combine(root.FullName, project);
             if (!Directory.Exists(p))
                 p = debugFolder ? Path.Combine(root.FullName, project, "bin", projectFolder) : Path.Combine(root.FullName, project);
+            if (!Directory.Exists(p))
+                p = Path.Combine(root.FullName, project, "bin", projectFolder + (debugFolder ? "-Debug" : String.Empty));
 
             //From the project
             var dllFrom = Path.Combine(p, projectBinary + ".dll");

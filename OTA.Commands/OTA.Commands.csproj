@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Client-Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Server-Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -10,42 +10,32 @@
     <SynchReleaseVersion>false</SynchReleaseVersion>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Client-Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;CLIENT</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Debug|AnyCPU' ">
     <Optimize>false</Optimize>
     <OutputPath>bin\Server-Debug</OutputPath>
     <WarningLevel>4</WarningLevel>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <DefineConstants>DEBUG;SERVER</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Release|AnyCPU' ">
     <Optimize>false</Optimize>
     <OutputPath>bin\Server-Release</OutputPath>
     <WarningLevel>4</WarningLevel>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <DefineConstants>SERVER</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'FNA-Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Linux-Debug|AnyCPU' ">
     <Optimize>false</Optimize>
-    <OutputPath>bin\FNA-Debug</OutputPath>
+    <OutputPath>bin\Linux-Debug</OutputPath>
     <WarningLevel>4</WarningLevel>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'XNA-Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Windows-Debug|AnyCPU' ">
     <Optimize>false</Optimize>
-    <OutputPath>bin\XNA-Debug</OutputPath>
+    <OutputPath>bin\Windows-Debug</OutputPath>
     <WarningLevel>4</WarningLevel>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mac-Debug|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Mac-Debug</OutputPath>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -88,7 +78,7 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
   <Choose>
-    <When Condition=" '$(Configuration)|$(Platform)' == 'FNA-Debug|AnyCPU' ">
+    <When Condition=" '$(Configuration)|$(Platform)' == 'Mac-Debug|AnyCPU' ">
       <ItemGroup>
         <Reference Include="Terraria">
           <HintPath>..\Binaries\Mac\Terraria.exe</HintPath>
@@ -98,7 +88,17 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition=" '$(Configuration)|$(Platform)' == 'XNA-Debug|AnyCPU' ">
+    <When Condition=" '$(Configuration)|$(Platform)' == 'Linux-Debug|AnyCPU' ">
+      <ItemGroup>
+        <Reference Include="Terraria">
+          <HintPath>..\Binaries\Linux\Terraria.exe</HintPath>
+        </Reference>
+        <Reference Include="FNA">
+          <HintPath>..\External\FNA.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition=" '$(Configuration)|$(Platform)' == 'Windows-Debug|AnyCPU' ">
       <ItemGroup>
         <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
           <SpecificVersion>False</SpecificVersion>
