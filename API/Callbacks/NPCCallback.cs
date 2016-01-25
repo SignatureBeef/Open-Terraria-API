@@ -107,7 +107,7 @@ namespace OTA.Callbacks
             if (ctx.ResultParam != null && ctx.ResultParam is double)
                 damage = (double)ctx.ResultParam; 
 
-            return ctx.Result == HookResult.DEFAULT; //If default then continue on to vanillacode
+            return ctx.Result == HookResult.DEFAULT; //If default then continue on to vanilla code
         }
 
         #region "Creation Calls"

@@ -67,6 +67,8 @@ namespace OTA.Patcher
             OTAPatcher.CopyAPI = true;
 
             OTAPatcher.DefaultProcess(args);
+
+            Environment.ExitCode = 0;
         }
     }
 

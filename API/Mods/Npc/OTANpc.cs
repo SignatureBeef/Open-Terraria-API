@@ -149,6 +149,15 @@ namespace OTA.Mod.Npc
         {
         }
 
+        public virtual bool OnDamage(double damage)
+        {
+            return true;
+        }
+
+        public virtual void OnDeath()
+        {
+        }
+
         #region Helpers
 
         public void EmulateNPC(int npcTypeId)
@@ -305,6 +314,7 @@ namespace OTA.Mod.Npc
                 Main.NPCLoaded[TypeId] = true;
             }
         }
+
 #elif SERVER
         internal static readonly System.Collections.Concurrent.ConcurrentDictionary<Int32, ServerTexture> NpcTextures = new System.Collections.Concurrent.ConcurrentDictionary<Int32, ServerTexture>();
 
