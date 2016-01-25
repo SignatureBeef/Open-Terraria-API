@@ -31,7 +31,7 @@ namespace OTA.Mod
         {
             DebugFramework.Assert.Expression(() => asm == null);
 
-            Logger.Log($"Scanning assemby {asm.FullName}");
+            Logger.Debug($"Scanning assemby {asm.FullName}");
 
             //Look for INativeMod
             var nm = typeof(NativeModAttribute);
@@ -51,25 +51,25 @@ namespace OTA.Mod
                 {
                     var attr = (NativeModAttribute)Attribute.GetCustomAttribute(nativeMod, nm);
 
-                    Logger.Log($"Flagged class {nativeMod.Name}");
+                    Logger.Debug($"Flagged class {nativeMod.Name}");
                     if (npc.IsAssignableFrom(nativeMod))
                     {
-                        Logger.Log($"Detected custom NPC {nativeMod.Name}");
+                        Logger.Debug($"Detected custom NPC {nativeMod.Name}");
                         npcRegister.MakeGenericMethod(nativeMod).Invoke(Npcs, new object[] { attr.EntityName });
                     }
                     else if (item.IsAssignableFrom(nativeMod))
                     {
-                        Logger.Log($"Detected custom ITEM {nativeMod.Name}");
+                        Logger.Debug($"Detected custom ITEM {nativeMod.Name}");
                         itemRegister.MakeGenericMethod(nativeMod).Invoke(Items, new object[] { attr.EntityName });
                     }
                     else if (tile.IsAssignableFrom(nativeMod))
                     {
-                        Logger.Log($"Detected custom TILE {nativeMod.Name}");
+                        Logger.Debug($"Detected custom TILE {nativeMod.Name}");
                         tileRegister.MakeGenericMethod(nativeMod).Invoke(Tiles, new object[] { attr.EntityName });
                     }
                     else if (projectile.IsAssignableFrom(nativeMod))
                     {
-                        Logger.Log($"Detected custom PROJECTILE {nativeMod.Name}");
+                        Logger.Debug($"Detected custom PROJECTILE {nativeMod.Name}");
                         projectileRegister.MakeGenericMethod(nativeMod).Invoke(Projectiles, new object[] { attr.EntityName });
                     }
                 }

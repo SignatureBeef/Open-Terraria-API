@@ -20,7 +20,7 @@ namespace OTA.Logging
         /// Defines the colour of the message
         /// </summary>
         /// <value>The color.</value>
-        public ConsoleColor Color { get; private set; }
+        public ConsoleColor Color { get; set; }
 
         /// <summary>
         /// This defines the display name of the channel
@@ -39,6 +39,11 @@ namespace OTA.Logging
         /// </summary>
         /// <value>The level.</value>
         public TraceLevel Level { get; set; }
+
+        /// <summary>
+        /// Allows you to disable this channel being displayed in the console window
+        /// </summary>
+        public bool EnableConsoleOutput { get; set; } = true;
 
         public LogChannel(string name, ConsoleColor color, TraceLevel level)
         {

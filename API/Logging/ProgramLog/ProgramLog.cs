@@ -80,7 +80,10 @@ namespace OTA.Logging
         /// <summary>
         /// Log a debug message in the console.
         /// </summary>
-        public static readonly LogChannel Debug = new LogChannel(Categories.Debug, ConsoleColor.Gray, System.Diagnostics.TraceLevel.Verbose);
+        public static readonly LogChannel Debug = new LogChannel(Categories.Debug, ConsoleColor.Cyan, System.Diagnostics.TraceLevel.Verbose)
+        {
+            EnableConsoleOutput = false
+        };
 
         /// <summary>
         /// Log an action that is specific to all plugins. The message will be displayed in Blue.
@@ -289,11 +292,13 @@ namespace OTA.Logging
             Exception error = null;
             output = default(OutputEntry);
 
+            output.consoleOutput = true;
             if (entry.channel != null)
             {
                 output.color = entry.channel.Color;
                 output.channelName = entry.channel.Name;
                 output.traceLevel = entry.channel.Level;
+                output.consoleOutput = entry.channel.EnableConsoleOutput;
             }
             else if (entry.color != null)
                 output.color = entry.color.Value;

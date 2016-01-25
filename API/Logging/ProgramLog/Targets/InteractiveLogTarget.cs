@@ -66,6 +66,8 @@ namespace OTA.Logging
                         var entry = list[i];
                         list[i] = default(OutputEntry);
 
+                        if(!CanWriteEntry(entry)) continue;
+
                         if (entry.prefix != null)
                         {
                             SetColor(ConsoleColor.Gray);
@@ -153,6 +155,11 @@ namespace OTA.Logging
         /// </summary>
         protected virtual void OnMessageReceived(string message)
         {
+        }
+
+        protected virtual bool CanWriteEntry(OutputEntry entry) 
+        {
+            return true;
         }
     }
 }

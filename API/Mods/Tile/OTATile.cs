@@ -140,8 +140,8 @@ namespace OTA.Mod.Tile
                 }
                 else
                 {
-                    Console.WriteLine("Array was being decreased when it should not");
-                    Console.WriteLine(Environment.StackTrace);
+                    Logging.Logger.Debug("Array was being decreased when it should not");
+                    Logging.Logger.Debug(Environment.StackTrace);
                 }
             }
         }
@@ -205,7 +205,7 @@ namespace OTA.Mod.Tile
                 if (null == Terraria.Map.MapHelper.tileOptionCounts) Terraria.Map.MapHelper.tileOptionCounts = new int[length];
                 else Resize(ref Terraria.Map.MapHelper.tileOptionCounts, length);
 
-                Console.WriteLine("New tile size: " + length);
+                Logging.Logger.Debug("New tile size: " + length);
 
                 //Resize ID sets
                 foreach (var field in typeof(Terraria.ID.TileID.Sets).GetFields())

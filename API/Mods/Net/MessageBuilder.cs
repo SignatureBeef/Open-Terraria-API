@@ -5,7 +5,8 @@ using OTA.Plugin;
 using Microsoft.Xna.Framework;
 using System.IO;
 using System.Text;
-using OTA.Mods.Net;
+using OTA.Mod.Net;
+using System.Linq;
 
 namespace OTA.Mod.Net
 {
@@ -140,6 +141,24 @@ namespace OTA.Mod.Net
                     {
                         (client.Socket as ClientConnection).CopyAndSend(Segment);
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Broadcast to all remote clients that are connected to the server.
+        /// </summary>
+        /// <param name="except">Except.</param>
+        public void Broadcast(Func<RemoteClient, Boolean> sendTo)
+        {
+            if (!_ended) End();
+
+            Logging.Logger.Debug($"Broadcasting custom packet");
+            foreach (var client in Terraria.Netplay.Clients.Where(sendTo))
+            {
+                if (client.IsConnected())
+                {
+                    (client.Socket as ClientConnection).CopyAndSend(Segment);
                 }
             }
         }

@@ -37,6 +37,11 @@ namespace OTA.Logging
 
             HookPoints.ConsoleMessageReceived.Invoke(ref ctx, ref args);
         }
+
+        protected override bool CanWriteEntry(OutputEntry entry)
+        {
+            return entry.consoleOutput == true;
+        }
     }
 }
 

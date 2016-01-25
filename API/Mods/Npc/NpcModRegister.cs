@@ -31,9 +31,10 @@ namespace OTA.Mod.Npc
                 OTANpc.ResizeArrays();
 
                 //Create a non-npc related definition in order for us to call simple non-instance events
-                var npc = (OTANpc)Activator.CreateInstance<T>();
-                npc.TypeId = def.TypeId;
-                _instances.Add(npc);
+                var mod = (OTANpc)Activator.CreateInstance<T>();
+                mod.TypeId = def.TypeId;
+                mod.OnPrepareResources();
+                _instances.Add(mod);
 
                 return def.TypeId;
             }
@@ -58,6 +59,7 @@ namespace OTA.Mod.Npc
             {
                 var mod = (OTANpc)Activator.CreateInstance(def.InstanceType);
                 mod.TypeId = type;
+                mod.OnPrepareResources();
                 return mod;
             }
             return null;
@@ -70,6 +72,7 @@ namespace OTA.Mod.Npc
             {
                 var mod = (OTANpc)Activator.CreateInstance(def.InstanceType);
                 mod.TypeId = def.TypeId;
+                mod.OnPrepareResources();
                 return mod;
             }
             return null;

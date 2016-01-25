@@ -1,5 +1,8 @@
 ﻿using OTA.Plugin;
 using OTA.Command;
+#if CLIENT
+using Microsoft.Xna.Framework.Graphics;
+#endif
 
 namespace OTA.Callbacks
 {
@@ -764,6 +767,22 @@ namespace OTA.Callbacks
 //        public static int DropLoot(int X, int Y, int Width, int Height, int Type, int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup, int npc)
 //        {
 //            return 0;//return Terraria.Main.NPCLoo((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1533, 1, false, 0, false, false);
+        //        }
+
+//        #if CLIENT
+//        static readonly object _textureLock = new object();
+//
+//        public static Texture2D GetTexture(int index)
+//        {
+//            lock (_textureLock)
+//                return Terraria.Main.npcTexture[index];
 //        }
+//
+//        public static void SetTexture(int index, Texture2D texture)
+//        {
+//            lock (_textureLock)
+//                Terraria.Main.npcTexture[index] = texture;
+//        }
+//        #endif
     }
 }

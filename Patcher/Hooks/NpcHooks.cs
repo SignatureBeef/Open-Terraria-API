@@ -664,6 +664,48 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ldc_I4, 200));
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
+
+//        [OTAPatch(SupportType.ClientServer, "Patching npc locks")]
+//        private void PatchInNpcLocking()
+//        {
+//            try
+//            {
+//                var getMethod = Terraria.Import(API.NPCCallback.Method("GetTexture"));
+//                var setMethod = Terraria.Import(API.NPCCallback.Method("SetTexture"));
+//
+//                var methods = _asm.MainModule.Types
+//                            .SelectMany(t => t.Methods)
+//                            .Where(m => m.HasBody);
+//
+//                foreach (var mth in methods)
+//                {
+//                    var il = mth.Body.GetILProcessor();
+//                    foreach (var ins in mth.Body.Instructions
+//                    .Where(x=> x.OpCode == OpCodes.Ldsfld
+//                            && x.Next != null
+//                            && x.Next.Next != null
+//                            && x.Next.Next.OpCode == OpCodes.Ldelem_Ref
+//                            && x.Operand is FieldReference 
+//                            && (x.Operand as FieldReference).Name == "npcTexture")
+//                    .ToArray())
+//                    {
+//                        //Change:
+////                        IL_002e: ldsfld class [FNA]Microsoft.Xna.Framework.Graphics.Texture2D[] Terraria.Main::npcTexture
+////                        IL_0033: ldloc.0
+////                        IL_0034: ldelem.ref
+//                        //To:
+////IL_0033: ldloc.0
+////IL_0034: call, GetTexture
+//
+//                        il.Replace(ins.Next.Next, il.Create(OpCodes.Call, getMethod));
+//                    }
+//                }
+//            }
+//            catch (Exception e)
+//            {
+//                Console.WriteLine(e);
+//            }
+//        }
     }
 }
 

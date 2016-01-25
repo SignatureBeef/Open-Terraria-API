@@ -7,7 +7,7 @@ using OTA.Mod.Npc;
 using System.Linq;
 using OTA.Extensions;
 using OTA.Mod.Tile;
-using OTA.Mods.Net;
+using OTA.Mod.Net;
 
 namespace OTA.Mod
 {
@@ -35,15 +35,16 @@ namespace OTA.Mod
 //            pkg.Run();
         }
 
-        #if SERVER
-        [Hook]
-        void OnPlayerEnter(ref HookContext ctx, ref HookArgs.PlayerEnteredGame args)
-        {
-            OTA.Logging.ProgramLog.Log($"Spawning {NpcTest.test}");
-            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs[NpcTest.test]);
-//            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), 77);
-        }
-        #endif
+//        #if SERVER
+//        [Hook]
+//        void OnPlayerEnter(ref HookContext ctx, ref HookArgs.PlayerEnteredGame args)
+//        {
+//            OTA.Logging.ProgramLog.Log($"Spawning {NpcTest.test}");
+//            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs[NpcTest.test]);
+//            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs[NpcTest2.test]);
+////            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), 77);
+//        }
+//        #endif
 
         void ScanExistingPlugins()
         {
@@ -76,9 +77,9 @@ namespace OTA.Mod
         {
             if (args.PacketId == PacketRegister.BasePacket)
             {
-                Logging.Logger.Error("Incoming placeholder packet");
+                Logging.Logger.Debug("Incoming placeholder packet");
 
-                if (PacketRegister.ProcessPacket(args.BufferId))
+                if (PacketRegister.ProcessPacket(args.BufferId, args.Length))
                 {
                     ctx.SetResult(HookResult.IGNORE);
                 }
@@ -146,14 +147,14 @@ namespace OTA.Mod
         }
 
         #if SERVER
-        public static readonly System.Collections.Concurrent.ConcurrentDictionary<Int32, String> NpcTextures = new System.Collections.Concurrent.ConcurrentDictionary<Int32, String>();
 
         void SyncOTAClient(int remoteClient)
         {
             var builder = PacketRegister.Write<SyncPackets>();
 
-            foreach (var item in NpcTextures)
-                builder = builder.Append<SyncNpcTexture>(item);
+            Logging.Logger.Debug("OTANpc.NpcTextures : " + OTANpc.NpcTextures.Count);
+            foreach (var item in OTANpc.NpcTextures)
+                builder = builder.Append<SyncNpcTexture>(item.Key, item.Value);
 
             builder.SendTo(remoteClient);
 
@@ -270,7 +271,7 @@ namespace OTA.Mod
             var mod = EntityRegistrar.Npcs.Create(args.Type);
             if (mod != null)
             {
-                Logging.Logger.Error("Creating new type of: " + args.Type);
+                Logging.Logger.Debug("Creating new type of: " + args.Type);
                 var npc = new Terraria.NPC();
                 npc.Mod = mod;
                 mod.Npc = npc;
@@ -412,17 +413,11 @@ namespace OTA.Mod
 
             if (item != null && item.Npc != null)
             {
-                Console.WriteLine("Spawning replacement npc");
+                Logging.Logger.Debug("Spawning replacement npc");
                 ctx.SetResult(HookResult.IGNORE);
 
                 NPC.NewNPC((int)(args.SpawnTileX * 16f), (int)(args.SpawnTileY * 16f), item.Npc.TypeId);
-
-                //                Main.NewText("Spawning custom npc: " + item.Npc.TypeId, R: 0, B: 0);
             }
-            //            else
-            //            {
-            //                Main.NewText("Spawning vanilla npc");
-            //            }
         }
 
         #endregion

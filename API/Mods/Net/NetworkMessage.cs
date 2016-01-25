@@ -6,8 +6,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using Terraria;
+using Microsoft.Xna.Framework.Graphics;
+using OTA.Mod.Npc;
 
-namespace OTA.Mods.Net
+namespace OTA.Mod.Net
 {
     /// <summary>
     /// These define the minimum requirements for OTAPI to function between a server and client.
@@ -132,32 +134,51 @@ namespace OTA.Mods.Net
     {
         public override void Read(int bufferId, BinaryReader reader)
         {
-            Logging.Logger.Debug("READ " + this.GetType().FullName);
+            try
+            {
+                Logging.Logger.Debug("READ " + this.GetType().FullName);
 
-            var filename = reader.ReadString();
-            var fileLength = reader.ReadInt32();
-            var contents = reader.ReadBytes(fileLength);
+                #if CLIENT
+                var typeId = reader.ReadInt32();
+                var filename = reader.ReadString();
+                var frameCount = reader.ReadInt32();
+                var fileLength = reader.ReadInt32();
+                var contents = reader.ReadBytes(fileLength);
 
-            Logging.Logger.Debug("Read NPC texture {0} with {1} bytes", filename, fileLength);
+                Logging.Logger.Debug("Read NPC texture {0} with {1} bytes for type {2}", filename, fileLength, typeId);
 
-            var folder = Path.Combine(Globals.DataPath, "ServerNPCs");
-            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+                var folder = Path.Combine(Globals.DataPath, "ServerNPCs");
+                if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
 
-            var savePath = Path.Combine(folder, filename);
-            if (File.Exists(savePath)) File.Delete(savePath);
+                var savePath = Path.Combine(folder, filename);
+                if (File.Exists(savePath)) File.Delete(savePath);
 
-            File.WriteAllBytes(savePath, contents);
+                File.WriteAllBytes(savePath, contents);
+
+                Callbacks.MainCallback.ScheduleNpcTextureLoad(typeId, savePath, frameCount);
+                #endif
+            }
+            catch (Exception e)
+            {
+                Logging.Logger.Error("SyncNpcTexture read error {0}", e);
+            }
         }
 
         public override void Write(BinaryWriter writer, params object[] args)
         {
+            #if SERVER
             Logging.Logger.Debug("WRITE " + this.GetType().FullName);
 
+            var typeId = (int)args[0];
+            var texture = (OTA.Mod.Npc.ServerTexture)args[1];
+
             //TODO implement caching
-            var info = new FileInfo(args[0] as string);
+            var info = new FileInfo(texture.FilePath);
             if (info.Exists)
             {
+                writer.Write(typeId);
                 writer.Write(info.Name);
+                writer.Write(texture.FrameCount);
                 var content = File.ReadAllBytes(info.FullName);
                 writer.Write(content.Length);
                 writer.Write(content);
@@ -166,6 +187,7 @@ namespace OTA.Mods.Net
             {
                 Logging.Logger.Error("Tried to send missing NPC texture {0}", args[0] as string);
             }
+            #endif
         }
     }
 
@@ -188,10 +210,13 @@ namespace OTA.Mods.Net
 
         private static void RegisterDefaults(Dictionary<Int32, OTAPacket> packets)
         {
-            int id;
-            packets.Add(id = Interlocked.Increment(ref _assignedIds), new PluginRequirement() { PacketId = id });
-            packets.Add(id = Interlocked.Increment(ref _assignedIds), new SyncPackets() { PacketId = id });
-            packets.Add(id = Interlocked.Increment(ref _assignedIds), new SyncNpcTexture() { PacketId = id });
+            int id = 1;
+            packets.Add(id, new PluginRequirement() { PacketId = id });
+            id++;
+            packets.Add(id, new SyncPackets() { PacketId = id });
+            id++;
+            packets.Add(id, new SyncNpcTexture() { PacketId = id });
+            id++;
         }
 
         /// <summary>
@@ -214,6 +239,7 @@ namespace OTA.Mods.Net
         internal static bool LoadFromPacketMap(Dictionary<String, Int16> map)
         {
             var packets = new Dictionary<Int32, OTAPacket>();
+            RegisterDefaults(packets);
 
             var ota = typeof(OTAPacket);
             foreach (var item in map)
@@ -236,6 +262,7 @@ namespace OTA.Mods.Net
                 {
                     item.Value.PacketId = System.Threading.Interlocked.Increment(ref _assignedIds);
                 }
+                Logging.Logger.Debug("Loaded {0} packets from map", packets.Count);
                 _packets = packets;
             }
 
@@ -297,25 +324,38 @@ namespace OTA.Mods.Net
         /// </summary>
         /// <returns><c>true</c>, if packet was processed, <c>false</c> otherwise.</returns>
         /// <param name="bufferId">Identifier of the endpoint.</param>
-        internal static bool ProcessPacket(int bufferId)
+        internal static bool ProcessPacket(int bufferId, int length)
         {
+            return false;
+            //Note yet complete. length may be other data, and the [while] below will corrupt other packets
             var reader = NetMessage.buffer[bufferId].reader;
 
-            var packetId = reader.ReadInt16();
-            Logging.Logger.Debug($"Reciving sub packet {packetId}");
+            bool processed = false;
 
-            OTAPacket instance = null;
-            lock (_packets)
-                _packets.TryGetValue(packetId, out instance);
-
-            if (instance != null)
+            var max = reader.BaseStream.Length + length;
+            while (reader.BaseStream.Length < max)
             {
-                Logging.Logger.Debug($"Processing sub packet {packetId}");
-                instance.Read(bufferId, reader);
-                return true;
+                var packetId = reader.ReadInt16();
+                Logging.Logger.Debug($"Receiving sub packet {packetId}");
+
+                OTAPacket instance = null;
+                lock (_packets)
+                    _packets.TryGetValue(packetId, out instance);
+
+                if (instance != null)
+                {
+                    Logging.Logger.Debug($"Processing sub packet {packetId}");
+                    instance.Read(bufferId, reader);
+                    processed = true;
+                }
+                else
+                {
+                    Logging.Logger.Debug($"Invalid sub packet {packetId}");
+                    break;
+                }
             }
 
-            return false;
+            return processed;
         }
     }
 }

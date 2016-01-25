@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Linq;
 using System.IO;
 using Terraria;
+using System.Collections.Generic;
 
 namespace OTA.Callbacks
 {
@@ -357,9 +358,50 @@ namespace OTA.Callbacks
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
         }
         #endif
+        internal struct ScheduledTexture
+        {
+            public int TypeId;
+            public OTA.Mod.Npc.ServerTexture ServerTexture;
+        }
+
+        private static Queue<ScheduledTexture> NpcTextureLoadQueue = new Queue<ScheduledTexture>();
+
+        public static void ScheduleNpcTextureLoad(int typeId, string filePath, int frameCount)
+        {
+            lock (NpcTextureLoadQueue)
+            {
+                NpcTextureLoadQueue.Enqueue(new ScheduledTexture()
+                    {
+                        TypeId = typeId,
+                        ServerTexture = new OTA.Mod.Npc.ServerTexture()
+                        {
+                            FilePath = filePath,
+                            FrameCount = frameCount
+                        }
+                    });
+            }
+        }
 
         public static void OnUpdateBegin()
         {
+            #if CLIENT
+            lock (NpcTextureLoadQueue)
+            {
+                if (NpcTextureLoadQueue.Count > 0)
+                {
+                    var request = NpcTextureLoadQueue.Dequeue();
+
+                    using (var srm = File.OpenRead(request.ServerTexture.FilePath))
+                    {
+                        var txt = Microsoft.Xna.Framework.Graphics.Texture2D.FromStream(Terraria.Main.graphics.GraphicsDevice, srm);
+                        Terraria.Main.npcTexture[request.TypeId] = txt;
+                        Main.NPCLoaded[request.TypeId] = true;
+                        Main.npcFrameCount[request.TypeId] = request.ServerTexture.FrameCount;
+                    }
+                }
+            }
+            #endif
+
             var ctx = HookContext.Empty;
             var args = HookArgs.GameUpdate.Begin;
             HookPoints.GameUpdate.Invoke(ref ctx, ref args);

@@ -19,6 +19,7 @@ namespace OTA.Logging
         public object message;
         public ConsoleColor? color;
         public int arg;
+        public bool consoleOutput;
 
         public static bool operator ==(OutputEntry left, OutputEntry right)
         {

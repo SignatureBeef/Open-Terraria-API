@@ -115,7 +115,7 @@ namespace OTA.Extensions
         /// <param name="client">Client.</param>
         public static bool IsOTAClient(this Terraria.RemoteClient client)
         {
-            return (client.Socket as OTA.Sockets.ClientConnection).IsOTAClient;
+            return client.Socket != null && (client.Socket as OTA.Sockets.ClientConnection).IsOTAClient;
         }
     }
 }

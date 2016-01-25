@@ -29,15 +29,20 @@ namespace TBLS
 
 		int shopId;
 
+		public override void OnPrepareResources ()
+		{
+			#if SERVER
+			this.LoadTexture ("sassy.png", 16);
+			#else
+			LoadTexture ("sassy", true);
+			#endif
+		}
+
 		public override void OnSetDefaults ()
 		{
 			base.OnSetDefaults ();
 
-			EmulateNPC (Terraria.ID.NPCID.Merchant, true);
-
-			#if !SERVER
-			LoadTexture ("sassy", true);
-			#endif
+			EmulateNPC (Terraria.ID.NPCID.Merchant);
 
 			Npc.IsTownNpc = true;
 			Npc.townNPC = true;
@@ -84,8 +89,11 @@ namespace TBLS
 			return base.OnChatButtonClick (button);
 		}
 
-		#region "Sassy foods"
+		
 
+#region "Sassy foods"
+
+		
 		private void OpenSassyFoods ()
 		{
 			Main.playerInventory = true;
@@ -95,7 +103,10 @@ namespace TBLS
 			Main.PlaySound (12, -1, -1, 1);
 		}
 
-		#endregion
+		
+
+#endregion
+
 		#endif
 
 		public override double OnPreSpawn (HookArgs.NpcPreSpawn info)

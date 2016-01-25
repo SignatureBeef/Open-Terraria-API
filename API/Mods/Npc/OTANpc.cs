@@ -3,9 +3,18 @@ using OTA.Plugin;
 using Terraria;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
+using OTA.Mod.Net;
+using OTA.Extensions;
 
 namespace OTA.Mod.Npc
 {
+    internal struct ServerTexture
+    {
+        public string FilePath { get; set; }
+
+        public int FrameCount { get; set; }
+    }
+
     #if SERVER
     [NativeMod(test)]
     public class NpcTest : OTANpc
@@ -40,8 +49,48 @@ namespace OTA.Mod.Npc
 
         public override double OnPreSpawn(HookArgs.NpcPreSpawn info)
         {
-//            //Spawn during day
-//            if (!Main.dayTime) return 0;
+            //            //Spawn during day
+            //            if (!Main.dayTime) return 0;
+
+            return 0.25;
+        }
+    }
+
+    [NativeMod(test)]
+    public class NpcTest2 : OTANpc
+    {
+        public const string test = "Test2";
+
+        public override void OnSetDefaults()
+        {
+            base.OnSetDefaults();
+
+            EmulateNPC(Terraria.ID.NPCID.ZombieDoctor);
+
+            Npc.IsTownNpc = false;
+            Npc.townNPC = false;
+            Npc.friendly = false;
+            Npc.width = 18;
+            Npc.height = 40;
+            Npc.aiStyle = 3;
+            Npc.damage = 40;
+            Npc.defense = 28;
+            Npc.life = 5000;
+            Npc.lifeMax = 5000;
+            Npc.soundHit = 2;
+            Npc.soundKilled = 2;
+            Npc.knockBackResist = 0.4f;
+            Npc.value = 400;
+            Npc.buffImmune[20] = true;
+            Npc.buffImmune[31] = false;
+
+            SetName(test);
+        }
+
+        public override double OnPreSpawn(HookArgs.NpcPreSpawn info)
+        {
+            //            //Spawn during day
+            //            if (!Main.dayTime) return 0;
 
             return 0.25;
         }
@@ -55,7 +104,7 @@ namespace OTA.Mod.Npc
         private int _typeId;
         private Terraria.NPC _npc;
 
-//        private int _emulateNPCTypeId;
+        //        private int _emulateNPCTypeId;
 
         #endregion
 
@@ -175,9 +224,31 @@ namespace OTA.Mod.Npc
         {
         }
 
+        /// <summary>
+        /// Called when your NPC is to load resources. This method willn not be called when your npc is active.
+        /// </summary>
+        public virtual void OnPrepareResources()
+        {
+        }
+
         #region Helpers
+
         public void EmulateNPC(int npcTypeId)
         {
+            #if SERVER
+            //Transition any old textures across
+            if (NpcTextures.ContainsKey(this.TypeId) && !NpcTextures.ContainsKey(npcTypeId))
+            {
+                NpcTextures[npcTypeId] = NpcTextures[this.TypeId];
+                //TODO: determine if the old ID's need removing. Mostly up to the implementation using this method...
+                Logging.Logger.Debug("Moving old textures across");
+
+                PacketRegister
+                    .Write<SyncNpcTexture>(npcTypeId, NpcTextures[npcTypeId])
+                    .Broadcast(x => x != null && x.IsOTAClient());
+            }
+            #endif
+
             this.TypeId = npcTypeId;
 
             #if CLIENT
@@ -254,19 +325,9 @@ namespace OTA.Mod.Npc
 
         #endregion
 
+        #region Textures
+
         #if CLIENT
-        
-        
-
-
-
-
-
-#region Textures
-
-        
-        
-        
         /// <summary>
         /// Load a NPC texture using an asset name for the current instance if it's not already been done.
         /// </summary>
@@ -326,18 +387,22 @@ namespace OTA.Mod.Npc
                 Main.NPCLoaded[TypeId] = true;
             }
         }
+#elif SERVER
+        internal static readonly System.Collections.Concurrent.ConcurrentDictionary<Int32, ServerTexture> NpcTextures = new System.Collections.Concurrent.ConcurrentDictionary<Int32, ServerTexture>();
 
-        
+        public bool LoadTexture(string filePath, int frameCount)
+        {
+            Logging.Logger.Debug($"Adding npc texture {filePath}");
+            if (!File.Exists(filePath)) throw new FileNotFoundException("Missing texture file", filePath);
 
-
-
-
-
-#endregion
-
-        
-        
+            return NpcTextures.TryAdd(this.TypeId, new ServerTexture()
+                {
+                    FilePath = filePath,
+                    FrameCount = frameCount
+                });
+        }
         #endif
+        #endregion
 
         #region "Handlers"
 
