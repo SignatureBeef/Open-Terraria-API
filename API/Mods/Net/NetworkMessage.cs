@@ -182,6 +182,8 @@ namespace OTA.Mod.Net
                 var content = File.ReadAllBytes(info.FullName);
                 writer.Write(content.Length);
                 writer.Write(content);
+
+                Logging.Logger.Debug("Sent NPC texture {0} with {1} bytes for type {2}", info.Name, content.Length, typeId);
             }
             else
             {
@@ -306,12 +308,13 @@ namespace OTA.Mod.Net
                 var instance = _packets.SingleOrDefault(x => x.Value is T);
                 if (instance.Value != null)
                 {
+                    var begin = builder == null;
                     builder = builder ?? MessageBuilder.PrepareThreadInstance();
-                    builder.Begin(BasePacket);
+                    if(begin) builder.Begin(BasePacket);
 
                     builder.Write(instance.Value, args);
 
-                    builder.End();
+//                    builder.End();
 
                     return builder;
                 }
@@ -326,16 +329,17 @@ namespace OTA.Mod.Net
         /// <param name="bufferId">Identifier of the endpoint.</param>
         internal static bool ProcessPacket(int bufferId, int length)
         {
-            return false;
-            //Note yet complete. length may be other data, and the [while] below will corrupt other packets
             var reader = NetMessage.buffer[bufferId].reader;
 
             bool processed = false;
 
-            var max = reader.BaseStream.Length + length;
-            while (reader.BaseStream.Length < max)
+            var max = reader.BaseStream.Position + length - 1;
+            while (reader.BaseStream.Position < max)
             {
                 var packetId = reader.ReadInt16();
+
+
+
                 Logging.Logger.Debug($"Receiving sub packet {packetId}");
 
                 OTAPacket instance = null;

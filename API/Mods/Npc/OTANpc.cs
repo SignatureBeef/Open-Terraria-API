@@ -170,6 +170,7 @@ namespace OTA.Mod.Npc
                 //TODO: determine if the old ID's need removing. Mostly up to the implementation using this method...
                 Logging.Logger.Debug("Moving old textures across");
 
+                //TODO: flag the remote client(s) as having the texture, and ignore the ones whom already have it
                 PacketRegister
                     .Write<SyncNpcTexture>(npcTypeId, NpcTextures[npcTypeId])
                     .Broadcast(x => x != null && x.IsOTAClient());

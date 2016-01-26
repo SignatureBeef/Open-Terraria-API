@@ -82,7 +82,7 @@ namespace OTA.Logging
         /// </summary>
         public static readonly LogChannel Debug = new LogChannel(Categories.Debug, ConsoleColor.Cyan, System.Diagnostics.TraceLevel.Verbose)
         {
-            EnableConsoleOutput = false
+            EnableConsoleOutput = true
         };
 
         /// <summary>

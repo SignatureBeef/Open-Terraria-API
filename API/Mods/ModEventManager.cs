@@ -29,22 +29,7 @@ namespace OTA.Mod
             OTANpc.ResizeArrays();
             ScanExistingPlugins();
             EntityRegistrar.ScanAssembly(typeof(ModEventManager).Assembly);
-            
-//            var pkg = Packages.PackageBuilder.CreateFromDirectory("TBLS", "TBLS");
-//
-//            pkg.Run();
         }
-
-        //        #if SERVER
-        //        [Hook]
-        //        void OnPlayerEnter(ref HookContext ctx, ref HookArgs.PlayerEnteredGame args)
-        //        {
-        //            OTA.Logging.ProgramLog.Log($"Spawning {NpcTest.test}");
-        //            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs[NpcTest.test]);
-        //            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), EntityRegistrar.Npcs[NpcTest2.test]);
-        ////            NPC.NewNPC((int)(ctx.Player.position.X), (int)(ctx.Player.position.Y), 77);
-        //        }
-        //        #endif
 
         void ScanExistingPlugins()
         {
@@ -446,11 +431,7 @@ namespace OTA.Mod
         #endregion
 
         #if CLIENT
-        
-
-#region Shop
-
-        
+        #region Shop
         [Hook]
         void OnChestSetupShop(ref HookContext ctx, ref HookArgs.ChestSetupShop args)
         {
@@ -464,12 +445,7 @@ namespace OTA.Mod
                 }
             }
         }
-
-        
-
-#endregion
-
-        
+        #endregion
         #endif
 
         #region Projectile
