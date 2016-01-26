@@ -12,7 +12,7 @@
 		"build-args": "/p:Configuration=Server-Debug 'Open Terraria API.sln'"
 	},
 	{
-		"build-name": "Windows",
+		"build-name": "Linux",
 		
 		"solution-file": "Open Terraria API.sln",
 	
@@ -21,7 +21,7 @@
 			"{mono-path} .nuget/NuGet.exe restore Patcher/packages.config -PackagesDirectory packages/ -source 'https://api.nuget.org/v3/index.json;https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet/'"
 		],
 	
-		"build-args": "/p:Configuration=Windows-Debug 'Open Terraria API.sln'"
+		"build-args": "/p:Configuration=Linux-Debug 'Open Terraria API.sln'"
 	},
 	{
 		"build-name": "Mac",
@@ -36,7 +36,7 @@
 		"build-args": "/p:Configuration=Mac-Debug 'Open Terraria API.sln'"
 	},
 	{
-		"build-name": "Linux",
+		"build-name": "Windows",
 		
 		"solution-file": "Open Terraria API.sln",
 	
@@ -45,6 +45,6 @@
 			"{mono-path} .nuget/NuGet.exe restore Patcher/packages.config -PackagesDirectory packages/ -source 'https://api.nuget.org/v3/index.json;https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet/'"
 		],
 	
-		"build-args": "/p:Configuration=Linux-Debug 'Open Terraria API.sln'"
+		"build-args": "/p:Configuration=Windows-Debug 'Open Terraria API.sln'"
 	}
 ]
