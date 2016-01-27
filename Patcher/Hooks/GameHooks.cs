@@ -297,38 +297,139 @@ namespace OTA.Patcher
             }
         }
 
-//        [OTAPatch(SupportType.ClientServer, "Test")] 
-//        private void Test()
-//        {
-//            var methods = _asm.MainModule.Types
-//                .SelectMany(t => t.Methods)
-//                .Where(m => m.HasBody);
-//            
-//            var field = Terraria.Import(API.NpcModRegister.Field("MaxNpcId"));
-//
-//            foreach (var mth in methods)
-//            {
-//                var ins = mth.Body.Instructions
-//                    .Where(x => x.Operand != null && x.Operand.Equals(540)).ToArray();
-//
-//                if (ins.Length > 0)
-//                {
-//                    Console.WriteLine(mth.FullName);
-////                    var asd = "";
-//                    foreach (var npc in ins)
-//                    {
-//                        npc.OpCode = OpCodes.Ldsfld;
-//                        npc.Operand = field;
-//                    }
-//                }
-//            }
-//        }
+        //        [OTAPatch(SupportType.ClientServer, "Test")]
+        //        private void Test()
+        //        {
+        //            var methods = _asm.MainModule.Types
+        //                .SelectMany(t => t.Methods)
+        //                .Where(m => m.HasBody);
+        //
+        //            var field = Terraria.Import(API.NpcModRegister.Field("MaxNpcId"));
+        //
+        //            foreach (var mth in methods)
+        //            {
+        //                var ins = mth.Body.Instructions
+        //                    .Where(x => x.Operand != null && x.Operand.Equals(540)).ToArray();
+        //
+        //                if (ins.Length > 0)
+        //                {
+        //                    Console.WriteLine(mth.FullName);
+        ////                    var asd = "";
+        //                    foreach (var npc in ins)
+        //                    {
+        //                        npc.OpCode = OpCodes.Ldsfld;
+        //                        npc.Operand = field;
+        //                    }
+        //                }
+        //            }
+        //        }
 
         private struct MethodInstructions
         {
             public MethodDefinition Method;
             public Instruction[] Instructions;
         }
+
+        #if CLIENT
+        [OTAPatch(SupportType.Client, "Hooking menu drawing")] 
+        private void Test()
+        {
+            var method = Terraria.Main.Method("DrawMenu");
+            var callback = Terraria.Import(API.InterfaceCallback.Method("OnDrawMenu"));
+
+            //Find the last 888 (ldc.i4) call. We must inject before this if block
+            var last888 = method.Body.Instructions.Last(x => x.OpCode == OpCodes.Ldc_I4 && x.Operand.Equals(888));
+
+
+            var localVariables = method.Body.Instructions
+                .Where(x => (new OpCode []
+                { 
+                    OpCodes.Ldloc,
+                    //                    OpCodes.Ldloca,
+                    OpCodes.Ldloc_S,
+                    OpCodes.Ldloca_S,
+
+                    OpCodes.Stloc,
+                    OpCodes.Stloc_S
+                }).Contains(x.OpCode)
+                                     && x.Offset < last888.Offset)
+                .Select(y => y.Operand as VariableDefinition)
+
+
+                .Union(
+                                     method.Body.Instructions
+                    .Where(x => (new OpCode []
+                    { 
+                        OpCodes.Ldloc_0,
+                        OpCodes.Stloc_0
+                    }).Contains(x.OpCode)
+                                         && x.Offset < last888.Offset)
+                    .Select(y => method.Body.Variables[0])
+                                 )
+
+                .Union(
+                                     method.Body.Instructions
+                    .Where(x => (new OpCode []
+                    { 
+                        OpCodes.Ldloc_1,
+                        OpCodes.Stloc_1
+                    }).Contains(x.OpCode)
+                                         && x.Offset < last888.Offset)
+                    .Select(y => method.Body.Variables[1])
+                                 )
+
+                .Union(
+                                     method.Body.Instructions
+                    .Where(x => (new OpCode []
+                    { 
+                        OpCodes.Ldloc_2,
+                        OpCodes.Stloc_2
+                    }).Contains(x.OpCode)
+                                         && x.Offset < last888.Offset)
+                    .Select(y => method.Body.Variables[2])
+                                 )
+
+                .Union(
+                                     method.Body.Instructions
+                    .Where(x => (new OpCode []
+                    { 
+                        OpCodes.Ldloc_3,
+                        OpCodes.Stloc_3
+                    }).Contains(x.OpCode)
+                                         && x.Offset < last888.Offset)
+                    .Select(y => method.Body.Variables[3])
+                                 )
+
+                .Distinct()
+                .OrderBy(z => z.Index);
+            var variables = localVariables.OrderBy(x => x.VariableType.ToString()).ToArray();
+
+//            int prmIdx = 0;
+//            foreach (var local in variables)
+//            {
+//                if (prmIdx > 0) Console.Write(", //\n");
+//                Console.Write("ref {0} prm{1}", local.VariableType, prmIdx++);
+//                //                Console.Write("/*" + local.Name + "*/");
+//            }
+
+            var il = method.Body.GetILProcessor();
+            Instruction insCall;
+
+            il.InsertBefore(last888.Previous, insCall = il.Create(OpCodes.Call, callback));
+
+            Instruction first = null;
+            foreach (var pair in variables)
+            {
+                var vrb = il.Create(OpCodes.Ldloca_S, pair);
+                if (first == null)
+                {
+                    first = vrb;
+                }
+                il.InsertBefore(insCall, vrb);
+            }
+            last888.Previous.ReplaceTransfer(first, method);
+        }
+        #endif
     }
 }
 

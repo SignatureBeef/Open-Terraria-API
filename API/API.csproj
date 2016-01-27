@@ -507,6 +507,9 @@
     <Compile Include="Mods\ModEventManager.cs" />
     <Compile Include="Mods\Net\MessageBuilder.cs" />
     <Compile Include="Mods\Net\NetworkMessage.cs" />
+    <Compile Include="Mods\Net\Extensions\RemoteClientExtensions.cs" />
+    <Compile Include="Mods\UI\GuiModRegister.cs" />
+    <Compile Include="Mods\UI\OTAGui.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -533,6 +536,8 @@
     <Folder Include="Mods\Mount\" />
     <Folder Include="Mods\Net\" />
     <Folder Include="Mods\Wall\" />
+    <Folder Include="Mods\Net\Extensions\" />
+    <Folder Include="Mods\UI\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />

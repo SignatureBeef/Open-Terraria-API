@@ -149,7 +149,7 @@ namespace OTA.Mod.Net
         /// Broadcast to all remote clients that are connected to the server.
         /// </summary>
         /// <param name="except">Except.</param>
-        public void Broadcast(Func<RemoteClient, Boolean> sendTo)
+        public void Broadcast(Func<RemoteClient, Boolean> sendTo, Action<RemoteClient> clientSent = null)
         {
             if (!_ended) End();
 
@@ -159,6 +159,8 @@ namespace OTA.Mod.Net
                 if (client.IsConnected())
                 {
                     (client.Socket as ClientConnection).CopyAndSend(Segment);
+
+                    if (clientSent != null) clientSent(client);
                 }
             }
         }

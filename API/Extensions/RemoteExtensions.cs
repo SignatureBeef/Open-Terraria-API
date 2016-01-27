@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using Terraria;
+using System.Collections.Concurrent;
 
 namespace OTA.Extensions
 {
@@ -117,6 +118,87 @@ namespace OTA.Extensions
         {
             return client.Socket != null && (client.Socket as OTA.Sockets.ClientConnection).IsOTAClient;
         }
+
+        #region Client Data
+
+        /// <summary>
+        /// Storage for plugins for on a per-player basis
+        /// </summary>
+        private static readonly ConcurrentDictionary<Terraria.RemoteClient, ConcurrentDictionary<String, Object>> RemoteClientData = new ConcurrentDictionary<Terraria.RemoteClient, ConcurrentDictionary<String, Object>>();
+
+        /// <summary>
+        /// Sets plugin data for this player
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value.</param>
+        public static bool SetData(this Terraria.RemoteClient client, string key, object value)
+        {
+            ConcurrentDictionary<String, Object> instance;
+            if (RemoteClientData.TryGetValue(client, out instance))
+            {
+                instance.AddOrUpdate(key, value, (x, y) => x == key);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Gets plugin data for this player
+        /// </summary>
+        /// <returns>The plugin data.</returns>
+        /// <param name="key">Key.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
+        public static T GetData<T>(this Terraria.RemoteClient client, string key, T defaultValue)
+        {
+            ConcurrentDictionary<String, Object> instance;
+            if (RemoteClientData.TryGetValue(client, out instance))
+            {
+                object data;
+                if (instance.TryGetValue(key, out data))
+                {
+                    return (T)(data ?? defaultValue);
+                }
+            }
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Removed plugin data for this player
+        /// </summary>
+        /// <returns><c>true</c>, if plugin data was cleared, <c>false</c> otherwise.</returns>
+        /// <param name="key">Key.</param>
+        public static bool ClearData(this Terraria.RemoteClient client, string key)
+        {
+            ConcurrentDictionary<String, Object> instance;
+            if (RemoteClientData.TryGetValue(client, out instance))
+            {
+                if (instance.ContainsKey(key))
+                {
+                    object val;
+                    return instance.TryRemove(key, out val);
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Removed plugin data for this player
+        /// </summary>
+        /// <returns><c>true</c>, if plugin data was cleared, <c>false</c> otherwise.</returns>
+        /// <param name="key">Key.</param>
+        public static bool ClearData(this Terraria.RemoteClient client)
+        {
+            ConcurrentDictionary<String, Object> instance;
+            if (RemoteClientData.TryGetValue(client, out instance))
+            {
+                instance.Clear();
+                return RemoteClientData.TryRemove(client, out instance);
+            }
+            return false;
+        }
+
+        #endregion
     }
 }
 

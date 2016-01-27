@@ -27,7 +27,9 @@ namespace TBLS
 	{
 		public const string SassyName = "Sassy";
 
+		#if CLIENT
 		int shopId;
+		#endif
 
 		public override void OnPrepareResources ()
 		{

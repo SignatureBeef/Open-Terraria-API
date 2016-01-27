@@ -1,6 +1,7 @@
 ﻿#if SERVER
 using System;
 using OTA.Plugin;
+using OTA.Extensions;
 
 namespace OTA.Callbacks
 {
@@ -15,6 +16,8 @@ namespace OTA.Callbacks
             };
 
             HookPoints.RemoteClientReset.Invoke(ref ctx, ref args);
+
+            client.ClearData();
         }
     }
 }

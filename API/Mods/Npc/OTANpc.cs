@@ -173,7 +173,9 @@ namespace OTA.Mod.Npc
                 //TODO: flag the remote client(s) as having the texture, and ignore the ones whom already have it
                 PacketRegister
                     .Write<SyncNpcTexture>(npcTypeId, NpcTextures[npcTypeId])
-                    .Broadcast(x => x != null && x.IsOTAClient());
+                    .Broadcast(x => x != null && x.IsOTAClient() && !x.HasNpcTexture(npcTypeId), (client) => {
+                        client.SetHasNpcTexture(npcTypeId, true);
+                    });
             }
             #endif
 

@@ -139,7 +139,11 @@ namespace OTA.Mod
 
             Logging.Logger.Debug("OTANpc.NpcTextures : " + OTANpc.NpcTextures.Count);
             foreach (var item in OTANpc.NpcTextures)
+            {
                 builder = builder.Append<SyncNpcTexture>(item.Key, item.Value);
+
+                Netplay.Clients[remoteClient].SetHasNpcTexture(item.Key, true);
+            }
 
             builder.SendTo(remoteClient);
 

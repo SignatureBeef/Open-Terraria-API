@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 #if CLIENT
 using OTA.Mod.Chest;
+using OTA.Mod.UI;
 #endif
 using OTA.Mod.Item;
 using OTA.Mod.Tile;
@@ -21,6 +22,8 @@ namespace OTA.Mod
 
         #if CLIENT
         public static ShopModRegister Shops { get; } = new ShopModRegister();
+
+        public static GuiModRegister UI { get; } = new GuiModRegister();
         #endif
 
         public static TileModRegister Tiles { get; } = new TileModRegister();
@@ -40,11 +43,17 @@ namespace OTA.Mod
             var item = typeof(OTAItem);
             var tile = typeof(OTATile);
             var projectile = typeof(OTAProjectile);
+            #if CLIENT
+            var ui = typeof(OTAGui);
+            #endif
 
             var npcRegister = typeof(NpcModRegister).GetMethod("Register");
             var itemRegister = typeof(ItemModRegister).GetMethod("Register");
             var tileRegister = typeof(TileModRegister).GetMethod("Register");
             var projectileRegister = typeof(ProjectileModRegister).GetMethod("Register");
+            #if CLIENT
+            var uiRegister = typeof(GuiModRegister).GetMethod("Register");
+            #endif
 
             if (null != asm.ExportedTypes)
                 foreach (var nativeMod in asm.ExportedTypes.Where(x => Attribute.IsDefined(x, nm)))
@@ -72,6 +81,13 @@ namespace OTA.Mod
                         Logger.Debug($"Detected custom PROJECTILE {nativeMod.Name}");
                         projectileRegister.MakeGenericMethod(nativeMod).Invoke(Projectiles, new object[] { attr.EntityName });
                     }
+                    #if CLIENT
+                    else if (ui.IsAssignableFrom(nativeMod))
+                    {
+                        Logger.Debug($"Detected custom UI {nativeMod.Name}");
+                        uiRegister.MakeGenericMethod(nativeMod).Invoke(UI, null);
+                    }
+                    #endif
                 }
         }
     }

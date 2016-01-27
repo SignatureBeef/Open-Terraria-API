@@ -338,8 +338,6 @@ namespace OTA.Mod.Net
             {
                 var packetId = reader.ReadInt16();
 
-
-
                 Logging.Logger.Debug($"Receiving sub packet {packetId}");
 
                 OTAPacket instance = null;

@@ -12,6 +12,10 @@ namespace OTA.Mod
     {
         public string EntityName { get; set; }
 
+        public NativeModAttribute()
+        {
+        }
+
         public NativeModAttribute(string name)
         {
             this.EntityName = name;
