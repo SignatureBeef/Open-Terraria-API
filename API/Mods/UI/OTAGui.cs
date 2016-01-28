@@ -7,6 +7,7 @@ using Terraria.UI;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
+using OTA.Logging;
 
 namespace OTA.Mod.UI
 {
@@ -121,6 +122,13 @@ namespace OTA.Mod.UI
 
     public class UIMenuDisplay : UIState
     {
+//        public static LogChannel Log = new LogChannel("GUI", ConsoleColor.DarkRed, System.Diagnostics.TraceLevel.Info);
+//
+//        static UIMenuDisplay()
+//        {
+//            Log.AddTarget(new FileOutputTarget(System.IO.Path.Combine(Globals.LogFolderPath, "gui.log"), true, 100));
+//        }
+
         public static readonly UIMenuDisplay Instance = new UIMenuDisplay();
 
         public override void OnInitialize()
@@ -131,6 +139,8 @@ namespace OTA.Mod.UI
 
             wrapper.Append(CreatePanel());
             wrapper.Append(CreateButtonBack());
+
+//            Log.Log("The form was initialised");
 
             base.Append(wrapper);
         }
@@ -181,6 +191,7 @@ namespace OTA.Mod.UI
         {
             Main.PlaySound(11, Style: 1);
             Main.menuMode = 0;
+//            Log.Log("Back button was clicked");
         }
     }
 }

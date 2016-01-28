@@ -181,12 +181,12 @@ namespace OTA.Logging
 
         public static void BareLog(LogChannel channel, string text)
         {
-            Write(new LogEntry { message = text, thread = Thread.CurrentThread, channel = channel, target = channel.Target, traceLevel = channel.Level });
+            Write(new LogEntry { message = text, thread = Thread.CurrentThread, channel = channel, traceLevel = channel.Level });
         }
 
         public static void BareLog(LogChannel channel, string format, params object[] args)
         {
-            Write(new LogEntry { message = format, args = args, thread = Thread.CurrentThread, channel = channel, target = channel.Target, traceLevel = channel.Level });
+            Write(new LogEntry { message = format, args = args, thread = Thread.CurrentThread, channel = channel, traceLevel = channel.Level });
         }
 
         public static void Log(string text)
@@ -207,39 +207,39 @@ namespace OTA.Logging
         public static void Log(LogChannel channel, string text, bool multipleLines = false)
         {
             if (!multipleLines)
-                Write(new LogEntry(text, null, channel.Level) { channel = channel, target = channel.Target });
+                Write(new LogEntry(text, null, channel.Level) { channel = channel });
             else
             {
                 var split = text.Split('\n');
 
                 foreach (var line in split)
-                    Write(new LogEntry(line, null, channel.Level) { channel = channel, target = channel.Target });
+                    Write(new LogEntry(line, null, channel.Level) { channel = channel });
             }
         }
 
         public static void Log(LogChannel channel, string format, params object[] args)
         {
-            Write(new LogEntry(format, args, channel.Level) { channel = channel, target = channel.Target });
+            Write(new LogEntry(format, args, channel.Level) { channel = channel });
         }
 
         public static void Log(Exception e)
         {
-            Write(new LogEntry(e, null, Error.Level) { channel = Error, target = Error.Target });
+            Write(new LogEntry(e, null, Error.Level) { channel = Error });
         }
 
         public static void Log(LogChannel channel, Exception e)
         {
-            Write(new LogEntry(e, null, channel.Level) { channel = channel, target = channel.Target ?? Error.Target });
+            Write(new LogEntry(e, null, channel.Level) { channel = channel });
         }
 
         public static void Log(Exception e, string text)
         {
-            Write(new LogEntry(e, text, Error.Level) { channel = Error, target = Error.Target });
+            Write(new LogEntry(e, text, Error.Level) { channel = Error });
         }
 
         public static void Log(LogChannel channel, Exception e, string text)
         {
-            Write(new LogEntry(e, text, channel.Level) { channel = channel, target = channel.Target ?? Error.Target });
+            Write(new LogEntry(e, text, channel.Level) { channel = channel });
         }
 
         public static void AddProgressLogger(ProgressLogger prog)
@@ -378,7 +378,7 @@ namespace OTA.Logging
             }
         }
 
-        static void Send(LogTarget target, OutputEntry output)
+        static void Send(LogEntry entry, OutputEntry output)
         {
 //            if (target == null)
 //            {
@@ -389,8 +389,20 @@ namespace OTA.Logging
                 }
 //            }
 //            else
-            if (target != null)
-                target.Send(output);
+            if (entry.target != null)
+                entry.target.Send(output);
+
+            if (entry.channel != null)
+            {
+                if (entry.channel.Targets.Count > 0)
+                {
+                    lock (entry.channel.Targets)
+                        foreach (var tar in entry.channel.Targets)
+                        {
+                            tar.Send(output);
+                        }
+                }
+            }
         }
 
         public const int LOG_THREAD_BATCH_SIZE = 64;
@@ -457,7 +469,7 @@ namespace OTA.Logging
                                 if (prog.Thread == entry.thread)
                                 {
                                     var upd = new OutputEntry { prefix = output.prefix, message = prog, arg = prog.Value };
-                                    Send(entry.target, upd);
+                                    Send(entry, upd);
                                     last = upd;
                                     run = 0;
                                 }
@@ -473,15 +485,15 @@ namespace OTA.Logging
                         {
                             //System.ProgramLog.Log ("sending");
                             last.message = String.Format("Log message repeated {0} times", run);
-                            Send(entry.target, last);
+                            Send(entry, last);
                             last = output;
                             run = 0;
-                            Send(entry.target, output);
+                            Send(entry, output);
                         }
                         else
                         {
                             last = output;
-                            Send(entry.target, output);
+                            Send(entry, output);
                         }
                     }
                 }

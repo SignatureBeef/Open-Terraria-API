@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace OTA.Logging
 {
@@ -32,7 +33,7 @@ namespace OTA.Logging
         /// This can be a custom LogTarget which will receive messages from only this channel
         /// </summary>
         /// <value>The target.</value>
-        public LogTarget Target { get; set; }
+        internal List<LogTarget> Targets { get; set; } = new List<LogTarget>();
 
         /// <summary>
         /// Defines the logging trace level
@@ -57,8 +58,20 @@ namespace OTA.Logging
             Color = color;
             Name = name;
 
-            Target = target;
+            Targets.Add(target);
             Level = level;
+        }
+
+        public void AddTarget(LogTarget target)
+        {
+            lock (Targets)
+                Targets.Add(target);
+        }
+
+        public void RemoveTarget(LogTarget target)
+        {
+            lock (Targets)
+                Targets.Remove(target);
         }
 
         public void Log(string text, bool multipleLines = false)
