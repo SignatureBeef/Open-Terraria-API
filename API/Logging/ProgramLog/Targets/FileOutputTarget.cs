@@ -10,28 +10,61 @@ namespace OTA.Logging
     /// </summary>
     public class FileOutputTarget : LogTarget
     {
-        ProgramThread thread;
-        StreamWriter file;
+        private ProgramThread _thread;
+        private StreamWriter _file;
+        private int _maxSize;
+        private bool _rotation;
 
         public string FilePath  { get; private set; }
 
-        public FileOutputTarget(string path, bool rotation = true)
+        public FileOutputTarget(string path, bool rotation = true, int maxLogSize = 1024 * 1024 /*1mb*/)
         {
-            FilePath = path;
+            this.FilePath = path;
+            this._maxSize = maxLogSize;
+            this._rotation = rotation;
 
-            if (rotation)
+            if (!rotation && maxLogSize > -1)
             {
-                var absolute = Path.GetFullPath(path);
-                var dir = Path.GetDirectoryName(absolute);
-                var name = Path.GetFileNameWithoutExtension(path);
-                var ext = Path.GetExtension(path);
-                FilePath = Path.Combine(dir, String.Format("{0}_{1:yyyyMMdd_HHmm}{2}", name, DateTime.Now, ext));
+                throw new NotSupportedException("Log rotation must be enabled in order for log size limits to take affect");
             }
 
-            file = new StreamWriter(FilePath, true);
-            thread = new ProgramThread("LogF", OutputThread);
-            thread.IsBackground = false;
-            thread.Start();
+            CreateWriter();
+
+            _thread = new ProgramThread("LogF", OutputThread);
+            _thread.IsBackground = false;
+            _thread.Start();
+        }
+
+        void CreateWriter()
+        {
+            var path = FilePath;
+            if (_rotation)
+            {
+                var ext = Path.GetExtension(path);
+
+                path = path.Insert(path.Length - ext.Length, '_' + DateTime.Now.ToString("yyyyMMdd_HHmmss"));
+            }
+
+            if (File.Exists(path))
+            {
+                System.Threading.Thread.Sleep(1000);
+                CreateWriter();
+            }
+
+            _file = new StreamWriter(path, true);
+        }
+
+        void CheckSize()
+        {
+            if (_maxSize > -1)
+            {
+                if (_file.BaseStream.Position >= _maxSize)
+                {
+                    _file.Close();
+                    _file.Dispose();
+                    CreateWriter();
+                }
+            }
         }
 
         void OutputThread()
@@ -68,14 +101,16 @@ namespace OTA.Logging
 
                         if (entry.prefix != null)
                         {
-                            file.Write(entry.prefix);
+                            _file.Write(entry.prefix);
                         }
 
                         if (entry.message is string)
                         {
                             var str = (string)entry.message;
-                            file.WriteLine(str);
-                            file.Flush();
+                            _file.WriteLine(str);
+                            _file.Flush();
+
+                            CheckSize();
                         }
                         else if (entry.message is ProgressLogger)
                         {
@@ -95,8 +130,10 @@ namespace OTA.Logging
                                 str = prog.Format(prog.Max != 100, entry.arg);
                             }
 
-                            file.WriteLine(str);
-                            file.Flush();
+                            _file.WriteLine(str);
+                            _file.Flush();
+
+                            CheckSize();
                         }
                     }
                 }
@@ -108,7 +145,7 @@ namespace OTA.Logging
 
             try
             {
-                file.Close();
+                _file.Close();
             }
             catch
             {

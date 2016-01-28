@@ -993,19 +993,19 @@ namespace OTA.Patcher
         //    il.InsertBefore(method.Body.Instructions.Last(), il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
         //}
 
-//        /// <summary>
-//        /// Hooks into the XNA Game.Initialize, so plugins can utilise
-//        /// </summary>
-//        public void HookInitialise()
-//        {
-//            var method = Terraria.Main.Methods.Single(x => x.Name == "Initialize");
-//            var callback = API.MainCallback.Methods.First(m => m.Name == "Initialise");
-//
-//            var il = method.Body.GetILProcessor();
-//            var first = method.Body.Instructions.First();
-//
-//            il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
-//        }
+        //        /// <summary>
+        //        /// Hooks into the XNA Game.Initialize, so plugins can utilise
+        //        /// </summary>
+        //        public void HookInitialise()
+        //        {
+        //            var method = Terraria.Main.Methods.Single(x => x.Name == "Initialize");
+        //            var callback = API.MainCallback.Methods.First(m => m.Name == "Initialise");
+        //
+        //            var il = method.Body.GetILProcessor();
+        //            var first = method.Body.Instructions.First();
+        //
+        //            il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(callback)));
+        //        }
 
         /// <summary>
         /// Hooks into Terraria.Netplay.Initialize so we can fire the server starting event
@@ -1134,11 +1134,20 @@ namespace OTA.Patcher
             }
             foreach (var itm in type.Fields)
             {
-                itm.IsPublic = true;
                 if (itm.IsFamily) itm.IsFamily = false;
                 if (itm.IsFamilyAndAssembly) itm.IsFamilyAndAssembly = false;
                 if (itm.IsFamilyOrAssembly) itm.IsFamilyOrAssembly = false;
-                if (itm.IsPrivate) itm.IsPrivate = false;
+                if (itm.IsPrivate)
+                {
+                    if (type.Events.Where(x => x.Name == itm.Name).Count() == 0)
+                        itm.IsPrivate = false;
+                    else 
+                    {
+                        continue;
+                    }
+                }
+
+                itm.IsPublic = true;
             }
             foreach (var itm in type.Properties)
             {
@@ -2215,27 +2224,27 @@ namespace OTA.Patcher
         //            //            }
         //        }
 
-//        /// <summary>
-//        /// Hooks if NPC's can spawn into OTA
-//        /// </summary>
-//        public void HookNPCSpawning()
-//        {
-//            var newNPC = Terraria.NPC.Methods.Single(x => x.Name == "NewNPC");
-//            var method = API.NPCCallback.Methods.Single(x => x.Name == "CanSpawnNPC");
-//
-//            var il = newNPC.Body.GetILProcessor();
-//            var first = newNPC.Body.Instructions.First();
-//
-//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
-//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_1));
-//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_2));
-//            il.InsertBefore(first, il.Create(OpCodes.Ldarg_3));
-//            il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(method)));
-//
-//            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
-//            il.InsertBefore(first, il.Create(OpCodes.Ldc_I4, 200));
-//            il.InsertBefore(first, il.Create(OpCodes.Ret));
-//        }
+        //        /// <summary>
+        //        /// Hooks if NPC's can spawn into OTA
+        //        /// </summary>
+        //        public void HookNPCSpawning()
+        //        {
+        //            var newNPC = Terraria.NPC.Methods.Single(x => x.Name == "NewNPC");
+        //            var method = API.NPCCallback.Methods.Single(x => x.Name == "CanSpawnNPC");
+        //
+        //            var il = newNPC.Body.GetILProcessor();
+        //            var first = newNPC.Body.Instructions.First();
+        //
+        //            il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
+        //            il.InsertBefore(first, il.Create(OpCodes.Ldarg_1));
+        //            il.InsertBefore(first, il.Create(OpCodes.Ldarg_2));
+        //            il.InsertBefore(first, il.Create(OpCodes.Ldarg_3));
+        //            il.InsertBefore(first, il.Create(OpCodes.Call, _asm.MainModule.Import(method)));
+        //
+        //            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
+        //            il.InsertBefore(first, il.Create(OpCodes.Ldc_I4, 200));
+        //            il.InsertBefore(first, il.Create(OpCodes.Ret));
+        //        }
 
         /// <summary>
         /// Hooks the invasion warning call into OTA
