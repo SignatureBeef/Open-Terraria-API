@@ -28,12 +28,12 @@ namespace OTA.Patcher
             }
             if (0 == OTAPatcher.PatchMode)
             {
-                #if CLIENT
+#if CLIENT
                 OTAPatcher.PatchMode = SupportType.Client;
-                #else
+#else
                 OTAPatcher.PatchMode = SupportType.Server;
                 OTAPatcher.Platform = "Server";
-                #endif
+#endif
             }
 
             if (String.IsNullOrEmpty(OTAPatcher.Platform))
@@ -397,7 +397,7 @@ namespace OTA.Patcher
                     //            Copy(root, "tdsm-mysql-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-mysql-connector", true);
                     //            Copy(root, "tdsm-sqlite-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-sqlite-connector", true);
 
-                    foreach (var item in new [] { "OTA.dll", "OTA.Commands.dll" })
+                    foreach (var item in new[] { "OTA.dll", "OTA.Commands.dll" })
                     {
                         if (File.Exists(item))
                         {
@@ -410,9 +410,9 @@ namespace OTA.Patcher
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                            {
-                                RootDirectory = root
-                            });
+                        {
+                            RootDirectory = root
+                        });
                 }
 
                 if (!File.Exists(inFile))
@@ -462,7 +462,7 @@ namespace OTA.Patcher
                     }
 
                     Copy(root, "Official", Environment.CurrentDirectory, "Terraria." + Platform, false);
-                    Copy(root, "OTA.Commands", Environment.CurrentDirectory, "OTA.Commands", true, "Server-Debug");
+                    Copy(root, "OTA.Commands", Environment.CurrentDirectory, "OTA.Commands", true, OTAPatcher.Platform + "-Debug");
 
                     foreach (var fileInfo in root.GetDirectories().Single(x => x.Name == "External").EnumerateFiles())
                     {
@@ -470,7 +470,7 @@ namespace OTA.Patcher
                         fileInfo.CopyTo(fileInfo.Name);
                     }
 
-                    foreach (var item in new [] { "OTA.dll", "OTA.Commands.dll" })
+                    foreach (var item in new[] { "OTA.dll", "OTA.Commands.dll" })
                     {
                         if (File.Exists(item))
                         {
@@ -483,9 +483,9 @@ namespace OTA.Patcher
 
                     if (CopyDependencies != null)
                         CopyDependencies.Invoke(null, new CopyDependenciesEventArgs()
-                            {
-                                RootDirectory = root
-                            });
+                        {
+                            RootDirectory = root
+                        });
                 }
             }
 
@@ -581,9 +581,9 @@ namespace OTA.Patcher
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                        {
-                            Injector = patcher
-                        });
+                    {
+                        Injector = patcher
+                    });
 
                 //TODO repace Terraria's Console.SetTitles
             }
@@ -617,9 +617,9 @@ namespace OTA.Patcher
 
                 if (PerformPatch != null)
                     PerformPatch.Invoke(null, new InjectorEventArgs()
-                        {
-                            Injector = patcher
-                        });
+                    {
+                        Injector = patcher
+                    });
             }
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -908,8 +908,8 @@ namespace OTA.Patcher
                 return;
             }
 
-//            BinariesFiles.Add(OutputName + ".exe");
-//            BinariesFiles.Add(OutputName + ".exe.config");
+            //            BinariesFiles.Add(OutputName + ".exe");
+            //            BinariesFiles.Add(OutputName + ".exe.config");
             var dir = new DirectoryInfo(Path.Combine(Platform));
             if (dir.Exists)
             {
@@ -939,7 +939,7 @@ namespace OTA.Patcher
                     if (inf.Exists)
                     {
                         int retry = 0;
-                        RETRY:
+                    RETRY:
                         try
                         {
                             inf.Delete();
