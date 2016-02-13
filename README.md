@@ -1,4 +1,4 @@
-# Open Terraria API (OTA)  [![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](https://openterraria.com/slack)
+# Open Terraria API (OTAPI)  [![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](https://openterraria.com/slack)
 *Supporting Terraria v1.3!*  
 
 The Open Terraria API is a modification of the official Terraria client & server software.
@@ -18,3 +18,4 @@ While the client support is limited feel free to join the TDSM team over on slac
 
 Known plugins or mods using this API:
   - TDSM - [https://github.com/DeathCradle/Terraria-s-Dedicated-Server-Mod](https://github.com/DeathCradle/Terraria-s-Dedicated-Server-Mod) [MOD]
+  - Orion [https://github.com/NyxStudios/Orion/](https://github.com/NyxStudios/Orion/)
