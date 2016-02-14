@@ -601,38 +601,38 @@ namespace OTA.Patcher
                     SwapVanillaType(nt);
         }
 
-        /// <summary>
-        /// Swaps Terraria.Tile to OTA.Memory.MemTile
-        /// </summary>
-        public void SwapToVanillaTile()
-        {
-            foreach (var ty in _asm.MainModule.Types)
-            {
-                SwapVanillaType(ty);
-            }
+//        /// <summary>
+//        /// Swaps Terraria.Tile to OTA.Memory.MemTile
+//        /// </summary>
+//        public void SwapToVanillaTile()
+//        {
+//            foreach (var ty in _asm.MainModule.Types)
+//            {
+//                SwapVanillaType(ty);
+//            }
 
-            //Swap the constructor
-            var mainCctor = Terraria.Main.Methods.Single(x => x.Name == ".cctor");
-            var constructor = _asm.MainModule.Import(_self.MainModule.Types.Single(x => x.Name == "TileCollection").Methods.Single(y => y.Name == ".ctor"));
+//            //Swap the constructor
+//            var mainCctor = Terraria.Main.Methods.Single(x => x.Name == ".cctor");
+//            var constructor = _asm.MainModule.Import(_self.MainModule.Types.Single(x => x.Name == "TileCollection").Methods.Single(y => y.Name == ".ctor"));
 
-//            var il = mainCctor.Body.GetILProcessor();
-            var ins = mainCctor.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
-                          && x.Operand is MethodReference
-                          && (x.Operand as MethodReference).Name == ".ctor"
-                          && (x.Operand as MethodReference).DeclaringType is ArrayType
-                          && ((x.Operand as MethodReference).DeclaringType as ArrayType).ElementType.Name == "MemTile");
-            ins.Operand = constructor;
-        }
+////            var il = mainCctor.Body.GetILProcessor();
+//            var ins = mainCctor.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
+//                          && x.Operand is MethodReference
+//                          && (x.Operand as MethodReference).Name == ".ctor"
+//                          && (x.Operand as MethodReference).DeclaringType is ArrayType
+//                          && ((x.Operand as MethodReference).DeclaringType as ArrayType).ElementType.Name == "MemTile");
+//            ins.Operand = constructor;
+//        }
 
         #endregion
 
-        public void InjectTileSet()
-        {
-            var ts = _self.MainModule.Types.Single(x => x.Name == "TileCollection");
-            var tm = _asm.MainModule.Types.Single(x => x.Name == "Main").Fields.Single(x => x.Name == "tile");
+        //public void InjectTileSet()
+        //{
+        //    var ts = _self.MainModule.Types.Single(x => x.Name == "TileCollection");
+        //    var tm = _asm.MainModule.Types.Single(x => x.Name == "Main").Fields.Single(x => x.Name == "tile");
 
-            tm.FieldType = _asm.MainModule.Import(ts);
-        }
+        //    tm.FieldType = _asm.MainModule.Import(ts);
+        //}
 
         /// <summary>
         /// Applies the patch so OTA can select what server states are valid

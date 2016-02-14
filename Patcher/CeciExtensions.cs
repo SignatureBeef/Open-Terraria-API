@@ -20,7 +20,7 @@ namespace OTA.Patcher
             return typeDefinition.Fields.Single(x => x.Name == name);
         }
 
-        public static IEnumerable<MethodDefinition> MatchMethodByParameters(this TypeDefinition source, 
+        public static IEnumerable<MethodDefinition> MatchMethodByParameters(this TypeDefinition source,
                                                                             IEnumerable<ParameterDefinition> parameters,
                                                                             string methodNameStartWith = null)
         {
@@ -30,7 +30,7 @@ namespace OTA.Patcher
                 && (methodNameStartWith == null || x.Name.StartsWith(methodNameStartWith)));
         }
 
-        public static IEnumerable<MethodDefinition> MatchInstanceMethodByParameters(this TypeDefinition source, 
+        public static IEnumerable<MethodDefinition> MatchInstanceMethodByParameters(this TypeDefinition source,
                                                                                     string instanceTypeName,
                                                                                     IEnumerable<ParameterDefinition> parameters,
                                                                                     string methodNameStartWith = null)
@@ -97,7 +97,7 @@ namespace OTA.Patcher
             //If a method has a body then check the instruction targets & exceptions
             if (method.HasBody)
             {
-                foreach (var ins in method.Body.Instructions.Where( x=> x.Operand == current))
+                foreach (var ins in method.Body.Instructions.Where(x => x.Operand == current))
                     ins.Operand = newTarget;
 
                 if (method.Body.HasExceptionHandlers)
@@ -242,7 +242,7 @@ namespace OTA.Patcher
 
                 var xstFirst = method.Body.Instructions.First();
                 var xstLast = method.Body.Instructions.Last(x => x.OpCode == OpCodes.Ret);
-//                var lastInstruction = method.Body.Instructions.Last();
+                //                var lastInstruction = method.Body.Instructions.Last();
 
                 var il = method.Body.GetILProcessor();
 
@@ -266,51 +266,51 @@ namespace OTA.Patcher
                     }
                 }
                 il.InsertBefore(xstLast, il.Create(OpCodes.Call, impEnd));
-                
-//                Instruction insertion = il.Create(OpCodes.Ret);
-//                Instruction endpoint = null;
-//                il.InsertAfter(lastInstruction, insertion);
-//                
-//                var nop = il.Create(OpCodes.Nop);
-//                if (null == endpoint) endpoint = nop;
-//                il.InsertBefore(insertion, nop);
-//                
-//                if (end.HasParameters) //Parameter order must be the same
-//                {
-//                    for (var i = 0; i < end.Parameters.Count; i++)
-//                    {
-//                        var prm = method.CreateParameterInstruction(i);
-//                        il.InsertBefore(insertion, prm);
-//                        //                        il.InsertBefore(lastInstruction, prm);
-//                        if (null == endpoint) endpoint = prm;
-//                    }
-//                }
-//                
-//                var injected = new List<Instruction>();
-//                var total = 0;
-//                while (total++ < 6)
-//                {
-//                    var ins = method.Body.Instructions.Except(injected).First(xx => xx.OpCode == OpCodes.Ret);
-//                
-//                    if (end.HasParameters) //Parameter order must be the same
-//                    {
-//                        for (var i = 0; i < end.Parameters.Count; i++)
-//                        {
-//                            var prm = method.CreateParameterInstruction(i);
-//                            il.InsertBefore(ins, prm);
-//                        }
-//                    }
-//                    il.InsertBefore(ins, il.Create(OpCodes.Call, impEnd));
-//                    il.InsertBefore(ins, il.Create(OpCodes.Pop));
-//                
-//                    injected.Add(ins);
-//                }
-//                
-//                //Since we are instructed to expect a cancellation, a hardcoded false is expected. If false then return the default.
-//                if (beginIsCancellable)
-//                {
-//                
-//                }
+
+                //                Instruction insertion = il.Create(OpCodes.Ret);
+                //                Instruction endpoint = null;
+                //                il.InsertAfter(lastInstruction, insertion);
+                //                
+                //                var nop = il.Create(OpCodes.Nop);
+                //                if (null == endpoint) endpoint = nop;
+                //                il.InsertBefore(insertion, nop);
+                //                
+                //                if (end.HasParameters) //Parameter order must be the same
+                //                {
+                //                    for (var i = 0; i < end.Parameters.Count; i++)
+                //                    {
+                //                        var prm = method.CreateParameterInstruction(i);
+                //                        il.InsertBefore(insertion, prm);
+                //                        //                        il.InsertBefore(lastInstruction, prm);
+                //                        if (null == endpoint) endpoint = prm;
+                //                    }
+                //                }
+                //                
+                //                var injected = new List<Instruction>();
+                //                var total = 0;
+                //                while (total++ < 6)
+                //                {
+                //                    var ins = method.Body.Instructions.Except(injected).First(xx => xx.OpCode == OpCodes.Ret);
+                //                
+                //                    if (end.HasParameters) //Parameter order must be the same
+                //                    {
+                //                        for (var i = 0; i < end.Parameters.Count; i++)
+                //                        {
+                //                            var prm = method.CreateParameterInstruction(i);
+                //                            il.InsertBefore(ins, prm);
+                //                        }
+                //                    }
+                //                    il.InsertBefore(ins, il.Create(OpCodes.Call, impEnd));
+                //                    il.InsertBefore(ins, il.Create(OpCodes.Pop));
+                //                
+                //                    injected.Add(ins);
+                //                }
+                //                
+                //                //Since we are instructed to expect a cancellation, a hardcoded false is expected. If false then return the default.
+                //                if (beginIsCancellable)
+                //                {
+                //                
+                //                }
             }
             else throw new NotSupportedException("Non Void methods not yet supported");
         }
@@ -322,7 +322,7 @@ namespace OTA.Patcher
             //Import the callbacks to the calling methods assembly
             var impBegin = method.Module.Import(begin);
 
-//            var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
+            //            var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
 
             //Now, create the IL body
             var il = method.Body.GetILProcessor();
@@ -373,7 +373,7 @@ namespace OTA.Patcher
             //Import the callbacks to the calling methods assembly
             var impEnd = method.Module.Import(end);
 
-//            var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
+            //            var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
 
             //Now, create the IL body
             var il = method.Body.GetILProcessor();
@@ -412,7 +412,7 @@ namespace OTA.Patcher
         public static Instruction InjectMethodCall(this MethodDefinition method, MethodReference target, bool instanceMethod, bool emitNonVoidPop = true)
         {
             Instruction firstInstruction = null;
-//            var instanceMethod = (target.Attributes & MethodAttributes.Static) == 0;
+            //            var instanceMethod = (target.Attributes & MethodAttributes.Static) == 0;
 
             //Now, create the IL body
             var il = method.Body.GetILProcessor();
@@ -422,11 +422,11 @@ namespace OTA.Patcher
             {
                 //Set the instruction to be resumed upon not cancelling, if not already
                 var instance = il.Create(OpCodes.Ldarg_0);
-//                if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
-//                {
-//                    beginResult.OpCode = OpCodes.Brtrue_S;
-//                    beginResult.Operand = instance;
-//                }
+                //                if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
+                //                {
+                //                    beginResult.OpCode = OpCodes.Brtrue_S;
+                //                    beginResult.Operand = instance;
+                //                }
                 if (null == firstInstruction) firstInstruction = instance;
 
                 il.Append(instance);
@@ -438,24 +438,24 @@ namespace OTA.Patcher
                 {
                     var prm = il.Create(OpCodes.Ldarg, target.Parameters[i]);
                     if (null == firstInstruction) firstInstruction = prm;
-//                    //Set the instruction to be resumed upon not cancelling, if not already
-//                    if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
-//                    {
-//                        beginResult.OpCode = OpCodes.Brtrue_S;
-//                        beginResult.Operand = prm;
-//                    }
+                    //                    //Set the instruction to be resumed upon not cancelling, if not already
+                    //                    if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
+                    //                    {
+                    //                        beginResult.OpCode = OpCodes.Brtrue_S;
+                    //                        beginResult.Operand = prm;
+                    //                    }
 
                     il.Append(prm);
                 }
 
             //Call the begin hook
             var call = il.Create(OpCodes.Call, target);
-//            //Set the instruction to be resumed upon not cancelling, if not already
-//            if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
-//            {
-//                beginResult.OpCode = OpCodes.Brtrue_S;
-//                beginResult.Operand = call;
-//            }
+            //            //Set the instruction to be resumed upon not cancelling, if not already
+            //            if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
+            //            {
+            //                beginResult.OpCode = OpCodes.Brtrue_S;
+            //                beginResult.Operand = call;
+            //            }
             if (null == firstInstruction) firstInstruction = call;
             il.Append(call);
 
@@ -472,8 +472,8 @@ namespace OTA.Patcher
         /// <param name="method"></param>
         /// <param name="begin"></param>
         /// <param name="end"></param>
-        public static MethodDefinition Wrap(this MethodDefinition method, MethodReference begin, 
-                                            MethodReference end = null, 
+        public static MethodDefinition Wrap(this MethodDefinition method, MethodReference begin,
+                                            MethodReference end = null,
                                             bool beginIsCancellable = false,
                                             bool noEndHandling = false)
         {
@@ -712,11 +712,237 @@ namespace OTA.Patcher
 
             Instruction call;
             il.InsertBefore(ins, call = il.Create(OpCodes.Call, callback));
-//            il.InsertBefore(ins, il.Create(OpCodes.Pop));
+            //            il.InsertBefore(ins, il.Create(OpCodes.Pop));
             il.InsertBefore(ins, il.Create(OpCodes.Brtrue, ins));
             il.InsertBefore(ins, il.Create(OpCodes.Ret));
 
             return call;
+        }
+
+
+        /// <summary>
+        /// Swaps a Tile array type to an array of the replacement type
+        /// </summary>
+        /// <returns>The to vanilla reference.</returns>
+        /// <param name="input">Input.</param>
+        /// <param name="replacement">Replacement.</param>
+        private static TypeReference SwapToVanillaReference(TypeReference input, TypeReference replacement, string lookFor)
+        {
+            if (input.FullName == lookFor)
+            {
+                return replacement;
+            }
+            else if (input is ArrayType)
+            {
+                var at = input as ArrayType;
+                if (at.ElementType.FullName == lookFor)
+                {
+                    var nt = new ArrayType(replacement);
+                    nt.Dimensions.Clear();
+
+                    foreach (var dm in at.Dimensions)
+                    {
+                        nt.Dimensions.Add(dm);
+                    }
+
+                    return input.Module.Import(nt);
+                }
+            }
+
+            return input;
+        }
+
+        public static void TryReplaceArrayWithClassInstance(this ModuleDefinition module, TypeDefinition lookFor, TypeDefinition replacementType, TypeDefinition replacementDespatcher, string callbackSuffix)
+        {
+            foreach (var ty in module.Types)
+            {
+                ty.TryReplaceArrayWithClassInstance(lookFor, replacementType, replacementDespatcher, callbackSuffix);
+            }
+        }
+
+        public static void TryReplaceArrayWithClassInstance(this TypeDefinition typeToSearch, TypeDefinition lookFor, TypeDefinition replacementType, TypeDefinition replacementDespatcher, string callbackSuffix)
+        {
+            var vt = typeToSearch.Module.Import(replacementType);
+
+            var setCall = typeToSearch.Module.Import(replacementDespatcher.Methods.SingleOrDefault(x => x.Name == "Set" + callbackSuffix));
+            var getCall = typeToSearch.Module.Import(replacementDespatcher.Methods.SingleOrDefault(x => x.Name == "Get" + callbackSuffix));
+
+            if (typeToSearch != lookFor)
+            {
+                if (typeToSearch.HasFields)
+                    foreach (var fld in typeToSearch.Fields)
+                    {
+                        fld.FieldType = SwapToVanillaReference(fld.FieldType, vt, lookFor.FullName);
+                    }
+
+                if (typeToSearch.HasProperties)
+                    foreach (var prop in typeToSearch.Properties)
+                    {
+                        prop.PropertyType = SwapToVanillaReference(prop.PropertyType, vt, lookFor.FullName);
+                    }
+
+                foreach (var mth in typeToSearch.Methods)
+                {
+                    if (mth.HasParameters)
+                    {
+                        foreach (var prm in mth.Parameters)
+                        {
+                            prm.ParameterType = SwapToVanillaReference(prm.ParameterType, vt, lookFor.FullName);
+                        }
+                    }
+
+                    if (mth.HasBody)
+                    {
+                        if (mth.Body.HasVariables)
+                        {
+                            foreach (var vrb in mth.Body.Variables)
+                            {
+                                vrb.VariableType = SwapToVanillaReference(vrb.VariableType, vt, lookFor.FullName);
+                            }
+                        }
+
+                        if (mth.Body.Instructions != null)
+                        {
+                            for (var i = mth.Body.Instructions.Count - 1; i > 0; i--)
+                            {
+                                var ins = mth.Body.Instructions[i];
+
+                                {
+                                    if (ins.OpCode == OpCodes.Call && ins.Operand is MemberReference)
+                                    {
+                                        var mr = ins.Operand as MemberReference;
+
+                                        if (setCall != null && mr.Name == "Set" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.FullName == replacementType.FullName)
+                                        {
+                                            ins.Operand = typeToSearch.Module.Import(setCall);
+                                        }
+
+                                        if (getCall != null && mr.Name == "Get" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.FullName == replacementType.FullName)
+                                        {
+                                            ins.Operand = typeToSearch.Module.Import(getCall);
+                                        }
+                                    }
+                                }
+
+
+                                if (ins.Operand is MethodReference)
+                                {
+                                    var meth = ins.Operand as MethodReference;
+                                    if (meth.DeclaringType.FullName == lookFor.FullName)
+                                    {
+                                        if (meth.Name == ".ctor")
+                                        {
+                                            ins.Operand = typeToSearch.Module.Import(vt.Resolve().Methods.Single(x => x.Name == meth.Name && x.Parameters.Count == meth.Parameters.Count));
+                                            continue;
+                                        }
+
+                                        ins.Operand = typeToSearch.Module.Import(vt.Resolve().Methods.Single(x => x.Name == meth.Name && x.Parameters.Count == meth.Parameters.Count));
+                                        continue;
+                                    }
+                                    else if (meth.DeclaringType is ArrayType)
+                                    {
+                                        var at = meth.DeclaringType as ArrayType;
+                                        if (at.ElementType.FullName == lookFor.FullName)
+                                        {
+                                            meth.DeclaringType = SwapToVanillaReference(meth.DeclaringType, vt, lookFor.FullName);
+                                        }
+                                    }
+
+                                    if (meth.HasParameters)
+                                        foreach (var prm in meth.Parameters)
+                                        {
+                                            prm.ParameterType = SwapToVanillaReference(prm.ParameterType, vt, lookFor.FullName);
+                                        }
+
+                                    meth.ReturnType = SwapToVanillaReference(meth.ReturnType, vt, lookFor.FullName);
+                                    meth.MethodReturnType.ReturnType = SwapToVanillaReference(meth.MethodReturnType.ReturnType, vt, lookFor.FullName);
+                                }
+                                else if (ins.Operand is TypeReference)
+                                {
+                                    var typ = ins.Operand as TypeReference;
+                                    if (typ.FullName == lookFor.FullName)
+                                    {
+                                        throw new NotImplementedException();
+                                    }
+                                    else if (typ is ArrayType)
+                                    {
+                                        var at = typ as ArrayType;
+                                        if (at.ElementType.FullName == lookFor.FullName)
+                                        {
+                                            throw new NotImplementedException();
+                                        }
+                                    }
+                                }
+                                else if (ins.Operand is FieldReference)
+                                {
+                                    var fld = ins.Operand as FieldReference;
+                                    if (fld.DeclaringType.FullName == lookFor.FullName)
+                                    {
+                                        //Now, instead map to our property methods
+
+                                        var il = mth.Body.GetILProcessor();
+                                        if (ins.OpCode == OpCodes.Ldfld)
+                                        {
+#if MEM_TILE_IS_VANILLA
+                                            //Get
+                                            var prop = _asm.MainModule.Import(vt.Resolve().Fields.Single(x => x.Name == fld.Name));
+                                            ins.Operand = prop;
+#else
+                                            //Get
+                                            var prop = typeToSearch.Module.Import(vt.Resolve().Properties.Single(x => x.Name == fld.Name).GetMethod);
+
+                                            il.Replace(ins, il.Create(OpCodes.Callvirt, prop));
+#endif
+                                        }
+                                        else if (ins.OpCode == OpCodes.Stfld)
+                                        {
+#if MEM_TILE_IS_VANILLA
+                                            //Set
+                                            var prop = _asm.MainModule.Import(vt.Resolve().Fields.Single(x => x.Name == fld.Name));
+                                            ins.Operand = prop;
+#else
+                                            //Set
+                                            var prop = typeToSearch.Module.Import(vt.Resolve().Properties.Single(x => x.Name == fld.Name).SetMethod);
+
+                                            il.Replace(ins, il.Create(OpCodes.Callvirt, prop));
+#endif
+                                        }
+                                        else
+                                        {
+                                            throw new NotImplementedException();
+                                        }
+                                    }
+                                    else if (fld.DeclaringType is ArrayType)
+                                    {
+                                        var at = fld.DeclaringType as ArrayType;
+                                        if (at.ElementType.FullName == lookFor.FullName)
+                                        {
+                                            throw new NotImplementedException();
+                                        }
+                                    }
+                                }
+                                else if (ins.Operand is PropertyReference)
+                                {
+                                    throw new NotImplementedException();
+                                }
+                                else if (ins.Operand is VariableReference)
+                                {
+                                    var vrb = ins.Operand as VariableReference;
+                                    vrb.VariableType = SwapToVanillaReference(vrb.VariableType, vt, lookFor.FullName);
+                                }
+                                else if (ins.Operand is MemberReference)
+                                {
+                                    throw new NotImplementedException();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (typeToSearch.HasNestedTypes)
+                foreach (var nt in typeToSearch.NestedTypes)
+                    nt.TryReplaceArrayWithClassInstance(lookFor, replacementType, replacementDespatcher, callbackSuffix);
         }
     }
 }

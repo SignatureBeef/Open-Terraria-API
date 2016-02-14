@@ -184,12 +184,6 @@ namespace OTA.Patcher.Organisers
 
         #endregion
 
-        public TypeDefinition NAT
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "NAT"); }
-        }
-
         public TypeDefinition Connection
         {
             get
@@ -203,16 +197,34 @@ namespace OTA.Patcher.Organisers
             //{ return _asm.MainModule.Types.Single(x => x.Name == "TemporarySynchSock"); }
         }
 
-        public TypeDefinition Utilities
-        {
-            get
-            { return _asm.MainModule.Types.Single(x => x.Name == "Utilities"); }
-        }
-
         public TypeDefinition Player
         {
             get
             { return _asm.MainModule.Types.Single(x => x.Name == "PlayerCallback"); }
+        }
+
+        public TypeDefinition MemTile
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "MemTile"); }
+        }
+
+        public TypeDefinition NAT
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "NAT"); }
+        }
+
+        public TypeDefinition TileCollection
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "TileCollection"); }
+        }
+
+        public TypeDefinition Utilities
+        {
+            get
+            { return _asm.MainModule.Types.Single(x => x.Name == "Utilities"); }
         }
 
         public TypeDefinition WorldSender

@@ -573,9 +573,9 @@ namespace OTA.Patcher
                 Console.Write($"Ok\nPatching Newtonsoft.Json to {jsonVersion}...");
                 patcher.PatchJSON(jsonVersion);
 
-                Console.Write("Ok\nPutting Terraria on a diet...");
-                patcher.SwapToVanillaTile(); //Holy shit batman! it works
-                patcher.InjectTileSet();
+                //Console.Write("Ok\nPutting Terraria on a diet...");
+                //patcher.SwapToVanillaTile(); //Holy shit batman! it works
+                //patcher.InjectTileSet();
 
                 Console.Write("Ok\n");
 
