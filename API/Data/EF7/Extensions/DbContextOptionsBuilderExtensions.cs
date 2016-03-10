@@ -1,5 +1,6 @@
 ﻿#if ENTITY_FRAMEWORK_7
 using Microsoft.Data.Entity;
+using OTA.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

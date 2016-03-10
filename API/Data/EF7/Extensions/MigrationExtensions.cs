@@ -1,10 +1,6 @@
 ﻿#if ENTITY_FRAMEWORK_7
-using System;
-using System.Linq;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations.Operations.Builders;
 using Microsoft.Data.Entity.Migrations.Operations;
-using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Migrations.Operations.Builders;
 
 namespace OTA.Data.EF7.Extensions
 {
@@ -19,7 +15,12 @@ namespace OTA.Data.EF7.Extensions
             if (activeProvider == "sqlite")
                 builder.Annotation("Sqlite:Autoincrement", true);
             else if (activeProvider == "sqlserver")
-                builder.Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn); //TODO reflect this
+            {
+                var type = System.Type.GetType("SqlServerValueGenerationStrategy");
+                var value = System.Enum.Parse(type, "IdentityColumn");
+                builder.Annotation("SqlServer:ValueGenerationStrategy", value);
+            }
+            //TODO postgres migration AutoIncrement
 
             return builder;
         }

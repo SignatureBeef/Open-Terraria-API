@@ -15,14 +15,14 @@ namespace OTA.Patcher
             //Specifiy the official file name
             if (args != null)
             {
-                var ix = Array.FindIndex(args, x => x == "-platform");
+                var ix = Array.FindIndex(args, x => x.ToLower() == "-platform");
                 if (ix > -1)
                     OTAPatcher.Platform = args[ix + 1];
             }
 
             if (args != null)
             {
-                var ix = Array.FindIndex(args, x => x == "-patchmode");
+                var ix = Array.FindIndex(args, x => x.ToLower() == "-patchmode");
                 if (ix > -1)
                     OTAPatcher.PatchMode = (SupportType)Enum.Parse(typeof(SupportType), args[ix + 1]);
             }

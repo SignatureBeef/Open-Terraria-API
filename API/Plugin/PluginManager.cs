@@ -302,7 +302,7 @@ namespace OTA.Plugin
                             };
                         else _deferedPlugins.Add(sh);
 
-                        Logger.Debug("Plugin is scheduled to load");
+                        Logger.Debug("Plugin is scheduled to load pending dependency " + String.Join(",", types));
                         return PluginLoadResult.Scheduled;
                     }
                 }
@@ -336,7 +336,6 @@ namespace OTA.Plugin
             SetPluginProperty<string>(plugin, "AUTHOR", "Author");
             SetPluginProperty<string>(plugin, "DESCRIPTION", "Description");
             SetPluginProperty<string>(plugin, "VERSION", "Version");
-            SetPluginProperty<int>(plugin, "BUILD", "TDSMBuild");
 
             return plugin;
         }

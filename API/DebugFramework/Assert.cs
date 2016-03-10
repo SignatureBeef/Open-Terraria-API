@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OTA.DebugFramework
 {
     public class Assert
     {
-
         /// <summary>
         /// Asserts the specified LINQ expression for a true condition and throws an assertion 
         /// failure exception indicating the compiled expression which failed, if the result of 

@@ -23,20 +23,22 @@ namespace OTA.Protection
         //            DelayMinutes = 10;
         //        }
 
-        public static DateTime? GetLastLockout(string ip)
+        public static DateTime? GetLastLockout(string ip, string context = null)
         {
+            var key = context == null ? ip : context + ip;
             IpLimit existing;
-            if (_requestMap.TryGetValue(ip, out existing))
+            if (_requestMap.TryGetValue(key, out existing))
             {
                 return existing.LastLockout;
             }
             return null;
         }
 
-        public static bool GetJustLockedOut(string ip)
+        public static bool GetJustLockedOut(string ip, string context = null)
         {
+            var key = context == null ? ip : context + ip;
             IpLimit existing;
-            if (_requestMap.TryGetValue(ip, out existing))
+            if (_requestMap.TryGetValue(key, out existing))
             {
                 return existing.JustLockedOut;
             }
@@ -49,21 +51,23 @@ namespace OTA.Protection
         /// <param name="ip">Ip.</param>
         /// <param name="maxRequests">Max requests allowed for time frame</param>
         /// <param name="delayMinutes">Time to wait when the limit is reached</param>
-        public static bool Register(string ip, int maxRequests, int delayMinutes)
+        public static bool Register(string ip, int maxRequests, int delayMinutes, string context = null)
         {
             //The target is to track the latest requests
             //When it's reached don't add any (but ensure it's denied)
             //In addition, when it is reached update all records to the request date. 
             //This way they must certainly wait the duration.
 
+            var key = context == null ? ip : context + ip;
+
             IpLimit existing;
-            if (!_requestMap.TryGetValue(ip, out existing))
+            if (!_requestMap.TryGetValue(key, out existing))
             {
                 existing = new IpLimit()
                 {
                     Requests = new FixedConcurrentQueue<DateTime>(maxRequests)
                 };
-                if (!_requestMap.TryAdd(ip, existing))
+                if (!_requestMap.TryAdd(key, existing))
                 {
                     //ProgramLog.Error.Log("Failed to increment API request, the request will be denied");
                     return true;
