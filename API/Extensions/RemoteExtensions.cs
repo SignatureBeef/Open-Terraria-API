@@ -18,7 +18,7 @@ namespace OTA.Extensions
         /// <param name="sock">Sock.</param>
         public static bool IsPlaying(this Terraria.RemoteClient sock)
         {
-            return sock.State == (int)OTA.Sockets.SlotState.PLAYING;
+            return sock.State == (int)OTA.Sockets.SlotState.Playing;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace OTA.Extensions
         public static bool CanSendWater(this Terraria.RemoteClient sock)
         {
             //return state >= 3;
-            return (Terraria.NetMessage.buffer[sock.Id].broadcast || sock.State >= (int)OTA.Sockets.SlotState.SENDING_TILES) && sock.Socket.IsConnected();
+            return (Terraria.NetMessage.buffer[sock.Id].broadcast || sock.State >= (int)OTA.Sockets.SlotState.SendingTiles) && sock.Socket.IsConnected();
         }
 
         /// <summary>

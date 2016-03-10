@@ -241,6 +241,7 @@
     <Compile Include="ID\ActionType.cs" />
     <Compile Include="ID\Lookup.cs" />
     <Compile Include="Misc\StringCache.cs" />
+    <Compile Include="Misc\WorldTime.cs" />
     <Compile Include="Plugin\HookAttribute.cs" />
     <Compile Include="Plugin\HookPoint.cs" />
     <Compile Include="Plugin\LUAManager.cs" />

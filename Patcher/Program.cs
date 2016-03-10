@@ -41,13 +41,13 @@ namespace OTA.Patcher
                 var platform = OTA.Misc.Platform.Type;
                 switch (OTA.Misc.Platform.Type)
                 {
-                    case Misc.Platform.PlatformType.LINUX:
+                    case Misc.Platform.PlatformType.Linux:
                         OTAPatcher.Platform = "Linux";
                         break;
-                    case Misc.Platform.PlatformType.MAC:
+                    case Misc.Platform.PlatformType.Mac:
                         OTAPatcher.Platform = "Mac";
                         break;
-                    case Misc.Platform.PlatformType.WINDOWS:
+                    case Misc.Platform.PlatformType.Windows:
                         OTAPatcher.Platform = "Windows";
                         break;
                 }

@@ -250,7 +250,7 @@ namespace OTA.Mod.Packages
             Extract();
             Build();
 
-            var xna = Misc.Platform.Type == Misc.Platform.PlatformType.WINDOWS;
+            var xna = Misc.Platform.Type == Misc.Platform.PlatformType.Windows;
             var path = Path.Combine(this.PackageDirectory, xna ? "XNA" : "FNA");
 
             var directoryInfo = new DirectoryInfo(path);

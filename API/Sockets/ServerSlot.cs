@@ -1,22 +1,20 @@
-﻿using System;
-
-namespace OTA.Sockets
+﻿namespace OTA.Sockets
 {
     /// <summary>
     /// Known vanilla slot states
     /// </summary>
     public enum SlotState : int
     {
-        PLAYER_AUTH = -2,
-        SERVER_AUTH = -1,
+        PlayerAuth = -2,
+        ServerAuth = -1,
 
-        NONE = 0,
+        None = 0,
 
-        CONNECTING = 1,
-        ACCEPTED = 2,
-        SENDING_TILES = 3,
+        Connecting = 1,
+        Accepted = 2,
+        SendingTiles = 3,
 
-        PLAYING = 10
+        Playing = 10
     }
 
     //[Flags]

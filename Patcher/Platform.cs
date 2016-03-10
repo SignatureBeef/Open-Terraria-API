@@ -24,10 +24,10 @@ namespace OTA.Misc
         /// </summary>
         public enum PlatformType : int
         {
-            UNKNOWN = 0,
-            LINUX = 1,
-            MAC = 2,
-            WINDOWS = 3
+            Unknown = 0,
+            Linux = 1,
+            Mac = 2,
+            Windows = 3
         }
 
         /// <summary>
@@ -43,20 +43,20 @@ namespace OTA.Misc
                         && Directory.Exists("/System")
                         && Directory.Exists("/Users")
                         && Directory.Exists("/Volumes")
-                    ) ? PlatformType.MAC : PlatformType.LINUX;
+                    ) ? PlatformType.Mac : PlatformType.Linux;
                     break;
                 case PlatformID.MacOSX:
-                    Type = PlatformType.MAC;
+                    Type = PlatformType.Mac;
                     break;
                 case PlatformID.Win32NT:
                 case PlatformID.Win32S:
                 case PlatformID.Win32Windows:
                 case PlatformID.WinCE:
                 case PlatformID.Xbox:
-                    Type = PlatformType.WINDOWS;
+                    Type = PlatformType.Windows;
                     break;
                 default:
-                    Type = PlatformType.UNKNOWN;
+                    Type = PlatformType.Unknown;
                     break;
             }
         }
