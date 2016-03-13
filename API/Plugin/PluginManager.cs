@@ -11,6 +11,7 @@ using OTA.Plugin;
 using OTA.Logging;
 using OTA.Extensions;
 using Microsoft.Xna.Framework;
+using Microsoft.Data.Entity;
 
 namespace OTA.Plugin
 {
@@ -651,7 +652,27 @@ namespace OTA.Plugin
             }
             catch (Exception e)
             {
-                ProgramLog.Log(e, "Database probe failed.");
+                ProgramLog.Log(e, "Database probe failed");
+            }
+#elif ENTITY_FRAMEWORK_7
+            try
+            {
+                using (var ctx = new OTA.Data.EF7.OTAContext())
+                {
+                    ctx.Database.EnsureCreated();
+                    //ctx.Database.Migrate();
+                }
+                
+                //All instances of DbContext's for the current database must be created by now.
+                //Fire an event to populate the database with default values (if any)
+                foreach (var plg in Plugin.PluginManager.EnumeratePlugins)
+                {
+                    plg.NotifyDatabaseCreated();
+                }
+            }
+            catch (Exception e)
+            {
+                ProgramLog.Log(e, "Database probe failed");
             }
 #endif
 

@@ -2,73 +2,61 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Data.Entity;
+using OTA.Extensions;
+using System.Linq;
+using OTA.Data.EF7.Extensions;
 
 namespace OTA.Data.EF7
 {
-    public class OTATest
-    {
-        [Key]
-        public int Id { get; set; }
-        public string DataString { get; set; }
-    }
-
     public enum SqliteCopyResult
     {
         Ok,
         DirectoryNotFound,
-        FileMissing
+        FileMissing,
+        AccessException
     }
 
-    public enum DbSupport
+    public class OTAContext : DbContext
     {
-        Sqlite,
-        SqlServer,
-        MySql
-    }
-
-    public static class DbContextExtensions
-    {
-        /// <summary>
-        /// Attempt to copy sqlite files from Data/Sqlite/[x86/x64]/* to where they should be.
-        /// </summary>
-        public static SqliteCopyResult TryCopySqliteDependencies(this DbContext ctx)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var path = System.IO.Path.Combine(Globals.DataPath, "Sqlite", Environment.Is64BitProcess ? "x64" : "x86");
-            if (!System.IO.Directory.Exists(path)) return SqliteCopyResult.DirectoryNotFound;
+            //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ota;Trusted_Connection=True;");
+            //optionsBuilder.UseDynamic("sqlserver", "Server=.\\SQLEXPRESS;Database=ota;Trusted_Connection=True;");
+            optionsBuilder.UseDynamic("sqlite", "Data Source=database.sqlite");
+        }
 
-            //Copy the new platform files
-            foreach (var file in new string[] { "sqlite3.dll", "sqlite3.def" })
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            if (this.GetType() == typeof(OTAContext))
             {
-                var fl = System.IO.Path.Combine(path, file);
-                if (!System.IO.File.Exists(fl))
-                    return SqliteCopyResult.FileMissing;
-
-                //Remove the existing, incase the platform changed
-                //This actually can even occur when you run in debug mode
-                //on a x64 machine, vshost can be x86.
-                if (System.IO.File.Exists(file))
-                    System.IO.File.Delete(file);
-
-                System.IO.File.Copy(fl, file);
+                InitialiseSubContexts(modelBuilder);
             }
+        }
 
-            return SqliteCopyResult.Ok;
+        /// <summary>
+        /// Import plugin context DbSets into the model being created
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        internal static void InitialiseSubContexts(ModelBuilder modelBuilder)
+        {
+            var type = typeof(DbContext);
+            foreach (var plg in Plugin.PluginManager.EnumeratePlugins)
+            {
+                foreach (var ctx in plg.Assembly.GetTypesLoaded()
+                    .Where(x => type.IsAssignableFrom(x) && x != type && !x.IsAbstract))
+                {
+                    Logging.ProgramLog.Debug.Log("Importing context {0} from {1}", ctx.Name, plg.Name);
+
+                    var dbContext = (DbContext)Activator.CreateInstance(ctx);
+                    
+                    var mth = ctx.GetMethod("OnModelCreating", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                    mth.Invoke(dbContext, new object[] { modelBuilder });
+                    dbContext.Dispose();
+                }
+            }
         }
     }
-
-    //public class OTAContext : DbContext
-    //{
-    //    public DbSet<OTATest> OtaTests { get; set; }
-
-    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //    {
-    //        optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ota;Trusted_Connection=True;");
-    //    }
-
-    //    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //    {
-    //        base.OnModelCreating(modelBuilder);
-    //    }
-    //}
 }
 #endif
