@@ -29,6 +29,7 @@ namespace OTA.Data.EF7
         {
             base.OnModelCreating(modelBuilder);
 
+            //This determines if the code running is the root context
             if (this.GetType() == typeof(OTAContext))
             {
                 InitialiseSubContexts(modelBuilder);

@@ -121,7 +121,7 @@ namespace OTA.Callbacks
             }
 
 #if CLIENT
-            if (Platform.Type == Platform.PlatformType.WINDOWS)
+            if (Platform.Type == Platform.PlatformType.Windows)
             {
                 (new System.Threading.Thread(() =>
                     {
