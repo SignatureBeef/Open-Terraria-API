@@ -1,4 +1,6 @@
-# Open Terraria API (OTAPI)  [![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](https://openterraria.com/slack)
+# Open Terraria API (OTAPI)
+[![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](https://openterraria.com/slack) ![Linux](https://openterraria.com/bleeding-edge/svg/Linux) ![Mac](https://openterraria.com/bleeding-edge/svg/Mac) ![Server](https://openterraria.com/bleeding-edge/svg/Server) ![Windows](https://openterraria.com/bleeding-edge/svg/Windows)
+
 *Supporting Terraria v1.3!*  
 
 The Open Terraria API is a modification of the official Terraria client & server software.
