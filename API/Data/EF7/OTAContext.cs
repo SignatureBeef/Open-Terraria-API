@@ -18,15 +18,15 @@ namespace OTA.Data.EF7
 
     public static class OTAContextFactory
     {
-        public static string ConnectionType { get; set; }
+        public static string ConnectionProvider { get; set; }
         public static string ConnectionString { get; set; }
 
         public static OTAContext Create()
         {
-            if (!String.IsNullOrEmpty(ConnectionType))
+            if (!String.IsNullOrEmpty(ConnectionProvider))
                 return new OTAContext()
                 {
-                    ConnectionType = ConnectionType,
+                    ConnectionProvider = ConnectionProvider,
                     ConnectionString = ConnectionString
                 };
 
@@ -36,7 +36,7 @@ namespace OTA.Data.EF7
 
     public class OTAContext : DbContext
     {
-        public string ConnectionType { get; set; }
+        public string ConnectionProvider { get; set; }
         public string ConnectionString { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -44,7 +44,7 @@ namespace OTA.Data.EF7
             //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ota;Trusted_Connection=True;");
             //optionsBuilder.UseDynamic("sqlserver", "Server=.\\SQLEXPRESS;Database=ota;Trusted_Connection=True;");
             //optionsBuilder.UseDynamic("sqlite", "Data Source=database.sqlite");
-            optionsBuilder.UseDynamic(ConnectionType, ConnectionString);
+            optionsBuilder.UseDynamic(ConnectionProvider, ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

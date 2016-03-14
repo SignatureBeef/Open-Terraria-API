@@ -106,9 +106,9 @@ namespace OTA.Data.EF7.Extensions
         /// <summary>
         /// Attempt to load an OTA supported database.
         /// </summary>
-        public static DbContextOptionsBuilder UseDynamic(this DbContextOptionsBuilder builder, string connectionType, string connectionString)
+        public static DbContextOptionsBuilder UseDynamic(this DbContextOptionsBuilder builder, string connectionProvider, string connectionString)
         {
-            switch (connectionType)
+            switch (connectionProvider)
             {
                 case "sqlite":
                     builder.TryLoadSqlite(connectionString);
