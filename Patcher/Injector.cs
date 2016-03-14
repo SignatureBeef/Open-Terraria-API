@@ -287,7 +287,7 @@ namespace OTA.Patcher
                                         if (setCall != null && mr.Name == "Set" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.Name == "MemTile")
                                         {
                                             //Swap
-//                                            var il = mth.Body.GetILProcessor();
+                                            //                                            var il = mth.Body.GetILProcessor();
 
                                             //                                            if (ins.Previous != null && ins.Previous.OpCode == OpCodes.Ldnull)
                                             //                                            {
@@ -331,7 +331,7 @@ namespace OTA.Patcher
                                         if (getCall != null && mr.Name == "Get" && mr.DeclaringType is ArrayType && (mr.DeclaringType as ArrayType).ElementType.Name == "MemTile")
                                         {
                                             //Swap
-//                                            var il = mth.Body.GetILProcessor();
+                                            //                                            var il = mth.Body.GetILProcessor();
                                             //Remove previous instructions to remove the array instance
 
                                             //bool remove = true;
@@ -524,7 +524,7 @@ namespace OTA.Patcher
                                     var fld = ins.Operand as FieldReference;
                                     if (fld.DeclaringType.Name == "Tile")
                                     {
-                                        
+
                                         //Vanilla 
                                         //ins.Operand = _asm.MainModule.Import(vt.Resolve().Fields.Single(x => x.Name == fld.Name));
 
@@ -601,28 +601,28 @@ namespace OTA.Patcher
                     SwapVanillaType(nt);
         }
 
-//        /// <summary>
-//        /// Swaps Terraria.Tile to OTA.Memory.MemTile
-//        /// </summary>
-//        public void SwapToVanillaTile()
-//        {
-//            foreach (var ty in _asm.MainModule.Types)
-//            {
-//                SwapVanillaType(ty);
-//            }
+        //        /// <summary>
+        //        /// Swaps Terraria.Tile to OTA.Memory.MemTile
+        //        /// </summary>
+        //        public void SwapToVanillaTile()
+        //        {
+        //            foreach (var ty in _asm.MainModule.Types)
+        //            {
+        //                SwapVanillaType(ty);
+        //            }
 
-//            //Swap the constructor
-//            var mainCctor = Terraria.Main.Methods.Single(x => x.Name == ".cctor");
-//            var constructor = _asm.MainModule.Import(_self.MainModule.Types.Single(x => x.Name == "TileCollection").Methods.Single(y => y.Name == ".ctor"));
+        //            //Swap the constructor
+        //            var mainCctor = Terraria.Main.Methods.Single(x => x.Name == ".cctor");
+        //            var constructor = _asm.MainModule.Import(_self.MainModule.Types.Single(x => x.Name == "TileCollection").Methods.Single(y => y.Name == ".ctor"));
 
-////            var il = mainCctor.Body.GetILProcessor();
-//            var ins = mainCctor.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
-//                          && x.Operand is MethodReference
-//                          && (x.Operand as MethodReference).Name == ".ctor"
-//                          && (x.Operand as MethodReference).DeclaringType is ArrayType
-//                          && ((x.Operand as MethodReference).DeclaringType as ArrayType).ElementType.Name == "MemTile");
-//            ins.Operand = constructor;
-//        }
+        ////            var il = mainCctor.Body.GetILProcessor();
+        //            var ins = mainCctor.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
+        //                          && x.Operand is MethodReference
+        //                          && (x.Operand as MethodReference).Name == ".ctor"
+        //                          && (x.Operand as MethodReference).DeclaringType is ArrayType
+        //                          && ((x.Operand as MethodReference).DeclaringType as ArrayType).ElementType.Name == "MemTile");
+        //            ins.Operand = constructor;
+        //        }
 
         #endregion
 
@@ -1141,7 +1141,7 @@ namespace OTA.Patcher
                 {
                     if (type.Events.Where(x => x.Name == itm.Name).Count() == 0)
                         itm.IsPrivate = false;
-                    else 
+                    else
                     {
                         continue;
                     }
@@ -1487,7 +1487,7 @@ namespace OTA.Patcher
             var initialise = Terraria.Main.Methods.Single(x => x.Name == "Initialize");
             var loc = initialise.Body.Instructions
                 .Where(x => x.OpCode == OpCodes.Ldsfld && x.Operand is FieldDefinition)
-                      //.Select(x => x.Operand as FieldDefinition)
+                //.Select(x => x.Operand as FieldDefinition)
                 .Single(x => (x.Operand as FieldDefinition).Name == "skipMenu");
             var il = initialise.Body.GetILProcessor();
             il.InsertBefore(loc, il.Create(OpCodes.Ret));

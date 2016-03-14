@@ -210,6 +210,10 @@ namespace OTA.Callbacks
 #pragma warning restore 0162
 
             Globals.CurrentState = ServerState.PreInitialisation; //This is to be before plugins and the web server. No event required.
+
+            //Prepare arguments
+            Terraria.Program.LaunchParameters = Terraria.Utils.ParseArguements(cmd);
+
             ProgramStart();
 
             var ctx = new HookContext()
