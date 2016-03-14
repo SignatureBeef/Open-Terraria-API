@@ -16,13 +16,35 @@ namespace OTA.Data.EF7
         AccessException
     }
 
+    public static class OTAContextFactory
+    {
+        public static string ConnectionType { get; set; }
+        public static string ConnectionString { get; set; }
+
+        public static OTAContext Create()
+        {
+            if (!String.IsNullOrEmpty(ConnectionType))
+                return new OTAContext()
+                {
+                    ConnectionType = ConnectionType,
+                    ConnectionString = ConnectionString
+                };
+
+            return null;
+        }
+    }
+
     public class OTAContext : DbContext
     {
+        public string ConnectionType { get; set; }
+        public string ConnectionString { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ota;Trusted_Connection=True;");
             //optionsBuilder.UseDynamic("sqlserver", "Server=.\\SQLEXPRESS;Database=ota;Trusted_Connection=True;");
-            optionsBuilder.UseDynamic("sqlite", "Data Source=database.sqlite");
+            //optionsBuilder.UseDynamic("sqlite", "Data Source=database.sqlite");
+            optionsBuilder.UseDynamic(ConnectionType, ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,7 +73,7 @@ namespace OTA.Data.EF7
                     Logging.ProgramLog.Debug.Log("Importing context {0} from {1}", ctx.Name, plg.Name);
 
                     var dbContext = (DbContext)Activator.CreateInstance(ctx);
-                    
+
                     var mth = ctx.GetMethod("OnModelCreating", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                     mth.Invoke(dbContext, new object[] { modelBuilder });
                     dbContext.Dispose();

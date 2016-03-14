@@ -657,17 +657,21 @@ namespace OTA.Plugin
 #elif ENTITY_FRAMEWORK_7
             try
             {
-                using (var ctx = new OTA.Data.EF7.OTAContext())
+                var ctx = OTA.Data.EF7.OTAContextFactory.Create();
+                if (ctx != null)
                 {
-                    ctx.Database.EnsureCreated();
-                    //ctx.Database.Migrate();
-                }
-                
-                //All instances of DbContext's for the current database must be created by now.
-                //Fire an event to populate the database with default values (if any)
-                foreach (var plg in Plugin.PluginManager.EnumeratePlugins)
-                {
-                    plg.NotifyDatabaseCreated();
+                    using (ctx)
+                    {
+                        ctx.Database.EnsureCreated();
+                        //ctx.Database.Migrate();
+                    }
+
+                    //All instances of DbContext's for the current database must be created by now.
+                    //Fire an event to populate the database with default values (if any)
+                    foreach (var plg in Plugin.PluginManager.EnumeratePlugins)
+                    {
+                        plg.NotifyDatabaseCreated();
+                    }
                 }
             }
             catch (Exception e)
