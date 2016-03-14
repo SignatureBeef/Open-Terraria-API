@@ -1,5 +1,5 @@
 # Open Terraria API (OTAPI)
-[![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](https://openterraria.com/slack) ![Linux](https://openterraria.com/bleeding-edge/svg/Linux) ![Mac](https://openterraria.com/bleeding-edge/svg/Mac) ![Server](https://openterraria.com/bleeding-edge/svg/Server) ![Windows](https://openterraria.com/bleeding-edge/svg/Windows)
+[![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](https://openterraria.com/#public-chat) ![Linux](https://openterraria.com/bleeding-edge/svg/Linux) ![Mac](https://openterraria.com/bleeding-edge/svg/Mac) ![Server](https://openterraria.com/bleeding-edge/svg/Server) ![Windows](https://openterraria.com/bleeding-edge/svg/Windows)
 
 *Supporting Terraria v1.3!*  
 
@@ -15,7 +15,7 @@ In this API it contains the tools to run a cross platform vanilla client or serv
 What makes this mod special is not only how quick updates are, but the capability to patch both the client and server binaries for each platform. This means you can write a generic cross platform plugin for both the client and server with one code base.
 
 
-While the client support is limited feel free to join the TDSM team over on slack to help out or request functionalities. [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](https://openterraria.com/slack)
+While the client support is limited feel free to join the TDSM team over on slack to help out or request functionalities. [![Slack](https://img.shields.io/badge/Chat%20on-Slack-blue.svg)](https://openterraria.com/#public-chat)
 
 
 Known plugins or mods using this API:
