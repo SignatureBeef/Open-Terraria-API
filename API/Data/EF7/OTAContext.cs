@@ -24,11 +24,7 @@ namespace OTA.Data.EF7
         public static OTAContext Create()
         {
             if (!String.IsNullOrEmpty(ConnectionProvider))
-                return new OTAContext()
-                {
-                    ConnectionProvider = ConnectionProvider,
-                    ConnectionString = ConnectionString
-                };
+                return new OTAContext(ConnectionProvider, ConnectionString);
 
             return null;
         }
@@ -38,6 +34,18 @@ namespace OTA.Data.EF7
     {
         public string ConnectionProvider { get; set; }
         public string ConnectionString { get; set; }
+
+        protected OTAContext()
+        {
+            this.ConnectionProvider = OTAContextFactory.ConnectionProvider;
+            this.ConnectionString = OTAContextFactory.ConnectionString;
+        }
+
+        public OTAContext(string connectionProvider, string connectionString)
+        {
+            this.ConnectionProvider = connectionProvider;
+            this.ConnectionString = connectionString;
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
