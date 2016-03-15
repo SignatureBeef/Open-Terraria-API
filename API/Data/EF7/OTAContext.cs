@@ -5,6 +5,7 @@ using Microsoft.Data.Entity;
 using OTA.Extensions;
 using System.Linq;
 using OTA.Data.EF7.Extensions;
+using OTA.Data.EF7.Models;
 
 namespace OTA.Data.EF7
 {
@@ -58,6 +59,10 @@ namespace OTA.Data.EF7
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<DataSetting>().HasKey(x => new[] { x.Context, x.DataKey });
+            //modelBuilder.Entity<DataSetting>().Property(x => x.Context).IsRequired();
+            //modelBuilder.Entity<DataSetting>().Property(x => x.DataKey).IsRequired();
 
             //This determines if the code running is the root context
             if (this.GetType() == typeof(OTAContext))

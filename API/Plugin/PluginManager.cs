@@ -11,7 +11,10 @@ using OTA.Plugin;
 using OTA.Logging;
 using OTA.Extensions;
 using Microsoft.Xna.Framework;
+
+#if ENTITY_FRAMEWORK_7
 using Microsoft.Data.Entity;
+#endif
 
 namespace OTA.Plugin
 {
@@ -637,6 +640,10 @@ namespace OTA.Plugin
                     }
                 }
             }
+
+            // Trigger OTA to start looking IDatabaseInitialisers'
+            //File.Delete("database.sqlite");
+            //Data.DatabaseFactory.Initialise("sqlite", "Data Source=database.sqlite");
 
 #if ENTITY_FRAMEWORK_6
             //Init the db here so:
