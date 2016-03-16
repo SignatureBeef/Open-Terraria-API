@@ -11,6 +11,7 @@ namespace OTA.Data
     public interface IDatabaseProvider
     {
         void Initialise(string provider, string connectionString);
+        void Migrate();
         IDbConnection CreateConnection();
     }
 }

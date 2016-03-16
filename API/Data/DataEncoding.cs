@@ -16,7 +16,17 @@ namespace OTA.Data
         /// </summary>
         /// <returns>The color.</returns>
         /// <param name="color">Color.</param>
-        public static uint EncodeColor(Color color)
+        public static int EncodeColorAsInt32(Color color)
+        {
+            return EncodeColorAsInt32(color.R, color.G, color.B, color.A);
+        }
+
+        /// <summary>
+        /// Encodes a color.
+        /// </summary>
+        /// <returns>The color.</returns>
+        /// <param name="color">Color.</param>
+        public static uint EncodeColorAsUInt32(Color color)
         {
             return color.PackedValue;
         }
@@ -29,7 +39,21 @@ namespace OTA.Data
         /// <param name="g">The green component.</param>
         /// <param name="b">The blue component.</param>
         /// <param name="a">The alpha component.</param>
-        public static uint EncodeColor(int r, int g, int b, int a = 255)
+        public static int EncodeColorAsInt32(byte r, byte g, byte b, byte a = 255)
+        {
+            //return ColorHelper.PackHelper(r, g, b, a);
+            return a | (r << 8) | (g << 16) | (b << 24);
+        }
+
+        /// <summary>
+        /// Encodes a color.
+        /// </summary>
+        /// <returns>The color.</returns>
+        /// <param name="r">The red component.</param>
+        /// <param name="g">The green component.</param>
+        /// <param name="b">The blue component.</param>
+        /// <param name="a">The alpha component.</param>
+        public static uint EncodeColorAsUInt32(byte r, byte g, byte b, byte a = 255)
         {
             return ColorHelper.PackHelper(r, g, b, a);
         }
@@ -39,11 +63,18 @@ namespace OTA.Data
         /// </summary>
         /// <returns>The color.</returns>
         /// <param name="color">Color.</param>
-        public static Color DecodeColor(uint color)
+        public static Color DecodeColor(int color)
         {
-            var col = default(Color);
-            col.PackedValue = color;
-            return col;
+            //var col = default(Color);
+            //col.PackedValue = color;
+
+            return new Color()
+            {
+                A = (byte)(color),
+                R = (byte)(color >> 8),
+                G = (byte)(color >> 16),
+                B = (byte)(color >> 24)
+            };
         }
 
         /// <summary>

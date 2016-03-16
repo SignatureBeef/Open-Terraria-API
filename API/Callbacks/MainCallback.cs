@@ -29,7 +29,7 @@ namespace OTA.Callbacks
                 {
                     if (a.Name == "Terraria" || a.Name == "TerrariaServer")
                         return Assembly.GetEntryAssembly();
-
+                    
                     if (PluginManager._plugins != null)
                     {
                         var items = PluginManager._plugins.Values
@@ -182,23 +182,31 @@ namespace OTA.Callbacks
             System.Threading.Thread.CurrentThread.Name = "Run";
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
-            //Preload our Libraries before we attempt anything
-            if (Directory.Exists(Globals.LibrariesPath))
-            {
-                foreach (var file in Directory.GetFiles(Globals.LibrariesPath, "*.dll"))
-                {
-                    try
-                    {
-                        var data = File.ReadAllBytes(file);
-                        AppDomain.CurrentDomain.Load(data);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Failed to load " + file);
-                        Console.WriteLine(e);
-                    }
-                }
-            }
+            //This was causing duplicate types to be loaded
+            ////Preload our Libraries before we attempt anything
+            //if (Directory.Exists(Globals.LibrariesPath))
+            //{
+            //    foreach (var file in Directory.GetFiles(Globals.LibrariesPath, "*.dll"))
+            //    {
+            //        try
+            //        {
+            //            if (!AppDomain.CurrentDomain.GetAssemblies().Any(x => x.Location == file))
+            //            {
+            //                var data = File.ReadAllBytes(file);
+            //                AppDomain.CurrentDomain.Load(data);)
+            //            }
+            //            else
+            //            {
+
+            //            }
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            Console.WriteLine("Failed to load " + file);
+            //            Console.WriteLine(e);
+            //        }
+            //    }
+            //}
 
 #pragma warning disable 0162
             if (!Globals.FullAPIDefined)

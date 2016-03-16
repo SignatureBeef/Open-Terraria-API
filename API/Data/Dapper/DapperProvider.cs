@@ -14,6 +14,19 @@ namespace OTA.Data.Dapper
 
         public void Initialise(string provider, string connectionString)
         {
+            System.IO.File.Delete("database.sqlite");
+            _provider = provider;
+            _connectionString = connectionString;
+
+            //Default shortcuts.
+            if (provider.ToLower() == "sqlite")
+            {
+                SetProviderType("SQLiteConnection");
+            }
+        }
+
+        public void Migrate()
+        {
             // To compliment our Dapper implementation we use the Fluent Migrator (+Runner) to solve various database
             // update problems that can arise due to numerous updates to OTAPI itself and it's plugins.
 
@@ -26,22 +39,12 @@ namespace OTA.Data.Dapper
 #endif
             var ctx = new RunnerContext(announcer)
             {
-                Database = provider,
-                Connection = connectionString,
-                Targets = Plugin.PluginManager._plugins.Keys.ToArray()
+                Database = _provider,
+                Connection = _connectionString,
+                Targets = Plugin.PluginManager.LoadedPlugins.ToArray()
             };
 
             new TaskExecutor(ctx, new DapperPluginAssemblyFactory(), new MigrationProcessorFactoryProvider()).Execute();
-
-            //Ready for use
-            _provider = provider;
-            _connectionString = connectionString;
-
-            //Default shortcuts.
-            if (provider.ToLower() == "sqlite")
-            {
-                SetProviderType("SQLiteConnection");
-            }
         }
 
         public void SetProviderType(string typeName)

@@ -36,6 +36,14 @@ namespace OTA.Plugin
         /// <value>The plugin count.</value>
         public static int PluginCount { get { return _plugins.Count; } }
 
+        public static IEnumerable<String> LoadedPlugins
+        {
+            get
+            {
+                return _plugins.Values.Select(x => x.Name);
+            }
+        }
+
         public static void RegisterHookSource(Type hookPoint)
         {
             lock (_sources)
@@ -711,6 +719,13 @@ namespace OTA.Plugin
         /// </summary>
         public static void EnablePlugins()
         {
+            //Run the pre enable event
+            //This can be used to setup the database
+            foreach (var plugin in EnumeratePlugins)
+            {
+                plugin.RunPreEnable();
+            }
+
             foreach (var plugin in EnumeratePlugins)
             {
                 plugin.Enable();

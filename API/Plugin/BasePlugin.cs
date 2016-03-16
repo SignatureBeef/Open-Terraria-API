@@ -167,6 +167,13 @@ namespace OTA.Plugin
         }
 
         /// <summary>
+        /// Pre enabled routine, typically used when all plugins are to be loaded and not enabled.
+        /// </summary>
+        protected virtual void PreEnable()
+        {
+        }
+
+        /// <summary>
         /// Enable routines, usually no more than enabled announcement and registering hooks
         /// </summary>
         protected virtual void Enabled()
@@ -677,6 +684,21 @@ namespace OTA.Plugin
             catch (Exception e)
             {
                 Logger.Log(e, "Exception in database created handler of plugin " + Name);
+                return false;
+            }
+
+            return true;
+        }
+
+        internal bool RunPreEnable()
+        {
+            try
+            {
+                PreEnable();
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e, "Exception in PreEnable of plugin " + Name);
                 return false;
             }
 
