@@ -364,6 +364,16 @@ namespace OTA.Plugin
             PluginLoadResult result = PluginLoadResult.Failed;
             try
             {
+                // If there are plugins in the root directory it can cause duplicate types
+                if (!Terraria.Initializers.LaunchInitializer.HasParameter("-plugin-clean"))
+                {
+                    var fn = Path.GetFileName(path);
+                    if (File.Exists(fn))
+                    {
+                        File.Delete(fn);
+                    }
+                }
+
                 Assembly assembly = null;
                 //                Type type = typeof(BasePlugin);
 
