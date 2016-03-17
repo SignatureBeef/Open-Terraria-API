@@ -31,7 +31,7 @@ namespace OTA.Data.Dapper
             // update problems that can arise due to numerous updates to OTAPI itself and it's plugins.
 
             // Construct a RunnerContext from the Fluent Migrator Runner assembly and pass it our plugin assemblies,
-            // and OTAPI itself for the runner to scan and apply migrations automatically.
+            // and OTAPI itself (todo when we use migrations) for the runner to scan and apply migrations automatically.
             // For debugging we should use the default console announcer, but for release mode we should really write
             // to a migration log e.g. Data\logs\migration_yyyyMMddHHmmss.log
 #if DEBUG
