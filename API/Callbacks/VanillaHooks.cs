@@ -58,10 +58,7 @@ namespace OTA.Callbacks
         /// <param name="player">Player.</param>
         public static void OnPlayerLeave(Player player)
         {
-            
-
-
-
+            if (player == null || !player.active) return;
 #if Full_API
             var ctx = new HookContext
             {
