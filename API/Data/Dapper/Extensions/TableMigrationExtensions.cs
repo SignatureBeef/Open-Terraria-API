@@ -1,4 +1,5 @@
-﻿using FluentMigrator.Builders;
+﻿using Dapper.Contrib.Extensions;
+using FluentMigrator.Builders;
 using FluentMigrator.Builders.Alter;
 using FluentMigrator.Builders.Alter.Table;
 using FluentMigrator.Builders.Create;
@@ -14,16 +15,6 @@ using System;
 
 namespace OTA.Data.Dapper.Extensions
 {
-    public class TableAttribute : Attribute
-    {
-        public string Name { get; private set; }
-
-        public TableAttribute(string name)
-        {
-            this.Name = name;
-        }
-    }
-
     public static class TableMapper
     {
         public static string TypeToName(Type type)
