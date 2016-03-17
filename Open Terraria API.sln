@@ -29,14 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTA.Commands", "OTA.Command
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|AnyCPU = Debug|AnyCPU
-		Debug|x86 = Debug|x86
 		Linux-Debug|AnyCPU = Linux-Debug|AnyCPU
 		Linux-Debug|x86 = Linux-Debug|x86
 		Mac-Debug|AnyCPU = Mac-Debug|AnyCPU
 		Mac-Debug|x86 = Mac-Debug|x86
-		Release|AnyCPU = Release|AnyCPU
-		Release|x86 = Release|x86
 		Server-Debug|AnyCPU = Server-Debug|AnyCPU
 		Server-Debug|x86 = Server-Debug|x86
 		Server-Release|AnyCPU = Server-Release|AnyCPU
@@ -45,10 +41,6 @@ Global
 		Windows-Debug|x86 = Windows-Debug|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug|AnyCPU.ActiveCfg = Windows-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug|AnyCPU.Build.0 = Windows-Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug|x86.ActiveCfg = Windows-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug|x86.Build.0 = Windows-Debug|x86
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Linux-Debug|AnyCPU.ActiveCfg = Linux-Debug|Any CPU
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Linux-Debug|AnyCPU.Build.0 = Linux-Debug|Any CPU
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Linux-Debug|x86.ActiveCfg = Linux-Debug|x86
@@ -57,10 +49,6 @@ Global
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Mac-Debug|AnyCPU.Build.0 = Mac-Debug|Any CPU
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Mac-Debug|x86.ActiveCfg = Mac-Debug|x86
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Mac-Debug|x86.Build.0 = Mac-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release|AnyCPU.ActiveCfg = Server-Release|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release|AnyCPU.Build.0 = Server-Release|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release|x86.ActiveCfg = Server-Release|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release|x86.Build.0 = Server-Release|x86
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.ActiveCfg = Server-Debug|Any CPU
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|AnyCPU.Build.0 = Server-Debug|Any CPU
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|x86.ActiveCfg = Server-Debug|x86
@@ -73,10 +61,6 @@ Global
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Windows-Debug|AnyCPU.Build.0 = Windows-Debug|Any CPU
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Windows-Debug|x86.ActiveCfg = Windows-Debug|x86
 		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Windows-Debug|x86.Build.0 = Windows-Debug|x86
-		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Debug|AnyCPU.ActiveCfg = Client-Debug|Any CPU
-		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Debug|AnyCPU.Build.0 = Client-Debug|Any CPU
-		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Debug|x86.ActiveCfg = Client-Debug|x86
-		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Debug|x86.Build.0 = Client-Debug|x86
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Linux-Debug|AnyCPU.ActiveCfg = Linux-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Linux-Debug|AnyCPU.Build.0 = Linux-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Linux-Debug|x86.ActiveCfg = Linux-Debug|x86
@@ -85,10 +69,6 @@ Global
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Mac-Debug|AnyCPU.Build.0 = Mac-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Mac-Debug|x86.ActiveCfg = Mac-Debug|x86
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Mac-Debug|x86.Build.0 = Mac-Debug|x86
-		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Release|AnyCPU.ActiveCfg = Server-Release|Any CPU
-		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Release|AnyCPU.Build.0 = Server-Release|Any CPU
-		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Release|x86.ActiveCfg = Server-Release|x86
-		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Release|x86.Build.0 = Server-Release|x86
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Server-Debug|AnyCPU.ActiveCfg = Server-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Server-Debug|AnyCPU.Build.0 = Server-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Server-Debug|x86.ActiveCfg = Server-Debug|x86
@@ -101,10 +81,6 @@ Global
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Windows-Debug|AnyCPU.Build.0 = Windows-Debug|Any CPU
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Windows-Debug|x86.ActiveCfg = Windows-Debug|x86
 		{0ED8C37C-355A-4271-92B8-F9ED66881C46}.Windows-Debug|x86.Build.0 = Windows-Debug|x86
-		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Debug|AnyCPU.ActiveCfg = Windows-Debug|Any CPU
-		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Debug|AnyCPU.Build.0 = Windows-Debug|Any CPU
-		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Debug|x86.ActiveCfg = Windows-Debug|x86
-		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Debug|x86.Build.0 = Windows-Debug|x86
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Linux-Debug|AnyCPU.ActiveCfg = Linux-Debug|Any CPU
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Linux-Debug|AnyCPU.Build.0 = Linux-Debug|Any CPU
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Linux-Debug|x86.ActiveCfg = Linux-Debug|x86
@@ -113,10 +89,6 @@ Global
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Mac-Debug|AnyCPU.Build.0 = Mac-Debug|Any CPU
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Mac-Debug|x86.ActiveCfg = Mac-Debug|x86
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Mac-Debug|x86.Build.0 = Mac-Debug|x86
-		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Release|AnyCPU.ActiveCfg = Server-Release|Any CPU
-		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Release|AnyCPU.Build.0 = Server-Release|Any CPU
-		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Release|x86.ActiveCfg = Server-Release|x86
-		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Release|x86.Build.0 = Server-Release|x86
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Server-Debug|AnyCPU.ActiveCfg = Server-Debug|Any CPU
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Server-Debug|AnyCPU.Build.0 = Server-Debug|Any CPU
 		{1F4BFCFD-FA1F-4E47-B44E-91E18EC785AC}.Server-Debug|x86.ActiveCfg = Server-Debug|x86

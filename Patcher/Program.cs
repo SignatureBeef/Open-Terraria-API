@@ -103,9 +103,9 @@ namespace OTA.Patcher
             if (projectFolder == null) projectFolder = FolderKind;
 
             var projectBinary = (pluginName ?? project).Replace("-", ".");
-            var p = debugFolder ? Path.Combine(root.FullName, project, "bin", "AnyCPU", projectFolder) : Path.Combine(root.FullName, project);
+            var p =/* debugFolder ? Path.Combine(root.FullName, project, "bin", "AnyCPU", projectFolder) : Path.Combine(root.FullName, project);
             if (!Directory.Exists(p))
-                p = debugFolder ? Path.Combine(root.FullName, project, "bin", projectFolder) : Path.Combine(root.FullName, project);
+                p =*/ debugFolder ? Path.Combine(root.FullName, project, "bin", projectFolder) : Path.Combine(root.FullName, project);
             if (!Directory.Exists(p))
                 p = Path.Combine(root.FullName, project, "bin", projectFolder + (debugFolder ? "-Debug" : String.Empty));
 
