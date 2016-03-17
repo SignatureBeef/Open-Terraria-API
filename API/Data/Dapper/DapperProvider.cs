@@ -21,7 +21,7 @@ namespace OTA.Data.Dapper
             //Default shortcuts.
             if (provider.ToLower() == "sqlite")
             {
-                SetProviderType("SQLiteConnection");
+                SetProviderType("SQLiteConnection", "System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139");
             }
         }
 
@@ -47,7 +47,7 @@ namespace OTA.Data.Dapper
             new TaskExecutor(ctx, new DapperPluginAssemblyFactory(), new MigrationProcessorFactoryProvider()).Execute();
         }
 
-        public void SetProviderType(string typeName)
+        public void SetProviderType(string typeName, string assemblyName = null)
         {
             var type = System.AppDomain.CurrentDomain
                 .GetAssemblies()
@@ -60,6 +60,14 @@ namespace OTA.Data.Dapper
                 type = System.AppDomain.CurrentDomain
                     .GetAssemblies()
                     .SelectMany(x => x.GetTypesLoaded())
+                    .Where(x => x.Name == typeName)
+                    .SingleOrDefault();
+            }
+
+            if (type == null && assemblyName != null)
+            {
+                type = System.Reflection.Assembly.Load(assemblyName)
+                    .GetTypesLoaded()
                     .Where(x => x.Name == typeName)
                     .SingleOrDefault();
             }
