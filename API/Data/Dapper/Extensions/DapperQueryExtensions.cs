@@ -18,7 +18,7 @@ namespace OTA.Data.Dapper.Extensions
             var sql = new StringBuilder();
 
             sql.Append("select count(*) from ");
-            sql.Append(TableMapper.TypeToName(typeof(T)));
+            sql.Append(TableMapper.TypeToName<T>());
             sql.Append(" where ");
             foreach (var prop in param.GetType().GetProperties())
             {
@@ -36,7 +36,7 @@ namespace OTA.Data.Dapper.Extensions
             var sql = new StringBuilder();
 
             sql.Append("select * from ");
-            sql.Append(TableMapper.TypeToName(typeof(T)));
+            sql.Append(TableMapper.TypeToName<T>());
             sql.Append(" where ");
             foreach (var prop in param.GetType().GetProperties())
             {
@@ -54,7 +54,7 @@ namespace OTA.Data.Dapper.Extensions
             var sql = new StringBuilder();
 
             sql.Append("delete from ");
-            sql.Append(TableMapper.TypeToName(typeof(T)));
+            sql.Append(TableMapper.TypeToName<T>());
             sql.Append(" where ");
             foreach (var prop in param.GetType().GetProperties())
             {
@@ -72,7 +72,7 @@ namespace OTA.Data.Dapper.Extensions
             var sql = new StringBuilder();
 
             sql.Append("select * from ");
-            sql.Append(TableMapper.TypeToName(typeof(T)));
+            sql.Append(TableMapper.TypeToName<T>());
             sql.Append(" where ");
             foreach (var prop in param.GetType().GetProperties())
             {
@@ -90,7 +90,7 @@ namespace OTA.Data.Dapper.Extensions
             var sql = new StringBuilder();
 
             sql.Append("select * from ");
-            sql.Append(TableMapper.TypeToName(typeof(T)));
+            sql.Append(TableMapper.TypeToName<T>());
             sql.Append(" where ");
             foreach (var prop in param.GetType().GetProperties())
             {
@@ -108,7 +108,7 @@ namespace OTA.Data.Dapper.Extensions
             var sql = new StringBuilder();
 
             sql.Append("select * from ");
-            sql.Append(TableMapper.TypeToName(typeof(T)));
+            sql.Append(TableMapper.TypeToName<T>());
             sql.Append(" where ");
             foreach (var prop in param.GetType().GetProperties())
             {
@@ -126,7 +126,7 @@ namespace OTA.Data.Dapper.Extensions
             var sql = new StringBuilder();
 
             sql.Append("select * from ");
-            sql.Append(TableMapper.TypeToName(typeof(T)));
+            sql.Append(TableMapper.TypeToName<T>());
             sql.Append(" where ");
             foreach (var prop in param.GetType().GetProperties())
             {
@@ -144,7 +144,7 @@ namespace OTA.Data.Dapper.Extensions
             var sql = new StringBuilder();
 
             sql.Append("select * from ");
-            sql.Append(TableMapper.TypeToName(typeof(T)));
+            sql.Append(TableMapper.TypeToName<T>());
             sql.Append(" where ");
             foreach (var prop in param.GetType().GetProperties())
             {
@@ -162,7 +162,7 @@ namespace OTA.Data.Dapper.Extensions
             var sql = new StringBuilder();
 
             sql.Append("select * from ");
-            sql.Append(TableMapper.TypeToName(typeof(T)));
+            sql.Append(TableMapper.TypeToName<T>());
             sql.Append(" where ");
             foreach (var prop in param.GetType().GetProperties())
             {

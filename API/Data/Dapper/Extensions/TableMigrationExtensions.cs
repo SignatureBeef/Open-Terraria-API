@@ -17,8 +17,9 @@ namespace OTA.Data.Dapper.Extensions
 {
     public static class TableMapper
     {
-        public static string TypeToName(Type type)
+        public static string TypeToName<T>()
         {
+            var type = typeof(T);
             var r = Attribute.GetCustomAttribute(type, typeof(TableAttribute)) as TableAttribute;
             if (r != null)
             {
@@ -32,42 +33,42 @@ namespace OTA.Data.Dapper.Extensions
     {
         public static ICreateTableWithColumnOrSchemaOrDescriptionSyntax Table<T>(this ICreateExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName(typeof(T)));
+            return root.Table(TableMapper.TypeToName<T>());
         }
 
         public static IAlterTableAddColumnOrAlterColumnOrSchemaOrDescriptionSyntax Table<T>(this IAlterExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName(typeof(T)));
+            return root.Table(TableMapper.TypeToName<T>());
         }
 
         public static IInSchemaSyntax Table<T>(this IDeleteExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName(typeof(T)));
+            return root.Table(TableMapper.TypeToName<T>());
         }
 
         public static IInsertDataOrInSchemaSyntax IntoTable<T>(this IInsertExpressionRoot root) where T : class
         {
-            return root.IntoTable(TableMapper.TypeToName(typeof(T)));
+            return root.IntoTable(TableMapper.TypeToName<T>());
         }
 
         public static IRenameTableToOrInSchemaSyntax Table<T>(this IRenameExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName(typeof(T)));
+            return root.Table(TableMapper.TypeToName<T>());
         }
 
         public static IInSchemaSyntax To<T>(this IRenameTableToSyntax root) where T : class
         {
-            return root.To(TableMapper.TypeToName(typeof(T)));
+            return root.To(TableMapper.TypeToName<T>());
         }
 
         public static ISchemaTableSyntax Table<T>(this ISchemaExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName(typeof(T)));
+            return root.Table(TableMapper.TypeToName<T>());
         }
 
         public static IUpdateSetOrInSchemaSyntax Table<T>(this IUpdateExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName(typeof(T)));
+            return root.Table(TableMapper.TypeToName<T>());
         }
     }
 }
