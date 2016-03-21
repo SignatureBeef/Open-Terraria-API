@@ -64,7 +64,7 @@ namespace OTA.Commands
             var ctx = new HookContext
             {
                 Sender = sender,
-//                Player = sender as Player
+                //                Player = sender as Player
             };
 
             var hargs = new CommandArgs.CommandIssued();
@@ -90,6 +90,12 @@ namespace OTA.Commands
 
                     if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
                         return true;
+
+                    if (ctx.Result == HookResult.CONTINUE && OTA.Permissions.Permissions.GetPermission(sender, info.Node) != Permissions.Permission.Permitted)
+                    {
+                        sender.SendMessage("Access denied.", G: 0, B: 0);
+                        return true;
+                    }
 
                     try
                     {
@@ -138,6 +144,12 @@ namespace OTA.Commands
 
                         if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
                             return true;
+
+                        if (ctx.Result == HookResult.CONTINUE && OTA.Permissions.Permissions.GetPermission(sender, info.Node) != Permissions.Permission.Permitted)
+                        {
+                            sender.SendMessage("Access denied.", G: 0, B: 0);
+                            return true;
+                        }
 
                         try
                         {
@@ -274,7 +286,7 @@ namespace OTA.Commands
         public bool FindStringCommand(string prefix, out CommandDefinition info)
         {
             info = null;
-        
+
             prefix = prefix.ToLower();
 
             if (commands.TryGetValue(prefix, out info))
@@ -282,14 +294,14 @@ namespace OTA.Commands
                 if (info.Plugin.IsEnabled)
                     return info.stringCallback != null;
             }
-        
+
             return false;
         }
 
         public bool FindTokenCommand(string prefix, out CommandDefinition info)
         {
             info = null;
-        
+
             prefix = prefix.ToLower();
 
             if (commands.TryGetValue(prefix, out info))
@@ -300,18 +312,18 @@ namespace OTA.Commands
                         return true;
                 }
             }
-        
+
             return false;
         }
 
-        internal T FindOrCreate<T>(string prefix, bool replaceExisting = false)  where T : CommandDefinition
+        internal T FindOrCreate<T>(string prefix, bool replaceExisting = false) where T : CommandDefinition
         {
             if (commands.ContainsKey(prefix))
             {
                 if (!replaceExisting)
                     throw new ApplicationException("AddCommand: duplicate command: " + prefix);
 
-                if(!Remove(prefix))
+                if (!Remove(prefix))
                     throw new ApplicationException("AddCommand: failed to replace command: " + prefix);
             }
 
