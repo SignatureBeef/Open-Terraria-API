@@ -91,7 +91,7 @@ namespace OTA.Commands
                     if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
                         return true;
 
-                    if (ctx.Result == HookResult.CONTINUE && OTA.Permissions.Permissions.GetPermission(sender, info.Node) != Permissions.Permission.Permitted)
+                    if (ctx.Result != HookResult.CONTINUE && OTA.Permissions.Permissions.GetPermission(sender, info.Node) != Permissions.Permission.Permitted)
                     {
                         sender.SendMessage("Access denied.", G: 0, B: 0);
                         return true;
@@ -145,7 +145,7 @@ namespace OTA.Commands
                         if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
                             return true;
 
-                        if (ctx.Result == HookResult.CONTINUE && OTA.Permissions.Permissions.GetPermission(sender, info.Node) != Permissions.Permission.Permitted)
+                        if (ctx.Result != HookResult.CONTINUE && OTA.Permissions.Permissions.GetPermission(sender, info.Node) != Permissions.Permission.Permitted)
                         {
                             sender.SendMessage("Access denied.", G: 0, B: 0);
                             return true;
