@@ -36,11 +36,23 @@ namespace OTA.Plugin
         /// <value>The plugin count.</value>
         public static int PluginCount { get { return _plugins.Count; } }
 
-        public static IEnumerable<String> LoadedPlugins
+        public static class Loaded
         {
-            get
+
+            public static IEnumerable<String> Names
             {
-                return _plugins.Values.Select(x => x.Name);
+                get
+                {
+                    return _plugins.Values.Select(x => x.Name);
+                }
+            }
+
+            public static IEnumerable<String> NameAndVersions
+            {
+                get
+                {
+                    return _plugins.Values.Select(x => x.Name + ' ' + x.Version);
+                }
             }
         }
 

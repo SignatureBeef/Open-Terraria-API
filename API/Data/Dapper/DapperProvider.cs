@@ -41,7 +41,7 @@ namespace OTA.Data.Dapper
             {
                 Database = _provider,
                 Connection = _connectionString,
-                Targets = Plugin.PluginManager.LoadedPlugins.ToArray()
+                Targets = Plugin.PluginManager.Loaded.Names.ToArray()
             };
 
             new TaskExecutor(ctx, new DapperPluginAssemblyFactory(), new MigrationProcessorFactoryProvider()).Execute();
