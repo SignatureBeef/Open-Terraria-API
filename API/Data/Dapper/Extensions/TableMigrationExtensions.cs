@@ -11,28 +11,11 @@ using FluentMigrator.Builders.Rename.Table;
 using FluentMigrator.Builders.Schema;
 using FluentMigrator.Builders.Schema.Table;
 using FluentMigrator.Builders.Update;
+using OTA.Data.Dapper.Mappers;
 using System;
 
 namespace OTA.Data.Dapper.Extensions
 {
-    public static class TableMapper
-    {
-        public static string TypeToName<T>()
-        {
-            return TypeToName(typeof(T));
-        }
-
-        public static string TypeToName(Type type)
-        {
-            var r = Attribute.GetCustomAttribute(type, typeof(TableAttribute)) as TableAttribute;
-            if (r != null)
-            {
-                return r.Name;
-            }
-            return type.Name + 's';
-        }
-    }
-
     public static class TableMigrationExtensions
     {
         public static ICreateTableWithColumnOrSchemaOrDescriptionSyntax Table<T>(this ICreateExpressionRoot root) where T : class

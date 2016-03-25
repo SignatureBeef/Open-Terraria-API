@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using OTA.Data.Dapper.Mappers;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -21,7 +22,7 @@ namespace OTA.Data.Dapper.Extensions
             foreach (var prop in param.GetType().GetProperties())
             {
                 if (and) builder.Append(" and ");
-                builder.Append(prop.Name);
+                builder.Append(ColumnMapper.Enclose(prop.Name));
                 builder.Append("=");
                 builder.Append("@");
                 builder.Append(prop.Name);

@@ -3,6 +3,7 @@ using FluentMigrator.Runner.Initialization;
 using FluentMigrator.Runner.Initialization.AssemblyLoader;
 using FluentMigrator.Runner.Processors;
 using OTA.Data.Dapper.Extensions;
+using OTA.Data.Dapper.Mappers;
 using OTA.Extensions;
 using System.Data;
 using System.Linq;
