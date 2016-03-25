@@ -43,7 +43,7 @@ namespace OTA.Data.Dapper
                 SetProviderType("NpgsqlConnection", "Npgsql, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7");
                 SqlMapperExtensions.TableNameMapper += (type) =>
                 {
-                    return '"' + TableMapper.TypeToName(type) + '"';
+                    return TableMapper.TypeToName(type);
                 };
             }
         }

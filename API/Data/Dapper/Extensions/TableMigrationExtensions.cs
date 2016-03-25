@@ -20,42 +20,42 @@ namespace OTA.Data.Dapper.Extensions
     {
         public static ICreateTableWithColumnOrSchemaOrDescriptionSyntax Table<T>(this ICreateExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName<T>());
+            return root.Table(TableMapper.TypeToName<T>(enclose: false));
         }
 
         public static IAlterTableAddColumnOrAlterColumnOrSchemaOrDescriptionSyntax Table<T>(this IAlterExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName<T>());
+            return root.Table(TableMapper.TypeToName<T>(enclose: false));
         }
 
         public static IInSchemaSyntax Table<T>(this IDeleteExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName<T>());
+            return root.Table(TableMapper.TypeToName<T>(enclose: false));
         }
 
         public static IInsertDataOrInSchemaSyntax IntoTable<T>(this IInsertExpressionRoot root) where T : class
         {
-            return root.IntoTable(TableMapper.TypeToName<T>());
+            return root.IntoTable(TableMapper.TypeToName<T>(enclose: false));
         }
 
         public static IRenameTableToOrInSchemaSyntax Table<T>(this IRenameExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName<T>());
+            return root.Table(TableMapper.TypeToName<T>(enclose: false));
         }
 
         public static IInSchemaSyntax To<T>(this IRenameTableToSyntax root) where T : class
         {
-            return root.To(TableMapper.TypeToName<T>());
+            return root.To(TableMapper.TypeToName<T>(enclose: false));
         }
 
         public static ISchemaTableSyntax Table<T>(this ISchemaExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName<T>());
+            return root.Table(TableMapper.TypeToName<T>(enclose: false));
         }
 
         public static IUpdateSetOrInSchemaSyntax Table<T>(this IUpdateExpressionRoot root) where T : class
         {
-            return root.Table(TableMapper.TypeToName<T>());
+            return root.Table(TableMapper.TypeToName<T>(enclose: false));
         }
     }
 }

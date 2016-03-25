@@ -5,19 +5,26 @@ namespace OTA.Data.Dapper.Mappers
 {
     public static class TableMapper
     {
-        public static string TypeToName<T>()
+        public static string TypeToName<T>(bool enclose = true)
         {
-            return TypeToName(typeof(T));
+            return TypeToName(typeof(T), enclose);
         }
 
-        public static string TypeToName(Type type)
+        public static string TypeToName(Type type, bool enclose = true)
         {
             var r = Attribute.GetCustomAttribute(type, typeof(TableAttribute)) as TableAttribute;
+            var tableName = String.Empty;
             if (r != null)
             {
-                return r.Name;
+                tableName = r.Name;
             }
-            return type.Name + 's';
+            else tableName = type.Name + 's';
+
+            if (enclose && DatabaseFactory.Provider == "postgres")
+            {
+                return '"' + tableName + '"';
+            }
+            return tableName;
         }
     }
 }
