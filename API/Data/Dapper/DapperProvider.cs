@@ -14,7 +14,6 @@ namespace OTA.Data.Dapper
 
         public void Initialise(string provider, string connectionString)
         {
-            System.IO.File.Delete("database.sqlite");
             _provider = provider;
             _connectionString = connectionString;
 
