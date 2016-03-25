@@ -1,6 +1,8 @@
-﻿using FluentMigrator.Runner.Initialization;
+﻿using Dapper.Contrib.Extensions;
+using FluentMigrator.Runner.Initialization;
 using FluentMigrator.Runner.Initialization.AssemblyLoader;
 using FluentMigrator.Runner.Processors;
+using OTA.Data.Dapper.Extensions;
 using OTA.Extensions;
 using System.Data;
 using System.Linq;
@@ -23,9 +25,23 @@ namespace OTA.Data.Dapper
             {
                 SetProviderType("SQLiteConnection", "System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139");
             }
-            else if (lowered == "mysql")
+            else if (new[] { "mysql", "mariadb" }.Contains(lowered))
             {
                 SetProviderType("MySqlConnection", "MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d");
+                _provider = "mysql";
+            }
+            else if (new[] { "mssql", "sqlserver" }.Contains(lowered))
+            {
+                SetProviderType<System.Data.SqlClient.SqlConnection>();
+                _provider = "sqlserver";
+            }
+            else if (lowered == "postgres")
+            {
+                SetProviderType("NpgsqlConnection", "Npgsql, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7");
+                SqlMapperExtensions.TableNameMapper += (type) =>
+                {
+                    return '"' + TableMapper.TypeToName(type) + '"';
+                };
             }
         }
 
@@ -80,6 +96,11 @@ namespace OTA.Data.Dapper
             {
                 _providerConstructor = type.GetConstructor(new System.Type[] { typeof(string) });
             }
+        }
+
+        public void SetProviderType<T>()
+        {
+            _providerConstructor = typeof(T).GetConstructor(new System.Type[] { typeof(string) });
         }
 
         public IDbConnection CreateConnection()
