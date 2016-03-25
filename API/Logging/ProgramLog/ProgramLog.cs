@@ -282,7 +282,15 @@ namespace OTA.Logging
         static string GeneratePrefix(LogEntry entry, OutputEntry output)
         {
             if (entry.time != default(DateTime))
-                return $"{entry.time} {output.threadName} {entry.channel.Name}> ";
+            {
+                if (entry.channel != null && output.threadName != null)
+                    return $"{entry.time} {output.threadName} {entry.channel.Name}> ";
+                else if (entry.channel != null)
+                    return $"{entry.time} {entry.channel.Name}> ";
+                else if (output.threadName != null)
+                    return $"{entry.time} {output.threadName}> ";
+                else return $"{entry.time}> ";
+            }
 
             return null;
         }
