@@ -18,9 +18,14 @@ namespace OTA.Data.Dapper
             _connectionString = connectionString;
 
             //Default shortcuts.
-            if (provider.ToLower() == "sqlite")
+            var lowered = provider.ToLower();
+            if (lowered == "sqlite")
             {
                 SetProviderType("SQLiteConnection", "System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139");
+            }
+            else if (lowered == "mysql")
+            {
+                SetProviderType("MySqlConnection", "MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d");
             }
         }
 
