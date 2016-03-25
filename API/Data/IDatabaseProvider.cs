@@ -13,5 +13,7 @@ namespace OTA.Data
         void Initialise(string provider, string connectionString);
         void Migrate();
         IDbConnection CreateConnection();
+
+        string Provider { get; }
     }
 }
