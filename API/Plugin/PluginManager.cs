@@ -56,6 +56,26 @@ namespace OTA.Plugin
             }
         }
 
+        public static class Enabled
+        {
+
+            public static IEnumerable<String> Names
+            {
+                get
+                {
+                    return _plugins.Values.Where(p => p.IsEnabled).Select(x => x.Name);
+                }
+            }
+
+            public static IEnumerable<String> NameAndVersions
+            {
+                get
+                {
+                    return _plugins.Values.Where(p => p.IsEnabled).Select(x => x.Name + ' ' + x.Version);
+                }
+            }
+        }
+
         public static void RegisterHookSource(Type hookPoint)
         {
             lock (_sources)
