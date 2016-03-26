@@ -48,7 +48,8 @@ namespace OTA.Commands
                 if (log)
                     OTA.Logging.ProgramLog.Log(player.SenderName + " sent command: " + line);
 
-                return ParseAndProcess(player, line);
+                ParseAndProcess(player, line);
+                return true;
             }
 
             return false;
