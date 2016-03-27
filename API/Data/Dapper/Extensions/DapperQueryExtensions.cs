@@ -14,11 +14,11 @@ namespace OTA.Data.Dapper.Extensions
             return cnn.Count<T>(param, transaction, commandTimeout, commandType) > 0;
         }
 
-        public static void AddClause(this StringBuilder builder, object param)
+        public static void AddClause(this StringBuilder builder, object param, bool addWhere = true, bool isFirst = false)
         {
-            builder.Append(" where ");
+            if (addWhere) builder.Append(" where ");
 
-            var and = false;
+            var and = isFirst;
             foreach (var prop in param.GetType().GetProperties())
             {
                 if (and) builder.Append(" and ");
