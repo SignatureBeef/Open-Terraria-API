@@ -275,6 +275,7 @@
     <Compile Include="Data\Dapper\Extensions\TableMigrationExtensions.cs" />
     <Compile Include="Data\Dapper\Mappers\ColumnMapper.cs" />
     <Compile Include="Data\Dapper\Mappers\TableMapper.cs" />
+    <Compile Include="Data\Dapper\OTAMigrationAttribute.cs" />
     <Compile Include="Data\DatabaseFactory.cs" />
     <Compile Include="Data\EF7\Extensions\DbContextOptionsBuilderExtensions.cs" />
     <Compile Include="Data\EF7\Extensions\MigrationExtensions.cs" />
