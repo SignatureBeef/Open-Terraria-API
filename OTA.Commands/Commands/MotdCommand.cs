@@ -11,7 +11,7 @@ namespace OTA.Commands
         {
             AddCommand("motd")
                 .WithDescription("Print or change the message of the day.")
-                .ByPermissionNode("terraria.motd")
+                .WithPermissionNode("terraria.motd")
                 .Calls(MOTD);
         }
 

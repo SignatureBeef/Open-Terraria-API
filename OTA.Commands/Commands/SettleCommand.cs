@@ -11,7 +11,7 @@ namespace OTA.Commands
             AddCommand("settle")
                 .SetDefaultUsage()
                 .WithDescription("Settle all water.")
-                .ByPermissionNode("terraria.settle")
+                .WithPermissionNode("terraria.settle")
                 .Calls(Settle);
         }
 

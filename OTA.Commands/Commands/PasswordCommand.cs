@@ -11,7 +11,7 @@ namespace OTA.Commands
         {
             AddCommand("password")
                 .WithDescription("Shows or changes to password.")
-                .ByPermissionNode("terraria.password")
+                .WithPermissionNode("terraria.password")
                 .Calls(Password);
         }
 

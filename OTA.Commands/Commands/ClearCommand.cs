@@ -11,13 +11,13 @@ namespace OTA.Commands
             AddCommand("clear")
                 .SetDefaultUsage()
                 .WithDescription("Clear the console window.")
-                .ByPermissionNode("terraria.clear")
+                .WithPermissionNode("terraria.clear")
                 .Calls(Clear);
         }
 
         public void Clear(ISender sender, ArgumentList args)
         {
-            if (sender is ConsoleSender && !Environment.UserInteractive)
+            if (sender is ConsoleSender)
             {
                 Console.Clear();
             }

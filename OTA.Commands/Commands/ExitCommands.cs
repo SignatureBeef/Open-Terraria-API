@@ -11,13 +11,13 @@ namespace OTA.Commands
             AddCommand("exit")
                 .SetDefaultUsage()
                 .WithDescription("Shutdown the server and save.")
-                .ByPermissionNode("terraria.exit")
+                .WithPermissionNode("terraria.exit")
                 .Calls(Exit);
             
             AddCommand("exit-nosave")
                 .SetDefaultUsage()
                 .WithDescription("Shutdown the server without saving.")
-                .ByPermissionNode("terraria.exit-nosave")
+                .WithPermissionNode("terraria.exit-nosave")
                 .Calls(ExitNoSave);
         }
 

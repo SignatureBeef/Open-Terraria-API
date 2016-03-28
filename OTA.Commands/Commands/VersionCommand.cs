@@ -11,7 +11,7 @@ namespace OTA.Commands
             AddCommand("version")
                 .SetDefaultUsage()
                 .WithDescription("Print version number.")
-                .ByPermissionNode("terraria.version")
+                .WithPermissionNode("terraria.version")
                 .Calls(Version);
         }
 

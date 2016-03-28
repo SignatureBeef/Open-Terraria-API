@@ -7,6 +7,7 @@ using System.Text;
 using OTA.Command;
 using System.Collections;
 using System.Linq;
+using OTA.DebugFramework;
 
 namespace OTA.Commands
 {
@@ -19,73 +20,90 @@ namespace OTA.Commands
 
         public char PlayerCommandPrefix = '/';
 
-        /// <summary>
-        /// Parses new console command
-        /// </summary>
-        /// <param name="line">Command to parse</param>
-        /// <param name="sender">Sending entity</param>
-        public bool ParseConsoleCommand(string line, ConsoleSender sender = null)
-        {
-            line = line.Trim();
 
-            if (sender == null)
-                sender = ConsoleSender;
+        ///// <summary>
+        ///// Parses new console command
+        ///// </summary>
+        ///// <param name="line">Command to parse</param>
+        ///// <param name="sender">Sending entity</param>
+        //public bool ParseConsoleCommand(string line, ConsoleSender sender = null)
+        //{
+        //    line = line.Trim();
 
-            return ParseAndProcess(sender, line);
-        }
+        //    if (sender == null)
+        //        sender = ConsoleSender;
 
-        /// <summary>
-        /// Parses player commands
-        /// </summary>
-        /// <param name="player">Sending player</param>
-        /// <param name="line">Command to parse</param>
-        public bool ParsePlayerCommand(ISender player, string line, bool log = true)
-        {
-            if (!String.IsNullOrEmpty(line) && line[0] == PlayerCommandPrefix)
-            {
-                line = line.Remove(0, 1);
+        //    return ParseAndProcess(sender, line);
+        //}
 
-                if (log)
-                    OTA.Logging.ProgramLog.Log(player.SenderName + " sent command: " + line);
+        ///// <summary>
+        ///// Parses player commands
+        ///// </summary>
+        ///// <param name="player">Sending player</param>
+        ///// <param name="line">Command to parse</param>
+        //public bool ParsePlayerCommand(ISender player, string line, bool log = true)
+        //{
+        //    if (!String.IsNullOrEmpty(line) && line[0] == PlayerCommandPrefix)
+        //    {
+        //        line = line.Remove(0, 1);
 
-                ParseAndProcess(player, line);
-                return true;
-            }
+        //        if (log)
+        //            OTA.Logging.ProgramLog.Log(player.SenderName + " sent command: " + line);
 
-            return false;
-        }
+        //        ParseAndProcess(player, line);
+        //        return true;
+        //    }
+
+        //    return false;
+        //}
+
 
         /// <summary>
         /// Parses and process a command from a sender
         /// </summary>
         /// <param name="sender">Sender.</param>
-        /// <param name="line">Line.</param>
-        public bool ParseAndProcess(ISender sender, string line)
+        /// <param name="text">text.</param>
+        public bool ParseAndProcess(ISender sender, string text)
         {
+            if (sender == null)
+                throw new System.ArgumentException("sender cannot me null", "original");
+            if (text == null)
+                throw new System.ArgumentException("Parameter cannot be null", "original");
+
+            text = text.Trim();
+            if (text.Length == 0)
+                throw new System.ArgumentException("Parameter cannot be null", "original");
+
+            if (text[0] == PlayerCommandPrefix)
+                text = text.Remove(0, 1);
+
             var ctx = new HookContext
             {
                 Sender = sender,
                 //                Player = sender as Player
             };
 
-            var hargs = new CommandArgs.CommandIssued();
+            var hargs = new CommandArgs.CommandIssued()
+            {
+                Prefix = text
+            };
 
             try
             {
                 CommandDefinition info;
 
-                var firstSpace = line.IndexOf(' ');
+                var firstSpace = text.IndexOf(' ');
+                if (firstSpace > -1)
+                    hargs.Prefix = text.Substring(0, firstSpace);
 
-                if (firstSpace < 0)
-                    firstSpace = line.Length;
+                var args = TokenizeArguments(text);
 
-                var prefix = line.Substring(0, firstSpace).ToLower();
-
-                hargs.Prefix = prefix;
-
-                if (FindStringCommand(prefix, out info))
+                if (FindCommand(args, out info))
                 {
-                    hargs.ArgumentString = (firstSpace < line.Length - 1 ? line.Substring(firstSpace + 1, line.Length - firstSpace - 1) : "").Trim();
+                    hargs.Arguments = args;
+                    hargs.ArgumentString = args.ToString();
+
+                    args.Plugin = info.Plugin;
 
                     CommandEvents.CommandIssued.Invoke(ref ctx, ref hargs);
 
@@ -100,7 +118,10 @@ namespace OTA.Commands
 
                     try
                     {
-                        info.Run(sender, hargs.ArgumentString);
+                        if (info._tokenCallback != null)
+                            info.Run(sender, hargs.Arguments);
+                        else if (info._stringCallback != null)
+                            info.Run(sender, hargs.ArgumentString);
                     }
                     catch (NLua.Exceptions.LuaScriptException e)
                     {
@@ -111,7 +132,7 @@ namespace OTA.Commands
                             {
                                 if (ex is CommandError)
                                 {
-                                    sender.SendMessage(prefix + ": " + ex.Message);
+                                    sender.SendMessage(hargs.Prefix + ": " + ex.Message);
                                     info.ShowHelp(sender);
                                 }
                             }
@@ -123,69 +144,14 @@ namespace OTA.Commands
                     }
                     catch (CommandError e)
                     {
-                        sender.SendMessage(prefix + ": " + e.Message);
+                        sender.SendMessage(hargs.Prefix + ": " + e.Message);
                         info.ShowHelp(sender);
                     }
                     return true;
                 }
-
-                var args = new ArgumentList();
-                var command = Tokenize(line, args);
-
-                if (command != null)
+                else
                 {
-                    if (FindTokenCommand(command, out info))
-                    {
-                        hargs.Arguments = args;
-                        hargs.ArgumentString = args.ToString();
-
-                        args.Plugin = info.Plugin;
-
-                        CommandEvents.CommandIssued.Invoke(ref ctx, ref hargs);
-
-                        if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
-                            return true;
-
-                        if (ctx.Result != HookResult.CONTINUE && OTA.Permissions.Permissions.GetPermission(sender, info.Node) != Permissions.Permission.Permitted)
-                        {
-                            sender.SendMessage("Access denied.", G: 0, B: 0);
-                            return true;
-                        }
-
-                        try
-                        {
-                            info.Run(sender, hargs.Arguments);
-                        }
-                        catch (NLua.Exceptions.LuaScriptException e)
-                        {
-                            if (e.IsNetException)
-                            {
-                                var ex = e.GetBaseException();
-                                if (ex != null)
-                                {
-                                    if (ex is CommandError)
-                                    {
-                                        sender.SendMessage(command + ": " + ex.Message);
-                                        info.ShowHelp(sender);
-                                    }
-                                }
-                            }
-                        }
-                        catch (ExitException e)
-                        {
-                            throw e;
-                        }
-                        catch (CommandError e)
-                        {
-                            sender.SendMessage(command + ": " + e.Message);
-                            info.ShowHelp(sender);
-                        }
-                        return true;
-                    }
-                    else
-                    {
-                        sender.SendMessage(String.Format("No such command '{0}'.", command));
-                    }
+                    sender.SendMessage(String.Format("No such command '{0}'.", hargs.Prefix));
                 }
             }
             catch (ExitException e)
@@ -215,11 +181,10 @@ namespace OTA.Commands
         /// </summary>
         /// <param name="command">Whole command line without trailing newline </param>
         /// <param name="args">An empty list to put the arguments in </param>
-        public static string Tokenize(string command, List<string> args)
+        public static void Tokenize(string command, Action<string> segmentCallback)
         {
             char l = '\0';
             var b = new StringBuilder();
-            string result = null;
             int s = 0;
 
             foreach (char cc in command.Trim())
@@ -233,10 +198,7 @@ namespace OTA.Commands
                                 s = 1;
                             else if (c == ' ' && l != '\\' && b.Length > 0)
                             {
-                                if (result == null)
-                                    result = b.ToString();
-                                else
-                                    args.Add(b.ToString());
+                                segmentCallback(b.ToString());
                                 b.Length = 0;
                             }
                             else if ((c != '\\' && c != ' ') || l == '\\')
@@ -267,39 +229,61 @@ namespace OTA.Commands
 
             if (b.Length > 0)
             {
-                if (result == null)
-                    result = b.ToString();
-                else
-                    args.Add(b.ToString());
+                segmentCallback(b.ToString());
             }
+        }
 
-            return result;
+        /// <summary>
+        /// Splits a command on spaces, with support for "parameters in quotes" and non-breaking\ spaces.
+        /// Literal quotes need to be escaped like this: \"
+        /// Literal backslashes need to escaped like this: \\
+        /// Returns the first token
+        /// </summary>
+        /// <param name="command">Whole command line without trailing newline </param>
+        /// <param name="args">An empty list to put the arguments in </param>
+        public static ArgumentList TokenizeArguments(string command)
+        {
+            var args = new ArgumentList();
+
+            Tokenize(command, (segment) =>
+            {
+                args.Add(segment);
+            });
+
+            return args;
         }
 
         // for binary compatibility
         public static List<string> Tokenize(string command)
         {
-            List<string> args = new List<string>();
-            args.Insert(0, Tokenize(command, args));
-            return args;
+            return (List<string>)TokenizeArguments(command);
         }
 
-        public bool FindStringCommand(string prefix, out CommandDefinition info)
+        public bool FindCommand(ArgumentList args, out CommandDefinition info)
         {
             info = null;
 
-            prefix = prefix.ToLower();
+            string part = null;
+            string node = null;
+            CommandDefinition cur = null;
 
-            if (commands.TryGetValue(prefix, out info))
+            while (args.Count > 0 && (part = args.GetString(0)) != null)
             {
-                if (info.Plugin.IsEnabled)
-                    return info.stringCallback != null;
+                if (node == null) node = part;
+                else if (part != null) node += '.' + part;
+
+                if (FindCommand(node, out cur))
+                {
+                    info = cur;
+                    args.RemoveRange(0, 1);
+                }
+                else break;
             }
 
-            return false;
+            return info != null;
         }
 
-        public bool FindTokenCommand(string prefix, out CommandDefinition info)
+        public bool FindCommand(string prefix, out CommandDefinition info)
         {
             info = null;
 
@@ -309,7 +293,7 @@ namespace OTA.Commands
             {
                 if (info.Plugin.IsEnabled)
                 {
-                    if ((info.tokenCallback != null || info.LuaCallback != null))
+                    if (info._tokenCallback != null || info._stringCallback != null || info.LuaCallback != null)
                         return true;
                 }
             }
@@ -317,24 +301,38 @@ namespace OTA.Commands
             return false;
         }
 
-        internal T FindOrCreate<T>(string prefix, bool replaceExisting = false) where T : CommandDefinition
+        internal T FindOrCreate<T>(string[] aliases, CommandDefinition parent = null) where T : CommandDefinition
         {
-            if (commands.ContainsKey(prefix))
+            T cmd = null;
+            foreach (var alias in aliases)
             {
-                if (!replaceExisting)
-                    throw new ApplicationException("AddCommand: duplicate command: " + prefix);
+                var key = alias;
+                if (parent != null) key = $"{parent.DefaultAlias}.{alias}";
+                if (commands.ContainsKey(key))
+                {
+                    if (!Remove(key))
+                        throw new ApplicationException("AddCommand: failed to replace command: " + key);
+                }
 
-                if (!Remove(prefix))
-                    throw new ApplicationException("AddCommand: failed to replace command: " + prefix);
-            }
+                if (cmd == null)
+                {
+                    cmd = (T)Activator.CreateInstance(typeof(T), new object[] { aliases });
+                    cmd.BeforeEvent += NotifyBeforeCommand;
+                    cmd.AfterEvent += NotifyAfterCommand;
+                    cmd._parent = parent;
+                }
 
-            var cmd = (T)Activator.CreateInstance(typeof(T), prefix);
-            cmd.BeforeEvent += NotifyBeforeCommand;
-            cmd.AfterEvent += NotifyAfterCommand;
+                lock (commands)
+                {
+                    if (parent != null)
+                    {
+                        if (parent._children == null)
+                            parent._children = new Dictionary<string, CommandDefinition>();
 
-            lock (commands)
-            {
-                commands.Add(prefix, cmd);
+                        parent._children.Add(alias, cmd);
+                    }
+                    commands.Add(key, cmd);
+                }
             }
 
             return cmd;
@@ -366,9 +364,14 @@ namespace OTA.Commands
             var commands = CommandManager.Parser.GetPluginCommands(plugin);
             foreach (var cmd in commands)
             {
-                if (!CommandManager.Parser.Remove(cmd.Prefix))
+                foreach (var alias in cmd.Aliases)
                 {
-                    OTA.Logging.ProgramLog.Debug.Log($"Failed to clear command {cmd.Prefix}.");
+                    var key = alias;
+                    if (cmd.Parent != null) key = $"{cmd.Parent.DefaultAlias}.{alias}";
+                    if (!CommandManager.Parser.Remove(key))
+                    {
+                        OTA.Logging.ProgramLog.Debug.Log($"Failed to clear command {key}.");
+                    }
                 }
             }
         }
@@ -382,7 +385,7 @@ namespace OTA.Commands
 
         public IEnumerable<CommandDefinition> GetCommandsForSender(ISender sender)
         {
-            return commands.Where(x => sender.HasPermission(x.Value.node)).Select(x => x.Value);
+            return commands.Where(x => sender.HasPermission(x.Value._node)).Select(x => x.Value);
         }
     }
 }

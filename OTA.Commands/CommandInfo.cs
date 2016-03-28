@@ -6,7 +6,7 @@ namespace OTA.Commands
 {
     public class CommandInfo : CommandDefinition<CommandInfo>
     {
-        public CommandInfo(string prefix) : base(prefix)
+        public CommandInfo(string[] aliases) : base(aliases)
         {
 
         }
@@ -14,9 +14,17 @@ namespace OTA.Commands
 
     public class CommandDefinition<T> : CommandDefinition where T : CommandDefinition
     {
-        public CommandDefinition(string prefix) : base(prefix)
+        public CommandDefinition(string[] aliases) : base(aliases)
         {
 
+        }
+
+        public T SubCommand(params string[] aliases)
+        {
+            var cmd = CommandManager.Parser.FindOrCreate<T>(aliases, this);
+            cmd.Plugin = this.Plugin;
+
+            return cmd;
         }
 
         /// <summary>
@@ -26,7 +34,7 @@ namespace OTA.Commands
         /// <param name="desc">Desc.</param>
         public T WithDescription(string desc)
         {
-            description = desc;
+            _description = desc;
             return (T)(CommandDefinition)this;
         }
 
@@ -37,7 +45,7 @@ namespace OTA.Commands
         /// <param name="help">Help.</param>
         public T WithHelpText(string help)
         {
-            helpText.Add(help);
+            _helpText.Add(help);
             return (T)(CommandDefinition)this;
         }
 
@@ -68,23 +76,7 @@ namespace OTA.Commands
         /// <param name="node">Node.</param>
         public T WithPermissionNode(string node)
         {
-            this.node = node;
-            return (T)(CommandDefinition)this;
-        }
-
-        /// <summary>
-        /// Sets the permission node relative to the command name.
-        /// </summary>
-        /// <param name="code">Permission node key</param>
-        public T ByPermissionNode(string code)
-        {
-            this.node = code + '.' + this._prefix;
-            return (T)(CommandDefinition)this;
-        }
-
-        internal T WithPermissionNode()
-        {
-            this.node = ComponentNodePrefix + this._prefix;
+            this._node = node;
             return (T)(CommandDefinition)this;
         }
 
@@ -94,7 +86,7 @@ namespace OTA.Commands
         /// <param name="callback">Callback.</param>
         public T Calls(Action<ISender, ArgumentList> callback)
         {
-            tokenCallback = callback;
+            _tokenCallback = callback;
             return (T)(CommandDefinition)this;
         }
 
@@ -104,7 +96,7 @@ namespace OTA.Commands
         /// <param name="callback">Callback.</param>
         public T Calls(Action<ISender, string> callback)
         {
-            stringCallback = callback;
+            _stringCallback = callback;
             return (T)(CommandDefinition)this;
         }
 
@@ -125,16 +117,16 @@ namespace OTA.Commands
     /// </summary>
     public abstract class CommandDefinition
     {
-        internal string description;
-        internal List<string> helpText = new List<string>();
-        internal string node;
-        internal Action<ISender, ArgumentList> tokenCallback;
-        internal Action<ISender, string> stringCallback;
+        internal string _description;
+        internal List<string> _helpText = new List<string>();
+        internal string _node;
+        internal Action<ISender, ArgumentList> _tokenCallback;
+        internal Action<ISender, string> _stringCallback;
 
         internal event Action<CommandDefinition> BeforeEvent;
         internal event Action<CommandDefinition> AfterEvent;
 
-        internal string _prefix;
+        internal string[] _aliases;
         internal bool _defaultHelp;
         internal bool _oldHelpStyle;
 
@@ -142,18 +134,39 @@ namespace OTA.Commands
 
         internal OTA.Plugin.BasePlugin Plugin { get; set; }
 
-        internal bool running, paused;
+        internal bool _running, _paused;
 
-        internal const String ComponentNodePrefix = "ota.";
+        internal CommandDefinition _parent;
+        internal Dictionary<string, CommandDefinition> _children;
 
         /// <summary>
-        /// Gets the prefix.
+        /// The parent command if this instance is a child.
         /// </summary>
-        /// <value>The prefix.</value>
-        public string Prefix
+        public CommandDefinition Parent
         {
             get
-            { return _prefix; }
+            { return _parent; }
+            protected set
+            { _parent = value; }
+        }
+
+        /// <summary>
+        /// Command aliases.
+        /// </summary>
+        /// <value>The prefix.</value>
+        public string[] Aliases
+        {
+            get
+            { return _aliases; }
+        }
+
+        /// <summary>
+        /// Gets the default alias.
+        /// </summary>
+        public string DefaultAlias
+        {
+            get
+            { return _aliases[0]; }
         }
 
         /// <summary>
@@ -163,28 +176,28 @@ namespace OTA.Commands
         public string Node
         {
             get
-            { return node; }
+            { return _node; }
         }
 
-        internal CommandDefinition(string prefix)
+        internal CommandDefinition(string[] aliases)
         {
-            _prefix = prefix;
+            this._aliases = aliases;
         }
 
         internal void InitFrom(CommandDefinition other)
         {
-            description = other.description;
-            helpText = other.helpText;
-            tokenCallback = other.tokenCallback;
-            stringCallback = other.stringCallback;
+            _description = other._description;
+            _helpText = other._helpText;
+            _tokenCallback = other._tokenCallback;
+            _stringCallback = other._stringCallback;
             LuaCallback = other.LuaCallback;
             ClearEvents();
         }
 
         internal void ClearCallbacks()
         {
-            tokenCallback = null;
-            stringCallback = null;
+            _tokenCallback = null;
+            _stringCallback = null;
             LuaCallback = null;
         }
 
@@ -195,7 +208,7 @@ namespace OTA.Commands
         /// <param name="noHelp">If set to <c>true</c> no help.</param>
         public void ShowHelp(ISender sender, bool noHelp = false)
         {
-            if (helpText.Count == 0 && noHelp)
+            if (_helpText.Count == 0 && noHelp)
             {
                 // Disabled this since it's not needed. There will usually be a description. But there should be some checks on if these are actually set, especially for plugins.
                 //sender.SendMessage("No help text specified.");
@@ -205,12 +218,12 @@ namespace OTA.Commands
             if (!_oldHelpStyle)
             {
                 const String Push = "       ";
-                string command = (sender is Terraria.Player ? "/" : String.Empty) + _prefix;
+                string command = (sender is Terraria.Player ? "/" : String.Empty) + this.DefaultAlias;
                 if (_defaultHelp)
                     sender.SendMessage("Usage: " + command);
 
                 bool first = !_defaultHelp;
-                foreach (var line in helpText)
+                foreach (var line in _helpText)
                 {
                     if (first)
                     {
@@ -225,7 +238,7 @@ namespace OTA.Commands
             }
             else
             {
-                foreach (var line in helpText)
+                foreach (var line in _helpText)
                     sender.SendMessage(line);
             }
         }
@@ -238,11 +251,11 @@ namespace OTA.Commands
         public void ShowDescription(ISender sender, int padd)
         {
             var space = String.Empty;
-            for (var x = 0; x < padd - this._prefix.Length; x++)
+            for (var x = 0; x < padd - this.DefaultAlias.Length; x++)
                 space += ' ';
 
-            sender.SendMessage((sender is Terraria.Player ? "/" : String.Empty) + _prefix +
-                space + " - " + (this.description ?? "No description specified")
+            sender.SendMessage((sender is Terraria.Player ? "/" : String.Empty) + this.DefaultAlias +
+                space + " - " + (this._description ?? "No description specified")
             );
         }
 
@@ -253,8 +266,8 @@ namespace OTA.Commands
 
             try
             {
-                if (stringCallback != null)
-                    stringCallback(sender, args);
+                if (_stringCallback != null)
+                    _stringCallback(sender, args);
                 else if (LuaCallback != null)
                     LuaCallback.Call(this, sender, args);
                 else
@@ -274,8 +287,8 @@ namespace OTA.Commands
 
             try
             {
-                if (tokenCallback != null)
-                    tokenCallback(sender, args);
+                if (_tokenCallback != null)
+                    _tokenCallback(sender, args);
                 else if (LuaCallback != null)
                     LuaCallback.Call(this, sender, args);
                 else

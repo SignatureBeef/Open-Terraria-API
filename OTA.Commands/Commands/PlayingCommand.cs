@@ -13,7 +13,7 @@ namespace OTA.Commands
             AddCommand("playing")
                 .SetDefaultUsage()
                 .WithDescription("Shows the list of players.")
-                .ByPermissionNode("terraria.playing")
+                .WithPermissionNode("terraria.playing")
                 .Calls(Playing);
         }
 

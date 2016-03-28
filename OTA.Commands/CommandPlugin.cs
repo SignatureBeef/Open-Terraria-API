@@ -3,6 +3,7 @@ using OTA.Logging;
 using System;
 using OTA.Commands.Events;
 using OTA.Misc;
+using OTA.Command;
 
 #if SERVER
 using Terraria;
@@ -70,21 +71,24 @@ namespace OTA.Commands
 
                     var message = buffer.reader.ReadString();
 
-                    if (!CommandManager.Parser.ParsePlayerCommand(player, message))
+                    if (!String.IsNullOrEmpty(message) && message.Length > 0)
                     {
-                        if (player.difficulty == 2)
+                        if (!CommandManager.Parser.ParseAndProcess(player, message))
                         {
-                            color = Main.hcColor;
-                        }
-                        else if (player.difficulty == 1)
-                        {
-                            color = Main.mcColor;
-                        }
-                        NetMessage.SendData(25, -1, -1, message, args.BufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
-                        if (Main.dedServ)
-                        {
-                            Logger.Vanilla("<" + player.name + "> " + message);
-                            return;
+                            if (player.difficulty == 2)
+                            {
+                                color = Main.hcColor;
+                            }
+                            else if (player.difficulty == 1)
+                            {
+                                color = Main.mcColor;
+                            }
+                            NetMessage.SendData(25, -1, -1, message, args.BufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
+                            if (Main.dedServ)
+                            {
+                                Logger.Vanilla("<" + player.name + "> " + message);
+                                return;
+                            }
                         }
                     }
                 }
@@ -109,9 +113,9 @@ namespace OTA.Commands
                 try
                 {
                     var ln = Console.ReadLine();
-                    if (!String.IsNullOrEmpty(ln))
+                    if (!String.IsNullOrEmpty(ln) && ln.Length > 0)
                     {
-                        CommandManager.Parser.ParseConsoleCommand(ln);
+                        CommandManager.Parser.ParseAndProcess(CommandParser.ConsoleSender, ln);
                     }
                     else if (null == ln)
                     {
@@ -151,7 +155,7 @@ namespace OTA.Commands
             if (null != def)
             {
                 foreach (var cmd in def)
-                    cmd.paused = false;
+                    cmd._paused = false;
             }
         }
 
@@ -163,8 +167,8 @@ namespace OTA.Commands
             {
                 foreach (var cmd in def)
                 {
-                    cmd.paused = true; 
-        
+                    cmd._paused = true;
+
                     // wait for commands that may have already been running to finish
                     while (args.Plugin.HasRunningCommands())
                     {

@@ -10,8 +10,8 @@ namespace OTA.Commands
         public static bool HasRunningCommands(this BasePlugin plugin)
         {
             var commands = CommandManager.Parser.GetPluginCommands(plugin);
-            var runningCommands = commands.Where(x => x.running).Count();
-            var pausedCommands = commands.Where(x => x.paused).Count();
+            var runningCommands = commands.Where(x => x._running).Count();
+            var pausedCommands = commands.Where(x => x._paused).Count();
 
             return (runningCommands - pausedCommands - CommandManager<CommandInfo>.threadInCommand) > 0;
         }
@@ -21,9 +21,9 @@ namespace OTA.Commands
         /// </summary>
         /// <param name="prefix">Command text</param>
         /// <returns>New Command</returns>
-        public static CommandInfo AddCommand(this BasePlugin plugin, string prefix, bool replaceExisting = false)
+        public static CommandInfo AddCommand(this BasePlugin plugin, params string[] prefix)
         {
-            return plugin.AddCommand<CommandInfo>(prefix, replaceExisting);
+            return plugin.AddCommand<CommandInfo>(prefix);
         }
 
         /// <summary>
@@ -31,9 +31,9 @@ namespace OTA.Commands
         /// </summary>
         /// <param name="prefix">Command text</param>
         /// <returns>New Command</returns>
-        public static T AddCommand<T>(this BasePlugin plugin, string prefix, bool replaceExisting = false) where T : CommandDefinition
+        public static T AddCommand<T>(this BasePlugin plugin, params string[] aliases) where T : CommandDefinition
         {
-            var cmd = CommandManager.Parser.FindOrCreate<T>(prefix, replaceExisting);
+            var cmd = CommandManager.Parser.FindOrCreate<T>(aliases);
             cmd.Plugin = plugin;
 
             return cmd;

@@ -11,7 +11,7 @@ namespace OTA.Commands
         {
             AddCommand("kick")
                 .WithDescription("Kicks a player from the server.")
-                .ByPermissionNode("terraria.kick")
+                .WithPermissionNode("terraria.kick")
                 .Calls(Kick);
         }
 

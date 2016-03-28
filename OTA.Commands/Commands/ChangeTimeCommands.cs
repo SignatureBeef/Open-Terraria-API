@@ -11,22 +11,22 @@ namespace OTA.Commands
             AddCommand("dawn")
                 .SetDefaultUsage()
                 .WithDescription("Change time to dawn.")
-                .ByPermissionNode("terraria.dawn")
+                .WithPermissionNode("terraria.dawn")
                 .Calls(Dawn);
             AddCommand("noon")
                 .SetDefaultUsage()
                 .WithDescription("Change time to noon.")
-                .ByPermissionNode("terraria.noon")
+                .WithPermissionNode("terraria.noon")
                 .Calls(Noon);
             AddCommand("dusk")
                 .SetDefaultUsage()
                 .WithDescription("Change time to dusk.")
-                .ByPermissionNode("terraria.dusk")
+                .WithPermissionNode("terraria.dusk")
                 .Calls(Dusk);
             AddCommand("midnight")
                 .SetDefaultUsage()
                 .WithDescription("Change time to midnight.")
-                .ByPermissionNode("terraria.midnight")
+                .WithPermissionNode("terraria.midnight")
                 .Calls(Midnight);
         }
 

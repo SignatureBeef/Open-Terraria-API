@@ -10,7 +10,7 @@ namespace OTA.Commands
             AddCommand("save")
                 .SetDefaultUsage()
                 .WithDescription("Save the game world.")
-                .ByPermissionNode("terraria.save")
+                .WithPermissionNode("terraria.save")
                 .Calls(Save);
         }
 

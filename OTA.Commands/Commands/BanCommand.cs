@@ -11,7 +11,7 @@ namespace OTA.Commands
         {
             AddCommand("ban")
                 .WithDescription("Bans a player from the server.")
-                .ByPermissionNode("terraria.ban")
+                .WithPermissionNode("terraria.ban")
                 .Calls(Ban);
         }
 

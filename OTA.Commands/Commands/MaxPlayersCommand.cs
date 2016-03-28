@@ -12,7 +12,7 @@ namespace OTA.Commands
             AddCommand("maxplayers")
                 .SetDefaultUsage()
                 .WithDescription("Print the max number of players.")
-                .ByPermissionNode("terraria.maxplayers")
+                .WithPermissionNode("terraria.maxplayers")
                 .Calls(MaxPlayers);
         }
 

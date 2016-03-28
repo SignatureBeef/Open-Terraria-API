@@ -25,11 +25,11 @@ namespace OTA.Commands
                 {
                     if (args.Count > 0)
                     {
-                        var command = args.GetString(0);
-                        var cmd = commands.SingleOrDefault(x => x.Prefix == command);
+                        var command = args.GetString(0).ToLower();
+                        var cmd = commands.SingleOrDefault(x => x.Aliases.Contains(command));
                         if (cmd != null)
                         {
-                            sender.SendMessage(cmd.description);
+                            sender.SendMessage(cmd._description);
                             cmd.ShowHelp(sender, true);
                             return;
                         }
@@ -51,7 +51,7 @@ namespace OTA.Commands
                 {
                     var cmds = new List<CommandDefinition>();
                     var sorted = commands
-                        .OrderBy(x => x.Prefix)
+                        .OrderBy(x => x.DefaultAlias)
                         .ToArray();
                     for (var i = lineOffset; i < lineOffset + maxLines; i++)
                     {
@@ -60,7 +60,7 @@ namespace OTA.Commands
                     }
 
                     var prefixMax = cmds
-                        .Select(x => x.Prefix.Length)
+                        .Select(x => x.DefaultAlias.Length)
                         .OrderByDescending(x => x)
                         .First();
                     foreach (var cmd in cmds)

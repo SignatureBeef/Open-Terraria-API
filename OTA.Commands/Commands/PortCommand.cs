@@ -12,7 +12,7 @@ namespace OTA.Commands
             AddCommand("port")
                 .SetDefaultUsage()
                 .WithDescription("Print the listening port.")
-                .ByPermissionNode("terraria.port")
+                .WithPermissionNode("terraria.port")
                 .Calls(Port);
         }
 

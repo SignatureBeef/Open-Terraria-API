@@ -12,7 +12,7 @@ namespace OTA.Commands
             AddCommand("fps")
                 .SetDefaultUsage()
                 .WithDescription("Toggle FPS monitoring.")
-                .ByPermissionNode("terraria.fps")
+                .WithPermissionNode("terraria.fps")
                 .Calls(FPS);
         }
 

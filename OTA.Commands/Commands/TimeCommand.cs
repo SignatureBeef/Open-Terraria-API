@@ -11,7 +11,7 @@ namespace OTA.Commands
             AddCommand("time")
                 .SetDefaultUsage()
                 .WithDescription("Display game time.")
-                .ByPermissionNode("terraria.time")
+                .WithPermissionNode("terraria.time")
                 .Calls(Time);
         }
 
