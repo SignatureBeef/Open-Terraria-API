@@ -15,5 +15,6 @@ namespace OTA.Data
         IDbConnection CreateConnection();
 
         string Provider { get; }
+        bool Available { get; }
     }
 }

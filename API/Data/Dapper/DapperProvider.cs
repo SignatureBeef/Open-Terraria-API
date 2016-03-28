@@ -16,6 +16,7 @@ namespace OTA.Data.Dapper
         private System.Reflection.ConstructorInfo _providerConstructor;
 
         public string Provider { get { return _provider; } }
+        public bool Available { get { return _providerConstructor != null; } }
 
         public void Initialise(string provider, string connectionString)
         {

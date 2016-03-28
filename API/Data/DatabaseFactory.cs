@@ -11,6 +11,7 @@ namespace OTA.Data
         public static void Migrate() => _provider.Migrate();
 
         public static string Provider { get { return _provider.Provider; } }
+        public static bool Available { get { return _provider.Available; } }
 
         public static IDbConnection CreateConnection()
         {
