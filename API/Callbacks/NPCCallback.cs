@@ -66,7 +66,7 @@ namespace OTA.Callbacks
             HookPoints.InvasionNpcSpawn.Invoke(ref ctx, ref args);
         }
 
-        #if Full_API
+#if Full_API
         /// <summary>
         /// Called by vanilla code when a NPC has been killed
         /// </summary>
@@ -83,12 +83,12 @@ namespace OTA.Callbacks
 
             HookPoints.NpcKilled.Invoke(ref ctx, ref args);
         }
-        
-        #else
+
+#else
         public static void OnNPCKilled(object npc)
         {
         }
-        #endif
+#endif
 
         public static bool OnStrike(Terraria.NPC npc, ref double damage)
         {
@@ -105,7 +105,7 @@ namespace OTA.Callbacks
 
             damage = args.Damage;
             if (ctx.ResultParam != null && ctx.ResultParam is double)
-                damage = (double)ctx.ResultParam; 
+                damage = (double)ctx.ResultParam;
 
             return ctx.Result == HookResult.DEFAULT; //If default then continue on to vanilla code
         }
@@ -389,12 +389,12 @@ namespace OTA.Callbacks
             if (ctx.Result == HookResult.RECTIFY && ctx.ResultParam is Terraria.NPC) return (Terraria.NPC)ctx.ResultParam;
 
             var npc = new Terraria.NPC();
-//            var npc = new NpcTest();
+            //            var npc = new NpcTest();
             npc.SetDefaults(type, -1);
             return npc;
         }
 
-        #if CLIENT
+#if CLIENT
         public static bool OnDrawNPCBegin(Terraria.Main game, int i, bool behindTiles)
         {
             var ctx = new HookContext();
@@ -424,7 +424,7 @@ namespace OTA.Callbacks
 
             HookPoints.NpcDraw.Invoke(ref ctx, ref args);
         }
-        #endif
+#endif
 
         public static bool OnUpdateNPCBegin(Terraria.NPC npc, int i)
         {
@@ -512,7 +512,7 @@ namespace OTA.Callbacks
             HookPoints.NpcFindFrame.Invoke(ref ctx, ref args);
         }
 
-        #if CLIENT
+#if CLIENT
         public static string OnGetChat(Terraria.NPC npc)
         {
             var ctx = new HookContext();
@@ -589,11 +589,81 @@ namespace OTA.Callbacks
 
             return true;
         }
-        #endif
+#endif
 
         public static bool OnPreSpawn
         (
-            #if CLIENT
+#if CLIENT
+#if WINDOWS
+            Microsoft.Xna.Framework.Rectangle prm0,
+            Microsoft.Xna.Framework.Rectangle prm1,
+            System.Boolean prm2,
+            System.Boolean prm3,
+            System.Boolean prm4,
+            System.Boolean prm5,
+            System.Boolean prm6,
+            System.Boolean prm7,
+            System.Boolean prm8,
+            System.Boolean prm9,
+            System.Boolean prm10,
+            System.Boolean prm11,
+            System.Boolean prm12,
+            System.Boolean prm13,
+            System.Boolean prm14,
+            System.Boolean prm15,
+            System.Int32 prm16,
+            System.Int32 prm17,
+            System.Int32 prm18,
+            System.Int32 prm19,
+            System.Int32 prm20,
+            System.Int32 prm21,
+            System.Int32 prm22,
+            System.Int32 prm23,
+            System.Int32 prm24,
+            System.Int32 prm25,
+            System.Int32 prm26,
+            System.Int32 prm27,
+            System.Int32 prm28,
+            System.Int32 prm29,
+            System.Int32 prm30,
+            System.Int32 prm31,
+            System.Int32 prm32,
+            System.Int32 prm33,
+            System.Int32 prm34,
+            System.Int32 prm35,
+            System.Int32 prm36,
+            System.Int32 prm37,
+            System.Int32 prm38,
+            System.Int32 prm39,
+            System.Int32 prm40,
+            System.Int32 prm41,
+            System.Int32 prm42,
+            System.Int32 prm43,
+            System.Int32 prm44,
+            System.Int32 prm45,
+            System.Int32 prm46,
+            System.Int32 prm47,
+            System.Int32 prm48,
+            System.Int32 prm49,
+            System.Int32 prm50,
+            System.Int32 prm51,
+            System.Int32 prm52,
+            System.Int32 prm53,
+            System.Int32 prm54,
+            System.Int32 prm55,
+            System.Int32 prm56,
+            System.Int32 prm57,
+            System.Int32 prm58,
+            System.Int32 prm59,
+            System.Int32 prm60,
+            System.Int32 prm61,
+            System.Int32 prm62,
+            System.Int32 prm63,
+            System.Int32 prm64,
+            System.Int32 prm65,
+            System.Int32 prm66,
+            System.Single prm67
+#else
             Microsoft.Xna.Framework.Rectangle prm0,//prm
             Microsoft.Xna.Framework.Rectangle prm1,//rectangle
             Microsoft.Xna.Framework.Vector2 prm2,//center
@@ -666,7 +736,8 @@ namespace OTA.Callbacks
             System.Int32 prm69,//num45
             System.Int32 prm70,//num46
             System.Single prm71//num8
-            #elif SERVER
+#endif
+#elif SERVER
             Microsoft.Xna.Framework.Rectangle prm0/*prm*/,
             Microsoft.Xna.Framework.Rectangle prm1/*prm2*/,
             System.Boolean prm2/*flag13*/,
@@ -735,54 +806,54 @@ namespace OTA.Callbacks
             System.Int32 prm65/*num45*/,
             System.Int32 prm66/*num46*/,
             System.Single prm67/*num8*/
-            #endif
+#endif
         )
         {
             var ctx = new HookContext();
-            var args = new HookArgs.NpcPreSpawn()
-            {
-                Sky = sky,
-                LihzahrdBrickWall = lihzahrdBrickWall,
-                PlayerSafe = playerSafe,
-                Invasion = invasion,
-                Water = water,
-                Granite = granite,
-                Marble = marble,
-                SpiderCave = spiderCave,
-                PlayerInTown = playerInTown,
-                DesertCave = desertCave,
-                PlanteraDefeated = planteraDefeated,
-                SafeRangeX = safeRangeX,
-                SpawnTileX = spawnTileX,
-                SpawnTileY = spawnTileY,
-                PlayerFloorX = playerFloorX,
-                PlayerFloorY = playerFloorY
-            };
+            //var args = new HookArgs.NpcPreSpawn()
+            //{
+            //    Sky = sky,
+            //    LihzahrdBrickWall = lihzahrdBrickWall,
+            //    PlayerSafe = playerSafe,
+            //    Invasion = invasion,
+            //    Water = water,
+            //    Granite = granite,
+            //    Marble = marble,
+            //    SpiderCave = spiderCave,
+            //    PlayerInTown = playerInTown,
+            //    DesertCave = desertCave,
+            //    PlanteraDefeated = planteraDefeated,
+            //    SafeRangeX = safeRangeX,
+            //    SpawnTileX = spawnTileX,
+            //    SpawnTileY = spawnTileY,
+            //    PlayerFloorX = playerFloorX,
+            //    PlayerFloorY = playerFloorY
+            //};
 
-            HookPoints.NpcPreSpawn.Invoke(ref ctx, ref args);
+            //HookPoints.NpcPreSpawn.Invoke(ref ctx, ref args);
 
             return ctx.Result == HookResult.DEFAULT;
         }
 
-//        public static int DropLoot(int X, int Y, int Width, int Height, int Type, int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup, int npc)
-//        {
-//            return 0;//return Terraria.Main.NPCLoo((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1533, 1, false, 0, false, false);
+        //        public static int DropLoot(int X, int Y, int Width, int Height, int Type, int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup, int npc)
+        //        {
+        //            return 0;//return Terraria.Main.NPCLoo((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1533, 1, false, 0, false, false);
         //        }
 
-//        #if CLIENT
-//        static readonly object _textureLock = new object();
-//
-//        public static Texture2D GetTexture(int index)
-//        {
-//            lock (_textureLock)
-//                return Terraria.Main.npcTexture[index];
-//        }
-//
-//        public static void SetTexture(int index, Texture2D texture)
-//        {
-//            lock (_textureLock)
-//                Terraria.Main.npcTexture[index] = texture;
-//        }
-//        #endif
+        //        #if CLIENT
+        //        static readonly object _textureLock = new object();
+        //
+        //        public static Texture2D GetTexture(int index)
+        //        {
+        //            lock (_textureLock)
+        //                return Terraria.Main.npcTexture[index];
+        //        }
+        //
+        //        public static void SetTexture(int index, Texture2D texture)
+        //        {
+        //            lock (_textureLock)
+        //                Terraria.Main.npcTexture[index] = texture;
+        //        }
+        //        #endif
     }
 }

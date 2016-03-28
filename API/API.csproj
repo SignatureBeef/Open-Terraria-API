@@ -44,7 +44,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Linux-Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API;LINUX</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -55,7 +55,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Windows-Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -94,7 +94,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Linux-Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Linux-Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API;LINUX</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -104,7 +104,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Windows-Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Windows-Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API;WINDOWS</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -114,7 +114,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mac-Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Mac-Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CLIENT;Full_API;MAC</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>

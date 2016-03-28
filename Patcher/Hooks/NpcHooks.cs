@@ -156,18 +156,18 @@ namespace OTA.Patcher
             il.Emit(OpCodes.Ret);
 
 
-//            var instanceCalls = dropLoot.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
-//                                    && x.Operand is MethodReference
-//                                    && (x.Operand as MethodReference).Name == "NewItem"
-//                                    && (x.Operand as MethodReference).DeclaringType.Name == "Item").ToArray();
-//
-//            //            var whoAmI = Terraria.Entity.Field("whoAmI");
-//            foreach (var call in instanceCalls)
-//            {
-//                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
-//                //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
-//                //                il.InsertBefore(call, il.Create(OpCodes.Ldfld, whoAmI));
-//            }
+            //            var instanceCalls = dropLoot.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
+            //                                    && x.Operand is MethodReference
+            //                                    && (x.Operand as MethodReference).Name == "NewItem"
+            //                                    && (x.Operand as MethodReference).DeclaringType.Name == "Item").ToArray();
+            //
+            //            //            var whoAmI = Terraria.Entity.Field("whoAmI");
+            //            foreach (var call in instanceCalls)
+            //            {
+            //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
+            //                //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
+            //                //                il.InsertBefore(call, il.Create(OpCodes.Ldfld, whoAmI));
+            //            }
 
 
             var itemCalls = npcLoot.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
@@ -176,12 +176,12 @@ namespace OTA.Patcher
                                 && (x.Operand as MethodReference).DeclaringType.Name == "Item").ToArray();
 
             //            var whoAmI = Terraria.Entity.Field("whoAmI");
-//            var vanillaIL = npcLoot.Body.GetILProcessor();
+            //            var vanillaIL = npcLoot.Body.GetILProcessor();
             foreach (var call in itemCalls)
             {
                 call.Operand = dropLoot;
 
-//                vanillaIL.InsertBefore(call, vanillaIL.Create(OpCodes.Ldarg_0));
+                //                vanillaIL.InsertBefore(call, vanillaIL.Create(OpCodes.Ldarg_0));
                 //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
                 //                il.InsertBefore(call, il.Create(OpCodes.Ldfld, whoAmI));
             }
@@ -319,7 +319,7 @@ namespace OTA.Patcher
                                 && x.Operand is MethodReference
                                 && (x.Operand as MethodReference).Name == "NewNPC"
                                 && (x.Operand as MethodReference).DeclaringType.Name == "NPC").ToArray();
-            
+
             //            var whoAmI = Terraria.Entity.Field("whoAmI");
             foreach (var call in itemCalls)
             {
@@ -328,65 +328,65 @@ namespace OTA.Patcher
                 //                il.InsertBefore(call, il.Create(OpCodes.Ldfld, whoAmI));
             }
 
-//            //Create the new DropLoot call in the Terraria.NPC class
-//            var invasionNPC = new MethodDefinition("SpawnInvasionNPC", spawnNPC.Attributes, newNPC.ReturnType);
-//            Terraria.NPC.Methods.Add(invasionNPC);
-//
-//            //Clone the parameters
-//            foreach (var prm in newNPC.Parameters)
-//                invasionNPC.Parameters.Add(prm);
-//            //            //Add the this call to the end
-//            //            dropLoot.Parameters.Add(new ParameterDefinition("npcId", ParameterAttributes.HasDefault, Terraria.TypeSystem.Int32));
-//
-//            //Collect the hooks
-//            var apiMatch = API.NPCCallback.Methods.Where(x => x.Name.StartsWith("OnSpawnInvasionNPC"));
-//
-//            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnDropBossBag Begin/End calls in the API");
-//
-//            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
-//            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
-//
-//            //Create the value to hold the new item id
-//            var il = invasionNPC.Body.GetILProcessor();
-//            var vrbItemId = new VariableDefinition("otaItem", (cbkBegin.Parameters[0].ParameterType as ByReferenceType).ElementType);
-//            invasionNPC.Body.Variables.Add(vrbItemId);
-//
-//            il.Emit(OpCodes.Ldloca_S, vrbItemId); //Loads our variable as a reference
-//            var beginResult = invasionNPC.InjectBeginCallback(cbkBegin, false, false);
-//
-//            var insFirstForMethod = invasionNPC.InjectMethodCall(newNPC, false, false);
-//            il.Emit(OpCodes.Stloc, vrbItemId);
-//
-//            //Set the instruction to be resumed upon not cancelling, if not already
-//            if (beginResult != null && beginResult.OpCode == OpCodes.Pop)
-//            {
-//                beginResult.OpCode = OpCodes.Brtrue_S;
-//                beginResult.Operand = insFirstForMethod;
-//
-//                il.InsertAfter(beginResult, il.Create(OpCodes.Ret));
-//                il.InsertAfter(beginResult, il.Create(OpCodes.Ldloc, vrbItemId));
-//            }
-//
-//            invasionNPC.InjectEndCallback(cbkEnd, false);
-//
-//            il.Emit(OpCodes.Ldloc, vrbItemId);
-//            il.Emit(OpCodes.Ret);
-//
-//            var itemCalls = spawnNPC.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
-//                                && x.Operand is MethodReference
-//                                && (x.Operand as MethodReference).Name == "NewNPC"
-//                                && (x.Operand as MethodReference).DeclaringType.Name == "NPC").ToArray();
-//
-//            //            var whoAmI = Terraria.Entity.Field("whoAmI");
-//            foreach (var call in itemCalls)
-//            {
-//                call.Operand = invasionNPC;
-//                //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
-//                //                il.InsertBefore(call, il.Create(OpCodes.Ldfld, whoAmI));
-//            }
-//
-//
-//            spawnNPC.Body.OptimizeMacros();
+            //            //Create the new DropLoot call in the Terraria.NPC class
+            //            var invasionNPC = new MethodDefinition("SpawnInvasionNPC", spawnNPC.Attributes, newNPC.ReturnType);
+            //            Terraria.NPC.Methods.Add(invasionNPC);
+            //
+            //            //Clone the parameters
+            //            foreach (var prm in newNPC.Parameters)
+            //                invasionNPC.Parameters.Add(prm);
+            //            //            //Add the this call to the end
+            //            //            dropLoot.Parameters.Add(new ParameterDefinition("npcId", ParameterAttributes.HasDefault, Terraria.TypeSystem.Int32));
+            //
+            //            //Collect the hooks
+            //            var apiMatch = API.NPCCallback.Methods.Where(x => x.Name.StartsWith("OnSpawnInvasionNPC"));
+            //
+            //            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnDropBossBag Begin/End calls in the API");
+            //
+            //            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
+            //            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
+            //
+            //            //Create the value to hold the new item id
+            //            var il = invasionNPC.Body.GetILProcessor();
+            //            var vrbItemId = new VariableDefinition("otaItem", (cbkBegin.Parameters[0].ParameterType as ByReferenceType).ElementType);
+            //            invasionNPC.Body.Variables.Add(vrbItemId);
+            //
+            //            il.Emit(OpCodes.Ldloca_S, vrbItemId); //Loads our variable as a reference
+            //            var beginResult = invasionNPC.InjectBeginCallback(cbkBegin, false, false);
+            //
+            //            var insFirstForMethod = invasionNPC.InjectMethodCall(newNPC, false, false);
+            //            il.Emit(OpCodes.Stloc, vrbItemId);
+            //
+            //            //Set the instruction to be resumed upon not cancelling, if not already
+            //            if (beginResult != null && beginResult.OpCode == OpCodes.Pop)
+            //            {
+            //                beginResult.OpCode = OpCodes.Brtrue_S;
+            //                beginResult.Operand = insFirstForMethod;
+            //
+            //                il.InsertAfter(beginResult, il.Create(OpCodes.Ret));
+            //                il.InsertAfter(beginResult, il.Create(OpCodes.Ldloc, vrbItemId));
+            //            }
+            //
+            //            invasionNPC.InjectEndCallback(cbkEnd, false);
+            //
+            //            il.Emit(OpCodes.Ldloc, vrbItemId);
+            //            il.Emit(OpCodes.Ret);
+            //
+            //            var itemCalls = spawnNPC.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
+            //                                && x.Operand is MethodReference
+            //                                && (x.Operand as MethodReference).Name == "NewNPC"
+            //                                && (x.Operand as MethodReference).DeclaringType.Name == "NPC").ToArray();
+            //
+            //            //            var whoAmI = Terraria.Entity.Field("whoAmI");
+            //            foreach (var call in itemCalls)
+            //            {
+            //                call.Operand = invasionNPC;
+            //                //                il.InsertBefore(call, il.Create(OpCodes.Ldarg_0));
+            //                //                il.InsertBefore(call, il.Create(OpCodes.Ldfld, whoAmI));
+            //            }
+            //
+            //
+            //            spawnNPC.Body.OptimizeMacros();
         }
 
         [OTAPatch(SupportType.ClientServer, "Hooking NPC creation")]
@@ -410,8 +410,8 @@ namespace OTA.Patcher
                 il.Remove(remFrom.Next);
             }
 
-//            //Add Type to our callback
-//            il.InsertBefore(ctor, il.Create(OpCodes.Ldarg_2));
+            //            //Add Type to our callback
+            //            il.InsertBefore(ctor, il.Create(OpCodes.Ldarg_2));
 
             il.InsertBefore(ctor, il.Create(OpCodes.Ldloc_0));
             foreach (var prm in method.Parameters)
@@ -515,8 +515,8 @@ namespace OTA.Patcher
             var insCall = method.InsertCancellableMethodBefore(insEntry, call);
 
             var localVariables = method.Body.Instructions
-                .Where(x => (new OpCode []
-                { 
+                .Where(x => (new OpCode[]
+                {
                     OpCodes.Ldloc,
 //                    OpCodes.Ldloca,
                     OpCodes.Ldloc_S,
@@ -531,8 +531,8 @@ namespace OTA.Patcher
 
                 .Union(
                                      method.Body.Instructions
-                    .Where(x => (new OpCode []
-                    { 
+                    .Where(x => (new OpCode[]
+                    {
                         OpCodes.Ldloc_0,
                         OpCodes.Stloc_0
                     }).Contains(x.OpCode)
@@ -542,8 +542,8 @@ namespace OTA.Patcher
 
                 .Union(
                                      method.Body.Instructions
-                .Where(x => (new OpCode []
-                    { 
+                .Where(x => (new OpCode[]
+                    {
                         OpCodes.Ldloc_1,
                         OpCodes.Stloc_1
                     }).Contains(x.OpCode)
@@ -553,8 +553,8 @@ namespace OTA.Patcher
 
                 .Union(
                                      method.Body.Instructions
-                    .Where(x => (new OpCode []
-                    { 
+                    .Where(x => (new OpCode[]
+                    {
                         OpCodes.Ldloc_2,
                         OpCodes.Stloc_2
                     }).Contains(x.OpCode)
@@ -564,8 +564,8 @@ namespace OTA.Patcher
 
                 .Union(
                                      method.Body.Instructions
-                    .Where(x => (new OpCode []
-                    { 
+                    .Where(x => (new OpCode[]
+                    {
                         OpCodes.Ldloc_3,
                         OpCodes.Stloc_3
                     }).Contains(x.OpCode)
@@ -578,13 +578,13 @@ namespace OTA.Patcher
 
             var variables = localVariables.OrderBy(x => x.VariableType.ToString()).ToArray();
 
-//            int prmIdx = 0;
-//            foreach (var local in variables)
-//            {
-//                if (prmIdx > 0) Console.Write(",\n");
-//                Console.Write("{0} prm{1}", local.VariableType, prmIdx++);
-////                Console.Write("/*" + local.Name + "*/");
-//            }
+            //int prmIdx = 0;
+            //foreach (var local in variables)
+            //{
+            //    if (prmIdx > 0) Console.Write(",\n");
+            //    Console.Write("{0} prm{1}", local.VariableType, prmIdx++);
+            //    //                Console.Write("/*" + local.Name + "*/");
+            //}
 
             foreach (var pair in variables)
             {
@@ -665,47 +665,47 @@ namespace OTA.Patcher
             il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
 
-//        [OTAPatch(SupportType.ClientServer, "Patching npc locks")]
-//        private void PatchInNpcLocking()
-//        {
-//            try
-//            {
-//                var getMethod = Terraria.Import(API.NPCCallback.Method("GetTexture"));
-//                var setMethod = Terraria.Import(API.NPCCallback.Method("SetTexture"));
-//
-//                var methods = _asm.MainModule.Types
-//                            .SelectMany(t => t.Methods)
-//                            .Where(m => m.HasBody);
-//
-//                foreach (var mth in methods)
-//                {
-//                    var il = mth.Body.GetILProcessor();
-//                    foreach (var ins in mth.Body.Instructions
-//                    .Where(x=> x.OpCode == OpCodes.Ldsfld
-//                            && x.Next != null
-//                            && x.Next.Next != null
-//                            && x.Next.Next.OpCode == OpCodes.Ldelem_Ref
-//                            && x.Operand is FieldReference 
-//                            && (x.Operand as FieldReference).Name == "npcTexture")
-//                    .ToArray())
-//                    {
-//                        //Change:
-////                        IL_002e: ldsfld class [FNA]Microsoft.Xna.Framework.Graphics.Texture2D[] Terraria.Main::npcTexture
-////                        IL_0033: ldloc.0
-////                        IL_0034: ldelem.ref
-//                        //To:
-////IL_0033: ldloc.0
-////IL_0034: call, GetTexture
-//
-//                        il.Replace(ins.Next.Next, il.Create(OpCodes.Call, getMethod));
-//                    }
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e);
-//            }
-//        }
+        //        [OTAPatch(SupportType.ClientServer, "Patching npc locks")]
+        //        private void PatchInNpcLocking()
+        //        {
+        //            try
+        //            {
+        //                var getMethod = Terraria.Import(API.NPCCallback.Method("GetTexture"));
+        //                var setMethod = Terraria.Import(API.NPCCallback.Method("SetTexture"));
+        //
+        //                var methods = _asm.MainModule.Types
+        //                            .SelectMany(t => t.Methods)
+        //                            .Where(m => m.HasBody);
+        //
+        //                foreach (var mth in methods)
+        //                {
+        //                    var il = mth.Body.GetILProcessor();
+        //                    foreach (var ins in mth.Body.Instructions
+        //                    .Where(x=> x.OpCode == OpCodes.Ldsfld
+        //                            && x.Next != null
+        //                            && x.Next.Next != null
+        //                            && x.Next.Next.OpCode == OpCodes.Ldelem_Ref
+        //                            && x.Operand is FieldReference 
+        //                            && (x.Operand as FieldReference).Name == "npcTexture")
+        //                    .ToArray())
+        //                    {
+        //                        //Change:
+        ////                        IL_002e: ldsfld class [FNA]Microsoft.Xna.Framework.Graphics.Texture2D[] Terraria.Main::npcTexture
+        ////                        IL_0033: ldloc.0
+        ////                        IL_0034: ldelem.ref
+        //                        //To:
+        ////IL_0033: ldloc.0
+        ////IL_0034: call, GetTexture
+        //
+        //                        il.Replace(ins.Next.Next, il.Create(OpCodes.Call, getMethod));
+        //                    }
+        //                }
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e);
+        //            }
+        //        }
     }
 }
 

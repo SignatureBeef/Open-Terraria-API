@@ -9,6 +9,7 @@ using System.Linq;
 using System.IO;
 using Terraria;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace OTA.Callbacks
 {
@@ -29,7 +30,7 @@ namespace OTA.Callbacks
                 {
                     if (a.Name == "Terraria" || a.Name == "TerrariaServer")
                         return Assembly.GetEntryAssembly();
-                    
+
                     if (PluginManager._plugins != null)
                     {
                         var items = PluginManager._plugins.Values
@@ -104,6 +105,73 @@ namespace OTA.Callbacks
             };
         }
 
+
+        public static IntPtr JitForcedMethodCache;
+
+
+        public static void ForceJITOnAssembly(Assembly assembly)
+        {
+            Type[] types = assembly.GetTypes();
+            Type[] array = types;
+            for (int i = 0; i < array.Length; i++)
+            {
+                Type type = array[i];
+                MethodInfo[] methods = type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                MethodInfo[] array2 = methods;
+                for (int j = 0; j < array2.Length; j++)
+                {
+                    MethodInfo methodInfo = array2[j];
+                    if (!methodInfo.IsAbstract && !methodInfo.ContainsGenericParameters && methodInfo.GetMethodBody() != null)
+                    {
+                        RuntimeHelpers.PrepareMethod(methodInfo.MethodHandle);
+                    }
+                }
+            }
+        }
+
+        public static void ForceStaticInitializers(Assembly assembly)
+        {
+            Type[] types = assembly.GetTypes();
+            Type[] array = types;
+            for (int i = 0; i < array.Length; i++)
+            {
+                Type type = array[i];
+                if (!type.IsGenericType)
+                {
+                    RuntimeHelpers.RunClassConstructor(type.TypeHandle);
+                }
+            }
+        }
+
+        public static void ForceLoadAssembly(Assembly assembly, bool initializeStaticMembers)
+        {
+            ForceJITOnAssembly(assembly);
+            if (initializeStaticMembers)
+            {
+                ForceStaticInitializers(assembly);
+            }
+        }
+
+        public static void ForceLoadAssembly(string name, bool initializeStaticMembers)
+        {
+            Assembly assembly = null;
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            for (int i = 0; i < assemblies.Length; i++)
+            {
+                if (assemblies[i].GetName().Name.Equals(name))
+                {
+                    assembly = assemblies[i];
+                    break;
+                }
+            }
+            if (assembly == null)
+            {
+                assembly = Assembly.Load(name);
+            }
+            ForceLoadAssembly(assembly, initializeStaticMembers);
+        }
+
+
         /// <summary>
         /// The startup call (non vanilla) for both the client and server
         /// </summary>
@@ -158,7 +226,7 @@ namespace OTA.Callbacks
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                SafeConsole.WriteLine("Failed to setup trace listeners\n{0}", e);
             }
 
             //Prepare log for use
@@ -211,8 +279,8 @@ namespace OTA.Callbacks
 #pragma warning disable 0162
             if (!Globals.FullAPIDefined)
             {
-                Console.WriteLine("Oh noes! You're nearly there, but the OTA.dll is incorrect.");
-                Console.WriteLine("If you are compiling from source you must enable the Full_API compilation flag");
+                SafeConsole.WriteLine("Oh noes! You're nearly there, but the OTA.dll is incorrect.");
+                SafeConsole.WriteLine("If you are compiling from source you must enable the Full_API compilation flag");
                 return false;
             }
 #pragma warning restore 0162
@@ -348,7 +416,7 @@ namespace OTA.Callbacks
 #endif
         }
 
-        #if SERVER
+#if SERVER
         //        private static DateTime? _lastUpdate;
         public static void OnUpdateServerBegin()
         {
@@ -369,7 +437,7 @@ namespace OTA.Callbacks
             var args = HookArgs.ServerUpdate.End;
             HookPoints.ServerUpdate.Invoke(ref ctx, ref args);
         }
-        #endif
+#endif
         internal struct ScheduledTexture
         {
             public int TypeId;
@@ -383,20 +451,20 @@ namespace OTA.Callbacks
             lock (NpcTextureLoadQueue)
             {
                 NpcTextureLoadQueue.Enqueue(new ScheduledTexture()
+                {
+                    TypeId = typeId,
+                    ServerTexture = new OTA.Mod.Npc.ServerTexture()
                     {
-                        TypeId = typeId,
-                        ServerTexture = new OTA.Mod.Npc.ServerTexture()
-                        {
-                            FilePath = filePath,
-                            FrameCount = frameCount
-                        }
-                    });
+                        FilePath = filePath,
+                        FrameCount = frameCount
+                    }
+                });
             }
         }
 
         public static void OnUpdateBegin()
         {
-            #if CLIENT
+#if CLIENT
             lock (NpcTextureLoadQueue)
             {
                 if (NpcTextureLoadQueue.Count > 0)
@@ -412,7 +480,7 @@ namespace OTA.Callbacks
                     }
                 }
             }
-            #endif
+#endif
 
             var ctx = HookContext.Empty;
             var args = HookArgs.GameUpdate.Begin;
@@ -563,7 +631,7 @@ namespace OTA.Callbacks
             return ctx.Result == HookResult.DEFAULT; //Continue on
         }
 
-        #if CLIENT
+#if CLIENT
         /// <summary>
         /// The first call from Terraria.Main.Draw
         /// </summary>
@@ -619,7 +687,7 @@ namespace OTA.Callbacks
 
             HookPoints.UpdateClient.Invoke(ref ctx, ref args);
         }
-        #endif
+#endif
 
         internal static void ResetTileArray()
         {
@@ -693,7 +761,7 @@ namespace OTA.Callbacks
             }
         }
 
-        #if CLIENT
+#if CLIENT
         public static void OnLoadContentBegin()
         {
             var ctx = HookContext.Empty;
@@ -728,7 +796,7 @@ namespace OTA.Callbacks
 
             return ctx.Result == HookResult.DEFAULT;
         }
-        #endif
+#endif
 
         public static void SetWindowTitle(string title)
         {
@@ -740,6 +808,9 @@ namespace OTA.Callbacks
 
             HookPoints.SetWindowTitle.Invoke(ref ctx, ref args);
 
+#if CLIENT
+            //TODO : Client window title
+#elif SERVER
             if (ctx.Result == HookResult.DEFAULT)
             {
                 Console.Title = title + " | Open Terraria API build " + Globals.BuildInfo;
@@ -748,6 +819,7 @@ namespace OTA.Callbacks
             {
                 Console.Title = (string)ctx.ResultParam;
             }
+#endif
         }
     }
 }

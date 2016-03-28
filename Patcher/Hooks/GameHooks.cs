@@ -404,13 +404,13 @@ namespace OTA.Patcher
                 .OrderBy(z => z.Index);
             var variables = localVariables.OrderBy(x => x.VariableType.ToString()).ToArray();
 
-//            int prmIdx = 0;
-//            foreach (var local in variables)
-//            {
-//                if (prmIdx > 0) Console.Write(", //\n");
-//                Console.Write("ref {0} prm{1}", local.VariableType, prmIdx++);
-//                //                Console.Write("/*" + local.Name + "*/");
-//            }
+            //int prmIdx = 0;
+            //foreach (var local in variables)
+            //{
+            //    if (prmIdx > 0) Console.Write(", //\n");
+            //    Console.Write("ref {0} prm{1}", local.VariableType, prmIdx++);
+            //    //                Console.Write("/*" + local.Name + "*/");
+            //}
 
             var il = method.Body.GetILProcessor();
             Instruction insCall;

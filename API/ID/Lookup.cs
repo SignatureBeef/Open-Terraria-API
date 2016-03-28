@@ -45,7 +45,7 @@ namespace OTA.ID
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                SafeConsole.WriteLine("Failed intialising entity lookups\n{0}", e);
             }
 #endif
         }

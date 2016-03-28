@@ -68,6 +68,84 @@ namespace OTA.Callbacks
         //ref text2, ref text3, ref name, ref a, ref a2, ref a3, ref a4, ref a5, ref array9, ref array10, ref array11, ref array12);
         //Injected before the last 888
         public static void OnDrawMenu(
+#if WINDOWS
+            ref Microsoft.Xna.Framework.Color prm0,
+            ref Microsoft.Xna.Framework.Color prm1,
+            ref Microsoft.Xna.Framework.Color prm2,
+            ref Microsoft.Xna.Framework.Input.Keys[] prm3,
+            ref Microsoft.Xna.Framework.Input.Keys[] prm4,
+            ref System.Boolean prm5,
+            ref System.Boolean prm6,
+            ref System.Boolean prm7,
+            ref System.Boolean prm8,
+            ref System.Boolean prm9,
+            ref System.Boolean prm10,
+            ref System.Boolean[] prm11,
+            ref System.Boolean[] prm12,
+            ref System.Boolean[] prm13,
+            ref System.Boolean[] prm14,
+            ref System.Byte prm15,
+            ref System.Byte[] prm16,
+            ref System.Int32 prm17,
+            ref System.Int32 buttonOffsetY,
+            ref System.Int32 prm19,
+            ref System.Int32 buttonSpacing,
+            ref System.Int32 buttonCount,
+            ref System.Int32 prm22,
+            ref System.Int32 prm23,
+            ref System.Int32 prm24,
+            ref System.Int32 prm25,
+            ref System.Int32 prm26,
+            ref System.Int32 prm27,
+            ref System.Int32 prm28,
+            ref System.Int32 prm29,
+            ref System.Int32 prm30,
+            ref System.Int32 prm31,
+            ref System.Int32 prm32,
+            ref System.Int32 targetIndex,
+            ref System.Int32 prm34,
+            ref System.Int32 prm35,
+            ref System.Int32 prm36,
+            ref System.Int32 prm37,
+            ref System.Int32 prm38,
+            ref System.Int32 prm39,
+            ref System.Int32 prm40,
+            ref System.Int32 prm41,
+            ref System.Int32 prm42,
+            ref System.Int32 prm43,
+            ref System.Int32 prm44,
+            ref System.Int32 prm45,
+            ref System.Int32 prm46,
+            ref System.Int32 prm47,
+            ref System.Int32 prm48,
+            ref System.Int32 prm49,
+            ref System.Int32 prm50,
+            ref System.Int32 prm51,
+            ref System.Int32 prm52,
+            ref System.Int32 prm53,
+            ref System.Int32 prm54,
+            ref System.Int32[] prm55,
+            ref System.Int32[] prm56,
+            ref System.IntPtr prm57,
+            ref System.Object prm58,
+            ref System.Object[] prm59,
+            ref System.Single prm60,
+            ref System.Single[] buttonScales,
+            ref System.String prm62,
+            ref System.String prm63,
+            ref System.String prm64,
+            ref System.String prm65,
+            ref System.String prm66,
+            ref System.String prm67,
+            ref System.String prm68,
+            ref System.String prm69,
+            ref System.String prm70,
+            ref System.String prm71,
+            ref System.String[] buttonNames,
+            ref System.String[] prm73,
+            ref System.String[] prm74,
+            ref System.String[] prm75
+#else
             ref Microsoft.Xna.Framework.Color prm0,
             ref Microsoft.Xna.Framework.Color prm1,
             ref Microsoft.Xna.Framework.Color prm2,
@@ -138,11 +216,12 @@ namespace OTA.Callbacks
             ref System.String prm67,
             ref System.String prm68,
             ref System.String prm69,
-            ref System.String prm70,
             ref System.String[] buttonNames,
             ref System.String[] prm72,
             ref System.String[] prm73,
-            ref System.String[] prm74)
+            ref System.String[] prm74
+#endif
+            )
         {
             var lButtonScales = buttonScales;
             var lButtonNames = buttonNames;
@@ -153,7 +232,7 @@ namespace OTA.Callbacks
                     lButtonScales[lButtonCount] = button.Scale;
                     lButtonNames[lButtonCount] = button.Text;
 
-                    if(Main.instance.selectedMenu == lTargetIndex)
+                    if (Main.instance.selectedMenu == lTargetIndex)
                     {
                         button.InvokeClick();
                     }
