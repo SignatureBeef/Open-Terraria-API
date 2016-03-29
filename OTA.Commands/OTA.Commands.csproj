@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\Chat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommandParser.cs" />
     <Compile Include="CommandInfo.cs" />

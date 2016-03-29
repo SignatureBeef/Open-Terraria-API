@@ -26,6 +26,8 @@ namespace OTA.Commands
         {
             base.Initialized(state);
 
+            PluginManager.RegisterHookSource(typeof(CommandEvents));
+
             OTACommand.Initialise(this);
             ProgramLog.Plugin.Log(this.Name + " initialised");
         }
@@ -83,11 +85,26 @@ namespace OTA.Commands
                             {
                                 color = Main.mcColor;
                             }
-                            NetMessage.SendData(25, -1, -1, message, args.BufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
-                            if (Main.dedServ)
+
+                            var cctx = new HookContext()
                             {
-                                Logger.Vanilla("<" + player.name + "> " + message);
-                                return;
+                                Player = player
+                            };
+                            var cargs = new CommandArgs.Chat()
+                            {
+                                Message = message,
+                                Color = color
+                            };
+                            CommandEvents.Chat.Invoke(ref cctx, ref cargs);
+
+                            if (cctx.Result == HookResult.DEFAULT)
+                            {
+                                NetMessage.SendData(25, -1, -1, message, args.BufferId, (float)color.R, (float)color.G, (float)color.B, 0, 0, 0);
+                                if (Main.dedServ)
+                                {
+                                    Logger.Vanilla("<" + player.name + "> " + message);
+                                    return;
+                                }
                             }
                         }
                     }
