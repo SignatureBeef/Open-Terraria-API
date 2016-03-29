@@ -76,6 +76,7 @@ namespace OTA.Commands
 
             if (text[0] == PlayerCommandPrefix)
                 text = text.Remove(0, 1);
+            else if (sender is BasePlayer) return false;
 
             var ctx = new HookContext
             {
