@@ -153,6 +153,7 @@ namespace OTA.Commands
                 else
                 {
                     sender.SendMessage(String.Format("No such command '{0}'.", hargs.Prefix));
+                    return true;
                 }
             }
             catch (ExitException e)
