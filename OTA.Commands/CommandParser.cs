@@ -163,8 +163,8 @@ namespace OTA.Commands
             catch (TokenizerException e)
             {
                 sender.SendMessage(e.Message);
+                return true;
             }
-            return false;
         }
 
         class TokenizerException : Exception
