@@ -16,47 +16,7 @@ namespace OTA.Commands
     /// </summary>
     public class CommandParser : CommandManager<CommandDefinition>
     {
-        public static ConsoleSender ConsoleSender { get; } = new ConsoleSender();
-
         public char PlayerCommandPrefix = '/';
-
-
-        ///// <summary>
-        ///// Parses new console command
-        ///// </summary>
-        ///// <param name="line">Command to parse</param>
-        ///// <param name="sender">Sending entity</param>
-        //public bool ParseConsoleCommand(string line, ConsoleSender sender = null)
-        //{
-        //    line = line.Trim();
-
-        //    if (sender == null)
-        //        sender = ConsoleSender;
-
-        //    return ParseAndProcess(sender, line);
-        //}
-
-        ///// <summary>
-        ///// Parses player commands
-        ///// </summary>
-        ///// <param name="player">Sending player</param>
-        ///// <param name="line">Command to parse</param>
-        //public bool ParsePlayerCommand(ISender player, string line, bool log = true)
-        //{
-        //    if (!String.IsNullOrEmpty(line) && line[0] == PlayerCommandPrefix)
-        //    {
-        //        line = line.Remove(0, 1);
-
-        //        if (log)
-        //            OTA.Logging.ProgramLog.Log(player.SenderName + " sent command: " + line);
-
-        //        ParseAndProcess(player, line);
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
-
 
         /// <summary>
         /// Parses and process a command from a sender
@@ -66,9 +26,9 @@ namespace OTA.Commands
         public bool ParseAndProcess(ISender sender, string text)
         {
             if (sender == null)
-                throw new System.ArgumentException("sender cannot me null", "original");
+                throw new System.ArgumentNullException(nameof(sender));
             if (text == null)
-                throw new System.ArgumentException("Parameter cannot be null", "original");
+                throw new System.ArgumentNullException(nameof(text));
 
             text = text.Trim();
             if (text.Length == 0)
@@ -111,7 +71,7 @@ namespace OTA.Commands
                     if (ctx.CheckForKick() || ctx.Result == HookResult.IGNORE)
                         return true;
 
-                    if (ctx.Result != HookResult.CONTINUE && OTA.Permissions.Permissions.GetPermission(sender, info.Node) != Permissions.Permission.Permitted)
+                    if (ctx.Result != HookResult.CONTINUE && OTA.Permissions.Permissions.GetPermission(sender, info.Node, info) != Permissions.Permission.Permitted)
                     {
                         sender.SendMessage("Access denied.", G: 0, B: 0);
                         return true;

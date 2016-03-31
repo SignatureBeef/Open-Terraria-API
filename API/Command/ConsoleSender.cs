@@ -12,6 +12,8 @@ namespace OTA.Command
 
         public static ConsoleColor DefaultColour = ConsoleColor.Gray;
 
+        public static ConsoleSender Default { get; } = new ConsoleSender();
+
         public string SenderName
         {
             get { return "CONSOLE"; }

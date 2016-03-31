@@ -4,7 +4,7 @@ namespace OTA.Permissions
 {
     public interface IPermissionHandler
     {
-        Permission GetPlayerPermission(ISender sender, string node);
+        Permission GetPlayerPermission(ISender sender, string node, params object[] args);
     }
 }
 

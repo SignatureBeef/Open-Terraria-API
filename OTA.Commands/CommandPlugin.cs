@@ -132,7 +132,7 @@ namespace OTA.Commands
                     var ln = Console.ReadLine();
                     if (!String.IsNullOrEmpty(ln) && ln.Length > 0)
                     {
-                        CommandManager.Parser.ParseAndProcess(CommandParser.ConsoleSender, ln);
+                        CommandManager.Parser.ParseAndProcess(ConsoleSender.Default, ln);
                     }
                     else if (null == ln)
                     {

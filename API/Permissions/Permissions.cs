@@ -13,7 +13,7 @@ namespace OTA.Permissions
             lock (_sync) _handler = handler;
         }
 
-        public static Permission GetPermission(ISender sender, string node)
+        public static Permission GetPermission(ISender sender, string node, params object[] args)
         {
             lock (_sync)
             {
