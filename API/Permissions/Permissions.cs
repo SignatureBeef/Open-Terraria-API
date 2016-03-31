@@ -17,7 +17,7 @@ namespace OTA.Permissions
         {
             lock (_sync)
             {
-                if (_handler != null) return _handler.GetPlayerPermission(sender, node);
+                if (_handler != null) return _handler.GetPlayerPermission(sender, node, args);
             }
 
             return Permission.Permitted;
