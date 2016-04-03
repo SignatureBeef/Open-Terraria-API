@@ -397,12 +397,30 @@ namespace OTA.Plugin
             try
             {
                 // If there are plugins in the root directory it can cause duplicate types
+                // TODO: I wish this could be avoided, but they cause a debugging nightmare.
+                // Need to figure out how to disable .net looking beside the launch exe.
+                // Or perhaps look in Plugins & Libraries first rather than the root (probing doesn't seem to do this).
                 if (!Terraria.Initializers.LaunchInitializer.HasParameter("-plugin-clean"))
                 {
-                    var fn = Path.GetFileName(path);
-                    if (File.Exists(fn))
+                    var exePath = Assembly.GetExecutingAssembly().Location;
+                    foreach (var dir in new[]
                     {
-                        File.Delete(fn);
+                        Environment.CurrentDirectory,
+                        Path.GetDirectoryName(exePath) //If the exe is started from another location
+                    }.Distinct())
+                    {
+                        var filename = Path.GetFileName(path);
+                        var fn = Path.Combine(dir, filename);
+                        if (File.Exists(fn))
+                        {
+                            var before = Console.ForegroundColor;
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write($"There is a duplicate {filename} beside {Path.GetFileName(exePath)} which typically causes issues, remove it? [Y/n]: ");
+                            if (Console.ReadKey().Key == ConsoleKey.Y)
+                                File.Delete(fn);
+                            Console.WriteLine();
+                            Console.ForegroundColor = before;
+                        }
                     }
                 }
 

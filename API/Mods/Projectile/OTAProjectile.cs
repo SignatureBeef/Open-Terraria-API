@@ -7,27 +7,27 @@ using System.Drawing.Imaging;
 
 namespace OTA.Mod.Projectile
 {
-    //This will get you the type: var type = EntityRegistrar.Projectiles["imp proj test"];
-    [NativeMod("imp proj test")]
-    public class PrjImpFireballTest : OTAProjectile
-    {
-        public override void OnSetDefaults()
-        {
-            base.OnSetDefaults();
+    ////This will get you the type: var type = EntityRegistrar.Projectiles["imp proj test"];
+    //[NativeMod("imp proj test")]
+    //public class PrjImpFireballTest : OTAProjectile
+    //{
+    //    public override void OnSetDefaults()
+    //    {
+    //        base.OnSetDefaults();
 
-            Projectile.name = "Imp Fireball";
-            Projectile.width = 12;
-            Projectile.height = 12;
-            Projectile.aiStyle = 0;
-            Projectile.friendly = true;
-            Projectile.penetrate = -1;
-            Projectile.aiStyle = 1;
-            Projectile.tileCollide = true;
-            Projectile.timeLeft = 100;
-            Projectile.alpha = 255;
-            Projectile.extraUpdates = 1;
-        }
-    }
+    //        Projectile.name = "Imp Fireball";
+    //        Projectile.width = 12;
+    //        Projectile.height = 12;
+    //        Projectile.aiStyle = 0;
+    //        Projectile.friendly = true;
+    //        Projectile.penetrate = -1;
+    //        Projectile.aiStyle = 1;
+    //        Projectile.tileCollide = true;
+    //        Projectile.timeLeft = 100;
+    //        Projectile.alpha = 255;
+    //        Projectile.extraUpdates = 1;
+    //    }
+    //}
 
     public abstract class OTAProjectile : INativeMod
     {
