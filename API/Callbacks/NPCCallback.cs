@@ -528,29 +528,36 @@ namespace OTA.Callbacks
 
         public static void OnGetChatButtons(ref string text, ref string text2)
         {
-            var ctx = new HookContext();
-            var args = new HookArgs.NpcGetChatButtons()
+            if (Terraria.Main.myPlayer > 0 && Terraria.Main.myPlayer < Terraria.Main.player.Length)
             {
-                Npc = Terraria.Main.npc[Terraria.Main.player[Terraria.Main.myPlayer].talkNPC],
-                Buttons = new string[] { text, text2 }
-            };
-
-            HookPoints.NpcGetChatButtons.Invoke(ref ctx, ref args);
-
-            if (ctx.Result == HookResult.RECTIFY)
-            {
-                var arr = ctx.ResultParam as string[];
-                if (arr != null)
+                var talkNpc = Terraria.Main.player[Terraria.Main.myPlayer].talkNPC;
+                if (talkNpc > -1 && talkNpc < Terraria.Main.npc.Length)
                 {
-                    if (arr.Length == 1)
+                    var ctx = new HookContext();
+                    var args = new HookArgs.NpcGetChatButtons()
                     {
-                        text = arr[0] ?? string.Empty;
-                        text2 = string.Empty;
-                    }
-                    else if (arr.Length == 2)
+                        Npc = Terraria.Main.npc[talkNpc],
+                        Buttons = new string[] { text, text2 }
+                    };
+
+                    HookPoints.NpcGetChatButtons.Invoke(ref ctx, ref args);
+
+                    if (ctx.Result == HookResult.RECTIFY)
                     {
-                        text = arr[0] ?? string.Empty;
-                        text2 = arr[1] ?? string.Empty;
+                        var arr = ctx.ResultParam as string[];
+                        if (arr != null)
+                        {
+                            if (arr.Length == 1)
+                            {
+                                text = arr[0] ?? string.Empty;
+                                text2 = string.Empty;
+                            }
+                            else if (arr.Length == 2)
+                            {
+                                text = arr[0] ?? string.Empty;
+                                text2 = arr[1] ?? string.Empty;
+                            }
+                        }
                     }
                 }
             }
