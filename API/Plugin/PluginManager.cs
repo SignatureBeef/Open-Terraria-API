@@ -415,7 +415,7 @@ namespace OTA.Plugin
                         {
                             var before = Console.ForegroundColor;
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write($"There is a duplicate {filename} beside {Path.GetFileName(exePath)} which typically causes issues, remove it? [Y/n]: ");
+                            Console.Write($"There is a duplicate {filename} beside {Path.GetFileName(exePath)} which typically causes issues, remove it? [y/N]: ");
                             if (Console.ReadKey().Key == ConsoleKey.Y)
                                 File.Delete(fn);
                             Console.WriteLine();
