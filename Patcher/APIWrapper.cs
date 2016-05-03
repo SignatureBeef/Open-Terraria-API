@@ -36,9 +36,9 @@ namespace OTA.Patcher
     }
 
     /// <summary>
-    /// This class is to isolate and manage the tdsm.exe referenced by the api dll.
-    /// Previously windows would lock the tdsm.exe that was referenced by TDSM.API.dll, which itself was loaded by the patcher.
-    /// The locking would cause the patcher (if ran a second time) to fail when saving tdsm.exe
+    /// This class is to isolate and manage the exe referenced by the api dll.
+    /// Previously windows would lock the exe that was referenced by TDSM.API.dll, which itself was loaded by the patcher.
+    /// The locking would cause the patcher (if ran a second time) to fail when saving exe
     /// </summary>
     public static class APIWrapper
     {

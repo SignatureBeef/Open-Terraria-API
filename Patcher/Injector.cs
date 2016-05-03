@@ -2359,10 +2359,10 @@ namespace OTA.Patcher
         /// <param name="mode">Mode.</param>
         /// <param name="fileName">File name.</param>
         /// <param name="apiBuild">API build.</param>
-        /// <param name="tdsmUID">Tdsm user interface.</param>
+        /// <param name="otapuUID">OTAPI UUID.</param>
         /// <param name="name">Name.</param>
         /// <param name="swapOTA">If set to <c>true</c> swap OT.</param>
-        public void Save(SupportType mode, string fileName, int apiBuild, string tdsmUID, string name, bool swapOTA = false)
+        public void Save(SupportType mode, string fileName, int apiBuild, string otapuUID, string name, bool swapOTA = false)
         {
             if (mode == SupportType.Server)
             {
@@ -2378,7 +2378,7 @@ namespace OTA.Patcher
                     if (_asm.CustomAttributes[x].AttributeType.Name == "GuidAttribute")
                     {
                         _asm.CustomAttributes[x].ConstructorArguments[0] =
-                        new CustomAttributeArgument(_asm.CustomAttributes[x].ConstructorArguments[0].Type, tdsmUID);
+                        new CustomAttributeArgument(_asm.CustomAttributes[x].ConstructorArguments[0].Type, otapuUID);
                     }
                     else if (_asm.CustomAttributes[x].AttributeType.Name == "AssemblyTitleAttribute")
                     {

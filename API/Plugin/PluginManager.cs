@@ -484,7 +484,7 @@ namespace OTA.Plugin
             var us = Assembly.GetExecutingAssembly();
             par.ReferencedAssemblies.Add(us.Location);
 
-            //Add the libraries path as well as where TDSM is located
+            //Add the libraries path as well as where OTAPI is located
             var directory = Path.GetDirectoryName(us.Location);
             par.CompilerOptions = String.Format("/lib:\"{0}\"", Globals.LibrariesPath, directory);
 

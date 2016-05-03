@@ -23,7 +23,7 @@ namespace OTA.Callbacks
     {
         static MainCallback()
         {
-            //Resolves external plugin hook assemblies. So there is no need to place the DLL beside tdsm.exe
+            //Resolves external plugin hook assemblies. So there is no need to place the DLL beside exe
             AppDomain.CurrentDomain.AssemblyResolve += (s, a) =>
             {
                 try

@@ -1,23 +1,23 @@
 ##Downloads
-This section contains the dump of our bin directories, and you could consider these as PreReleases.
+This section contains the dump of our bin directories which are typically updated each time a developer commits to the repository. While most of the time these binaries should work outright, they are still development files and serve as the Bleeding Edge files over at [https://openterraria.com/bleeding-edge](https://openterraria.com/bleeding-edge).
+These files can be used to create a minimalistic server that replicates the functionality of the official Re-Logic server. Additionally you can download the TDSM Rebind or TShock 5 (Orion) modifications.
 
-For a tutorial for using the patcher please visit [this wiki page](https://github.com/DeathCradle/Terraria-s-Dedicated-Server-Mod/wiki/A-Beginner%27s-Guide-for-TDSM-Rebind%3A-Installation-and-Running).
 
-We have now also started including the generated tdsm.exe. The minimalistic installation for TDSM is shown with the directory structure below (all using files available within this Binaries folder):
+Below is a basic directory structure of some of the required files.
 
-### Directory Structure:
+### Example Directory Structure:
 ```
-\tdsm\
-  TDSM.API.dll
-  tdsm.exe
-\tdsm\Plugins\
-  TDSM.Core.dll
-\tdsm\Data\
-  permissions.xml
-\tdsm\Libraries\
+\Binaries\
+  OTA.dll
+  TerrariaServer.exe
+  TerrariaServer.exe.config	
+\Binaries\Plugins\
+  ** Here you can use TDSM Rebind or TShock 5 (Orion)
+\Binaries\Libraries\
   ICSharpCode.SharpZipLib.dll
   KopiLua.dll
   Mono.Nat.dll
   Newtonsoft.Json.dll
   NLua.dll
+  **+ many more supporting files**
 ```

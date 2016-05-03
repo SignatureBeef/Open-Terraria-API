@@ -70,7 +70,7 @@ namespace OTA.Misc
             {
                 try
                 {
-                    prctl(15, "TDSM: " + name, 0, 0, 0);
+                    prctl(15, "OTAPI: " + name, 0, 0, 0);
                 }
                 catch
                 {

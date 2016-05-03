@@ -144,6 +144,9 @@ namespace OTA.Web
         {
             this.InitialiseOptions();
 
+            //This is the preferred option, so it must be applied before the traditional routes
+            WebApiConfig.MapHttpAttributeRoutes();
+
             WebApiConfig.Routes.MapHttpRoute
             (
                 name: "DefaultApi",
@@ -153,8 +156,6 @@ namespace OTA.Web
 
             //Ensure the plugin resolver is added
             WebApiConfig.Services.Replace(typeof(System.Web.Http.Dispatcher.IAssembliesResolver), new PluginServiceResolver());
-
-            WebApiConfig.MapHttpAttributeRoutes();
         }
 
         /// <summary>

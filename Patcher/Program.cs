@@ -385,17 +385,10 @@ namespace OTA.Patcher
                         }
                     }
 
-                    //            Copy(root, "TDSM-Core", Path.Combine(Environment.CurrentDirectory, "Plugins"));
-                    //            Copy(root, "Binaries", Path.Combine(Environment.CurrentDirectory), "TDSM.API");
-                    //Copy (root, "Restrict", Path.Combine (Environment.CurrentDirectory, "Plugins"), "RestrictPlugin");
                     Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "KopiLua", false);
                     Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "NLua", false);
                     Copy(root, "External", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "ICSharpCode.SharpZipLib", false);
                     Copy(root, "Official", Environment.CurrentDirectory, "TerrariaServer", false);
-                    //            Copy(root, "tdsm-core", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Newtonsoft.Json", true);
-                    //            Copy(root, "tdsm-web", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-web", true);
-                    //            Copy(root, "tdsm-mysql-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-mysql-connector", true);
-                    //            Copy(root, "tdsm-sqlite-connector", Path.Combine(Environment.CurrentDirectory, "Plugins"), "tdsm-sqlite-connector", true);
 
                     foreach (var item in new[] { "OTA.dll", "OTA.Commands.dll" })
                     {

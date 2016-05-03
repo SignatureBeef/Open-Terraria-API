@@ -50,7 +50,6 @@ namespace OTA.Plugin
 
             if (plg != null)
             {
-//                this.TDSMBuild = (int)(double)plg["TDSMBuild"];
                 //UNTESTED
                 this.OTAVersion.Major = (int)(double)plg["OTAVersionMajor"];
                 this.OTAVersion.Minor = (int)(double)plg["OTAVersionMinor"];

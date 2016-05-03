@@ -10,8 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EED99527-E456-4B5C-8079-D4DC60410DFE}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		Changelog.md = Changelog.md
-		Development.md = Development.md
 		gh-build.json = gh-build.json
 		project.json = project.json
 		README.md = README.md
