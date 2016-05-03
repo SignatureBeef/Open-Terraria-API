@@ -14,7 +14,7 @@ namespace OTA.Command
 
         public static ConsoleSender Default { get; } = new ConsoleSender();
 
-        public string SenderName
+        public virtual string SenderName
         {
             get { return "CONSOLE"; }
         }
