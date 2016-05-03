@@ -47,7 +47,7 @@ namespace OTA.Command
         /// <summary>
         /// Sends a message to the console
         /// </summary>
-        public void SendMessage(string message, int A = 255, byte R = 255, byte G = 255, byte B = 255)
+        public virtual void SendMessage(string message, int A = 255, byte R = 255, byte G = 255, byte B = 255)
         {
             if (_consoleMethod == null)
             {
