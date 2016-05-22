@@ -9,6 +9,9 @@ namespace Microsoft.Xna.Framework.Input
         public ButtonState MiddleButton { get; set; }
         public ButtonState RightButton { get; set; }
         public int ScrollWheelValue { get; set; }
+
+        public ButtonState XButton1 => ButtonState.Released;
+        public ButtonState XButton2 => ButtonState.Released;
     }
 }
 #endif

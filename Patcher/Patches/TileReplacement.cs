@@ -9,6 +9,9 @@ namespace OTA.Patcher
         [OTAPatch(SupportType.Server, "Forcing Terraria on a diet...", 200)]
         public void SwapTileToMemTile()
         {
+            //TODO: check if Terraria.Tile matches the MemTile signatures
+            //      it will help to ensure updates are done correctly.
+
             _asm.MainModule.TryReplaceArrayWithClassInstance(Terraria.Tile, API.MemTile, API.TileCollection, "Tile");
 
             //Swap the constructor

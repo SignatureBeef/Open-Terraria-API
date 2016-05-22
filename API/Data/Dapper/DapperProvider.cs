@@ -5,7 +5,9 @@ using FluentMigrator.Runner.Processors;
 using OTA.Data.Dapper.Extensions;
 using OTA.Data.Dapper.Mappers;
 using OTA.Extensions;
+using OTA.Logging;
 using System.Data;
+using System.IO;
 using System.Linq;
 
 namespace OTA.Data.Dapper
@@ -14,6 +16,10 @@ namespace OTA.Data.Dapper
     {
         private string _provider, _connectionString;
         private System.Reflection.ConstructorInfo _providerConstructor;
+        private LogChannel _logger => new LogChannel("Migration", System.ConsoleColor.Yellow, System.Diagnostics.TraceLevel.Info)
+        {
+            EnableConsoleOutput = false
+        };
 
         public string Provider { get { return _provider; } }
         public bool Available { get { return _providerConstructor != null; } }
@@ -47,6 +53,11 @@ namespace OTA.Data.Dapper
                     return TableMapper.TypeToName(type);
                 };
             }
+
+            //Enable logging for the migrations announcer
+            _logger.Targets.Add(
+                 new FileOutputTarget(Path.Combine(Globals.LogFolderPath, "migrations.log"))
+             );
         }
 
         public void Migrate()
@@ -60,6 +71,11 @@ namespace OTA.Data.Dapper
             // to a migration log e.g. Data\logs\migration_yyyyMMddHHmmss.log
 #if DEBUG
             var announcer = new FluentMigrator.Runner.Announcers.ConsoleAnnouncer();
+#else
+            var announcer = new FluentMigrator.Runner.Announcers.TextWriterAnnouncer((str) =>
+            {
+                _logger.Log(str);
+            });
 #endif
             var ctx = new RunnerContext(announcer)
             {
@@ -71,6 +87,7 @@ namespace OTA.Data.Dapper
             new TaskExecutor(ctx, new DapperPluginAssemblyFactory(), new MigrationProcessorFactoryProvider()).Execute();
         }
 
+        //TODO: look into DbProviderFactories
         public void SetProviderType(string typeName, string assemblyName = null)
         {
             var type = System.AppDomain.CurrentDomain

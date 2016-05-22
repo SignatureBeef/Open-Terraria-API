@@ -38,8 +38,8 @@ namespace OTA
             get { return String.Format("{0}.{1}{2}", Version.Major, Version.Minor, PhaseToSuffix(Version.Phase)); }
         }
 
-        public const Int32 TerrariaRelease = 146;
-        public const String TerrariaVersion = "1.3.0.7";
+        public const Int32 TerrariaRelease = 168;
+        public const String TerrariaVersion = "1.3.1.0";
 
         private const String WorldDirectory = "Worlds";
         private const String PluginDirectory = "Plugins";

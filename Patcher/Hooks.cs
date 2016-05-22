@@ -201,10 +201,10 @@ namespace OTA.Patcher
             //Add the sender parameter
             ParameterDefinition prmSender;
             switchTiles.Parameters.Add(prmSender = new ParameterDefinition("sender", ParameterAttributes.None, Terraria.Entity)
-                {
-                    HasDefault = true,
-                    IsOptional = true
-                });
+            {
+                HasDefault = true,
+                IsOptional = true
+            });
 
             //Update all references to add themselves (currently they are all senders!)
             Terraria.ForEachInstruction((mth, ins) =>
@@ -218,24 +218,26 @@ namespace OTA.Patcher
 
             //--STEP 2
             //Find where the HitSwitch call is (this is our unique reference)
-            var insHitSwitch = switchTiles.Body.Instructions.Single(x => x.OpCode == OpCodes.Call
+            foreach (var insHitSwitch in switchTiles.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
                                    && x.Operand is MethodReference
-                                   && (x.Operand as MethodReference).Name == "HitSwitch");
-            //Find the branch where we will append our code to
-            var insLdLocS = insHitSwitch.FindPreviousInstructionByOpCode(OpCodes.Brfalse_S);
+                                   && (x.Operand as MethodReference).Name == "HitSwitch").ToArray())
+            {
+                //Find the branch where we will append our code to
+                var insLdLocS = insHitSwitch.FindPreviousInstructionByOpCode(OpCodes.Brfalse_S);
 
-            //Import and get ready for injection
-            var hookCall = Terraria.Import(API.CollisionCallback.Method("OnPressurePlateTriggered"));
-            var il = switchTiles.Body.GetILProcessor();
+                //Import and get ready for injection
+                var hookCall = Terraria.Import(API.CollisionCallback.Method("OnPressurePlateTriggered"));
+                var il = switchTiles.Body.GetILProcessor();
 
-            //Add our call to the statement, and leave the result on the branch to take affect to the continutation of the statement
-            //These are in reverse order
-            var insSkipTo = insLdLocS.Operand as Instruction;
-            il.InsertAfter(insLdLocS, il.Create(OpCodes.Brfalse_S, insSkipTo)); //If our hook cancels, then we must skip the trigger
-            il.InsertAfter(insLdLocS, il.Create(OpCodes.Call, hookCall)); //Call our code
-            il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Previous.Operand as VariableDefinition)); //Load the Y
-            il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Operand as VariableDefinition)); //Load the X
-            il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldarg, prmSender)); //Load the sender (remember we added this in Step 1)
+                //Add our call to the statement, and leave the result on the branch to take affect to the continutation of the statement
+                //These are in reverse order
+                var insSkipTo = insLdLocS.Operand as Instruction;
+                il.InsertAfter(insLdLocS, il.Create(OpCodes.Brfalse_S, insSkipTo)); //If our hook cancels, then we must skip the trigger
+                il.InsertAfter(insLdLocS, il.Create(OpCodes.Call, hookCall)); //Call our code
+                il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Previous.Operand as VariableDefinition)); //Load the Y
+                il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Operand as VariableDefinition)); //Load the X
+                il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldarg, prmSender)); //Load the sender (remember we added this in Step 1)
+            }
 
             switchTiles.Body.OptimizeMacros();
         }
@@ -243,7 +245,7 @@ namespace OTA.Patcher
         [OTAPatch(SupportType.Server, "Hooking MechSpawn")]
         private void HookMechSpawn()
         {
-            foreach (var type in new TypeDefinition[] 
+            foreach (var type in new TypeDefinition[]
                 {
                     Terraria.NPC,
                     Terraria.Item
@@ -278,7 +280,7 @@ namespace OTA.Patcher
             }
         }
 
-        #if SAVE_PROGRESS
+#if SAVE_PROGRESS
         [OTAPatch(SupportType.Server, "Hooking world save tiles progress")]
         private void PatchWorldSaveTileProgress()
         {
@@ -341,6 +343,6 @@ namespace OTA.Patcher
                 il.Replace(st, il.Create(OpCodes.Call, callback));
             }
         }
-        #endif
+#endif
     }
 }

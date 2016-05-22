@@ -78,7 +78,7 @@ namespace OTA.Patcher
     public static class OTAPatcher
     {
         public const String OTAGuid = "9f7bca2e-4d2e-4244-aaae-fa56ca7797ec";
-        public const Int32 Build = 6;
+        public const Int32 Build = 7;
 
         //        #if CLIENT
         //        private const String FolderKind = "Client";
@@ -107,7 +107,7 @@ namespace OTA.Patcher
             if (!Directory.Exists(p))
                 p =*/ debugFolder ? Path.Combine(root.FullName, project, "bin", projectFolder) : Path.Combine(root.FullName, project);
             if (!Directory.Exists(p))
-                p = Path.Combine(root.FullName, project, "bin", projectFolder + (debugFolder ? "-Debug" : String.Empty));
+                p = Path.Combine(root.FullName, project, "bin", projectFolder + (debugFolder ? $"-{ReleaseType}" : String.Empty));
 
             //From the project
             var dllFrom = Path.Combine(p, projectBinary + ".dll");
@@ -234,6 +234,12 @@ namespace OTA.Patcher
 
         public static string PlatformType { get; set; }
 
+#if DEBUG
+        public static string ReleaseType = @"Debug";
+#else
+        public static string ReleaseType = @"Release";
+#endif
+
         static OTAPatcher()
         {
             LibrariesFolder = DefaultLibrariesFolder;
@@ -350,7 +356,7 @@ namespace OTA.Patcher
                     if (CopyAPI)
                     {
                         Copy(root, "API", Environment.CurrentDirectory, "OTA", true);
-                        Copy(root, "OTA.Commands", Environment.CurrentDirectory, "OTA.Commands", true, "Server-Debug");
+                        Copy(root, "OTA.Commands", Environment.CurrentDirectory, "OTA.Commands", true, $"Server-{ReleaseType}");
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.Diagnostics", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin", true);
                         Copy(root, "API", Path.Combine(Environment.CurrentDirectory, LibrariesFolder), "Microsoft.Owin.FileSystems", true);
@@ -455,7 +461,7 @@ namespace OTA.Patcher
                     }
 
                     Copy(root, "Official", Environment.CurrentDirectory, "Terraria." + Platform, false);
-                    Copy(root, "OTA.Commands", Environment.CurrentDirectory, "OTA.Commands", true, OTAPatcher.Platform + "-Debug");
+                    Copy(root, "OTA.Commands", Environment.CurrentDirectory, "OTA.Commands", true, OTAPatcher.Platform + $"-{ReleaseType}");
 
                     foreach (var fileInfo in root.GetDirectories().Single(x => x.Name == "External").EnumerateFiles())
                     {
@@ -550,7 +556,6 @@ namespace OTA.Patcher
                 patcher.FixNetplay();
                 Console.Write("Ok\nFixing NPC AI crashes...");
                 patcher.FixRandomErrors();
-                //            patcher.DetectMissingXNA();
 
                 //                patcher.HookWorldFile_DEBUG();
 
@@ -569,6 +574,8 @@ namespace OTA.Patcher
                 //Console.Write("Ok\nPutting Terraria on a diet...");
                 //patcher.SwapToVanillaTile(); //Holy shit batman! it works
                 //patcher.InjectTileSet();
+
+                patcher.DetectMissingXNA();
 
                 Console.Write("Ok\n");
 
@@ -932,7 +939,7 @@ namespace OTA.Patcher
                     if (inf.Exists)
                     {
                         int retry = 0;
-                    RETRY:
+                        RETRY:
                         try
                         {
                             inf.Delete();

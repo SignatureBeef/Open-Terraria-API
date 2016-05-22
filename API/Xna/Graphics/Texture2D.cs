@@ -1,5 +1,6 @@
 ﻿#if XNA_SHIMS
 using System;
+using System.Runtime.InteropServices;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -65,6 +66,9 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
 
 		}
-	}
+
+        public static Texture2D FromStream(GraphicsDevice graphicsDevice, System.IO.Stream stream) => null;
+        public static Texture2D FromStream(GraphicsDevice graphicsDevice, System.IO.Stream stream, int width, int height, [MarshalAs(UnmanagedType.U1)] bool zoom) => null;
+    }
 }
 #endif

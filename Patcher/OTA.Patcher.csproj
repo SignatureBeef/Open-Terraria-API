@@ -43,12 +43,14 @@
     <Commandlineparameters>-projectfiles -platform Server</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Server-Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Server-Release\</OutputPath>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
     <ErrorReport>prompt</ErrorReport>
-    <DefineConstants>DEBUG;TRACE;SERVER</DefineConstants>
+    <DefineConstants>SERVER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <ConsolePause>false</ConsolePause>
     <UseVSHostingProcess>false</UseVSHostingProcess>

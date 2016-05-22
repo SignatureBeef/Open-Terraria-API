@@ -1,39 +1,37 @@
 ﻿//#define TESTING
 
-using System.Runtime.InteropServices;
+using System;
 
 namespace OTA.Memory
 {
     /// <summary>
     /// Overridable terrarian tile. 
-    /// [TODO] Allow use from SQL and so on, contact DeathCradle if you require this.
+    /// [TODO] Allow use from SQL and so on, contact DeathCradle if you require 
     /// This is also possible to be done in the patcher/IL
     /// </summary>
-    /// <remarks>You typically wont create this class</remarks>
     public class MemTile
     {
-        public const System.Int32 TileDataSize = 13;
+        #region Protected
+        protected virtual byte _wall { get; set; }
 
-        public virtual byte _wall { get; set; }
+        protected virtual byte _liquid { get; set; }
 
-        public virtual byte _liquid { get; set; }
+        protected virtual byte _bTileHeader { get; set; }
 
-        public virtual byte _bTileHeader { get; set; }
+        protected virtual byte _bTileHeader2 { get; set; }
 
-        public virtual byte _bTileHeader2 { get; set; }
+        protected virtual byte _bTileHeader3 { get; set; }
 
-        public virtual byte _bTileHeader3 { get; set; }
+        protected virtual short _sTileHeader { get; set; }
 
-        public virtual short _sTileHeader { get; set; }
+        protected virtual short _frameX { get; set; }
 
-        public virtual short _frameX { get; set; }
+        protected virtual short _frameY { get; set; }
 
-        public virtual short _frameY { get; set; }
+        protected virtual ushort _type { get; set; }
+        #endregion
 
-        public virtual ushort _type { get; set; }
-
-        //private TileRef _ref;
-
+        #region Properties
         public byte wall
         {
             get { return _wall; }
@@ -87,502 +85,465 @@ namespace OTA.Memory
             get { return _frameY; }
             set { _frameY = value; }
         }
+        #endregion
 
-        public int collisionType
-        {
-            get
-            {
-                if (!this.active())
-                {
-                    return 0;
-                }
-                if (this.halfBrick())
-                {
-                    return 2;
-                }
-                if (this.slope() > 0)
-                {
-                    return (int)(2 + this.slope());
-                }
-#if Full_API
-                if (Terraria.Main.tileSolid[(int)this.type] && !Terraria.Main.tileSolidTop[(int)this.type])
-                {
-                    return 1;
-                }
-#endif
-                return -1;
-            }
-        }
+        #region Flags
+        const Int32 Flag_WallColor = 31;
+        const Int32 Flag_WallColor_Remove = byte.MaxValue - Flag_WallColor;
 
-        public MemTile()
-        {
-        }
+        const Int32 Flag_Lava = 32;
+        const Int32 Flag_Lava_Remove = byte.MaxValue - Flag_Lava;
+
+        const Int32 Flag_Honey = 64;
+        const Int32 Flag_Honey_Remove = byte.MaxValue - Flag_Honey;
+
+        const Int32 Flag_Wire4 = 128;
+        const Int32 Flag_Wire4_Remove = byte.MaxValue - Flag_Wire4;
+
+        const Int32 Flag_WallFrameX = 15;
+        const Int32 Flag_WallFrameX_Remove = byte.MaxValue - Flag_WallFrameX;
+
+        const Int32 Flag_FrameNumber = 48;
+        const Int32 Flag_FrameNumber_Remove = byte.MaxValue - Flag_FrameNumber;
+
+        const Int32 Flag_WallFrameNumber = 63;
+        const Int32 Flag_WallFrameNumber_Remove = byte.MaxValue - Flag_WallFrameNumber;
+
+        const Int32 Flag_WallFrameY = 7;
+        const Int32 Flag_WallFrameY_Remove = byte.MaxValue - Flag_WallFrameY;
+
+        const Int32 Flag_CheckingLiquid = 8;
+        const Int32 Flag_CheckingLiquid_Remove = byte.MaxValue - Flag_CheckingLiquid;
+
+        const Int32 Flag_SkipLiquid = 16;
+        const Int32 Flag_SkipLiquid_Remove = byte.MaxValue - Flag_SkipLiquid;
+
+        const Int32 Flag_Color = 31;
+        const Int32 Flag_Color_Remove = ushort.MaxValue - Flag_Color;
+
+        const Int32 Flag_Active = 32;
+        const Int32 Flag_Active_Remove = ushort.MaxValue - Flag_Active;
+
+        const Int32 Flag_Inactive = 64;
+        const Int32 Flag_Inactive_Remove = ushort.MaxValue - Flag_Inactive;
+
+        const Int32 Flag_Wire = 128;
+        const Int32 Flag_Wire_Remove = ushort.MaxValue - Flag_Wire;
+
+        const Int32 Flag_Wire2 = 256;
+        const Int32 Flag_Wire2_Remove = ushort.MaxValue - Flag_Wire2;
+
+        const Int32 Flag_Wire3 = 512;
+        const Int32 Flag_Wire3_Remove = ushort.MaxValue - Flag_Wire3;
+
+        const Int32 Flag_HalfBrick = 1024;
+        const Int32 Flag_HalfBrick_Remove = ushort.MaxValue - Flag_HalfBrick;
+
+        const Int32 Flag_Actuator = 2048;
+        const Int32 Flag_Actuator_Remove = ushort.MaxValue - Flag_Actuator;
+        #endregion
+
+        public MemTile() { }
 
         public MemTile(MemTile copy)
         {
             if (copy == null)
             {
-                this.type = 0;
-                this.wall = 0;
-                this.liquid = 0;
-                this.sTileHeader = 0;
-                this.bTileHeader = 0;
-                this.bTileHeader2 = 0;
-                this.bTileHeader3 = 0;
-                this.frameX = 0;
-                this.frameY = 0;
+                type = 0;
+                wall = 0;
+                liquid = 0;
+                sTileHeader = 0;
+                bTileHeader = 0;
+                bTileHeader2 = 0;
+                bTileHeader3 = 0;
+                frameX = 0;
+                frameY = 0;
                 return;
             }
-            this.type = copy.type;
-            this.wall = copy.wall;
-            this.liquid = copy.liquid;
-            this.sTileHeader = copy.sTileHeader;
-            this.bTileHeader = copy.bTileHeader;
-            this.bTileHeader2 = copy.bTileHeader2;
-            this.bTileHeader3 = copy.bTileHeader3;
-            this.frameX = copy.frameX;
-            this.frameY = copy.frameY;
+
+            type = copy.type;
+            wall = copy.wall;
+            liquid = copy.liquid;
+            sTileHeader = copy.sTileHeader;
+            bTileHeader = copy.bTileHeader;
+            bTileHeader2 = copy.bTileHeader2;
+            bTileHeader3 = copy.bTileHeader3;
+            frameX = copy.frameX;
+            frameY = copy.frameY;
         }
 
-        public object Clone()
+        public int collisionType
         {
-            return base.MemberwiseClone();
+            get
+            {
+                if (!active())
+                    return 0;
+
+                if (halfBrick())
+                    return 2;
+
+                if (slope() > 0)
+                    return (int)(2 + slope());
+
+#if Full_API
+                if (Terraria.Main.tileSolid[(int)type] && !Terraria.Main.tileSolidTop[(int)type])
+                    return 1;
+#endif
+                return -1;
+            }
         }
+
+        public object Clone() => base.MemberwiseClone();
 
         public void ClearEverything()
         {
-            this.type = 0;
-            this.wall = 0;
-            this.liquid = 0;
-            this.sTileHeader = 0;
-            this.bTileHeader = 0;
-            this.bTileHeader2 = 0;
-            this.bTileHeader3 = 0;
-            this.frameX = 0;
-            this.frameY = 0;
+            type = 0;
+            wall = 0;
+            liquid = 0;
+            sTileHeader = 0;
+            bTileHeader = 0;
+            bTileHeader2 = 0;
+            bTileHeader3 = 0;
+            frameX = 0;
+            frameY = 0;
         }
 
         public void ClearTile()
         {
-            this.slope(0);
-            this.halfBrick(false);
-            this.active(false);
+            slope(0);
+            halfBrick(false);
+            active(false);
         }
 
         public void CopyFrom(MemTile from)
         {
-            this.type = from.type;
-            this.wall = from.wall;
-            this.liquid = from.liquid;
-            this.sTileHeader = from.sTileHeader;
-            this.bTileHeader = from.bTileHeader;
-            this.bTileHeader2 = from.bTileHeader2;
-            this.bTileHeader3 = from.bTileHeader3;
-            this.frameX = from.frameX;
-            this.frameY = from.frameY;
+            type = from.type;
+            wall = from.wall;
+            liquid = from.liquid;
+            sTileHeader = from.sTileHeader;
+            bTileHeader = from.bTileHeader;
+            bTileHeader2 = from.bTileHeader2;
+            bTileHeader3 = from.bTileHeader3;
+            frameX = from.frameX;
+            frameY = from.frameY;
         }
 
         public bool isTheSameAs(MemTile compTile)
         {
             if (compTile == null)
-            {
                 return false;
-            }
-            if (this.sTileHeader != compTile.sTileHeader)
-            {
-                return false;
-            }
-            if (this.active())
-            {
-                if (this.type != compTile.type)
-                {
-                    return false;
-                }
 
-#if Full_API
-                if (Terraria.Main.tileFrameImportant[(int)this.type] && (this.frameX != compTile.frameX || this.frameY != compTile.frameY))
-                {
-                    return false;
-                }
-#endif
-            }
-            if (this.wall != compTile.wall || this.liquid != compTile.liquid)
-            {
+            if (sTileHeader != compTile.sTileHeader)
                 return false;
+
+            if (active())
+            {
+                if (type != compTile.type)
+                    return false;
+
+                if (Terraria.Main.tileFrameImportant[(int)type] && (frameX != compTile.frameX || frameY != compTile.frameY))
+                    return false;
             }
+
+            if (wall != compTile.wall || liquid != compTile.liquid)
+                return false;
+
             if (compTile.liquid == 0)
             {
-                if (this.wallColor() != compTile.wallColor())
-                {
+                if (wallColor() != compTile.wallColor())
                     return false;
-                }
+
+                if (wire4() != compTile.wire4())
+                    return false;
             }
-            else if (this.bTileHeader != compTile.bTileHeader)
-            {
+            else if (bTileHeader != compTile.bTileHeader)
                 return false;
-            }
+
             return true;
         }
 
-        public int wallFrameX()
+        public int blockType()
         {
-            return (int)((this.bTileHeader2 & 15) * 36);
+            if (halfBrick())
+                return 1;
+
+            var slope = (int)this.slope();
+            if (slope > 0)
+                slope++;
+
+            return slope;
         }
 
-        public void wallFrameX(int wallFrameX)
+        public void liquidType(int liquidType)
         {
-            this.bTileHeader2 = (byte)((int)(this.bTileHeader2 & 240) | (wallFrameX / 36 & 15));
+            switch (liquidType)
+            {
+                case 0:
+                    bTileHeader &= 159;
+                    return;
+                case 1:
+                    lava(true);
+                    return;
+                case 2:
+                    honey(true);
+                    return;
+            }
         }
 
-        public int wallFrameY()
+        public byte liquidType() => (byte)((bTileHeader & 96) >> 5);
+
+        public bool nactive() => (int)(sTileHeader & 96) == 32;
+
+        public void ResetToType(ushort newType)
         {
-            return (int)((this.bTileHeader3 & 7) * 36);
+            liquid = 0;
+            sTileHeader = 32;
+            bTileHeader = 0;
+            bTileHeader2 = 0;
+            bTileHeader3 = 0;
+            frameX = 0;
+            frameY = 0;
+            type = newType;
         }
 
-        public void wallFrameY(int wallFrameY)
+        public void ClearMetadata()
         {
-            this.bTileHeader3 = (byte)((int)(this.bTileHeader3 & 248) | (wallFrameY / 36 & 7));
+            liquid = 0;
+            sTileHeader = 0;
+            bTileHeader = 0;
+            bTileHeader2 = 0;
+            bTileHeader3 = 0;
+            frameX = 0;
+            frameY = 0;
         }
 
-        public byte frameNumber()
+        public Microsoft.Xna.Framework.Color actColor(Microsoft.Xna.Framework.Color oldColor)
         {
-            return (byte)((this.bTileHeader2 & 48) >> 4);
-        }
+            if (!inActive()) return oldColor;
 
-        public void frameNumber(byte frameNumber)
-        {
-            this.bTileHeader2 = (byte)((int)(this.bTileHeader2 & 207) | (int)(frameNumber & 3) << 4);
-        }
-
-        public byte wallFrameNumber()
-        {
-            return (byte)((this.bTileHeader2 & 192) >> 6);
-        }
-
-        public void wallFrameNumber(byte wallFrameNumber)
-        {
-            this.bTileHeader2 = (byte)((int)(this.bTileHeader2 & 63) | (int)(wallFrameNumber & 3) << 6);
+            var opacity = 0.4;
+            return new Microsoft.Xna.Framework.Color
+            (
+                (int)((byte)(opacity * (double)oldColor.R)),
+                (int)((byte)(opacity * (double)oldColor.G)),
+                (int)((byte)(opacity * (double)oldColor.B)),
+                (int)oldColor.A
+            );
         }
 
         public bool topSlope()
         {
-            byte b = this.slope();
+            var b = slope();
             return b == 1 || b == 2;
         }
 
         public bool bottomSlope()
         {
-            byte b = this.slope();
+            var b = slope();
             return b == 3 || b == 4;
         }
 
         public bool leftSlope()
         {
-            byte b = this.slope();
+            var b = slope();
             return b == 2 || b == 4;
         }
 
         public bool rightSlope()
         {
-            byte b = this.slope();
+            var b = slope();
             return b == 1 || b == 3;
         }
 
-        public byte slope()
-        {
-            return (byte)((this.sTileHeader & 28672) >> 12);
-        }
+        public bool HasSameSlope(MemTile tile) => (sTileHeader & 29696) == (tile.sTileHeader & 29696);
 
-        public bool HasSameSlope(MemTile tile)
-        {
-            return (this.sTileHeader & 29696) == (tile.sTileHeader & 29696);
-        }
-
-        public void slope(byte slope)
-        {
-            this.sTileHeader = (short)(((int)this.sTileHeader & 36863) | (int)(slope & 7) << 12);
-        }
-
-        public int blockType()
-        {
-            if (this.halfBrick())
-            {
-                return 1;
-            }
-            int num = (int)this.slope();
-            if (num > 0)
-            {
-                num++;
-            }
-            return num;
-        }
-
-        public byte color()
-        {
-            return (byte)(this.sTileHeader & 31);
-        }
-
-        public void color(byte color)
-        {
-            if (color > 30)
-            {
-                color = 30;
-            }
-            this.sTileHeader = (short)(((int)this.sTileHeader & 65504) | (int)color);
-        }
-
-        public byte wallColor()
-        {
-            return (byte)(this.bTileHeader & 31);
-        }
+        public byte wallColor() => (byte)(bTileHeader & Flag_WallColor);
 
         public void wallColor(byte wallColor)
         {
             if (wallColor > 30)
-            {
                 wallColor = 30;
-            }
-            this.bTileHeader = (byte)((this.bTileHeader & 224) | wallColor);
+
+            bTileHeader = (byte)((bTileHeader & Flag_WallColor_Remove) | wallColor);
         }
 
-        public bool lava()
-        {
-            return (this.bTileHeader & 32) == 32;
-        }
+        public bool lava() => (bTileHeader & Flag_Lava) == Flag_Lava;
 
         public void lava(bool lava)
         {
             if (lava)
-            {
-                this.bTileHeader = (byte)((this.bTileHeader & 159) | 32);
-                return;
-            }
-            this.bTileHeader &= 223;
+                bTileHeader = (byte)((bTileHeader & 159) | Flag_Lava);
+            else bTileHeader &= Flag_Lava_Remove;
         }
 
-        public bool honey()
-        {
-            return (this.bTileHeader & 64) == 64;
-        }
+        public bool honey() => (bTileHeader & Flag_Honey) == Flag_Honey;
 
         public void honey(bool honey)
         {
             if (honey)
-            {
-                this.bTileHeader = (byte)((this.bTileHeader & 159) | 64);
-                return;
-            }
-            this.bTileHeader &= 191;
+                bTileHeader = (byte)((bTileHeader & 159) | Flag_Honey);
+            else bTileHeader &= Flag_Honey_Remove;
         }
 
-        public void liquidType(int liquidType)
+        public bool wire4() => (bTileHeader & Flag_Wire4) == Flag_Wire4;
+
+        public void wire4(bool wire4)
         {
-            if (liquidType == 0)
-            {
-                this.bTileHeader &= 159;
-                return;
-            }
-            if (liquidType == 1)
-            {
-                this.lava(true);
-                return;
-            }
-            if (liquidType == 2)
-            {
-                this.honey(true);
-            }
+            if (wire4)
+                bTileHeader |= Flag_Wire4;
+            else bTileHeader &= Flag_Wire4_Remove;
         }
 
-        public byte liquidType()
+        public int wallFrameX() => (int)((bTileHeader2 & Flag_WallFrameX) * 36);
+
+        public void wallFrameX(int wallFrameX)
         {
-            return (byte)((this.bTileHeader & 96) >> 5);
+            bTileHeader2 = (byte)((int)(bTileHeader2 & Flag_WallFrameX_Remove) | (wallFrameX / 36 & 15));
         }
 
-        public bool checkingLiquid()
+        public byte frameNumber() => (byte)((bTileHeader2 & Flag_FrameNumber) >> 4);
+
+        public void frameNumber(byte frameNumber)
         {
-            return (this.bTileHeader3 & 8) == 8;
+            bTileHeader2 = (byte)((int)(bTileHeader2 & Flag_FrameNumber_Remove) | (int)(frameNumber & 3) << 4);
         }
+
+        public byte wallFrameNumber() => (byte)((bTileHeader2 & Flag_WallFrameNumber_Remove) >> 6);
+
+        public void wallFrameNumber(byte wallFrameNumber)
+        {
+            bTileHeader2 = (byte)((int)(bTileHeader2 & Flag_WallFrameNumber) | (int)(wallFrameNumber & 3) << 6);
+        }
+
+        public int wallFrameY() => (int)((bTileHeader3 & Flag_WallFrameY) * 36);
+
+        public void wallFrameY(int wallFrameY)
+        {
+            bTileHeader3 = (byte)((int)(bTileHeader3 & Flag_WallFrameY_Remove) | (wallFrameY / 36 & Flag_WallFrameY));
+        }
+
+        public bool checkingLiquid() => (bTileHeader3 & Flag_CheckingLiquid) == Flag_CheckingLiquid;
 
         public void checkingLiquid(bool checkingLiquid)
         {
             if (checkingLiquid)
-            {
-                this.bTileHeader3 |= 8;
-                return;
-            }
-            this.bTileHeader3 &= 247;
+                bTileHeader3 |= Flag_CheckingLiquid;
+            else bTileHeader3 &= Flag_CheckingLiquid_Remove;
         }
 
-        public bool skipLiquid()
-        {
-            return (this.bTileHeader3 & 16) == 16;
-        }
+        public bool skipLiquid() => (bTileHeader3 & Flag_SkipLiquid) == Flag_SkipLiquid;
 
         public void skipLiquid(bool skipLiquid)
         {
             if (skipLiquid)
-            {
-                this.bTileHeader3 |= 16;
-                return;
-            }
-            this.bTileHeader3 &= 239;
+                bTileHeader3 |= Flag_SkipLiquid;
+            else bTileHeader3 &= Flag_SkipLiquid_Remove;
         }
 
-        public bool wire()
+        public byte color() => (byte)(sTileHeader & Flag_Color);
+
+        public void color(byte color)
         {
-            return (this.sTileHeader & 128) == 128;
+            if (color > 30)
+                color = 30;
+
+            sTileHeader = (short)(((int)sTileHeader & Flag_Color_Remove) | (int)color);
         }
+
+        public bool active() => (sTileHeader & Flag_Active) == Flag_Active;
+
+        public void active(bool active)
+        {
+            if (active)
+                sTileHeader |= Flag_Active;
+            else sTileHeader = (short)((int)sTileHeader & Flag_Active_Remove);
+        }
+
+        public bool inActive() => (sTileHeader & Flag_Inactive) == Flag_Inactive;
+
+        public void inActive(bool inActive)
+        {
+            if (inActive)
+                sTileHeader |= Flag_Inactive;
+            else sTileHeader = (short)((int)sTileHeader & Flag_Inactive_Remove);
+        }
+
+        public bool wire() => (sTileHeader & Flag_Wire) == Flag_Wire;
 
         public void wire(bool wire)
         {
             if (wire)
             {
-                this.sTileHeader |= 128;
+                sTileHeader |= Flag_Wire;
                 return;
             }
-            this.sTileHeader = (short)((int)this.sTileHeader & 65407);
+            sTileHeader = (short)((int)sTileHeader & Flag_Wire_Remove);
         }
 
-        public bool wire2()
-        {
-            return (this.sTileHeader & 256) == 256;
-        }
+        public bool wire2() => (sTileHeader & Flag_Wire2) == Flag_Wire2;
 
         public void wire2(bool wire2)
         {
             if (wire2)
-            {
-                this.sTileHeader |= 256;
-                return;
-            }
-            this.sTileHeader = (short)((int)this.sTileHeader & 65279);
+                sTileHeader |= Flag_Wire2;
+            else sTileHeader = (short)((int)sTileHeader & Flag_Wire2_Remove);
         }
 
-        public bool wire3()
-        {
-            return (this.sTileHeader & 512) == 512;
-        }
+        public bool wire3() => (sTileHeader & Flag_Wire3) == Flag_Wire3;
 
         public void wire3(bool wire3)
         {
             if (wire3)
-            {
-                this.sTileHeader |= 512;
-                return;
-            }
-            this.sTileHeader = (short)((int)this.sTileHeader & 65023);
+                sTileHeader |= Flag_Wire3;
+            else sTileHeader = (short)((int)sTileHeader & Flag_Wire3_Remove);
         }
 
-        public bool halfBrick()
-        {
-            return (this.sTileHeader & 1024) == 1024;
-        }
+        public bool halfBrick() => (sTileHeader & Flag_HalfBrick) == Flag_HalfBrick;
 
         public void halfBrick(bool halfBrick)
         {
             if (halfBrick)
-            {
-                this.sTileHeader |= 1024;
-                return;
-            }
-            this.sTileHeader = (short)((int)this.sTileHeader & 64511);
+                sTileHeader |= Flag_HalfBrick;
+            else sTileHeader = (short)((int)sTileHeader & Flag_HalfBrick_Remove);
         }
 
-        public bool actuator()
-        {
-            return (this.sTileHeader & 2048) == 2048;
-        }
+        public bool actuator() => (sTileHeader & Flag_Actuator) == Flag_Actuator;
 
         public void actuator(bool actuator)
         {
             if (actuator)
-            {
-                this.sTileHeader |= 2048;
-                return;
-            }
-            this.sTileHeader = (short)((int)this.sTileHeader & 63487);
+                sTileHeader |= Flag_Actuator;
+            else sTileHeader = (short)((int)sTileHeader & Flag_Actuator_Remove);
         }
 
-        public bool nactive()
-        {
-            int num = (int)(this.sTileHeader & 96);
-            return num == 32;
-        }
+        public byte slope() => (byte)((sTileHeader & 28672) >> 12);
 
-        public bool inActive()
+        public void slope(byte slope)
         {
-            return (this.sTileHeader & 64) == 64;
-        }
-
-        public void inActive(bool inActive)
-        {
-            if (inActive)
-            {
-                this.sTileHeader |= 64;
-                return;
-            }
-            this.sTileHeader = (short)((int)this.sTileHeader & 65471);
-        }
-
-        public bool active()
-        {
-            return (this.sTileHeader & 32) == 32;
-        }
-
-        public void active(bool active)
-        {
-            if (active)
-            {
-                this.sTileHeader |= 32;
-                return;
-            }
-            this.sTileHeader = (short)((int)this.sTileHeader & 65503);
-        }
-
-        public void ResetToType(ushort type)
-        {
-            this.liquid = 0;
-            this.sTileHeader = 32;
-            this.bTileHeader = 0;
-            this.bTileHeader2 = 0;
-            this.bTileHeader3 = 0;
-            this.frameX = 0;
-            this.frameY = 0;
-            this.type = type;
-        }
-
-        public Microsoft.Xna.Framework.Color actColor(Microsoft.Xna.Framework.Color oldColor)
-        {
-            if (!this.inActive())
-            {
-                return oldColor;
-            }
-            double num = 0.4;
-            return new Microsoft.Xna.Framework.Color((int)((byte)(num * (double)oldColor.R)), (int)((byte)(num * (double)oldColor.G)), (int)((byte)(num * (double)oldColor.B)), (int)oldColor.A);
+            sTileHeader = (short)(((int)sTileHeader & 36863) | (int)(slope & 7) << 12);
         }
 
         public static void SmoothSlope(int x, int y, bool applyToNeighbors = true)
         {
             if (applyToNeighbors)
             {
-                MemTile.SmoothSlope(x + 1, y, false);
-                MemTile.SmoothSlope(x - 1, y, false);
-                MemTile.SmoothSlope(x, y + 1, false);
-                MemTile.SmoothSlope(x, y - 1, false);
+                SmoothSlope(x + 1, y, false);
+                SmoothSlope(x - 1, y, false);
+                SmoothSlope(x, y + 1, false);
+                SmoothSlope(x, y - 1, false);
             }
 
-#if Full_API
             var tile = Terraria.Main.tile[x, y];
             if (!Terraria.WorldGen.SolidOrSlopedTile(x, y))
-            {
                 return;
-            }
-            bool flag = !Terraria.WorldGen.TileEmpty(x, y - 1);
-            bool flag2 = !Terraria.WorldGen.SolidOrSlopedTile(x, y - 1) && flag;
-            bool flag3 = Terraria.WorldGen.SolidOrSlopedTile(x, y + 1);
-            bool flag4 = Terraria.WorldGen.SolidOrSlopedTile(x - 1, y);
-            bool flag5 = Terraria.WorldGen.SolidOrSlopedTile(x + 1, y);
-            switch ((flag ? 1 : 0) << 3 | (flag3 ? 1 : 0) << 2 | (flag4 ? 1 : 0) << 1 | (flag5 ? 1 : 0))
+
+            var topSet = !Terraria.WorldGen.TileEmpty(x, y - 1);
+            var top = !Terraria.WorldGen.SolidOrSlopedTile(x, y - 1) && topSet;
+            var bottom = Terraria.WorldGen.SolidOrSlopedTile(x, y + 1);
+            var left = Terraria.WorldGen.SolidOrSlopedTile(x - 1, y);
+            var right = Terraria.WorldGen.SolidOrSlopedTile(x + 1, y);
+
+            switch ((topSet ? 1 : 0) << 3 | (bottom ? 1 : 0) << 2 | (left ? 1 : 0) << 1 | (right ? 1 : 0))
             {
                 case 4:
                     tile.slope(0);
@@ -597,7 +558,7 @@ namespace OTA.Memory
                     tile.slope(1);
                     return;
                 case 9:
-                    if (!flag2)
+                    if (!top)
                     {
                         tile.halfBrick(false);
                         tile.slope(4);
@@ -605,7 +566,7 @@ namespace OTA.Memory
                     }
                     return;
                 case 10:
-                    if (!flag2)
+                    if (!top)
                     {
                         tile.halfBrick(false);
                         tile.slope(3);
@@ -615,18 +576,8 @@ namespace OTA.Memory
             }
             tile.halfBrick(false);
             tile.slope(0);
-#endif
         }
 
-        public void ClearMetadata()
-        {
-            this.liquid = 0;
-            this.sTileHeader = 0;
-            this.bTileHeader = 0;
-            this.bTileHeader2 = 0;
-            this.bTileHeader3 = 0;
-            this.frameX = 0;
-            this.frameY = 0;
-        }
+        public override string ToString() => $"Tile Type:{type} Active:{active()} Wall:{wall} Slope:{slope()} fX:{frameX} fY:{frameY}";
     }
 }

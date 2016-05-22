@@ -764,39 +764,39 @@ namespace OTA.Patcher
             il.InsertBefore(ins, il.Create(OpCodes.Stsfld, statusText));
         }
 
-        /// <summary>
-        /// Meant to inject OTA's loadWorld in order for world file debugging
-        /// </summary>
-        public void HookWorldFile_DEBUG()
-        {
+        ///// <summary>
+        ///// Meant to inject OTA's loadWorld in order for world file debugging
+        ///// </summary>
+        //public void HookWorldFile_DEBUG()
+        //{
 
-            //            //Make public
-            //            var fld = Terraria.WorldGen.Fields.Single(x => x.Name == "lastMaxTilesX");
-            //            fld.IsPrivate = false;
-            //            fld.IsFamily = false;
-            //            fld.IsPublic = true;
-            //
-            //            fld = Terraria.WorldGen.Fields.Single(x => x.Name == "lastMaxTilesY");
-            //            fld.IsPrivate = false;
-            //            fld.IsFamily = false;
-            //            fld.IsPublic = true;
-            //            return;
+        //    //            //Make public
+        //    //            var fld = Terraria.WorldGen.Fields.Single(x => x.Name == "lastMaxTilesX");
+        //    //            fld.IsPrivate = false;
+        //    //            fld.IsFamily = false;
+        //    //            fld.IsPublic = true;
+        //    //
+        //    //            fld = Terraria.WorldGen.Fields.Single(x => x.Name == "lastMaxTilesY");
+        //    //            fld.IsPrivate = false;
+        //    //            fld.IsFamily = false;
+        //    //            fld.IsPublic = true;
+        //    //            return;
 
-            var mth = Terraria.WorldGen.Methods.Single(x => x.Name == "serverLoadWorldCallBack" && x.IsStatic);
-            var replacement = API.WorldFileCallback.Methods.Single(x => x.Name == "loadWorld" && x.IsStatic);
+        //    var mth = Terraria.WorldGen.Methods.Single(x => x.Name == "serverLoadWorldCallBack" && x.IsStatic);
+        //    var replacement = API.WorldFileCallback.Methods.Single(x => x.Name == "loadWorld" && x.IsStatic);
 
-            var toBeReplaced = mth.Body.Instructions
-                .Where(x => x.OpCode == Mono.Cecil.Cil.OpCodes.Call
-                                   && x.Operand is MethodReference
-                                   && (x.Operand as MethodReference).Name == "loadWorld"
-                               )
-                .ToArray();
+        //    var toBeReplaced = mth.Body.Instructions
+        //        .Where(x => x.OpCode == Mono.Cecil.Cil.OpCodes.Call
+        //                           && x.Operand is MethodReference
+        //                           && (x.Operand as MethodReference).Name == "loadWorld"
+        //                       )
+        //        .ToArray();
 
-            for (var x = 0; x < toBeReplaced.Length; x++)
-            {
-                toBeReplaced[x].Operand = _asm.MainModule.Import(replacement);
-            }
-        }
+        //    for (var x = 0; x < toBeReplaced.Length; x++)
+        //    {
+        //        toBeReplaced[x].Operand = _asm.MainModule.Import(replacement);
+        //    }
+        //}
 
         /// <summary>
         /// Call OTA instead to print Terraria.Main.statusText to the console

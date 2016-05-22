@@ -34,7 +34,7 @@ namespace OTA.Memory
             this.y = y;
         }
 
-        public override ushort _type
+        protected override ushort _type
         {
             get
             {
@@ -48,7 +48,7 @@ namespace OTA.Memory
             }
         }
 
-        public override byte _wall
+        protected override byte _wall
         {
             get
             {
@@ -61,7 +61,7 @@ namespace OTA.Memory
             }
         }
 
-        public override byte _liquid
+        protected override byte _liquid
         {
             get
             {
@@ -74,7 +74,7 @@ namespace OTA.Memory
             }
         }
 
-        public override short _sTileHeader
+        protected override short _sTileHeader
         {
             get
             {
@@ -88,7 +88,7 @@ namespace OTA.Memory
             }
         }
 
-        public override byte _bTileHeader
+        protected override byte _bTileHeader
         {
             get
             {
@@ -101,7 +101,7 @@ namespace OTA.Memory
             }
         }
 
-        public override byte _bTileHeader2
+        protected override byte _bTileHeader2
         {
             get
             {
@@ -114,7 +114,7 @@ namespace OTA.Memory
             }
         }
 
-        public override byte _bTileHeader3
+        protected override byte _bTileHeader3
         {
             get
             {
@@ -127,7 +127,7 @@ namespace OTA.Memory
             }
         }
 
-        public override short _frameX
+        protected override short _frameX
         {
             get
             {
@@ -141,7 +141,7 @@ namespace OTA.Memory
             }
         }
 
-        public override short _frameY
+        protected override short _frameY
         {
             get
             {

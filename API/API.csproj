@@ -35,7 +35,7 @@
     <OutputPath>bin\Server-Release</OutputPath>
     <WarningLevel>4</WarningLevel>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;DEBUG;XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER</DefineConstants>
+    <DefineConstants>XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER;DAPPER;FLUENT_MIGRATOR</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -304,6 +304,8 @@
     <Compile Include="Xna\Color.cs" />
     <Compile Include="Xna\ContentManager.cs" />
     <Compile Include="Xna\Game.cs" />
+    <Compile Include="Xna\Graphics\PackedVector\HalfUtils.cs" />
+    <Compile Include="Xna\Graphics\PackedVector\HalfVector2.cs" />
     <Compile Include="Xna\Graphics\RenderTargetUsage.cs" />
     <Compile Include="Xna\Graphics\RenderTarget2D.cs" />
     <Compile Include="Xna\Graphics\GraphicsAdapter.cs" />
@@ -323,6 +325,7 @@
     <Compile Include="Xna\Graphics\SpriteEffects.cs" />
     <Compile Include="Xna\Graphics\SpriteBatch.cs" />
     <Compile Include="Xna\Graphics\SurfaceFormat.cs" />
+    <Compile Include="Xna\Input\Buttons.cs" />
     <Compile Include="Xna\Input\Keys.cs" />
     <Compile Include="Xna\Input\GamePadTriggers.cs" />
     <Compile Include="Xna\Input\GamePadThumbSticks.cs" />

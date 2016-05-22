@@ -22,6 +22,10 @@
         KillWire3 = 13,
         SlopeTile = 14,
         FrameTrack = 15,
+        PlaceWire4 = 16,
+        KillWire4 = 17,
+        PlaceLogicGate = 18,
+        Actuate = 19,
         UNKNOWN_1 = 100,
         UNKNOWN_2 = 101,
     }
