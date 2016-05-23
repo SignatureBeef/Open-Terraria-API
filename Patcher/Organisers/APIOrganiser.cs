@@ -54,13 +54,13 @@ namespace OTA.Patcher.Organisers
             { return _asm.MainModule.Types.Single(x => x.Name == "INativeMod"); }
         }
 
-        #if CLIENT
+#if CLIENT
         public TypeDefinition InterfaceCallback
         {
             get
             { return _asm.MainModule.Types.Single(x => x.Name == "InterfaceCallback"); }
         }
-        #endif
+#endif
 
         public TypeDefinition ItemCallback
         {
@@ -193,8 +193,11 @@ namespace OTA.Patcher.Organisers
         public TypeDefinition ClientConnection
         {
             get
+#if !CUSTOM_SOCKETS
+            { return _asm.MainModule.Types.Single(x => x.Name == "TemporarySynchSock"); }
+#else
             { return _asm.MainModule.Types.Single(x => x.Name == "ClientConnection"); }
-            //{ return _asm.MainModule.Types.Single(x => x.Name == "TemporarySynchSock"); }
+#endif
         }
 
         public TypeDefinition Player

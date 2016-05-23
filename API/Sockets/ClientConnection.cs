@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if CUSTOM_SOCKETS
+using System;
 using System.Diagnostics;
 using System.Net.Sockets;
 using OTA.Plugin;
@@ -20,7 +21,7 @@ using OTA.Callbacks;
 #endif
 namespace OTA.Sockets
 {
-    #if !Full_API
+#if !Full_API
     public interface ISocket
     {
         void AsyncReceive(byte[] data, int offset, int size, SocketReceiveCallback callback, object state);
@@ -62,7 +63,7 @@ namespace OTA.Sockets
     public delegate void SocketReceiveCallback(object state,int size);
     public delegate void SocketSendCallback(object state);
 
-    #endif
+#endif
 
     /// <summary>
     /// A tcp client implementation that directly bolts into the Terrarian socket implementation
@@ -112,21 +113,7 @@ namespace OTA.Sockets
             sock.LingerState = new LingerOption(true, 10);
             sock.NoDelay = true;
 
-            #if SERVER
-            var ctx = new HookContext
-            {
-                Connection = this
-            };
-
-            var args = new HookArgs.NewConnection();
-            
-            HookPoints.NewConnection.Invoke(ref ctx, ref args);
-
-            if (ctx.CheckForKick())
-                return;
-            #endif
-
-            _isReceiving = true; //The connection was established, so we can begin reading
+            //_isReceiving = true; //The connection was established, so we can begin reading
         }
 
         class AsyncCallback //: IDisposable
@@ -151,6 +138,7 @@ namespace OTA.Sockets
 
         void ISocket.AsyncReceive(byte[] data, int offset, int size, SocketReceiveCallback callback, object state)
         {
+            ProgramLog.Log("Data requested from ", this.SlotId);
             if (_callback == null)
             {
                 _callback = new AsyncCallback()
@@ -161,18 +149,20 @@ namespace OTA.Sockets
                     Size = size,
                     State = state
                 };
-                StartReading();
             }
             else
             {
                 _callback.Offset = offset;
             }
+
+            if (recvBytes > 0)
+                ProcessRead();
         }
 
         void ISocket.AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state)
         {
-            #if Full_API
-//            Main.ignoreErrors = false;
+#if Full_API
+            //            Main.ignoreErrors = false;
             var ctx = new HookContext()
             {
                 Connection = this
@@ -197,27 +187,38 @@ namespace OTA.Sockets
 
                 if (callback != null)
                     callback(state);
-            
+
                 this.Flush();
             }
-            #endif
+#endif
         }
 
         protected override void ProcessRead()
         {
-            var local = new byte[recvBytes];
-            Buffer.BlockCopy(recvBuffer, 0, local, 0, recvBytes);
+            if (_callback != null)
+            {
+                ProgramLog.Log("Despatching data from " + this.SlotId);
+                if (!_isReceiving) _isReceiving = true;
+                byte[] local;
+                lock (recvSyncRoot)
+                {
+                    local = new byte[recvBytes];
+                    Buffer.BlockCopy(recvBuffer, 0, local, 0, recvBytes);
 
-            //Reset read position
-            recvBytes = 0;
+                    //Reset read position
+                    recvBytes = 0;
+                }
 
-            DespatchData(local);
+                DespatchData(local);
+            }
+            else
+            {
+                ProgramLog.Log("No data vailable for ", this.SlotId);
+            }
         }
 
         void DespatchData(byte[] buff)
         {
-            if (_callback == null)
-                throw new InvalidOperationException("No callback to read data to");
             try
             {
                 int processed = 0;
@@ -226,7 +227,7 @@ namespace OTA.Sockets
                     var len = buff.Length - processed;
                     if (len > _callback.Size)
                         len = _callback.Size;
-                        
+
                     if (len > 0)
                     {
                         //No point shifting the target buffer as they always read from index 0
@@ -271,9 +272,10 @@ namespace OTA.Sockets
 
         void ISocket.Close()
         {
-            if (_isReceiving)
+            ProgramLog.Log("Socket closed at " + this.SlotId);
+            //if (_isReceiving)
                 Close();
-            _isReceiving = false;
+            //_isReceiving = false;
         }
 
         void ISocket.Connect(RemoteAddress address)
@@ -308,7 +310,7 @@ namespace OTA.Sockets
 
         bool ISocket.StartListening(SocketConnectionAccepted callback)
         {
-            #if Full_API
+#if Full_API
             IPAddress any = IPAddress.Any;
             string ipString;
             if (Program.LaunchParameters.TryGetValue("-ip", out ipString) && !IPAddress.TryParse(ipString, out any))
@@ -330,7 +332,7 @@ namespace OTA.Sockets
                 return false;
             }
             ThreadPool.QueueUserWorkItem(new WaitCallback(this.ListenLoop));
-            #endif
+#endif
             return true;
         }
 
@@ -341,37 +343,217 @@ namespace OTA.Sockets
 
         bool ISocket.IsConnected()
         {
-            return Active || _isReceiving;
+            return Active;
         }
 
         bool ISocket.IsDataAvailable()
         {
-            return recvBytes > 0 || _isReceiving;
+            return recvBytes > 0;
         }
 
         private void ListenLoop(object unused)
         {
-            #if Full_API
+#if Full_API
             while (this._isListening && !Terraria.Netplay.disconnect)
             {
                 try
                 {
-                    ISocket socket = new ClientConnection(this._listener.AcceptSocket());
+                    var socket = this._listener.AcceptSocket();
+                    var connection = new ClientConnection(socket);
                     Netplay.anyClients = true;
                     //                    ProgramLog.Users.Log(socket.GetRemoteAddress() + " is connecting..."); TODO remove IL in vanilla as it's a bare log (or change it...)
-//                    this._listenerCallback(socket);
-                    this._listenerCallback.BeginInvoke(socket, (ar) =>
+                    //                    this._listenerCallback(socket);
+                    this._listenerCallback.BeginInvoke(connection, (ar) =>
                         {
                             _listenerCallback.EndInvoke(ar);
                         }, null);
+
+                    var ctx = new HookContext
+                    {
+                        Connection = connection
+                    };
+
+                    var args = new HookArgs.NewConnection();
+
+                    HookPoints.NewConnection.Invoke(ref ctx, ref args);
+
+                    if (ctx.CheckForKick())
+                        break;
+
+                    connection.StartReading();
                 }
-                catch
+                catch (Exception e)
+                {
+                    ProgramLog.Error.Log(e, "Exception in ClientConnection.ListenLoop");
+                }
+            }
+            this._listener.Stop();
+#endif
+        }
+    }
+#else
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+using Terraria;
+using Terraria.Net;
+using Terraria.Net.Sockets;
+
+namespace OTA.Sockets
+{
+    public class TemporarySynchSock : ISocket /* Whoever done this, I love you. */
+    {
+
+        //
+        // Fields
+        //
+        private TcpClient _connection;
+
+        private TcpListener _listener;
+
+        private SocketConnectionAccepted _listenerCallback;
+
+        private RemoteAddress _remoteAddress;
+
+        private bool _isListening;
+
+        //
+        // Constructors
+        //
+        public TemporarySynchSock(TcpClient tcpClient)
+        {
+            this._connection = tcpClient;
+            this._connection.NoDelay = true;
+            IPEndPoint iPEndPoint = (IPEndPoint)tcpClient.Client.RemoteEndPoint;
+            this._remoteAddress = new TcpAddress(iPEndPoint.Address, iPEndPoint.Port);
+        }
+
+        public TemporarySynchSock()
+        {
+            //            this._connection = new TcpClient ();
+            //            this._connection.NoDelay = true;
+        }
+
+        private void CheckSocket()
+        {
+            if (this._connection == null)
+            {
+                this._connection = new TcpClient();
+                this._connection.NoDelay = true;
+            }
+        }
+
+        //
+        // Methods
+        //
+        void ISocket.AsyncReceive(byte[] data, int offset, int size, SocketReceiveCallback callback, object state)
+        {
+            int len = this._connection.GetStream().Read(data, offset, size);
+            callback(null, len);
+            //            this._connection.GetStream ().BeginRead (data, offset, size, new AsyncCallback (this.ReadCallback), new Tuple<SocketReceiveCallback, object> (callback, state));
+        }
+
+        void ISocket.AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state)
+        {
+            this._connection.GetStream().Write(data, offset, size);
+            callback(null);
+            //            this._connection.GetStream ().BeginWrite (data, 0, size, new AsyncCallback (this.SendCallback), new Tuple<SocketSendCallback, object> (callback, state));
+        }
+
+        void ISocket.Close()
+        {
+            this._remoteAddress = null;
+            if (this._connection != null)
+            {
+                this._connection.Close();
+            }
+        }
+
+        void ISocket.Connect(RemoteAddress address)
+        {
+            CheckSocket();
+            TcpAddress tcpAddress = (TcpAddress)address;
+            this._connection.Connect(tcpAddress.Address, tcpAddress.Port);
+            this._remoteAddress = address;
+        }
+
+        RemoteAddress ISocket.GetRemoteAddress()
+        {
+            return this._remoteAddress;
+        }
+
+        bool ISocket.IsConnected()
+        {
+            return this._connection != null && this._connection.Client != null && this._connection.Connected;
+        }
+
+        bool ISocket.IsDataAvailable()
+        {
+            return this._connection.GetStream().DataAvailable;
+        }
+
+        private void ListenLoop(object unused)
+        {
+            while (this._isListening && !Terraria.Netplay.disconnect)
+            {
+                try
+                {
+                    ISocket socket = new TemporarySynchSock(this._listener.AcceptTcpClient());
+                    Console.WriteLine(socket.GetRemoteAddress() + " is connecting...");
+                    this._listenerCallback(socket);
+                }
+                catch (Exception)
                 {
                 }
             }
             this._listener.Stop();
-            #endif
+        }
+
+        private void ReadCallback(IAsyncResult result)
+        {
+            Tuple<SocketReceiveCallback, object> tuple = (Tuple<SocketReceiveCallback, object>)result.AsyncState;
+            tuple.Item1(tuple.Item2, this._connection.GetStream().EndRead(result));
+        }
+
+        private void SendCallback(IAsyncResult result)
+        {
+            Tuple<SocketSendCallback, object> tuple = (Tuple<SocketSendCallback, object>)result.AsyncState;
+            try
+            {
+                this._connection.GetStream().EndWrite(result);
+                tuple.Item1(tuple.Item2);
+            }
+            catch (Exception)
+            {
+                ((ISocket)this).Close();
+            }
+        }
+
+        bool ISocket.StartListening(SocketConnectionAccepted callback)
+        {
+            this._isListening = true;
+            this._listenerCallback = callback;
+            if (this._listener == null)
+            {
+                this._listener = new TcpListener(IPAddress.Any, Terraria.Netplay.ListenPort);
+            }
+            try
+            {
+                this._listener.Start();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            ThreadPool.QueueUserWorkItem(new WaitCallback(this.ListenLoop));
+            return true;
+        }
+
+        void ISocket.StopListening()
+        {
+            this._isListening = false;
         }
     }
 }
-
+#endif

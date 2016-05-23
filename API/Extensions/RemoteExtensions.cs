@@ -10,7 +10,7 @@ namespace OTA.Extensions
     /// </summary>
     public static class RemoteExtensions
     {
-        #if Full_API
+#if Full_API
         /// <summary>
         /// Determines if the client is in the playing state
         /// </summary>
@@ -65,7 +65,7 @@ namespace OTA.Extensions
         {
             Terraria.NetMessage.SendData((int)Packet.DISCONNECT, sock.Id, -1, reason);
         }
-        #endif
+#endif
 
         /// <summary>
         /// Sagely closes the socket
@@ -116,7 +116,11 @@ namespace OTA.Extensions
         /// <param name="client">Client.</param>
         public static bool IsOTAClient(this Terraria.RemoteClient client)
         {
+#if CUSTOM_SOCKETS
             return client.Socket != null && (client.Socket as OTA.Sockets.ClientConnection).IsOTAClient;
+#else
+            return false;
+#endif
         }
 
         #region Client Data

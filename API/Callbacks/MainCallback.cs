@@ -290,14 +290,14 @@ namespace OTA.Callbacks
             }
 #endif
 
-            try
-            {
-                Plugin.PluginManager.RegisterPlugin(new OTA.Mod.ModEventManager());
-            }
-            catch (Exception e)
-            {
-                ProgramLog.Log(e);
-            }
+            //try
+            //{
+            //    Plugin.PluginManager.RegisterPlugin(new OTA.Mod.ModEventManager());
+            //}
+            //catch (Exception e)
+            //{
+            //    ProgramLog.Log(e);
+            //}
 
             var gi = new HookArgs.GameInitialize()
             {
@@ -328,6 +328,7 @@ namespace OTA.Callbacks
         public static void OnServerTick()
         {
 #if Full_API && SERVER
+#if CUSTOM_SOCKETS
             if (Terraria.Netplay.anyClients)
             {
                 for (var i = 0; i < Terraria.Netplay.Clients.Length; i++)
@@ -342,6 +343,7 @@ namespace OTA.Callbacks
                     }
                 }
             }
+#endif
 
             var ctx = HookContext.Empty;
             var args = HookArgs.ServerTick.Empty;

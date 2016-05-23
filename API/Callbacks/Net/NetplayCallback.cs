@@ -52,12 +52,12 @@ namespace OTA.Callbacks
         /// <param name="slot">Slot.</param>
         public static void OnNewConnection(int slot)
         {
-            #if Full_API
+#if Full_API && CUSTOM_SOCKETS
             if (Terraria.Netplay.Clients[slot].Socket is ClientConnection)
             {
                 ((ClientConnection)Terraria.Netplay.Clients[slot].Socket).Set(slot);
             }
-            #endif
+#endif
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace OTA.Callbacks
         /// </summary>
         public static bool Initialise()
         {
-            #if Full_API && SERVER
+#if Full_API && SERVER
             if (Terraria.Main.dedServ)
             {
                 var ctx = new HookContext()
@@ -80,20 +80,22 @@ namespace OTA.Callbacks
 
                 return ctx.Result != HookResult.IGNORE;
             }
-            #endif
+#endif
 
             return true; //Allow continue
         }
 
         public static void OnServerFull(ISocket client)
         {
-            #if Full_API && SERVER
+#if Full_API && SERVER && CUSTOM_SOCKETS
             var conn = client as ClientConnection;
             conn.Kick("Server is full");
-            #endif
+#else
+            client.Close(); //TODO
+#endif
         }
 
-        #if SERVER
+#if SERVER
         public static bool OnAddBanBegin(int player)
         {
             var ctx = new HookContext();
@@ -119,6 +121,6 @@ namespace OTA.Callbacks
 
             HookPoints.AddBan.Invoke(ref ctx, ref args);
         }
-        #endif
+#endif
     }
 }

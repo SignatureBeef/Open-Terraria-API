@@ -52,11 +52,12 @@ namespace OTA.Mod
         {
             if (args.State == MethodState.End)
             {
-//                OTATile.ResizeArrays(true, false);
+                //                OTATile.ResizeArrays(true, false);
                 EntityRegistrar.Tiles.InitialiseTiles();
             }
         }
 
+#if CUSTOM_SOCKETS
         [Hook]
         void OnNetMessage(ref HookContext ctx, ref HookArgs.ReceiveNetMessage args)
         {
@@ -69,7 +70,7 @@ namespace OTA.Mod
                     ctx.SetResult(HookResult.IGNORE);
                 }
             }
-            #if SERVER
+#if SERVER
             if (args.PacketId == (int)Packet.CONNECTION_REQUEST)
             {
                 Logging.Logger.Debug("Incoming connection, determining if an OTAPI client");
@@ -128,10 +129,11 @@ namespace OTA.Mod
                     }
                 }
             }
-            #endif
+#endif
         }
+#endif
 
-        #if SERVER
+#if SERVER
 
         void SyncOTAClient(int remoteClient)
         {
@@ -153,12 +155,12 @@ namespace OTA.Mod
             Netplay.Clients[remoteClient].State = 1;
             NetMessage.SendData(3, remoteClient);
         }
-        #endif
+#endif
 
         [Hook]
         void OnSendMessage(ref HookContext ctx, ref HookArgs.SendNetMessage args)
         {
-            #if CLIENT
+#if CLIENT
             if (args.MsgType == (int)Packet.CONNECTION_REQUEST)
             {
                 Logging.Logger.Debug("Requesting connection");
@@ -170,11 +172,11 @@ namespace OTA.Mod
                 writer.Write("OTAPI" + Globals.BuildInfo);
             }
 
-            #elif SERVER
-            #endif
+#elif SERVER
+#endif
         }
 
-        #if CLIENT
+#if CLIENT
         [Hook]
         void OnGUIChatBoxOpen(ref HookContext ctx, ref HookArgs.GUIChatBoxOpen args)
         {
@@ -184,7 +186,7 @@ namespace OTA.Mod
                 && !args.IsRightAltDown
                 && Terraria.Main.hasFocus);
         }
-        #endif
+#endif
 
         #region Item
 
@@ -269,7 +271,7 @@ namespace OTA.Mod
             }
         }
 
-        #if CLIENT
+#if CLIENT
         [Hook]
         void OnNpcDraw(ref HookContext ctx, ref HookArgs.NpcDraw args)
         {
@@ -290,7 +292,7 @@ namespace OTA.Mod
                 }
             }
         }
-        #endif
+#endif
 
         [Hook]
         void OnNpcUpdate(ref HookContext ctx, ref HookArgs.NpcUpdate args)
@@ -334,7 +336,7 @@ namespace OTA.Mod
             }
         }
 
-        #if CLIENT
+#if CLIENT
         [Hook]
         void OnNpcChat(ref HookContext ctx, ref HookArgs.NpcGetChat args)
         {
@@ -372,7 +374,7 @@ namespace OTA.Mod
                 }
             }
         }
-        #endif
+#endif
 
         class WeightableItem
         {
@@ -394,10 +396,10 @@ namespace OTA.Mod
                 .Select(x => new WeightableItem() { Npc = x, Chance = x.OnPreSpawn(info) })
                 .Where(y => y.Chance > 0)
 
-                       //Add the vanilla NPC chance
+                //Add the vanilla NPC chance
                 .Union(new WeightableItem[] { new WeightableItem() { Chance = VanillaNPCWeight } })
 
-                       //Find the item to spawn
+                //Find the item to spawn
                 .WeightedRandom(x => x.Chance);
 
             if (item != null && item.Npc != null)
@@ -434,7 +436,7 @@ namespace OTA.Mod
         }
         #endregion
 
-        #if CLIENT
+#if CLIENT
         #region Shop
         [Hook]
         void OnChestSetupShop(ref HookContext ctx, ref HookArgs.ChestSetupShop args)
@@ -450,7 +452,7 @@ namespace OTA.Mod
             }
         }
         #endregion
-        #endif
+#endif
 
         #region Projectile
 

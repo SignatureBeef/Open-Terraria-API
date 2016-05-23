@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if CUSTOM_SOCKETS
+using System;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
@@ -74,6 +75,7 @@ namespace OTA.Sockets
         Socket socket;
         ArrayDeque<Message> sendQueue = new ArrayDeque<Message>();
 
+        protected readonly object recvSyncRoot = new object();
         protected byte[] recvBuffer;
         protected int recvBytes;
         protected Timer timeout;
@@ -589,20 +591,22 @@ namespace OTA.Sockets
                         recvBytes += bytes;
                         BytesReceived += bytes;
 
-                        ProcessRead();
+                        //ProcessRead();
 
-                        if (kicking)
+                        //if (kicking)
+                        //{
+                        //    receiving = false;
+                        //    break;
+                        //}
+                        lock (recvSyncRoot)
                         {
-                            receiving = false;
-                            break;
+                            var left = recvBuffer.Length - recvBytes;
+
+                            if (left <= 0)
+                                return;
+
+                            argz.SetBuffer(recvBuffer, recvBytes, left);
                         }
-
-                        var left = recvBuffer.Length - recvBytes;
-
-                        if (left <= 0)
-                            return;
-
-                        argz.SetBuffer(recvBuffer, recvBytes, left);
                         try
                         {
                             receiving = socket.ReceiveAsync(argz);
@@ -787,3 +791,4 @@ namespace OTA.Sockets
         static ArgsPool<RecvArgs> recvPool = new ArgsPool<RecvArgs>();
     }
 }
+#endif

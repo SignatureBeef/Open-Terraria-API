@@ -1273,7 +1273,9 @@ namespace OTA.Patcher
             //Descrease the amount of file descriptors for mono.
             //We'll do this manually
             //            var fd = staticConstructor.Body.Instructions.Single(x => x.Operand is Int32 && (int)x.Operand == 256);
-            //            fd.Operand = 0;
+            //            fd.Operand = 0; 
+            var serverLoop = Terraria.Netplay.Methods.Single(x => x.Name == "ServerLoop");
+            //LinuxTcpSocket
             var rcCtor = Terraria.RemoteServer.Methods.Single(x => x.Name == ".ctor");
             var rtsCtor = API.ClientConnection.Methods.Single(x => x.Name == ".ctor" && x.Parameters.Count == (rcCtor.Body.Instructions[1].Operand as MethodReference).Parameters.Count);
 
@@ -1286,7 +1288,6 @@ namespace OTA.Patcher
             //            rcCtor.Body.Instructions[1].Operand = _asm.MainModule.Import(rtsCtor);
 
 
-            var serverLoop = Terraria.Netplay.Methods.Single(x => x.Name == "ServerLoop");
             var target = serverLoop.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
                              && (x.Operand is MethodReference)
                              && (x.Operand as MethodReference).DeclaringType.Name == "TcpSocket");

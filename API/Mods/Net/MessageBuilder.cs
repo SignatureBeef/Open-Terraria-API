@@ -122,7 +122,7 @@ namespace OTA.Mod.Net
             return PacketRegister.Write<T>(this, args);
         }
 
-        #if SERVER
+#if SERVER
         /// <summary>
         /// Broadcast to all remote clients that are connected to the server.
         /// </summary>
@@ -131,6 +131,7 @@ namespace OTA.Mod.Net
         {
             if (!_ended) End();
 
+#if CUSTOM_SOCKETS
             Logging.Logger.Debug($"Broadcasting custom packet");
             for (var x = 0; x < Terraria.Netplay.Clients.Length; x++)
             {
@@ -143,6 +144,7 @@ namespace OTA.Mod.Net
                     }
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -153,6 +155,7 @@ namespace OTA.Mod.Net
         {
             if (!_ended) End();
 
+#if CUSTOM_SOCKETS
             Logging.Logger.Debug($"Broadcasting custom packet");
             foreach (var client in Terraria.Netplay.Clients.Where(sendTo))
             {
@@ -163,8 +166,9 @@ namespace OTA.Mod.Net
                     if (clientSent != null) clientSent(client);
                 }
             }
+#endif
         }
-        #endif
+#endif
 
         /// <summary>
         /// Send the built message to the endpoint
@@ -174,12 +178,14 @@ namespace OTA.Mod.Net
         {
             if (!_ended) End();
 
+#if CUSTOM_SOCKETS
             Logging.Logger.Debug($"Sending custom packet to {target}");
             var client = Terraria.Netplay.Clients[target];
             if (client.IsConnected())
             {
                 (client.Socket as ClientConnection).CopyAndSend(Segment);
             }
+#endif
         }
     }
 }
