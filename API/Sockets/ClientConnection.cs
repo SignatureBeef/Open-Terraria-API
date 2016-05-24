@@ -443,8 +443,17 @@ namespace OTA.Sockets
 
         void ISocket.AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state)
         {
-            this._connection.GetStream().Write(data, offset, size);
-            if (callback != null) callback(state);
+            try
+            {
+                this._connection.GetStream().Write(data, offset, size);
+                if (callback != null) callback(state);
+            }
+            catch (SocketException e)
+            {
+            }
+            catch (ObjectDisposedException)
+            {
+            }
             //            this._connection.GetStream ().BeginWrite (data, 0, size, new AsyncCallback (this.SendCallback), new Tuple<SocketSendCallback, object> (callback, state));
         }
 

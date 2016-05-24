@@ -23,15 +23,27 @@ namespace OTA.Memory
         public const int kHeapTileFrameXOffset = 9;
         public const int kHeapTileFrameYOffset = 11;
 
-        protected int x;
-        protected int y;
+        //protected int x;
+        //protected int y;
+
+        private static readonly byte[] temp = new byte[kHeapTileSize];
 
         public HeapTile(byte[] array, int x, int y)
         {
-            heap = array;
             this.offset = (Terraria.Main.maxTilesY * x + y) * kHeapTileSize;
-            this.x = x;
-            this.y = y;
+            if (this.offset < 0)
+            {
+                heap = temp;
+                //x = 0;
+                //y = 0;
+                this.offset = 0;
+            }
+            else
+            {
+                heap = array;
+                //this.x = x;
+                //this.y = y;
+            }
         }
 
         protected override ushort _type
