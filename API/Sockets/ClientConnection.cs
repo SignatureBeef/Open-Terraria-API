@@ -113,7 +113,21 @@ namespace OTA.Sockets
             sock.LingerState = new LingerOption(true, 10);
             sock.NoDelay = true;
 
-            //_isReceiving = true; //The connection was established, so we can begin reading
+#if SERVER
+            var ctx = new HookContext
+            {
+                Connection = this
+            };
+
+            var args = new HookArgs.NewConnection();
+
+            HookPoints.NewConnection.Invoke(ref ctx, ref args);
+
+            if (ctx.CheckForKick())
+                return;
+#endif
+
+            _isReceiving = true; //The connection was established, so we can begin reading
         }
 
         class AsyncCallback //: IDisposable
@@ -138,7 +152,6 @@ namespace OTA.Sockets
 
         void ISocket.AsyncReceive(byte[] data, int offset, int size, SocketReceiveCallback callback, object state)
         {
-            ProgramLog.Log("Data requested from ", this.SlotId);
             if (_callback == null)
             {
                 _callback = new AsyncCallback()
@@ -149,6 +162,7 @@ namespace OTA.Sockets
                     Size = size,
                     State = state
                 };
+                StartReading();
             }
             else
             {
@@ -195,30 +209,19 @@ namespace OTA.Sockets
 
         protected override void ProcessRead()
         {
-            if (_callback != null)
-            {
-                ProgramLog.Log("Despatching data from " + this.SlotId);
-                if (!_isReceiving) _isReceiving = true;
-                byte[] local;
-                lock (recvSyncRoot)
-                {
-                    local = new byte[recvBytes];
-                    Buffer.BlockCopy(recvBuffer, 0, local, 0, recvBytes);
+            var local = new byte[recvBytes];
+            Buffer.BlockCopy(recvBuffer, 0, local, 0, recvBytes);
 
-                    //Reset read position
-                    recvBytes = 0;
-                }
+            //Reset read position
+            recvBytes = 0;
 
-                DespatchData(local);
-            }
-            else
-            {
-                ProgramLog.Log("No data vailable for ", this.SlotId);
-            }
+            DespatchData(local);
         }
 
         void DespatchData(byte[] buff)
         {
+            if (_callback == null)
+                throw new InvalidOperationException("No callback to read data to");
             try
             {
                 int processed = 0;
@@ -272,10 +275,9 @@ namespace OTA.Sockets
 
         void ISocket.Close()
         {
-            ProgramLog.Log("Socket closed at " + this.SlotId);
-            //if (_isReceiving)
-            Close();
-            //_isReceiving = false;
+            if (_isReceiving)
+                Close();
+            _isReceiving = false;
         }
 
         void ISocket.Connect(RemoteAddress address)
@@ -343,12 +345,12 @@ namespace OTA.Sockets
 
         bool ISocket.IsConnected()
         {
-            return Active;
+            return Active || _isReceiving;
         }
 
         bool ISocket.IsDataAvailable()
         {
-            return recvBytes > 0;
+            return recvBytes > 0 || _isReceiving;
         }
 
         private void ListenLoop(object unused)
@@ -358,33 +360,17 @@ namespace OTA.Sockets
             {
                 try
                 {
-                    var socket = this._listener.AcceptSocket();
-                    var connection = new ClientConnection(socket);
+                    ISocket socket = new ClientConnection(this._listener.AcceptSocket());
                     Netplay.anyClients = true;
                     //                    ProgramLog.Users.Log(socket.GetRemoteAddress() + " is connecting..."); TODO remove IL in vanilla as it's a bare log (or change it...)
                     //                    this._listenerCallback(socket);
-                    this._listenerCallback.BeginInvoke(connection, (ar) =>
-                        {
-                            _listenerCallback.EndInvoke(ar);
-                        }, null);
-
-                    var ctx = new HookContext
+                    this._listenerCallback.BeginInvoke(socket, (ar) =>
                     {
-                        Connection = connection
-                    };
-
-                    var args = new HookArgs.NewConnection();
-
-                    HookPoints.NewConnection.Invoke(ref ctx, ref args);
-
-                    if (ctx.CheckForKick())
-                        break;
-
-                    connection.StartReading();
+                        _listenerCallback.EndInvoke(ar);
+                    }, null);
                 }
-                catch (Exception e)
+                catch
                 {
-                    ProgramLog.Error.Log(e, "Exception in ClientConnection.ListenLoop");
                 }
             }
             this._listener.Stop();
@@ -451,14 +437,14 @@ namespace OTA.Sockets
         void ISocket.AsyncReceive(byte[] data, int offset, int size, SocketReceiveCallback callback, object state)
         {
             int len = this._connection.GetStream().Read(data, offset, size);
-            callback(null, len);
+            if (callback != null) callback(state, len);
             //            this._connection.GetStream ().BeginRead (data, offset, size, new AsyncCallback (this.ReadCallback), new Tuple<SocketReceiveCallback, object> (callback, state));
         }
 
         void ISocket.AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state)
         {
             this._connection.GetStream().Write(data, offset, size);
-            callback(null);
+            if (callback != null) callback(state);
             //            this._connection.GetStream ().BeginWrite (data, 0, size, new AsyncCallback (this.SendCallback), new Tuple<SocketSendCallback, object> (callback, state));
         }
 

@@ -923,6 +923,8 @@ namespace OTA.Patcher
                     var relative = file.FullName.Remove(0, dir.FullName.Length).TrimStart(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
                     var target = Path.Combine(targetDir, relative);
                     if (File.Exists(target)) File.Delete(target);
+                    var parent = Path.GetDirectoryName(target);
+                    if (!Directory.Exists(parent)) Directory.CreateDirectory(parent);
                     File.Copy(file.FullName, target);
                 }
             }

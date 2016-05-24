@@ -24,7 +24,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Server-Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER;DAPPER;FLUENT_MIGRATOR;CUSTOM_SOCKETS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;XNA_SHIMS;WEBSERVER;Full_API;VANILLACOMPAT;TileReady;MONO_NAT;SERVER;DAPPER;FLUENT_MIGRATOR</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>

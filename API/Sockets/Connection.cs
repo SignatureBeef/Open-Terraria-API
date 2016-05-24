@@ -75,7 +75,6 @@ namespace OTA.Sockets
         Socket socket;
         ArrayDeque<Message> sendQueue = new ArrayDeque<Message>();
 
-        protected readonly object recvSyncRoot = new object();
         protected byte[] recvBuffer;
         protected int recvBytes;
         protected Timer timeout;
@@ -280,7 +279,7 @@ namespace OTA.Sockets
         {
             if (kicking)
                 return;
-            
+
             kicking = true;
 
             timeout = new Timer(Timeout, null, 15000, 0);
@@ -591,22 +590,20 @@ namespace OTA.Sockets
                         recvBytes += bytes;
                         BytesReceived += bytes;
 
-                        //ProcessRead();
+                        ProcessRead();
 
-                        //if (kicking)
-                        //{
-                        //    receiving = false;
-                        //    break;
-                        //}
-                        lock (recvSyncRoot)
+                        if (kicking)
                         {
-                            var left = recvBuffer.Length - recvBytes;
-
-                            if (left <= 0)
-                                return;
-
-                            argz.SetBuffer(recvBuffer, recvBytes, left);
+                            receiving = false;
+                            break;
                         }
+
+                        var left = recvBuffer.Length - recvBytes;
+
+                        if (left <= 0)
+                            return;
+
+                        argz.SetBuffer(recvBuffer, recvBytes, left);
                         try
                         {
                             receiving = socket.ReceiveAsync(argz);
