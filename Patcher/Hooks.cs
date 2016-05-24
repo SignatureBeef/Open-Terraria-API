@@ -190,57 +190,57 @@ namespace OTA.Patcher
         //            }
         //        }
 
-        [OTAPatch(SupportType.Server, "Hooking pressure plate triggers")]
-        private void HookCollisionPressurePlate()
-        {
-            //Step 1: Add the calling object as a parameter to Terraria.Collision.SwitchTiles
-            //Setp 2: Inject cancellable IL before the HitSwitch branch
-            var switchTiles = Terraria.Collision.Method("SwitchTiles");
+        //[OTAPatch(SupportType.Server, "Hooking pressure plate triggers")] DEAD IN 1.3.1 - Caused deadlocks in SwitchTiles!
+        //private void HookCollisionPressurePlate()
+        //{
+        //    //Step 1: Add the calling object as a parameter to Terraria.Collision.SwitchTiles
+        //    //Setp 2: Inject cancellable IL before the HitSwitch branch
+        //    var switchTiles = Terraria.Collision.Method("SwitchTiles");
 
-            //--STEP 1
-            //Add the sender parameter
-            ParameterDefinition prmSender;
-            switchTiles.Parameters.Add(prmSender = new ParameterDefinition("sender", ParameterAttributes.None, Terraria.Entity)
-            {
-                HasDefault = true,
-                IsOptional = true
-            });
+        //    //--STEP 1
+        //    //Add the sender parameter
+        //    ParameterDefinition prmSender;
+        //    switchTiles.Parameters.Add(prmSender = new ParameterDefinition("sender", ParameterAttributes.None, Terraria.Entity)
+        //    {
+        //        HasDefault = true,
+        //        IsOptional = true
+        //    });
 
-            //Update all references to add themselves (currently they are all senders!)
-            Terraria.ForEachInstruction((mth, ins) =>
-                {
-                    if (ins.OpCode == OpCodes.Call && ins.Operand == switchTiles)
-                    {
-                        var cil = mth.Body.GetILProcessor();
-                        cil.InsertBefore(ins, cil.Create(OpCodes.Ldarg_0));
-                    }
-                });
+        //    //Update all references to add themselves (currently they are all senders!)
+        //    Terraria.ForEachInstruction((mth, ins) =>
+        //        {
+        //            if (ins.OpCode == OpCodes.Call && ins.Operand == switchTiles)
+        //            {
+        //                var cil = mth.Body.GetILProcessor();
+        //                cil.InsertBefore(ins, cil.Create(OpCodes.Ldarg_0));
+        //            }
+        //        });
 
-            //--STEP 2
-            //Find where the HitSwitch call is (this is our unique reference)
-            foreach (var insHitSwitch in switchTiles.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
-                                   && x.Operand is MethodReference
-                                   && (x.Operand as MethodReference).Name == "HitSwitch").ToArray())
-            {
-                //Find the branch where we will append our code to
-                var insLdLocS = insHitSwitch.FindPreviousInstructionByOpCode(OpCodes.Brfalse_S);
+        //    //--STEP 2
+        //    //Find where the HitSwitch call is (this is our unique reference)
+        //    foreach (var insHitSwitch in switchTiles.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
+        //                           && x.Operand is MethodReference
+        //                           && (x.Operand as MethodReference).Name == "HitSwitch").ToArray())
+        //    {
+        //        //Find the branch where we will append our code to
+        //        var insLdLocS = insHitSwitch.FindPreviousInstructionByOpCode(OpCodes.Brfalse_S);
 
-                //Import and get ready for injection
-                var hookCall = Terraria.Import(API.CollisionCallback.Method("OnPressurePlateTriggered"));
-                var il = switchTiles.Body.GetILProcessor();
+        //        //Import and get ready for injection
+        //        var hookCall = Terraria.Import(API.CollisionCallback.Method("OnPressurePlateTriggered"));
+        //        var il = switchTiles.Body.GetILProcessor();
 
-                //Add our call to the statement, and leave the result on the branch to take affect to the continutation of the statement
-                //These are in reverse order
-                var insSkipTo = insLdLocS.Operand as Instruction;
-                il.InsertAfter(insLdLocS, il.Create(OpCodes.Brfalse_S, insSkipTo)); //If our hook cancels, then we must skip the trigger
-                il.InsertAfter(insLdLocS, il.Create(OpCodes.Call, hookCall)); //Call our code
-                il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Previous.Operand as VariableDefinition)); //Load the Y
-                il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Operand as VariableDefinition)); //Load the X
-                il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldarg, prmSender)); //Load the sender (remember we added this in Step 1)
-            }
+        //        //Add our call to the statement, and leave the result on the branch to take affect to the continutation of the statement
+        //        //These are in reverse order
+        //        var insSkipTo = insLdLocS.Operand as Instruction;
+        //        il.InsertAfter(insLdLocS, il.Create(OpCodes.Brfalse_S, insSkipTo)); //If our hook cancels, then we must skip the trigger
+        //        il.InsertAfter(insLdLocS, il.Create(OpCodes.Call, hookCall)); //Call our code
+        //        il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Previous.Operand as VariableDefinition)); //Load the Y
+        //        il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldloc_S, insHitSwitch.Previous.Operand as VariableDefinition)); //Load the X
+        //        il.InsertAfter(insLdLocS, il.Create(OpCodes.Ldarg, prmSender)); //Load the sender (remember we added this in Step 1)
+        //    }
 
-            switchTiles.Body.OptimizeMacros();
-        }
+        //    switchTiles.Body.OptimizeMacros();
+        //}
 
         [OTAPatch(SupportType.Server, "Hooking MechSpawn")]
         private void HookMechSpawn()

@@ -274,7 +274,7 @@ namespace OTA.Sockets
         {
             ProgramLog.Log("Socket closed at " + this.SlotId);
             //if (_isReceiving)
-                Close();
+            Close();
             //_isReceiving = false;
         }
 
@@ -391,6 +391,7 @@ namespace OTA.Sockets
 #endif
         }
     }
+}
 #else
 using System;
 using System.Net;

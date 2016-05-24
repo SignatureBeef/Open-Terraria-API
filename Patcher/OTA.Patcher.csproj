@@ -33,7 +33,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Server-Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;SERVER</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SERVER;CUSTOM_SOCKETS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
