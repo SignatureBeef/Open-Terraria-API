@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "OTAPI.Patcher": {
+      "commandName": "OTAPI.Patcher",
+      "commandLineArgs": "-asm=Terraria:TerrariaServer.exe -asm=OTAPI:OTAPI.Core.dll"
+    }
+  }
+}

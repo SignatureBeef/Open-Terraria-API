@@ -23,7 +23,6 @@ namespace OTAPI.Patcher
 
         public static void Main(string[] args)
         {
-            args = "-asm=Terraria:TerrariaServer.exe -asm=OTAPI:OTAPI.Core.dll".Split(' ');
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.Clear();
@@ -66,7 +65,7 @@ namespace OTAPI.Patcher
             //Apply the injections to the loaded binary
             runner.Run(_startupOptions);
 
-            runner.SaveAllTo(OutputFileName);
+            runner.SaveAll(OutputFileName);
         }
 
         /// <summary>

@@ -48,7 +48,7 @@ namespace OTAPI.Patcher.Inject
             }
         }
 
-        public void SaveAllTo(string filename)
+        public void SaveAll(string filename)
         {
             var expando = (IDictionary<string, object>)Context.Assemblies;
             foreach (var item in expando.Keys)
