@@ -1,18 +1,13 @@
 *.suo
 *.csproj.user
-*.DotSettings.user
 *.pidb
 *.userprefs
 
-/Binaries/*.zip
-
-bin/
-obj/
-
-/Patcher/project.lock
-/Patcher/project.lock.json
-
-/packages
+artifacts/
 
 .DS_Store
-Binaries/Data/.DS_Store
+.vs
+.vscode
+
+OTAPI.Patcher.Tests/bin/
+OTAPI.Patcher.Tests/obj/

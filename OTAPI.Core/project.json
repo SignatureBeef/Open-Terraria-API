@@ -1,0 +1,12 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "OTAPI.Core Class Library",
+  "authors": [ "Luke" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "net451": { }
+  }
+}

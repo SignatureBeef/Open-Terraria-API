@@ -1,0 +1,27 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "OTAPI.Patcher Console Application",
+  "authors": [ "Luke" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "ILRepack.Lib": "2.0.10",
+    "Mono.Cecil": "0.9.6.1",
+    "NDesk.Options": "0.2.1",
+    "OTAPI.Core": "1.0.0-*"
+  },
+
+  "commands": {
+    "OTAPI.Patcher": "OTAPI.Patcher"
+  },
+
+  "frameworks": {
+    "dnx451": { }
+  }
+}
