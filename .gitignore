@@ -11,3 +11,5 @@ artifacts/
 
 OTAPI.Patcher.Tests/bin/
 OTAPI.Patcher.Tests/obj/
+OTAPI.Core.Tests/bin/
+OTAPI.Core.Tests/obj/
