@@ -50,7 +50,9 @@ namespace OTAPI.Patcher
                     InputAssemblies = _mergeAsseblies.ToArray(),
                     OutputFile = MergeOutputFileName,
                     TargetKind = ILRepacking.ILRepack.Kind.Dll,
-                    SearchDirectories = new[] { Environment.CurrentDirectory }
+                    SearchDirectories = new[] { Environment.CurrentDirectory },
+                    Parallel = true,
+                    Version = new Version(1, 0, 0, 0)
                 });
                 repacker.Repack();
             }

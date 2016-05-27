@@ -27,12 +27,13 @@ namespace OTAPI.Patcher.Modifications
 
             for (var x = 0; x < xnaFramework.Length; x++)
             {
-                xnaFramework[x].Name = "OTAPI";// Context.OTAPI.Assembly.Name.Name;
+                xnaFramework[x].Name = "OTAPI"; //TODO: Fix me, ILRepack is adding .dll to the asm name      Context.OTAPI.Assembly.Name.Name;
                 xnaFramework[x].PublicKey = Context.OTAPI.Assembly.Name.PublicKey;
                 xnaFramework[x].PublicKeyToken = Context.OTAPI.Assembly.Name.PublicKeyToken;
                 xnaFramework[x].Version = Context.OTAPI.Assembly.Name.Version;
             }
 
+            //Since we
             Context.AssemblyResolver.AssemblyResolve += AssemblyResolver_AssemblyResolve;
 
             Console.WriteLine("Done.");
