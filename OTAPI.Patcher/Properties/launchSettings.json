@@ -2,7 +2,8 @@
   "profiles": {
     "OTAPI.Patcher": {
       "commandName": "OTAPI.Patcher",
-      "commandLineArgs": "-asm=Terraria:TerrariaServer.exe -asm=OTAPI:OTAPI.Core.dll"
+      "commandLineArgs": "-merge=TerrariaServer.exe -merge=OTAPI.Core.dll -merge=OTAPI.Xna.dll -merge-output=OTAPI.dll.tmp -patch=OTAPI:OTAPI.dll.tmp -output-file=OTAPI.dll -output-name=OTAPI",
+      "workingDirectory": "C:\\Git\\Open-Terraria-API\\artifacts\\patcher"
     }
   }
 }

@@ -6,6 +6,17 @@ using System.Linq;
 
 namespace OTAPI.Patcher.Inject
 {
+    public static partial class StringExtensions
+    {
+        public static string TrimEnd(this string input, string suffixToRemove)
+        {
+            if (input != null && suffixToRemove != null && input.EndsWith(suffixToRemove))
+                return input.Substring(0, input.Length - suffixToRemove.Length);
+
+            return input;
+        }
+    }
+
     /// <summary>
     /// InjectionRunner handles anything to do with running injections. 
     /// </summary>
@@ -44,7 +55,8 @@ namespace OTAPI.Patcher.Inject
         {
             foreach (var injection in this.Injections)
             {
-                injection.Inject(options);
+                if (injection.CanInject(options))
+                    injection.Inject(options);
             }
         }
 
@@ -55,6 +67,17 @@ namespace OTAPI.Patcher.Inject
             {
                 var asm = expando[item] as AssemblyDefinition;
                 asm.Write(asm.MainModule.FullyQualifiedName);
+            }
+        }
+
+        public void SaveAs(string filename, string assemblyName)
+        {
+            var expando = (IDictionary<string, object>)Context.Assemblies;
+            foreach (var item in expando.Keys)
+            {
+                var asm = expando[item] as AssemblyDefinition;
+                asm.Name.Name = assemblyName;
+                asm.Write(filename);
             }
         }
 

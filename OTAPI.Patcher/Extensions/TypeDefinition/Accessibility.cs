@@ -10,62 +10,57 @@ namespace OTAPI.Patcher.Extensions
         /// </summary>
         /// <param name="type">The type to be made accessible</param>
         /// <param name="nested">To make all nested classes public as well.</param>
-        public static void MakePublic(this TypeDefinition type, bool nested = true,
-            bool isPublic = true,
-            bool isFamily = false,
-            bool isFamilyAndAssembly = false,
-            bool isFamilyOrAssembly = false,
-            bool isPrivate = false)
+        public static void MakePublic(this TypeDefinition type, bool nested = true)
         {
-            if (!nested) type.IsPublic = isPublic;
+            if (!nested) type.IsPublic = true;
 
             foreach (var itm in type.Methods)
             {
-                itm.IsPublic = isPublic;
-                if (itm.IsFamily != isFamily) itm.IsFamily = isFamily;
-                if (itm.IsFamilyAndAssembly != isFamilyAndAssembly) itm.IsFamilyAndAssembly = isFamilyAndAssembly;
-                if (itm.IsFamilyOrAssembly != isFamilyOrAssembly) itm.IsFamilyOrAssembly = isFamilyOrAssembly;
-                if (itm.IsPrivate != isPrivate) itm.IsPrivate = isPrivate;
+                itm.IsPublic = true;
+                if (itm.IsFamily) itm.IsFamily = false;
+                if (itm.IsFamilyAndAssembly) itm.IsFamilyAndAssembly = false;
+                if (itm.IsFamilyOrAssembly) itm.IsFamilyOrAssembly = false;
+                if (itm.IsPrivate) itm.IsPrivate = false;
             }
             foreach (var itm in type.Fields)
             {
-                if (itm.IsFamily != isFamily) itm.IsFamily = isFamily;
-                if (itm.IsFamilyAndAssembly != isFamilyAndAssembly) itm.IsFamilyAndAssembly = isFamilyAndAssembly;
-                if (itm.IsFamilyOrAssembly != isFamilyOrAssembly) itm.IsFamilyOrAssembly = isFamilyOrAssembly;
-                if (itm.IsPrivate != isPrivate)
+                if (itm.IsFamily) itm.IsFamily = false;
+                if (itm.IsFamilyAndAssembly) itm.IsFamilyAndAssembly = false;
+                if (itm.IsFamilyOrAssembly) itm.IsFamilyOrAssembly = false;
+                if (itm.IsPrivate)
                 {
                     if (type.Events.Where(x => x.Name == itm.Name).Count() == 0)
-                        itm.IsPrivate = isPrivate;
+                        itm.IsPrivate = false;
                     else
                     {
                         continue;
                     }
                 }
 
-                itm.IsPublic = isPublic;
+                itm.IsPublic = true;
             }
             foreach (var itm in type.Properties)
             {
                 if (null != itm.GetMethod)
                 {
-                    if (itm.GetMethod.IsPublic != isPublic) itm.GetMethod.IsPublic = isPublic;
-                    if (itm.GetMethod.IsFamily != isFamily) itm.GetMethod.IsFamily = isFamily;
-                    if (itm.GetMethod.IsFamilyAndAssembly != isFamilyAndAssembly) itm.GetMethod.IsFamilyAndAssembly = isFamilyAndAssembly;
-                    if (itm.GetMethod.IsFamilyOrAssembly != isFamilyOrAssembly) itm.GetMethod.IsFamilyOrAssembly = isFamilyOrAssembly;
-                    if (itm.GetMethod.IsPrivate != isPrivate) itm.GetMethod.IsPrivate = isPrivate;
+                    itm.GetMethod.IsPublic = true;
+                    if (itm.GetMethod.IsFamily) itm.GetMethod.IsFamily = false;
+                    if (itm.GetMethod.IsFamilyAndAssembly) itm.GetMethod.IsFamilyAndAssembly = false;
+                    if (itm.GetMethod.IsFamilyOrAssembly) itm.GetMethod.IsFamilyOrAssembly = false;
+                    if (itm.GetMethod.IsPrivate) itm.GetMethod.IsPrivate = false;
                 }
                 if (null != itm.SetMethod)
                 {
-                    if (itm.SetMethod.IsPublic != isPublic) itm.SetMethod.IsPublic = isPublic;
-                    if (itm.SetMethod.IsFamily != isFamily) itm.SetMethod.IsFamily = isFamily;
-                    if (itm.SetMethod.IsFamilyAndAssembly != isFamilyAndAssembly) itm.SetMethod.IsFamilyAndAssembly = isFamilyAndAssembly;
-                    if (itm.SetMethod.IsFamilyOrAssembly != isFamilyOrAssembly) itm.SetMethod.IsFamilyOrAssembly = isFamilyOrAssembly;
-                    if (itm.SetMethod.IsPrivate != isPrivate) itm.SetMethod.IsPrivate = isPrivate;
+                    itm.SetMethod.IsPublic = true;
+                    if (itm.SetMethod.IsFamily) itm.SetMethod.IsFamily = false;
+                    if (itm.SetMethod.IsFamilyAndAssembly) itm.SetMethod.IsFamilyAndAssembly = false;
+                    if (itm.SetMethod.IsFamilyOrAssembly) itm.SetMethod.IsFamilyOrAssembly = false;
+                    if (itm.SetMethod.IsPrivate) itm.SetMethod.IsPrivate = false;
                 }
             }
 
             foreach (var nt in type.NestedTypes)
-                nt.MakePublic(nested, isPublic, isFamily, isFamilyAndAssembly, isFamilyOrAssembly, isPrivate);
+                nt.MakePublic(true);
         }
     }
 }

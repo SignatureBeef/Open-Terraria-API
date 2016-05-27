@@ -10,6 +10,12 @@ namespace OTAPI.Patcher.Inject
         InjectionContext InjectionContext { get; set; }
 
         /// <summary>
+        /// Determines if the current instance can run injections.
+        /// </summary>
+        /// <returns></returns>
+        bool CanInject(OptionSet options);
+
+        /// <summary>
         /// Run the external injection.
         /// </summary>
         /// <param name="options"></param>
@@ -34,6 +40,12 @@ namespace OTAPI.Patcher.Inject
         /// Back reference to the global InjectionRunner context that is shared across injections.
         /// </summary>
         public TInjectionContext Context { get; internal set; }
+
+        /// <summary>
+        /// Determines if the current instance can run injections.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool CanInject(OptionSet options) => true;
 
         /// <summary>
         /// Run the external injection.

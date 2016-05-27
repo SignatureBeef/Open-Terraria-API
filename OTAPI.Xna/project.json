@@ -1,0 +1,15 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "OTAPI.Xna Class Library",
+  "authors": [ "Luke" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "net451": { }
+  },
+  "compilationOptions": {
+    "allowUnsafe": true
+  }
+}

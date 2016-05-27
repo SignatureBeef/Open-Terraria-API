@@ -10,16 +10,23 @@ namespace OTAPI.Patcher
     public class Program
     {
         /// <summary>
-        /// Assembilies loaded from disk that are to be passed to the InjectionRunner.
+        /// Assemblies loaded from disk that are to be passed to the InjectionRunner.
         /// </summary>
         /// <remarks>
         ///     Key     = Key to be used in the InjectionContext.Assembilies
         /// </remarks>
-        private static Dictionary<String, String> _assembilies = new Dictionary<String, String>();
+        private static Dictionary<String, String> _patchAssemblies = new Dictionary<String, String>();
+
+        /// <summary>
+        /// Assemblies on disk that are to be merged into one assembly.
+        /// </summary>
+        private static List<String> _mergeAsseblies = new List<String>();
 
         private static OptionSet _startupOptions;
 
-        private const String OutputFileName = "OTAPI.dll";
+        private static String OutputFileName;
+        private static String OutputAssemblyName;
+        private static String MergeOutputFileName;
 
         public static void Main(string[] args)
         {
@@ -32,19 +39,24 @@ namespace OTAPI.Patcher
             // Parse command line arguments.
             ParseArguments(args);
 
-            //Ensure that the binaries specified exist before anything occurs to them.
-            VerifyAssemblies();
-
             //Merge the binaries together
-            //if(options.Merge)
-            var repacker = new ILRepacking.ILRepack(new ILRepacking.RepackOptions()
+            if (!String.IsNullOrWhiteSpace(MergeOutputFileName))
             {
-                InputAssemblies = _assembilies.Values.ToArray(),
-                OutputFile = OutputFileName,
-                TargetKind = ILRepacking.ILRepack.Kind.Dll,
-                SearchDirectories = new[] { Environment.CurrentDirectory }
-            });
-            repacker.Repack();
+                //Ensure that the binaries specified exist before anything occurs to them.
+                VerifyAssemblies(_mergeAsseblies);
+
+                var repacker = new ILRepacking.ILRepack(new ILRepacking.RepackOptions()
+                {
+                    InputAssemblies = _mergeAsseblies.ToArray(),
+                    OutputFile = MergeOutputFileName,
+                    TargetKind = ILRepacking.ILRepack.Kind.Dll,
+                    SearchDirectories = new[] { Environment.CurrentDirectory }
+                });
+                repacker.Repack();
+            }
+
+            //Ensure that the binaries specified exist before anything occurs to them.
+            VerifyAssemblies(_patchAssemblies);
 
             //Run injection files through processor
             Run();
@@ -59,25 +71,39 @@ namespace OTAPI.Patcher
         /// </summary>
         static void Run()
         {
-            var context = InjectionContext.LoadFromAssemblies<OTAPIContext>(OutputFileName);
+            var context = InjectionContext.LoadFromAssemblies<OTAPIContext>(_patchAssemblies);
             var runner = InjectionRunner.LoadFromAssembly<Program>(context);
 
             //Apply the injections to the loaded binary
             runner.Run(_startupOptions);
 
-            runner.SaveAll(OutputFileName);
+            runner.SaveAs(OutputFileName, OutputAssemblyName);
         }
 
         /// <summary>
         /// Verifies that all assembilies exist and are usable by the InjectionContexts
         /// </summary>
-        static void VerifyAssemblies()
+        static void VerifyAssemblies(Dictionary<String, String> assemblies)
         {
-            foreach (var asm in _assembilies.Keys)
+            foreach (var asm in assemblies.Keys)
             {
-                if (!File.Exists(_assembilies[asm]))
+                if (!File.Exists(assemblies[asm]))
                 {
-                    throw new FileNotFoundException("Cannot find input assembly", _assembilies[asm]);
+                    throw new FileNotFoundException("Cannot find input assembly", assemblies[asm]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Verifies that all assembilies exist and are usable by the InjectionContexts
+        /// </summary>
+        static void VerifyAssemblies(List<String> assemblies)
+        {
+            foreach (var asm in assemblies)
+            {
+                if (!File.Exists(asm))
+                {
+                    throw new FileNotFoundException("Cannot find input assembly", asm);
                 }
             }
         }
@@ -97,7 +123,11 @@ namespace OTAPI.Patcher
         static void ParseArguments(string[] args)
         {
             _startupOptions = new OptionSet()
-                .Add("asm={:}", (k, v) => _assembilies.Add(k, v))
+                .Add("patch={:}", (k, v) => _patchAssemblies.Add(k, v))
+                .Add("merge=|m=", (asm) => _mergeAsseblies.Add(asm))
+                .Add("merge-output=|mo=", merge => MergeOutputFileName = merge)
+                .Add("out=|o=|output-file=", output => OutputFileName = output)
+                .Add("output-name=", name => OutputAssemblyName = name)
                 .Add("?|h|help", h => DisplayHelp());
             _startupOptions.Parse(args);
         }

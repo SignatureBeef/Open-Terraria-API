@@ -1,13 +1,12 @@
 ﻿using NDesk.Options;
+using OTAPI.Patcher.Extensions;
 using OTAPI.Patcher.Inject;
 using System;
-using Mono.Cecil.Rocks;
-using OTAPI.Patcher.Extensions;
 
 namespace OTAPI.Patcher.Modifications
 {
     /// <summary>
-    /// 
+    /// Makes all types public in the OTAPI assembly dll.
     /// </summary>
     public class MakeTypesPublic : Injection<OTAPIContext>
     {
@@ -15,9 +14,8 @@ namespace OTAPI.Patcher.Modifications
         {
             Console.Write("Making all types public...");
 
-            foreach(var type in Context.OTAPI.MainModule.Types)
+            foreach(var type in Context.OTAPI.MainModue.Types)
                 type.MakePublic(false);
-
 
             Console.WriteLine("Done.");
         }
