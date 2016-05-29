@@ -4,15 +4,12 @@ namespace OTAPI.Core.Hooks.Terraria
 {
     public static class Main
     {
-        public static bool startDedInputBegin()
+        public static Func<Boolean> OnStartCommandThread;
+        
+        internal static bool startDedInput()
         {
-            Console.WriteLine("OTAPI - Start ded input");
-            return true;
-        }
-
-        public static bool startDedInputEnd()
-        {
-            Console.WriteLine("OTAPI - End ded input");
+            if (OnStartCommandThread != null)
+                return OnStartCommandThread.Invoke();
             return true;
         }
     }

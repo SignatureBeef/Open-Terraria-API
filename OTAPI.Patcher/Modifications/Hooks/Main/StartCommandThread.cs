@@ -12,14 +12,9 @@ namespace OTAPI.Patcher.Modifications.Hooks.Main
         {
             Console.Write("Hooking console listener creation...");
             var target = this.Context.Terraria.Types.Main.Method("startDedInput");
+            var callback = this.Context.OTAPI.Types.Main.Methods.Single(x => x.Name == "startDedInput");
 
-            var apiMatch = this.Context.OTAPI.Types.Main.Methods.Where(x => x.Name.StartsWith("startDedInput"));
-            if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching startDedInput Begin/End calls in OTAPI");
-
-            var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
-            var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));
-
-            target.Wrap(cbkBegin, cbkEnd, true);
+            target.Wrap(callback, beginIsCancellable: true);
             Console.WriteLine("Done");
         }
     }
