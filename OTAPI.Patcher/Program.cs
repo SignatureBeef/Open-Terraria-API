@@ -58,7 +58,7 @@ namespace OTAPI.Patcher
             }
 
             //Ensure that the binaries specified exist before anything occurs to them.
-            VerifyAssemblies(_patchAssemblies);
+            VerifyAssemblies(_patchAssemblies.Values);
 
             //Run injection files through processor
             Run();
@@ -73,7 +73,7 @@ namespace OTAPI.Patcher
         /// </summary>
         static void Run()
         {
-            var context = InjectionContext.LoadFromAssemblies<OTAPIContext>(_patchAssemblies);
+            var context = InjectionContext.LoadFromAssemblies<Modifications.Helpers.OTAPIContext/*TODO: load the dynamic asm and load types at inject time into a map*/>(_patchAssemblies);
             var runner = InjectionRunner.LoadFromAssembly<Program>(context);
 
             //Apply the injections to the loaded binary
@@ -85,21 +85,7 @@ namespace OTAPI.Patcher
         /// <summary>
         /// Verifies that all assembilies exist and are usable by the InjectionContexts
         /// </summary>
-        static void VerifyAssemblies(Dictionary<String, String> assemblies)
-        {
-            foreach (var asm in assemblies.Keys)
-            {
-                if (!File.Exists(assemblies[asm]))
-                {
-                    throw new FileNotFoundException("Cannot find input assembly", assemblies[asm]);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Verifies that all assembilies exist and are usable by the InjectionContexts
-        /// </summary>
-        static void VerifyAssemblies(List<String> assemblies)
+        static void VerifyAssemblies(IEnumerable<String> assemblies)
         {
             foreach (var asm in assemblies)
             {
@@ -115,7 +101,7 @@ namespace OTAPI.Patcher
         /// </summary>
         static void DisplayHelp()
         {
-            Console.WriteLine("TODO");
+            _startupOptions.WriteOptionDescriptions(Console.Out);
         }
 
         /// <summary>

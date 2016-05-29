@@ -71,7 +71,6 @@ namespace OTAPI.Core.Tests
                 }
             }
 
-
             Terraria.WindowsLaunch.Main(args);
         }
     }

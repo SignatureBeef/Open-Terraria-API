@@ -1,5 +1,6 @@
 ﻿using NDesk.Options;
 using OTAPI.Patcher.Inject;
+using OTAPI.Patcher.Modifications.Helpers;
 using System;
 using System.Linq;
 
@@ -10,10 +11,7 @@ namespace OTAPI.Patcher.Modifications
     /// </summary>
     public class RemoveXna : Injection<OTAPIContext>
     {
-        public override bool CanInject(OptionSet options)
-        {
-            return this.Context.OTAPI.MainModue.Types.Any(t => t.Namespace.StartsWith("Microsoft.Xna.Framework"));
-        }
+        public override bool CanInject(OptionSet options) => this.IsServer();
 
         public override void Inject(OptionSet options)
         {

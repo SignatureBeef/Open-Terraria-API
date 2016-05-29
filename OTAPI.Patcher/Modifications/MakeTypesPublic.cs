@@ -1,6 +1,7 @@
 ﻿using NDesk.Options;
 using OTAPI.Patcher.Extensions;
 using OTAPI.Patcher.Inject;
+using OTAPI.Patcher.Modifications.Helpers;
 using System;
 
 namespace OTAPI.Patcher.Modifications
