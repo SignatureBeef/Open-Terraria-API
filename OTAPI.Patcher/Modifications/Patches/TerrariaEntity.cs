@@ -15,9 +15,7 @@ namespace OTAPI.Patcher.Modifications.Patches
         {
             Console.Write("Injecting TerrariaEntity...");
 
-            this.Context.Terraria.Types.Entity.Interfaces.Add(
-                this.Context.OTAPI.Types.TerrariaEntity
-            );
+            this.Context.Terraria.Types.Entity.BaseType = this.Context.OTAPI.Types.TerrariaEntity;
 
             Console.WriteLine("Done");
         }

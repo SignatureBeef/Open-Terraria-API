@@ -10,8 +10,6 @@ namespace OTAPI.Core.Tests
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.Clear();
 
-            var test = new OTAPI.Core.Class1();
-
             Console.WriteLine("OTAPI Test Launcher.");
             Console.WriteLine("Menu.");
 
