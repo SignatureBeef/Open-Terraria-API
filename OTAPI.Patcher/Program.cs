@@ -52,7 +52,10 @@ namespace OTAPI.Patcher
                     TargetKind = ILRepacking.ILRepack.Kind.Dll,
                     SearchDirectories = new[] { Environment.CurrentDirectory },
                     Parallel = true,
-                    Version = new Version(1, 0, 0, 0)
+                    Version = new Version(1, 0, 0, 0),
+#if DEBUG
+                    DebugInfo = true
+#endif
                 });
                 repacker.Repack();
             }

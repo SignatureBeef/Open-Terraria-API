@@ -7,7 +7,7 @@ namespace OTAPI.Patcher.Extensions
     {
         public static TypeDefinition Type(this ModuleDefinition moduleDefinition, string name)
         {
-            return moduleDefinition.Types.Single(x => x.Name == name);
+            return moduleDefinition.Types.Single(x => x.FullName == name);
         }
     }
 }

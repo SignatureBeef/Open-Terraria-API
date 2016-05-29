@@ -27,9 +27,13 @@ namespace OTAPI.Patcher.Modifications.Helpers
             internal TerrariaOrganiser _organiser;
             internal OrganiserTypes(TerrariaOrganiser organiser) { _organiser = organiser; }
 
-            public TypeDefinition Program => _organiser.MainModue.Type("Program");
+            public TypeDefinition Entity => _organiser.MainModue.Type("Terraria.Entity");
 
-            public TypeDefinition WindowsLaunch => _organiser.MainModue.Type("WindowsLaunch");
+            public TypeDefinition Main => _organiser.MainModue.Type("Terraria.Main");
+
+            public TypeDefinition Program => _organiser.MainModue.Type("Terraria.Program");
+
+            public TypeDefinition WindowsLaunch => _organiser.MainModue.Type("Terraria.WindowsLaunch");
         }
     }
 }

@@ -20,14 +20,16 @@ namespace OTAPI.Patcher.Modifications.Helpers
 
         public ModuleDefinition MainModue => Assembly.MainModule;
 
-        public OrganiserTypes Types { get; } 
+        public OrganiserTypes Types { get; }
 
         public class OrganiserTypes
         {
             internal OTAPIOrganiser _organiser;
             internal OrganiserTypes(OTAPIOrganiser organiser) { _organiser = organiser; }
 
-            public TypeDefinition Main => _organiser.MainModue.Type("Main");
+            public TypeDefinition Main => _organiser.MainModue.Type("OTAPI.Core.Hooks.Terraria.Main");
+
+            public TypeDefinition TerrariaEntity => _organiser.MainModue.Type("OTAPI.Core.TerrariaEntity");
         }
     }
 }
