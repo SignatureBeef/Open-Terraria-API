@@ -10,12 +10,12 @@ namespace OTAPI.Patcher.Modifications.Hooks.Main
     {
         public override void Inject(OptionSet options)
         {
-            Console.Write("Hooking GameUpdate...");
+            Console.Write("Hooking Game.Update...");
 
             //Grab the Update method
-            var updateServer = this.Context.Terraria.Types.Main.Method("Update");
+            var vanilla = this.Context.Terraria.Types.Main.Method("Update");
             //Wrap it with the API calls
-            updateServer.InjectBeginEnd(this.Context.OTAPI.Types.Main, "Update");
+            vanilla.InjectBeginEnd(this.Context.OTAPI.Types.Main, "Update");
 
             Console.WriteLine("Done");
         }

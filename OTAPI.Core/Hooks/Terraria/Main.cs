@@ -20,6 +20,16 @@ namespace OTAPI.Core.Hooks.Terraria
         public static Action OnGamePostUpdate;
 
         /// <summary>
+        /// Occurs at the first point of call when the Initialze method is ran.
+        /// </summary>
+        public static Action OnGamePreInitialize;
+
+        /// <summary>
+        /// Occurs at the end of the games initialize method.
+        /// </summary>
+        public static Action OnGamePostInitialize;
+
+        /// <summary>
         /// This method is injected into the start of the startDedInput method.
         /// The return value will dictate if normal vanilla code should continue to run.
         /// </summary>
@@ -49,6 +59,24 @@ namespace OTAPI.Core.Hooks.Terraria
         {
             if (OnGamePostUpdate != null)
                 OnGamePostUpdate();
+        }
+
+        /// <summary>
+        /// This method is injected to the beginning of the terraria Initialize method.
+        /// </summary>
+        internal static void InitializeBegin()
+        {
+            if (OnGamePreInitialize != null)
+                OnGamePreInitialize();
+        }
+
+        /// <summary>
+        /// This method is injected into the end of the terraria Initialize method.
+        /// </summary>
+        internal static void InitializeEnd()
+        {
+            if (OnGamePostInitialize != null)
+                OnGamePostInitialize();
         }
     }
 }
