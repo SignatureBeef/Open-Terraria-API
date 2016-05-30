@@ -9,5 +9,6 @@
     "net451": { }
   },
   "dependencies": {
+    "OTAPI.Xna": "1.0.0-*"
   }
 }

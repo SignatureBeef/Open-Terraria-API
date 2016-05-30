@@ -38,6 +38,13 @@
       },
       "OTAPI.Core/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "OTAPI.Xna": "1.0.0"
+        }
+      },
+      "OTAPI.Xna/1.0.0": {
+        "type": "project",
         "framework": ".NETFramework,Version=v4.5.1"
       }
     },
@@ -76,6 +83,13 @@
         }
       },
       "OTAPI.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "OTAPI.Xna": "1.0.0"
+        }
+      },
+      "OTAPI.Xna/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1"
       }
@@ -116,6 +130,13 @@
       },
       "OTAPI.Core/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "OTAPI.Xna": "1.0.0"
+        }
+      },
+      "OTAPI.Xna/1.0.0": {
+        "type": "project",
         "framework": ".NETFramework,Version=v4.5.1"
       }
     }
@@ -124,6 +145,10 @@
     "OTAPI.Core/1.0.0": {
       "type": "project",
       "path": "../OTAPI.Core/project.json"
+    },
+    "OTAPI.Xna/1.0.0": {
+      "type": "project",
+      "path": "../OTAPI.Xna/project.json"
     },
     "ILRepack.Lib/2.0.10": {
       "type": "package",

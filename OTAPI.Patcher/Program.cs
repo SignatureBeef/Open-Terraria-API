@@ -53,6 +53,7 @@ namespace OTAPI.Patcher
                     SearchDirectories = new[] { Environment.CurrentDirectory },
                     Parallel = true,
                     Version = new Version(1, 0, 0, 0),
+                    CopyAttributes = true,
 #if DEBUG
                     DebugInfo = true
 #endif
