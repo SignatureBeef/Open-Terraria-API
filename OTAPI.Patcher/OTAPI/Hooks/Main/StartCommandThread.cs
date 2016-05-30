@@ -6,9 +6,12 @@ using System.Linq;
 
 namespace OTAPI.Patcher.Modifications.Hooks.Main
 {
-    public class StartCommandThread : Inject.Injection<OTAPIContext>
+    /// <summary>
+    /// This modification will allow the hook for starting a custom command thread to function.
+    /// </summary>
+    public class StartCommandThread : OTAPIModification<OTAPIContext>
     {
-        public override void Inject(OptionSet options)
+        public override void Run(OptionSet options)
         {
             Console.Write("Hooking console listener creation...");
             var target = this.Context.Terraria.Types.Main.Method("startDedInput");

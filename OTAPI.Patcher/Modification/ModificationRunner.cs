@@ -4,48 +4,48 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OTAPI.Patcher.Inject
+namespace OTAPI.Patcher.Modification
 {
     /// <summary>
-    /// InjectionRunner handles anything to do with running injections. 
+    /// ModificationRunner handles anything to do with running injections. 
     /// </summary>
-    public class InjectionRunner
+    public class ModificationRunner
     {
         /// <summary>
         /// Injections to be performed.
         /// </summary>
-        public List<IInjection> Injections { get; private set; }
+        public List<IModification> Modifications { get; private set; }
 
         /// <summary>
-        /// The global InjectionContext instance for this InjectionRunner.
+        /// The global ModificationContext instance for this ModificationRunner.
         /// It is shared across all chidren injections.
         /// </summary>
-        public InjectionContext Context { get; private set; }
+        public ModificationContext Context { get; private set; }
 
         /// <summary>
         /// Creates a new InjectionRunner instance, auto populated with the supplied injection collection.
         /// </summary>
         /// <param name="injections"></param>
-        public InjectionRunner(InjectionContext context, IEnumerable<IInjection> injections)
+        public ModificationRunner(ModificationContext context, IEnumerable<IModification> injections)
         {
             //Set the global context
             this.Context = context;
 
-            this.Injections = injections.ToList();
-            //Set new children injection contexts to the global context
-            foreach (var injection in this.Injections)
-                injection.InjectionContext = this.Context;
+            this.Modifications = injections.ToList();
+            //Set new children modification contexts to the global context
+            foreach (var mod in this.Modifications)
+                mod.ModificationContext = this.Context;
         }
 
         /// <summary>
-        /// Runs all injections registered in the current instance.
+        /// Runs all modifications registered in the current instance.
         /// </summary>
         public void Run(OptionSet options)
         {
-            foreach (var injection in this.Injections)
+            foreach (var modification in this.Modifications)
             {
-                if (injection.CanInject(options))
-                    injection.Inject(options);
+                if (modification.IsAvailable(options))
+                    modification.Run(options);
             }
         }
 
@@ -72,16 +72,16 @@ namespace OTAPI.Patcher.Inject
 
         #region Statics
         /// <summary>
-        /// Loads all public Injections from a given type into a new InjectionRunner.
+        /// Loads all public modifications from a given type into a new ModificationRunner.
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
         /// <returns></returns>
-        public static InjectionRunner LoadFromAssembly<TSource>(InjectionContext context)
+        public static ModificationRunner LoadFromAssembly<TSource>(ModificationContext context)
         {
-            return new InjectionRunner(context,
+            return new ModificationRunner(context,
                 typeof(TSource).Assembly.ExportedTypes
-                    .Where(type => typeof(IInjection).IsAssignableFrom(type) && !type.IsAbstract)
-                    .Select(injectionType => (IInjection)Activator.CreateInstance(injectionType))
+                    .Where(type => typeof(IModification).IsAssignableFrom(type) && !type.IsAbstract)
+                    .Select(modificationType => (IModification)Activator.CreateInstance(modificationType))
             );
         }
         #endregion

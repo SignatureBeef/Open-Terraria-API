@@ -1,11 +1,11 @@
-﻿using OTAPI.Patcher.Inject;
+﻿using OTAPI.Patcher.Modification;
 
 namespace OTAPI.Patcher.Modifications.Helpers
 {
     /// <summary>
-    /// This defines the OTAPI injection context. It expects that there is an OTAPI.dll loaded (from which has been ILRepacked).
+    /// This defines the OTAPI modification context. It expects that there is an OTAPI.dll loaded (from which has been ILRepacked).
     /// </summary>
-    public class OTAPIContext : InjectionContext
+    public class OTAPIContext : ModificationContext
     {
         public OTAPIContext()
         {

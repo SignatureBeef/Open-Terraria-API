@@ -1,5 +1,5 @@
 ﻿using NDesk.Options;
-using OTAPI.Patcher.Inject;
+using OTAPI.Patcher.Modification;
 using OTAPI.Patcher.Modifications.Helpers;
 using System;
 using System.Linq;
@@ -9,11 +9,11 @@ namespace OTAPI.Patcher.Modifications.Patches
     /// <summary>
     /// Replaces all Xna references to use OTAPI.Xna.dll
     /// </summary>
-    public class RemoveXna : Injection<OTAPIContext>
+    public class RemoveXna : OTAPIModification<OTAPIContext>
     {
-        public override bool CanInject(OptionSet options) => this.IsServer();
+        public override bool IsAvailable(OptionSet options) => this.IsServer();
 
-        public override void Inject(OptionSet options)
+        public override void Run(OptionSet options)
         {
             Console.Write("Removing Xna references...");
 
@@ -37,7 +37,7 @@ namespace OTAPI.Patcher.Modifications.Patches
             Console.WriteLine("Done.");
         }
 
-        private void AssemblyResolver_AssemblyResolve(object sender, ContextAssemblyResolver.AssemblyResolveEventArgs e)
+        private void AssemblyResolver_AssemblyResolve(object sender, ModificationAssemblyResolver.AssemblyResolveEventArgs e)
         {
             if (e.Reference.Name == "OTAPI")
                 e.AssemblyDefinition = this.Context.OTAPI.Assembly;

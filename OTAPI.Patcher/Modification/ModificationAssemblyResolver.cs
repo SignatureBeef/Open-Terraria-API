@@ -1,9 +1,13 @@
 ﻿using Mono.Cecil;
 using System;
 
-namespace OTAPI.Patcher.Inject
+namespace OTAPI.Patcher.Modification
 {
-    public class ContextAssemblyResolver : DefaultAssemblyResolver
+    /// <summary>
+    /// Provides a way for modifications to easily resolve modifications 
+    /// while the assembly is in the process of being saved to disk.
+    /// </summary>
+    public class ModificationAssemblyResolver : DefaultAssemblyResolver
     {
         public class AssemblyResolveEventArgs : EventArgs
         {
@@ -14,6 +18,7 @@ namespace OTAPI.Patcher.Inject
 
         public override AssemblyDefinition Resolve(AssemblyNameReference name)
         {
+            //Fire the event
             var args = new AssemblyResolveEventArgs()
             {
                 Reference = name,
@@ -21,6 +26,7 @@ namespace OTAPI.Patcher.Inject
             };
             if (AssemblyResolve != null) AssemblyResolve.Invoke(this, args);
 
+            //Use the default behaviour as a fallback
             return args.AssemblyDefinition ?? base.Resolve(name);
         }
     }

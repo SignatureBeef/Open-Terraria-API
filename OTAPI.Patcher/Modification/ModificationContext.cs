@@ -3,22 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace OTAPI.Patcher.Inject
+namespace OTAPI.Patcher.Modification
 {
     /// <summary>
     /// Defines the bare minimum InjectionContext. It's purpose is to dynamically contain loaded assemblies
     /// that are later used by an inheritor with helper methods.
     /// </summary>
-    public abstract class InjectionContext
+    public abstract class ModificationContext
     {
         /// <summary>
         /// Assembilies registered from a dynamic source, such as launch arguments.
         /// </summary>
         public dynamic Assemblies { get; set; }
 
-        public ContextAssemblyResolver AssemblyResolver { get; } = new ContextAssemblyResolver();
+        public ModificationAssemblyResolver AssemblyResolver { get; } = new ModificationAssemblyResolver();
 
-        private static AssemblyDefinition ReadAssembly(InjectionContext context, string path)
+        private static AssemblyDefinition ReadAssembly(ModificationContext context, string path)
         {
             var rp = new ReaderParameters(ReadingMode.Immediate) { AssemblyResolver = context.AssemblyResolver };
             return AssemblyDefinition.ReadAssembly(path, rp);
@@ -27,13 +27,13 @@ namespace OTAPI.Patcher.Inject
         /// <summary>
         /// Loads the given AssemblyDefinitions from disk.
         /// </summary>
-        /// <typeparam name="TInjectionContext"></typeparam>
+        /// <typeparam name="TModificationContext"></typeparam>
         /// <param name="assembliesMap"></param>
         /// <returns></returns>
-        public static TInjectionContext LoadFromAssemblies<TInjectionContext>(Dictionary<string, string> assembliesMap)
-            where TInjectionContext : InjectionContext, new()
+        public static TModificationContext LoadFromAssemblies<TModificationContext>(Dictionary<string, string> assembliesMap)
+            where TModificationContext : ModificationContext, new()
         {
-            var ctx = new TInjectionContext();
+            var ctx = new TModificationContext();
             var assemblies = (IDictionary<String, Object>)new ExpandoObject();
 
             foreach (var asm in assembliesMap.Keys)
@@ -54,7 +54,7 @@ namespace OTAPI.Patcher.Inject
         /// <param name="assembliesMap"></param>
         /// <returns></returns>
         public static TInjectionContext LoadFromAssemblies<TInjectionContext>(params string[] assembliesMap)
-            where TInjectionContext : InjectionContext, new()
+            where TInjectionContext : ModificationContext, new()
         {
             var ctx = new TInjectionContext();
             var assemblies = (IDictionary<String, Object>)new ExpandoObject();

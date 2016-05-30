@@ -2,13 +2,16 @@
 using OTAPI.Patcher.Extensions;
 using OTAPI.Patcher.Modifications.Helpers;
 using System;
-using System.Linq;
 
 namespace OTAPI.Patcher.Modifications.Hooks.Main
 {
-    public class GameUpdate : Inject.Injection<OTAPIContext>
+    /// <summary>
+    /// This modification is to allow the Game.Update hooks to be ran by injecting
+    /// to the start and end of the vanilla method.
+    /// </summary>
+    public class GameUpdate : OTAPIModification<OTAPIContext>
     {
-        public override void Inject(OptionSet options)
+        public override void Run(OptionSet options)
         {
             Console.Write("Hooking Game.Update...");
 

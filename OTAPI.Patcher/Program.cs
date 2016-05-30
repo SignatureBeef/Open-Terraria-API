@@ -1,16 +1,15 @@
 ﻿using NDesk.Options;
-using OTAPI.Patcher.Inject;
+using OTAPI.Patcher.Modification;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace OTAPI.Patcher
 {
     public class Program
     {
         /// <summary>
-        /// Assemblies loaded from disk that are to be passed to the InjectionRunner.
+        /// Assemblies loaded from disk that are to be passed to the ModificationRunner.
         /// </summary>
         /// <remarks>
         ///     Key     = Key to be used in the InjectionContext.Assembilies
@@ -64,7 +63,7 @@ namespace OTAPI.Patcher
             //Ensure that the binaries specified exist before anything occurs to them.
             VerifyAssemblies(_patchAssemblies.Values);
 
-            //Run injection files through processor
+            //Run modification files through processor
             Run();
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -73,21 +72,21 @@ namespace OTAPI.Patcher
         }
 
         /// <summary>
-        /// Runs all injections that have been loaded.
+        /// Runs all modifications that have been loaded.
         /// </summary>
         static void Run()
         {
-            var context = InjectionContext.LoadFromAssemblies<Modifications.Helpers.OTAPIContext/*TODO: load the dynamic asm and load types at inject time into a map*/>(_patchAssemblies);
-            var runner = InjectionRunner.LoadFromAssembly<Program>(context);
+            var context = ModificationContext.LoadFromAssemblies<Modifications.Helpers.OTAPIContext/*TODO: load the dynamic asm and load types at inject time into a map*/>(_patchAssemblies);
+            var runner = ModificationRunner.LoadFromAssembly<Program>(context);
 
-            //Apply the injections to the loaded binary
+            //Apply the modifications to the loaded binary
             runner.Run(_startupOptions);
 
             runner.SaveAs(OutputFileName, OutputAssemblyName);
         }
 
         /// <summary>
-        /// Verifies that all assembilies exist and are usable by the InjectionContexts
+        /// Verifies that all assemblies exist and are usable by the ModificationContext's
         /// </summary>
         static void VerifyAssemblies(IEnumerable<String> assemblies)
         {

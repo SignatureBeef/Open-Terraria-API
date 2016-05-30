@@ -1,5 +1,5 @@
 ﻿using OTAPI.Patcher.Extensions;
-using OTAPI.Patcher.Inject;
+using OTAPI.Patcher.Modification;
 
 namespace OTAPI.Patcher.Modifications.Helpers
 {
@@ -8,24 +8,24 @@ namespace OTAPI.Patcher.Modifications.Helpers
         /// <summary>
         /// Determines the type of the currently-loaded Terraria executable.
         /// </summary>
-        /// <param name="injection"></param>
+        /// <param name="modification"></param>
         /// <returns></returns>
-        public static TerrariaKind GetTerrariaKind(this Injection<OTAPIContext> injection) =>
-            injection.Context.Terraria.Types.Program.Field("IsServer")
+        public static TerrariaKind GetTerrariaKind(this OTAPIModification<OTAPIContext> modification) =>
+            modification.Context.Terraria.Types.Program.Field("IsServer")
                 .Constant.Equals(true) ? TerrariaKind.Server : TerrariaKind.Client;
 
         /// <summary>
         /// Determines if the current terraria assembly is the client binary
         /// </summary>
-        /// <param name="injection"></param>
+        /// <param name="modification"></param>
         /// <returns></returns>
-        public static bool IsClient(this Injection<OTAPIContext> injection) => injection.GetTerrariaKind() == TerrariaKind.Client;
+        public static bool IsClient(this OTAPIModification<OTAPIContext> modification) => modification.GetTerrariaKind() == TerrariaKind.Client;
 
         /// <summary>
         /// Determines if the current terraria assembly is the server binary
         /// </summary>
-        /// <param name="injection"></param>
+        /// <param name="modification"></param>
         /// <returns></returns>
-        public static bool IsServer(this Injection<OTAPIContext> injection) => injection.GetTerrariaKind() == TerrariaKind.Server;
+        public static bool IsServer(this OTAPIModification<OTAPIContext> modification) => modification.GetTerrariaKind() == TerrariaKind.Server;
     }
 }
