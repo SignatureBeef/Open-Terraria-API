@@ -27,7 +27,7 @@ namespace OTAPI.Patcher.Modifications.Helpers
             internal OTAPIOrganiser _organiser;
             internal OrganiserTypes(OTAPIOrganiser organiser) { _organiser = organiser; }
 
-            public TypeDefinition Main => _organiser.MainModue.Type("OTAPI.Core.Hooks.Terraria.Main");
+            public TypeDefinition Main => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Main");
 
             public TypeDefinition TerrariaEntity => _organiser.MainModue.Type("OTAPI.Core.TerrariaEntity");
         }

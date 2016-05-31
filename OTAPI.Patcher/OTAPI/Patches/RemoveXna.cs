@@ -31,7 +31,7 @@ namespace OTAPI.Patcher.Modifications.Patches
                 xnaFramework[x].Version = Context.OTAPI.Assembly.Name.Version;
             }
 
-            //Since we
+            //To resolve the "OTAPI" from above until the .dll can be corrected.
             Context.AssemblyResolver.AssemblyResolve += AssemblyResolver_AssemblyResolve;
 
             Console.WriteLine("Done.");

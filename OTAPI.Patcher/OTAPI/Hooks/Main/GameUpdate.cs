@@ -6,8 +6,8 @@ using System;
 namespace OTAPI.Patcher.Modifications.Hooks.Main
 {
     /// <summary>
-    /// This modification is to allow the Game.Update hooks to be ran by injecting
-    /// to the start and end of the vanilla method.
+    /// This modification is to allow the Game.Update hooks to be ran by injecting callbacks into
+    /// the start and end of the vanilla method.
     /// </summary>
     public class GameUpdate : OTAPIModification<OTAPIContext>
     {

@@ -76,7 +76,7 @@ namespace OTAPI.Patcher
         /// </summary>
         static void Run()
         {
-            var context = ModificationContext.LoadFromAssemblies<Modifications.Helpers.OTAPIContext/*TODO: load the dynamic asm and load types at inject time into a map*/>(_patchAssemblies);
+            var context = ModificationContext.LoadFromAssemblies<Modifications.Helpers.OTAPIContext/*We could do this dynamically, but this class is for OTAPI*/>(_patchAssemblies);
             var runner = ModificationRunner.LoadFromAssembly<Program>(context);
 
             //Apply the modifications to the loaded binary

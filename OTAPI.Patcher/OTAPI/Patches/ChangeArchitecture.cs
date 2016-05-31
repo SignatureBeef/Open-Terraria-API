@@ -9,6 +9,11 @@ namespace OTAPI.Patcher.Modifications.Patches
     /// </summary>
     public class ChanegArchitecture : OTAPIModification<OTAPIContext>
     {
+        /// <summary>
+        /// Determines if current context is running in server mode.
+        /// This patch is only applicable to server assemblies.
+        /// </summary>
+        /// <returns>True if the server assemblies are detected, otherwise False.</returns>
         public override bool IsAvailable(OptionSet options) => this.IsServer();
 
         public override void Run(OptionSet options)
