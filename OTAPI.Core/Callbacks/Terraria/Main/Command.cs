@@ -10,7 +10,7 @@
         internal static bool startDedInput()
         {
             if (Hooks.Command.StartCommandThread != null)
-                return Hooks.Command.StartCommandThread.Invoke();
+                return Hooks.Command.StartCommandThread.Invoke() == HookResult.Continue;
             return true;
         }
     }

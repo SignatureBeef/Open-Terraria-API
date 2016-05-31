@@ -9,7 +9,7 @@ namespace OTAPI.Core
             /// <summary>
             /// Occurs when the server is to start listening for commands.
             /// </summary>
-            public static Func<Boolean> StartCommandThread;
+            public static Func<HookResult> StartCommandThread;
         }
     }
 }

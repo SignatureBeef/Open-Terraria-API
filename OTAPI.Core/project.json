@@ -6,7 +6,11 @@
   "projectUrl": "",
   "licenseUrl": "",
   "frameworks": {
-    "net451": { }
+    "net451": {
+      "dependencies": {
+        "TerrariaServer": "1.0.0-*"
+      }
+    }
   },
   "dependencies": {
     "OTAPI.Xna": "1.0.0-*"

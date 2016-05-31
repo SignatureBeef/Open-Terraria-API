@@ -29,6 +29,8 @@ namespace OTAPI.Patcher.Modifications.Helpers
 
             public TypeDefinition Entity => _organiser.MainModue.Type("Terraria.Entity");
 
+            public TypeDefinition Item => _organiser.MainModue.Type("Terraria.Item");
+
             public TypeDefinition Main => _organiser.MainModue.Type("Terraria.Main");
 
             public TypeDefinition Program => _organiser.MainModue.Type("Terraria.Program");
