@@ -30,6 +30,8 @@ namespace OTAPI.Patcher.Modifications.Helpers
             public TypeDefinition Item => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Item");
 
             public TypeDefinition Main => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Main");
+            
+            public TypeDefinition Npc => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Npc");
 
             public TypeDefinition TerrariaEntity => _organiser.MainModue.Type("OTAPI.Core.TerrariaEntity");
         }

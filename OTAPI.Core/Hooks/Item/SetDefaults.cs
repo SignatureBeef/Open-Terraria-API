@@ -13,7 +13,7 @@ namespace OTAPI.Core
             /// </summary>
             public static Func<global::Terraria.Item, String, HookResult> PreSetDefaultsByName;
 
-            public static Action PostSetDefaultsByName;
+            public static Action<global::Terraria.Item, String> PostSetDefaultsByName;
 
             /// <summary>
             /// Occurs when SetDefaults is being executed
@@ -23,7 +23,7 @@ namespace OTAPI.Core
             /// </summary>
             public static Func<global::Terraria.Item, Int32, Boolean, HookResult> PreSetDefaultsById;
 
-            public static Action PostSetDefaultsById;
+            public static Action<global::Terraria.Item, Int32, Boolean> PostSetDefaultsById;
         }
     }
 }

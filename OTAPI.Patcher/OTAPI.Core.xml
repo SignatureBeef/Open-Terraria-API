@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OTAPI.Core</name>
+    </assembly>
+    <members>
+        <member name="T:OTAPI.Core.IEntity">
+            <summary>
+            IEntity is designed to be the base of all entities in the application.
+            Said examples of these entities may be:
+                Command line sender
+                TerrariaEntity (which is Projectiles, Players, Npcs etc) 
+                External assembly's implementation
+            defined in an external assembly.
+            </summary>
+        </member>
+        <member name="T:OTAPI.Core.TerrariaEntity">
+            <summary>
+            TerrariaEntity is intended to be the inclusive base of all vanilla terraria entities, so will be used instead of the
+            patcher injecting IEntity.
+            </summary>
+            <remarks>
+            Developers: We must ensure we don't introduce new requirements that conflict with:
+                Terraria.Player
+                Terraria.NPC
+                Terraria.Projectile
+            </remarks>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.startDedInput">
+            <summary>
+            This method is injected into the start of the startDedInput method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.InitializeBegin">
+            <summary>
+            This method is injected to the beginning of the terraria Initialize method.
+            </summary>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.InitializeEnd">
+            <summary>
+            This method is injected into the end of the terraria Initialize method.
+            </summary>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.UpdateBegin(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            This method is injected to the beginning of the terraria Update method.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.UpdateEnd(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            This method is injected into the end of the terraria Update method.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:OTAPI.Core.Debug.Assert.Expression(System.Linq.Expressions.Expression{System.Func{System.Boolean}})">
+            <summary>
+            Asserts the specified LINQ expression for a true condition and throws an assertion 
+            failure exception indicating the compiled expression which failed, if the result of 
+            the expression is true.
+            </summary>
+            <param name="assertionExpr">A LINQ-style expression which to evaluate</param>
+            <example>
+            Use a LINQ-style expression to evaluate an assertion expression.
+            
+            Assert.Expression(() => objectRef.Property == null);
+            </example>
+            <remarks>
+            This code will only run in debug mode.  Calls to this method are ignored when
+            the DEBUG symbol is not defined.
+            </remarks>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Command.StartCommandThread">
+            <summary>
+            Occurs when the server is to start listening for commands.
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Game.PreInitialize">
+            <summary>
+            Occurs at the first point of call when the Initialze method is ran.
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Game.PostInitialize">
+            <summary>
+            Occurs at the end of the games initialize method.
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Game.PreUpdate">
+            <summary>
+            Occurs at the first point of call when the game is running the update loop.
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Game.PostUpdate">
+            <summary>
+            Occurs at the end of the games update loop.
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Item.PreNetDefaults">
+            <summary>
+            Occurs when NetDefaults is being executed
+            Arg 1:  The item instance
+                2:  type
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Item.PreSetDefaultsByName">
+            <summary>
+            Occurs when SetDefaults is being executed
+            Arg 1:  The item instance
+                2:  Item name
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Item.PreSetDefaultsById">
+            <summary>
+            Occurs when SetDefaults is being executed
+            Arg 1:  The item instance
+                2:  Type
+                3:  noMatCheck flag
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Npc.PreNetDefaults">
+            <summary>
+            Occurs when NetDefaults is being executed
+            Arg 1:  The npc instance
+                2:  type
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Npc.PreSetDefaultsByName">
+            <summary>
+            Occurs when SetDefaults is being executed
+            Arg 1:  The npc instance
+                2:  Item name
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Npc.PreSetDefaultsById">
+            <summary>
+            Occurs when SetDefaults is being executed
+            Arg 1:  The npc instance
+                2:  Type
+                3:  noMatCheck flag
+            </summary>
+        </member>
+    </members>
+</doc>

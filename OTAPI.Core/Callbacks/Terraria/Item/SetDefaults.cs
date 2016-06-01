@@ -12,7 +12,7 @@
         internal static void SetDefaultsByNameEnd(global::Terraria.Item item, string itemName)
         {
             if (Hooks.Item.PostSetDefaultsByName != null)
-                Hooks.Item.PostSetDefaultsByName();
+                Hooks.Item.PostSetDefaultsByName(item, itemName);
         }
 
         internal static bool SetDefaultsByIdBegin(global::Terraria.Item item, int type, bool noMatCheck)
@@ -25,7 +25,7 @@
         internal static void SetDefaultsByIdEnd(global::Terraria.Item item, int type, bool noMatCheck)
         {
             if (Hooks.Item.PostSetDefaultsById != null)
-                Hooks.Item.PostSetDefaultsById();
+                Hooks.Item.PostSetDefaultsById(item, type, noMatCheck);
         }
     }
 }
