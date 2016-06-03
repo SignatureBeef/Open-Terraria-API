@@ -5,7 +5,7 @@
         public static partial class Net
         {
             #region Handlers
-            public delegate HookHandler ReceiveDataHandler
+            public delegate HookResult ReceiveDataHandler
             (
                 global::Terraria.MessageBuffer buffer,
                 ref byte packetId,
@@ -26,7 +26,6 @@
             //      6: messageType
             /// </summary>
             public static ReceiveDataHandler ReceiveData;
-
         }
     }
 }

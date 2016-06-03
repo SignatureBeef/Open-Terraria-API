@@ -13,7 +13,10 @@
         )
         {
             if (Hooks.Net.ReceiveData != null)
-                Hooks.Net.ReceiveData(buffer, ref packetId, ref readOffset, ref start, ref length, ref messageType);
+            {
+                if (Hooks.Net.ReceiveData(buffer, ref packetId, ref readOffset, ref start, ref length, ref messageType) == HookResult.Cancel)
+                    return 0;
+            }
             return (int)packetId;
         }
     }

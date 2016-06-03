@@ -38,7 +38,6 @@
             //      12: number7
             /// </summary>
             public static SendDataHandler SendData;
-
         }
     }
 }
