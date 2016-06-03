@@ -100,6 +100,20 @@ namespace OTAPI.Core.Tests
                 Console.WriteLine($"Sending {msgType} to {bufferIndex}");
                 return HookResult.Continue;
             };
+            Hooks.Net.ReceiveData =
+            (
+                global::Terraria.MessageBuffer buffer,
+                ref byte packetId,
+                ref int readOffset,
+                ref int start,
+                ref int length,
+                ref int messageType
+            ) =>
+            {
+                Console.WriteLine($"Receiving {packetId} from {buffer.whoAmI}");
+
+                return null;
+            };
         }
     }
 }

@@ -31,6 +31,8 @@ namespace OTAPI.Patcher.Modifications.Helpers
 
             public TypeDefinition Main => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Main");
             
+            public TypeDefinition MessageBuffer => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.MessageBuffer");
+
             public TypeDefinition NetMessage => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.NetMessage");
 
             public TypeDefinition Npc => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Npc");

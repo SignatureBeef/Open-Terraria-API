@@ -32,7 +32,9 @@ namespace OTAPI.Patcher.Modifications.Helpers
             public TypeDefinition Item => _organiser.MainModue.Type("Terraria.Item");
 
             public TypeDefinition Main => _organiser.MainModue.Type("Terraria.Main");
-            
+
+            public TypeDefinition MessageBuffer => _organiser.MainModue.Type("Terraria.MessageBuffer");
+
             public TypeDefinition NetMessage => _organiser.MainModue.Type("Terraria.NetMessage");
 
             public TypeDefinition Npc => _organiser.MainModue.Type("Terraria.NPC");
