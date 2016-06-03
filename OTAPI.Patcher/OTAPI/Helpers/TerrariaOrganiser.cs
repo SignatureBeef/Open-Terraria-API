@@ -16,7 +16,7 @@ namespace OTAPI.Patcher.Modifications.Helpers
             this.Types = new OrganiserTypes(this);
         }
 
-        public AssemblyDefinition Assembly => Context.Assemblies.OTAPI;
+        public AssemblyDefinition Assembly => Context.Assemblies.Terraria;
 
         public ModuleDefinition MainModue => Assembly.MainModule;
 

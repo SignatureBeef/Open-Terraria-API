@@ -1,6 +1,5 @@
 ﻿using NDesk.Options;
 using OTAPI.Patcher.Extensions;
-using OTAPI.Patcher.Modification;
 using OTAPI.Patcher.Modifications.Helpers;
 using System;
 
@@ -15,7 +14,7 @@ namespace OTAPI.Patcher.Modifications.Patches
         {
             Console.Write("Making all types public...");
 
-            foreach(var type in Context.OTAPI.MainModue.Types)
+            foreach(var type in Context.Terraria.MainModue.Types)
                 type.MakePublic(false);
 
             Console.WriteLine("Done.");

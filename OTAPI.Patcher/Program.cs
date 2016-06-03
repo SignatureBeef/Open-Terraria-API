@@ -24,8 +24,9 @@ namespace OTAPI.Patcher
 
         private static OptionSet _startupOptions;
 
-        private static String OutputFileName;
-        private static String OutputAssemblyName;
+        //private static String OutputFileName;
+        //private static String OutputAssemblyName;
+        private static String OutputFileNameSuffix;
         private static String MergeOutputFileName;
 
         public static void Main(string[] args)
@@ -38,6 +39,12 @@ namespace OTAPI.Patcher
 
             // Parse command line arguments.
             ParseArguments(args);
+
+            //Ensure that the binaries specified exist before anything occurs to them.
+            VerifyAssemblies(_patchAssemblies.Values);
+
+            //Run modification files through processor
+            Run();
 
             //Merge the binaries together
             if (!String.IsNullOrWhiteSpace(MergeOutputFileName))
@@ -61,12 +68,6 @@ namespace OTAPI.Patcher
                 repacker.Repack();
             }
 
-            //Ensure that the binaries specified exist before anything occurs to them.
-            VerifyAssemblies(_patchAssemblies.Values);
-
-            //Run modification files through processor
-            Run();
-
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
@@ -83,7 +84,7 @@ namespace OTAPI.Patcher
             //Apply the modifications to the loaded binary
             runner.Run(_startupOptions);
 
-            runner.SaveAs(OutputFileName, OutputAssemblyName);
+            runner.SaveAs(OutputFileNameSuffix);
         }
 
         /// <summary>
@@ -118,8 +119,9 @@ namespace OTAPI.Patcher
                 .Add("patch={:}", (k, v) => _patchAssemblies.Add(k, v))
                 .Add("merge=|m=", (asm) => _mergeAsseblies.Add(asm))
                 .Add("merge-output=|mo=", merge => MergeOutputFileName = merge)
-                .Add("out=|o=|output-file=", output => OutputFileName = output)
-                .Add("output-name=", name => OutputAssemblyName = name)
+                //.Add("out=|o=|output-file=", output => OutputFileName = output)
+                .Add("out=|o=|output-suffix=", output => OutputFileNameSuffix = output)
+                //.Add("output-name=", name => OutputAssemblyName = name)
                 .Add("?|h|help", h => DisplayHelp());
             _startupOptions.Parse(args);
         }

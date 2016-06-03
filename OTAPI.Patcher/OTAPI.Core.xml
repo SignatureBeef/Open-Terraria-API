@@ -26,12 +26,48 @@
                 Terraria.Projectile
             </remarks>
         </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Item.NetDefaultsBegin(Terraria.Item,System.Int32@)">
+            <summary>
+            This method is injected into the start of the NetDefaults method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Item.NetDefaultsEnd(Terraria.Item,System.Int32@)">
+            <summary>
+            This method is injected into the end of the NetDefaults method.
+            </summary>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Item.SetDefaultsByNameBegin(Terraria.Item,System.String@)">
+            <summary>
+            This method is injected into the start of the SetDefaults(string) method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Item.SetDefaultsByNameEnd(Terraria.Item,System.String@)">
+            <summary>
+            This method is injected into the end of the SetDefaults(string) method.
+            </summary>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Item.SetDefaultsByIdBegin(Terraria.Item,System.Int32@,System.Boolean@)">
+            <summary>
+            This method is injected into the start of the SetDefaults(int,bool) method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Item.SetDefaultsByIdEnd(Terraria.Item,System.Int32@,System.Boolean@)">
+            <summary>
+            This method is injected into the end of the SetDefaults(int,bool) method.
+            </summary>
+        </member>
         <member name="M:OTAPI.Core.Callbacks.Terraria.Main.startDedInput">
             <summary>
             This method is injected into the start of the startDedInput method.
             The return value will dictate if normal vanilla code should continue to run.
             </summary>
-            <returns>True to continue on to vanilla, otherwise false</returns>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
         </member>
         <member name="M:OTAPI.Core.Callbacks.Terraria.Main.InitializeBegin">
             <summary>
@@ -43,17 +79,53 @@
             This method is injected into the end of the terraria Initialize method.
             </summary>
         </member>
-        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.UpdateBegin(Microsoft.Xna.Framework.GameTime)">
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.UpdateBegin(Microsoft.Xna.Framework.GameTime@)">
             <summary>
             This method is injected to the beginning of the terraria Update method.
             </summary>
             <param name="gameTime"></param>
         </member>
-        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.UpdateEnd(Microsoft.Xna.Framework.GameTime)">
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.UpdateEnd(Microsoft.Xna.Framework.GameTime@)">
             <summary>
             This method is injected into the end of the terraria Update method.
             </summary>
             <param name="gameTime"></param>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Npc.NetDefaultsBegin(Terraria.NPC,System.Int32@)">
+            <summary>
+            This method is injected into the start of the NetDefaults method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Npc.NetDefaultsEnd(Terraria.NPC,System.Int32@)">
+            <summary>
+            This method is injected into the end of the NetDefaults method.
+            </summary>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Npc.SetDefaultsByNameBegin(Terraria.NPC,System.String@)">
+            <summary>
+            This method is injected into the start of the SetDefaults(string) method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Npc.SetDefaultsByNameEnd(Terraria.NPC,System.String@)">
+            <summary>
+            This method is injected into the end of the SetDefaults(string) method.
+            </summary>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Npc.SetDefaultsByIdBegin(Terraria.NPC,System.Int32@,System.Single@)">
+            <summary>
+            This method is injected into the start of the SetDefaults(int,float) method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Npc.SetDefaultsByIdEnd(Terraria.NPC,System.Int32@,System.Single@)">
+            <summary>
+            This method is injected into the end of the SetDefaults(int,float) method.
+            </summary>
         </member>
         <member name="M:OTAPI.Core.Debug.Assert.Expression(System.Linq.Expressions.Expression{System.Func{System.Boolean}})">
             <summary>
@@ -71,6 +143,21 @@
             This code will only run in debug mode.  Calls to this method are ignored when
             the DEBUG symbol is not defined.
             </remarks>
+        </member>
+        <member name="T:OTAPI.Core.HookResult">
+            <summary>
+            Defines a result from a hook to be actioned by OTAPI
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.HookResult.Continue">
+            <summary>
+            Typically used to continue on to vanilla code
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.HookResult.Cancel">
+            <summary>
+            Typically used to stop executing vanilla code
+            </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.Command.StartCommandThread">
             <summary>
@@ -99,21 +186,43 @@
         </member>
         <member name="F:OTAPI.Core.Hooks.Item.PreNetDefaults">
             <summary>
-            Occurs when NetDefaults is being executed
+            Occurs at the start of the NetDefaults(int) method.
             Arg 1:  The item instance
-                2:  type
+                2:  Type
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Item.PostNetDefaults">
+            <summary>
+            Occurs when the NetDefaults(int) method ends
+            Arg 1:  The item instance
+                2:  Type
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.Item.PreSetDefaultsByName">
             <summary>
-            Occurs when SetDefaults is being executed
+            Occurs at the start of the SetDefaults(string) method.
+            Arg 1:  The item instance
+                2:  Item name
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Item.PostSetDefaultsByName">
+            <summary>
+            Occurs when the SetDefaults(string) method ends
             Arg 1:  The item instance
                 2:  Item name
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.Item.PreSetDefaultsById">
             <summary>
-            Occurs when SetDefaults is being executed
+            Occurs at the start of the SetDefaults(int,bool) method
+            Arg 1:  The item instance
+                2:  Type
+                3:  noMatCheck flag
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Item.PostSetDefaultsById">
+            <summary>
+            Occurs when the SetDefaults(int,bool) method ends
             Arg 1:  The item instance
                 2:  Type
                 3:  noMatCheck flag
@@ -121,24 +230,45 @@
         </member>
         <member name="F:OTAPI.Core.Hooks.Npc.PreNetDefaults">
             <summary>
-            Occurs when NetDefaults is being executed
+            Occurs at the start of the NetDefaults(int) method.
             Arg 1:  The npc instance
-                2:  type
+                2:  Type
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Npc.PostNetDefaults">
+            <summary>
+            Occurs when the NetDefaults(int) method ends
+            Arg 1:  The npc instance
+                2:  Type
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.Npc.PreSetDefaultsByName">
             <summary>
-            Occurs when SetDefaults is being executed
+            Occurs at the start of the SetDefaults(string) method.
             Arg 1:  The npc instance
-                2:  Item name
+                2:  Npc name
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Npc.PostSetDefaultsByName">
+            <summary>
+            Occurs when the SetDefaults(string) method ends
+            Arg 1:  The npc instance
+                2:  Npc name
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.Npc.PreSetDefaultsById">
             <summary>
-            Occurs when SetDefaults is being executed
+            Occurs at the start of the SetDefaults(int,float) method.
             Arg 1:  The npc instance
                 2:  Type
                 3:  noMatCheck flag
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Npc.PostSetDefaultsById">
+            <summary>
+            Occurs when the SetDefaults(int,float) method ends
+            Arg 1:  The npc instance
+                2:  Npc name
             </summary>
         </member>
     </members>

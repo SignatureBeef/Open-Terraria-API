@@ -19,16 +19,16 @@ namespace OTAPI.Patcher.Modifications.Patches
 
             //Context.OTAPI.MainModue.Resources.Clear();
 
-            var xnaFramework = Context.OTAPI.MainModue.AssemblyReferences
+            var xnaFramework = Context.Terraria.MainModue.AssemblyReferences
                 .Where(x => x.Name.StartsWith("Microsoft.Xna.Framework"))
                 .ToArray();
 
             for (var x = 0; x < xnaFramework.Length; x++)
             {
-                xnaFramework[x].Name = "OTAPI"; //TODO: Fix me, ILRepack is adding .dll to the asm name      Context.OTAPI.Assembly.Name.Name;
-                xnaFramework[x].PublicKey = Context.OTAPI.Assembly.Name.PublicKey;
-                xnaFramework[x].PublicKeyToken = Context.OTAPI.Assembly.Name.PublicKeyToken;
-                xnaFramework[x].Version = Context.OTAPI.Assembly.Name.Version;
+                xnaFramework[x].Name = "OTAPI.Xna"; //TODO: Fix me, ILRepack is adding .dll to the asm name      Context.OTAPI.Assembly.Name.Name;
+                xnaFramework[x].PublicKey = Context.Assemblies.Xna.Name.PublicKey;
+                xnaFramework[x].PublicKeyToken = Context.Assemblies.Xna.Name.PublicKeyToken;
+                xnaFramework[x].Version = Context.Assemblies.Xna.Name.Version;
             }
 
             //To resolve the "OTAPI" from above until the .dll can be corrected.
@@ -39,8 +39,8 @@ namespace OTAPI.Patcher.Modifications.Patches
 
         private void AssemblyResolver_AssemblyResolve(object sender, ModificationAssemblyResolver.AssemblyResolveEventArgs e)
         {
-            if (e.Reference.Name == "OTAPI")
-                e.AssemblyDefinition = this.Context.OTAPI.Assembly;
+            if (e.Reference.Name == "OTAPI.Xna")
+                e.AssemblyDefinition = this.Context.Assemblies.Xna;
         }
     }
 }

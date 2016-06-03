@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OTAPI.Core
+﻿namespace OTAPI.Core
 {
     public static partial class Hooks
     {
@@ -9,7 +7,7 @@ namespace OTAPI.Core
             /// <summary>
             /// Occurs when the server is to start listening for commands.
             /// </summary>
-            public static Func<HookResult> StartCommandThread;
+            public static HookResultHandler StartCommandThread;
         }
     }
 }

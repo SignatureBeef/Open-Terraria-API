@@ -1,19 +1,27 @@
-﻿using System;
-
-namespace OTAPI.Core
+﻿namespace OTAPI.Core
 {
     public static partial class Hooks
     {
         public static partial class Item
         {
-            /// <summary>
-            /// Occurs when NetDefaults is being executed
-            /// Arg 1:  The item instance
-            ///     2:  type
-            /// </summary>
-            public static Func<global::Terraria.Item, Int32, HookResult> PreNetDefaults;
+            #region Handlers
+            public delegate HookResult PreNetDefaultsHandler(global::Terraria.Item item, ref int type);
+            public delegate void PostNetDefaultsHandler(global::Terraria.Item item, ref int type);
+            #endregion
 
-            public static Action<global::Terraria.Item, Int32> PostNetDefaults;
+            /// <summary>
+            /// Occurs at the start of the NetDefaults(int) method.
+            /// Arg 1:  The item instance
+            ///     2:  Type
+            /// </summary>
+            public static PreNetDefaultsHandler PreNetDefaults;
+
+            /// <summary>
+            /// Occurs when the NetDefaults(int) method ends
+            /// Arg 1:  The item instance
+            ///     2:  Type
+            /// </summary>
+            public static PostNetDefaultsHandler PostNetDefaults;
         }
     }
 }

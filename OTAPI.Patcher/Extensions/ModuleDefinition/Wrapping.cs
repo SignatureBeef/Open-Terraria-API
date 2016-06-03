@@ -61,7 +61,7 @@ namespace OTAPI.Patcher.Extensions
         {
             return Instruction.Create(OpCodes.Ldarg, method.Parameters[index]);
         }
-        
+
         /// <summary>
         /// Wraps the method with the specified begin/end calls
         /// </summary>
@@ -169,7 +169,14 @@ namespace OTAPI.Patcher.Extensions
                 il.Emit(OpCodes.Ldarg_0);
             if (method.HasParameters)
                 for (var i = 0; i < method.Parameters.Count; i++)
-                    il.Emit(OpCodes.Ldarg, method.Parameters[i]);
+                {
+                    if (begin.Parameters[i + 1].ParameterType.IsByReference)
+                    {
+                        //new ParameterDefinition(method.Parameters[i].Name, method.Parameters[i].Attributes, new ByReferenceType(method.Parameters[i].ParameterType))
+                        il.Emit(OpCodes.Ldarga, method.Parameters[i]);
+                    }
+                    else il.Emit(OpCodes.Ldarg, method.Parameters[i]);
+                }
             il.Emit(OpCodes.Call, impBegin);
 
             //Create the cancel return if required.

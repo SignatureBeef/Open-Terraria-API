@@ -14,5 +14,18 @@
   },
   "dependencies": {
     "OTAPI.Xna": "1.0.0-*"
+  },
+  "configurations": {
+    "Debug": {
+      "compilationOptions": {
+        "define": [ "DEBUG", "TRACE" ]
+      }
+    },
+    "Release": {
+      "compilationOptions": {
+        "define": [ "RELEASE", "TRACE" ],
+        "optimize": true
+      }
+    }
   }
 }

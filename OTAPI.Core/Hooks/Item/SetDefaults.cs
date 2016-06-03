@@ -1,29 +1,46 @@
-﻿using System;
-
-namespace OTAPI.Core
+﻿namespace OTAPI.Core
 {
     public static partial class Hooks
     {
         public static partial class Item
         {
+            #region Handlers
+            public delegate HookResult PreSetDefaultsByNameHandler(global::Terraria.Item item, ref string name);
+            public delegate void PostSetDefaultsByNameHandler(global::Terraria.Item item, ref string name);
+
+            public delegate HookResult PreSetDefaultsByIdHandler(global::Terraria.Item item, ref int type, ref bool noMatCheck);
+            public delegate void PostSetDefaultsByIdHandler(global::Terraria.Item item, ref int type, ref bool noMatCheck);
+            #endregion
+
             /// <summary>
-            /// Occurs when SetDefaults is being executed
+            /// Occurs at the start of the SetDefaults(string) method.
             /// Arg 1:  The item instance
             ///     2:  Item name
             /// </summary>
-            public static Func<global::Terraria.Item, String, HookResult> PreSetDefaultsByName;
-
-            public static Action<global::Terraria.Item, String> PostSetDefaultsByName;
+            public static PreSetDefaultsByNameHandler PreSetDefaultsByName;
 
             /// <summary>
-            /// Occurs when SetDefaults is being executed
+            /// Occurs when the SetDefaults(string) method ends
+            /// Arg 1:  The item instance
+            ///     2:  Item name
+            /// </summary>
+            public static PostSetDefaultsByNameHandler PostSetDefaultsByName;
+
+            /// <summary>
+            /// Occurs at the start of the SetDefaults(int,bool) method
             /// Arg 1:  The item instance
             ///     2:  Type
             ///     3:  noMatCheck flag
             /// </summary>
-            public static Func<global::Terraria.Item, Int32, Boolean, HookResult> PreSetDefaultsById;
+            public static PreSetDefaultsByIdHandler PreSetDefaultsById;
 
-            public static Action<global::Terraria.Item, Int32, Boolean> PostSetDefaultsById;
+            /// <summary>
+            /// Occurs when the SetDefaults(int,bool) method ends
+            /// Arg 1:  The item instance
+            ///     2:  Type
+            ///     3:  noMatCheck flag
+            /// </summary>
+            public static PostSetDefaultsByIdHandler PostSetDefaultsById;
         }
     }
 }

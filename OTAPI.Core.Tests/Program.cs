@@ -69,7 +69,18 @@ namespace OTAPI.Core.Tests
                 }
             }
 
+            Listen();
+
             Terraria.WindowsLaunch.Main(args);
+        }
+
+        static void Listen()
+        {
+            Hooks.Command.StartCommandThread = () =>
+            {
+                Console.WriteLine("[Hook] Command thread.");
+                return HookResult.Continue;
+            };
         }
     }
 }

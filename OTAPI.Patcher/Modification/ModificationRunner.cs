@@ -59,14 +59,14 @@ namespace OTAPI.Patcher.Modification
             }
         }
 
-        public void SaveAs(string filename, string assemblyName)
+        public void SaveAs(string suffix)
         {
             var expando = (IDictionary<string, object>)Context.Assemblies;
             foreach (var item in expando.Keys)
             {
                 var asm = expando[item] as AssemblyDefinition;
-                asm.Name.Name = assemblyName;
-                asm.Write(filename);
+                //asm.Name.Name = assemblyName );
+                asm.Write(item + (suffix ?? ""));
             }
         }
 
