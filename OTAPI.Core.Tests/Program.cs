@@ -81,6 +81,25 @@ namespace OTAPI.Core.Tests
                 Console.WriteLine("[Hook] Command thread.");
                 return HookResult.Continue;
             };
+            Hooks.Net.SendData =
+            (
+                ref int bufferIndex,
+                ref int msgType,
+                ref int remoteClient,
+                ref int ignoreClient,
+                ref string text,
+                ref int number,
+                ref float number2,
+                ref float number3,
+                ref float number4,
+                ref int number5,
+                ref int number6,
+                ref int number7
+            ) =>
+            {
+                Console.WriteLine($"Sending {msgType} to {bufferIndex}");
+                return HookResult.Continue;
+            };
         }
     }
 }

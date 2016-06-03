@@ -21,3 +21,13 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("0822b1ac-42f2-4fcf-b0ab-f5e59a30548f")]
+
+
+/*
+ * These are here as OTAPI's callbacks (from vanilla to otapi) are internals.
+ * This is not an issue when you run the merged OTAPI.dll, but when you wish to debug something 
+ * you need to run the OTAPI.Core.dll,OTAPI.Xna.dll & TerrariaServer.exe beside each other.
+ * This is where the problem lies, so we must allow the terraria assemblies.
+ */
+[assembly: InternalsVisibleTo("Terraria")]
+[assembly: InternalsVisibleTo("TerrariaServer")]

@@ -37,8 +37,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OTAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\artifacts\patcher\OTAPI.dll</HintPath>
+      <HintPath>..\packages\OTAPI.dll.0.2.0\lib\net451\OTAPI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

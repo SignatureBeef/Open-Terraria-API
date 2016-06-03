@@ -170,7 +170,8 @@ namespace OTAPI.Patcher.Extensions
             if (method.HasParameters)
                 for (var i = 0; i < method.Parameters.Count; i++)
                 {
-                    if (begin.Parameters[i + 1].ParameterType.IsByReference)
+                    var offset = instanceMethod ? 1 : 0;
+                    if (begin.Parameters[i + offset].ParameterType.IsByReference)
                     {
                         //new ParameterDefinition(method.Parameters[i].Name, method.Parameters[i].Attributes, new ByReferenceType(method.Parameters[i].ParameterType))
                         il.Emit(OpCodes.Ldarga, method.Parameters[i]);
@@ -210,6 +211,122 @@ namespace OTAPI.Patcher.Extensions
             }
 
             return targetInstruction;
+        }
+
+        public static Instruction InjectCallback(this MethodDefinition method, MethodReference callback, bool instanceMethod, bool isCancellable = false, Instruction target = null)
+        {
+            Instruction firstInstruction = null;
+            Instruction ins = null;
+
+            //Import the callbacks to the calling methods assembly
+            var impBegin = method.Module.Import(callback);
+
+            //If we don't have a target instruction already then we will default to the start of the method
+            if (target == null)
+                target = method.Body.Instructions.First();
+
+            //            var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
+
+            //Now, create the IL body
+            var il = method.Body.GetILProcessor();
+
+            //Execute the begin hook
+            if (instanceMethod)
+            {
+                ins = il.Create(OpCodes.Ldarg_0);
+                if (firstInstruction == null)
+                    firstInstruction = ins;
+                il.InsertBefore(target, ins);
+            }
+            if (method.HasParameters)
+                for (var i = 0; i < method.Parameters.Count; i++)
+                {
+                    ins = null;
+                    var offset = instanceMethod ? 1 : 0;
+                    if (callback.Parameters[i + offset].ParameterType.IsByReference)
+                    {
+                        il.InsertBefore(target, ins = il.Create(OpCodes.Ldarga, method.Parameters[i]));
+                    }
+                    else il.InsertBefore(target, ins = il.Create(OpCodes.Ldarg, method.Parameters[i]));
+
+                    if (firstInstruction == null)
+                        firstInstruction = ins;
+                }
+
+
+            il.InsertBefore(target, ins = il.Create(OpCodes.Call, impBegin));
+            if (firstInstruction == null)
+                firstInstruction = ins;
+
+            //Create the cancel return if required.
+
+            if (isCancellable)
+            {
+                firstInstruction = il.Create(OpCodes.Nop);
+                il.InsertBefore(target, ins = firstInstruction);
+                if (firstInstruction == null)
+                    firstInstruction = ins;
+
+                //Emit the cancel handling
+                if (method.ReturnType.Name == "Void")
+                {
+                    il.InsertBefore(target, ins = il.Create(OpCodes.Ret));
+                    if (firstInstruction == null)
+                        firstInstruction = ins;
+                }
+                else
+                {
+                    //Return a default value
+                    VariableDefinition vr1;
+                    method.Body.Variables.Add(vr1 = new VariableDefinition(method.ReturnType));
+
+                    //Initialise the variable
+                    il.InsertBefore(target, ins = il.Create(OpCodes.Ldloca_S, vr1));
+                    if (firstInstruction == null)
+                        firstInstruction = ins;
+                    il.InsertBefore(target, il.Create(OpCodes.Initobj, method.ReturnType));
+                    il.InsertBefore(target, il.Create(OpCodes.Ldloc, vr1));
+
+                    il.InsertBefore(target, il.Create(OpCodes.Ret));
+                }
+            }
+            else if (impBegin.ReturnType.Name != "Void")
+            {
+                firstInstruction = il.Create(OpCodes.Pop);
+                il.InsertBefore(target, ins = firstInstruction);
+                if (firstInstruction == null)
+                    firstInstruction = ins;
+            }
+
+            target.ReplaceTransfer(firstInstruction, method);
+
+            return firstInstruction;
+        }
+
+        public static void ReplaceTransfer(this Instruction current, Instruction newTarget, MethodDefinition method)
+        {
+            //If a method has a body then check the instruction targets & exceptions
+            if (method.HasBody)
+            {
+                foreach (var ins in method.Body.Instructions.Where(x => x.Operand == current))
+                    ins.Operand = newTarget;
+
+                if (method.Body.HasExceptionHandlers)
+                {
+                    foreach (var handler in method.Body.ExceptionHandlers)
+                    {
+                        if (handler.FilterStart == current) handler.FilterStart = newTarget;
+                        if (handler.HandlerEnd == current) handler.HandlerEnd = newTarget;
+                        if (handler.HandlerStart == current) handler.HandlerStart = newTarget;
+                        if (handler.TryEnd == current) handler.TryEnd = newTarget;
+                        if (handler.TryStart == current) handler.TryStart = newTarget;
+                    }
+                }
+
+                newTarget.Offset = current.Offset;
+                newTarget.SequencePoint = current.SequencePoint;
+                newTarget.Offset++;
+            }
         }
 
         public static void InjectEndCallback(this MethodDefinition method, MethodReference end, bool instanceMethod)
