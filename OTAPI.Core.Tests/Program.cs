@@ -123,6 +123,17 @@ namespace OTAPI.Core.Tests
                 Console.WriteLine(nameof(Hooks.Net.PostGreetPlayer) + " " + playerId);
                 return null;
             };
+            Hooks.Net.SendBytes = (
+                ref int remoteClient,
+                ref byte[] data,
+                ref int offset,
+                ref int size,
+                ref global::Terraria.Net.Sockets.SocketSendCallback callback,
+                ref object state) =>
+            {
+                Console.WriteLine($"Sending {size} bytes of data to {remoteClient}");
+                return HookResult.Continue;
+            };
         }
     }
 }
