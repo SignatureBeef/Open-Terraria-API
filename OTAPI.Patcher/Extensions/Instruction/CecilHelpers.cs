@@ -16,6 +16,17 @@ namespace OTAPI.Patcher.Extensions
             return null;
         }
 
+        public static Instruction FindNextInstruction(this Instruction initial, Func<Instruction, Boolean> predicate)
+        {
+            while (initial.Next != null)
+            {
+                if (predicate(initial)) return initial;
+                initial = initial.Next;
+            }
+
+            return null;
+        }
+
         public static Instruction Previous(this Instruction initial, int count)
         {
             while (count > 0)

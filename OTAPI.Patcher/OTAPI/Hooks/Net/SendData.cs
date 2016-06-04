@@ -1,13 +1,7 @@
-﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
-using Mono.Cecil.Rocks;
-using NDesk.Options;
+﻿using NDesk.Options;
 using OTAPI.Patcher.Extensions;
 using OTAPI.Patcher.Modifications.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OTAPI.Patcher.Modifications.Hooks.Net
 {
@@ -29,4 +23,3 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net
         }
     }
 }
-//InjectCallback

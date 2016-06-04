@@ -81,38 +81,38 @@ namespace OTAPI.Core.Tests
                 Console.WriteLine("[Hook] Command thread.");
                 return HookResult.Continue;
             };
-            Hooks.Net.SendData =
-            (
-                ref int bufferIndex,
-                ref int msgType,
-                ref int remoteClient,
-                ref int ignoreClient,
-                ref string text,
-                ref int number,
-                ref float number2,
-                ref float number3,
-                ref float number4,
-                ref int number5,
-                ref int number6,
-                ref int number7
-            ) =>
-            {
-                //Console.WriteLine($"Sending {msgType} to {bufferIndex}");
-                return HookResult.Continue;
-            };
-            Hooks.Net.ReceiveData =
-            (
-                global::Terraria.MessageBuffer buffer,
-                ref byte packetId,
-                ref int readOffset,
-                ref int start,
-                ref int length,
-                ref int messageType
-            ) =>
-            {
-                //Console.WriteLine($"Receiving {packetId} from {buffer.whoAmI}");
-                return HookResult.Continue;
-            };
+            //Hooks.Net.SendData =
+            //(
+            //    ref int bufferIndex,
+            //    ref int msgType,
+            //    ref int remoteClient,
+            //    ref int ignoreClient,
+            //    ref string text,
+            //    ref int number,
+            //    ref float number2,
+            //    ref float number3,
+            //    ref float number4,
+            //    ref int number5,
+            //    ref int number6,
+            //    ref int number7
+            //) =>
+            //{
+            //    //Console.WriteLine($"Sending {msgType} to {bufferIndex}");
+            //    return HookResult.Continue;
+            //};
+            //Hooks.Net.ReceiveData =
+            //(
+            //    global::Terraria.MessageBuffer buffer,
+            //    ref byte packetId,
+            //    ref int readOffset,
+            //    ref int start,
+            //    ref int length,
+            //    ref int messageType
+            //) =>
+            //{
+            //    //Console.WriteLine($"Receiving {packetId} from {buffer.whoAmI}");
+            //    return HookResult.Continue;
+            //};
             Hooks.Net.PreGreetPlayer = (ref int playerId) =>
             {
                 Console.WriteLine(nameof(Hooks.Net.PreGreetPlayer) + " " + playerId);
@@ -123,15 +123,20 @@ namespace OTAPI.Core.Tests
                 Console.WriteLine(nameof(Hooks.Net.PostGreetPlayer) + " " + playerId);
                 return null;
             };
-            Hooks.Net.SendBytes = (
-                ref int remoteClient,
-                ref byte[] data,
-                ref int offset,
-                ref int size,
-                ref global::Terraria.Net.Sockets.SocketSendCallback callback,
-                ref object state) =>
+            //Hooks.Net.SendBytes = (
+            //    ref int remoteClient,
+            //    ref byte[] data,
+            //    ref int offset,
+            //    ref int size,
+            //    ref global::Terraria.Net.Sockets.SocketSendCallback callback,
+            //    ref object state) =>
+            //{
+            //    Console.WriteLine($"Sending {size} bytes of data to {remoteClient}");
+            //    return HookResult.Continue;
+            //};
+            Hooks.Net.NameCollision = (player) =>
             {
-                Console.WriteLine($"Sending {size} bytes of data to {remoteClient}");
+                Console.WriteLine($"Booting {player.name} as their name conflicts with an existing player.");
                 return HookResult.Continue;
             };
         }
