@@ -97,7 +97,7 @@ namespace OTAPI.Core.Tests
                 ref int number7
             ) =>
             {
-                Console.WriteLine($"Sending {msgType} to {bufferIndex}");
+                //Console.WriteLine($"Sending {msgType} to {bufferIndex}");
                 return HookResult.Continue;
             };
             Hooks.Net.ReceiveData =
@@ -110,8 +110,17 @@ namespace OTAPI.Core.Tests
                 ref int messageType
             ) =>
             {
-                Console.WriteLine($"Receiving {packetId} from {buffer.whoAmI}");
-
+                //Console.WriteLine($"Receiving {packetId} from {buffer.whoAmI}");
+                return HookResult.Continue;
+            };
+            Hooks.Net.PreGreetPlayer = (ref int playerId) =>
+            {
+                Console.WriteLine(nameof(Hooks.Net.PreGreetPlayer) + " " + playerId);
+                return HookResult.Continue;
+            };
+            Hooks.Net.PostGreetPlayer = (int playerId) =>
+            {
+                Console.WriteLine(nameof(Hooks.Net.PostGreetPlayer) + " " + playerId);
                 return null;
             };
         }
