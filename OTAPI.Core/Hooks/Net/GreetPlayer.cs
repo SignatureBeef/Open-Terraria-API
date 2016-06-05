@@ -6,7 +6,7 @@
         {
             #region Handlers
             public delegate HookResult PreGreetPlayerHandler(ref int playerId);
-            public delegate HookHandler PostGreetPlayerHandler(int playerId);
+            public delegate void PostGreetPlayerHandler(int playerId);
             #endregion
 
             /// <summary>

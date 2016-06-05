@@ -500,7 +500,7 @@ namespace OTAPI.Patcher.Extensions
             else throw new NotSupportedException("Non Void methods not yet supported");
         }
 
-        public static void InjectNonVoidBegin(this MethodDefinition target, MethodDefinition callback)
+        public static void InjectNonVoidCallback(this MethodDefinition target, MethodDefinition callback)
         {
             if (callback.ReturnType.Name == "Void") throw new InvalidOperationException("Invalid return type for callback");
 

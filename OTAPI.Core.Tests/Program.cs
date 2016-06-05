@@ -121,7 +121,6 @@ namespace OTAPI.Core.Tests
             Hooks.Net.PostGreetPlayer = (int playerId) =>
             {
                 Console.WriteLine(nameof(Hooks.Net.PostGreetPlayer) + " " + playerId);
-                return null;
             };
             //Hooks.Net.SendBytes = (
             //    ref int remoteClient,
@@ -167,6 +166,36 @@ namespace OTAPI.Core.Tests
             {
                 Console.WriteLine($"Creating npc for {index} at {x},{y}");
                 return null;
+            };
+            Hooks.Npc.PreDropLoot = (
+                ref int itemId,
+                int x,
+                int y,
+                int width,
+                int height,
+                int type,
+                int stack,
+                bool noBroadcast,
+                int prefix,
+                bool noGrabDelay,
+                bool reverseLookup) =>
+            {
+                Console.WriteLine($"[Pre] Dropping loot {type} at {x},{y}");
+                return HookResult.Continue;
+            };
+            Hooks.Npc.PostDropLoot = (
+                int x,
+                int y,
+                int width,
+                int height,
+                int type,
+                int stack,
+                bool noBroadcast,
+                int prefix,
+                bool noGrabDelay,
+                bool reverseLookup) =>
+            {
+                Console.WriteLine($"[Post] Dropping loot {type} at {x},{y}");
             };
         }
     }
