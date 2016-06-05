@@ -39,10 +39,10 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net
                 call.Operand = vanilla.Module.Import(callback);
 
                 //Wind back to the first Netplay.Clients (there are two, we want the one before the Socket reference)
-                var clients = call.FindPreviousInstruction(x => x.OpCode == OpCodes.Ldfld
+                var clients = call.Previous(x => x.OpCode == OpCodes.Ldfld
                                                             && x.Operand is FieldReference
                                                             && (x.Operand as FieldReference).Name == "Socket")
-                                  .FindPreviousInstruction(x => x.OpCode == OpCodes.Ldsfld
+                                  .Previous(x => x.OpCode == OpCodes.Ldsfld
                                                             && x.Operand is FieldReference
                                                             && (x.Operand as FieldReference).Name == "Clients");
 

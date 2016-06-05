@@ -153,6 +153,21 @@ namespace OTAPI.Core.Tests
                 Console.WriteLine($"Hitting npc at {npc.whoAmI} with: {Damage},{knockBack},{hitDirection},{crit},{noEffect},{fromNet}");
                 return HookResult.Continue;
             };
+            Hooks.Npc.Create = (
+                ref int index,
+                ref int x,
+                ref int y,
+                ref int type,
+                ref int start,
+                ref float ai0,
+                ref float ai1,
+                ref float ai2,
+                ref float ai3,
+                ref int target) =>
+            {
+                Console.WriteLine($"Creating npc for {index} at {x},{y}");
+                return null;
+            };
         }
     }
 }

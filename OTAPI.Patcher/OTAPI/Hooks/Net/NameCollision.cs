@@ -26,10 +26,10 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net
             //first brfalse.s where we inject our callback.
 
             var flag = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldstr && x.Operand.Equals("Name is too long."))
-                                                .FindPreviousInstruction(y => y.OpCode == OpCodes.Brfalse_S);
+                                                .Previous(y => y.OpCode == OpCodes.Brfalse_S);
 
             //Our arguments requires the player reference (which is easier than grabbing a bunch of details the player object already has)
-            var player = flag.FindNextInstruction(x => x.OpCode == OpCodes.Ldloc_S);
+            var player = flag.Next(x => x.OpCode == OpCodes.Ldloc_S);
 
             var il = vanilla.Body.GetILProcessor();
 
