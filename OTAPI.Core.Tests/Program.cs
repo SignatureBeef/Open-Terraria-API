@@ -137,7 +137,7 @@ namespace OTAPI.Core.Tests
             Hooks.Net.NameCollision = (player) =>
             {
                 Console.WriteLine($"Booting {player.name} as their name conflicts with an existing player.");
-                return HookResult.Cancel;
+                return HookResult.Continue;
             };
             Hooks.Npc.Strike = (
                 global::Terraria.NPC npc,

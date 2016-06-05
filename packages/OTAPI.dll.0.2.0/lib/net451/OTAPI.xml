@@ -337,6 +337,12 @@
                 9:  from net
             </summary>
         </member>
+        <member name="F:OTAPI.Core.Hooks.Npc.Transform">
+            <summary>
+            Occurs when an npc transforms
+            Arg 1:  The npc instance=
+            </summary>
+        </member>
         <member name="T:Microsoft.Xna.Framework.Color">
             <summary>Represents a four-component color using red, green, blue, and alpha data.</summary>
         </member>
