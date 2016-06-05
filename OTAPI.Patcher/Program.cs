@@ -1,5 +1,4 @@
-﻿using Mono.Cecil;
-using NDesk.Options;
+﻿using NDesk.Options;
 using OTAPI.Patcher.Modification;
 using System;
 using System.Collections.Generic;
@@ -61,6 +60,7 @@ namespace OTAPI.Patcher
                     Parallel = true,
                     Version = new Version(1, 0, 0, 0),
                     CopyAttributes = true,
+                    XmlDocumentation = true,
 #if DEBUG
                     DebugInfo = true
 #endif

@@ -439,7 +439,7 @@ namespace OTAPI.Patcher.Extensions
                                             bool noEndHandling = false)
         {
             if (!method.HasBody) throw new InvalidOperationException("Method must have a body.");
-            if (method.ReturnType.Name == "Void" || method.ReturnType.Name == "String")
+            if (method.ReturnType.Name == "Void" || method.ReturnType.Name == "String") //|| method.ReturnType.Name == "Double")
             {
                 //Create the new replacement method
                 var wrapped = new MethodDefinition(method.Name, method.Attributes, method.ReturnType);
@@ -462,7 +462,8 @@ namespace OTAPI.Patcher.Extensions
                 var beginResult = wrapped.InjectBeginCallback(begin, instanceMethod, beginIsCancellable);
 
                 //Execute the actual code
-                var insFirstForMethod = wrapped.InjectMethodCall(method, instanceMethod, method.ReturnType.Name != "String");
+                var insFirstForMethod = wrapped.InjectMethodCall(method, instanceMethod, method.ReturnType.Name != "String");// && method.ReturnType.Name != "Double");
+
                 //Set the instruction to be resumed upon not cancelling, if not already
                 if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
                 {
@@ -471,7 +472,7 @@ namespace OTAPI.Patcher.Extensions
                         beginResult.OpCode = OpCodes.Brtrue_S;
                         beginResult.Operand = insFirstForMethod;
                     }
-                    else if (method.ReturnType.Name == "String")
+                    else if (method.ReturnType.Name == "String")// || method.ReturnType.Name == "Double")
                     {
                         var il = wrapped.Body.GetILProcessor();
 
@@ -497,6 +498,50 @@ namespace OTAPI.Patcher.Extensions
                 return wrapped;
             }
             else throw new NotSupportedException("Non Void methods not yet supported");
+        }
+
+        public static void InjectNonVoidBegin(this MethodDefinition target, MethodDefinition callback)
+        {
+            if (callback.ReturnType.Name == "Void") throw new InvalidOperationException("Invalid return type for callback");
+
+            //var impCall = Terraria.Import(API.NPCCallback.Method("OnStrike"));
+            //var target = Terraria.NPC.Method("StrikeNPC");
+            var impCallback = target.Module.Import(callback);
+
+            var il = target.Body.GetILProcessor();
+
+            var first = target.Body.Instructions.First();
+
+            //TODO cecil extension
+
+            //Create our variable, to hold the modified damage
+            VariableDefinition vrbResult = null;
+            target.Body.Variables.Add(vrbResult = new VariableDefinition("otapi_result", impCallback.ReturnType));
+
+            //Create the API callback, and return the modified damage variable if cancelled
+            if ((target.Attributes & MethodAttributes.Static) == 0)
+                il.InsertBefore(first, il.Create(OpCodes.Ldarg_0)); //instance
+
+            il.InsertBefore(first, il.Create(OpCodes.Ldloca_S, vrbResult)); //Loads our variable as a reference
+
+            //Add our parameters
+            for (var i = 0; i < target.Parameters.Count; i++)
+            {
+                var offset = (target.Attributes & MethodAttributes.Static) == 0 ? 1 : 0;
+                if (callback.Parameters[i + offset].ParameterType.IsByReference)
+                {
+                    il.InsertBefore(first, il.Create(OpCodes.Ldarga, target.Parameters[i]));
+                }
+                else il.InsertBefore(first, il.Create(OpCodes.Ldarg, target.Parameters[i]));
+            }
+
+            il.InsertBefore(first, il.Create(OpCodes.Call, impCallback)); //Call the hook
+            //                il.InsertBefore(first, il.Create(OpCodes.Pop));
+
+            //If the hook cancelled the rest of the code, then we can return our modified variable
+            il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, first));
+            il.InsertBefore(first, il.Create(OpCodes.Ldloc, vrbResult));
+            il.InsertBefore(first, il.Create(OpCodes.Ret));
         }
     }
 }
