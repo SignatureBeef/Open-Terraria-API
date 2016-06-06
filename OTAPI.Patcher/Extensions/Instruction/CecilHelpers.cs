@@ -21,7 +21,7 @@ namespace OTAPI.Patcher.Extensions
         {
             while (initial.Next != null)
             {
-                if (predicate(initial)) return initial;
+                if (predicate(initial.Next)) return initial.Next;
                 initial = initial.Next;
             }
 

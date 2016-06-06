@@ -27,6 +27,8 @@ namespace OTAPI.Patcher.Modifications.Helpers
             internal OTAPIOrganiser _organiser;
             internal OrganiserTypes(OTAPIOrganiser organiser) { _organiser = organiser; }
             
+            public TypeDefinition Collision => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Collision");
+
             public TypeDefinition Item => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Item");
 
             public TypeDefinition Main => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Main");

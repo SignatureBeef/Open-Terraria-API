@@ -26,6 +26,8 @@ namespace OTAPI.Patcher.Modifications.Helpers
         {
             internal TerrariaOrganiser _organiser;
             internal OrganiserTypes(TerrariaOrganiser organiser) { _organiser = organiser; }
+            
+            public TypeDefinition Collision => _organiser.MainModue.Type("Terraria.Collision");
 
             public TypeDefinition Entity => _organiser.MainModue.Type("Terraria.Entity");
 

@@ -7,6 +7,7 @@ namespace OTAPI.Patcher.Modifications.Helpers
     /// In addition to IInjection, this class provides helper methods for OTAPI specific
     /// functionalities
     /// </summary>
+    [Ordered]
     public abstract class OTAPIModification<TModificationContext> : IModification
         where TModificationContext : ModificationContext
     {

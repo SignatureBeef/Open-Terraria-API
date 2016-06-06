@@ -42,7 +42,7 @@ namespace OTAPI.Core.Tests
 
             while (wait)
             {
-                var key = Console.ReadKey();
+                var key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.DownArrow)
                 {
                     offset++;
@@ -70,7 +70,7 @@ namespace OTAPI.Core.Tests
             }
 
             Listen();
-
+            Console.WriteLine("Starting...");
             Terraria.WindowsLaunch.Main(args);
         }
 
@@ -196,6 +196,14 @@ namespace OTAPI.Core.Tests
                 bool reverseLookup) =>
             {
                 Console.WriteLine($"[Post] Dropping loot {type} at {x},{y}");
+            };
+            Hooks.Collision.PressurePlate = (
+                ref int x,
+                ref int y,
+                ref global::Terraria.Entity entity) =>
+            {
+                Console.WriteLine($"Pressure plate triggered at {x},{y} by {entity}");
+                return HookResult.Continue;
             };
         }
     }

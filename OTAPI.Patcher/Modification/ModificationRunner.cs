@@ -82,6 +82,9 @@ namespace OTAPI.Patcher.Modification
                 typeof(TSource).Assembly.ExportedTypes
                     .Where(type => typeof(IModification).IsAssignableFrom(type) && !type.IsAbstract)
                     .Select(modificationType => (IModification)Activator.CreateInstance(modificationType))
+
+                    //Order using the OrderAttribute.Order field value
+                    .OrderBy(x => ((OrderedAttribute)Attribute.GetCustomAttribute(x.GetType(), typeof(OrderedAttribute), true)).Order)
             );
         }
         #endregion

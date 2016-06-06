@@ -193,6 +193,11 @@
             Typically used to stop executing vanilla code
             </summary>
         </member>
+        <member name="F:OTAPI.Core.Hooks.Collision.PressurePlate">
+            <summary>
+            Occurs when an entity triggers a pressure plate.
+            </summary>
+        </member>
         <member name="F:OTAPI.Core.Hooks.Command.StartCommandThread">
             <summary>
             Occurs when the server is to start listening for commands.
