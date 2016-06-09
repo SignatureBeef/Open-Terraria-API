@@ -4,6 +4,7 @@
 *.userprefs
 
 artifacts/
+packages/
 
 .DS_Store
 .vs
