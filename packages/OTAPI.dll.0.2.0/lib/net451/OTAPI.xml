@@ -113,6 +113,12 @@
             This method replaces most calls to AsyncSend in the SendData method
             </summary>
         </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Npc.BossBagItem(Terraria.NPC,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            This method injected into the DropBossBags call, replacing the server NewItem calls.
+            We check the result for -1 to cancel the function.
+            </summary>
+        </member>
         <member name="M:OTAPI.Core.Callbacks.Terraria.Npc.Create(System.Int32@,System.Int32@,System.Int32@,System.Int32@,System.Int32@,System.Single@,System.Single@,System.Single@,System.Single@,System.Int32@)">
             <summary>
             This method is injected into the StrikeNPC method along with an additional variable [cancelResult] which is returned
@@ -290,6 +296,14 @@
             <summary>
             Occurs when the server is about to send data to a client
             </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Npc.BossBagItem">
+            <summary>
+            Occurs when a boss item is to drop
+            Arg 1:  The npc instance
+            TODO: the following arguments are vanilla, these need to be documented.
+            </summary>
+            <remarks>Currently only supported using the server API</remarks>
         </member>
         <member name="F:OTAPI.Core.Hooks.Npc.PreNetDefaults">
             <summary>

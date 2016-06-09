@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria;
 
 namespace OTAPI.Core.Tests
 {
@@ -203,6 +204,22 @@ namespace OTAPI.Core.Tests
                 ref global::Terraria.Entity entity) =>
             {
                 Console.WriteLine($"Pressure plate triggered at {x},{y} by {entity}");
+                return HookResult.Continue;
+            };
+            Hooks.Npc.BossBagItem = (
+                global::Terraria.NPC npc,
+                ref int X,
+                ref int Y,
+                ref int Width,
+                ref int Height,
+                ref int Type,
+                ref int Stack,
+                ref bool noBroadcast,
+                ref int pfix,
+                ref bool noGrabDelay,
+                ref bool reverseLookup) =>
+            {
+                Console.WriteLine($"Drop boss bag at {X},{Y}");
                 return HookResult.Continue;
             };
         }
