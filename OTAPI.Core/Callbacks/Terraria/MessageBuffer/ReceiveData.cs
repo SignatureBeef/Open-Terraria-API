@@ -2,7 +2,7 @@
 {
     internal static partial class MessageBuffer
     {
-        public static int ReceiveData
+        internal static int ReceiveData
         (
             global::Terraria.MessageBuffer buffer,
             ref byte packetId,

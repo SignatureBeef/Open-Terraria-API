@@ -5,6 +5,8 @@
 function being wrapped. 
 You can make corrections to parameters in your hook handler :+1:
 
+Ensure that your callback class and method are both marked as internal. This is to avoid any external assembly manually calling our callbacks which can cause unexpected issues.
+
 ####Hooks
 **Argument order**: When adding hooks ensure the handler arguments are in a sensible order, e.g. instance, arguments as defined in the vanilla function
 This is so people can learn and remember that (typically) the first parameters are more important than the rest

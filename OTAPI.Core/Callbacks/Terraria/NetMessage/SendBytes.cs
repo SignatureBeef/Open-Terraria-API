@@ -5,7 +5,7 @@
         /// <summary>
         /// This method replaces most calls to AsyncSend in the SendData method
         /// </summary>
-        public static void SendBytes
+        internal static void SendBytes
         (
             int remoteClient,
             byte[] data,

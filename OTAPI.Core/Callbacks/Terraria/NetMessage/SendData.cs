@@ -2,7 +2,7 @@
 {
     internal static partial class NetMessage
     {
-        public static bool SendData
+        internal static bool SendData
         (
             ref int msgType,
             ref int remoteClient,

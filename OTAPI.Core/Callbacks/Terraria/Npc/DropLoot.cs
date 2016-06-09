@@ -2,7 +2,7 @@
 {
     internal static partial class Npc
     {
-        public static bool DropLootBegin
+        internal static bool DropLootBegin
         (
             ref int itemId,
             int x,
@@ -35,7 +35,7 @@
             return true;
         }
 
-        public static void DropLootEnd
+        internal static void DropLootEnd
         (
             int x,
             int y,
