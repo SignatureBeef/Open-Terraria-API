@@ -17,8 +17,9 @@
             public static PreSetDefaultsByIdHandler PreSetDefaultsById;
 
             /// <summary>
-            /// Occurs when the SetDefaults(int,float) method ends
+            /// Occurs when the SetDefaults(int) method ends
             /// Arg 1:  The projectile instance
+            ///     2:  Type
             /// </summary>
             public static PostSetDefaultsByIdHandler PostSetDefaultsById;
         }

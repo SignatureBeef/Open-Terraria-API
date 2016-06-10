@@ -235,6 +235,19 @@ namespace OTAPI.Core.Tests
             {
                 Console.WriteLine($"Created new projectile using type: {type}");
             };
+            //Hooks.Projectile.PreUpdate = (
+            //    global::Terraria.Projectile projectile,
+            //    ref int index) =>
+            //{
+            //    Console.WriteLine($"Begin Update at index: {index}");
+            //    return HookResult.Continue;
+            //};
+            //Hooks.Projectile.PostUpdate = (
+            //    global::Terraria.Projectile projectile,
+            //    int index) =>
+            //{
+            //    Console.WriteLine($"End Update at index: {index}");
+            //};
         }
     }
 }

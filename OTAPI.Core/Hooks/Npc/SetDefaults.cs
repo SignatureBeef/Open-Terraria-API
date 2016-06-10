@@ -29,8 +29,8 @@
             /// <summary>
             /// Occurs at the start of the SetDefaults(int,float) method.
             /// Arg 1:  The npc instance
-            ///     2:  Type
-            ///     3:  noMatCheck flag
+            ///     2:  type
+            ///     3:  scale override
             /// </summary>
             public static PreSetDefaultsByIdHandler PreSetDefaultsById;
 
@@ -38,6 +38,7 @@
             /// Occurs when the SetDefaults(int,float) method ends
             /// Arg 1:  The npc instance
             ///     2:  type
+            ///     3:  scale override
             /// </summary>
             public static PostSetDefaultsByIdHandler PostSetDefaultsById;
         }
