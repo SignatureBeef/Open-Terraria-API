@@ -62,6 +62,13 @@
             This method is injected into the end of the SetDefaults(int,bool) method.
             </summary>
         </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.Christmas">
+            <summary>
+            This method is ran right before the call to checkXMas to allow
+            cancelling of the function.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
         <member name="M:OTAPI.Core.Callbacks.Terraria.Main.startDedInput">
             <summary>
             This method is injected into the start of the startDedInput method.
@@ -90,6 +97,13 @@
             This method is injected into the end of the terraria Update method.
             </summary>
             <param name="gameTime" />
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Main.Halloween">
+            <summary>
+            This method is ran right before the call to checkHalloween to allow
+            cancelling of the function.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
         </member>
         <member name="M:OTAPI.Core.Callbacks.Terraria.MessageBuffer.NameCollision(Terraria.Player)">
             <summary>
@@ -276,6 +290,11 @@
             Occurs when the server is to start listening for commands.
             </summary>
         </member>
+        <member name="F:OTAPI.Core.Hooks.Game.Christmas">
+            <summary>
+            Occurs when christmas is being checked for.
+            </summary>
+        </member>
         <member name="F:OTAPI.Core.Hooks.Game.PreInitialize">
             <summary>
             Occurs at the first point of call when the Initialze method is ran.
@@ -294,6 +313,11 @@
         <member name="F:OTAPI.Core.Hooks.Game.PostUpdate">
             <summary>
             Occurs at the end of the games update loop.
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Game.Halloween">
+            <summary>
+            Occurs when hallowwn is being checked for.
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.Item.PreNetDefaults">
