@@ -167,6 +167,18 @@
             if this method returns false.
             </summary>
         </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Projectile.AIBegin(Terraria.Projectile)">
+            <summary>
+            This method is injected into the start of the AI() method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Projectile.AIEnd(Terraria.Projectile)">
+            <summary>
+            This method is injected into the end of the AI() method.
+            </summary>
+        </member>
         <member name="M:OTAPI.Core.Callbacks.Terraria.Projectile.SetDefaultsByIdBegin(Terraria.Projectile,System.Int32@)">
             <summary>
             This method is injected into the start of the SetDefaults(int) method.
@@ -415,6 +427,18 @@
             <summary>
             Occurs when an npc transforms
             Arg 1:  The npc instance=
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Projectile.PreAI">
+            <summary>
+            Occurs at the start of the AI() method.
+            Arg 1:  The projectile instance
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Projectile.PostAI">
+            <summary>
+            Occurs when the AI() method ends
+            Arg 1:  The projectile instance
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.Projectile.PreSetDefaultsById">

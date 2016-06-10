@@ -266,6 +266,15 @@ namespace OTAPI.Core.Tests
             {
                 Console.WriteLine("Hardmode is now in processed. Extra: netMode:{Terraria.Main.netMode},hardMode:{Terraria.Main.hardMode}");
             };
+            //Hooks.Projectile.PreAI = (projectile) =>
+            //{
+            //    Console.WriteLine($"[Prj] AI for {projectile.whoAmI}");
+            //    return HookResult.Continue;
+            //};
+            //Hooks.Projectile.PostAI = (projectile) =>
+            //{
+            //    Console.WriteLine($"[Prj] Post AI for {projectile.whoAmI}");
+            //};
         }
     }
 }
