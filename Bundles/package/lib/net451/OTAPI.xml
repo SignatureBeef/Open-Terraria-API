@@ -127,6 +127,12 @@
             This method replaces most calls to AsyncSend in the SendData method
             </summary>
         </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Netplay.ServerSocketCreate">
+            <summary>
+            This method replaces the "new TcpSocket" call in server loop, allowing
+            custom server socket implementations.
+            </summary>
+        </member>
         <member name="M:OTAPI.Core.Callbacks.Terraria.Npc.BossBagItem(Terraria.NPC,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.Int32,System.Boolean,System.Boolean)">
             <summary>
             This method injected into the DropBossBags call, replacing the server NewItem calls.
@@ -386,6 +392,12 @@
             Occurs when a connecting player is about to be booted due to having the same name
             as a player whom is already playing.
             Arg 1: player instance
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Net.Socket.ServerSocketCreate">
+            <summary>
+            Occurs when the server socket is to be created.
+            Return null if you wish for default functionality.
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.Npc.BossBagItem">

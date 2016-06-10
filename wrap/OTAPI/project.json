@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "net451": {
+      "bin": {
+        "assembly": "../../artifacts/patcher/OTAPI.dll",
+        "pdb": "../../artifacts/patcher/OTAPI.pdb"
+      },
+      "dependencies": {
+        "Newtonsoft.Json": "1.0.0-*",
+        "Steamworks.NET": "1.0.0-*"
+      }
+    }
+  }
+}

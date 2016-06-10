@@ -1,0 +1,80 @@
+{
+  "locked": false,
+  "version": 2,
+  "targets": {
+    ".NETFramework,Version=v4.5.1": {
+      "Newtonsoft.Json/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1"
+      },
+      "OTAPI/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Newtonsoft.Json": "1.0.0",
+          "Steamworks.NET": "1.0.0"
+        }
+      },
+      "Steamworks.NET/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1"
+      }
+    },
+    ".NETFramework,Version=v4.5.1/win7-x86": {
+      "Newtonsoft.Json/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1"
+      },
+      "OTAPI/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Newtonsoft.Json": "1.0.0",
+          "Steamworks.NET": "1.0.0"
+        }
+      },
+      "Steamworks.NET/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1"
+      }
+    },
+    ".NETFramework,Version=v4.5.1/win7-x64": {
+      "Newtonsoft.Json/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1"
+      },
+      "OTAPI/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Newtonsoft.Json": "1.0.0",
+          "Steamworks.NET": "1.0.0"
+        }
+      },
+      "Steamworks.NET/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1"
+      }
+    }
+  },
+  "libraries": {
+    "Newtonsoft.Json/1.0.0": {
+      "type": "project",
+      "path": "../wrap/Newtonsoft.Json/project.json"
+    },
+    "OTAPI/1.0.0": {
+      "type": "project",
+      "path": "../wrap/OTAPI/project.json"
+    },
+    "Steamworks.NET/1.0.0": {
+      "type": "project",
+      "path": "../wrap/Steamworks.NET/project.json"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "OTAPI >= 0.2.0"
+    ],
+    ".NETFramework,Version=v4.5.1": []
+  }
+}

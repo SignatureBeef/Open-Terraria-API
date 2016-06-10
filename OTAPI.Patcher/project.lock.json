@@ -40,7 +40,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1"
       },
-      "OTAPI.Core/1.0.0": {
+      "OTAPI.Core/0.2.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -103,7 +103,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1"
       },
-      "OTAPI.Core/1.0.0": {
+      "OTAPI.Core/0.2.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -166,7 +166,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1"
       },
-      "OTAPI.Core/1.0.0": {
+      "OTAPI.Core/0.2.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -197,7 +197,7 @@
       "type": "project",
       "path": "../wrap/Newtonsoft.Json/project.json"
     },
-    "OTAPI.Core/1.0.0": {
+    "OTAPI.Core/0.2.0": {
       "type": "project",
       "path": "../OTAPI.Core/project.json"
     },

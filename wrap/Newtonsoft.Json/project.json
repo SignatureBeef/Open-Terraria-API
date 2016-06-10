@@ -3,7 +3,7 @@
   "frameworks": {
     "net451": {
       "bin": {
-        "assembly": "../../OTAPI.Patcher/Newtonsoft.Json.dll"
+        "assembly": "../../artifacts/patcher/Newtonsoft.Json.dll"
       }
     }
   }

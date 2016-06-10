@@ -77,6 +77,10 @@ namespace OTAPI.Core.Tests
 
         static void Listen()
         {
+            Hooks.Net.Socket.ServerSocketCreate = () =>
+            {
+                return new OTAPI.Sockets.PoolSocket();
+            };
             Hooks.Command.StartCommandThread = () =>
             {
                 Console.WriteLine("[Hook] Command thread.");

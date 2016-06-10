@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0-*",
+  "description": "OTAPI.Sockets Class Library",
+  "authors": [ "Luke" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": {
+      "dependencies": {
+      }
+    }
+  },
+  "dependencies": {
+    "OTAPI": "0.2.0"
+  }
+}
