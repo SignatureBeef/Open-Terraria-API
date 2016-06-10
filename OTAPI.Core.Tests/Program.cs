@@ -257,6 +257,15 @@ namespace OTAPI.Core.Tests
             {
                 Console.WriteLine($"Saved world useCloudSaving:{useCloudSaving}, resetTime:{resetTime}");
             };
+            Hooks.World.PreHardmode = () =>
+            {
+                Console.WriteLine($"Starting hardmode. Extra: netMode:{Terraria.Main.netMode},hardMode:{Terraria.Main.hardMode}");
+                return HookResult.Continue;
+            };
+            Hooks.World.PostHardmode = () =>
+            {
+                Console.WriteLine("Hardmode is now in processed. Extra: netMode:{Terraria.Main.netMode},hardMode:{Terraria.Main.hardMode}");
+            };
         }
     }
 }

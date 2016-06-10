@@ -44,6 +44,8 @@ namespace OTAPI.Patcher.Modifications.Helpers
             public TypeDefinition TerrariaEntity => _organiser.MainModue.Type("OTAPI.Core.TerrariaEntity");
             
             public TypeDefinition WorldFile => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.WorldFile");
+            
+            public TypeDefinition WorldGen => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.WorldGen");
         }
     }
 }

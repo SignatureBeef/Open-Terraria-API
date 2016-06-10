@@ -203,6 +203,18 @@
             This method is injected into the end of the saveWorld(bool) method.
             </summary>
         </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.WorldGen.HardmodeBegin">
+            <summary>
+            This method is injected into the start of the StartHardmode() method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.WorldGen.HardmodeEnd">
+            <summary>
+            This method is injected into the end of the StartHardmode() method.
+            </summary>
+        </member>
         <member name="M:OTAPI.Core.Debug.Assert.Expression(System.Linq.Expressions.Expression{System.Func{System.Boolean}})">
             <summary>
             Asserts the specified LINQ expression for a true condition and throws an assertion 
@@ -431,6 +443,16 @@
             Occurs when the Update(int) method ends
             Arg 1:  The projectile instance
                 2:  The root of whoAmI
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.World.PreHardmode">
+            <summary>
+            Occurs at the start of the StartHardmode() method.
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.World.PostHardmode">
+            <summary>
+            Occurs when the StartHardmode() method ends
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.World.IO.PreSaveWorld">
