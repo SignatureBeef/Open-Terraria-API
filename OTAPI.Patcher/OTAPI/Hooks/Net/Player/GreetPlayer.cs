@@ -3,7 +3,7 @@ using OTAPI.Patcher.Extensions;
 using OTAPI.Patcher.Modifications.Helpers;
 using System;
 
-namespace OTAPI.Patcher.Modifications.Hooks.Net
+namespace OTAPI.Patcher.Modifications.Hooks.Net.Player
 {
     /// <summary>
     /// This modification is to allow the NetMessage.greetPlayer hooks to be ran by injecting callbacks into

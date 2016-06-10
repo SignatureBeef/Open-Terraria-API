@@ -7,8 +7,8 @@
         /// </summary>
         internal static bool GreetPlayerBegin(ref int playerId)
         {
-            if (Hooks.Net.PreGreetPlayer != null)
-                return Hooks.Net.PreGreetPlayer(ref playerId) == HookResult.Continue;
+            if (Hooks.Net.Player.PreGreetPlayer != null)
+                return Hooks.Net.Player.PreGreetPlayer(ref playerId) == HookResult.Continue;
             return true;
         }
 
@@ -19,8 +19,8 @@
         /// <param name="playerId"></param>
         internal static void GreetPlayerEnd(int playerId)
         {
-            if (Hooks.Net.PostGreetPlayer != null)
-                Hooks.Net.PostGreetPlayer(playerId);
+            if (Hooks.Net.Player.PostGreetPlayer != null)
+                Hooks.Net.Player.PostGreetPlayer(playerId);
         }
     }
 }
