@@ -203,6 +203,13 @@
             This method is injected into the end of the Update(int) method.
             </summary>
         </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.World.MechSpawn(System.Single,System.Single,System.Int32,System.Int32@,System.Int32@,System.Int32@,OTAPI.Core.StatueType)">
+            <summary>
+            This method is injected both the NPC and Item MechSpawn functions
+            in order to control the return value.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
         <member name="M:OTAPI.Core.Callbacks.Terraria.WorldFile.SaveWorldBegin(System.Boolean@,System.Boolean@)">
             <summary>
             This method is injected into the start of the saveWorld(bool) method.
@@ -477,6 +484,11 @@
         <member name="F:OTAPI.Core.Hooks.World.PostHardmode">
             <summary>
             Occurs when the StartHardmode() method ends
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.World.Statue">
+            <summary>
+            Occurs when the game is to spawn a statue
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.World.IO.PreSaveWorld">

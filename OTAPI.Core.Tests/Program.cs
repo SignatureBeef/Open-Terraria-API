@@ -275,6 +275,11 @@ namespace OTAPI.Core.Tests
             //{
             //    Console.WriteLine($"[Prj] Post AI for {projectile.whoAmI}");
             //};
+            Hooks.World.Statue = (StatueType caller, float x, float y, int type, ref int num, ref int num2, ref int num3) =>
+            {
+                Console.WriteLine($"Mech spawn for {caller} at {x},{y}");
+                return HookResult.Continue;
+            };
         }
     }
 }

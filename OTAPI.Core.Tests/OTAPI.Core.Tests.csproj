@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OTAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OTAPI.dll.0.2.0\lib\net451\OTAPI.dll</HintPath>
+      <HintPath>..\packages\OTAPI.0.2.0\lib\net451\OTAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
