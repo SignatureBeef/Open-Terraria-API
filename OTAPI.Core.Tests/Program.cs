@@ -114,14 +114,14 @@ namespace OTAPI.Core.Tests
             //    //Console.WriteLine($"Receiving {packetId} from {buffer.whoAmI}");
             //    return HookResult.Continue;
             //};
-            Hooks.Net.PreGreetPlayer = (ref int playerId) =>
+            Hooks.Net.Player.PreGreetPlayer = (ref int playerId) =>
             {
-                Console.WriteLine(nameof(Hooks.Net.PreGreetPlayer) + " " + playerId);
+                Console.WriteLine(nameof(Hooks.Net.Player.PreGreetPlayer) + " " + playerId);
                 return HookResult.Continue;
             };
-            Hooks.Net.PostGreetPlayer = (int playerId) =>
+            Hooks.Net.Player.PostGreetPlayer = (int playerId) =>
             {
-                Console.WriteLine(nameof(Hooks.Net.PostGreetPlayer) + " " + playerId);
+                Console.WriteLine(nameof(Hooks.Net.Player.PostGreetPlayer) + " " + playerId);
             };
             //Hooks.Net.SendBytes = (
             //    ref int remoteClient,
@@ -134,7 +134,7 @@ namespace OTAPI.Core.Tests
             //    Console.WriteLine($"Sending {size} bytes of data to {remoteClient}");
             //    return HookResult.Continue;
             //};
-            Hooks.Net.NameCollision = (player) =>
+            Hooks.Net.Player.NameCollision = (player) =>
             {
                 Console.WriteLine($"Booting {player.name} as their name conflicts with an existing player.");
                 return HookResult.Continue;
@@ -248,6 +248,15 @@ namespace OTAPI.Core.Tests
             //{
             //    Console.WriteLine($"End Update at index: {index}");
             //};
+            Hooks.World.IO.PreSaveWorld = (ref bool useCloudSaving, ref bool resetTime) =>
+            {
+                Console.WriteLine($"Saving world useCloudSaving:{useCloudSaving}, resetTime:{resetTime}");
+                return HookResult.Continue;
+            };
+            Hooks.World.IO.PostSaveWorld = (bool useCloudSaving, bool resetTime) =>
+            {
+                Console.WriteLine($"Saved world useCloudSaving:{useCloudSaving}, resetTime:{resetTime}");
+            };
         }
     }
 }

@@ -16,8 +16,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Projectile
                 x => x.Name == "Update"
                 && x.Parameters.Single().ParameterType == this.Context.Terraria.MainModue.TypeSystem.Int32
             );
-
-
+            
             var cbkBegin = this.Context.OTAPI.Types.Projectile.Method("UpdateBegin", parameters: vanilla.Parameters);
             var cbkEnd = this.Context.OTAPI.Types.Projectile.Method("UpdateEnd", parameters: vanilla.Parameters);
 
