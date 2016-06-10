@@ -38,6 +38,8 @@ namespace OTAPI.Patcher.Modifications.Helpers
             public TypeDefinition NetMessage => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.NetMessage");
 
             public TypeDefinition Npc => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Npc");
+            
+            public TypeDefinition Projectile => _organiser.MainModue.Type("OTAPI.Core.Callbacks.Terraria.Projectile");
 
             public TypeDefinition TerrariaEntity => _organiser.MainModue.Type("OTAPI.Core.TerrariaEntity");
         }

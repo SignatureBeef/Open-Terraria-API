@@ -42,6 +42,8 @@ namespace OTAPI.Patcher.Modifications.Helpers
             public TypeDefinition Npc => _organiser.MainModue.Type("Terraria.NPC");
 
             public TypeDefinition Program => _organiser.MainModue.Type("Terraria.Program");
+            
+            public TypeDefinition Projectile => _organiser.MainModue.Type("Terraria.Projectile");
 
             public TypeDefinition WindowsLaunch => _organiser.MainModue.Type("Terraria.WindowsLaunch");
         }

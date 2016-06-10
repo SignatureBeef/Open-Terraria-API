@@ -222,6 +222,19 @@ namespace OTAPI.Core.Tests
                 Console.WriteLine($"Drop boss bag at {X},{Y}");
                 return HookResult.Continue;
             };
+            Hooks.Projectile.PreSetDefaultsById = (
+                global::Terraria.Projectile projectile,
+                ref int type) =>
+            {
+                Console.WriteLine($"Creating new projectile using type: {type}");
+                return HookResult.Continue;
+            };
+            Hooks.Projectile.PostSetDefaultsById = (
+                global::Terraria.Projectile projectile,
+                int type) =>
+            {
+                Console.WriteLine($"Created new projectile using type: {type}");
+            };
         }
     }
 }

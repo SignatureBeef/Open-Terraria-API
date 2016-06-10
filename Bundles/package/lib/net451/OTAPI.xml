@@ -167,6 +167,18 @@
             if this method returns false.
             </summary>
         </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Projectile.SetDefaultsByIdBegin(Terraria.Projectile,System.Int32@)">
+            <summary>
+            This method is injected into the start of the SetDefaults(int) method.
+            The return value will dictate if normal vanilla code should continue to run.
+            </summary>
+            <returns>True to continue on to vanilla code, otherwise false</returns>
+        </member>
+        <member name="M:OTAPI.Core.Callbacks.Terraria.Projectile.SetDefaultsByIdEnd(Terraria.Projectile,System.Int32)">
+            <summary>
+            This method is injected into the end of the SetDefaults(int) method.
+            </summary>
+        </member>
         <member name="M:OTAPI.Core.Debug.Assert.Expression(System.Linq.Expressions.Expression{System.Func{System.Boolean}})">
             <summary>
             Asserts the specified LINQ expression for a true condition and throws an assertion 
@@ -345,7 +357,7 @@
             <summary>
             Occurs when the SetDefaults(int,float) method ends
             Arg 1:  The npc instance
-                2:  Npc name
+                2:  type
             </summary>
         </member>
         <member name="F:OTAPI.Core.Hooks.Npc.Strike">
@@ -366,6 +378,19 @@
             <summary>
             Occurs when an npc transforms
             Arg 1:  The npc instance=
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Projectile.PreSetDefaultsById">
+            <summary>
+            Occurs at the start of the SetDefaults(int) method.
+            Arg 1:  The projectile instance
+                2:  Type
+            </summary>
+        </member>
+        <member name="F:OTAPI.Core.Hooks.Projectile.PostSetDefaultsById">
+            <summary>
+            Occurs when the SetDefaults(int,float) method ends
+            Arg 1:  The projectile instance
             </summary>
         </member>
         <member name="T:Microsoft.Xna.Framework.Color">

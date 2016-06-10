@@ -37,7 +37,7 @@
             /// <summary>
             /// Occurs when the SetDefaults(int,float) method ends
             /// Arg 1:  The npc instance
-            ///     2:  Npc name
+            ///     2:  type
             /// </summary>
             public static PostSetDefaultsByIdHandler PostSetDefaultsById;
         }
