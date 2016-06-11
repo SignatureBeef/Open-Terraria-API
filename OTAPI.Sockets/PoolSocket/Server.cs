@@ -7,41 +7,7 @@ using Terraria.Net.Sockets;
 
 namespace OTAPI.Sockets
 {
-    public class ReceiveEventArgs : PoolSocketEventArgs
-    {
-
-    }
-    public class SendEventArgs : PoolSocketEventArgs
-    {
-
-    }
-
-
-    public partial class PoolSocket : global::Terraria.Net.Sockets.ISocket
-    {
-        private Socket _socket;
-        private RemoteAddress _remoteAddress;
-        private bool _connected;
-
-        public PoolSocket(Socket socket)
-        {
-            this._socket = socket;
-
-            this._socket.NoDelay = true;
-            var endpoint = (IPEndPoint)this._socket.RemoteEndPoint;
-            this._remoteAddress = new TcpAddress(endpoint.Address, endpoint.Port);
-
-            _connected = true;
-        }
-
-        public RemoteAddress GetRemoteAddress() => _remoteAddress;
-
-        public bool IsConnected() => _connected;
-
-        public bool IsDataAvailable() => false;//TODO
-    }
-
-
+    //Server
     public partial class PoolSocket : global::Terraria.Net.Sockets.ISocket
     {
         private bool _disconnect = false;
@@ -84,6 +50,7 @@ namespace OTAPI.Sockets
             }
 
             (new System.Threading.Thread(ListenThread)).Start(callback);
+            (new System.Threading.Thread(DrainThread)).Start();
 
             return true;
         }
@@ -117,13 +84,17 @@ namespace OTAPI.Sockets
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ServerLoop terminated with exception\n{ex}");
+                Console.WriteLine($"{nameof(ListenThread)} terminated with exception\n{ex}");
             }
         }
 
-        private void SinkThread()
+        /// <summary>
+        /// The purpose of this thread is to look for each instance of PoolSocket
+        /// and to flush data to be sent to the client.
+        /// This method might change as i'm testing it not being on the server thread 
+        /// </summary>
+        private void DrainThread()
         {
-
             try
             {
                 while (!_disconnect)
@@ -147,6 +118,10 @@ namespace OTAPI.Sockets
                         }
                     }
 
+                    ////DEBUG
+                    ////Long delay to test that messages are in order
+                    //System.Threading.Thread.Sleep(2000);
+
                     //No clients, we can decrease the interval
                     if (!any)
                         System.Threading.Thread.Sleep(200);
@@ -155,33 +130,8 @@ namespace OTAPI.Sockets
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ServerLoop terminated with exception\n{ex}");
+                Console.WriteLine($"{nameof(DrainThread)} terminated with exception\n{ex}");
             }
         }
-    }
-
-    public partial class PoolSocket : global::Terraria.Net.Sockets.ISocket
-    {
-
-        public void AsyncReceive(byte[] data, int offset, int size, SocketReceiveCallback callback, object state = null)
-        {
-        }
-
-        public void AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state = null)
-        {
-        }
-
-        public void Flush()
-        {
-
-        }
-    }
-
-
-
-    public partial class PoolSocket : global::Terraria.Net.Sockets.ISocket
-    {
-        private static ArgsPool<ReceiveEventArgs> _receivePool = new ArgsPool<ReceiveEventArgs>();
-        private static ArgsPool<ReceiveEventArgs> _sendPool = new ArgsPool<ReceiveEventArgs>();
     }
 }

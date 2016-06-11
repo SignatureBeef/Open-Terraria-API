@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 
 namespace OTAPI.Sockets
@@ -11,27 +12,23 @@ namespace OTAPI.Sockets
     public class ArgsPool<TSocketAsyncEventArgs>
         where TSocketAsyncEventArgs : PoolSocketEventArgs, new()
     {
-        private Stack<TSocketAsyncEventArgs> _pool = new Stack<TSocketAsyncEventArgs>();
+        private Queue<TSocketAsyncEventArgs> _pool = new Queue<TSocketAsyncEventArgs>();
 
         public int Capacity { get; private set; }
 
-        public void Fill(TSocketAsyncEventArgs args)
+        public void PushBack(TSocketAsyncEventArgs args)
         {
-            if (args.Socket == null)
-            {
-                return;
-            }
+            if (args.Socket != null) throw new InvalidOperationException("Cannot push in a non released socket");
 
             lock (_pool)
             {
-                args.Socket = null;
-                _pool.Push(args);
+                _pool.Enqueue(args);
             }
         }
 
-        public TSocketAsyncEventArgs Drain()
+        public TSocketAsyncEventArgs PopFront()
         {
-            lock(_pool)
+            lock (_pool)
             {
                 if (_pool.Count == 0)
                 {
@@ -40,7 +37,7 @@ namespace OTAPI.Sockets
                     return new TSocketAsyncEventArgs();
                 }
 
-                return _pool.Pop();
+                return _pool.Dequeue();
             }
         }
     }
