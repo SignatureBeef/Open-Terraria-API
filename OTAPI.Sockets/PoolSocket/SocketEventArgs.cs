@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Collections.Generic;
+using System.Net.Sockets;
 
 namespace OTAPI.Sockets
 {
@@ -14,10 +15,17 @@ namespace OTAPI.Sockets
         }
         public class SendEventArgs : PoolSocketEventArgs
         {
+            public List<Message> Confirmations { get; } = new List<Message>();
+
+            public SendEventArgs()
+            {
+                this.UserToken = Confirmations;
+            }
+
             protected override void OnCompleted(SocketAsyncEventArgs e)
             {
                 base.OnCompleted(e);
-                this.Socket.OnSendComplete(this, this.UserToken as System.Collections.Generic.List<Message>);
+                this.Socket.OnSendComplete(this);
             }
         }
     }

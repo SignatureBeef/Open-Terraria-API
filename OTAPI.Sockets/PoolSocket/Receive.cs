@@ -16,7 +16,7 @@ namespace OTAPI.Sockets
                 throw new InvalidOperationException("Receive buffer already initialised");
 
             receiveBuffer = new byte[1024]; //Receives packets
-            storeBuffer = new byte[1024]; //Stores the data, ready for the AsyncReceive method to request data
+            storeBuffer = new byte[1024 * 4]; //Stores the data, ready for the AsyncReceive method to request data
 
             ReceiveData();
         }

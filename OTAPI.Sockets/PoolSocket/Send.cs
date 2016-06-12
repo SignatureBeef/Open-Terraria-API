@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria.Net.Sockets;
 
 namespace OTAPI.Sockets
@@ -8,8 +10,10 @@ namespace OTAPI.Sockets
     {
 
         //private System.Collections.Concurrent.ConcurrentQueue<Message> confirmQueue = new System.Collections.Concurrent.ConcurrentQueue<Message>();
-        private System.Collections.Generic.Queue<Message> _sendQueue = new System.Collections.Generic.Queue<Message>();
-        private System.Collections.Generic.List<ArraySegment<byte>> _txQueue = new System.Collections.Generic.List<ArraySegment<byte>>();
+        private Queue<Message> _sendQueue = new Queue<Message>();
+        //private Queue<ArraySegment<byte>> _txQueue = new Queue<ArraySegment<byte>>();
+        private List<ArraySegment<byte>> _txQueue = new List<ArraySegment<byte>>();
+        private readonly object _txSyncRoot = new object();
 
         public void AsyncSend(byte[] data, int offset, int count, SocketSendCallback callback, object state = null)
         {
@@ -29,11 +33,12 @@ namespace OTAPI.Sockets
         }
 
         int txBytes = 0;
+        int txOffset = 0;
         static int txSegmentBytes = 2;
 
         protected void Send(Message message)
         {
-            lock (_txQueue)
+            lock (_txSyncRoot)
             {
                 _sendQueue.Enqueue(message);
                 _txQueue.Add(new ArraySegment<byte>(message.data));
@@ -72,11 +77,19 @@ namespace OTAPI.Sockets
                     throw new InvalidOperationException($"{nameof(ReceiveEventArgs)} was not released correctly");
 
                 args.Socket = this;
+
+                //Create the buffer list that we use to store our queued data.
+                if (args.BufferList == null)
+                    args.BufferList = new List<ArraySegment<byte>>();
             }
+
+            //Ensure our operation collections are reset
+            if (args.BufferList.Count > 0) args.BufferList.Clear();
+            if (args.Confirmations.Count > 0) args.Confirmations.Clear();
 
             try
             {
-                lock (_txQueue)
+                lock (_txSyncRoot)
                 {
                     if (_txQueue.Count == 0)
                     {
@@ -85,55 +98,75 @@ namespace OTAPI.Sockets
                         return SendResult.NotQueued;
                     }
 
-                    var local = new System.Collections.Generic.List<ArraySegment<byte>>(_txQueue); //debug
-                    args.BufferList = local;
+                    //args.BufferList = new List<ArraySegment<byte>>(_txQueue);
+                    //_txQueue.Clear();
 
-                    var callbacks = new System.Collections.Generic.List<Message>();
+                    args.BufferList = _txQueue;
+                    _txQueue = new List<ArraySegment<byte>>();
+                    
+                    //Place all callbacks into this operation
                     while (_sendQueue.Count > 0)
-                        callbacks.Add(_sendQueue.Dequeue());
+                        args.Confirmations.Add(_sendQueue.Dequeue());
 
-                    args.UserToken = callbacks;
-
-                    sending = true;
+                    if (!sending) sending = true;
                     var sent = _socket.SendAsync(args);
                     if (!sent)
                     {
-                        OnSendComplete(args, callbacks);
+                        OnSendComplete(args);
                     }
-
-                    _txQueue.Clear();
 
                     if (sent) return SendResult.Queued;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception in {this.GetType().FullName}.{nameof(Flush)}\n{ex}");
+                Console.WriteLine($"Exception in {this.GetType().FullName}.{nameof(SendData)}\n{ex}");
             }
 
             return SendResult.NotQueued;
         }
 
-        protected struct Message
+        public struct Message
         {
             public byte[] data;
             public SocketSendCallback callback;
             public object state;
         }
 
-        protected virtual void OnSendComplete(SendEventArgs arg, System.Collections.Generic.List<Message> messages)
+        protected virtual void OnSendComplete(SendEventArgs arg)
         {
             System.Diagnostics.Debug.WriteLine($"Sent {arg.BytesTransferred} bytes");
 
-            foreach (var msg in messages)
-                msg.callback(msg.state);
-
-            if (SendData(arg) == SendResult.NotQueued)
+            if (arg.SocketError != System.Net.Sockets.SocketError.Success)
             {
+                //Release back to the pool
+                arg.Socket = null;
+                _sendPool.PushBack(arg);
                 sending = false;
-                ////Release socket
-                //arg.Socket = null;
-                //_sendPool.PushBack(arg);
+
+                Close();
+            }
+            else if (arg.BytesTransferred == 0)
+            {
+                //Release back to the pool
+                arg.Socket = null;
+                _sendPool.PushBack(arg);
+                sending = false;
+
+                Close();
+            }
+            else
+            {
+                foreach (var msg in arg.Confirmations)
+                    msg.callback(msg.state);
+
+                if (SendData(arg) == SendResult.NotQueued)
+                {
+                    sending = false;
+                    ////Release socket
+                    //arg.Socket = null;
+                    //_sendPool.PushBack(arg);
+                }
             }
         }
     }

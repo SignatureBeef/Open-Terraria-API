@@ -20,6 +20,7 @@ namespace OTAPI.Sockets
 
         public void Close()
         {
+            _connected = false;
             if (_socket != null)
             {
                 try
