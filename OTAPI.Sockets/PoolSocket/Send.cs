@@ -23,16 +23,15 @@ namespace OTAPI.Sockets
             });
         }
 
-        static int SegmentSize = 50;
         internal void Flush()
         {
-            TrySend(true);
+            TrySend();
         }
 
-        volatile int txBytes = 0;
-        static int txSegmentBytes = 1024;
+        int txBytes = 0;
+        static int txSegmentBytes = 2;
 
-        protected void Send(Message message, bool flush = false)
+        protected void Send(Message message)
         {
             lock (_txQueue)
             {
@@ -42,33 +41,52 @@ namespace OTAPI.Sockets
 
             txBytes += message.data.Length;
 
-            TrySend(flush);
+            TrySend();
         }
 
-        volatile int sendOffset;
-        volatile bool sending = false;
+        int sendOffset;
+        bool sending = false;
 
-        protected void TrySend(bool flush = false)
+        protected void TrySend()
         {
             var bytes = txBytes;
-            if (!sending && (bytes >= txSegmentBytes || flush) && _txQueue.Count > 0)
+            if (!sending && _txQueue.Count > 0)
             {
-                SendData();
+                SendData(null);
             }
         }
 
-        protected void SendData()
+        public enum SendResult : int
         {
-            var args = _sendPool.PopFront();
-            if (args.Socket != null)
-                throw new InvalidOperationException($"{nameof(ReceiveEventArgs)} was not released correctly");
+            NotQueued,
+            Queued
+        }
 
-            args.Socket = this;
+        protected SendResult SendData(SendEventArgs args)
+        {
+            System.Diagnostics.Debug.WriteLine($"Sending data");
+            if (args == null)
+            {
+                args = _sendPool.PopFront();
+                if (args.Socket != null)
+                    throw new InvalidOperationException($"{nameof(ReceiveEventArgs)} was not released correctly");
+
+                args.Socket = this;
+            }
+
             try
             {
                 lock (_txQueue)
                 {
-                    args.BufferList = _txQueue;
+                    if (_txQueue.Count == 0)
+                    {
+                        args.Socket = null;
+                        _sendPool.PushBack(args);
+                        return SendResult.NotQueued;
+                    }
+
+                    var local = new System.Collections.Generic.List<ArraySegment<byte>>(_txQueue); //debug
+                    args.BufferList = local;
 
                     var callbacks = new System.Collections.Generic.List<Message>();
                     while (_sendQueue.Count > 0)
@@ -82,14 +100,18 @@ namespace OTAPI.Sockets
                     {
                         OnSendComplete(args, callbacks);
                     }
+
                     _txQueue.Clear();
-                    sending = false;
+
+                    if (sent) return SendResult.Queued;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception in {this.GetType().FullName}.{nameof(Flush)}\n{ex}");
             }
+
+            return SendResult.NotQueued;
         }
 
         protected struct Message
@@ -97,6 +119,22 @@ namespace OTAPI.Sockets
             public byte[] data;
             public SocketSendCallback callback;
             public object state;
+        }
+
+        protected virtual void OnSendComplete(SendEventArgs arg, System.Collections.Generic.List<Message> messages)
+        {
+            System.Diagnostics.Debug.WriteLine($"Sent {arg.BytesTransferred} bytes");
+
+            foreach (var msg in messages)
+                msg.callback(msg.state);
+
+            if (SendData(arg) == SendResult.NotQueued)
+            {
+                sending = false;
+                ////Release socket
+                //arg.Socket = null;
+                //_sendPool.PushBack(arg);
+            }
         }
     }
 }

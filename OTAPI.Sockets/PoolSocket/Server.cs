@@ -7,7 +7,7 @@ using Terraria.Net.Sockets;
 
 namespace OTAPI.Sockets
 {
-    //Server
+    //Server implementation
     public partial class PoolSocket : global::Terraria.Net.Sockets.ISocket
     {
         private bool _disconnect = false;
@@ -18,13 +18,22 @@ namespace OTAPI.Sockets
 
         }
 
-        public void Connect(RemoteAddress address)
-        {
-        }
-
         public void Close()
         {
-
+            if (_socket != null)
+            {
+                try
+                {
+                    _socket.Close();
+                }
+                catch (SocketException) { }
+                catch (ObjectDisposedException) { }
+            }
+            if (_listener != null)
+            {
+                _listener.Stop();
+            }
+            System.Diagnostics.Debug.WriteLine("Closed socket");
         }
 
         public bool StartListening(SocketConnectionAccepted callback)
@@ -112,7 +121,7 @@ namespace OTAPI.Sockets
                                 {
                                     any = true;
 
-                                    socket.Flush();
+                                    socket.TrySend();
                                 }
                             }
                         }
@@ -125,7 +134,7 @@ namespace OTAPI.Sockets
                     //No clients, we can decrease the interval
                     if (!any)
                         System.Threading.Thread.Sleep(200);
-                    else System.Threading.Thread.Sleep(16);
+                    else System.Threading.Thread.Sleep(1);
                 }
             }
             catch (Exception ex)

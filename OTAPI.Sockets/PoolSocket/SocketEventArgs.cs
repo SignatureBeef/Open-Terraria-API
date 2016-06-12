@@ -20,17 +20,5 @@ namespace OTAPI.Sockets
                 this.Socket.OnSendComplete(this, this.UserToken as System.Collections.Generic.List<Message>);
             }
         }
-
-        protected virtual void OnSendComplete(SendEventArgs arg, System.Collections.Generic.List<Message> messages)
-        {
-            System.Diagnostics.Debug.WriteLine($"Sent {arg.BytesTransferred} bytes");
-
-            foreach (var msg in messages)
-                msg.callback(msg.state);
-
-            //Release socket
-            arg.Socket = null;
-            _sendPool.PushBack(arg);
-        }
     }
 }

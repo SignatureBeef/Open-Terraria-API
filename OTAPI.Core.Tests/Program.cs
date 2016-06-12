@@ -5,6 +5,11 @@ namespace OTAPI.Core.Tests
 {
     class Program
     {
+        static class Config
+        {
+            public static bool AutoStart { get; set; }
+        }
+
         static void Main(string[] args)
         {
             Console.BackgroundColor = ConsoleColor.White;
@@ -12,28 +17,53 @@ namespace OTAPI.Core.Tests
             Console.Clear();
 
             Console.WriteLine("OTAPI Test Launcher.");
-            Console.WriteLine("Menu.");
+
+            var options = new NDesk.Options.OptionSet()
+                    .Add("as:|auto-start:", x => Config.AutoStart = true);
+            options.Parse(args);
+
+            AttachHooks();
+
+            if (Config.AutoStart)
+                StartServer(args);
+            else Menu(args);
+
+        }
+
+        static void StartServer(string[] args)
+        {
+            Console.WriteLine("Starting...");
+            Terraria.WindowsLaunch.Main(args);
+        }
+
+        static void Menu(string[] args)
+        {
+            Console.WriteLine("Main menu:");
 
             var offset = 0;
 
             var wait = true;
+
+            var startX = Console.CursorLeft;
+            var startY = Console.CursorTop;
 
             var menus = new[]
             {
                 new
                 {
                     Text = "Start server",
-                    Execute = new Action(() => { wait=false; })
+                    Execute = new Action(() =>
+                    {
+                        StartServer(args);
+                        wait =false;
+                    })
                 },
                 new
                 {
                     Text = "Exit",
-                    Execute = new Action(() => { Environment.Exit(0); })
+                    Execute = new Action(() => { wait=false; })
                 }
             };
-
-            var startX = Console.CursorLeft;
-            var startY = Console.CursorTop;
 
             for (var x = 0; x < menus.Length; x++)
             {
@@ -69,13 +99,9 @@ namespace OTAPI.Core.Tests
                     Console.WriteLine(menus[x].Text);
                 }
             }
-
-            Listen();
-            Console.WriteLine("Starting...");
-            Terraria.WindowsLaunch.Main(args);
         }
 
-        static void Listen()
+        static void AttachHooks()
         {
             Hooks.Net.Socket.ServerSocketCreate = () =>
             {
