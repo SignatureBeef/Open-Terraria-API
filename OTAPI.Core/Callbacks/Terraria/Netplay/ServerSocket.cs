@@ -8,10 +8,7 @@
         /// </summary>
         internal static global::Terraria.Net.Sockets.ISocket ServerSocketCreate()
         {
-            global::Terraria.Net.Sockets.ISocket socket = null;
-
-            if (Hooks.Net.Socket.ServerSocketCreate != null)
-                socket = Hooks.Net.Socket.ServerSocketCreate();
+            var socket = Hooks.Net.Socket.ServerSocketCreate?.Invoke();
 
             //A value is always required
             if (socket == null)

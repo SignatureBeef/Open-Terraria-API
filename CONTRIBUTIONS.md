@@ -15,3 +15,6 @@ This is so people can learn and remember that (typically) the first parameters a
 You might also notice that a lot of hook callbacks generate ref keywords using the ldloca opcode. This is how we alter some vanilla functionality.
 		
 Note: these tips may are being added as development progresses.
+
+####IDE Setup
+Currently the only thing you need to ensure is that you use tabs instead of spaces (4/4).

@@ -21,7 +21,12 @@ namespace OTAPI.Patcher
         /// </summary>
         private static List<String> _mergeAsseblies = new List<String>();
 
-        private static OptionSet _startupOptions;
+		/// <summary>
+		/// The output version for the new assembly
+		/// </summary>
+		private static readonly Version _outputVersion = new Version(0, 0, 2, 0);
+
+		private static OptionSet _startupOptions;
 
         //private static String OutputFileName;
         //private static String OutputAssemblyName;
@@ -58,7 +63,7 @@ namespace OTAPI.Patcher
                     TargetKind = ILRepacking.ILRepack.Kind.Dll,
                     SearchDirectories = new[] { Environment.CurrentDirectory },
                     Parallel = true,
-                    Version = new Version(1, 0, 0, 0),
+                    Version = _outputVersion,
                     CopyAttributes = true,
                     XmlDocumentation = true,
 #if DEBUG

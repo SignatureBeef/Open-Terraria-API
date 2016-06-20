@@ -9,18 +9,15 @@
         /// <returns>True to continue on to vanilla code, otherwise false</returns>
         internal static bool NetDefaultsBegin(global::Terraria.NPC npc, ref int type)
         {
-            if (Hooks.Npc.PreNetDefaults != null)
-                return Hooks.Npc.PreNetDefaults(npc, ref type) == HookResult.Continue;
+            var res = Hooks.Npc.PreNetDefaults?.Invoke(npc, ref type);
+            if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
         }
 
         /// <summary>
         /// This method is injected into the end of the NetDefaults method.
         /// </summary>
-        internal static void NetDefaultsEnd(global::Terraria.NPC npc, ref int type)
-        {
-            if (Hooks.Npc.PostNetDefaults != null)
-                Hooks.Npc.PostNetDefaults(npc, ref type);
-        }
+        internal static void NetDefaultsEnd(global::Terraria.NPC npc, ref int type) =>
+            Hooks.Npc.PostNetDefaults?.Invoke(npc, ref type);
     }
 }

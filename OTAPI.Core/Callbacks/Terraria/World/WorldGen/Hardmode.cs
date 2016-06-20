@@ -9,18 +9,14 @@
         /// <returns>True to continue on to vanilla code, otherwise false</returns>
         internal static bool HardmodeBegin()
         {
-            if (Hooks.World.PreHardmode != null)
-                return Hooks.World.PreHardmode() == HookResult.Continue;
+            var res = Hooks.World.PreHardmode?.Invoke();
+            if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
         }
 
         /// <summary>
         /// This method is injected into the end of the StartHardmode() method.
         /// </summary>
-        internal static void HardmodeEnd()
-        {
-            if (Hooks.World.PostHardmode != null)
-                Hooks.World.PostHardmode();
-        }
+        internal static void HardmodeEnd() => Hooks.World.PostHardmode?.Invoke();
     }
 }

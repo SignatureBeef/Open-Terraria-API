@@ -9,8 +9,8 @@
         /// <returns>True to continue on to vanilla code, otherwise false</returns>
         internal static bool Halloween()
         {
-            if (Hooks.Game.Halloween != null)
-                return Hooks.Game.Halloween() == HookResult.Continue;
+            var res = Hooks.Game.Halloween?.Invoke();
+            if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
         }
     }

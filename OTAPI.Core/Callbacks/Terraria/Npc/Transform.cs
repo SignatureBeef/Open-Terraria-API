@@ -2,10 +2,6 @@
 {
     internal static partial class Npc
     {
-        internal static void Transform(global::Terraria.NPC npc)
-        {
-            if (Hooks.Npc.Transform != null)
-                Hooks.Npc.Transform(npc);
-        }
+        internal static void Transform(global::Terraria.NPC npc) => Hooks.Npc.Transform?.Invoke(npc);
     }
 }

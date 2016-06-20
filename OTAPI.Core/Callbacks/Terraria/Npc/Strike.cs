@@ -18,8 +18,8 @@
             ref bool fromNet
         )
         {
-            if (Hooks.Npc.Strike != null)
-                return Hooks.Npc.Strike(npc, ref cancelResult, ref Damage, ref knockBack, ref hitDirection, ref crit, ref noEffect, ref fromNet) == HookResult.Continue;
+            var res = Hooks.Npc.Strike?.Invoke(npc, ref cancelResult, ref Damage, ref knockBack, ref hitDirection, ref crit, ref noEffect, ref fromNet);
+            if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
         }
     }

@@ -4,9 +4,7 @@
     {
         internal static void PressurePlate(int x, int y, global::Terraria.Entity entity)
         {
-            if(Hooks.Collision.PressurePlate != null
-                && Hooks.Collision.PressurePlate(ref x, ref y, ref entity) == HookResult.Cancel
-            )
+            if (Hooks.Collision.PressurePlate?.Invoke(ref x, ref y, ref entity) == HookResult.Cancel)
             {
                 return;
             }

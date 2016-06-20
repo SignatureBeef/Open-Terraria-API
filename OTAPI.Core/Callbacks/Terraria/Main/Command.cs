@@ -9,8 +9,8 @@
         /// <returns>True to continue on to vanilla code, otherwise false</returns>
         internal static bool startDedInput()
         {
-            if (Hooks.Command.StartCommandThread != null)
-                return Hooks.Command.StartCommandThread() == HookResult.Continue;
+            var res = Hooks.Command.StartCommandThread?.Invoke();
+            if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
         }
     }

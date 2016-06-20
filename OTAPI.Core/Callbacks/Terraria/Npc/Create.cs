@@ -20,22 +20,19 @@
             ref int target
         )
         {
-            global::Terraria.NPC npc = null;
-
-            if (Hooks.Npc.Create != null)
-                npc = Hooks.Npc.Create
-                (
-                    ref index,
-                    ref x,
-                    ref y,
-                    ref type,
-                    ref start,
-                    ref ai0,
-                    ref ai1,
-                    ref ai2,
-                    ref ai3,
-                    ref target
-                );
+            var npc = Hooks.Npc.Create?.Invoke
+            (
+                ref index,
+                ref x,
+                ref y,
+                ref type,
+                ref start,
+                ref ai0,
+                ref ai1,
+                ref ai2,
+                ref ai3,
+                ref target
+            );
 
             //This hook requires a return value or it will crash.
             if (npc == null)

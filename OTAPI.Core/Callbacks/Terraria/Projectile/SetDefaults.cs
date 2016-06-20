@@ -9,18 +9,15 @@
         /// <returns>True to continue on to vanilla code, otherwise false</returns>
         internal static bool SetDefaultsByIdBegin(global::Terraria.Projectile projectile, ref int Type)
         {
-            if (Hooks.Projectile.PreSetDefaultsById != null)
-                return Hooks.Projectile.PreSetDefaultsById(projectile, ref Type) == HookResult.Continue;
+            var res = Hooks.Projectile.PreSetDefaultsById?.Invoke(projectile, ref Type);
+            if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
         }
 
         /// <summary>
         /// This method is injected into the end of the SetDefaults(int) method.
         /// </summary>
-        internal static void SetDefaultsByIdEnd(global::Terraria.Projectile projectile, int Type)
-        {
-            if (Hooks.Projectile.PostSetDefaultsById != null)
-                Hooks.Projectile.PostSetDefaultsById(projectile, Type);
-        }
+        internal static void SetDefaultsByIdEnd(global::Terraria.Projectile projectile, int Type) =>
+            Hooks.Projectile.PostSetDefaultsById?.Invoke(projectile, Type);
     }
 }

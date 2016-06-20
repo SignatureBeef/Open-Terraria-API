@@ -15,7 +15,7 @@
             object state
         )
         {
-            if (Hooks.Net.SendBytes != null && Hooks.Net.SendBytes(ref remoteClient, ref data, ref offset, ref size, ref callback, ref state) == HookResult.Cancel)
+            if (Hooks.Net.SendBytes?.Invoke(ref remoteClient, ref data, ref offset, ref size, ref callback, ref state) == HookResult.Cancel)
                 return;
 
             global::Terraria.Netplay.Clients[remoteClient].Socket.AsyncSend(data, offset, size, callback, state);

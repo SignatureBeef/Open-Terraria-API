@@ -17,21 +17,21 @@
             bool reverseLookup
         )
         {
-            if (Hooks.Npc.PreDropLoot != null)
-                return Hooks.Npc.PreDropLoot
-                (
-                    ref itemId,
-                    x,
-                    y,
-                    width,
-                    height,
-                    type,
-                    stack,
-                    noBroadcast,
-                    prefix,
-                    noGrabDelay,
-                    reverseLookup
-                ) == HookResult.Continue;
+            var res = Hooks.Npc.PreDropLoot?.Invoke
+            (
+                ref itemId,
+                x,
+                y,
+                width,
+                height,
+                type,
+                stack,
+                noBroadcast,
+                prefix,
+                noGrabDelay,
+                reverseLookup
+            );
+            if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
         }
 
@@ -47,22 +47,18 @@
             int prefix,
             bool noGrabDelay,
             bool reverseLookup
-        )
-        {
-            if (Hooks.Npc.PostDropLoot != null)
-                Hooks.Npc.PostDropLoot
-                (
-                    x,
-                    y,
-                    width,
-                    height,
-                    type,
-                    stack,
-                    noBroadcast,
-                    prefix,
-                    noGrabDelay,
-                    reverseLookup
-                );
-        }
+        ) => Hooks.Npc.PostDropLoot?.Invoke
+        (
+            x,
+            y,
+            width,
+            height,
+            type,
+            stack,
+            noBroadcast,
+            prefix,
+            noGrabDelay,
+            reverseLookup
+        );
     }
 }

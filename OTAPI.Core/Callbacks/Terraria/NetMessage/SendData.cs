@@ -26,22 +26,22 @@
             if (global::Terraria.Main.netMode == (int)NetMode.Server && remoteClient >= 0)
                 bufferIndex = remoteClient;
 
-            if (Hooks.Net.SendData != null)
-                return Hooks.Net.SendData
-                (
-                    ref bufferIndex,
-                    ref msgType,
-                    ref remoteClient,
-                    ref ignoreClient,
-                    ref text,
-                    ref number,
-                    ref number2,
-                    ref number3,
-                    ref number4,
-                    ref number5,
-                    ref number6,
-                    ref number7
-                ) == HookResult.Continue;
+            var res = Hooks.Net.SendData?.Invoke
+            (
+                ref bufferIndex,
+                ref msgType,
+                ref remoteClient,
+                ref ignoreClient,
+                ref text,
+                ref number,
+                ref number2,
+                ref number3,
+                ref number4,
+                ref number5,
+                ref number6,
+                ref number7
+            );
+            if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
         }
     }
