@@ -3,7 +3,7 @@
   "frameworks": {
     "net451": {
       "bin": {
-        "assembly": "../../artifacts/Steamworks.NET.dll"
+        "assembly": "Steamworks.NET.dll"
       }
     }
   }

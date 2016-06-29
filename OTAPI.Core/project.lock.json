@@ -3,88 +3,38 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5.1": {
-      "Newtonsoft.Json/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1"
-      },
       "OTAPI.Xna/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1"
-      },
-      "Steamworks.NET/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1"
-      },
-      "TerrariaServer/1.0.0": {
-        "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "Newtonsoft.Json": "1.0.0",
-          "Steamworks.NET": "1.0.0"
+        "compile": {
+          "net451/OTAPI.Xna.dll": {}
+        },
+        "runtime": {
+          "net451/OTAPI.Xna.dll": {}
         }
-      }
-    },
-    ".NETFramework,Version=v4.5.1/win7-x86": {
-      "Newtonsoft.Json/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1"
-      },
-      "OTAPI.Xna/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1"
-      },
-      "Steamworks.NET/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1"
       },
       "TerrariaServer/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "Newtonsoft.Json": "1.0.0",
-          "Steamworks.NET": "1.0.0"
-        }
-      }
-    },
-    ".NETFramework,Version=v4.5.1/win7-x64": {
-      "Newtonsoft.Json/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1"
-      },
-      "OTAPI.Xna/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1"
-      },
-      "Steamworks.NET/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1"
-      },
-      "TerrariaServer/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "Newtonsoft.Json": "1.0.0",
-          "Steamworks.NET": "1.0.0"
+        "compile": {
+          "net451/TerrariaServer.dll": {}
+        },
+        "runtime": {
+          "net451/TerrariaServer.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Newtonsoft.Json/1.0.0": {
-      "type": "project",
-      "path": "../wrap/Newtonsoft.Json/project.json"
-    },
     "OTAPI.Xna/1.0.0": {
       "type": "project",
-      "path": "../OTAPI.Xna/project.json"
-    },
-    "Steamworks.NET/1.0.0": {
-      "type": "project",
-      "path": "../wrap/Steamworks.NET/project.json"
+      "path": "../OTAPI.Xna/project.json",
+      "msbuildProject": "../OTAPI.Xna/OTAPI.Xna.xproj"
     },
     "TerrariaServer/1.0.0": {
       "type": "project",
-      "path": "../wrap/TerrariaServer/project.json"
+      "path": "../wrap/TerrariaServer/project.json",
+      "msbuildProject": "../wrap/TerrariaServer/TerrariaServer.xproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -94,5 +44,7 @@
     ".NETFramework,Version=v4.5.1": [
       "TerrariaServer >= 1.0.0-*"
     ]
-  }
+  },
+  "tools": {},
+  "projectFileToolGroups": {}
 }

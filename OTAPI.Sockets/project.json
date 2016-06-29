@@ -12,6 +12,6 @@
     }
   },
   "dependencies": {
-    "OTAPI": "0.2.0"
+    "OTAPI.Core": "0.2.0"
   }
 }
