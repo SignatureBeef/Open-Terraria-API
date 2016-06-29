@@ -10,7 +10,7 @@ packages/
 .vs
 .vscode
 
-OTAPI.Patcher.Tests/bin/
-OTAPI.Patcher.Tests/obj/
-OTAPI.Core.Tests/bin/
-OTAPI.Core.Tests/obj/
+bin/
+obj/
+
+*.lock.json
