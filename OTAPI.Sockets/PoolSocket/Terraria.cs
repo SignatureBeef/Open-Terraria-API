@@ -27,6 +27,6 @@ namespace OTAPI.Sockets
 
         public bool IsConnected() => _connected;
 
-        public bool IsDataAvailable() => storeWriteOffset > 0;
+        public bool IsDataAvailable() => available > 0; // storeWriteOffset > 0;
     }
 }

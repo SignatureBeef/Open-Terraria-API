@@ -69,7 +69,6 @@ namespace OTAPI.Sockets
 
         protected SendResult SendData(SendEventArgs args)
         {
-            System.Diagnostics.Debug.WriteLine($"Sending data");
             if (args == null)
             {
                 args = _sendPool.PopFront();
@@ -97,10 +96,8 @@ namespace OTAPI.Sockets
                         _sendPool.PushBack(args);
                         return SendResult.NotQueued;
                     }
-
-                    //args.BufferList = new List<ArraySegment<byte>>(_txQueue);
-                    //_txQueue.Clear();
-
+                    
+                    //Let our data list be sent out
                     args.BufferList = _txQueue;
                     _txQueue = new List<ArraySegment<byte>>();
                     
@@ -135,8 +132,6 @@ namespace OTAPI.Sockets
 
         protected virtual void OnSendComplete(SendEventArgs arg)
         {
-            System.Diagnostics.Debug.WriteLine($"Sent {arg.BytesTransferred} bytes");
-
             if (arg.SocketError != System.Net.Sockets.SocketError.Success)
             {
                 //Release back to the pool
@@ -163,9 +158,6 @@ namespace OTAPI.Sockets
                 if (SendData(arg) == SendResult.NotQueued)
                 {
                     sending = false;
-                    ////Release socket
-                    //arg.Socket = null;
-                    //_sendPool.PushBack(arg);
                 }
             }
         }
