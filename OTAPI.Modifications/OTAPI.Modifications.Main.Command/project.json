@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0-*",
+  "description": "OTAPI.Modifications.Main.Command Class Library",
+  "authors": [ "Luke" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "net451": {
+      "dependencies": {
+        "OTAPI.Core": "0.2.1-*",
+        "OTAPI.Patcher": "1.0.0-*"
+      }
+    }
+  }
+}

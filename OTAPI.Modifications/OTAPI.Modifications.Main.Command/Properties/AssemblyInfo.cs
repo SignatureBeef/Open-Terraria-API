@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OTAPI.Modifications.Christmas")]
+[assembly: AssemblyTitle("OTAPI.Modifications.Main.Command")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OTAPI.Modifications.Christmas")]
+[assembly: AssemblyProduct("OTAPI.Modifications.Main.Command")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,4 +20,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a336ea0a-884d-4a60-a2ad-2fc89bf9e52b")]
+[assembly: Guid("dbb73dc4-493a-41f3-a3fd-1fecf79dc8a6")]
