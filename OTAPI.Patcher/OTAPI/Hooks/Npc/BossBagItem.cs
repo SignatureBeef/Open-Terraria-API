@@ -15,12 +15,12 @@ namespace OTAPI.Patcher.Modifications.Hooks.Npc
     /// </summary>
     public class BossBagItem : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking Npc.DropBossBag\\Item...";
+		
         public override bool IsAvailable(OptionSet options) => this.IsServer();
 
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking Npc.DropBossBag\\Item...");
-
             var vanilla = this.Context.Terraria.Types.Npc.Method("DropBossBags");
             var callback = this.Context.OTAPI.Types.Npc.Method("BossBagItem");
 
@@ -49,8 +49,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.Npc
             il.InsertBefore(target, il.Create(OpCodes.Ceq)); //Consume & compare the two variables and push 1 (true) or 0 (false) onto the stack
             il.InsertBefore(target, il.Create(OpCodes.Brfalse_S, target)); //if the output of ceq is 0 (false) then continue back on with the [target] instruction. In code terms, if the expression is not -1 then don't exit
             il.InsertBefore(target, il.Create(OpCodes.Ret)); //If we are here, the num2 variable is equal to -1, so we can exit the function.
-
-            Console.WriteLine("Done");
         }
     }
 }

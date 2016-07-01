@@ -11,16 +11,13 @@ namespace OTAPI.Patcher.Modifications.Hooks.Main
     /// </summary>
     public class GameUpdate : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking Game.Update";
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking Game.Update...");
-
             //Grab the Update method
             var vanilla = this.Context.Terraria.Types.Main.Method("Update");
             //Wrap it with the API calls
             vanilla.InjectBeginEnd(this.Context.OTAPI.Types.Main, "Update");
-
-            Console.WriteLine("Done");
         }
     }
 }

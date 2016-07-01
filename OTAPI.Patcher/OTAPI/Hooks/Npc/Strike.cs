@@ -7,16 +7,14 @@ namespace OTAPI.Patcher.Modifications.Hooks.Npc
 {
     public class Strike : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking Npc.StrikeNPC...";
+
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking Npc.StrikeNPC...");
-
             var vanilla = this.Context.Terraria.Types.Npc.Method("StrikeNPC");
             var callback = this.Context.OTAPI.Types.Npc.Method("Strike");
             
             vanilla.InjectNonVoidCallback(callback);
-
-            Console.WriteLine("Done");
         }
     }
 }

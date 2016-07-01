@@ -14,10 +14,9 @@ namespace OTAPI.Patcher.Modifications.Hooks.Collision
     [Ordered(4)] //Change the default order as we need to be infront of the HitSwitch mod.
     public class SwitchTilesEntitiy : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking Collision.SwitchTiles\\IEntity...";
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking Collision.SwitchTiles\\IEntity...");
-            
             var switchTiles = this.Context.Terraria.Types.Collision.Method("SwitchTiles");
             
             //Add the sender parameter to the vanilla method
@@ -37,8 +36,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.Collision
                     cil.InsertBefore(ins, cil.Create(OpCodes.Ldarg_0));
                 }
             });
-
-            Console.WriteLine("Done");
         }
     }
 }

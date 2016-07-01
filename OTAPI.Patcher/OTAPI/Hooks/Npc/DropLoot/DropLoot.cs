@@ -10,10 +10,9 @@ namespace OTAPI.Patcher.Modifications.Hooks.Npc
 {
     public class DropLoot_1_DropLoot : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Creating DropLoot";
         public override void Run(OptionSet options)
         {
-            Console.Write("Creating DropLoot...");
-            
             var newItem = this.Context.Terraria.Types.Item.Method("NewItem");
 
             //In this patch we create a custom DropLoot method that will be the receiver
@@ -65,8 +64,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.Npc
             //Emit the return value using the result variable we injected
             il.Emit(OpCodes.Ldloc, vrbItemId);
             il.Emit(OpCodes.Ret);
-
-            Console.WriteLine("Done");
         }
     }
 }

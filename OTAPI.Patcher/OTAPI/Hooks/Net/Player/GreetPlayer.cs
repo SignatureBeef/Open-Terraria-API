@@ -11,10 +11,9 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net.Player
     /// </summary>
     public class GreetPlayer : OTAPIModification<OTAPIContext>
     {
-        public override void Run(OptionSet options)
+		public override string Description => "Hooking NetMessage.greetPlayer";
+		public override void Run(OptionSet options)
         {
-            Console.Write("Hooking NetMessage.greetPlayer...");
-
             var vanilla = this.Context.Terraria.Types.NetMessage.Method("greetPlayer");
 
             var cbkBegin = this.Context.OTAPI.Types.NetMessage.Method("GreetPlayerBegin", parameters: vanilla.Parameters);

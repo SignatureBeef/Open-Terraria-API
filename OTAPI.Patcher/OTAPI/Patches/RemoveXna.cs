@@ -11,12 +11,11 @@ namespace OTAPI.Patcher.Modifications.Patches
     /// </summary>
     public class RemoveXna : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Removing Xna references...";
         public override bool IsAvailable(OptionSet options) => this.IsServer();
 
         public override void Run(OptionSet options)
         {
-            Console.Write("Removing Xna references...");
-
             //Context.OTAPI.MainModue.Resources.Clear();
 
             var xnaFramework = Context.Terraria.MainModue.AssemblyReferences
@@ -33,8 +32,6 @@ namespace OTAPI.Patcher.Modifications.Patches
 
             //To resolve the "OTAPI" from above until the .dll can be corrected.
             Context.AssemblyResolver.AssemblyResolve += AssemblyResolver_AssemblyResolve;
-
-            Console.WriteLine("Done.");
         }
 
         private void AssemblyResolver_AssemblyResolve(object sender, ModificationAssemblyResolver.AssemblyResolveEventArgs e)

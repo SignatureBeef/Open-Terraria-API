@@ -11,14 +11,14 @@ namespace OTAPI.Patcher.Modifications.Hooks.Command
     /// </summary>
     public class StartCommandThread : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking console listener creation...";
+
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking console listener creation...");
             var target = this.Context.Terraria.Types.Main.Method("startDedInput");
             var callback = this.Context.OTAPI.Types.Main.Methods.Single(x => x.Name == "startDedInput");
 
             target.Wrap(callback, beginIsCancellable: true);
-            Console.WriteLine("Done");
         }
     }
 }

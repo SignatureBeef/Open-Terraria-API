@@ -8,10 +8,9 @@ namespace OTAPI.Patcher.Modifications.Hooks.Item
 {
     public class SetDefaultsById : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking Item.SetDefaults(int,bool)...";
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking Item.SetDefaults(int,bool)...");
-
             var vanilla = this.Context.Terraria.Types.Item.Methods.Single(
                 x => x.Name == "SetDefaults"
                 && x.Parameters.First().ParameterType == this.Context.Terraria.MainModue.TypeSystem.Int32
@@ -23,8 +22,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.Item
             var cbkEnd = this.Context.OTAPI.Types.Item.Method("SetDefaultsByIdEnd", parameters: vanilla.Parameters);
 
             vanilla.Wrap(cbkBegin, cbkEnd, true);
-
-            Console.WriteLine("Done");
         }
     }
 }

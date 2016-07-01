@@ -1,0 +1,1 @@
+dotnet run -p OTAPI.Patcher -f net451 -- -merge=Terraria.patched -merge=OTAPI.Core\bin\Debug\net451\OTAPI.Core.dll -merge=OTAPI.Xna\bin\Debug\net451\OTAPI.Xna.dll -merge-output=OTAPI.dll -patch=OTAPI:OTAPI.Core\bin\Debug\net451\OTAPI.Core.dll -patch=Terrariaasd:wrap\TerrariaServer\TerrariaServer.exe -patch=Xna:OTAPI.Xna\bin\Debug\net451\OTAPI.Xna.dll -o=.patched

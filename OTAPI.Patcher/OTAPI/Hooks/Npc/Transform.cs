@@ -10,10 +10,9 @@ namespace OTAPI.Patcher.Modifications.Hooks.Npc
 {
     public class Transform : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking Npc.Transform...";
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking Npc.Transform...");
-
             var vanilla = this.Context.Terraria.Types.Npc.Method("Transform");
             var callback = this.Context.OTAPI.Types.Npc.Method("Transform");
 
@@ -37,8 +36,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.Npc
 
             //Replace transfers
             insertionPoint.ReplaceTransfer(ourEntry, vanilla);
-
-            Console.WriteLine("Done");
         }
     }
 }

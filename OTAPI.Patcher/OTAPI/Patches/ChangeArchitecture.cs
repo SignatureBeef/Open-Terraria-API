@@ -16,6 +16,8 @@ namespace OTAPI.Patcher.Modifications.Patches
         /// <returns>True if the server assemblies are detected, otherwise False.</returns>
         public override bool IsAvailable(OptionSet options) => this.IsServer();
 
+		public override string Description => "Changing architecture to x86";
+
         public override void Run(OptionSet options)
         {
             this.Context.Terraria.MainModue.Architecture = Mono.Cecil.TargetArchitecture.I386;

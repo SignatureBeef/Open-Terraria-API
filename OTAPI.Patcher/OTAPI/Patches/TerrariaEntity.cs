@@ -11,13 +11,10 @@ namespace OTAPI.Patcher.Modifications.Patches
     /// </summary>
     public class TerrariaEntity : OTAPIModification<OTAPIContext>
     {
+		public override string Description =>  "Injecting TerrariaEntity...";
         public override void Run(OptionSet options)
         {
-            Console.Write("Injecting TerrariaEntity...");
-
             this.Context.Terraria.Types.Entity.BaseType = this.Context.OTAPI.Types.TerrariaEntity;
-
-            Console.WriteLine("Done");
         }
     }
 }

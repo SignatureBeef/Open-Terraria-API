@@ -8,59 +8,59 @@ using System.Linq;
 
 namespace OTAPI.Patcher.Modifications.Hooks.Net
 {
-    public class ReceiveData : OTAPIModification<OTAPIContext>
-    {
-        public override void Run(OptionSet options)
-        {
-            Console.Write("Hooking NetMessage.GetData...");
+	public class ReceiveData : OTAPIModification<OTAPIContext>
+	{
+		public override string Description => "Hooking NetMessage.GetData";
 
-            var vanilla = this.Context.Terraria.Types.MessageBuffer.Method("GetData");
-            var callback = this.Context.OTAPI.Types.MessageBuffer.Method("ReceiveData");
+		public override void Run(OptionSet options)
+		{
+			var vanilla = this.Context.Terraria.Types.MessageBuffer.Method("GetData");
+			var callback = this.Context.OTAPI.Types.MessageBuffer.Method("ReceiveData");
 
-            //In this episode we are injecting the hook in a place where it can modify the packet id
-            //as soon as it can. The target instruction will be the just after the packet id byte is
-            //read from the buffer, and before the mac packet id check. Luckily the variable "messageType"
-            //is being set right between these conditions, so we can replace the value on the stack
-            //with the result value from the call to our callback!
+			//In this episode we are injecting the hook in a place where it can modify the packet id
+			//as soon as it can. The target instruction will be the just after the packet id byte is
+			//read from the buffer, and before the mac packet id check. Luckily the variable "messageType"
+			//is being set right between these conditions, so we can replace the value on the stack
+			//with the result value from the call to our callback!
 
-            //Note to self: the above is done without consideration to max packets. max packets should
-            //              be a seperate patch that alteres the value in the condition. ideally the mod
-            //              running OTAPI should have a packet register (OTAPI 1 provided this).
+			//Note to self: the above is done without consideration to max packets. max packets should
+			//              be a seperate patch that alteres the value in the condition. ideally the mod
+			//              running OTAPI should have a packet register (OTAPI 1 provided this).
 
 
-            //Time to find the messageType variable
-            //It's the first ldloc.0 after read buffer
-            var target = vanilla.Body.Instructions.First(x => x.OpCode == OpCodes.Ldloc_0
-                //After read buffer
-                && x.Offset > vanilla.Body.Instructions.First(y => y.OpCode == OpCodes.Ldfld
-                                                                && y.Operand is FieldReference
-                                                                && (y.Operand as FieldReference).Name == "readBuffer"
-                                                             ).Offset
-            );
+			//Time to find the messageType variable
+			//It's the first ldloc.0 after read buffer
+			var target = vanilla.Body.Instructions.First(x => x.OpCode == OpCodes.Ldloc_0
+				//After read buffer
+				&& x.Offset > vanilla.Body.Instructions.First(y => y.OpCode == OpCodes.Ldfld
+																&& y.Operand is FieldReference
+																&& (y.Operand as FieldReference).Name == "readBuffer"
+															 ).Offset
+			);
 
-            //Change the target to our callback, which will pop it's return value on the stack
-            target.OpCode = OpCodes.Call;
-            target.Operand = vanilla.Module.Import(callback);
+			//Change the target to our callback, which will pop it's return value on the stack
+			target.OpCode = OpCodes.Call;
+			target.Operand = vanilla.Module.Import(callback);
 
-            var il = vanilla.Body.GetILProcessor();
+			var il = vanilla.Body.GetILProcessor();
 
-            //We now need to add arguments to our callback, by reference so we can alter them.
+			//We now need to add arguments to our callback, by reference so we can alter them.
 
-            //Manually add the current instance of MessageBuffer
-            il.InsertBefore(target, il.Create(OpCodes.Ldarg_0));
+			//Manually add the current instance of MessageBuffer
+			il.InsertBefore(target, il.Create(OpCodes.Ldarg_0));
 
-            //Manually add the packet id and read offset
-            il.InsertBefore(target, il.Create(OpCodes.Ldloca, vanilla.Body.Variables.First(x => x.VariableType.Name == "Byte"))); //First byte is b
-            il.InsertBefore(target, il.Create(OpCodes.Ldloca, vanilla.Body.Variables.First(x => x.VariableType.Name == "Int32"))); //First int is read offset
+			//Manually add the packet id and read offset
+			il.InsertBefore(target, il.Create(OpCodes.Ldloca, vanilla.Body.Variables.First(x => x.VariableType.Name == "Byte"))); //First byte is b
+			il.InsertBefore(target, il.Create(OpCodes.Ldloca, vanilla.Body.Variables.First(x => x.VariableType.Name == "Int32"))); //First int is read offset
 
-            //Add parameters by reference
-            foreach (var prm in vanilla.Parameters)
-            {
-                il.InsertBefore(target, il.Create(OpCodes.Ldarga, prm));
-            }
+			//Add parameters by reference
+			foreach (var prm in vanilla.Parameters)
+			{
+				il.InsertBefore(target, il.Create(OpCodes.Ldarga, prm));
+			}
 
-            Console.WriteLine("Done");
-        }
-    }
+			Console.WriteLine("Done");
+		}
+	}
 }
 //InjectCallback

@@ -8,10 +8,9 @@ namespace OTAPI.Patcher.Modifications.Hooks.World.IO
 {
     public class Save : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking WorldFile.saveWorld(bool,bool)...";
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking WorldFile.saveWorld(bool,bool)...");
-
             var vanilla = this.Context.Terraria.Types.WorldFile.Methods.Single(
                 x => x.Name == "saveWorld"
                 && x.Parameters.Count() == 2
@@ -24,8 +23,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.World.IO
             var cbkEnd = this.Context.OTAPI.Types.WorldFile.Method("SaveWorldEnd", parameters: vanilla.Parameters);
 
             vanilla.Wrap(cbkBegin, cbkEnd, true);
-
-            Console.WriteLine("Done");
         }
     }
 }

@@ -8,10 +8,9 @@ namespace OTAPI.Patcher.Modifications.Hooks.Npc
 {
     public class NetDefaults : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking Npc.NetDefaults(int)...";
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking Npc.NetDefaults(int)...");
-
             var vanilla = this.Context.Terraria.Types.Npc.Methods.Single(
                 x => x.Name == "netDefaults"
                 && x.Parameters.First().ParameterType == this.Context.Terraria.MainModue.TypeSystem.Int32
@@ -22,8 +21,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.Npc
             var cbkEnd = this.Context.OTAPI.Types.Npc.Method("NetDefaultsEnd", parameters: vanilla.Parameters);
 
             vanilla.Wrap(cbkBegin, cbkEnd, true);
-
-            Console.WriteLine("Done");
         }
     }
 }

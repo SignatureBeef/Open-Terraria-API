@@ -14,10 +14,10 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net.Socket
     /// </summary>
     public class ServerSocketCreate : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking Netplay.ServerLoop\\TcpSocket...";
+		
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking Netplay.ServerLoop\\TcpSocket...");
-
             var vanilla = this.Context.Terraria.Types.Netplay.Method("ServerLoop");
             var callback = this.Context.OTAPI.Types.Netplay.Method("ServerSocketCreate");
 
@@ -29,8 +29,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net.Socket
 
             iTcpSocket.OpCode = OpCodes.Call; //Replace newobj to be call as we need to execute out callback instead
             iTcpSocket.Operand = vanilla.Module.Import(callback); //Replace the method reference from the TcpSocket constructor, to our callback
-
-            Console.WriteLine("Done");
         }
     }
 }

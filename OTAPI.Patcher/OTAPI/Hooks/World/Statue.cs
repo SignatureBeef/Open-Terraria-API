@@ -16,10 +16,9 @@ namespace OTAPI.Patcher.Modifications.Hooks.World
     /// </summary>
     public class Statue : OTAPIModification<OTAPIContext>
     {
+		public override string Description => "Hooking statue spawning...";
         public override void Run(OptionSet options)
         {
-            Console.Write("Hooking statue spawning...");
-
             foreach (var type in new[]
             {
                 new { TypeDef = this.Context.Terraria.Types.Npc, MechType = OpCodes.Ldc_I4_1 },
@@ -55,8 +54,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.World
 
                 vanilla.Body.OptimizeMacros();
             }
-
-            Console.WriteLine("Done");
         }
     }
 }
