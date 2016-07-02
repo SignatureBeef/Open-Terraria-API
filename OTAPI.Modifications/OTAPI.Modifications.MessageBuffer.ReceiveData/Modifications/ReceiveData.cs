@@ -1,8 +1,8 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NDesk.Options;
-using OTAPI.Patcher.Extensions;
-using OTAPI.Patcher.Modifications.Helpers;
+using OTAPI.Patcher.Engine.Extensions;
+using OTAPI.Patcher.Engine.Modifications.Helpers;
 using System;
 using System.Linq;
 
@@ -58,8 +58,6 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net
 			{
 				il.InsertBefore(target, il.Create(OpCodes.Ldarga, prm));
 			}
-
-			Console.WriteLine("Done");
 		}
 	}
 }

@@ -13,6 +13,6 @@
   },
   "dependencies": {
     "OTAPI.Core": "0.2.1-*",
-    "OTAPI.Patcher": "1.0.0-*"
+    "OTAPI.Patcher.Engine": "0.20.2"
   }
 }

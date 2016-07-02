@@ -1,5 +1,5 @@
 ﻿using NDesk.Options;
-using OTAPI.Patcher.Modification;
+using OTAPI.Patcher.Engine.Modification;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +33,7 @@ namespace OTAPI.Patcher
 		private static String OutputFileNameSuffix;
 		private static String MergeOutputFileName;
 
-		public static void Main(string[] args)
+		public static void Main22(string[] args)
 		{
 			Console.BackgroundColor = ConsoleColor.White;
 			Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -83,7 +83,7 @@ namespace OTAPI.Patcher
 		/// </summary>
 		static void Run()
 		{
-			var context = ModificationContext.LoadFromAssemblies<Modifications.Helpers.OTAPIContext/*We could do this dynamically, but this class is for OTAPI*/>(_patchAssemblies);
+			var context = ModificationContext.LoadFromAssemblies<Engine.Modifications.Helpers.OTAPIContext/*We could do this dynamically, but this class is for OTAPI*/>(_patchAssemblies);
 			var runner = ModificationRunner.LoadFromAssembly<Program>(context);
 
 			//Apply the modifications to the loaded binary

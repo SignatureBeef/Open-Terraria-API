@@ -1,0 +1,14 @@
+{
+  "version": "0.20.2",
+  "dependencies": {
+    "ILRepack.Lib": "2.0.10",
+    "Mono.Cecil": "0.9.6.1",
+    "NDesk.Options": "0.2.1",
+    "NuGet.Core": "2.11.1"
+  },
+  
+  "frameworks": {
+    "net451": { },
+    "dnx451": { }
+  }
+}
