@@ -2,8 +2,7 @@
   "profiles": {
     "OTAPI.Patcher": {
       "commandName": "OTAPI.Patcher",
-      "commandLineArgs": "--in wrap\\TerrariaServer\\TerrariaServer.exe --mod OTAPI.Modifications\\**\\bin\\Debug\\net451\\OTAPI.Modifications.*.dll",
-      //"commandLineArgs": "-merge=Terraria.patched -merge=OTAPI.Core\\bin\\Debug\\net451\\OTAPI.Core.dll -merge=OTAPI.Xna\\bin\\Debug\\net451\\OTAPI.Xna.dll -merge-output=OTAPI.dll -patch=OTAPI:OTAPI.Core\\bin\\Debug\\net451\\OTAPI.Core.dll -patch=Terrariaasd:wrap\\TerrariaServer\\TerrariaServer.exe -patch=Xna:OTAPI.Xna\\bin\\Debug\\net451\\OTAPI.Xna.dll -o=.patched",
+      "commandLineArgs": "--in wrap\\TerrariaServer\\TerrariaServer.exe --mod OTAPI.Modifications\\**\\bin\\Debug\\net451\\OTAPI.Modifications.*.dll -o=OTAPI.dll",
       "workingDirectory": "..\\"
     }
   }

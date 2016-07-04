@@ -2,8 +2,7 @@
 using Mono.Cecil.Cil;
 using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
-using System;
+using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
 namespace OTAPI.Patcher.Modifications.Hooks.Collision
@@ -13,14 +12,14 @@ namespace OTAPI.Patcher.Modifications.Hooks.Collision
 	/// method will also be ripped out as it's quicker and easier to do this than hacking ourselves
 	/// into the if blocks.
 	/// </summary>
-	public class PressurePlate : OTAPIModification<OTAPIContext>
+	public class PressurePlate : ModificationBase
 	{
 		public override string Description => @"Hooking Collision.SwitchTiles\PressurePlate...";
 
 		public override void Run(OptionSet options)
 		{
-			var vanilla = this.Context.Terraria.Types.Collision.Method("SwitchTiles");
-			var callback = vanilla.Module.Import(this.Context.OTAPI.Types.Collision.Method("PressurePlate"));
+			var vanilla = this.SourceDefinition.Type("Terraria.Collision").Method("SwitchTiles");
+			var callback = vanilla.Module.Import(this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Collision").Method("PressurePlate"));
 			var il = vanilla.Body.GetILProcessor();
 
 			//Find all HitSwitch calls
@@ -35,7 +34,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Collision
 				call.Operand = callback;
 
 				//Now we insert the entity argument to our custom version
-				var prmEntity = vanilla.Parameters.Single(x => x.ParameterType.Name == "Entity");
+				var prmEntity = vanilla.Parameters.Single(x => x.ParameterType.Name == "IEntity");
 				il.InsertBefore(call, il.Create(OpCodes.Ldarg, prmEntity));
 
 				//Time to remove SendData calls under the HitSwitch calls.

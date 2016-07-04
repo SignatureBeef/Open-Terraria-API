@@ -1,9 +1,5 @@
 ﻿using NDesk.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using OTAPI.Patcher.Engine;
 
 namespace OTAPI.Patcher
 {
@@ -16,6 +12,7 @@ namespace OTAPI.Patcher
 		{
 			string sourceAsm = null;
 			string modificationGlob = null;
+			string outputPath = null;
 
 			Console.WriteLine("Open Terraria API v2.0");
 
@@ -24,6 +21,8 @@ namespace OTAPI.Patcher
 				op => sourceAsm = op);
 			options.Add("mod=|modifications=", "Glob specifiying the path to modification assemblies that will run against the target assembly.",
 				op => modificationGlob = op);
+			options.Add("o=|output=", "Specifies the output assembly that has had all modifications applied.",
+				op => outputPath = op);
 
 			options.Parse(args);
 
@@ -34,8 +33,8 @@ namespace OTAPI.Patcher
 				return;
 			}
 
-			patcher = new Engine.Patcher(sourceAsm, modificationGlob);
-			patcher.Run();
+			patcher = new Engine.Patcher(sourceAsm, modificationGlob, outputPath);
+			patcher.Run(options);
 		}
 	}
 }

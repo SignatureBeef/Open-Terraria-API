@@ -15,8 +15,8 @@ namespace OTAPI.Patcher.Engine
 	/// list of all the modification instances that will run against the source
 	/// assembly.
 	/// </summary>
-    public class Patcher
-    {
+	public class Patcher
+	{
 		/// <summary>
 		/// Gets or sets the path on disk for the source assembly that will have all
 		/// the patches run against it.
@@ -24,17 +24,23 @@ namespace OTAPI.Patcher.Engine
 		public string SourceAssemblyPath { get; set; }
 
 		/// <summary>
+		/// Gets or sets the path on disk for the output assembly that will be saved
+		/// once all modifications have been applied
+		/// </summary>
+		public string OutputAssemblyPath { get; set; }
+
+		/// <summary>
 		/// Gets or sets the assembly definition loaded from the source assembly path.
-		/// This assemblydefinition gets modified and rewritten by all the IModification
+		/// This assemblydefinition gets modified and rewritten by all the ModificationBase
 		/// instances
 		/// </summary>
 		public AssemblyDefinition SourceAssembly { get; internal set; }
 
 		/// <summary>
-		/// Contains a list of all the IModification instances yielded from all the
+		/// Contains a list of all the ModificationBase instances yielded from all the
 		/// patch assemblies.
 		/// </summary>
-		public List<IModification> Modifications { get; set; } = new List<IModification>();
+		public List<ModificationBase> Modifications { get; set; } = new List<ModificationBase>();
 
 		protected ReaderParameters readerParams = new ReaderParameters(ReadingMode.Immediate)
 		{
@@ -53,10 +59,11 @@ namespace OTAPI.Patcher.Engine
 		/// a glob containing all the modification assemblies.
 		/// </summary>
 		/// <param name="SourceAssemblyPath"></param>
-		public Patcher(string sourceAssemblyPath, string modificationAssemblyGlob)
+		public Patcher(string sourceAssemblyPath, string modificationAssemblyGlob, string outputAssemblyPath)
 		{
 			this.SourceAssemblyPath = sourceAssemblyPath;
 			this.modificationAssemblyGlob = modificationAssemblyGlob;
+			this.OutputAssemblyPath = outputAssemblyPath;
 
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 		}
@@ -88,18 +95,17 @@ namespace OTAPI.Patcher.Engine
 
 		protected IEnumerable<string> GlobModificationAssemblies()
 		{
-
 			foreach (var info in Glob.Glob.Expand(modificationAssemblyGlob))
 			{
 				yield return info.FullName;
 			}
 		}
 
-		protected IModification LoadModification(Type type)
+		protected ModificationBase LoadModification(Type type)
 		{
 			object objectRef = Activator.CreateInstance(type);
 
-			return objectRef as IModification;
+			return objectRef as ModificationBase;
 		}
 
 		protected void LoadModificationAssemblies()
@@ -113,14 +119,16 @@ namespace OTAPI.Patcher.Engine
 
 					foreach (Type t in asm.GetTypes())
 					{
-						if (t.GetInterface("IModification") == null)
+						if (t.BaseType != typeof(ModificationBase))
 						{
 							continue;
 						}
 
-						IModification mod = LoadModification(t);
+						ModificationBase mod = LoadModification(t);
 						if (mod != null)
 						{
+							mod.SourceDefinition = SourceAssembly;
+
 							Modifications.Add(mod);
 						}
 					}
@@ -135,11 +143,33 @@ namespace OTAPI.Patcher.Engine
 
 					continue;
 				}
-
 			}
 		}
 
-		public void Run()
+		protected void RunModifications(NDesk.Options.OptionSet optionSet)
+		{
+			foreach (var mod in Modifications.OrderBy(x => x.GetOrder()))
+			{
+				if (mod.IsAvailable(optionSet))
+				{
+					Console.Write(" -> " + mod.Description);
+					mod.Run(optionSet);
+					Console.WriteLine();
+				}
+			}
+		}
+
+		protected void SaveSourceAssembly()
+		{
+			if (string.IsNullOrEmpty(OutputAssemblyPath))
+			{
+				throw new ArgumentNullException(nameof(OutputAssemblyPath));
+			}
+
+			this.SourceAssembly.Write(OutputAssemblyPath);
+		}
+
+		public void Run(NDesk.Options.OptionSet optionSet)
 		{
 			try
 			{
@@ -156,6 +186,12 @@ namespace OTAPI.Patcher.Engine
 			LoadModificationAssemblies();
 
 			Console.WriteLine($"Running {Modifications.Count} modifications.");
+
+			RunModifications(optionSet);
+
+			Console.WriteLine($"Saving modifications to {OutputAssemblyPath ?? "<null>"}");
+
+			SaveSourceAssembly();
 		}
-    }
+	}
 }
