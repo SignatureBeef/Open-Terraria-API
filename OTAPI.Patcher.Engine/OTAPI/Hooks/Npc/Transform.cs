@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
     public class Transform : OTAPIModification<OTAPIContext>
     {
 		public override string Description => "Hooking Npc.Transform...";
-        public override void Run(OptionSet options)
+        public override void Run()
         {
             var vanilla = this.Context.Terraria.Types.Npc.Method("Transform");
             var callback = this.Context.OTAPI.Types.Npc.Method("Transform");

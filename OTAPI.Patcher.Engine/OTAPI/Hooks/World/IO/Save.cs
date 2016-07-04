@@ -10,8 +10,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
 	public class Save : ModificationBase
 	{
 		public override string Description => "Hooking WorldFile.saveWorld(bool,bool)...";
-		public override void Run(OptionSet options)
-		{
+        public override void Run()
+        {
 			var vanilla = SourceDefinition.Type("Terraria.IO.WorldFile").Methods.Single(
 				x => x.Name == "saveWorld"
 				&& x.Parameters.Count() == 2

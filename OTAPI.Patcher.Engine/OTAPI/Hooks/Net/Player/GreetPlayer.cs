@@ -1,5 +1,6 @@
 ﻿using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
+using OTAPI.Patcher.Engine.Modification;
 using OTAPI.Patcher.Engine.Modifications.Helpers;
 using System;
 
@@ -9,19 +10,22 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Player
     /// This modification is to allow the NetMessage.greetPlayer hooks to be ran by injecting callbacks into
     /// the start and end of the vanilla method.
     /// </summary>
-    public class GreetPlayer : OTAPIModification<OTAPIContext>
+    public class GreetPlayer : ModificationBase
     {
 		public override string Description => "Hooking NetMessage.greetPlayer";
-		public override void Run(OptionSet options)
+		public override void Run()
         {
-            var vanilla = this.Context.Terraria.Types.NetMessage.Method("greetPlayer");
+			var vanilla = SourceDefinition.Type("Terraria.NetMessage")
+				.Method("greetPlayer");
 
-            var cbkBegin = this.Context.OTAPI.Types.NetMessage.Method("GreetPlayerBegin", parameters: vanilla.Parameters);
-            var cbkEnd = this.Context.OTAPI.Types.NetMessage.Method("GreetPlayerEnd", parameters: vanilla.Parameters);
+			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.NetMessage")
+				.Method("GreetPlayerBegin", parameters: vanilla.Parameters);
+
+
+            var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.NetMessage")
+				.Method("GreetPlayerEnd", parameters: vanilla.Parameters);
 
             vanilla.Wrap(cbkBegin, cbkEnd, true);
-
-            Console.WriteLine("Done");
         }
     }
 }

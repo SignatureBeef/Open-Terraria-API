@@ -10,8 +10,9 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 	public class SetDefaultsById : ModificationBase
 	{
 		public override string Description => "Hooking Projectile.SetDefaults(int)...";
-		public override void Run(OptionSet options)
-		{
+
+        public override void Run()
+        {
 			var vanilla = SourceDefinition.Type("Terraria.Projectile").Methods.Single(
 				x => x.Name == "SetDefaults"
 				&& x.Parameters.Single().ParameterType == SourceDefinition.MainModule.TypeSystem.Int32

@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Main
 	public class GameUpdate : ModificationBase
 	{
 		public override string Description => "Hooking Game.Update";
-        public override void Run(OptionSet options)
+        public override void Run()
         {
             //Grab the Update method
             var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("Update");

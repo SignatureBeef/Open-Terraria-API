@@ -150,12 +150,12 @@ namespace OTAPI.Patcher.Engine
 		{
 			foreach (var mod in Modifications.OrderBy(x => x.GetOrder()))
 			{
-				if (mod.IsAvailable(optionSet))
+				if (mod.IsAvailable())
 				{
 					try
 					{
 						Console.Write(" -> " + mod.Description);
-						mod.Run(optionSet);
+						mod.Run();
 						Console.WriteLine();
 					}
 					catch (Exception ex)

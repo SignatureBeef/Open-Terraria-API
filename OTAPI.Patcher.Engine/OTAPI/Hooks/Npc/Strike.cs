@@ -9,7 +9,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
     {
 		public override string Description => "Hooking Npc.StrikeNPC...";
 
-        public override void Run(OptionSet options)
+        public override void Run()
         {
             var vanilla = this.Context.Terraria.Types.Npc.Method("StrikeNPC");
             var callback = this.Context.OTAPI.Types.Npc.Method("Strike");

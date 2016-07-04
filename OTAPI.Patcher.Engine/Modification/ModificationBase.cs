@@ -21,13 +21,13 @@ namespace OTAPI.Patcher.Engine.Modification
 		/// Determines if the current modification can be executed.
 		/// </summary>
 		/// <returns></returns>
-		public virtual bool IsAvailable(OptionSet options) => true;
+		public virtual bool IsAvailable() => true;
 
 		/// <summary>
 		/// Occurs when the modification is triggered to run
 		/// </summary>
 		/// <param name="options"></param>
-		public abstract void Run(OptionSet options);
+		public abstract void Run();
 
 		/// <summary>
 		/// Description of the modification running

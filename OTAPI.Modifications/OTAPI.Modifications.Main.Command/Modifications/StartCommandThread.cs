@@ -12,7 +12,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Command
 	{
 		public override string Description => "Hooking console listener creation...";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var target = this.SourceDefinition.Type("Terraria.Main").Method("startDedInput");
 			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Methods.Single(x => x.Name == "startDedInput");

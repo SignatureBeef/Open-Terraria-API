@@ -12,7 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override string Description => "Hooking Npc.NewNPC...";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var vanilla = this.Context.Terraria.Types.Npc.Method("NewNPC");
 			var callback = this.Context.OTAPI.Types.Npc.Method("Create");

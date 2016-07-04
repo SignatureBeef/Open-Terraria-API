@@ -6,7 +6,13 @@ namespace OTAPI.Patcher.Engine.Extensions
 {
     public static partial class CecilHelpers
     {
-        public static MethodDefinition Method(this TypeDefinition typeDefinition, string name,
+
+		public static TypeDefinition TypeDefinition(this System.Type type, AssemblyDefinition definition)
+		{
+			return definition.Type(type.FullName);
+		}
+
+		public static MethodDefinition Method(this TypeDefinition typeDefinition, string name,
             bool? isStatic = null,
             Collection<ParameterDefinition> parameters = null
         )

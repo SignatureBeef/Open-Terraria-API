@@ -16,7 +16,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
     {
 		public override string Description => "Hooking Netplay.ServerLoop\\TcpSocket...";
 		
-        public override void Run(OptionSet options)
+        public override void Run()
         {
             var vanilla = this.Context.Terraria.Types.Netplay.Method("ServerLoop");
             var callback = this.Context.OTAPI.Types.Netplay.Method("ServerSocketCreate");

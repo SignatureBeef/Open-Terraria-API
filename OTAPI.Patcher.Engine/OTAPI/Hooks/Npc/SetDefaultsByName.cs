@@ -9,7 +9,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
     public class SetDefaultsByName : OTAPIModification<OTAPIContext>
     {
 		public override string Description => "Hooking Npc.SetDefaults(string)...";
-        public override void Run(OptionSet options)
+        public override void Run()
         {
             var vanilla = this.Context.Terraria.Types.Npc.Methods.Single(
                 x => x.Name == "SetDefaults"

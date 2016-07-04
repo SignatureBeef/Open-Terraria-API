@@ -13,7 +13,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net.Player
 	{
 		public override string Description => "Hooking NetMessage.GetData\\NameCollision";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var vanilla = this.SourceDefinition.Type("Terraria.MessageBuffer").Method("GetData");
 			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.MessageBuffer").Method("NameCollision");

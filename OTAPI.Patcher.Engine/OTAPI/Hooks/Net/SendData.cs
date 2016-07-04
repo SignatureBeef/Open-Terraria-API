@@ -9,7 +9,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 	{
 		public override string Description => "Hooking NetMessage.SendData...";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var vanilla = this.Context.Terraria.Types.NetMessage.Method("SendData");
 			var callback = this.Context.OTAPI.Types.NetMessage.Method("SendData");

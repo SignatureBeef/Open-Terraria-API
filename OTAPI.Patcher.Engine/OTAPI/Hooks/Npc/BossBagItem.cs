@@ -19,7 +19,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		
         public override bool IsAvailable(OptionSet options) => this.IsServer();
 
-        public override void Run(OptionSet options)
+        public override void Run()
         {
             var vanilla = this.Context.Terraria.Types.Npc.Method("DropBossBags");
             var callback = this.Context.OTAPI.Types.Npc.Method("BossBagItem");

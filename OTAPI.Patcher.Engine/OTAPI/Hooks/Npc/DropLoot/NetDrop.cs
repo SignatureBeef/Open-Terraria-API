@@ -13,7 +13,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
     {
 		public override string Description => "Hooking Npc.NPCLoot\\SendData...";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var npcLoot = this.Context.Terraria.Types.Npc.Method("NPCLoot");
 			var dropLoot = this.Context.Terraria.Types.Npc.Method("DropLoot");

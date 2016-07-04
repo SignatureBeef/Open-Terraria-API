@@ -14,11 +14,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 		/// This patch is only applicable to server assemblies.
 		/// </summary>
 		/// <returns>True if the server assemblies are detected, otherwise False.</returns>
-		public override bool IsAvailable(OptionSet options) => this.IsServer();
+		public override bool IsAvailable() => this.IsServer();
 
 		public override string Description => "Changing architecture to x86";
 
-		public override void Run(OptionSet options)
+        public override void Run()
 		{
 			SourceDefinition.MainModule.Architecture = Mono.Cecil.TargetArchitecture.I386;
 			SourceDefinition.MainModule.Attributes = Mono.Cecil.ModuleAttributes.ILOnly;

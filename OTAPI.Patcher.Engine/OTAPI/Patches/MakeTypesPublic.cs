@@ -12,7 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	public class MakeTypesPublic : ModificationBase
 	{
 		public override string Description => "Making all types public...";
-		public override void Run(OptionSet options)
+        public override void Run()
 		{
 			foreach (var type in SourceDefinition.MainModule.Types)
 				type.MakePublic(false);

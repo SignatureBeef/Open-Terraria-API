@@ -9,7 +9,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
     public class NetDefaults : OTAPIModification<OTAPIContext>
     {
 		public override string Description => "Hooking Npc.NetDefaults(int)...";
-        public override void Run(OptionSet options)
+        public override void Run()
         {
             var vanilla = this.Context.Terraria.Types.Npc.Methods.Single(
                 x => x.Name == "netDefaults"

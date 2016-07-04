@@ -12,7 +12,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Main
 	{
 		public override string Description => "Hooking Game.Initialize...";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			//Grab the Initialise method
 			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("Initialize");
