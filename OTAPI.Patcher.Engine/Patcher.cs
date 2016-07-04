@@ -152,9 +152,17 @@ namespace OTAPI.Patcher.Engine
 			{
 				if (mod.IsAvailable(optionSet))
 				{
-					Console.Write(" -> " + mod.Description);
-					mod.Run(optionSet);
-					Console.WriteLine();
+					try
+					{
+						Console.Write(" -> " + mod.Description);
+						mod.Run(optionSet);
+						Console.WriteLine();
+					}
+					catch (Exception ex)
+					{
+						Console.Error.WriteLine($"Error executing modification {mod.GetType().Name}: {ex.Message}");
+						return;
+					}
 				}
 			}
 		}

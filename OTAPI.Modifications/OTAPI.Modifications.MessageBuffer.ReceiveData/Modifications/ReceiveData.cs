@@ -2,20 +2,19 @@
 using Mono.Cecil.Cil;
 using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
-using System;
+using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
 namespace OTAPI.Patcher.Modifications.Hooks.Net
 {
-	public class ReceiveData : OTAPIModification<OTAPIContext>
+	public class ReceiveData : ModificationBase
 	{
 		public override string Description => "Hooking NetMessage.GetData";
 
 		public override void Run(OptionSet options)
 		{
-			var vanilla = this.Context.Terraria.Types.MessageBuffer.Method("GetData");
-			var callback = this.Context.OTAPI.Types.MessageBuffer.Method("ReceiveData");
+			var vanilla = this.SourceDefinition.Type("Terraria.MessageBuffer").Method("GetData");
+			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.MessageBuffer").Method("ReceiveData");
 
 			//In this episode we are injecting the hook in a place where it can modify the packet id
 			//as soon as it can. The target instruction will be the just after the packet id byte is

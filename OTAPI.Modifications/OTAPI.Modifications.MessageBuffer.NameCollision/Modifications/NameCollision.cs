@@ -1,9 +1,7 @@
-﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
+﻿using Mono.Cecil.Cil;
 using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
-using System;
+using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
 namespace OTAPI.Patcher.Modifications.Hooks.Net.Player
@@ -11,14 +9,14 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net.Player
 	/// <summary>
 	/// Injects a hook into the if statement that surrounds the name collision kick.
 	/// </summary>
-	public class NameCollision : OTAPIModification<OTAPIContext>
+	public class NameCollision : ModificationBase
 	{
 		public override string Description => "Hooking NetMessage.GetData\\NameCollision";
 
 		public override void Run(OptionSet options)
 		{
-			var vanilla = this.Context.Terraria.Types.MessageBuffer.Method("GetData");
-			var callback = this.Context.OTAPI.Types.MessageBuffer.Method("NameCollision");
+			var vanilla = this.SourceDefinition.Type("Terraria.MessageBuffer").Method("GetData");
+			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.MessageBuffer").Method("NameCollision");
 
 			//Luckily there is a if statement that we can inject our callbacks result into.
 			//What we need to do is find a reference point and back track to this flag.

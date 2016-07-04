@@ -1,24 +1,24 @@
 ﻿using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
-using System;
+using OTAPI.Patcher.Engine.Modification;
 
 namespace OTAPI.Patcher.Modifications.Hooks.Main
 {
-    /// <summary>
-    /// Adds a hook for checking if it's christmas
-    /// </summary>
-    public class Christmas : OTAPIModification<OTAPIContext>
-    {
+	/// <summary>
+	/// Adds a hook for checking if it's christmas
+	/// </summary>
+	public class Christmas : ModificationBase
+	{
 		public override string Description => "Hooking Game.checkXMas...";
-        public override void Run(OptionSet options)
-        {
-            //Grab the methods
-            var vanilla = this.Context.Terraria.Types.Main.Method("checkXMas");
-            var callback = this.Context.OTAPI.Types.Main.Method("Christmas");
 
-            //Inject only the begin call
-            vanilla.Wrap(callback, null, true);
-        }
-    }
+		public override void Run(OptionSet options)
+		{
+			//Grab the methods
+			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("checkXMas");
+			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Method("Christmas");
+
+			//Inject only the begin call
+			vanilla.Wrap(callback, null, true);
+		}
+	}
 }
