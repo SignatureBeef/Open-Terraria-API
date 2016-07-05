@@ -18,12 +18,6 @@ namespace OTAPI.Patcher.Engine.Modification
 		}
 
 		/// <summary>
-		/// Determines if the current modification can be executed.
-		/// </summary>
-		/// <returns></returns>
-		public virtual bool IsAvailable() => true;
-
-		/// <summary>
 		/// Occurs when the modification is triggered to run
 		/// </summary>
 		/// <param name="options"></param>

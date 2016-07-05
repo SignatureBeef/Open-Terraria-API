@@ -18,8 +18,6 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override string Description => "Hooking Npc.DropBossBag\\Item...";
 
-		public override bool IsAvailable() => this.IsServer();
-
 		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("DropBossBags");

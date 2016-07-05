@@ -150,19 +150,16 @@ namespace OTAPI.Patcher.Engine
 		{
 			foreach (var mod in Modifications.OrderBy(x => x.GetOrder()))
 			{
-				if (mod.IsAvailable())
+				try
 				{
-					try
-					{
-						Console.Write(" -> " + mod.Description);
-						mod.Run();
-						Console.WriteLine();
-					}
-					catch (Exception ex)
-					{
-						Console.Error.WriteLine($"Error executing modification {mod.GetType().Name}: {ex.Message}");
-						return;
-					}
+					Console.Write(" -> " + mod.Description);
+					mod.Run();
+					Console.WriteLine();
+				}
+				catch (Exception ex)
+				{
+					Console.Error.WriteLine($"Error executing modification {mod.GetType().Name}: {ex.Message}");
+					return;
 				}
 			}
 		}

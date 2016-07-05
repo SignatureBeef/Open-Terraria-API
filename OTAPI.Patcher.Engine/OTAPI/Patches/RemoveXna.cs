@@ -11,7 +11,6 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	public class RemoveXna : ModificationBase
 	{
 		public override string Description => "Removing Xna references...";
-		public override bool IsAvailable() => this.IsServer();
 
         public override void Run()
         {

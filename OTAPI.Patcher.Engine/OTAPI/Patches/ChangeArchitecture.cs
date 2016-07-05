@@ -9,13 +9,6 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	/// </summary>
 	public class ChanegArchitecture : ModificationBase
 	{
-		/// <summary>
-		/// Determines if current context is running in server mode.
-		/// This patch is only applicable to server assemblies.
-		/// </summary>
-		/// <returns>True if the server assemblies are detected, otherwise False.</returns>
-		public override bool IsAvailable() => this.IsServer();
-
 		public override string Description => "Changing architecture to x86";
 
         public override void Run()
