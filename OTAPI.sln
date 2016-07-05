@@ -63,6 +63,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Patcher.Engine", "OTA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tile", "Tile", "{31CE5499-22BC-4C56-B64E-02CDD7160B3F}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Tile", "OTAPI.Modifications\OTAPI.Modifications.Tile\OTAPI.Modifications.Tile.xproj", "{04906046-835E-4D77-B852-09EF649B91BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
