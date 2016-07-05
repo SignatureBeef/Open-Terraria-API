@@ -24,7 +24,7 @@ namespace OTAPI.Modification.Tile.Modifications
 	//		);
 
 
-	//		//Currently the only occurances are:
+	//		//Currently the only occurrences are:
 	//		//	Terraria.Main.tile
 	//		//	Terraria.World.Generation._tiles
 	//		//
@@ -59,7 +59,7 @@ namespace OTAPI.Modification.Tile.Modifications
 	//		//
 	//		//From here I will remove the maxTileX & maxTileY instructions, leaving both newobj and stsfld.
 	//		//The operand of newobj must then be swapped to CALL and also it's operand to OTAPI's imported callback.
-	//		//I tend to swap existing instructions rather than remode and inject as it can avoid having
+	//		//I tend to swap existing instructions rather than remove and inject as it can avoid having
 	//		//to update IL jumps, handlers and so on.
 
 	//		//Get the static constructor
