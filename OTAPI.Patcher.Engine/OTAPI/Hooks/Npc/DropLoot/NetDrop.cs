@@ -1,22 +1,20 @@
-﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
+﻿using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
 using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
-using System;
+using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 {
-    public class DropLoot_1_NetDrop : OTAPIModification<OTAPIContext>
-    {
+	public class DropLoot_1_NetDrop : ModificationBase
+	{
 		public override string Description => "Hooking Npc.NPCLoot\\SendData...";
 
 		public override void Run()
 		{
-			var npcLoot = this.Context.Terraria.Types.Npc.Method("NPCLoot");
-			var dropLoot = this.Context.Terraria.Types.Npc.Method("DropLoot");
+			var npcLoot = SourceDefinition.Type("Terraria.NPC").Method("NPCLoot");
+			var dropLoot = SourceDefinition.Type("Terraria.NPC").Method("DropLoot");
 
 			//In the NPCLoot method there is a call to send packet 88 (after item drop).
 			//We will also want to hook this in the case the returned value from DropLoot
@@ -28,7 +26,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			var il = npcLoot.Body.GetILProcessor();
 
 			//This section will add '&& num40 >= 0' to the statement above "Main.item [num40].color = this.color;"
-			var insColour = npcLoot.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldfld && x.Operand == this.Context.Terraria.Types.Npc.Field("color")); //Grab where the call is located
+			var insColour = npcLoot.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldfld && x.Operand == SourceDefinition.Type("Terraria.NPC").Field("color")); //Grab where the call is located
 			var insColorStart = insColour.Previous(i => i.OpCode == OpCodes.Ldsfld); //Find the first instruction for the color call
 			var resumeInstruction = insColorStart.Previous.Operand as Instruction; //Find the instruction where it should be transferred to if false is evaludated
 
@@ -43,5 +41,5 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 
 			npcLoot.Body.OptimizeMacros();
 		}
-    }
+	}
 }

@@ -1,25 +1,24 @@
 ﻿using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
-using System;
+using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 {
-    public class SetDefaultsByName : OTAPIModification<OTAPIContext>
-    {
+	public class SetDefaultsByName : ModificationBase
+	{
 		public override string Description => "Hooking Npc.SetDefaults(string)...";
         public override void Run()
-        {
-            var vanilla = this.Context.Terraria.Types.Npc.Methods.Single(
-                x => x.Name == "SetDefaults"
-                && x.Parameters.First().ParameterType == this.Context.Terraria.MainModue.TypeSystem.String
-            );
-            
-            var cbkBegin = this.Context.OTAPI.Types.Npc.Method("SetDefaultsByNameBegin", parameters: vanilla.Parameters);
-            var cbkEnd = this.Context.OTAPI.Types.Npc.Method("SetDefaultsByNameEnd", parameters: vanilla.Parameters);
+		{
+			var vanilla = SourceDefinition.Type("Terraria.NPC").Methods.Single(
+				x => x.Name == "SetDefaults"
+				&& x.Parameters.First().ParameterType == SourceDefinition.MainModule.TypeSystem.String
+			);
 
-            vanilla.Wrap(cbkBegin, cbkEnd, true);
-        }
-    }
+			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("SetDefaultsByNameBegin", parameters: vanilla.Parameters);
+			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("SetDefaultsByNameEnd", parameters: vanilla.Parameters);
+
+			vanilla.Wrap(cbkBegin, cbkEnd, true);
+		}
+	}
 }

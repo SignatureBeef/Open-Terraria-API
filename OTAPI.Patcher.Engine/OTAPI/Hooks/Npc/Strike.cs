@@ -1,20 +1,18 @@
 ﻿using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
-using System;
+using OTAPI.Patcher.Engine.Modification;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 {
-    public class Strike : OTAPIModification<OTAPIContext>
-    {
+	public class Strike : ModificationBase
+	{
 		public override string Description => "Hooking Npc.StrikeNPC...";
 
         public override void Run()
-        {
-            var vanilla = this.Context.Terraria.Types.Npc.Method("StrikeNPC");
-            var callback = this.Context.OTAPI.Types.Npc.Method("Strike");
-            
-            vanilla.InjectNonVoidCallback(callback);
-        }
-    }
-}
+		{
+			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("StrikeNPC");
+			var callback = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("Strike");
+
+			vanilla.InjectNonVoidCallback(callback);
+		}
+	}

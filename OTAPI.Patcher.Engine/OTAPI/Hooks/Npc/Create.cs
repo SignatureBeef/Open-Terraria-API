@@ -2,20 +2,19 @@
 using Mono.Cecil.Cil;
 using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
-using System;
+using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 {
-	public class Create : OTAPIModification<OTAPIContext>
+	public class Create : ModificationBase
 	{
 		public override string Description => "Hooking Npc.NewNPC...";
 
 		public override void Run()
 		{
-			var vanilla = this.Context.Terraria.Types.Npc.Method("NewNPC");
-			var callback = this.Context.OTAPI.Types.Npc.Method("Create");
+			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("NewNPC");
+			var callback = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("Create");
 
 
 			var ctor = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
