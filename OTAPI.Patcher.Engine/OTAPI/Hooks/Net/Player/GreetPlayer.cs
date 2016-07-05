@@ -1,7 +1,7 @@
 ﻿using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
+
 using System;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Player

@@ -1,6 +1,6 @@
 ﻿using NDesk.Options;
 using OTAPI.Patcher.Engine.Modification;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
+
 using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Patches
