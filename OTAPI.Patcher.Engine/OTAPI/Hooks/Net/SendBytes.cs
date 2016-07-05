@@ -2,20 +2,21 @@
 using Mono.Cecil.Cil;
 using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
+using OTAPI.Patcher.Engine.Modification;
 using OTAPI.Patcher.Engine.Modifications.Helpers;
 using System;
 using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 {
-	public class SendBytes : OTAPIModification<OTAPIContext>
+	public class SendBytes : ModificationBase
 	{
 		public override string Description => "Hooking NetMessage.SendData\\AsyncSend...";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
-			var vanilla = this.Context.Terraria.Types.NetMessage.Method("SendData");
-			var callback = vanilla.Module.Import(this.Context.OTAPI.Types.NetMessage.Method("SendBytes"));
+			var vanilla = SourceDefinition.Type("Terraria.NetMesssage").Method("SendData");
+			var callback = vanilla.Module.Import(SourceDefinition.Type("Terraria.NetMesssage").Method("SendBytes"));
 
 			//Hooking send bytes should be as simple as replacing each AsyncSend call with
 			//the OTAPI callback as well as removing the socket instance and leaving the

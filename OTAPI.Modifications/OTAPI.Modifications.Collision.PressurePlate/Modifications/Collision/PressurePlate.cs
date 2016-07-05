@@ -16,7 +16,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Collision
 	{
 		public override string Description => @"Hooking Collision.SwitchTiles\PressurePlate...";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var vanilla = this.SourceDefinition.Type("Terraria.Collision").Method("SwitchTiles");
 			var callback = vanilla.Module.Import(this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Collision").Method("PressurePlate"));

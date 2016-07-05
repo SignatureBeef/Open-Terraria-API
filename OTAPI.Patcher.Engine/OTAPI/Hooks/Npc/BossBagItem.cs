@@ -18,9 +18,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override string Description => "Hooking Npc.DropBossBag\\Item...";
 
-		public override bool IsAvailable(OptionSet options) => this.IsServer();
-
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("DropBossBags");
 			var callback = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("BossBagItem");

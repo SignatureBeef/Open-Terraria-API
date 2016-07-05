@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override string Description => "Hooking Npc.NPCLoot\\SendData...";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var npcLoot = SourceDefinition.Type("Terraria.NPC").Method("NPCLoot");
 			var dropLoot = SourceDefinition.Type("Terraria.NPC").Method("DropLoot");

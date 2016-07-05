@@ -146,25 +146,22 @@ namespace OTAPI.Patcher.Engine
 			}
 		}
 
-		protected void RunModifications(NDesk.Options.OptionSet optionSet)
+		protected void RunModifications()
 		{
 			foreach (var mod in Modifications.OrderBy(x => x.GetOrder()))
 			{
-				if (mod.IsAvailable(optionSet))
+				try
 				{
-					try
-					{
-						Console.Write(" -> " + mod.Description);
-						mod.Run(optionSet);
-						Console.WriteLine();
-					}
-					catch (Exception ex)
-					{
-						Console.Error.WriteLine($"Error executing modification {mod.GetType().Name}: {ex.Message}");
-						if (System.Diagnostics.Debugger.IsAttached)
-							System.Diagnostics.Debugger.Break();
-						return;
-					}
+					Console.Write(" -> " + mod.Description);
+					mod.Run();
+					Console.WriteLine();
+				}
+				catch (Exception ex)
+				{
+					Console.Error.WriteLine($"Error executing modification {mod.GetType().Name}: {ex.Message}");
+					if (System.Diagnostics.Debugger.IsAttached)
+						System.Diagnostics.Debugger.Break();
+					return;
 				}
 			}
 		}
@@ -179,7 +176,7 @@ namespace OTAPI.Patcher.Engine
 			this.SourceAssembly.Write(OutputAssemblyPath);
 		}
 
-		public void Run(NDesk.Options.OptionSet optionSet)
+		public void Run()
 		{
 			try
 			{
@@ -197,7 +194,7 @@ namespace OTAPI.Patcher.Engine
 
 			Console.WriteLine($"Running {Modifications.Count} modifications.");
 
-			RunModifications(optionSet);
+			RunModifications();
 
 			Console.WriteLine($"Saving modifications to {OutputAssemblyPath ?? "<null>"}");
 

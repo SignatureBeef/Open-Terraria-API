@@ -8,7 +8,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Item
 	public class SetDefaultsById : ModificationBase
 	{
 		public override string Description => "Hooking Item.SetDefaults(int,bool)...";
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.Item").Methods.Single(
 				x => x.Name == "SetDefaults"

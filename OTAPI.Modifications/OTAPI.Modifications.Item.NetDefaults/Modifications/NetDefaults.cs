@@ -8,7 +8,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Item
 	public class NetDefaults : ModificationBase
     {
 		public override string Description => "Hooking Item.NetDefaults(int)...";
-        public override void Run(OptionSet options)
+        public override void Run()
         {
             var vanilla = this.SourceDefinition.Type("Terraria.Item").Methods.Single(
                 x => x.Name == "netDefaults"

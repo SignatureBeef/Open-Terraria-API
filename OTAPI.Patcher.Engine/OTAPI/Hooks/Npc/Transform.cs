@@ -10,7 +10,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	public class Transform : ModificationBase
 	{
 		public override string Description => "Hooking Npc.Transform...";
-		public override void Run(OptionSet options)
+        public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("Transform");
 			var callback = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("Transform");

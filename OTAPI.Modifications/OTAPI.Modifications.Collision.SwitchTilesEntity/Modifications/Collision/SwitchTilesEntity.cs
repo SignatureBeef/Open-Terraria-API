@@ -14,7 +14,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Collision
 	{
 		public override string Description => @"Hooking Collision.SwitchTiles\IEntity...";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			//Import TerrariaEntity as the base type of Terraria.Entity
 			this.SourceDefinition.Type("Terraria.Entity").BaseType = this.ModificationDefinition.Type("OTAPI.Core.TerrariaEntity");

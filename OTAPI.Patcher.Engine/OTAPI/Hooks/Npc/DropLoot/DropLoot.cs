@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	public class DropLoot_1_DropLoot : ModificationBase
 	{
 		public override string Description => "Creating DropLoot";
-		public override void Run(OptionSet options)
+        public override void Run()
 		{
 			var newItem = SourceDefinition.Type("Terraria.Item").Method("NewItem");
 

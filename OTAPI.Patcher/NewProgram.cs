@@ -34,7 +34,7 @@ namespace OTAPI.Patcher
 			}
 
 			patcher = new Engine.Patcher(sourceAsm, modificationGlob, outputPath);
-			patcher.Run(options);
+			patcher.Run();
 		}
 	}
 }

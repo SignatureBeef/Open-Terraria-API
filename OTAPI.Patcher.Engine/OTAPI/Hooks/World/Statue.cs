@@ -18,12 +18,12 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 	public class Statue : ModificationBase
 	{
 		public override string Description => "Hooking statue spawning...";
-		public override void Run(OptionSet options)
+        public override void Run()
 		{
 			foreach (var type in new[]
 			{
 				new { TypeDef = SourceDefinition.Type("Terraria.NPC"), MechType = OpCodes.Ldc_I4_1 },
-				new { TypeDef = SourceDefinition.Type("Terraria.Item"), MechType = OpCodes.Ldc_I4_2}
+				new { TypeDef = SourceDefinition.Type("Terraria.Item"), MechType = OpCodes.Ldc_I4_2 }
 			})
 			{
 				var vanilla = type.TypeDef.Methods.Single(x => x.Name == "MechSpawn");

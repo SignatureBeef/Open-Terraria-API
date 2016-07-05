@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Main
 	{
 		public override string Description => "Hooking Game.checkHalloween";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			//Grab the methods
 			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("checkHalloween");

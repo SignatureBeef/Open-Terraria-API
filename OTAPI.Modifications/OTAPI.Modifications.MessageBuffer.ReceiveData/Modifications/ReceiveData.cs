@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net
 	{
 		public override string Description => "Hooking NetMessage.GetData";
 
-		public override void Run(OptionSet options)
+		public override void Run()
 		{
 			var vanilla = this.SourceDefinition.Type("Terraria.MessageBuffer").Method("GetData");
 			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.MessageBuffer").Method("ReceiveData");

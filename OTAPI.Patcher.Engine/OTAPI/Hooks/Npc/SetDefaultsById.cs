@@ -8,7 +8,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	public class SetDefaultsById : ModificationBase
 	{
 		public override string Description => "Hooking Npc.SetDefaults(int,bool)...";
-		public override void Run(OptionSet options)
+        public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Methods.Single(
 				x => x.Name == "SetDefaults"
