@@ -161,6 +161,8 @@ namespace OTAPI.Patcher.Engine
 					catch (Exception ex)
 					{
 						Console.Error.WriteLine($"Error executing modification {mod.GetType().Name}: {ex.Message}");
+						if (System.Diagnostics.Debugger.IsAttached)
+							System.Diagnostics.Debugger.Break();
 						return;
 					}
 				}

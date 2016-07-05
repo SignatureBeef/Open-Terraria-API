@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0-*",
+  "description": "OTAPI.Modification.Tile Class Library",
+  "authors": [ "Luke" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "net451": {
+      "dependencies": {
+        "OTAPI.Patcher.Engine": "0.20.2",
+        "TerrariaServer": "1.0.0-*"
+      }
+    }
+  }
+}
