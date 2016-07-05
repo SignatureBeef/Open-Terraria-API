@@ -3,7 +3,7 @@ using Mono.Cecil.Cil;
 using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
-using OTAPI.Patcher.Engine.Modifications.Helpers;
+
 using System;
 using System.Linq;
 
