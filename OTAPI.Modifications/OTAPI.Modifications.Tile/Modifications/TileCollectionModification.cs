@@ -28,29 +28,30 @@ namespace OTAPI.Modification.Tile.Modifications
 	//		//	Terraria.Main.tile
 	//		//	Terraria.World.Generation._tiles
 	//		//
-	//		//I started eneumerating each type's properties and fields
+	//		//I started enumerating each type's properties and fields
 	//		//but thats kind of over kill for whats actually needed.
-	//		//
+
 	//		//Manually swap the declared types of Tile[] to ITileCollection
 	//		this.SourceDefinition.Type("Terraria.Main").Field("tile").FieldType = iTileCollection;
 	//		this.SourceDefinition.Type("Terraria.World.Generation.GenBase").Property("_tiles").PropertyType = iTileCollection;
 
-	//		//The Terraria.Main.tile's static contructor also needs to be corrected, as it's initialising
+	//		//The Terraria.Main.tile's static initialiser also needs to be corrected, as it's initialising
 	//		//the collection with Terraria.Tile[,] still.
 	//		//
-	//		//What we need to do in IL is find where the tile instance is being created with a new array.
+	//		//What we need to do in IL is find where the tile instance is being created with the new array.
 	//		//This is what the IL currently looks like in 1.3.1.1
 	//		//
 	//		//		IL_1fee: stsfld class Terraria.Map.WorldMap Terraria.Main::Map
 	//		//	*	IL_1ff3: ldsfld int32 Terraria.Main::maxTilesX
 	//		//	*	IL_1ff8: ldsfld int32 Terraria.Main::maxTilesY
-	//		//	*	IL_1ffd: newobj instance void class Terraria.Tile[0..., 0...]::.ctor(int32, int32)
-	//		//	*	IL_2002: stsfld class [OTAPI.Modifications.Tile] OTAPI.Tile.ITileCollection Terraria.Main::tile
+	//		//	~	IL_1ffd: newobj instance void class Terraria.Tile[0..., 0...]::.ctor(int32, int32)
+	//		//		IL_2002: stsfld class [OTAPI.Modifications.Tile] OTAPI.Tile.ITileCollection Terraria.Main::tile
 	//		//		IL_2007: ldc.i4 6001
 	//		//		IL_200c: newarr Terraria.Dust
 	//		//
 	//		//The lines on the stack marked with * need to be removed, and a
-	//		//[CALL OTAPI.OTAPI.Core.Callbacks.Terraria.Collection.Create] should be inserted.
+	//		//[CALL OTAPI.OTAPI.Core.Callbacks.Terraria.Collection.Create] should replace the instruction at
+	//		//the line marked with ~
 	//		//
 	//		//To do this I will uniquely look for the stsfld opcode by checking the operand to see
 	//		//if it's a field reference to Terraria.Main.tile, and additionally by checking if the previous
@@ -58,7 +59,7 @@ namespace OTAPI.Modification.Tile.Modifications
 	//		//
 	//		//From here I will remove the maxTileX & maxTileY instructions, leaving both newobj and stsfld.
 	//		//The operand of newobj must then be swapped to CALL and also it's operand to OTAPI's imported callback.
-	//		//I tend to swap existing instructions rather than replace as it can avoid having
+	//		//I tend to swap existing instructions rather than remode and inject as it can avoid having
 	//		//to update IL jumps, handlers and so on.
 
 	//		//Get the static constructor
