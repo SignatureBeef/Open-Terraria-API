@@ -1,6 +1,8 @@
 ﻿using Mono.Cecil;
 using NDesk.Options;
+using OTAPI.Patcher.Engine.Extensions;
 using System;
+using System.Reflection;
 
 namespace OTAPI.Patcher.Engine.Modification
 {
@@ -39,6 +41,22 @@ namespace OTAPI.Patcher.Engine.Modification
 				return attr.Order;
 
 			return DefaultOrder;
+		}
+
+		/// <summary>
+		/// Returns the TypeDefintion of the type specified
+		/// </summary>
+		public TypeDefinition Type<T>() => ModificationDefinition.Type<T>();
+
+		/// <summary>
+		/// Returns the MethodDefinition for the specified action
+		/// </summary>
+		public MethodDefinition Method(System.Linq.Expressions.Expression<Action> expression)
+		{
+			var method = (expression.Body as System.Linq.Expressions.MethodCallExpression).Method;
+			var type = this.ModificationDefinition.Type(method.DeclaringType.FullName);
+
+			return type.Method(method.Name);
 		}
 	}
 }

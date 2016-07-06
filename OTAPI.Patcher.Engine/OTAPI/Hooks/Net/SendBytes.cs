@@ -16,7 +16,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NetMesssage").Method("SendData");
-			var callback = vanilla.Module.Import(SourceDefinition.Type("Terraria.NetMesssage").Method("SendBytes"));
+			var callback = vanilla.Module.Import(ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.NetMesssage").Method("SendBytes"));
 
 			//Hooking send bytes should be as simple as replacing each AsyncSend call with
 			//the OTAPI callback as well as removing the socket instance and leaving the
@@ -37,7 +37,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 			{
 				//Replace the call with our OTAPI callback
 				call.OpCode = OpCodes.Call;
-				call.Operand = vanilla.Module.Import(callback);
+				call.Operand = callback;
 
 				//Wind back to the first Netplay.Clients (there are two, we want the one before the Socket reference)
 				var clients = call.Previous(x => x.OpCode == OpCodes.Ldfld

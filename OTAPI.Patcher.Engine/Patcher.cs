@@ -79,6 +79,10 @@ namespace OTAPI.Patcher.Engine
 			{
 				return Assembly.LoadFrom(libPath);
 			}
+			else if (args.Name == SourceAssembly.FullName)
+			{
+				return Assembly.LoadFrom(SourceAssemblyPath);
+			}
 
 			return null;
 		}

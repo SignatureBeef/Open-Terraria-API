@@ -4,6 +4,7 @@ using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
+using System;
 
 namespace OTAPI.Patcher.Modifications.Hooks.Collision
 {
@@ -19,7 +20,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Collision
 		public override void Run()
 		{
 			var vanilla = this.SourceDefinition.Type("Terraria.Collision").Method("SwitchTiles");
-			var callback = vanilla.Module.Import(this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Collision").Method("PressurePlate"));
+			var callback = vanilla.Module.Import(this.Method(() => Core.Callbacks.Terraria.Collision.PressurePlate(0, 0, null)));
 			var il = vanilla.Body.GetILProcessor();
 
 			//Find all HitSwitch calls

@@ -58,9 +58,7 @@ namespace OTAPI.Modification.Tile.Modifications
 	//		//opcode is newobj.
 	//		//
 	//		//From here I will remove the maxTileX & maxTileY instructions, leaving both newobj and stsfld.
-	//		//The operand of newobj must then be swapped to CALL and also it's operand to OTAPI's imported callback.
-	//		//I tend to swap existing instructions rather than remove and inject as it can avoid having
-	//		//to update IL jumps, handlers and so on.
+	//		//The opcode of newobj must then be swapped to CALL and also it's operand to OTAPI's imported callback.
 
 	//		//Get the static constructor
 	//		var staticConstructor = this.SourceDefinition
