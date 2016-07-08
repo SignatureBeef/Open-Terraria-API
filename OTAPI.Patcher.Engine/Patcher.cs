@@ -202,7 +202,15 @@ namespace OTAPI.Patcher.Engine
 
 			Console.WriteLine($"Saving modifications to {OutputAssemblyPath ?? "<null>"}");
 
-			SaveSourceAssembly();
+			try
+			{
+				SaveSourceAssembly();
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine($"Error saving patched source assembly: {ex.Message}");
+				return;
+			}
 		}
 	}
 }

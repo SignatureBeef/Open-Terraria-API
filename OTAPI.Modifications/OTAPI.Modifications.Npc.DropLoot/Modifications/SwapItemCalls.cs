@@ -10,7 +10,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	public class DropLoot_1_SwapItemCalls : ModificationBase
 	{
 		public override string Description => "Hooking Npc.NPCLoot\\NewItem...";
-        public override void Run()
+		public override void Run()
 		{
 			var npcLoot = SourceDefinition.Type("Terraria.NPC").Method("NPCLoot");
 			var dropLoot = SourceDefinition.Type("Terraria.NPC").Method("DropLoot");

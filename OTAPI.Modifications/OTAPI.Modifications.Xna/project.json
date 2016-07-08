@@ -1,15 +1,18 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "OTAPI.Xna Class Library",
   "authors": [ "Luke" ],
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-
   "frameworks": {
     "net451": { }
   },
   "compilationOptions": {
     "allowUnsafe": true
+  },
+  "dependencies": {
+    "OTAPI.Core": "0.2.1-*",
+    "OTAPI.Patcher.Engine": "0.20.2"
   }
 }

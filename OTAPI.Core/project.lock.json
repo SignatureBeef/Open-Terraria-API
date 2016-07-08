@@ -3,16 +3,6 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5.1": {
-      "OTAPI.Xna/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "compile": {
-          "net451/OTAPI.Xna.dll": {}
-        },
-        "runtime": {
-          "net451/OTAPI.Xna.dll": {}
-        }
-      },
       "TerrariaServer/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
@@ -26,11 +16,6 @@
     }
   },
   "libraries": {
-    "OTAPI.Xna/1.0.0": {
-      "type": "project",
-      "path": "../OTAPI.Xna/project.json",
-      "msbuildProject": "../OTAPI.Xna/OTAPI.Xna.xproj"
-    },
     "TerrariaServer/1.0.0": {
       "type": "project",
       "path": "../wrap/TerrariaServer/project.json",
@@ -38,9 +23,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "": [
-      "OTAPI.Xna >= 1.0.0-*"
-    ],
+    "": [],
     ".NETFramework,Version=v4.5.1": [
       "TerrariaServer >= 1.0.0-*"
     ]
