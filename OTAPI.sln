@@ -65,47 +65,47 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tile", "Tile", "{31CE5499-2
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Tile", "OTAPI.Modifications\OTAPI.Modifications.Tile\OTAPI.Modifications.Tile.xproj", "{04906046-835E-4D77-B852-09EF649B91BA}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Projectile.AI", "OTAPI.Modifications\OTAPI.Modification.Projectile.AI\OTAPI.Modification.Projectile.AI.xproj", "{2A290C14-1AB9-450F-BEE0-BFDD1C74086C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Projectile.AI", "OTAPI.Modifications\OTAPI.Modifications.Projectile.AI\OTAPI.Modifications.Projectile.AI.xproj", "{2A290C14-1AB9-450F-BEE0-BFDD1C74086C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Npc.BossBagItem", "OTAPI.Modifications\OTAPI.Modification.Npc.BossBagItem\OTAPI.Modification.Npc.BossBagItem.xproj", "{7D727548-B5E1-41AE-BB6D-A4EC93DD381C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Npc.BossBagItem", "OTAPI.Modifications\OTAPI.Modifications.Npc.BossBagItem\OTAPI.Modifications.Npc.BossBagItem.xproj", "{7D727548-B5E1-41AE-BB6D-A4EC93DD381C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.ChangeArchitecture", "OTAPI.Modifications\OTAPI.Modification.ChangeArchitecture\OTAPI.Modification.ChangeArchitecture.xproj", "{0AB98BF8-C80F-47A1-8E45-E33C864F6A99}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.ChangeArchitecture", "OTAPI.Modifications\OTAPI.Modifications.ChangeArchitecture\OTAPI.Modifications.ChangeArchitecture.xproj", "{0AB98BF8-C80F-47A1-8E45-E33C864F6A99}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Npc.Create", "OTAPI.Modifications\OTAPI.Modification.Npc.Create\OTAPI.Modification.Npc.Create.xproj", "{692594A4-285A-4997-BC17-44FA413995C2}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Npc.Create", "OTAPI.Modifications\OTAPI.Modifications.Npc.Create\OTAPI.Modifications.Npc.Create.xproj", "{692594A4-285A-4997-BC17-44FA413995C2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Npc.DropLoot_1_DropLoot", "OTAPI.Modifications\OTAPI.Modification.Npc.DropLoot_1_DropLoot\OTAPI.Modification.Npc.DropLoot_1_DropLoot.xproj", "{98DA4309-CDB5-4432-B787-E054CFDDB107}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Npc.DropLoot_1_DropLoot", "OTAPI.Modifications\OTAPI.Modifications.Npc.DropLoot_1_DropLoot\OTAPI.Modifications.Npc.DropLoot_1_DropLoot.xproj", "{98DA4309-CDB5-4432-B787-E054CFDDB107}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Npc.DropLoot_1_NetDrop", "OTAPI.Modifications\OTAPI.Modification.Npc.DropLoot_1_NetDrop\OTAPI.Modification.Npc.DropLoot_1_NetDrop.xproj", "{EC0370D9-853C-46D5-997F-214E9301B099}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Npc.DropLoot_1_NetDrop", "OTAPI.Modifications\OTAPI.Modifications.Npc.DropLoot_1_NetDrop\OTAPI.Modifications.Npc.DropLoot_1_NetDrop.xproj", "{EC0370D9-853C-46D5-997F-214E9301B099}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Npc.DropLoot_1_SwapItemCalls", "OTAPI.Modifications\OTAPI.Modification.Npc.DropLoot_1_SwapItemCalls\OTAPI.Modification.Npc.DropLoot_1_SwapItemCalls.xproj", "{B95FB13C-1F1B-4A29-8F67-676E0162C9FC}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Npc.DropLoot_1_SwapItemCalls", "OTAPI.Modifications\OTAPI.Modifications.Npc.DropLoot_1_SwapItemCalls\OTAPI.Modifications.Npc.DropLoot_1_SwapItemCalls.xproj", "{B95FB13C-1F1B-4A29-8F67-676E0162C9FC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Net.Player.Greet", "OTAPI.Modifications\OTAPI.Modification.Net.Player.Greet\OTAPI.Modification.Net.Player.Greet.xproj", "{33C29BD1-7621-40F8-BF6D-069986474CB5}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Net.Player.Greet", "OTAPI.Modifications\OTAPI.Modifications.Net.Player.Greet\OTAPI.Modifications.Net.Player.Greet.xproj", "{33C29BD1-7621-40F8-BF6D-069986474CB5}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.World.Hardmode", "OTAPI.Modifications\OTAPI.Modification.World.Hardmode\OTAPI.Modification.World.Hardmode.xproj", "{9976312D-B9AC-4EBB-8DD4-102168D209B9}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.World.Hardmode", "OTAPI.Modifications\OTAPI.Modifications.World.Hardmode\OTAPI.Modifications.World.Hardmode.xproj", "{9976312D-B9AC-4EBB-8DD4-102168D209B9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.MakeTypesPublic", "OTAPI.Modifications\OTAPI.Modification.MakeTypesPublic\OTAPI.Modification.MakeTypesPublic.xproj", "{F528FA85-7855-4735-AF1A-B45743746EBC}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.MakeTypesPublic", "OTAPI.Modifications\OTAPI.Modifications.MakeTypesPublic\OTAPI.Modifications.MakeTypesPublic.xproj", "{F528FA85-7855-4735-AF1A-B45743746EBC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Npc.NetDefaults", "OTAPI.Modifications\OTAPI.Modification.Npc.NetDefaults\OTAPI.Modification.Npc.NetDefaults.xproj", "{F9DE0F1B-559F-461C-A4F9-A0E6EAFF2710}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Npc.NetDefaults", "OTAPI.Modifications\OTAPI.Modifications.Npc.NetDefaults\OTAPI.Modifications.Npc.NetDefaults.xproj", "{F9DE0F1B-559F-461C-A4F9-A0E6EAFF2710}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.World.Save", "OTAPI.Modifications\OTAPI.Modification.World.Save\OTAPI.Modification.World.Save.xproj", "{942E9DBA-9DA5-475D-97B7-B847A7707962}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.World.Save", "OTAPI.Modifications\OTAPI.Modifications.World.Save\OTAPI.Modifications.World.Save.xproj", "{942E9DBA-9DA5-475D-97B7-B847A7707962}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Net.SendData", "OTAPI.Modifications\OTAPI.Modification.Net.SendData\OTAPI.Modification.Net.SendData.xproj", "{45EA0788-7FF4-4D8C-85FD-76DACEADBEAD}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Net.SendData", "OTAPI.Modifications\OTAPI.Modifications.Net.SendData\OTAPI.Modifications.Net.SendData.xproj", "{45EA0788-7FF4-4D8C-85FD-76DACEADBEAD}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Net.SendBytes", "OTAPI.Modifications\OTAPI.Modification.Net.SendBytes\OTAPI.Modification.Net.SendBytes.xproj", "{ED2FD291-F3F2-4CD5-A4E5-40254841494E}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Net.SendBytes", "OTAPI.Modifications\OTAPI.Modifications.Net.SendBytes\OTAPI.Modifications.Net.SendBytes.xproj", "{ED2FD291-F3F2-4CD5-A4E5-40254841494E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Net.ServerSocketCreate", "OTAPI.Modifications\OTAPI.Modification.Net.ServerSocketCreate\OTAPI.Modification.Net.ServerSocketCreate.xproj", "{AE610993-F3BB-4B5B-91AC-A33DDBE89539}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Net.ServerSocketCreate", "OTAPI.Modifications\OTAPI.Modifications.Net.ServerSocketCreate\OTAPI.Modifications.Net.ServerSocketCreate.xproj", "{AE610993-F3BB-4B5B-91AC-A33DDBE89539}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Projectile.SetDefaultsById", "OTAPI.Modifications\OTAPI.Modification.Projectile.SetDefaultsById\OTAPI.Modification.Projectile.SetDefaultsById.xproj", "{E6C56FB9-FCC5-41D8-9AC7-DA0A70E12A94}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Projectile.SetDefaultsById", "OTAPI.Modifications\OTAPI.Modifications.Projectile.SetDefaultsById\OTAPI.Modifications.Projectile.SetDefaultsById.xproj", "{E6C56FB9-FCC5-41D8-9AC7-DA0A70E12A94}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Npc.SetDefaultsByName", "OTAPI.Modifications\OTAPI.Modification.Npc.SetDefaultsByName\OTAPI.Modification.Npc.SetDefaultsByName.xproj", "{964706CD-AC1D-4A2C-9C49-D87BB6725DE6}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Npc.SetDefaultsByName", "OTAPI.Modifications\OTAPI.Modifications.Npc.SetDefaultsByName\OTAPI.Modifications.Npc.SetDefaultsByName.xproj", "{964706CD-AC1D-4A2C-9C49-D87BB6725DE6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.World.Statue", "OTAPI.Modifications\OTAPI.Modification.World.Statue\OTAPI.Modification.World.Statue.xproj", "{329F27A4-A971-4638-BAEF-0C3B98A8BDFD}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.World.Statue", "OTAPI.Modifications\OTAPI.Modifications.World.Statue\OTAPI.Modifications.World.Statue.xproj", "{329F27A4-A971-4638-BAEF-0C3B98A8BDFD}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Npc.Strike", "OTAPI.Modifications\OTAPI.Modification.Npc.Strike\OTAPI.Modification.Npc.Strike.xproj", "{36CD8BFE-9CD3-4A39-A18A-CE8FA245E02C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Npc.Strike", "OTAPI.Modifications\OTAPI.Modifications.Npc.Strike\OTAPI.Modifications.Npc.Strike.xproj", "{36CD8BFE-9CD3-4A39-A18A-CE8FA245E02C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Npc.Transform", "OTAPI.Modifications\OTAPI.Modification.Npc.Transform\OTAPI.Modification.Npc.Transform.xproj", "{34D96581-3C17-4076-B655-55582CCA8682}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Npc.Transform", "OTAPI.Modifications\OTAPI.Modifications.Npc.Transform\OTAPI.Modifications.Npc.Transform.xproj", "{34D96581-3C17-4076-B655-55582CCA8682}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modification.Projectile.Update", "OTAPI.Modifications\OTAPI.Modification.Projectile.Update\OTAPI.Modification.Projectile.Update.xproj", "{CAA9E2BA-041B-465E-A11C-BD4992802CEE}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Projectile.Update", "OTAPI.Modifications\OTAPI.Modifications.Projectile.Update\OTAPI.Modifications.Projectile.Update.xproj", "{CAA9E2BA-041B-465E-A11C-BD4992802CEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projectile", "Projectile", "{3E6AAE36-62C4-4517-B7F9-F1741796F1F5}"
 EndProject

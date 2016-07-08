@@ -19,7 +19,7 @@ namespace OTAPI.Patcher
 			options = new OptionSet();
 			options.Add("in=|source=", "specifies the source assembly to patch", 
 				op => sourceAsm = op);
-			options.Add("mod=|modifications=", "Glob specifiying the path to modification assemblies that will run against the target assembly.",
+			options.Add("mod=|modifications=", "Glob specifying the path to modification assemblies that will run against the target assembly.",
 				op => modificationGlob = op);
 			options.Add("o=|output=", "Specifies the output assembly that has had all modifications applied.",
 				op => outputPath = op);
