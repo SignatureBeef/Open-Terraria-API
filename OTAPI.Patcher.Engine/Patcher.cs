@@ -42,10 +42,9 @@ namespace OTAPI.Patcher.Engine
 		/// </summary>
 		public List<ModificationBase> Modifications { get; set; } = new List<ModificationBase>();
 
-		protected ReaderParameters readerParams = new ReaderParameters(ReadingMode.Immediate)
-		{
-			AssemblyResolver = new NugetAssemblyResolver()
-		};
+		protected NugetAssemblyResolver resolver;
+
+		protected ReaderParameters readerParams;
 
 
 		/// <summary>
@@ -65,7 +64,24 @@ namespace OTAPI.Patcher.Engine
 			this.modificationAssemblyGlob = modificationAssemblyGlob;
 			this.OutputAssemblyPath = outputAssemblyPath;
 
+			resolver = new NugetAssemblyResolver();
+			readerParams = new ReaderParameters(ReadingMode.Immediate)
+			{
+				AssemblyResolver = resolver
+			};
+
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+			resolver.ResolveFailure += Resolver_ResolveFailure;
+		}
+
+		private AssemblyDefinition Resolver_ResolveFailure(object sender, AssemblyNameReference reference)
+		{
+			var assemblyDefinition = this.Modifications.FirstOrDefault(x => x.ModificationDefinition.Name.FullName == reference.FullName);
+
+			if (assemblyDefinition != null)
+				return assemblyDefinition.ModificationDefinition;
+
+			return null;
 		}
 
 		private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
