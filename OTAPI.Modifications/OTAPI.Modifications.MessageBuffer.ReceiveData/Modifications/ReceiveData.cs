@@ -5,7 +5,7 @@ using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
-namespace OTAPI.Patcher.Modifications.Hooks.Net
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 {
 	public class ReceiveData : ModificationBase
 	{
@@ -23,7 +23,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Net
 			//with the result value from the call to our callback!
 
 			//Note to self: the above is done without consideration to max packets. max packets should
-			//              be a seperate patch that alteres the value in the condition. ideally the mod
+			//              be a separate patch that alters the value in the condition. ideally the mod
 			//              running OTAPI should have a packet register (OTAPI 1 provided this).
 
 

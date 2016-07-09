@@ -1,0 +1,30 @@
+{
+  "version": "0.2.1-*",
+  "description": "OTAPI.Core Class Library",
+  "authors": [ "Luke" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": {
+      "dependencies": {
+        "TerrariaServer": "1.0.0-*"
+      }
+    }
+  },
+  "dependencies": {
+  },
+  "configurations": {
+    "Debug": {
+      "compilationOptions": {
+        "define": [ "DEBUG", "TRACE" ]
+      }
+    },
+    "Release": {
+      "compilationOptions": {
+        "define": [ "RELEASE", "TRACE" ],
+        "optimize": true
+      }
+    }
+  }
+}

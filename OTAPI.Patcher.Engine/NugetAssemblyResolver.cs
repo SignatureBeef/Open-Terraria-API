@@ -1,20 +1,28 @@
-﻿using Mono.Cecil;
+﻿using ILRepacking;
+using Mono.Cecil;
 using NuGet;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OTAPI.Patcher.Engine
 {
-	public class NugetAssemblyResolver : BaseAssemblyResolver
+	public class NugetAssemblyResolvedEventArgs : EventArgs
+	{
+		public AssemblyDefinition Assembly { get; set; }
+		public string FilePath { get; set; }
+	}
+
+	public class NugetAssemblyResolver : DefaultAssemblyResolver
 	{
 		protected string NugetFeedUri => "https://packages.nuget.org/api/v2";
 		protected IPackageRepository packageRepo;
 		protected IPackageRepository localPackageRepo;
 		protected IPackageManager packageManager;
 		protected string packageInstallDir;
+
+		public string PackagesDirectory => packageInstallDir;
+
+		public event EventHandler<NugetAssemblyResolvedEventArgs> OnResolved;
 
 		public NugetAssemblyResolver()
 		{
@@ -65,6 +73,11 @@ namespace OTAPI.Patcher.Engine
 				if (File.Exists(libPath))
 				{
 					AssemblyDefinition asmdef = ModuleDefinition.ReadModule(libPath, new ReaderParameters(ReadingMode.Immediate)).Assembly;
+					OnResolved?.Invoke(this, new NugetAssemblyResolvedEventArgs()
+					{
+						Assembly = asmdef,
+						FilePath = libPath
+					});
 					return asmdef;
 				}
 			}

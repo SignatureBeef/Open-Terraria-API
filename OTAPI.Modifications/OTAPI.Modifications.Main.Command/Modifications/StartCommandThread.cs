@@ -3,7 +3,7 @@ using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
-namespace OTAPI.Patcher.Modifications.Hooks.Command
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Command
 {
 	/// <summary>
 	/// This modification will allow the hook for starting a custom command thread to function.

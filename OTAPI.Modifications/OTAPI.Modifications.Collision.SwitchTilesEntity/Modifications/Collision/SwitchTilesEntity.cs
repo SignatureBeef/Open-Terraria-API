@@ -4,7 +4,7 @@ using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
-namespace OTAPI.Patcher.Modifications.Hooks.Collision
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
 {
 	/// <summary>
 	/// This patch adds an extra parameter to SwitchTiles to allow the entity to be passed by callers.
@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Modifications.Hooks.Collision
 		public override void Run()
 		{
 			//Import TerrariaEntity as the base type of Terraria.Entity
-			this.SourceDefinition.Type("Terraria.Entity").BaseType = this.ModificationDefinition.Type("OTAPI.Core.TerrariaEntity");
+			this.SourceDefinition.Type("Terraria.Entity").BaseType = SourceDefinition.MainModule.Import(this.ModificationDefinition.Type("OTAPI.Core.TerrariaEntity"));
 
 			var switchTiles = this.SourceDefinition.Type("Terraria.Collision").Method("SwitchTiles");
 			var iEntity = switchTiles.Module.Import(this.ModificationDefinition.Type("OTAPI.Core.IEntity"));

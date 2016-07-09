@@ -9,7 +9,7 @@
     "net451": { }
   },
   "dependencies": {
-    "OTAPI.Core": "0.2.1-*",
+    "OTAPI.Modifications.Core": "0.2.1-*",
     "OTAPI.Patcher.Engine": "0.20.2"
   }
 }

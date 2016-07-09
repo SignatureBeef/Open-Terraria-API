@@ -3,7 +3,7 @@ using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
-namespace OTAPI.Patcher.Modifications.Hooks.Item
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
 {
 	public class SetDefaultsById : ModificationBase
 	{

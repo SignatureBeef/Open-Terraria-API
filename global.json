@@ -1,6 +1,7 @@
 {
   "projects": [
     "wrap",
-    "."
+    ".",
+    "OTAPI.Modifications"
   ]
 }

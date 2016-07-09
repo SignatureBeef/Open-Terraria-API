@@ -4,7 +4,7 @@ using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
-namespace OTAPI.Patcher.Modifications.Hooks.Net.Player
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Player
 {
 	/// <summary>
 	/// Injects a hook into the if statement that surrounds the name collision kick.

@@ -2,7 +2,7 @@
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
-namespace OTAPI.Patcher.Modifications.Hooks.Main
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 {
 	/// <summary>
 	/// Adds a hook for checking if it's christmas

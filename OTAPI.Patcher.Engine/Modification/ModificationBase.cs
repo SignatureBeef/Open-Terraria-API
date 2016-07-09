@@ -1,8 +1,6 @@
 ﻿using Mono.Cecil;
-using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
 using System;
-using System.Reflection;
 
 namespace OTAPI.Patcher.Engine.Modification
 {

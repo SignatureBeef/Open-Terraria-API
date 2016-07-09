@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Glob;
 using System.IO;
+using OTAPI.Patcher.Engine.Extensions;
 
 namespace OTAPI.Patcher.Engine
 {
@@ -46,6 +47,9 @@ namespace OTAPI.Patcher.Engine
 
 		protected ReaderParameters readerParams;
 
+		private string tempSourceOutput;
+		private string tempPackedOutput;
+
 
 		/// <summary>
 		/// Glob pattern for the list of modification assemblies that will run against the source
@@ -65,6 +69,7 @@ namespace OTAPI.Patcher.Engine
 			this.OutputAssemblyPath = outputAssemblyPath;
 
 			resolver = new NugetAssemblyResolver();
+			resolver.OnResolved += Resolver_OnResolved;
 			readerParams = new ReaderParameters(ReadingMode.Immediate)
 			{
 				AssemblyResolver = resolver
@@ -72,6 +77,12 @@ namespace OTAPI.Patcher.Engine
 
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 			resolver.ResolveFailure += Resolver_ResolveFailure;
+		}
+
+		private List<String> resolvedAssemblies = new List<string>();
+		private void Resolver_OnResolved(object sender, NugetAssemblyResolvedEventArgs e)
+		{
+			resolvedAssemblies.Add(e.FilePath);
 		}
 
 		private AssemblyDefinition Resolver_ResolveFailure(object sender, AssemblyNameReference reference)
@@ -144,12 +155,16 @@ namespace OTAPI.Patcher.Engine
 							continue;
 						}
 
-						ModificationBase mod = LoadModification(t);
-						if (mod != null)
+						//Prevent duplicates caused from modifications referencing other modifications (ie core/xna)
+						if (!Modifications.Any(m => m.GetType().FullName == t.FullName))
 						{
-							mod.SourceDefinition = SourceAssembly;
+							ModificationBase mod = LoadModification(t);
+							if (mod != null)
+							{
+								mod.SourceDefinition = SourceAssembly;
 
-							Modifications.Add(mod);
+								Modifications.Add(mod);
+							}
 						}
 					}
 				}
@@ -188,12 +203,130 @@ namespace OTAPI.Patcher.Engine
 
 		protected void SaveSourceAssembly()
 		{
+			tempSourceOutput = Path.GetTempFileName() + ".dll";
+
+			this.SourceAssembly.Write(tempSourceOutput, new WriterParameters()
+			{
+				//WriteSymbols = true
+			});
+		}
+
+		protected void PackAssemblies()
+		{
+			tempPackedOutput = Path.GetTempFileName() + ".dll";
+
+			var options = new ILRepacking.RepackOptions()
+			{
+				//Get the list of input assemblies for merging, ensuring our source 
+				//assembly is first in the list so it can be granted as the target assembly.
+				InputAssemblies = new[] { tempSourceOutput }
+					//Add the modifications for merging
+					.Concat(GlobModificationAssemblies())
+					//ILRepack will want to find the assemblies we have
+					//resolved using our NuGet package resolver or it
+					//will crash with not being able to find libraries
+					.Concat(resolvedAssemblies)
+					.ToArray(),
+
+				OutputFile = tempPackedOutput,
+				TargetKind = ILRepacking.ILRepack.Kind.Dll,
+
+				SearchDirectories = GlobModificationAssemblies()
+					.Select(x => Path.GetDirectoryName(x))
+					.Concat(resolvedAssemblies.Select(x => Path.GetDirectoryName(x)))
+					.Concat(new[]
+					{
+						Path.GetDirectoryName(tempSourceOutput),
+						Environment.CurrentDirectory
+					})
+					.Distinct()
+					.ToArray(),
+				Parallel = true,
+				//Version = this.SourceAssembly., //perhaps check an option for this. if changed it should not allow repatching
+				CopyAttributes = true,
+				XmlDocumentation = true,
+				UnionMerge = true,
+#if DEBUG
+				DebugInfo = true
+#endif
+			};
+
+			//Generate the allow list of types from our modifications
+			AllowDuplcateModificationTypes(options.AllowedDuplicateTypes);
+
+			var repacker = new ILRepacking.ILRepack(options);
+			repacker.Repack();
+		}
+
+		/// <summary>
+		/// This will allow ILRepack to merge all our modifications into one assembly.
+		/// In our case we define hooks in the same namespace across different modification
+		/// assemblies, and of course ILRepack detects the conflict.
+		/// By enumerating each type of the modifications, we add each full name to the
+		/// allowed list.
+		/// </summary>
+		/// <param name="allowedTypes"></param>
+		void AllowDuplcateModificationTypes(System.Collections.Hashtable allowedTypes)
+		{
+			foreach (var mod in Modifications)
+			{
+				mod.ModificationDefinition.MainModule.ForEachType(type =>
+				{
+					allowedTypes[type.FullName] = type.FullName;
+				});
+			}
+		}
+
+		/// <summary>
+		/// Removes all ModificationBase implementations from the output assembly.
+		/// Additionally it will also remove references that were added due to ModificationBases
+		/// being merged in.
+		/// </summary>
+		protected void RemoveModificationsFromPackedAssembly()
+		{
 			if (string.IsNullOrEmpty(OutputAssemblyPath))
 			{
 				throw new ArgumentNullException(nameof(OutputAssemblyPath));
 			}
 
-			this.SourceAssembly.Write(OutputAssemblyPath);
+			//Load the ILRepacked assembly so we can find and remove what we need to
+			var packedDefinition = AssemblyDefinition.ReadAssembly(tempPackedOutput);
+
+			//Now we enumerate over the references and mainly remove ourself (the engine).
+			foreach (var reference in packedDefinition.MainModule.AssemblyReferences
+				.Where(x => new[] { /*"Mono.Cecil", "Mono.Cecil.Rocks",*/ typeof(Patcher).Assembly.GetName().Name }.Contains(x.Name))
+				.ToArray())
+			{
+				packedDefinition.MainModule.AssemblyReferences.Remove(reference);
+			}
+
+			//Remove all ModificationBase implementations from the output.
+			//Normal circumstances this shouldn't matter, but fair chance if 
+			//a implementor or their plugin enumerates over each type it will
+			//cause issues as the in our case we are not shipping cecil.
+			foreach (var mod in Modifications)
+			{
+				//Find the TypeDefinition using the Modification's type name
+				var type = packedDefinition.MainModule.Type(mod.GetType().FullName);
+
+				//Remove it from the packed assembly
+				packedDefinition.MainModule.Types.Remove(type);
+			}
+
+			//All modifications and cleaning is complete, we can now save the final assembly.
+			packedDefinition.Write(OutputAssemblyPath);
+		}
+
+		/// <summary>
+		/// Cleans up data after a successful patch
+		/// </summary>
+		protected void Cleanup()
+		{
+			if (File.Exists(tempPackedOutput))
+				File.Delete(tempPackedOutput);
+
+			if (File.Exists(tempSourceOutput))
+				File.Delete(tempSourceOutput);
 		}
 
 		public void Run()
@@ -209,15 +342,12 @@ namespace OTAPI.Patcher.Engine
 			}
 
 			Console.WriteLine($"Patching {SourceAssembly.FullName}.");
-
 			LoadModificationAssemblies();
 
 			Console.WriteLine($"Running {Modifications.Count} modifications.");
-
 			RunModifications();
 
 			Console.WriteLine($"Saving modifications to {OutputAssemblyPath ?? "<null>"}");
-
 			try
 			{
 				SaveSourceAssembly();
@@ -227,6 +357,21 @@ namespace OTAPI.Patcher.Engine
 				Console.Error.WriteLine($"Error saving patched source assembly: {ex.Message}");
 				return;
 			}
+
+			Console.WriteLine("Packing source and modification assemblies.");
+			try
+			{
+				PackAssemblies();
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine($"Error packing assemblies: {ex.Message}");
+				return;
+			}
+
+			Console.WriteLine("Cleaning up assembly.");
+			RemoveModificationsFromPackedAssembly();
+			Cleanup();
 		}
 	}
 }

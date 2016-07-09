@@ -4,15 +4,19 @@
     "debugType": "portable",
     "emitEntryPoint": true
   },
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "commands": {
+    "OTAPI.Core.Tests": "OTAPI.Core.Tests"
+  },
   "dependencies": {
-    "NDesk.Options": "0.2.1",
-    "OTAPI.Sockets": "1.0.0-*",
-    "OTAPI.Core": "0.2.0-*"
+    "NDesk.Options": "0.2.1"
   },
   "frameworks": {
     "dnx451": {
       "dependencies": {
-        "TerrariaServer": "1.0.0-*"
+        "OTAPI": "1.0.0-*"
       }
     }
   }

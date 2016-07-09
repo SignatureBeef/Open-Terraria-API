@@ -6,7 +6,7 @@ using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 using System;
 
-namespace OTAPI.Patcher.Modifications.Hooks.Collision
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
 {
 	/// <summary>
 	/// This mod we will replace the HitSwitch calls with our own custom version, as the SendData

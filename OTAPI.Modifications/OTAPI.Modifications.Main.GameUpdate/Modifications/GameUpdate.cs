@@ -2,7 +2,7 @@
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
-namespace OTAPI.Patcher.Modifications.Hooks.Main
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 {
 	/// <summary>
 	/// This modification is to allow the Game.Update hooks to be ran by injecting callbacks into

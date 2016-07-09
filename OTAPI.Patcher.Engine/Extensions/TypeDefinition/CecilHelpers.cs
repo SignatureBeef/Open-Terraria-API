@@ -44,7 +44,11 @@ namespace OTAPI.Patcher.Engine.Extensions
 		public static void ForEachNestedType(this TypeDefinition parent, Action<TypeDefinition> callback)
 		{
 			foreach (var type in parent.NestedTypes)
+			{
 				callback(type);
+
+				type.ForEachNestedType(callback);
+			}
 		}
 
 		/// <summary>
