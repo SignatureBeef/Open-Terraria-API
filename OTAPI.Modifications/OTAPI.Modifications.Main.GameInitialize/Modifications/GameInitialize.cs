@@ -25,7 +25,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 				endCallback: cbkEnd,
 				beginIsCancellable: false,
 				noEndHandling: false,
-				allowCallbackInstance: false
+				allowCallbackInstance: true
 			);
 		}
 	}

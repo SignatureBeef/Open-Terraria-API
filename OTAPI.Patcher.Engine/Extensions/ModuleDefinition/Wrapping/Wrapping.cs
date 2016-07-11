@@ -7,6 +7,9 @@ namespace OTAPI.Patcher.Engine.Extensions
 {
 	public static partial class WrappingExtensions
 	{
+		/// <summary>
+		/// Default wrapped name that will be appended to wrapped methods
+		/// </summary>
 		const String WrappedMethodNameSuffix = "Direct";
 
 		/// <summary>
@@ -19,8 +22,8 @@ namespace OTAPI.Patcher.Engine.Extensions
 			//Enumerates over each type in the assembly, including nested types
 			method.Module.ForEachInstruction((mth, ins) =>
 			{
-				//Compare instruction operands method references to see if they match the
-				//replacement method definition. If it matches, it can be swapped
+				//Compare each instruction operand value as if it were a method reference. Check to 
+				//see if they match the current method definition. If it matches, it can be swapped.
 				if (ins.Operand == method)
 					ins.Operand = replacement;
 			});
@@ -36,82 +39,9 @@ namespace OTAPI.Patcher.Engine.Extensions
 		}
 
 		/// <summary>
-		/// Emits il for a callback at the start of a 
-		/// </summary>
-		/// <param name="current"></param>
-		/// <param name="callback"></param>
-		/// <param name="callbackRequiresInstance"></param>
-		/// <param name="isCancelable"></param>
-		/// <returns></returns>
-		public static Instruction EmitBeginCallback(this MethodDefinition current, MethodReference callback,
-			bool instanceMethod,
-			bool callbackRequiresInstance,
-			bool isCancelable)
-		{
-			Instruction targetInstruction = null;
-
-			//Import the callbacks to the calling methods assembly
-			var importedCallback = current.Module.Import(callback);
-
-			//            var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
-
-			//Create the il processor so we can alter il
-			var il = current.Body.GetILProcessor();
-
-			//If the callback expects the instance to be passed through, then we add the keyword 'this'
-			//onto the call stack. 
-			//This also expects that the current method is an instance method.
-			if (instanceMethod)
-				il.Emit(OpCodes.Ldarg_0);
-
-			//Emit the parameters for the callback
-			if (current.HasParameters)
-			{
-				for (var i = 0; i < current.Parameters.Count; i++)
-				{
-					//Here we are looking at the callback to see if it wants a reference parameter.
-					//If it does, and it also expects an instance to be passed, we must move the offset
-					//by one to skip the previous ldarg_0 we added before.
-					var offset = callbackRequiresInstance ? 1 : 0;
-					if (callback.Parameters[i + offset].ParameterType.IsByReference)
-					{
-						il.Emit(OpCodes.Ldarga, current.Parameters[i]);
-					}
-					else il.Emit(OpCodes.Ldarg, current.Parameters[i]);
-				}
-			}
-
-			il.Emit(OpCodes.Call, importedCallback);
-
-			//Used to inform the method caller the first instruction that we created
-			//in the case that they need to replace instruction references.
-			//Some cases this will eventually be transformed to a Brtrue_S in order
-			//to transfer to normal code.
-			targetInstruction = null;
-
-			//If the callback can be canceled then we must generate the
-			//il to handle it. We use a common function to do this for us.
-			if (isCancelable)
-			{
-				//Nop is used externally in .Wrap to allow it to continue executing
-				//code rather than exiting
-				il.Append(targetInstruction = il.Create(OpCodes.Nop));
-				current.EmitMethodEnding();
-			}
-			//If the callback has a return type and it has not been handled
-			//we must pop the result value from the stack or it will cause 
-			//and exception
-			else if (importedCallback.ReturnType.Name != "Void")
-			{
-				targetInstruction = il.Create(OpCodes.Pop);
-				il.Append(targetInstruction);
-			}
-
-			return targetInstruction;
-		}
-
-		/// <summary>
-		/// Replaces transfers from other instructions (ie if, try) to a new instruction target
+		/// Replaces instruction references (ie if, try) to a new instruction target.
+		/// This is useful if you are injecting new code before a section of code that is already
+		/// the receiver of a try/if block.
 		/// </summary>
 		/// <param name="current">The original instruction</param>
 		/// <param name="newTarget">The new instruction that will receive the transfer</param>
@@ -146,153 +76,18 @@ namespace OTAPI.Patcher.Engine.Extensions
 		}
 
 		/// <summary>
-		/// Emits a method-end callback into the current method.
-		/// Optionally, if <param name="callbackRequiresInstance"/> is specified it will insert a 'this' argument that
-		/// will be sent to the first parameter of the callback.
-		/// </summary>
-		public static void EmitEndCallback(this MethodDefinition current, MethodReference callback,
-			bool instanceMethod,
-			bool callbackRequiresInstance
-		)
-		{
-			//Import the callback to the calling methods assembly
-			var importedCallback = current.Module.Import(callback);
-
-			//            var instanceMethod = (method.Attributes & MethodAttributes.Static) == 0;
-
-			//Get the il processor instance so we can modify IL
-			var il = current.Body.GetILProcessor();
-
-			//If the callback expects the instance, emit 'this'
-			if (instanceMethod)
-				il.Emit(OpCodes.Ldarg_0);
-
-			//If there are parameters, add each of them to the stack for the callback
-			if (current.HasParameters)
-			{
-				for (var i = 0; i < current.Parameters.Count; i++)
-				{
-					//Here we are looking at the callback to see if it wants a reference parameter.
-					//If it does, and it also expects an instance to be passed, we must move the offset
-					//by one to skip the previous ldarg_0 we added before.
-					var offset = callbackRequiresInstance ? 1 : 0;
-					if (callback.Parameters[i + offset].ParameterType.IsByReference)
-					{
-						il.Emit(OpCodes.Ldarga, current.Parameters[i]);
-					}
-					else il.Emit(OpCodes.Ldarg, current.Parameters[i]);
-				}
-			}
-
-			//Execute the callback
-			il.Emit(OpCodes.Call, importedCallback);
-
-			//If the end call has a value, pop it for the time being
-			//In the case of begin callbacks, we use this value to determine
-			//a cancel.
-			if (importedCallback.ReturnType.Name != "Void")
-				il.Emit(OpCodes.Pop);
-		}
-
-		/// <summary>
-		/// Emits IL that is used to exit a method.
-		/// This expects that you are appending to a method being built.
-		/// </summary>
-		public static Instruction EmitMethodEnding(this MethodDefinition method, bool noHandling = false)
-		{
-			Instruction firstInstruction = null;
-
-			//Get the il processor instance so we can alter il
-			var il = method.Body.GetILProcessor();
-
-			//If we are working on a method with a return value
-			//we will have a value to handle.
-			if (false == noHandling && method.ReturnType.Name != "Void")
-			{
-				VariableDefinition vr1;
-				method.Body.Variables.Add(vr1 = new VariableDefinition("cancelDefault", method.ReturnType));
-
-				//Initialise the variable
-				il.Append(firstInstruction = il.Create(OpCodes.Ldloca_S, vr1));
-				il.Emit(OpCodes.Initobj, method.ReturnType);
-				il.Emit(OpCodes.Ldloc, vr1);
-			}
-
-			//The method is now complete.
-			if (firstInstruction == null)
-				il.Append(firstInstruction = il.Create(OpCodes.Ret));
-			else il.Emit(OpCodes.Ret);
-
-			return firstInstruction;
-		}
-
-		/// <summary>
-		/// Emits IL that is used to execute a callback.
-		/// </summary>
-		/// <param name="method"></param>
-		/// <param name="target"></param>
-		/// <param name="callbackExpectsInstance"></param>
-		/// <param name="emitNonVoidPop"></param>
-		/// <returns>The first instruction emitted</returns>
-		public static Instruction EmitMethodCallback(this MethodDefinition method, MethodReference target, bool callbackExpectsInstance, bool emitNonVoidPop = true)
-		{
-			Instruction retFirstInstruction = null;
-			//            var instanceMethod = (target.Attributes & MethodAttributes.Static) == 0;
-
-			//Get the il processor instance so we can generate il
-			var il = method.Body.GetILProcessor();
-
-			//If the callback expects an instance we must emit the 'this' value.
-			//This flag would also expect that the 'method' is a instance method.
-			if (callbackExpectsInstance)
-			{
-				//Set the instruction to be resumed upon not cancelling, if not already
-				var instance = il.Create(OpCodes.Ldarg_0);
-
-				if (null == retFirstInstruction)
-					retFirstInstruction = instance;
-
-				il.Append(instance);
-			}
-
-			//Create the parameters to pass through to the callback
-			if (target.HasParameters)
-			{
-				for (var i = 0; i < target.Parameters.Count; i++)
-				{
-					var prm = il.Create(OpCodes.Ldarg, target.Parameters[i]);
-
-					if (null == retFirstInstruction)
-						retFirstInstruction = prm;
-
-					il.Append(prm);
-				}
-			}
-
-			//Invoke the callback now that we have everything on the stack
-			var call = il.Create(OpCodes.Call, target);
-
-			if (null == retFirstInstruction)
-				retFirstInstruction = call;
-
-			il.Append(call);
-
-			//If a value is returned, ensure it's removed from the stack
-			if (emitNonVoidPop && target.ReturnType.Name != "Void")
-				il.Emit(OpCodes.Pop);
-
-			return retFirstInstruction;
-		}
-
-		/// <summary>
 		/// Wraps the current method with begin/end callbacks.
 		/// </summary>
 		/// <remarks>
 		/// This will rename the current method and replace it with a new method that will take its place.
 		/// In the new method it will call the callbacks and perform canceling on the begin callback if required.</remarks>
-		/// <param name="current"></param>
-		/// <param name="beginCallback"></param>
-		/// <param name="endCallback"></param>
+		/// <param name="current">The current method to be wrapped</param>
+		/// <param name="beginCallback">The callback to be executed at the start of the method</param>
+		/// <param name="endCallback">The optional end callback that will be executed at the end of the method</param>
+		/// <param name="beginIsCancellable">Indicates that the begin callback can cancel the method execution</param>
+		/// <param name="noEndHandling">Indicates to only return from the method and not do any special popping and so on</param>
+		/// <param name="allowCallbackInstance">Indicates that the callbacks expect an instance parameter at the first parameter index</param>
+		/// <returns></returns>
 		public static MethodDefinition Wrap
 		(
 			this MethodDefinition current,
@@ -344,18 +139,18 @@ namespace OTAPI.Patcher.Engine.Extensions
 				var beginResult = wrapped.EmitBeginCallback(beginCallback, instanceMethod, allowCallbackInstance, beginIsCancellable);
 
 				//Emit the il that will execute the actual method that was renamed earlier 
-				var insFirstForMethod = wrapped.EmitMethodCallback(current, instanceMethod, current.ReturnType.Name != "String");// && method.ReturnType.Name != "Double");
+				var insFirstForMethod = wrapped.EmitMethodCallback(current, instanceMethod, current.ReturnType.Name != current.Module.TypeSystem.String.Name);
 
 				//If the begin callback is cancelable, the EmitBeginCallback method will have left a Nop
 				//instruction so we can direct where to continue on to, rather than exiting the method.
 				if (beginIsCancellable && beginResult != null && beginResult.OpCode == OpCodes.Nop)
 				{
-					if (current.ReturnType == current.Module.TypeSystem.Void)
+					if (current.ReturnType.Name == current.Module.TypeSystem.Void.Name)
 					{
 						beginResult.OpCode = OpCodes.Brtrue_S;
 						beginResult.Operand = insFirstForMethod;
 					}
-					else if (current.ReturnType == current.Module.TypeSystem.String)
+					else if (current.ReturnType.Name == current.Module.TypeSystem.String.Name)
 					{
 						beginResult.OpCode = OpCodes.Brtrue;
 						beginResult.Operand = insFirstForMethod;
@@ -385,7 +180,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 		/// </summary>
 		public static void InjectNonVoidBeginCallback(this MethodDefinition current, MethodDefinition callback)
 		{
-			if (callback.ReturnType.Name == "Void")
+			if (callback.ReturnType.Name == callback.Module.TypeSystem.Void.Name)
 				throw new InvalidOperationException("Invalid return type for callback");
 
 			//Get the il processor instance so we can modify il
