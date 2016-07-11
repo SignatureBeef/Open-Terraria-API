@@ -1,5 +1,4 @@
-﻿using NDesk.Options;
-using OTAPI.Patcher.Engine.Extensions;
+﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
@@ -20,7 +19,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
 			var cbkBegin = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Item").Method("SetDefaultsByIdBegin", parameters: vanilla.Parameters);
 			var cbkEnd = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Item").Method("SetDefaultsByIdEnd", parameters: vanilla.Parameters);
 
-			vanilla.Wrap(cbkBegin, cbkEnd, true);
+			vanilla.Wrap
+			(
+				beginCallback: cbkBegin,
+				endCallback: cbkEnd,
+				beginIsCancellable: true,
+				noEndHandling: false,
+				allowCallbackInstance: true
+			);
 		}
 	}
 }

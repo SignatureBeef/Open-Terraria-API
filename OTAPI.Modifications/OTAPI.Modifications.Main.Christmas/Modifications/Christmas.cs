@@ -1,5 +1,4 @@
-﻿using NDesk.Options;
-using OTAPI.Patcher.Engine.Extensions;
+﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
@@ -18,7 +17,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Method("Christmas");
 
 			//Inject only the begin call
-			vanilla.Wrap(callback, null, true);
+			vanilla.Wrap
+			(
+				beginCallback: callback,
+				endCallback: null,
+				beginIsCancellable: true,
+				noEndHandling: false,
+				allowCallbackInstance: false
+			);
 		}
 	}
 }

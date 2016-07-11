@@ -40,10 +40,10 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			dropLoot.Body.Variables.Add(vrbItemId);
 
 			il.Emit(OpCodes.Ldloca_S, vrbItemId); //Loads our variable by reference so our callback and alter it.
-			var beginResult = dropLoot.InjectBeginCallback(cbkBegin, false, false);
+			var beginResult = dropLoot.EmitBeginCallback(cbkBegin, false, false, false);
 
 			//Inject the begin call
-			var insFirstForMethod = dropLoot.InjectMethodCall(newItem, false, false);
+			var insFirstForMethod = dropLoot.EmitMethodCallback(newItem, false, false);
 			//Store the result into our new variable
 			il.Emit(OpCodes.Stloc, vrbItemId);
 
@@ -59,7 +59,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			}
 
 			//Inject the end callback
-			dropLoot.InjectEndCallback(cbkEnd, false);
+			dropLoot.EmitEndCallback(cbkEnd, false, false);
 
 			//Emit the return value using the result variable we injected
 			il.Emit(OpCodes.Ldloc, vrbItemId);

@@ -1,5 +1,4 @@
-﻿using NDesk.Options;
-using OTAPI.Patcher.Engine.Extensions;
+﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
@@ -11,12 +10,22 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 	public class GameUpdate : ModificationBase
 	{
 		public override string Description => "Hooking Game.Update";
-        public override void Run()
-        {
-            //Grab the Update method
-            var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("Update");
-            //Wrap it with the API calls
-            vanilla.InjectBeginEnd(this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main"), "Update");
-        }
-    }
+		public override void Run()
+		{
+			//Grab the Update method
+			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("Update");
+
+			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Method("UpdateBegin", parameters: vanilla.Parameters);
+			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Method("UpdateEnd", parameters: vanilla.Parameters);
+			
+			vanilla.Wrap
+			(
+				beginCallback: cbkBegin,
+				endCallback: cbkEnd,
+				beginIsCancellable: false,
+				noEndHandling: false,
+				allowCallbackInstance: false
+			);
+		}
+	}
 }

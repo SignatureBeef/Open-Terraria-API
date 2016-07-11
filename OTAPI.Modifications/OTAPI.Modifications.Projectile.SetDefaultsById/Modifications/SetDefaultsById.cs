@@ -1,8 +1,5 @@
-﻿using NDesk.Options;
-using OTAPI.Patcher.Engine.Extensions;
+﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
-
-using System;
 using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
@@ -11,8 +8,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 	{
 		public override string Description => "Hooking Projectile.SetDefaults(int)...";
 
-        public override void Run()
-        {
+		public override void Run()
+		{
 			var vanilla = SourceDefinition.Type("Terraria.Projectile").Methods.Single(
 				x => x.Name == "SetDefaults"
 				&& x.Parameters.Single().ParameterType == SourceDefinition.MainModule.TypeSystem.Int32
@@ -22,7 +19,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Projectile").Method("SetDefaultsByIdBegin", parameters: vanilla.Parameters);
 			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Projectile").Method("SetDefaultsByIdEnd", parameters: vanilla.Parameters);
 
-			vanilla.Wrap(cbkBegin, cbkEnd, true);
+			vanilla.Wrap
+			(
+				beginCallback: cbkBegin,
+				endCallback: cbkEnd,
+				beginIsCancellable: true,
+				noEndHandling: false,
+				allowCallbackInstance: true
+			);
 		}
 	}
 }

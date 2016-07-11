@@ -1,5 +1,4 @@
-﻿using NDesk.Options;
-using OTAPI.Patcher.Engine.Extensions;
+﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
@@ -16,8 +15,18 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 		{
 			//Grab the Initialise method
 			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("Initialize");
-			//Wrap it with the API calls
-			vanilla.InjectBeginEnd(this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main"), "Initialize");
+
+			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Method("InitializeBegin", parameters: vanilla.Parameters);
+			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Method("InitializeEnd", parameters: vanilla.Parameters);
+			
+			vanilla.Wrap
+			(
+				beginCallback: cbkBegin,
+				endCallback: cbkEnd,
+				beginIsCancellable: false,
+				noEndHandling: false,
+				allowCallbackInstance: false
+			);
 		}
 	}
 }

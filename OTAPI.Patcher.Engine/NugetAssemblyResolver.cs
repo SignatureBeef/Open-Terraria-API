@@ -1,5 +1,4 @@
-﻿using ILRepacking;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using NuGet;
 using System;
 using System.IO;
@@ -63,6 +62,17 @@ namespace OTAPI.Patcher.Engine
 
 		public override AssemblyDefinition Resolve(AssemblyNameReference name)
 		{
+			//Don't resolve system files (at least temporarily. i cannot run without internet otherwise).
+			if (Array.IndexOf(new[]
+			{
+				"mscorlib"
+			}, name.Name) > -1)
+				return base.Resolve(name);
+
+			////Temp, occasionally wanted internet to resolve T.T
+			//if (name.Name.StartsWith("OTAPI."))
+			//	return base.Resolve(name);
+
 			IPackage package = ResolvePackage(name.Name, name.Version);
 
 			if (package != null)

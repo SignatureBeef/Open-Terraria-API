@@ -18,7 +18,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("SetDefaultsByNameBegin", parameters: vanilla.Parameters);
 			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("SetDefaultsByNameEnd", parameters: vanilla.Parameters);
 
-			vanilla.Wrap(cbkBegin, cbkEnd, true);
+			vanilla.Wrap
+			(
+				beginCallback: cbkBegin,
+				endCallback: cbkEnd,
+				beginIsCancellable: true,
+				noEndHandling: false,
+				allowCallbackInstance: true
+			);
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using NDesk.Options;
-using OTAPI.Patcher.Engine.Extensions;
+﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
@@ -17,7 +16,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Command
 			var target = this.SourceDefinition.Type("Terraria.Main").Method("startDedInput");
 			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Methods.Single(x => x.Name == "startDedInput");
 
-			target.Wrap(callback, beginIsCancellable: true);
+			target.Wrap
+			(
+				beginCallback: callback,
+				endCallback: null,
+				beginIsCancellable: true,
+				noEndHandling: false,
+				allowCallbackInstance: false
+			);
 		}
 	}
 }

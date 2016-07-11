@@ -13,7 +13,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("StrikeNPC");
 			var callback = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("Strike");
 
-			vanilla.InjectNonVoidCallback(callback);
+			vanilla.InjectNonVoidBeginCallback(callback);
 		}
 	}
 }

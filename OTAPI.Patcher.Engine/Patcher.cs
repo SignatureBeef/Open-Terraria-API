@@ -1,13 +1,11 @@
 ﻿using Mono.Cecil;
+using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using Glob;
-using System.IO;
-using OTAPI.Patcher.Engine.Extensions;
 
 namespace OTAPI.Patcher.Engine
 {
@@ -47,7 +45,16 @@ namespace OTAPI.Patcher.Engine
 
 		protected ReaderParameters readerParams;
 
+		/// <summary>
+		/// Temporary storage path for the patched source assembly.
+		/// We need it in order to pass it through to ILRepack
+		/// </summary>
 		private string tempSourceOutput;
+
+		/// <summary>
+		/// Temporary storage path for the ILRepacked source assembly.
+		/// We need it in order to do cleanups on the final assembly.
+		/// </summary>
 		private string tempPackedOutput;
 
 
@@ -231,14 +238,16 @@ namespace OTAPI.Patcher.Engine
 				OutputFile = tempPackedOutput,
 				TargetKind = ILRepacking.ILRepack.Kind.Dll,
 
+				//Setup where ILRepack can look for assemblies
 				SearchDirectories = GlobModificationAssemblies()
+					//Translate full path files found via the glob mechanism
+					//into a directory name
 					.Select(x => Path.GetDirectoryName(x))
+
+					//Additionally we may have resolved libraries using NuGet,
+					//so we also append the directory of each assembly as well
 					.Concat(resolvedAssemblies.Select(x => Path.GetDirectoryName(x)))
-					.Concat(new[]
-					{
-						Path.GetDirectoryName(tempSourceOutput),
-						Environment.CurrentDirectory
-					})
+
 					.Distinct()
 					.ToArray(),
 				Parallel = true,
@@ -290,7 +299,11 @@ namespace OTAPI.Patcher.Engine
 			}
 
 			//Load the ILRepacked assembly so we can find and remove what we need to
-			var packedDefinition = AssemblyDefinition.ReadAssembly(tempPackedOutput);
+			var packedDefinition = AssemblyDefinition.ReadAssembly(tempPackedOutput, new ReaderParameters()
+			{
+				//ReadSymbols = true,
+				//AssemblyResolver = resolver
+			});
 
 			//Now we enumerate over the references and mainly remove ourself (the engine).
 			foreach (var reference in packedDefinition.MainModule.AssemblyReferences
@@ -303,7 +316,7 @@ namespace OTAPI.Patcher.Engine
 			//Remove all ModificationBase implementations from the output.
 			//Normal circumstances this shouldn't matter, but fair chance if 
 			//a implementor or their plugin enumerates over each type it will
-			//cause issues as the in our case we are not shipping cecil.
+			//cause issues as in our case we are not shipping cecil.
 			foreach (var mod in Modifications)
 			{
 				//Find the TypeDefinition using the Modification's type name
@@ -313,8 +326,15 @@ namespace OTAPI.Patcher.Engine
 				packedDefinition.MainModule.Types.Remove(type);
 			}
 
+			//We are changing the file name from a temporary file, so the assembly name
+			//will also need to reflect this.
+			packedDefinition.Name.Name = Path.GetFileNameWithoutExtension(OutputAssemblyPath);
+
 			//All modifications and cleaning is complete, we can now save the final assembly.
-			packedDefinition.Write(OutputAssemblyPath);
+			packedDefinition.Write(OutputAssemblyPath, new WriterParameters()
+			{
+				//WriteSymbols = true
+			});
 		}
 
 		/// <summary>
@@ -369,9 +389,17 @@ namespace OTAPI.Patcher.Engine
 				return;
 			}
 
-			Console.WriteLine("Cleaning up assembly.");
-			RemoveModificationsFromPackedAssembly();
-			Cleanup();
+			try
+			{
+				Console.WriteLine("Cleaning up assembly.");
+				RemoveModificationsFromPackedAssembly();
+				Cleanup();
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine($"Error cleaning assembly: {ex.Message}");
+				return;
+			}
 		}
 	}
 }

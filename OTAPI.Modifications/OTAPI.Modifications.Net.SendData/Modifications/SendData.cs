@@ -16,8 +16,15 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
 			//Few stack issues arose trying to inject a callback before for lock, so i'll resort to 
 			//wrapping the method;
-
-			vanilla.Wrap(callback, null, true);
+			
+			vanilla.Wrap
+			(
+				beginCallback: callback,
+				endCallback: null,
+				beginIsCancellable: true,
+				noEndHandling: false,
+				allowCallbackInstance: false
+			);
 
 			Console.WriteLine("Done");
 		}
