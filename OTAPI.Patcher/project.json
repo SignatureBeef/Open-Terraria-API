@@ -10,6 +10,10 @@
     "emitEntryPoint": true
   },
 
+  "buildOptions": {
+    "xmlDoc": true
+  },
+
   "dependencies": {
     "OTAPI.Patcher.Engine": "0.20.2-*",
     "ILRepack.Lib": "2.0.10",

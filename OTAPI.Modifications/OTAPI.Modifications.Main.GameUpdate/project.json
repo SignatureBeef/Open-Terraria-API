@@ -8,6 +8,10 @@
   "frameworks": {
     "net451": { }
   },
+
+  "buildOptions": {
+    "xmlDoc": true
+  },
   "dependencies": {
     "OTAPI.Modifications.Core": "0.2.1-*",
     "OTAPI.Modifications.Xna": "1.0.0-*",

@@ -6,7 +6,11 @@
     "NDesk.Options": "0.2.1",
     "NuGet.Core": "2.11.1"
   },
-  
+
+  "buildOptions": {
+    "xmlDoc": true
+  },
+
   "frameworks": {
     "net451": { },
     "dnx451": { }

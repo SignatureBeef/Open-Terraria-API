@@ -57,7 +57,6 @@ namespace OTAPI.Patcher.Engine
 		/// </summary>
 		private string tempPackedOutput;
 
-
 		/// <summary>
 		/// Glob pattern for the list of modification assemblies that will run against the source
 		/// assembly.
@@ -255,6 +254,7 @@ namespace OTAPI.Patcher.Engine
 				CopyAttributes = true,
 				XmlDocumentation = true,
 				UnionMerge = true,
+
 #if DEBUG
 				DebugInfo = true
 #endif
@@ -298,11 +298,28 @@ namespace OTAPI.Patcher.Engine
 				throw new ArgumentNullException(nameof(OutputAssemblyPath));
 			}
 
-			//Load the ILRepacked assembly so we can find and remove what we need to
-			var packedDefinition = AssemblyDefinition.ReadAssembly(tempPackedOutput, new ReaderParameters()
+			var assemblyName = Path.GetFileNameWithoutExtension(OutputAssemblyPath);
+
+			#region Xml Comments
+			//ILRepack already constructed the xml comments file for us
+			//so all we need to do is copy and correct it's assembly name.
+			var srcXml = Path.ChangeExtension(tempPackedOutput, "xml");
+			if (File.Exists(srcXml))
 			{
-				//ReadSymbols = true,
-				//AssemblyResolver = resolver
+				var destXml = Path.ChangeExtension(OutputAssemblyPath, "xml");
+				var tempAssemblyName = Path.GetFileNameWithoutExtension(tempPackedOutput);
+
+				var comments = File.ReadAllText(srcXml).Replace(tempAssemblyName, assemblyName);
+				File.WriteAllText(destXml, comments);
+			}
+			#endregion
+
+			//Load the ILRepacked assembly so we can find and remove what we need to
+			var packedDefinition = AssemblyDefinition.ReadAssembly(tempPackedOutput, new ReaderParameters(ReadingMode.Immediate)
+			{
+				ReadSymbols = true,
+				AssemblyResolver = resolver,
+				SymbolReaderProvider = new Mono.Cecil.Pdb.PdbReaderProvider()
 			});
 
 			//Now we enumerate over the references and mainly remove ourself (the engine).
@@ -328,12 +345,13 @@ namespace OTAPI.Patcher.Engine
 
 			//We are changing the file name from a temporary file, so the assembly name
 			//will also need to reflect this.
-			packedDefinition.Name.Name = Path.GetFileNameWithoutExtension(OutputAssemblyPath);
+			packedDefinition.Name.Name = assemblyName;
 
 			//All modifications and cleaning is complete, we can now save the final assembly.
 			packedDefinition.Write(OutputAssemblyPath, new WriterParameters()
 			{
-				//WriteSymbols = true
+				WriteSymbols = true,
+				SymbolWriterProvider = new Mono.Cecil.Pdb.PdbWriterProvider()
 			});
 		}
 

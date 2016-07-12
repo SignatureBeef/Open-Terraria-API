@@ -5,6 +5,11 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
+
+  "buildOptions": {
+    "xmlDoc": true
+  },
+
   "frameworks": {
     "net451": {
       "dependencies": {
