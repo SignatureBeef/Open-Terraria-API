@@ -1,5 +1,4 @@
-﻿using NDesk.Options;
-using OTAPI.Patcher.Engine.Modification;
+﻿using OTAPI.Patcher.Engine.Modification;
 
 using System.Linq;
 
@@ -10,11 +9,15 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	/// </summary>
 	public class RemoveXna : ModificationBase
 	{
+		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
+		{
+			"TerrariaServer, Version=1.3.1.1, Culture=neutral, PublicKeyToken=null"
+		};
 		public override string Description => "Removing Xna references...";
 
-        public override void Run()
-        {
-            //Context.OTAPI.MainModue.Resources.Clear();
+		public override void Run()
+		{
+			//Context.OTAPI.MainModue.Resources.Clear();
 
 			var xnaFramework = SourceDefinition.MainModule.AssemblyReferences
 				.Where(x => x.Name.StartsWith("Microsoft.Xna.Framework"))

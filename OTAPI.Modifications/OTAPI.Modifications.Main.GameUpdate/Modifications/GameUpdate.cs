@@ -9,6 +9,10 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 	/// </summary>
 	public class GameUpdate : ModificationBase
 	{
+		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
+		{
+			"TerrariaServer, Version=1.3.1.1, Culture=neutral, PublicKeyToken=null"
+		};
 		public override string Description => "Hooking Game.Update";
 		public override void Run()
 		{

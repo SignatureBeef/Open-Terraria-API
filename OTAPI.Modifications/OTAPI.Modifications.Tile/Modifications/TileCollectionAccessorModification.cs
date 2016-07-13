@@ -7,6 +7,10 @@ namespace OTAPI.Modification.Tile.Modifications
 {
 	public class TileCollectionAccessorModification : ModificationBase
 	{
+		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
+		{
+			"TerrariaServer, Version=1.3.1.1, Culture=neutral, PublicKeyToken=null"
+		};
 		public override string Description => "Patching tile collections accessors...";
 
 		public override void Run()

@@ -1,6 +1,5 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
@@ -12,6 +11,10 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
 	[Ordered(4)] //Change the default order as we need to be infront of the HitSwitch mod.
 	public class SwitchTilesEntitiy : ModificationBase
 	{
+		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
+		{
+			"TerrariaServer, Version=1.3.1.1, Culture=neutral, PublicKeyToken=null"
+		};
 		public override string Description => @"Hooking Collision.SwitchTiles\IEntity...";
 
 		public override void Run()

@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>9976312d-b9ac-4ebb-8dd4-102168d209b9</ProjectGuid>
-    <RootNamespace>OTAPI.Modification.Hardmode</RootNamespace>
+    <ProjectGuid>2559ece0-5bc9-490c-999b-b514aa1c255b</ProjectGuid>
+    <RootNamespace>OTAPI.Modifications.StatusText</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>

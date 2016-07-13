@@ -1,8 +1,5 @@
-﻿using NDesk.Options;
-using OTAPI.Patcher.Engine.Extensions;
+﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
-
-using System;
 
 namespace OTAPI.Patcher.Engine.Modifications.Patches
 {
@@ -11,8 +8,12 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	/// </summary>
 	public class MakeTypesPublic : ModificationBase
 	{
+		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
+		{
+			"TerrariaServer, Version=1.3.1.1, Culture=neutral, PublicKeyToken=null"
+		};
 		public override string Description => "Making all types public...";
-        public override void Run()
+		public override void Run()
 		{
 			foreach (var type in SourceDefinition.MainModule.Types)
 				type.MakePublic(false);

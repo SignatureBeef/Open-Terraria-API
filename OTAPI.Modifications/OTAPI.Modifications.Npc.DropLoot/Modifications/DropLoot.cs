@@ -1,6 +1,5 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NDesk.Options;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System;
@@ -10,8 +9,12 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 {
 	public class DropLoot_1_DropLoot : ModificationBase
 	{
+		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
+		{
+			"TerrariaServer, Version=1.3.1.1, Culture=neutral, PublicKeyToken=null"
+		};
 		public override string Description => "Creating DropLoot";
-        public override void Run()
+		public override void Run()
 		{
 			var newItem = SourceDefinition.Type("Terraria.Item").Method("NewItem");
 

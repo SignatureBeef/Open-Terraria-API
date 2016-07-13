@@ -82,12 +82,19 @@ namespace OTAPI.Patcher.Engine
 			};
 
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+			AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
 			resolver.ResolveFailure += Resolver_ResolveFailure;
+		}
+
+		private void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+		{
+			System.Diagnostics.Debug.WriteLine($"Loaded .net assembly: {args.LoadedAssembly.Location}");
 		}
 
 		private List<String> resolvedAssemblies = new List<string>();
 		private void Resolver_OnResolved(object sender, NugetAssemblyResolvedEventArgs e)
 		{
+			System.Diagnostics.Debug.WriteLine($"Resolved nuget assembly: {e.FilePath}");
 			resolvedAssemblies.Add(e.FilePath);
 		}
 
@@ -96,7 +103,10 @@ namespace OTAPI.Patcher.Engine
 			var assemblyDefinition = this.Modifications.FirstOrDefault(x => x.ModificationDefinition.Name.FullName == reference.FullName);
 
 			if (assemblyDefinition != null)
+			{
+				System.Diagnostics.Debug.WriteLine($"Resolved modification assembly: {reference.FullName}");
 				return assemblyDefinition.ModificationDefinition;
+			}
 
 			return null;
 		}
@@ -115,6 +125,16 @@ namespace OTAPI.Patcher.Engine
 			else if (args.Name == SourceAssembly.FullName)
 			{
 				return Assembly.LoadFrom(SourceAssemblyPath);
+			}
+			else
+			{
+				//VS will output artifacts but not dependencies.
+				//dotnet however does, and we have now switched to vs as debugging was an issue.
+				var modification = GlobModificationAssemblies().SingleOrDefault(x => Path.GetFileName(x) == asmName.Name + ".dll");
+				if (modification != null)
+				{
+					return Assembly.LoadFrom(modification);
+				}
 			}
 
 			return null;
@@ -167,9 +187,13 @@ namespace OTAPI.Patcher.Engine
 							ModificationBase mod = LoadModification(t);
 							if (mod != null)
 							{
-								mod.SourceDefinition = SourceAssembly;
+								//Is the mod applicable to the current source assembly?
+								if (mod.AssemblyTargets.Contains(SourceAssembly.Name.FullName))
+								{
+									mod.SourceDefinition = SourceAssembly;
 
-								Modifications.Add(mod);
+									Modifications.Add(mod);
+								}
 							}
 						}
 					}
@@ -232,6 +256,7 @@ namespace OTAPI.Patcher.Engine
 					//resolved using our NuGet package resolver or it
 					//will crash with not being able to find libraries
 					.Concat(resolvedAssemblies)
+
 					.ToArray(),
 
 				OutputFile = tempPackedOutput,
@@ -246,6 +271,11 @@ namespace OTAPI.Patcher.Engine
 					//Additionally we may have resolved libraries using NuGet,
 					//so we also append the directory of each assembly as well
 					.Concat(resolvedAssemblies.Select(x => Path.GetDirectoryName(x)))
+
+					//ILRepack rolls is own silly cecil version, keeps the namespace and hides
+					//custom assembly resolvers we have to explicitly add in cecil or it wont 
+					//be found
+					.Concat(new[] { Path.GetDirectoryName(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location) })
 
 					.Distinct()
 					.ToArray(),
@@ -314,12 +344,14 @@ namespace OTAPI.Patcher.Engine
 			}
 			#endregion
 
+			var handlePdbs = File.Exists(Path.ChangeExtension(tempPackedOutput, "pdb"));
+
 			//Load the ILRepacked assembly so we can find and remove what we need to
 			var packedDefinition = AssemblyDefinition.ReadAssembly(tempPackedOutput, new ReaderParameters(ReadingMode.Immediate)
 			{
-				ReadSymbols = true,
+				ReadSymbols = handlePdbs,
 				AssemblyResolver = resolver,
-				SymbolReaderProvider = new Mono.Cecil.Pdb.PdbReaderProvider()
+				SymbolReaderProvider = handlePdbs ? new Mono.Cecil.Pdb.PdbReaderProvider() : null
 			});
 
 			//Now we enumerate over the references and mainly remove ourself (the engine).
@@ -350,8 +382,8 @@ namespace OTAPI.Patcher.Engine
 			//All modifications and cleaning is complete, we can now save the final assembly.
 			packedDefinition.Write(OutputAssemblyPath, new WriterParameters()
 			{
-				WriteSymbols = true,
-				SymbolWriterProvider = new Mono.Cecil.Pdb.PdbWriterProvider()
+				WriteSymbols = handlePdbs,
+				SymbolWriterProvider = handlePdbs ? new Mono.Cecil.Pdb.PdbWriterProvider() : null
 			});
 		}
 

@@ -7,6 +7,10 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	/// </summary>
 	public class ChangeArchitecture : ModificationBase
 	{
+		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
+		{
+			"TerrariaServer, Version=1.3.1.1, Culture=neutral, PublicKeyToken=null"
+		};
 		public override string Description => "Changing architecture to AnyCPU (64-bit preferred)";
 
 		public override void Run()

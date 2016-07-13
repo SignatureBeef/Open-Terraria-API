@@ -29,5 +29,6 @@
   "frameworks": {
     "net451": { },
     "dnx451": { }
-  }
+  },
+  "userSecretsId": "aspnet5-OTAPI.Patcher-20160713093957"
 }
