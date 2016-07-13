@@ -3,7 +3,7 @@
   "frameworks": {
     "dnx451": {
       "bin": {
-        "assembly": "../../lib/dnx451/OTAPI.dll"
+        "assembly": "../../../OTAPI.dll"
       }
     }
   }
