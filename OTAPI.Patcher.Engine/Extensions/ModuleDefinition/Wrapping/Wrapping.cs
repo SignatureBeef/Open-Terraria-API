@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 		/// </summary>
 		/// <param name="method"></param>
 		/// <param name="replacement"></param>
-		public static void ReplaceWith(this MethodDefinition method, MethodDefinition replacement)
+		public static void ReplaceWith(this MethodDefinition method, MethodReference replacement)
 		{
 			//Enumerates over each type in the assembly, including nested types
 			method.Module.ForEachInstruction((mth, ins) =>
@@ -194,7 +194,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 
 			//Create our variable, to hold the modified callback result
 			VariableDefinition vrbResult = null;
-			current.Body.Variables.Add(vrbResult = new VariableDefinition("otapi_result", importedCallback.ReturnType));
+			current.Body.Variables.Add(vrbResult = new VariableDefinition("otapi_result", current.ReturnType));
 
 			//If the current method is an instance method, we insert the 'this'/ldarg_0 value
 			//for the callback.
