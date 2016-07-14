@@ -8,6 +8,7 @@ namespace OTAPI.Modifications.StatusText.Modifications
     /// The purpose of this modification is to capture writes to Main.statusText and to mark
     /// it as internal so no one else can use it as it's a terrible field to use in the first place.
     /// </summary>
+    [Ordered(6)] //So the statusText does not get changed from internal to public due to the MakeTypesPublic mod
     public class StatusTextModification : ModificationBase
     {
         public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
@@ -15,6 +16,8 @@ namespace OTAPI.Modifications.StatusText.Modifications
             "TerrariaServer, Version=1.3.1.1, Culture=neutral, PublicKeyToken=null"
         };
         public override string Description => "Patching Main.statusText updates";
+
+        internal static string test;
 
         public override void Run()
         {
@@ -26,9 +29,11 @@ namespace OTAPI.Modifications.StatusText.Modifications
                 this.Method(() => OTAPI.Core.Callbacks.Terraria.Main.SetStatusText(null))
             );
 
+            var t = this.ModificationDefinition.Type<StatusTextModification>().Field("test");
+
             //Trigger the internal keyword
-            fldStatusText.IsFamily = true;
-            fldStatusText.IsPublic = false;
+            fldStatusText.IsPublic = false; //must be before IsAssembly
+            fldStatusText.IsAssembly = true;
 
             //For each instruction in the assembly we will compare if the Terraria.Main.statusText
             //field is being set with a new value. 

@@ -417,7 +417,7 @@ namespace OTAPI.Patcher.Engine
 			Console.WriteLine($"Running {Modifications.Count} modifications.");
 			RunModifications();
 
-			Console.WriteLine($"Saving modifications to {OutputAssemblyPath ?? "<null>"}");
+			Console.WriteLine("Saving modifications for merge...");
 			try
 			{
 				SaveSourceAssembly();

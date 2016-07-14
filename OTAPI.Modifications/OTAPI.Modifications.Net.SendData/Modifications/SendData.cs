@@ -29,8 +29,6 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 				noEndHandling: false,
 				allowCallbackInstance: false
 			);
-
-			Console.WriteLine("Done");
 		}
 	}
 }

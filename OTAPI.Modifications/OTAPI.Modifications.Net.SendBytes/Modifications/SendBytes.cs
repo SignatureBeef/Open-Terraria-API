@@ -59,8 +59,6 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 				//Remove the client call
 				il.Remove(clients);
 			}
-
-			Console.WriteLine("Done");
 		}
 	}
 }
