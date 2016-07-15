@@ -3,14 +3,14 @@
 	/// <summary>
 	/// Replicates the default functionality of a normal array.
 	/// </summary>
-	public class TileCollection : ITileCollection
+	public class DefaultTileCollection : ITileCollection
 	{
 		protected Terraria.Tile[,] _tiles;
 
 		/// <summary>
 		/// Replicates the default terraria tile array constructor
 		/// </summary>
-		internal TileCollection() : this(new Terraria.Tile[Terraria.Main.maxTilesX, Terraria.Main.maxTilesY])
+		internal DefaultTileCollection() : this(new Terraria.Tile[Terraria.Main.maxTilesX, Terraria.Main.maxTilesY])
 		{
 
 		}
@@ -20,7 +20,7 @@
 		/// as the underlying source.
 		/// </summary>
 		/// <param name="collection"></param>
-		protected TileCollection(Terraria.Tile[,] collection)
+		protected DefaultTileCollection(Terraria.Tile[,] collection)
 		{
 			_tiles = collection;
 		}

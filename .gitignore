@@ -2,9 +2,12 @@
 *.csproj.user
 *.pidb
 *.userprefs
+*.nupkg
 
 artifacts/
 packages/
+Bundles/package/
+Bundles/nuget.exe
 
 .DS_Store
 .vs
@@ -12,5 +15,9 @@ packages/
 
 bin/
 obj/
+
+OTAPI.dll
+OTAPI.pdb
+OTAPI.xml
 
 *.lock.json
