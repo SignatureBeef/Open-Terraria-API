@@ -2,12 +2,12 @@
 using NuGet;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace OTAPI.Patcher.Engine
 {
 	public class NugetAssemblyResolvedEventArgs : EventArgs
 	{
-		public AssemblyDefinition Assembly { get; set; }
 		public string FilePath { get; set; }
 	}
 
@@ -30,7 +30,6 @@ namespace OTAPI.Patcher.Engine
 			packageInstallDir = Path.Combine(Path.GetTempPath(), "cecilnuget");
 			Directory.CreateDirectory(packageInstallDir);
 
-
 			packageManager = new PackageManager(packageRepo, packageInstallDir);
 			packageManager.PackageInstalled += PackageManager_PackageInstalled;
 			localPackageRepo = packageManager.LocalRepository;
@@ -41,15 +40,20 @@ namespace OTAPI.Patcher.Engine
 			Console.WriteLine($" * NuGet: Package {e.Package.GetFullName()} installed to {e.InstallPath}.");
 		}
 
-		protected IPackage ResolvePackage(string name, Version version)
+		/// <summary>
+		/// Resolves a nuget packege locally or from the internet and automatically installs it.
+		/// </summary>
+		/// <param name="name">Name of the package to find</param>
+		/// <param name="version">Version of the package</param>
+		/// <returns>Nuget package details</returns>
+		protected IPackage ResolvePackage(string name, SemanticVersion version)
 		{
 			IPackage package = null;
-			SemanticVersion vers = SemanticVersion.ParseOptionalVersion($"{version.Major}.{version.Minor}.*");
 
-			package = localPackageRepo.FindPackage(name, vers);
+			package = localPackageRepo.FindPackage(name, version);
 			if (package == null)
 			{
-				package = packageRepo.FindPackage(name, vers);
+				package = packageRepo.FindPackage(name, version);
 			}
 
 			if (package != null)
@@ -58,6 +62,64 @@ namespace OTAPI.Patcher.Engine
 			}
 
 			return package;
+		}
+
+		/// <summary>
+		/// Resolves a package from nuget using a specified name and version.
+		/// </summary>
+		/// <param name="name">Name of the package to find</param>
+		/// <param name="version">Version of the package</param>
+		/// <returns>File path if the nuget package is found</returns>
+		protected string ResolvePackage(string name, Version version)
+		{
+			SemanticVersion vers = SemanticVersion.ParseOptionalVersion($"{version.Major}.{version.Minor}.*");
+			IPackage package = ResolvePackage(name, vers);
+
+			if (package != null)
+			{
+				string installPath = packageManager.PathResolver.GetInstallPath(package);
+				string libPath = Path.Combine(installPath, "lib", "net45", name + ".dll");
+
+				if (File.Exists(libPath))
+				{
+					OnResolved?.Invoke(this, new NugetAssemblyResolvedEventArgs()
+					{
+						FilePath = libPath
+					});
+					return libPath;
+				}
+				else
+				{
+					var files = Directory.EnumerateFiles(installPath, "*.dll", SearchOption.AllDirectories);
+					if (files.Count() == 1)
+					{
+						libPath = files.Single();
+						OnResolved?.Invoke(this, new NugetAssemblyResolvedEventArgs()
+						{
+							FilePath = libPath
+						});
+						return libPath;
+					}
+				}
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Resolves a assembly from nuget and loads it as a .net assembly
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public System.Reflection.Assembly Resolve(System.Reflection.AssemblyName name)
+		{
+			var filePath = ResolvePackage(name.Name, name.Version);
+			if (filePath != null)
+			{
+				return System.Reflection.Assembly.LoadFrom(filePath);
+			}
+
+			return null;
 		}
 
 		public override AssemblyDefinition Resolve(AssemblyNameReference name)
@@ -69,27 +131,10 @@ namespace OTAPI.Patcher.Engine
 			}, name.Name) > -1)
 				return base.Resolve(name);
 
-			////Temp, occasionally wanted internet to resolve T.T
-			//if (name.Name.StartsWith("OTAPI."))
-			//	return base.Resolve(name);
-
-			IPackage package = ResolvePackage(name.Name, name.Version);
-
-			if (package != null)
+			var filePath = ResolvePackage(name.Name, name.Version);
+			if (filePath != null)
 			{
-				string libPath = Path.Combine(packageManager.PathResolver.GetInstallPath(package),
-					"lib", "net45", name.Name + ".dll");
-
-				if (File.Exists(libPath))
-				{
-					AssemblyDefinition asmdef = ModuleDefinition.ReadModule(libPath, new ReaderParameters(ReadingMode.Immediate)).Assembly;
-					OnResolved?.Invoke(this, new NugetAssemblyResolvedEventArgs()
-					{
-						Assembly = asmdef,
-						FilePath = libPath
-					});
-					return asmdef;
-				}
+				return ModuleDefinition.ReadModule(filePath, new ReaderParameters(ReadingMode.Immediate)).Assembly;
 			}
 
 			return base.Resolve(name);

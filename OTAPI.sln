@@ -115,6 +115,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Socket", "Socket", "{8574CF
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Main.StatusText", "OTAPI.Modifications\OTAPI.Modifications.Main.StatusText\OTAPI.Modifications.Main.StatusText.xproj", "{2559ECE0-5BC9-490C-999B-B514AA1C255B}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Json", "OTAPI.Modifications\OTAPI.Modifications.Json\OTAPI.Modifications.Json\OTAPI.Modifications.Json.xproj", "{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -427,6 +429,14 @@ Global
 		{2559ECE0-5BC9-490C-999B-B514AA1C255B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2559ECE0-5BC9-490C-999B-B514AA1C255B}.Release|x86.ActiveCfg = Release|Any CPU
 		{2559ECE0-5BC9-490C-999B-B514AA1C255B}.Release|x86.Build.0 = Release|Any CPU
+		{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6}.Debug|x86.Build.0 = Debug|Any CPU
+		{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6}.Release|x86.ActiveCfg = Release|Any CPU
+		{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -478,5 +488,6 @@ Global
 		{D6DE4652-8079-493E-B6F0-220A24D96B7B} = {6F612C0E-1D67-4E06-8FB2-0D372CA5C264}
 		{8574CF28-01FD-4C01-96B0-4A4BAA401C53} = {936CBC51-EB4E-4381-B992-AC7D9D4DBB7F}
 		{2559ECE0-5BC9-490C-999B-B514AA1C255B} = {29C91099-E98D-44F1-9511-60C0DD9DB16D}
+		{258B1BED-D841-4DEE-84E3-1F2B3C77FCA6} = {6F612C0E-1D67-4E06-8FB2-0D372CA5C264}
 	EndGlobalSection
 EndGlobal

@@ -301,7 +301,7 @@ namespace OTAPI.Core.Tests
             };
             Hooks.World.PostHardmode = () =>
             {
-                Console.WriteLine("Hardmode is now in processed. Extra: netMode:{Terraria.Main.netMode},hardMode:{Terraria.Main.hardMode}");
+                Console.WriteLine($"Hardmode is now in processed. Extra: netMode:{Terraria.Main.netMode},hardMode:{Terraria.Main.hardMode}");
             };
             //Hooks.Projectile.PreAI = (projectile) =>
             //{

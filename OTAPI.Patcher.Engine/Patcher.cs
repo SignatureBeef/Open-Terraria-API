@@ -135,6 +135,12 @@ namespace OTAPI.Patcher.Engine
 				{
 					return Assembly.LoadFrom(modification);
 				}
+				else
+				{
+					var asm = resolver.Resolve(asmName);
+					if (asm != null)
+						return asm;
+				}
 			}
 
 			return null;
@@ -252,10 +258,6 @@ namespace OTAPI.Patcher.Engine
 				InputAssemblies = new[] { tempSourceOutput }
 					//Add the modifications for merging
 					.Concat(GlobModificationAssemblies())
-					//ILRepack will want to find the assemblies we have
-					//resolved using our NuGet package resolver or it
-					//will crash with not being able to find libraries
-					.Concat(resolvedAssemblies)
 
 					.ToArray(),
 
@@ -273,7 +275,7 @@ namespace OTAPI.Patcher.Engine
 					.Concat(resolvedAssemblies.Select(x => Path.GetDirectoryName(x)))
 
 					//ILRepack rolls is own silly cecil version, keeps the namespace and hides
-					//custom assembly resolvers we have to explicitly add in cecil or it wont 
+					//custom assembly resolvers. We have to explicitly add in cecil or it wont 
 					//be found
 					.Concat(new[] { Path.GetDirectoryName(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location) })
 
