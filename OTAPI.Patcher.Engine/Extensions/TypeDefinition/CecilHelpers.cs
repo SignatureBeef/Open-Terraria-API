@@ -35,6 +35,11 @@ namespace OTAPI.Patcher.Engine.Extensions
 			return typeDefinition.Properties.Single(x => x.Name == name);
 		}
 
+		public static TypeDefinition NestedType(this TypeDefinition typeDefinition, string name)
+		{
+			return typeDefinition.NestedTypes.Single(x => x.Name == name);
+		}
+
 		public static bool HasSameParameters(this MethodDefinition method, Collection<ParameterDefinition> parameters)
 		{
 			var src = method.IsStatic ? method.Parameters.Skip(1) : method.Parameters;

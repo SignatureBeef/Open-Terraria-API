@@ -8,7 +8,7 @@
         /// </summary>
         internal static bool NameCollision(global::Terraria.Player player)
         {
-            var res = Hooks.Net.Player.NameCollision?.Invoke(player);
+            var res = Hooks.Player.NameCollision?.Invoke(player);
             if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
         }

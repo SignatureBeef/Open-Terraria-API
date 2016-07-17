@@ -1,8 +1,6 @@
 ﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
-using System;
-
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 {
 	public class SendData : ModificationBase
@@ -20,7 +18,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
 			//Few stack issues arose trying to inject a callback before for lock, so i'll resort to 
 			//wrapping the method;
-			
+
 			vanilla.Wrap
 			(
 				beginCallback: callback,
@@ -29,6 +27,32 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 				noEndHandling: false,
 				allowCallbackInstance: false
 			);
+
+			//{
+			//	var sendData = SourceDefinition.Type("Terraria.Net.NetManager").Method("SendData");
+
+			//	sendData.ReplaceWith(SourceDefinition.MainModule.Import(
+			//		this.Method(() => NetManager_Debug.SendData(null, default(global::Terraria.Net.NetPacket)))
+			//	));
+			//}
 		}
 	}
+
+	//public static class NetManager_Debug
+	//{
+	//	public static void SendData(global::Terraria.Net.Sockets.ISocket socket, global::Terraria.Net.NetPacket packet)
+	//	{
+	//		try
+	//		{
+	//			socket.AsyncSend(packet.Buffer.Data, 0, packet.Length, new global::Terraria.Net.Sockets.SocketSendCallback((object state) =>
+	//			{
+	//				((global::Terraria.Net.NetPacket)state).Recycle();
+	//			}), packet);
+	//		}
+	//		catch (System.Exception ex)
+	//		{
+	//			System.Console.WriteLine("    Exception normal: Tried to send data to a client after losing connection" + ex);
+	//		}
+	//	}
+	//}
 }

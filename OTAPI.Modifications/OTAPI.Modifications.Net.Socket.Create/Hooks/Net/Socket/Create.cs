@@ -14,7 +14,7 @@
                 /// Occurs when the server socket is to be created.
                 /// Return null if you wish for default functionality.
                 /// </summary>
-                public static ServerSocketCreateHandler ServerSocketCreate;
+                public static ServerSocketCreateHandler Create;
             }
         }
     }

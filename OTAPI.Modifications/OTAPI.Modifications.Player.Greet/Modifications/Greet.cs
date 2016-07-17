@@ -1,7 +1,7 @@
 ﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
-namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Player
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 {
 	/// <summary>
 	/// This modification is to allow the NetMessage.greetPlayer hooks to be ran by injecting callbacks into
