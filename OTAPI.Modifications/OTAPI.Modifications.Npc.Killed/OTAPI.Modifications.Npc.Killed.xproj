@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>964706cd-ac1d-4a2c-9c49-d87bb6725de6</ProjectGuid>
-    <RootNamespace>OTAPI.Modification.SetDefaultsByName</RootNamespace>
+    <ProjectGuid>724529b0-33e8-4abd-bae2-15c98e4f9053</ProjectGuid>
+    <RootNamespace>OTAPI.Modifications.Npc.Killed</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>

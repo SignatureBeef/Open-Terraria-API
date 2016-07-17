@@ -11,10 +11,11 @@
     "OTAPI.Core.Tests": "OTAPI.Core.Tests"
   },
   "dependencies": {
-    "NDesk.Options": "0.2.1"
+    "NDesk.Options": "0.2.1",
+    "Newtonsoft.Json": "9.0.1"
   },
   "frameworks": {
-    "dnx451": {
+    "net451": {
       "dependencies": {
         "OTAPI": "1.0.0-*"
       }
