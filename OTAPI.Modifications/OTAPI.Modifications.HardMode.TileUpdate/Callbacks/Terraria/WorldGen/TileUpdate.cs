@@ -7,12 +7,21 @@ namespace OTAPI.Core.Callbacks.Terraria
 	{
 		private static Func<OTAPI.Tile.ITileCollection> GetTileCollection = GetTileCollectionMethod();
 
-		public static Func<OTAPI.Tile.ITileCollection> GetTileCollectionMethod()
+		/// <summary>
+		/// Gets active ITileCollection instance as it's not available at compile time.
+		/// 
+		/// This is because at compile time we are using Terraria.Main.tile which is a
+		/// 2D array of Terraria.Tile which uses fields. 
+		/// If we compile against fields in OTAPI then our IL wont match after the tile
+		/// modifications are applied.
+		/// </summary>
+		/// <returns>ITileCollection instance</returns>
+		private static Func<OTAPI.Tile.ITileCollection> GetTileCollectionMethod()
 		{
 			var dm = new DynamicMethod("GetTileCollection", typeof(OTAPI.Tile.ITileCollection), null);
 			var processor = dm.GetILGenerator();
 
-			processor.Emit(OpCodes.Ldsfld, Type.GetType("Terraria.Main").GetField("tile"));
+			processor.Emit(OpCodes.Ldsfld, typeof(global::Terraria.Main).GetField("tile"));
 			processor.Emit(OpCodes.Ret);
 
 			return (Func<OTAPI.Tile.ITileCollection>)dm.CreateDelegate(typeof(Func<OTAPI.Tile.ITileCollection>));

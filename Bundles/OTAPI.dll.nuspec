@@ -3,7 +3,7 @@
   <metadata>
     <id>OTAPI</id>
     <title>Open Terraria API for Terraria</title>
-    <version>0.2.6</version>
+    <version>0.2.7</version>
     <authors>DeathCradle</authors>
     <owners>DeathCradle</owners>
     <licenseUrl>https://github.com/DeathCradle/Open-Terraria-API/blob/v2/LICENSE.txt</licenseUrl>
@@ -11,10 +11,12 @@
     <iconUrl>https://openterraria.com/images/ota-logo-small.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The Open Terraria API (OTAPI) is the core for the new generation of Terraria Server and Client mods.</description>
-	<summary>Open Terraria API 0.2.6 for Terraria 1.3.1.1</summary>
+	<summary>Open Terraria API 0.2.7 for Terraria 1.3.1.1</summary>
     <releaseNotes>
-	Added hook Npc.Killed
-	Readded hook Npc.SetDefaultsById
+	Added hook Tile.CreateTile
+	Changed default tile implementation from Terraria.Tile to the OTAPI.Tile.ITile interface
+	Hooked hardmode tile updates
+	Hooked meteor drops
     </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>Terraria,OTAPI</tags>
