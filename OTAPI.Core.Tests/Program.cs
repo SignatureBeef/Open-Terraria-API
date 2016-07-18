@@ -117,6 +117,8 @@ namespace OTAPI.Core.Tests
 			Hooks.Command.StartCommandThread = () =>
 			{
 				Console.WriteLine("[Hook] Command thread.");
+
+				Console.WriteLine($"[Hook] Tile type at {Terraria.Main.tile[0, 0].GetType().FullName}/{Terraria.Main.tile[0, 0].GetType().GetInterfaces()[0].FullName}");
 				return HookResult.Continue;
 			};
 			//Hooks.Net.SendData =

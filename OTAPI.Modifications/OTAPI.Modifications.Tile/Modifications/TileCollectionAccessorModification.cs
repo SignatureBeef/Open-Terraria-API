@@ -17,7 +17,7 @@ namespace OTAPI.Modification.Tile.Modifications
 		{
 			//The process here is to look through each instruction in the assembly
 			//for array accessors for Terraria.Tile[,]. Specifically ones that relate back to
-			//Terraria.Main.tile and Terraria.World.Generation.GenBase._tiles.
+			//Terraria.Main.tile, Terraria.World.Generation.GenBase._tiles and Terraria.GameContent.Liquid.LiquidRenderer._tiles
 			//
 			//Once we find a Get or Set call, we are to swap to them out to ITileCollection.get_Item/set_Item.
 			//

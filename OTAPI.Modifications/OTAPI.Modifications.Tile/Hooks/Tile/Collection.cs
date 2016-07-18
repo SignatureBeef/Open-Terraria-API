@@ -8,6 +8,7 @@ namespace OTAPI.Core
 		{
 			#region Handlers
 			public delegate ITileCollection CreateCollectionHandler();
+			public delegate ITile CreateTileHandler();
 			#endregion
 
 			/// <summary>
@@ -16,6 +17,12 @@ namespace OTAPI.Core
 			/// Use this to create custom tile providers.
 			/// </summary>
 			public static CreateCollectionHandler CreateCollection;
+
+			/// <summary>
+			/// Occurs whenever a tile instance is to be created
+			/// in the Terraria assembly.
+			/// </summary>
+			public static CreateTileHandler CreateTile;
 		}
 	}
 }

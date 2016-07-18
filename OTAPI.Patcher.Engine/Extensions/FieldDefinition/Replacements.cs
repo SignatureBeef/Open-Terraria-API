@@ -37,7 +37,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 
 						//Swap the instruction to call the propertys getter
 						instruction.OpCode = OpCodes.Callvirt;
-						instruction.Operand = property.GetMethod;
+						instruction.Operand = field.Module.Import(property.GetMethod);
 					}
 					else if (instruction.OpCode == OpCodes.Stfld)
 					{
@@ -52,7 +52,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 
 						//Swap the instruction to call the propertys setter
 						instruction.OpCode = OpCodes.Callvirt;
-						instruction.Operand = property.SetMethod;
+						instruction.Operand = field.Module.Import(property.SetMethod);
 					}
 				}
 			});

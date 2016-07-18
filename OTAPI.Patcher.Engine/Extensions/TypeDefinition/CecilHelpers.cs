@@ -15,14 +15,22 @@ namespace OTAPI.Patcher.Engine.Extensions
 
 		public static MethodDefinition Method(this TypeDefinition typeDefinition, string name,
 			bool? isStatic = null,
-			Collection<ParameterDefinition> parameters = null
+			Collection<ParameterDefinition> parameters = null,
+			int skipParameters = 1
 		)
 		{
-			return typeDefinition.Methods.Single(
+			var method = typeDefinition.Methods.Where(
 				x => x.Name == name
 				&& (isStatic == null || x.IsStatic == isStatic.Value)
-				&& (parameters == null || x.HasSameParameters(parameters))
+				&& (parameters == null || x.HasSameParameters(parameters, skipParameters))
 			);
+
+			if (method.Count() == 0)
+				throw new Exception($"Method `{name}` is not found on {typeDefinition.FullName}");
+			else if (method.Count() > 1)
+				throw new Exception($"Too many methods named `{name}` found in {typeDefinition.FullName}");
+
+			return method.Single();
 		}
 
 		public static FieldDefinition Field(this TypeDefinition typeDefinition, string name)
@@ -40,10 +48,12 @@ namespace OTAPI.Patcher.Engine.Extensions
 			return typeDefinition.NestedTypes.Single(x => x.Name == name);
 		}
 
-		public static bool HasSameParameters(this MethodDefinition method, Collection<ParameterDefinition> parameters)
+		public static bool HasSameParameters(this MethodDefinition method, Collection<ParameterDefinition> parameters, int skipParameters = 1)
 		{
-			var src = method.IsStatic ? method.Parameters.Skip(1) : method.Parameters;
+			//TODO: fix this whole thing. this was initially designed for begin/end callbacks
+			var src = skipParameters > 0 && method.IsStatic ? method.Parameters.Skip(skipParameters) : method.Parameters;
 			return src.All(prm => parameters.Any(p => p.Name.Equals(prm.Name, System.StringComparison.CurrentCultureIgnoreCase)));
+				//&& src.Count() == parameters.Count;
 		}
 
 		public static void ForEachNestedType(this TypeDefinition parent, Action<TypeDefinition> callback)

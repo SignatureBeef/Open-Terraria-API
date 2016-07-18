@@ -81,6 +81,9 @@ namespace OTAPI.Modification.Tile.Modifications
 			//Get the type definition of Terraria.Tile
 			var terrariaTile = this.SourceDefinition.Type("Terraria.Tile");
 
+			//var iTile = this.ModificationDefinition.Type("OTAPI.Tile.ITile");
+			//terrariaTile.Interfaces.Add(this.SourceDefinition.MainModule.Import(iTile));
+
 			//Enumerate over each instance field and start swapping
 			foreach (var field in terrariaTile.Fields.Where(f => !f.IsStatic))
 			{
@@ -115,6 +118,8 @@ namespace OTAPI.Modification.Tile.Modifications
 
 				//Add the property to the assembly
 				terrariaTile.Properties.Add(prop);
+
+				//var iTileProperty = iTile.Property(prop.Name);
 
 				//Now simply replace all occurrences of the field with the newly added property
 				field.ReplaceWith(prop);

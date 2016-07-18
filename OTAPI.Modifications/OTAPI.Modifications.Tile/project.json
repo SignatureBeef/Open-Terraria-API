@@ -14,7 +14,8 @@
     "net451": {
       "dependencies": {
         "OTAPI.Patcher.Engine": "0.20.2",
-        "TerrariaServer": "1.0.0-*"
+        "TerrariaServer": "1.0.0-*",
+        "OTAPI.Modifications.Xna": "1.0.0-*"
       }
     }
   }
