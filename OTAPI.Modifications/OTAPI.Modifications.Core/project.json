@@ -13,7 +13,8 @@
   "frameworks": {
     "net451": {
       "dependencies": {
-        "TerrariaServer": "1.0.0-*"
+        "TerrariaServer": "1.0.0-*",
+        "OTAPI.Patcher.Engine": "0.20.2"
       }
     }
   },

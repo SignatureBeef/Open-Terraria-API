@@ -7,7 +7,6 @@ namespace OTAPI.Patcher.Engine.Extensions
 {
 	public static partial class CecilHelpers
 	{
-
 		public static TypeDefinition TypeDefinition(this System.Type type, AssemblyDefinition definition)
 		{
 			return definition.Type(type.FullName);
@@ -26,7 +25,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 			);
 
 			if (method.Count() == 0)
-				throw new Exception($"Method `{name}` is not found on {typeDefinition.FullName}");
+				throw new Exception($"Method `{name}` is not found in {typeDefinition.FullName}");
 			else if (method.Count() > 1)
 				throw new Exception($"Too many methods named `{name}` found in {typeDefinition.FullName}");
 

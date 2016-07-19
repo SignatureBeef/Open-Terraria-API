@@ -22,7 +22,7 @@
     ///     Terraria.NPC
     ///     Terraria.Projectile
     /// </remarks>
-    internal/*Currently achieved using ILRepack*/ abstract class TerrariaEntity : IEntity
+    public abstract class TerrariaEntity : IEntity
     {
 
     }
