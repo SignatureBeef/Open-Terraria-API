@@ -17,6 +17,11 @@ namespace OTAPI.Patcher.Engine.Modification
             ModificationDefinition = AssemblyDefinition.ReadAssembly(moduleLocation);
         }
 
+		/// <summary>
+		/// Location of the source definition on disk
+		/// </summary>
+		internal string SourceDefinitionFilePath { get; set; }
+
         /// <summary>
         /// Returns the list of applicable assembly targets the modification can be ran against
         /// </summary>

@@ -197,6 +197,7 @@ namespace OTAPI.Patcher.Engine
 								if (mod.AssemblyTargets.Contains(SourceAssembly.Name.FullName))
 								{
 									mod.SourceDefinition = SourceAssembly;
+									mod.SourceDefinitionFilePath = asmPath;
 
 									Modifications.Add(mod);
 								}
@@ -250,14 +251,14 @@ namespace OTAPI.Patcher.Engine
 		protected void PackAssemblies()
 		{
 			tempPackedOutput = Path.GetTempFileName() + ".dll";
-
+			
 			var options = new ILRepacking.RepackOptions()
 			{
 				//Get the list of input assemblies for merging, ensuring our source 
 				//assembly is first in the list so it can be granted as the target assembly.
 				InputAssemblies = new[] { tempSourceOutput }
 					//Add the modifications for merging
-					.Concat(GlobModificationAssemblies())
+					.Concat(Modifications.Select(x => x.SourceDefinitionFilePath))
 
 					.ToArray(),
 
