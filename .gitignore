@@ -8,6 +8,7 @@ artifacts/
 packages/
 Bundles/package/
 Bundles/nuget.exe
+wrap/TerrariaServer/TerrariaServer.exe
 
 .DS_Store
 .vs
