@@ -9,7 +9,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.2.0, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.2.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Changing architecture to AnyCPU (64-bit preferred)";
 
