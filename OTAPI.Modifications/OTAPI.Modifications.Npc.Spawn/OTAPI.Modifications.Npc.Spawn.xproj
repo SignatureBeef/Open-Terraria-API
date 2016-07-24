@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>1f8723e1-0253-44ac-8389-112a5c3dc062</ProjectGuid>
-    <RootNamespace>OTAPI.Modifications.Net.RemoteClient.Reset</RootNamespace>
+    <ProjectGuid>30f9b017-7dd3-40c1-9beb-e3d50143d6b7</ProjectGuid>
+    <RootNamespace>OTAPI.Modifications.Npc.Spawn</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>

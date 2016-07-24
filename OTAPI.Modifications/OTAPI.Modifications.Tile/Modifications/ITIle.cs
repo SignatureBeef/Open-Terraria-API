@@ -26,6 +26,11 @@ namespace OTAPI.Modification.Tile.Modifications
 			var iTile = this.ModificationDefinition.Type("OTAPI.Tile.ITile");
 			var importedITile = this.SourceDefinition.MainModule.Import(iTile);
 
+			if(!iTile.SignatureMatches(terrariaTile))
+			{
+				throw new Exception("ITile does not match Terraria.Tile signatures!");
+			}
+
 			//Make Terraria.Tile implement ITile
 			terrariaTile.Interfaces.Add(importedITile);
 

@@ -18,6 +18,14 @@ namespace OTAPI.Tile
 		ITile this[int x, int y] { get; set; }
 	}
 
+	/// <summary>
+	/// ITile is injected into the Terraria assembly to replace all instance usages
+	/// of Terraria.Tile.
+	/// 
+	/// This allows us to seamlessly swap out implementations of the tile mechanism.
+	/// </summary>
+	/// <remarks>This interface is based of the implementations after the Terraria.Tile
+	/// fields have been changed to properties.</remarks>
 	public interface ITile
 	{
 		int collisionType { get; }
@@ -86,5 +94,7 @@ namespace OTAPI.Tile
 		void actuator(bool actuator);
 		byte slope();
 		void slope(byte slope);
+
+		string ToString();
 	}
 }

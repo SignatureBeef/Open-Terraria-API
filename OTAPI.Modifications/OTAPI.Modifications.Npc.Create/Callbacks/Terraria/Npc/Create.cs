@@ -2,10 +2,6 @@
 {
     internal static partial class Npc
     {
-        /// <summary>
-        /// This method is injected into the StrikeNPC method along with an additional variable [cancelResult] which is returned
-        /// if this method returns false.
-        /// </summary>
         internal static global::Terraria.NPC Create
         (
             ref int index,

@@ -110,50 +110,51 @@ namespace OTAPI.Core.Tests
 
 		static void AttachHooks()
 		{
-			//Hooks.Net.Socket.ServerSocketCreate = () =>
-			//{
-			//    return new OTAPI.Sockets.PoolSocket();
-			//};
-			Hooks.Command.StartCommandThread = () =>
+            Hooks.Net.Socket.Create = () =>
+            {
+                //return new OTAPI.Sockets.PoolSocket();
+                return new Terraria.Net.Sockets.TcpSocket();
+            };
+            Hooks.Command.StartCommandThread = () =>
 			{
 				Console.WriteLine("[Hook] Command thread.");
 
 				Console.WriteLine($"[Hook] Tile type at {Terraria.Main.tile[0, 0].GetType().FullName}/{Terraria.Main.tile[0, 0].GetType().GetInterfaces()[0].FullName}");
 				return HookResult.Continue;
 			};
-			//Hooks.Net.SendData =
-			//(
-			//    ref int bufferIndex,
-			//    ref int msgType,
-			//    ref int remoteClient,
-			//    ref int ignoreClient,
-			//    ref string text,
-			//    ref int number,
-			//    ref float number2,
-			//    ref float number3,
-			//    ref float number4,
-			//    ref int number5,
-			//    ref int number6,
-			//    ref int number7
-			//) =>
-			//{
-			//    //Console.WriteLine($"Sending {msgType} to {bufferIndex}");
-			//    return HookResult.Continue;
-			//};
-			//Hooks.Net.ReceiveData =
-			//(
-			//    global::Terraria.MessageBuffer buffer,
-			//    ref byte packetId,
-			//    ref int readOffset,
-			//    ref int start,
-			//    ref int length,
-			//    ref int messageType
-			//) =>
-			//{
-			//    //Console.WriteLine($"Receiving {packetId} from {buffer.whoAmI}");
-			//    return HookResult.Continue;
-			//};
-			Hooks.Player.PreGreet = (ref int playerId) =>
+            Hooks.Net.SendData =
+            (
+                ref int bufferIndex,
+                ref int msgType,
+                ref int remoteClient,
+                ref int ignoreClient,
+                ref string text,
+                ref int number,
+                ref float number2,
+                ref float number3,
+                ref float number4,
+                ref int number5,
+                ref int number6,
+                ref int number7
+            ) =>
+            {
+                //Console.WriteLine($"Sending {msgType} to {bufferIndex}");
+                return HookResult.Continue;
+            };
+            Hooks.Net.ReceiveData =
+            (
+                global::Terraria.MessageBuffer buffer,
+                ref byte packetId,
+                ref int readOffset,
+                ref int start,
+                ref int length,
+                ref int messageType
+            ) =>
+            {
+                //Console.WriteLine($"Receiving {packetId} from {buffer.whoAmI}");
+                return HookResult.Continue;
+            };
+            Hooks.Player.PreGreet = (ref int playerId) =>
 			{
 				Console.WriteLine(nameof(Hooks.Player.PreGreet) + " " + playerId);
 				return HookResult.Continue;
@@ -162,18 +163,18 @@ namespace OTAPI.Core.Tests
 			{
 				Console.WriteLine(nameof(Hooks.Player.PostGreet) + " " + playerId);
 			};
-			//Hooks.Net.SendBytes = (
-			//    ref int remoteClient,
-			//    ref byte[] data,
-			//    ref int offset,
-			//    ref int size,
-			//    ref global::Terraria.Net.Sockets.SocketSendCallback callback,
-			//    ref object state) =>
-			//{
-			//    Console.WriteLine($"Sending {size} bytes of data to {remoteClient}");
-			//    return HookResult.Continue;
-			//};
-			Hooks.Player.NameCollision = (player) =>
+            Hooks.Net.SendBytes = (
+                ref int remoteClient,
+                ref byte[] data,
+                ref int offset,
+                ref int size,
+                ref global::Terraria.Net.Sockets.SocketSendCallback callback,
+                ref object state) =>
+            {
+                //Console.WriteLine($"Sending {size} bytes of data to {remoteClient}");
+                return HookResult.Continue;
+            };
+            Hooks.Player.NameCollision = (player) =>
 			{
 				Console.WriteLine($"Booting {player.name} as their name conflicts with an existing player.");
 				return HookResult.Continue;
@@ -204,7 +205,7 @@ namespace OTAPI.Core.Tests
 				ref float ai3,
 				ref int target) =>
 			{
-				Console.WriteLine($"Creating npc for {index} at {x},{y}");
+				Console.WriteLine($"Creating npc for index {index} at {x},{y}");
 				return null;
 			};
 			Hooks.Npc.PreDropLoot = (
@@ -258,36 +259,36 @@ namespace OTAPI.Core.Tests
 				ref bool noGrabDelay,
 				ref bool reverseLookup) =>
 			{
-				Console.WriteLine($"Drop boss bag at {X},{Y}");
-				return HookResult.Continue;
+                Console.WriteLine($"Drop boss bag at {X},{Y}");
+                return HookResult.Continue;
 			};
-			//Hooks.Projectile.PreSetDefaultsById = (
-			//    global::Terraria.Projectile projectile,
-			//    ref int type) =>
-			//{
-			//    Console.WriteLine($"Creating new projectile using type: {type}");
-			//    return HookResult.Continue;
-			//};
-			//Hooks.Projectile.PostSetDefaultsById = (
-			//    global::Terraria.Projectile projectile,
-			//    int type) =>
-			//{
-			//    Console.WriteLine($"Created new projectile using type: {type}");
-			//};
-			//Hooks.Projectile.PreUpdate = (
-			//    global::Terraria.Projectile projectile,
-			//    ref int index) =>
-			//{
-			//    Console.WriteLine($"Begin Update at index: {index}");
-			//    return HookResult.Continue;
-			//};
-			//Hooks.Projectile.PostUpdate = (
-			//    global::Terraria.Projectile projectile,
-			//    int index) =>
-			//{
-			//    Console.WriteLine($"End Update at index: {index}");
-			//};
-			Hooks.World.IO.PreSaveWorld = (ref bool useCloudSaving, ref bool resetTime) =>
+            Hooks.Projectile.PreSetDefaultsById = (
+                global::Terraria.Projectile projectile,
+                ref int type) =>
+            {
+                //Console.WriteLine($"Creating new projectile using type: {type}");
+                return HookResult.Continue;
+            };
+            Hooks.Projectile.PostSetDefaultsById = (
+                global::Terraria.Projectile projectile,
+                int type) =>
+            {
+                //Console.WriteLine($"Created new projectile using type: {type}");
+            };
+            Hooks.Projectile.PreUpdate = (
+                global::Terraria.Projectile projectile,
+                ref int index) =>
+            {
+                //Console.WriteLine($"Begin Update at index: {index}");
+                return HookResult.Continue;
+            };
+            Hooks.Projectile.PostUpdate = (
+                global::Terraria.Projectile projectile,
+                int index) =>
+            {
+                //Console.WriteLine($"End Update at index: {index}");
+            };
+            Hooks.World.IO.PreSaveWorld = (ref bool useCloudSaving, ref bool resetTime) =>
 			{
 				Console.WriteLine($"Saving world useCloudSaving:{useCloudSaving}, resetTime:{resetTime}");
 				return HookResult.Continue;
@@ -305,26 +306,26 @@ namespace OTAPI.Core.Tests
 			{
 				Console.WriteLine($"Hardmode is now in processed. Extra: netMode:{Terraria.Main.netMode},hardMode:{Terraria.Main.hardMode}");
 			};
-			//Hooks.Projectile.PreAI = (projectile) =>
-			//{
-			//    Console.WriteLine($"[Prj] AI for {projectile.whoAmI}");
-			//    return HookResult.Continue;
-			//};
-			//Hooks.Projectile.PostAI = (projectile) =>
-			//{
-			//    Console.WriteLine($"[Prj] Post AI for {projectile.whoAmI}");
-			//};
-			Hooks.World.Statue = (StatueType caller, float x, float y, int type, ref int num, ref int num2, ref int num3) =>
+            Hooks.Projectile.PreAI = (projectile) =>
+            {
+                //Console.WriteLine($"[Prj] AI for {projectile.whoAmI}");
+                return HookResult.Continue;
+            };
+            Hooks.Projectile.PostAI = (projectile) =>
+            {
+                //Console.WriteLine($"[Prj] Post AI for {projectile.whoAmI}");
+            };
+            Hooks.World.Statue = (StatueType caller, float x, float y, int type, ref int num, ref int num2, ref int num3) =>
 			{
 				Console.WriteLine($"Mech spawn for {caller} at {x},{y}");
 				return HookResult.Continue;
 			};
 
-			//Hooks.Game.StatusTextUpdate = () =>
-			//{
-			//    return HookResult.Cancel;
-			//};
-			Hooks.Game.StatusTextWrite = (ref string text) =>
+            Hooks.Game.StatusTextUpdate = () =>
+            {
+                return HookResult.Continue;
+            };
+            Hooks.Game.StatusTextWrite = (ref string text) =>
 			{
 				text = "[Hook] " + text;
 				return HookResult.Continue;
@@ -347,6 +348,12 @@ namespace OTAPI.Core.Tests
 				var connected = remoteClient.Socket != null && remoteClient.Socket.IsConnected();
 				Console.WriteLine($"[Hook] Reset client at {remoteClient.Id}, socket: {socket}, connected: {connected}");
 			};
-		}
+
+            Hooks.Npc.Spawn = (ref int index) =>
+            {
+                Console.WriteLine($"Spawning npc type {Terraria.Main.npc[index].type} at index {index}");
+                return HookResult.Continue;
+            };
+        }
 	}
 }

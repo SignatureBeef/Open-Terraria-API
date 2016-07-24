@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OTAPI.Modifications.Net.RemoteClient.Reset")]
+[assembly: AssemblyTitle("OTAPI.Modifications.Console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OTAPI.Modifications.Net.RemoteClient.Reset")]
+[assembly: AssemblyProduct("OTAPI.Modifications.Console")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,4 +20,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1f8723e1-0253-44ac-8389-112a5c3dc062")]
+[assembly: Guid("a96fbf97-7519-4d7b-a9cd-86da68877bf1")]

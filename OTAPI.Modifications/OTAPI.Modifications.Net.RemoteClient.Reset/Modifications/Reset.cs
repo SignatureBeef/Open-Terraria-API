@@ -1,9 +1,9 @@
 ﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 
-namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
+namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.RemoteClient
 {
-	public class ServerSocketCreate : ModificationBase
+	public class RemoteClientReset : ModificationBase
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{

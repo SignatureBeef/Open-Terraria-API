@@ -168,6 +168,8 @@ namespace OTAPI.Patcher.Engine
 		{
 			object objectRef = Activator.CreateInstance(type);
 
+			System.Diagnostics.Debug.WriteLine($"Loaded modification {type.FullName}");
+
 			return objectRef as ModificationBase;
 		}
 
@@ -199,9 +201,18 @@ namespace OTAPI.Patcher.Engine
 									mod.SourceDefinition = SourceAssembly;
 									mod.SourceDefinitionFilePath = asmPath;
 
+									System.Diagnostics.Debug.WriteLine($"Ready to run modification {t.FullName}");
 									Modifications.Add(mod);
 								}
+								else
+								{
+									System.Diagnostics.Debug.WriteLine($"Modification {t.FullName} not supported");
+								}
 							}
+						}
+						else
+						{
+							System.Diagnostics.Debug.WriteLine($"Skipping modification {t.FullName}");
 						}
 					}
 				}
@@ -224,6 +235,7 @@ namespace OTAPI.Patcher.Engine
 			{
 				try
 				{
+					System.Diagnostics.Debug.WriteLine($"Running modification {mod.GetType().FullName} from file {mod.SourceDefinitionFilePath}");
 					Console.Write(" -> " + mod.Description);
 					mod.Run();
 					Console.WriteLine();
@@ -251,54 +263,54 @@ namespace OTAPI.Patcher.Engine
 		protected void PackAssemblies()
 		{
 			tempPackedOutput = Path.GetTempFileName() + ".dll";
-			
-			var options = new ILRepacking.RepackOptions()
-			{
-				//Get the list of input assemblies for merging, ensuring our source 
-				//assembly is first in the list so it can be granted as the target assembly.
-				InputAssemblies = new[] { tempSourceOutput }
-					//Add the modifications for merging
-					.Concat(Modifications.Select(x => x.SourceDefinitionFilePath))
 
-					.ToArray(),
+            var options = new ILRepacking.RepackOptions()
+            {
+                //Get the list of input assemblies for merging, ensuring our source 
+                //assembly is first in the list so it can be granted as the target assembly.
+                InputAssemblies = new[] { tempSourceOutput }
+                    //Add the modifications for merging
+                    .Concat(Modifications.Select(x => x.SourceDefinitionFilePath))
 
-				OutputFile = tempPackedOutput,
-				TargetKind = ILRepacking.ILRepack.Kind.Dll,
+                    .ToArray(),
 
-				//Setup where ILRepack can look for assemblies
-				SearchDirectories = GlobModificationAssemblies()
-					//Translate full path files found via the glob mechanism
-					//into a directory name
-					.Select(x => Path.GetDirectoryName(x))
+                OutputFile = tempPackedOutput,
+                TargetKind = ILRepacking.ILRepack.Kind.Dll,
 
-					//Additionally we may have resolved libraries using NuGet,
-					//so we also append the directory of each assembly as well
-					.Concat(resolvedAssemblies.Select(x => Path.GetDirectoryName(x)))
+                //Setup where ILRepack can look for assemblies
+                SearchDirectories = GlobModificationAssemblies()
+                    //Translate full path files found via the glob mechanism
+                    //into a directory name
+                    .Select(x => Path.GetDirectoryName(x))
 
-					//ILRepack rolls is own silly cecil version, keeps the namespace and hides
-					//custom assembly resolvers. We have to explicitly add in cecil or it wont 
-					//be found
-					.Concat(new[] { Path.GetDirectoryName(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location) })
+                    //Additionally we may have resolved libraries using NuGet,
+                    //so we also append the directory of each assembly as well
+                    .Concat(resolvedAssemblies.Select(x => Path.GetDirectoryName(x)))
 
-					.Distinct()
-					.ToArray(),
-				Parallel = true,
-				//Version = this.SourceAssembly., //perhaps check an option for this. if changed it should not allow repatching
-				CopyAttributes = true,
-				XmlDocumentation = true,
-				UnionMerge = true,
+                    //ILRepack rolls is own silly cecil version, keeps the namespace and hides
+                    //custom assembly resolvers. We have to explicitly add in cecil or it wont 
+                    //be found
+                    .Concat(new[] { Path.GetDirectoryName(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location) })
+
+                    .Distinct()
+                    .ToArray(),
+                Parallel = true,
+                //Version = this.SourceAssembly., //perhaps check an option for this. if changed it should not allow repatching
+                CopyAttributes = true,
+                XmlDocumentation = true,
+                UnionMerge = true,
 
 #if DEBUG
-				DebugInfo = true
+                DebugInfo = true
 #endif
-			};
+            };
 
-			//Generate the allow list of types from our modifications
-			AllowDuplcateModificationTypes(options.AllowedDuplicateTypes);
+            //Generate the allow list of types from our modifications
+            AllowDuplcateModificationTypes(options.AllowedDuplicateTypes);
 
-			var repacker = new ILRepacking.ILRepack(options);
-			repacker.Repack();
-		}
+            var repacker = new ILRepacking.ILRepack(options);
+            repacker.Repack();
+        }
 
 		/// <summary>
 		/// This will allow ILRepack to merge all our modifications into one assembly.
