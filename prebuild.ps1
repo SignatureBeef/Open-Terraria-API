@@ -3,20 +3,30 @@
 #	Invoke-Expression .\prebuild.ps1
 
 #OTAPI expected paths
-$saveFile = "wrap\TerrariaServer\TerrariaServer.exe"
+$serverSaveFile = "wrap\TerrariaServer\TerrariaServer.exe"
 $zipSavePath = "wrap\TerrariaServer\TerrariaServer.zip"
+
+$clientSaveFile = "wrap\Terraria\Terraria.exe"
+$clientSourcePath = "Steam\steamapps\common\Terraria\Terraria.exe"
 
 #Gets the working path for the current script being executed
 $workingDirectory = Split-Path -parent $PSCommandPath;
 
 #Generate the full paths
-$saveFile = [System.IO.Path]::Combine($workingDirectory, $saveFile)
-$zipSavePath = [System.IO.Path]::Combine($workingDirectory, $zipSavePath)
+$serverSaveFile = [IO.Path]::Combine($workingDirectory, $serverSaveFile)
+$zipSavePath = [IO.Path]::Combine($workingDirectory, $zipSavePath)
+$clientSaveFile = [IO.Path]::Combine($workingDirectory, $clientSaveFile)
+$clientSourcePath = [IO.Path]::Combine([Environment]::GetFolderPath([Environment+SpecialFolder]::ProgramFilesX86), $clientSourcePath);
 
-#Remove the Initial TerrariaServer.exe
-If(Test-Path $saveFile)
+#Remove any existing TerrariaServer.exe
+If(Test-Path $serverSaveFile)
 {
-	Remove-Item $saveFile
+	Remove-Item $serverSaveFile
+}
+#Remove any existing client Terraria.exe
+If(Test-Path $clientSaveFile)
+{
+	Remove-Item $clientSaveFile
 }
 
 #Remove any existing temp zips
@@ -26,7 +36,7 @@ If(Test-Path $zipSavePath)
 }
 
 #Fetch the download url from the terraria.org website
-$terrariaHtml = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($saveFile), "terraria_org.html");
+$terrariaHtml = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($serverSaveFile), "terraria_org.html");
 If(Test-Path $terrariaHtml)
 {
 	Remove-Item $terrariaHtml
@@ -59,7 +69,7 @@ $zip = [System.IO.Compression.ZipFile]::OpenRead($zipSavePath);
 $entry = $zip.GetEntry("Dedicated Server/Windows/TerrariaServer.exe");
 
 #Write the new zip to disk
-$output = New-Object IO.StreamWriter $saveFile;
+$output = New-Object IO.StreamWriter $serverSaveFile;
 $input = $entry.Open();
 $input.CopyTo($output.BaseStream);
 $input.Dispose();
@@ -70,5 +80,9 @@ Write-Host "Cleaning up"
 $zip.Dispose();
 Remove-Item $terrariaHtml;
 Remove-Item $zipSavePath;
+
+#Process the client. No fancy web update here as people must have paid for it anyway.
+Write-Host "Copying client exe"
+[System.IO.File]::Copy($clientSourcePath, $clientSaveFile);
 
 Write-Host "Setup complete"

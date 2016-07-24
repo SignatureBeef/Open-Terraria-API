@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0-*",
+  "description": "OTAPI.Modifications.Input.Filter Class Library",
+  "authors": [ "Luke" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Windows.Forms": "4.0.0.0"
+      }
+    }
+  },
+
+  "buildOptions": {
+    "xmlDoc": true
+  },
+
+  "dependencies": {
+    "OTAPI.Modifications.Core": "0.2.1-*",
+    "OTAPI.Patcher.Engine": "0.20.2",
+    "Terraria": "1.0.0-*"
+  }
+}

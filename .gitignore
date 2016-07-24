@@ -9,6 +9,7 @@ packages/
 Bundles/package/
 Bundles/nuget.exe
 wrap/TerrariaServer/TerrariaServer.exe
+wrap/Terraria/Terraria.exe
 
 .DS_Store
 .vs
