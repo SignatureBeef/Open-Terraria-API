@@ -210,16 +210,16 @@ namespace OTAPI.Core.Tests
 			};
 			Hooks.Npc.PreDropLoot = (
 				ref int itemId,
-				int x,
-				int y,
-				int width,
-				int height,
-				int type,
-				int stack,
-				bool noBroadcast,
-				int prefix,
-				bool noGrabDelay,
-				bool reverseLookup) =>
+                ref int x,
+                ref int y,
+                ref int width,
+                ref int height,
+                ref int type,
+                ref int stack,
+                ref bool noBroadcast,
+                ref int prefix,
+                ref bool noGrabDelay,
+                ref bool reverseLookup) =>
 			{
 				Console.WriteLine($"[Pre] Dropping loot {type} at {x},{y}");
 				return HookResult.Continue;
@@ -302,10 +302,14 @@ namespace OTAPI.Core.Tests
 				Console.WriteLine($"Starting hardmode. Extra: netMode:{Terraria.Main.netMode},hardMode:{Terraria.Main.hardMode}");
 				return HookResult.Continue;
 			};
-			Hooks.World.PostHardmode = () =>
-			{
-				Console.WriteLine($"Hardmode is now in processed. Extra: netMode:{Terraria.Main.netMode},hardMode:{Terraria.Main.hardMode}");
-			};
+            Hooks.World.PostHardmode = () =>
+            {
+                Console.WriteLine($"Hardmode is now in processed. Extra: netMode:{Terraria.Main.netMode},hardMode:{Terraria.Main.hardMode}");
+            };
+            Hooks.World.HardmodeTileUpdate = (int x, int y, ref ushort type) =>
+            {
+                return HardmodeTileUpdateResult.Continue;
+            };
             Hooks.Projectile.PreAI = (projectile) =>
             {
                 //Console.WriteLine($"[Prj] AI for {projectile.whoAmI}");

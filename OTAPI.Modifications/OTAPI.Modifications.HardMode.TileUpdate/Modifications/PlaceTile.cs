@@ -43,8 +43,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 			{
 				replacementPoint.Operand = callback;
 
-				replacementPoint.Next.OpCode = OpCodes.Brtrue_S;
-				replacementPoint.Next.Operand = replacementPoint.Next.Next;
+                
+                var insContinue = replacementPoint.Next.Next.Next(i =>
+                    i.OpCode == OpCodes.Call
+                    && (i.Operand as MethodReference).Name == "SendTileSquare"
+                ).Next;
+
+                replacementPoint.Next.OpCode = OpCodes.Brtrue_S;
+				replacementPoint.Next.Operand = insContinue;
 
 				processor.InsertAfter(replacementPoint.Next, processor.Create(OpCodes.Ret));
 			}

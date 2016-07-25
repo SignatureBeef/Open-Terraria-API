@@ -74,8 +74,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 				//It's safe to remove the tile load instruction now
 				processor.Remove(tileLoader);
 
-				processor.InsertAfter(insertionPoint,
-					new { OpCodes.Brtrue_S, insertionPoint.Next },
+                var insContinue = insertionPoint.Next.Next(i =>
+                    i.OpCode == OpCodes.Call
+                    && (i.Operand as MethodReference).Name == "SendTileSquare"
+                ).Next;
+                
+                processor.InsertAfter(insertionPoint,
+					new { OpCodes.Brtrue_S, insContinue },
 					new { OpCodes.Ret }
 				);
 			}

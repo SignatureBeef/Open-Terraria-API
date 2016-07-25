@@ -8,16 +8,16 @@
             public delegate HookResult PreDropLootHandler
             (
                 ref int itemId,
-                int x,
-                int y,
-                int width,
-                int height,
-                int type,
-                int stack,
-                bool noBroadcast,
-                int prefix,
-                bool noGrabDelay,
-                bool reverseLookup
+                ref int x,
+                ref int y,
+                ref int width,
+                ref int height,
+                ref int type,
+                ref int stack,
+                ref bool noBroadcast,
+                ref int prefix,
+                ref bool noGrabDelay,
+                ref bool reverseLookup
             );
             public delegate void PostDropLootHandler
             (

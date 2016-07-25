@@ -5,7 +5,7 @@
 		public static partial class World
 		{
 			#region Handlers
-			public delegate HookResult HardModeTileUpdateHandler(int x, int y, ref ushort type);
+			public delegate HardmodeTileUpdateResult HardModeTileUpdateHandler(int x, int y, ref ushort type);
 			#endregion
 
 			public static HardModeTileUpdateHandler HardmodeTileUpdate;
