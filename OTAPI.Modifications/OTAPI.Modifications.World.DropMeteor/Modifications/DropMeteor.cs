@@ -41,12 +41,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 			//Get the IL processor instance so we can inject some il
 			var processor = vanilla.Body.GetILProcessor();
 
-			//Get the instruction reference, in which we use to continue
+			//Get the instruction reference in which we use to continue
 			//on with vanilla code if our callback doesn't cancel the method.
-			var insContinue = stopDrops.Next;
+            //Since we are inserting before the stopDrops = true, we use the
+            //first instruction for the setter, which is ldc.i4.1 (which means (bool)true)
+			var insContinue = stopDrops.Previous;
 
 			//Inject the callback IL
-			processor.InsertAfter(stopDrops,
+			processor.InsertBefore(insContinue,
 				//Create the callback execution
 				new { OpCodes.Ldarga, Operand = vanilla.Parameters[0] }, //reference to int x
 				new { OpCodes.Ldarga, Operand = vanilla.Parameters[1] }, //reference to int y
@@ -60,14 +62,16 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 				new { OpCodes.Ret } //return
 			);
 
-			/* We now should have code in meteor looking like:
-				WorldGen.stopDrops = true;
+            /* We now should have code in meteor looking like:
+                    }
+                }
 				if (!WorldGen.DropMeteor(ref i, ref j))
 				{
 					return false;
 				}
+				WorldGen.stopDrops = true;
 				num = WorldGen.genRand.Next(17, 23);
 			*/
-		}
-	}
+        }
+    }
 }
