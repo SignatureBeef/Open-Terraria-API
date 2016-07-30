@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>d6da326b-7ae7-4269-ab69-6ad44a507522</ProjectGuid>
-    <RootNamespace>OTAPI.Modifications.Main.ChatText</RootNamespace>
+    <ProjectGuid>c7d234da-9085-4403-a054-bcbfb26c0215</ProjectGuid>
+    <RootNamespace>OTAPI.Modifications.World.Load</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>
