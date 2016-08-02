@@ -1,6 +1,7 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 using OTAPI.Patcher.Engine.Extensions;
+using OTAPI.Patcher.Engine.Extensions.ILProcessor;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
@@ -16,28 +17,45 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("Transform");
-			var callback = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("Transform");
+			int tmp = 0;
+			var preCallback = vanilla.Module.Import(this.Method(() => OTAPI.Core.Callbacks.Terraria.Npc.PreTransform(null, ref tmp)));
+			var postCallback = vanilla.Module.Import(this.Method(() => OTAPI.Core.Callbacks.Terraria.Npc.PostTransform(null)));
 
 			//We could wrap this method, but this hooks is to inform when an npc transforms, not
-			//and occurance of the call.
-			//However, in the future we might actually provide the begin/end calls for a seperate hook.
+			//an occurrence of the call.
 			//Anyway, this instance we need to insert before the netMode == 2 check.
 
-			var insertionPoint = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldsfld
-			   && x.Operand is FieldReference
-			   && (x.Operand as FieldReference).Name == "netMode"
-			   && x.Next.OpCode == OpCodes.Ldc_I4_2
-			);
+			//Get the IL processor instance so we can modify IL
+			var processor = vanilla.Body.GetILProcessor();
 
-			var il = vanilla.Body.GetILProcessor();
+			//Pre callback section
+			{
+				var first = vanilla.Body.Instructions.First();
+				processor.InsertBefore(first,
+					new { OpCodes.Ldarg_0 },
+					new { OpCodes.Ldarga, Operand = vanilla.Parameters.Single() },
+					new { OpCodes.Call, Operand = preCallback },
+					new { OpCodes.Brtrue_S, Operand = first },
+					new { OpCodes.Ret }
+				);
+			}
 
-			//Insert our callback before the if block, ensuring we consider that the if block may be referenced elsewhere
-			Instruction ourEntry;
-			il.InsertBefore(insertionPoint, ourEntry = il.Create(OpCodes.Ldarg_0)); //Add the current instance (this in C#) to the callback
-			il.InsertBefore(insertionPoint, il.Create(OpCodes.Call, vanilla.Module.Import(callback)));
+			//Post callback section
+			{
+				var insertionPoint = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldsfld
+				   && x.Operand is FieldReference
+				   && (x.Operand as FieldReference).Name == "netMode"
+				   && x.Next.OpCode == OpCodes.Ldc_I4_2
+				);
 
-			//Replace transfers
-			insertionPoint.ReplaceTransfer(ourEntry, vanilla);
+				//Insert our callback before the if block, ensuring we consider that the if block may be referenced elsewhere
+				Instruction ourEntry;
+				processor.InsertBefore(insertionPoint, ourEntry = processor.Create(OpCodes.Ldarg_0)); //Add the current instance (this in C#) to the callback
+				processor.InsertBefore(insertionPoint, processor.Create(OpCodes.Call, postCallback));
+
+				//Replace transfers
+				insertionPoint.ReplaceTransfer(ourEntry, vanilla);
+			}
 		}
 	}
 }
