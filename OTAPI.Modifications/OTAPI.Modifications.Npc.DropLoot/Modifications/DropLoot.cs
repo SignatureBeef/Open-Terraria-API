@@ -32,6 +32,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			foreach (var prm in newItem.Parameters)
 				dropLoot.Parameters.Add(prm);
 
+			dropLoot.Parameters.Add(new ParameterDefinition(SourceDefinition.Type("Terraria.NPC"))
+			{
+				Name = "npc",
+				IsOptional = true,
+				HasDefault = true,
+				Constant = null
+			});
+
 			//Collect the hooks
 			var apiMatch = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Methods.Where(x => x.Name.StartsWith("DropLoot"));
 			if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnDropLoot Begin/End calls in the API");
@@ -43,7 +51,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			dropLoot.Body.Variables.Add(vrbItemId);
 
 			il.Emit(OpCodes.Ldloca_S, vrbItemId); //Loads our variable by reference so our callback and alter it.
-			var beginResult = dropLoot.EmitBeginCallback(cbkBegin, false, false, false);
+			var beginResult = dropLoot.EmitBeginCallback(cbkBegin, false, false, false, parameterOffset: 1);
 
 			//Inject the begin call
 			var insFirstForMethod = dropLoot.EmitMethodCallback(newItem, false, false);

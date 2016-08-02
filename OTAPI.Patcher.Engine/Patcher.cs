@@ -242,7 +242,7 @@ namespace OTAPI.Patcher.Engine
 				}
 				catch (Exception ex)
 				{
-					Console.Error.WriteLine($"Error executing modification {mod.GetType().Name}: {ex.Message}");
+					Console.Error.WriteLine($"Error executing modification {mod.GetType().Name}: {ex.Message}\n{ex.StackTrace}");
 					if (System.Diagnostics.Debugger.IsAttached)
 						System.Diagnostics.Debugger.Break();
 					return;

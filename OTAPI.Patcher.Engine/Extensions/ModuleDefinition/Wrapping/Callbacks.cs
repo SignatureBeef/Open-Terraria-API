@@ -16,7 +16,8 @@ namespace OTAPI.Patcher.Engine.Extensions
 		public static Instruction EmitBeginCallback(this MethodDefinition current, MethodReference callback,
 			bool instanceMethod,
 			bool callbackRequiresInstance,
-			bool isCancelable)
+			bool isCancelable,
+			int parameterOffset = 0)
 		{
 			Instruction targetInstruction = null;
 
@@ -42,7 +43,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 					//Here we are looking at the callback to see if it wants a reference parameter.
 					//If it does, and it also expects an instance to be passed, we must move the offset
 					//by one to skip the previous ldarg_0 we added before.
-					var offset = callbackRequiresInstance ? 1 : 0;
+					var offset =( callbackRequiresInstance ? 1 : 0) + parameterOffset;
 					if (callback.Parameters[i + offset].ParameterType.IsByReference)
 					{
 						il.Emit(OpCodes.Ldarga, current.Parameters[i]);

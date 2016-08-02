@@ -1,6 +1,8 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 using OTAPI.Patcher.Engine.Extensions;
+using OTAPI.Patcher.Engine.Extensions.ILProcessor;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
 
@@ -27,9 +29,24 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 								&& (x.Operand as MethodReference).Name == "NewItem"
 								&& (x.Operand as MethodReference).DeclaringType.Name == "Item").ToArray();
 
+			var processor = npcLoot.Body.GetILProcessor();
+
 			//Swap each Item.NewItem calls to our Npc.DropLoot method.
 			foreach (var call in itemCalls)
+			{
+				//Swap to our custom method
 				call.Operand = dropLoot;
+
+				//Append the additional arguments to the end of the existing call
+				processor.InsertBefore(call, new[]
+				{
+					new { OpCodes.Ldarg_0 } //Adds 'this' (so the npc instance)
+				});
+			}
+
+			//Ensure the short branches are updated
+			npcLoot.Body.SimplifyMacros();
+			npcLoot.Body.OptimizeMacros();
 		}
 	}
 }
