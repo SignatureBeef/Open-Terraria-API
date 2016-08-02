@@ -209,6 +209,7 @@ namespace OTAPI.Core.Tests
 				return null;
 			};
 			Hooks.Npc.PreDropLoot = (
+				NPC npc,
 				ref int itemId,
                 ref int x,
                 ref int y,
@@ -225,6 +226,7 @@ namespace OTAPI.Core.Tests
 				return HookResult.Continue;
 			};
 			Hooks.Npc.PostDropLoot = (
+				NPC npc,
 				int x,
 				int y,
 				int width,
