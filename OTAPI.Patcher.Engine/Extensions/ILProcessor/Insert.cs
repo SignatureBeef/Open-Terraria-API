@@ -77,25 +77,35 @@ namespace OTAPI.Patcher.Engine.Extensions.ILProcessor
 		/// <summary>
 		/// Inserts a list of anonymous instructions after the target instruction
 		/// </summary>
-		public static void InsertAfter(this Mono.Cecil.Cil.ILProcessor processor, Instruction target, params object[] instructions)
+		public static List<Instruction> InsertAfter(this Mono.Cecil.Cil.ILProcessor processor, Instruction target, params object[] instructions)
 		{
+			var created = new List<Instruction>();
 			foreach (var anon in instructions.Reverse())
 			{
 				var ins = AnonymousToInstruction(anon);
 				processor.InsertAfter(target, ins);
+
+				created.Add(ins);
 			}
+
+			return created;
 		}
 
 		/// <summary>
 		/// Inserts a list of anonymous instructions before the target instruction
 		/// </summary>
-		public static void InsertBefore(this Mono.Cecil.Cil.ILProcessor processor, Instruction target, params object[] instructions)
+		public static List<Instruction> InsertBefore(this Mono.Cecil.Cil.ILProcessor processor, Instruction target, params object[] instructions)
 		{
+			var created = new List<Instruction>();
 			foreach (var anon in instructions)
 			{
 				var ins = AnonymousToInstruction(anon);
 				processor.InsertBefore(target, ins);
+
+				created.Add(ins);
 			}
+
+			return created;
 		}
 	}
 }

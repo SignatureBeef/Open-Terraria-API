@@ -362,4 +362,33 @@ namespace OTAPI.Core.Tests
             };
         }
 	}
+
+	public class TestTile : Terraria.Tile
+	{
+		public override byte bTileHeader
+		{
+			get
+			{
+				return base.bTileHeader;
+			}
+
+			set
+			{
+				base.bTileHeader = value;
+			}
+		}
+
+		public override int collisionType
+		{
+			get
+			{
+				return base.collisionType;
+			}
+		}
+
+		public override bool active()
+		{
+			return base.active();
+		}
+	}
 }

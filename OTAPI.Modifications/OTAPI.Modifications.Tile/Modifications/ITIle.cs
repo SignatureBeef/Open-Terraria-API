@@ -4,8 +4,6 @@ using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using OTAPI.Tile;
 
 namespace OTAPI.Modification.Tile.Modifications
 {
@@ -26,7 +24,7 @@ namespace OTAPI.Modification.Tile.Modifications
 			var iTile = this.ModificationDefinition.Type("OTAPI.Tile.ITile");
 			var importedITile = this.SourceDefinition.MainModule.Import(iTile);
 
-			if(!iTile.SignatureMatches(terrariaTile))
+			if (!iTile.SignatureMatches(terrariaTile))
 			{
 				throw new Exception("ITile does not match Terraria.Tile signatures!");
 			}
@@ -54,12 +52,10 @@ namespace OTAPI.Modification.Tile.Modifications
 			#endregion
 
 			#region Terraria.Tile ITile implementations
-			foreach (var method in terrariaTile.Methods.Where(m => !m.IsConstructor && !m.IsStatic))
-			{
-				method.IsFinal = true;
-				method.IsVirtual = true;
-				method.IsNewSlot = true;
-			}
+			//Since we introduced ITile, some properties need to be marked to indicate there is an implementation.
+			//However, with tiles we want to be able to override anything, and marking everything as virtual will
+			//automatically correct the requirement for us anyway.
+			terrariaTile.MakeVirtual();
 			#endregion
 
 			#region Tile methods

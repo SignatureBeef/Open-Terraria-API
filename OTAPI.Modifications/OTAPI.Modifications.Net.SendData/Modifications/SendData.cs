@@ -27,14 +27,6 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 				noEndHandling: false,
 				allowCallbackInstance: false
 			);
-
-			//{
-			//	var sendData = SourceDefinition.Type("Terraria.Net.NetManager").Method("SendData");
-
-			//	sendData.ReplaceWith(SourceDefinition.MainModule.Import(
-			//		this.Method(() => NetManager_Debug.SendData(null, default(global::Terraria.Net.NetPacket)))
-			//	));
-			//}
 		}
 	}
 
