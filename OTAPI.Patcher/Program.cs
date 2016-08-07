@@ -3,7 +3,7 @@ using System;
 
 namespace OTAPI.Patcher
 {
-	public class NewProgram
+	public class Program
 	{
 		static Engine.Patcher patcher;
 		static OptionSet options;

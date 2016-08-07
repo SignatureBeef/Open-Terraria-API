@@ -14,6 +14,8 @@ wrap/Terraria/Terraria.exe
 .DS_Store
 .vs
 .vscode
+.idea
+.idea.OTAPI
 
 bin/
 obj/
@@ -23,3 +25,4 @@ OTAPI.pdb
 OTAPI.xml
 
 *.lock.json
+OTAPI.Core.Tests/lib/net451/OTAPI.Sockets.dll
