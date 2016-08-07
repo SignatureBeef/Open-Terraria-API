@@ -19,8 +19,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 			);
 
 
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.WorldGen").Method("HardmodeBegin", parameters: vanilla.Parameters);
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.WorldGen").Method("HardmodeEnd", parameters: vanilla.Parameters);
+			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.WorldGen").Method("HardmodeBegin", parameters: vanilla.Parameters);
+			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.WorldGen").Method("HardmodeEnd", parameters: vanilla.Parameters);
 
 			vanilla.Wrap
 			(

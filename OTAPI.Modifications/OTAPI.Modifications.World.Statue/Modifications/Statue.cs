@@ -28,7 +28,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 			})
 			{
 				var vanilla = type.TypeDef.Methods.Single(x => x.Name == "MechSpawn");
-				var hook = SourceDefinition.MainModule.Import(ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.World").Method("MechSpawn"));
+				var hook = SourceDefinition.MainModule.Import(ModificationDefinition.Type("OTAPI.Callbacks.Terraria.World").Method("MechSpawn"));
 
 				//Here we find the insertion point where we want to inject our callback at.
 				var iInsertionPoint = vanilla.Body.Instructions.Last(x => x.OpCode == OpCodes.Ldloc_1);

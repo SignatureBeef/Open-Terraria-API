@@ -22,7 +22,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 			//Get the OTAPI callback method reference
 			//int tmp = 0;
 			var callback = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Core.Callbacks.Terraria.WorldGen.HardmodeTileUpdate(0, 0, 0))
+				this.Method(() => OTAPI.Callbacks.Terraria.WorldGen.HardmodeTileUpdate(0, 0, 0))
 			);
 
 			/* In this particular tile update mod (part 1) we are 

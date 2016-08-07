@@ -20,10 +20,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
 		public override void Run()
 		{
 			//Import TerrariaEntity as the base type of Terraria.Entity
-			this.SourceDefinition.Type("Terraria.Entity").BaseType = SourceDefinition.MainModule.Import(this.ModificationDefinition.Type("OTAPI.Core.TerrariaEntity"));
+			this.SourceDefinition.Type("Terraria.Entity").BaseType = SourceDefinition.MainModule.Import(
+				this.Type<OTAPI.TerrariaEntity >()
+			);
 
 			var switchTiles = this.SourceDefinition.Type("Terraria.Collision").Method("SwitchTiles");
-			var iEntity = switchTiles.Module.Import(this.ModificationDefinition.Type("OTAPI.Core.IEntity"));
+			var iEntity = switchTiles.Module.Import(
+				this.Type<IEntity>()
+			);
 
 			//Add the sender parameter to the vanilla method
 			ParameterDefinition prmSender;

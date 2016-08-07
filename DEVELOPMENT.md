@@ -13,6 +13,6 @@ This version of OTAPI aims to make the project as simple and clean as possible. 
 In addition to these components we have decided that we wish to try and give more control to projects that use our API. To do this we combine both the terraria assembly and the OTAPI assembly using using ILRepack to bundle them into one library, named OTAPI.dll. This dll is then bundled along side the pdb and xml files into a NuGet package for developers.
 
 ####Debugging OTAPI
-**Setup**: Even though ILRepack can provide us a pdb we find that when we are debugging it is easier to reference the OTAPI.Core.dll and patched terraria assembly separately. When we are happy we switch back to the NuGet package to keep things clean for repo cloners.
+**Setup**: Even though ILRepack can provide us a pdb we find that when we are debugging it is easier to reference the OTAPI.dll and patched terraria assembly separately. When we are happy we switch back to the NuGet package to keep things clean for repo cloners.
 
 **Internal error in the expression evaluator**: In Visual Studio, Tools->Options->Debugging->General and check the option [Use Managed Compatibility Mode].

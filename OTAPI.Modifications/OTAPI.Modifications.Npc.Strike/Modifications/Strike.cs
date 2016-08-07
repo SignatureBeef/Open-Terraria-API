@@ -14,7 +14,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("StrikeNPC");
-			var callback = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("Strike");
+			var callback = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method("Strike");
 
 			vanilla.InjectNonVoidBeginCallback(callback);
 		}

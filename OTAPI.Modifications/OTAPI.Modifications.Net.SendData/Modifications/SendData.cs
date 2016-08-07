@@ -14,7 +14,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NetMessage").Method("SendData");
-			var callback = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.NetMessage").Method("SendData");
+			var callback = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.NetMessage").Method("SendData");
 
 			//Few stack issues arose trying to inject a callback before for lock, so i'll resort to 
 			//wrapping the method;

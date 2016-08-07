@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Reflection.Emit;
 
-namespace OTAPI.Core.Callbacks.Terraria
+namespace OTAPI.Callbacks.Terraria
 {
 	internal static class Collection
 	{

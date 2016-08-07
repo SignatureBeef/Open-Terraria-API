@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("NewNPC");
-			var callback = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("Create");
+			var callback = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method("Create");
 
 
 			var ctor = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj

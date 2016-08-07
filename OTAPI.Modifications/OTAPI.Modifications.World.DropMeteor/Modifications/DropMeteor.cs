@@ -26,7 +26,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 			//Get the OTAPI callback method reference
 			int tmp = 0;
 			var callback = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Core.Callbacks.Terraria.WorldGen.DropMeteor(ref tmp, ref tmp))
+				this.Method(() => OTAPI.Callbacks.Terraria.WorldGen.DropMeteor(ref tmp, ref tmp))
 			);
 
 			//Look for stopDrops = true in the vanilla methods instructions

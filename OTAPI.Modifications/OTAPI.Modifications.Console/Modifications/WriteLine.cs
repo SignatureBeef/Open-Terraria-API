@@ -15,10 +15,10 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
         public override void Run()
         {
             var cbWrite = SourceDefinition.MainModule.Import(
-                Method(() => OTAPI.Core.Callbacks.Terraria.Console.Write(null))
+                Method(() => OTAPI.Callbacks.Terraria.Console.Write(null))
             );
             var cbWriteLine = SourceDefinition.MainModule.Import(
-                Method(() => OTAPI.Core.Callbacks.Terraria.Console.WriteLine(null))
+                Method(() => OTAPI.Callbacks.Terraria.Console.WriteLine(null))
             );
 
             SourceDefinition.MainModule.ForEachInstruction((method, instruction) =>

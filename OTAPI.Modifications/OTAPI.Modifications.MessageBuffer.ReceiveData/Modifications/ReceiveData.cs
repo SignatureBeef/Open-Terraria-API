@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 		public override void Run()
 		{
 			var vanilla = this.SourceDefinition.Type("Terraria.MessageBuffer").Method("GetData");
-			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.MessageBuffer").Method("ReceiveData");
+			var callback = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.MessageBuffer").Method("ReceiveData");
 
 			//In this episode we are injecting the hook in a place where it can modify the packet id
 			//as soon as it can. The target instruction will be the just after the packet id byte is

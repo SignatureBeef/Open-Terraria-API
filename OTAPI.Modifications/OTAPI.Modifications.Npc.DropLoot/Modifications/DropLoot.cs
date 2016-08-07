@@ -41,7 +41,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			});
 
 			//Collect the hooks
-			var apiMatch = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Methods.Where(x => x.Name.StartsWith("DropLoot"));
+			var apiMatch = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Methods.Where(x => x.Name.StartsWith("DropLoot"));
 			if (apiMatch.Count() != 2) throw new InvalidOperationException("There is no matching OnDropLoot Begin/End calls in the API");
 			var cbkBegin = apiMatch.Single(x => x.Name.EndsWith("Begin"));
 			var cbkEnd = apiMatch.Single(x => x.Name.EndsWith("End"));

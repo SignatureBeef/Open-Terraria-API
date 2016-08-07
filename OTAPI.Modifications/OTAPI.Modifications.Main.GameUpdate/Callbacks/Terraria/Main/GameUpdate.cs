@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace OTAPI.Core.Callbacks.Terraria
+namespace OTAPI.Callbacks.Terraria
 {
 	internal static partial class Main
 	{

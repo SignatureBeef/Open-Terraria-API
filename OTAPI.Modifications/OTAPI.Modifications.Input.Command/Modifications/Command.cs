@@ -25,7 +25,7 @@ namespace OTAPI.Modifications.Main.Command.Modifications
 			//Get the method references. One for vanilla, and imported version of our callback
 			var mStartDedInputCallBack = this.SourceDefinition.Type("Terraria.Main").Method("startDedInputCallBack");
 			var mCallback = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Core.Callbacks.Terraria.Main.ProcessCommand(null, null))
+				this.Method(() => OTAPI.Callbacks.Terraria.Main.ProcessCommand(null, null))
 			);
 
 			//Get the IL processor instance so we can modify il in the vanilla code

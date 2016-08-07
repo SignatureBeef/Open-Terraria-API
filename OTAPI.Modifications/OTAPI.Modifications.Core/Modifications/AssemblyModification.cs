@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OTAPI.Core.Modifications
+namespace OTAPI.Modifications
 {
 	public class AssemblyModification : ModificationBase
 	{

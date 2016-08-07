@@ -70,7 +70,7 @@ namespace OTAPI.Modifications.StatusText.Modifications
             //Get the UpdateStatusText callback that we will replace the ldsfld oldStatusText
             //instruction with (this saves reinjecting and updating instruction references)
             var mthUpdateStatusText = this.SourceDefinition.MainModule.Import(
-                this.Method(() => OTAPI.Core.Callbacks.Terraria.Main.UpdateStatusText())
+                this.Method(() => OTAPI.Callbacks.Terraria.Main.UpdateStatusText())
             );
 
             //For each branch that match our target oldStatusText != statusText

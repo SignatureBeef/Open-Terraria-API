@@ -19,8 +19,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
                 && x.Parameters[0].ParameterType == SourceDefinition.MainModule.TypeSystem.Boolean
             );
 
-            var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.WorldFile").Method("LoadWorldBegin", parameters: vanilla.Parameters);
-            var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.WorldFile").Method("LoadWorldEnd", parameters: vanilla.Parameters);
+            var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.WorldFile").Method("LoadWorldBegin", parameters: vanilla.Parameters);
+            var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.WorldFile").Method("LoadWorldEnd", parameters: vanilla.Parameters);
 
             vanilla.Wrap
             (

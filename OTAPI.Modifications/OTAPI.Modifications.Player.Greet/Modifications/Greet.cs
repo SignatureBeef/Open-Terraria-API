@@ -19,10 +19,10 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 			var vanilla = SourceDefinition.Type("Terraria.NetMessage")
 				.Method("greetPlayer");
 
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.NetMessage")
+			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.NetMessage")
 				.Method("GreetPlayerBegin", parameters: vanilla.Parameters);
 
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.NetMessage")
+			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.NetMessage")
 				.Method("GreetPlayerEnd", parameters: vanilla.Parameters);
 
 			vanilla.Wrap

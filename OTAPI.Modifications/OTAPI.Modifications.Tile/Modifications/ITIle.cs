@@ -35,7 +35,7 @@ namespace OTAPI.Modification.Tile.Modifications
 			#region Tile constructor
 			//Swap all tile constructors to the OTAPI callback
 			var createTileCallback = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Core.Callbacks.Terraria.Collection.CreateTile())
+				this.Method(() => OTAPI.Callbacks.Terraria.Collection.CreateTile())
 			);
 			this.SourceDefinition.MainModule.ForEachInstruction((method, instruction) =>
 			{

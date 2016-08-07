@@ -19,7 +19,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NetMessage").Method("SendData");
-			var callback = vanilla.Module.Import(ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.NetMessage").Method("SendBytes"));
+			var callback = vanilla.Module.Import(ModificationDefinition.Type("OTAPI.Callbacks.Terraria.NetMessage").Method("SendBytes"));
 
 			//Hooking send bytes should be as simple as replacing each AsyncSend call with
 			//the OTAPI callback as well as removing the socket instance and leaving the

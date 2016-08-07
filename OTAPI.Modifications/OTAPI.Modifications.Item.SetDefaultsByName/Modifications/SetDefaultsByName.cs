@@ -18,8 +18,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
 				&& x.Parameters.First().ParameterType == this.SourceDefinition.MainModule.TypeSystem.String
 			);
 
-			var cbkBegin = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Item").Method("SetDefaultsByNameBegin", parameters: vanilla.Parameters);
-			var cbkEnd = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Item").Method("SetDefaultsByNameEnd", parameters: vanilla.Parameters);
+			var cbkBegin = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Item").Method("SetDefaultsByNameBegin", parameters: vanilla.Parameters);
+			var cbkEnd = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Item").Method("SetDefaultsByNameEnd", parameters: vanilla.Parameters);
 
 			vanilla.Wrap
 			(

@@ -18,7 +18,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 		{
 			//Grab the methods
 			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("checkHalloween");
-			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Method("Halloween");
+			var callback = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Main").Method("Halloween");
 
 			//Inject only the begin call
 			vanilla.Wrap

@@ -1,4 +1,4 @@
-﻿namespace OTAPI.Core.Callbacks.Terraria
+﻿namespace OTAPI.Callbacks.Terraria
 {
     internal static partial class NetMessage
     {

@@ -19,7 +19,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Player
 		public override void Run()
 		{
 			var vanilla = this.SourceDefinition.Type("Terraria.MessageBuffer").Method("GetData");
-			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.MessageBuffer").Method("NameCollision");
+			var callback = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.MessageBuffer").Method("NameCollision");
 
 			//Luckily there is a if statement that we can inject our callbacks result into.
 			//What we need to do is find a reference point and back track to this flag.

@@ -18,7 +18,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Command
 		public override void Run()
 		{
 			var target = this.SourceDefinition.Type("Terraria.Main").Method("startDedInput");
-			var callback = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Main").Methods.Single(x => x.Name == "startDedInput");
+			var callback = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Main").Methods.Single(x => x.Name == "startDedInput");
 
 			target.Wrap
 			(

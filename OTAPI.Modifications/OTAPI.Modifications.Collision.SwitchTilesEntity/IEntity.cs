@@ -1,4 +1,4 @@
-﻿namespace OTAPI.Core
+﻿namespace OTAPI
 {
     /// <summary>
     /// IEntity is designed to be the base of all entities in the application.

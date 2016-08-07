@@ -23,7 +23,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 
 			var checkDead = this.SourceDefinition.Type("Terraria.NPC").Method("checkDead");
 			var callback = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Core.Callbacks.Terraria.Npc.Killed(null))
+				this.Method(() => OTAPI.Callbacks.Terraria.Npc.Killed(null))
 			);
 
 

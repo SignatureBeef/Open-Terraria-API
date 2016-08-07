@@ -1,6 +1,6 @@
 ﻿using OTAPI.Tile;
 
-namespace OTAPI.Core
+namespace OTAPI
 {
 	public static partial class Hooks
 	{

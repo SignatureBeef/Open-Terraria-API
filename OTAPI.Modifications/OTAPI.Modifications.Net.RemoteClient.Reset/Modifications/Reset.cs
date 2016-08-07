@@ -15,8 +15,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.RemoteClient
 		{
 			var vanilla = SourceDefinition.Type("Terraria.RemoteClient").Method("Reset");
 
-			var cbkBegin = this.Method(() => OTAPI.Core.Callbacks.Terraria.RemoteClient.PreReset(null));
-			var cbkEnd = this.Method(() => OTAPI.Core.Callbacks.Terraria.RemoteClient.PostReset(null));
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.RemoteClient.PreReset(null));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.RemoteClient.PostReset(null));
 
 			vanilla.Wrap
 			(

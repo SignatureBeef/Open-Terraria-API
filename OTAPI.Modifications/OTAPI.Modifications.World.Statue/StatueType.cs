@@ -1,4 +1,4 @@
-﻿namespace OTAPI.Core
+﻿namespace OTAPI
 {
     public enum StatueType : int
     {

@@ -26,7 +26,7 @@ namespace OTAPI.Modifications.StatusText.Modifications
 
             //Get the method reference to the SetStatusText callback
             var mthSetStatusText = this.SourceDefinition.MainModule.Import(
-                this.Method(() => OTAPI.Core.Callbacks.Terraria.Main.SetStatusText(null))
+                this.Method(() => OTAPI.Callbacks.Terraria.Main.SetStatusText(null))
             );
 
             var t = this.ModificationDefinition.Type<StatusTextModification>().Field("test");

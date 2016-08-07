@@ -20,8 +20,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
 				&& x.Parameters[1].ParameterType == SourceDefinition.MainModule.TypeSystem.Boolean
 			);
 
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.WorldFile").Method("SaveWorldBegin", parameters: vanilla.Parameters);
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.WorldFile").Method("SaveWorldEnd", parameters: vanilla.Parameters);
+			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.WorldFile").Method("SaveWorldBegin", parameters: vanilla.Parameters);
+			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.WorldFile").Method("SaveWorldEnd", parameters: vanilla.Parameters);
 
 			vanilla.Wrap
 			(

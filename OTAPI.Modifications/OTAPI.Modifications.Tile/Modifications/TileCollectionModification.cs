@@ -23,7 +23,7 @@ namespace OTAPI.Modification.Tile.Modifications
 
 			//Import the ITileCollection Create Hook
 			var callback = this.SourceDefinition.MainModule.Import(
-				this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Collection").Method("Create")
+				this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Collection").Method("Create")
 			);
 
 
@@ -54,7 +54,7 @@ namespace OTAPI.Modification.Tile.Modifications
 			//		IL_200c: newarr Terraria.Dust
 			//
 			//The lines on the stack marked with * need to be removed, and a
-			//[CALL OTAPI.OTAPI.Core.Callbacks.Terraria.Collection.Create] should replace the instruction at
+			//[CALL OTAPI.OTAPI.Callbacks.Terraria.Collection.Create] should replace the instruction at
 			//the line marked with ~
 			//
 			//To do this I will uniquely look for the stsfld opcode by checking the operand to see

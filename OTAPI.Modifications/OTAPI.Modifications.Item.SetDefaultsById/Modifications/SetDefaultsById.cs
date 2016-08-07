@@ -20,8 +20,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
             );
 
 
-            var cbkBegin = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Item").Method("SetDefaultsByIdBegin", parameters: vanilla.Parameters);
-            var cbkEnd = this.ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Item").Method("SetDefaultsByIdEnd", parameters: vanilla.Parameters);
+            var cbkBegin = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Item").Method("SetDefaultsByIdBegin", parameters: vanilla.Parameters);
+            var cbkEnd = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Item").Method("SetDefaultsByIdEnd", parameters: vanilla.Parameters);
 
             vanilla.Wrap
             (

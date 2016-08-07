@@ -22,7 +22,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
 		public override void Run()
 		{
 			var vanilla = this.SourceDefinition.Type("Terraria.Collision").Method("SwitchTiles");
-			var callback = vanilla.Module.Import(this.Method(() => Core.Callbacks.Terraria.Collision.PressurePlate(0, 0, null)));
+			var callback = vanilla.Module.Import(this.Method(() => OTAPI.Callbacks.Terraria.Collision.PressurePlate(0, 0, null)));
 			var il = vanilla.Body.GetILProcessor();
 
 			//Find all HitSwitch calls

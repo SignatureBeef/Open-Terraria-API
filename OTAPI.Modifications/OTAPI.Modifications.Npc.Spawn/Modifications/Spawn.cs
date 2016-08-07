@@ -20,7 +20,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
         {
             var vanilla = SourceDefinition.Type("Terraria.NPC").Method("NewNPC");
             int tmp = 0;
-            var callback = this.Method(() => OTAPI.Core.Callbacks.Terraria.Npc.Spawn(ref tmp));
+            var callback = this.Method(() => OTAPI.Callbacks.Terraria.Npc.Spawn(ref tmp));
             var importedCallback = SourceDefinition.MainModule.Import(callback);
 
             //This hook is to notify when a npc has been created, and is about to be spawned into

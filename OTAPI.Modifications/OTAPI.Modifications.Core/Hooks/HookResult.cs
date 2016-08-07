@@ -1,4 +1,4 @@
-﻿namespace OTAPI.Core
+﻿namespace OTAPI
 {
     /// <summary>
     /// Defines a result from a hook to be actioned by OTAPI

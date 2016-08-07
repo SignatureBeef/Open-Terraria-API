@@ -19,8 +19,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 			);
 
 
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Projectile").Method("UpdateBegin", parameters: vanilla.Parameters);
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Projectile").Method("UpdateEnd", parameters: vanilla.Parameters);
+			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Projectile").Method("UpdateBegin", parameters: vanilla.Parameters);
+			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Projectile").Method("UpdateEnd", parameters: vanilla.Parameters);
 
 			vanilla.Wrap
 			(

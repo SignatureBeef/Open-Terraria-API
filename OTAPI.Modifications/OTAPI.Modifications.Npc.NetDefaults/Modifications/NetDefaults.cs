@@ -19,8 +19,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			);
 
 
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("NetDefaultsBegin", parameters: vanilla.Parameters);
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Core.Callbacks.Terraria.Npc").Method("NetDefaultsEnd", parameters: vanilla.Parameters);
+			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method("NetDefaultsBegin", parameters: vanilla.Parameters);
+			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method("NetDefaultsEnd", parameters: vanilla.Parameters);
 
 			vanilla.Wrap
 			(

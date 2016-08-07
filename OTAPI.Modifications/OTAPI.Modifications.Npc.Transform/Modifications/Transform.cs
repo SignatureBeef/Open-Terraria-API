@@ -18,8 +18,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("Transform");
 			int tmp = 0;
-			var preCallback = vanilla.Module.Import(this.Method(() => OTAPI.Core.Callbacks.Terraria.Npc.PreTransform(null, ref tmp)));
-			var postCallback = vanilla.Module.Import(this.Method(() => OTAPI.Core.Callbacks.Terraria.Npc.PostTransform(null)));
+			var preCallback = vanilla.Module.Import(this.Method(() => OTAPI.Callbacks.Terraria.Npc.PreTransform(null, ref tmp)));
+			var postCallback = vanilla.Module.Import(this.Method(() => OTAPI.Callbacks.Terraria.Npc.PostTransform(null)));
 
 			//We could wrap this method, but this hooks is to inform when an npc transforms, not
 			//an occurrence of the call.
