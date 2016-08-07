@@ -422,7 +422,7 @@ namespace OTAPI.Patcher.Engine
 			}
 			catch (Exception ex)
 			{
-				Console.Error.WriteLine($"Error reading source assembly: {ex.Message}");
+				Console.Error.WriteLine($"Error reading source assembly: {ex.Message}\n{ex.StackTrace}");
 				return;
 			}
 

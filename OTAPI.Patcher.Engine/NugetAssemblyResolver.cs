@@ -72,7 +72,8 @@ namespace OTAPI.Patcher.Engine
 		/// <returns>File path if the nuget package is found</returns>
 		protected string ResolvePackage(string name, Version version)
 		{
-			SemanticVersion vers = SemanticVersion.ParseOptionalVersion($"{version.Major}.{version.Minor}.*");
+			//SemanticVersion vers = SemanticVersion.ParseOptionalVersion($"{version.Major}.{version.Minor}.*");
+			SemanticVersion vers = SemanticVersion.ParseOptionalVersion($"{version.Major}.{version.Minor}.{version.MajorRevision}.{version.MinorRevision}");
 			IPackage package = ResolvePackage(name, vers);
 
 			if (package != null)
