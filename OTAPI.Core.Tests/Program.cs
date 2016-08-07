@@ -360,11 +360,25 @@ namespace OTAPI.Core.Tests
                 Console.WriteLine($"Spawning npc type {Terraria.Main.npc[index].type} at index {index}");
                 return HookResult.Continue;
             };
+			Hooks.Tile.CreateTile = () =>
+			{
+				return new TestTile();
+			};
         }
 	}
 
 	public class TestTile : Terraria.Tile
 	{
+		public TestTile()
+		{
+
+		}
+
+		public override void Initialise()
+		{
+			base.Initialise();
+		}
+
 		public override byte bTileHeader
 		{
 			get
