@@ -45,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{29C91099-E
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Main.Christmas", "OTAPI.Modifications\OTAPI.Modifications.Main.Christmas\OTAPI.Modifications.Main.Christmas.xproj", "{A336EA0A-884D-4A60-A2AD-2FC89BF9E52B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Input.Command", "OTAPI.Modifications\OTAPI.Modifications.Main.Command\OTAPI.Modifications.Input.Command.xproj", "{DBB73DC4-493A-41F3-A3FD-1FECF79DC8A6}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Input.Command", "OTAPI.Modifications\OTAPI.Modifications.Input.Command\OTAPI.Modifications.Input.Command.xproj", "{DBB73DC4-493A-41F3-A3FD-1FECF79DC8A6}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "OTAPI.Modifications.Main.GameInitialize", "OTAPI.Modifications\OTAPI.Modifications.Main.GameInitialize\OTAPI.Modifications.Main.GameInitialize.xproj", "{21F7360B-EC6F-411C-86F3-AE8ACBADC3E5}"
 EndProject
