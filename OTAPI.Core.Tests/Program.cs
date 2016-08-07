@@ -112,8 +112,8 @@ namespace OTAPI.Core.Tests
 		{
 			Hooks.Net.Socket.Create = () =>
 			{
-				return new OTAPI.Sockets.PoolSocket();
-				//return new Terraria.Net.Sockets.TcpSocket();
+				//return new OTAPI.Sockets.PoolSocket();
+				return new Terraria.Net.Sockets.TcpSocket();
 			};
 			Hooks.Command.Process = (lowered, raw) =>
 			{

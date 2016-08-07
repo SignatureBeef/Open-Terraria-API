@@ -19,6 +19,15 @@ ForEach($directory in $directory)
     $compile = "";
     $templateClone = $template;
 
+	ForEach($removeItem in @(($name + ".xproj"), ($name + ".xproj.user"), ("project.json"), ("project.lock.json")))
+	{
+		$lookFor = [IO.Path]::Combine($directory, $removeItem);
+		If(Test-Path $lookFor)
+		{
+			Remove-Item $lookFor
+		}
+	}
+
     If(!($name -eq "OTAPI.Modifications.Core"))
     {
         #Write-Host $csproj
@@ -35,7 +44,7 @@ ForEach($directory in $directory)
                     If([IO.Path]::GetExtension($file) -eq ".cs")
                     {
                         $relative = $file.Remove(0, $directory.Length + 1);
-                        Write-Host $relative
+                        #Write-Host $relative
                         $compile = $compile + "<Compile Include=`"$relative`" />" + [Environment]::NewLine + "    ";
                     }
                 }
@@ -47,7 +56,7 @@ ForEach($directory in $directory)
         $templateClone = $templateClone.Replace("~PROJECT_GUID~", [Guid]::NewGuid().ToString().ToUpper());
         [IO.File]::WriteAllText($csproj, $templateClone);
 
-        $packagesConfig = "<?xml version=`"1.0`" encoding=`"utf-8`"?>" + [Environment]::NewLine + "<packages>" + [Environment]::NewLine + "<package id=`"Mono.Cecil`" version=`"0.9.6.4`" targetFramework=`"net451`" />" + [Environment]::NewLine + "</packages>";
+        $packagesConfig = "<?xml version=`"1.0`" encoding=`"utf-8`"?>" + [Environment]::NewLine + "<packages>" + [Environment]::NewLine + "    <package id=`"Mono.Cecil`" version=`"0.9.6.4`" targetFramework=`"net451`" />" + [Environment]::NewLine + "</packages>";
         [IO.File]::WriteAllText($packages, $packagesConfig);
     }
 }
@@ -62,7 +71,7 @@ ForEach($directory in $directory)
 #@    <OutputType>Library</OutputType>
 #@		<RootNamespace>~NAMESPACE~</RootNamespace>
 #@		<AssemblyName>~NAMESPACE~</AssemblyName>
-#@		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+#@		<TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
 #@	</PropertyGroup>
 #@	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 #@		<DebugSymbols>true</DebugSymbols>
@@ -96,7 +105,7 @@ ForEach($directory in $directory)
 #@      <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
 #@    </Reference>
 #@    <Reference Include="System" />
-#@    <Reference Include="TerrariaServer, Version=1.3.2.1, Culture=neutral, PublicKeyToken=null">
+#@    <Reference Include="TerrariaServer">
 #@      <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
 #@    </Reference>
 #@  </ItemGroup>

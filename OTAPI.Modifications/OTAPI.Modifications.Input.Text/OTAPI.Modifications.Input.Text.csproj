@@ -3,11 +3,11 @@
 	<PropertyGroup>
 		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
 		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-		<ProjectGuid>{B85D351F-12A4-48EE-8560-E17193897396}</ProjectGuid>
+		<ProjectGuid>{AA03B47D-475B-4FF9-A13A-5B72BE430B3F}</ProjectGuid>
     <OutputType>Library</OutputType>
 		<RootNamespace>OTAPI.Modifications.Input.Text</RootNamespace>
 		<AssemblyName>OTAPI.Modifications.Input.Text</AssemblyName>
-		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<DebugSymbols>true</DebugSymbols>
@@ -17,6 +17,7 @@
 		<DefineConstants>DEBUG;</DefineConstants>
 		<ErrorReport>prompt</ErrorReport>
 		<WarningLevel>4</WarningLevel>
+		<DocumentationFile>bin\Debug\OTAPI.Modifications.Input.Text.xml</DocumentationFile>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<Optimize>true</Optimize>
@@ -24,6 +25,7 @@
 		<ErrorReport>prompt</ErrorReport>
 		<WarningLevel>4</WarningLevel>
 		<ConsolePause>false</ConsolePause>
+		<DocumentationFile>bin\Release\OTAPI.Modifications.Input.Text.xml</DocumentationFile>
 	</PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
@@ -39,15 +41,15 @@
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="TerrariaServer, Version=1.3.2.1, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="TerrariaServer">
       <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks/Terraria/Main.cs" />
-    <Compile Include="Hooks/Input/GetText.cs" />
-    <Compile Include="Modifications/InputTextModification.cs" />
-    <Compile Include="Properties/AssemblyInfo.cs" />
+    <Compile Include="Callbacks\Terraria\Main.cs" />
+    <Compile Include="Hooks\Input\GetText.cs" />
+    <Compile Include="Modifications\InputTextModification.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">
