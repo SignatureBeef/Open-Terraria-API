@@ -2,6 +2,8 @@ language: csharp
 mono:
   - beta
 solution: OTAPI.sln
-install: mozroots --import --sync
+install:
+  - mozroots --import --sync
+  - nuget restore
 script:
   - xbuild /p:Configuration=Debug OTAPI.sln
