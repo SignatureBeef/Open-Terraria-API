@@ -2,7 +2,6 @@ language: csharp
 mono:
   - beta
 solution: OTAPI.sln
-install: curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | sh && source ~/.dnx/dnvm/dnvm.sh && dnvm upgrade
+install: mozroots --import --sync
 script:
-  - dnu restore OTAPI.Patcher OTAPI.Modifications OTAPI.Patcher.Engine
-  - dnu build OTAPI.Patcher.Engine OTAPI.Patcher OTAPI.Modifications\**\
+  - xbuild /p:Configuration=Debug OTAPI.sln
