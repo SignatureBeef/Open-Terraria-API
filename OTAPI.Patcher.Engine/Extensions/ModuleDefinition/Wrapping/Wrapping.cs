@@ -95,7 +95,8 @@ namespace OTAPI.Patcher.Engine.Extensions
 			MethodReference endCallback,
 			bool beginIsCancellable,
 			bool noEndHandling,
-			bool allowCallbackInstance
+			bool allowCallbackInstance,
+			TypeReference overrideReturnType = null
 		)
 		{
 			if (!current.HasBody)
@@ -105,8 +106,9 @@ namespace OTAPI.Patcher.Engine.Extensions
 			if (new[]
 			{
 				current.Module.TypeSystem.Void,
-				current.Module.TypeSystem.String
-			}.Contains(current.ReturnType))
+				current.Module.TypeSystem.String,
+				current.Module.TypeSystem.Double,
+			}.Contains(current.ReturnType) || (overrideReturnType != null && current.ReturnType.Name == overrideReturnType.Name))
 			{
 				//Create the new replacement method that will take place of the current method.
 				//So we must ensure we clone to meet the signatures.
@@ -151,6 +153,16 @@ namespace OTAPI.Patcher.Engine.Extensions
 						beginResult.Operand = insFirstForMethod;
 					}
 					else if (current.ReturnType.Name == current.Module.TypeSystem.String.Name)
+					{
+						beginResult.OpCode = OpCodes.Brtrue;
+						beginResult.Operand = insFirstForMethod;
+					}
+					else if (current.ReturnType.Name == current.Module.TypeSystem.Double.Name)
+					{
+						beginResult.OpCode = OpCodes.Brtrue;
+						beginResult.Operand = insFirstForMethod;
+					}
+					else if (overrideReturnType != null && current.ReturnType.Name == overrideReturnType.Name)
 					{
 						beginResult.OpCode = OpCodes.Brtrue;
 						beginResult.Operand = insFirstForMethod;
