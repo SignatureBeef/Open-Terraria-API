@@ -9,7 +9,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 		{
 			"Terraria, Version=1.3.2.1, Culture=neutral, PublicKeyToken=null"
 		};
-		public override string Description => "Hooking Player.SavePlayer";
+		public override string Description => "Hooking Player.ResetEffects";
 		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.Player")
