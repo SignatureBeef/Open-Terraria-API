@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace OTAPI.Core
+namespace OTAPI
 {
 	public static partial class Hooks
 	{

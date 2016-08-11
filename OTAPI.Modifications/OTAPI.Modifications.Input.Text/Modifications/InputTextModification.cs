@@ -18,7 +18,7 @@ namespace OTAPI.Modifications.Input.Text.Modifications
             var method = this.SourceDefinition.Type("Terraria.Main").Method("GetInputText");
 
             string tmp = null;
-            var callback = this.Method(() => OTAPI.Core.Callbacks.Terraria.Main.GetInputText(ref tmp, null));
+            var callback = this.Method(() => OTAPI.Callbacks.Terraria.Main.GetInputText(ref tmp, null));
 
             method.InjectNonVoidBeginCallback(callback);
         }

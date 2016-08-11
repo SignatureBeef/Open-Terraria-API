@@ -41,9 +41,6 @@
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="TerrariaServer">
-      <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modifications\MakeTypesPublic.cs" />
@@ -52,10 +49,6 @@
     <ProjectReference Include="..\..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">
       <Project>{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}</Project>
       <Name>OTAPI.Patcher.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OTAPI.Modifications.Core\OTAPI.Modifications.Core.csproj">
-      <Project>{D9439E01-19C1-4E89-9B33-2C19C804DDCF}</Project>
-      <Name>OTAPI.Modifications.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

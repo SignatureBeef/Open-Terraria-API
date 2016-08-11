@@ -41,10 +41,31 @@
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="TerrariaServer">
-      <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
-    </Reference>
   </ItemGroup>
+  <Choose>
+    <When Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' ">
+      <ItemGroup>
+        <Reference Include="Terraria">
+          <HintPath>..\..\wrap\Terraria\Terraria.exe</HintPath>
+        </Reference>
+		<Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+		<Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+		<Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+		<Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="TerrariaServer">
+          <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
+        </Reference>
+		<ProjectReference Include="..\OTAPI.Modifications.Xna\OTAPI.Modifications.Xna.csproj">
+		  <Project>{4a980a83-9e64-4207-8281-4f29fbf2ad90}</Project>
+		  <Name>OTAPI.Modifications.Xna</Name>
+		</ProjectReference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
     <Compile Include="Callbacks\Terraria\Main\GameUpdate.cs" />
     <Compile Include="Hooks\Game\GameHooks.cs" />
@@ -59,10 +80,6 @@
     <ProjectReference Include="..\OTAPI.Modifications.Core\OTAPI.Modifications.Core.csproj">
       <Project>{D9439E01-19C1-4E89-9B33-2C19C804DDCF}</Project>
       <Name>OTAPI.Modifications.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OTAPI.Modifications.Xna\OTAPI.Modifications.Xna.csproj">
-      <Project>{4a980a83-9e64-4207-8281-4f29fbf2ad90}</Project>
-      <Name>OTAPI.Modifications.Xna</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

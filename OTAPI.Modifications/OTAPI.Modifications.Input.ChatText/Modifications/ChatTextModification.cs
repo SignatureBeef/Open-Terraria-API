@@ -20,7 +20,7 @@ namespace OTAPI.Modifications.Input.ChatText.Modifications
 		{
 			var method = this.SourceDefinition.Type("Terraria.Main").Method("Update");
 			var callback = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Core.Callbacks.Terraria.Main.OnChatTextSend())
+				this.Method(() => OTAPI.Callbacks.Terraria.Main.OnChatTextSend())
 			);
 
 			var insEntry = method.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldsfld

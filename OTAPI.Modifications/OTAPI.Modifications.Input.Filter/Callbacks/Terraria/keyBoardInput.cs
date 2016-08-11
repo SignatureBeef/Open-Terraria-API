@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace OTAPI.Core.Callbacks.Terraria
+namespace OTAPI.Callbacks.Terraria
 {
 	internal static partial class keyBoardInput
 	{

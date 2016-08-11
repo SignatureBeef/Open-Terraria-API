@@ -25,7 +25,7 @@ namespace OTAPI.Modifications.Input.Filter.Modifications
 
 			ins.OpCode = OpCodes.Call;
 			ins.Operand = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Core.Callbacks.Terraria.keyBoardInput.CreateMessageFilter())
+				this.Method(() => OTAPI.Callbacks.Terraria.keyBoardInput.CreateMessageFilter())
 			);
 		}
 	}
