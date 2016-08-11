@@ -6,7 +6,7 @@
 		{
 			#region Handlers
 			public delegate HookResult PreSaveHandler(global::Terraria.IO.PlayerFileData playerFile, ref bool skipMapSave);
-			public delegate void PostUpdateHandler(global::Terraria.IO.PlayerFileData playerFile, bool skipMapSave);
+			public delegate void PostSaveHandler(global::Terraria.IO.PlayerFileData playerFile, bool skipMapSave);
 			#endregion
 
 			/// <summary>
@@ -21,7 +21,7 @@
 			/// Arg 1: player data file
 			///		2: skip map save
 			/// </summary>
-			public static PostUpdateHandler PostSave;
+			public static PostSaveHandler PostSave;
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace OTAPI.Callbacks.Terraria
         /// <returns>ITileCollection instance</returns>
         private static Func<OTAPI.Tile.ITileCollection> GetTileCollectionMethod()
         {
-            var dm = new DynamicMethod("GetTileCollection", typeof(OTAPI.Tile.ITileCollection), null);
+            var dm = new DynamicMethod("GetTileCollectionInstance", typeof(OTAPI.Tile.ITileCollection), null);
             var processor = dm.GetILGenerator();
 
             processor.Emit(OpCodes.Ldsfld, typeof(global::Terraria.Main).GetField("tile"));
