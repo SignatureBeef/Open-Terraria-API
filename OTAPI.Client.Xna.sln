@@ -169,6 +169,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lighting", "Lighting", "{A6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Lighting.Swipe", "OTAPI.Modifications\OTAPI.Modifications.Lighting.Swipe\OTAPI.Modifications.Lighting.Swipe.csproj", "{CDFD7A01-67B2-452F-8C4E-875A30DBD047}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Waterfall", "Waterfall", "{571DAE9B-196B-49FF-B787-80E02387ECD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Waterfall.Find", "OTAPI.Modifications\OTAPI.Modifications.Waterfall.Find\OTAPI.Modifications.Waterfall.Find.csproj", "{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Client-Debug|Any CPU = Client-Debug|Any CPU
@@ -805,6 +809,18 @@ Global
 		{CDFD7A01-67B2-452F-8C4E-875A30DBD047}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDFD7A01-67B2-452F-8C4E-875A30DBD047}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDFD7A01-67B2-452F-8C4E-875A30DBD047}.Server-Release|Any CPU.Build.0 = Release|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Client-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Client-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Client-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Client-Release|Any CPU.Build.0 = Release|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Server-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F}.Server-Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -883,5 +899,7 @@ Global
 		{1CCC809B-2B64-4414-91DF-78A80BBDD161} = {29C91099-E98D-44F1-9511-60C0DD9DB16D}
 		{A66D35D9-8A29-4961-9AEF-DEB46911CED1} = {6F612C0E-1D67-4E06-8FB2-0D372CA5C264}
 		{CDFD7A01-67B2-452F-8C4E-875A30DBD047} = {A66D35D9-8A29-4961-9AEF-DEB46911CED1}
+		{571DAE9B-196B-49FF-B787-80E02387ECD4} = {6F612C0E-1D67-4E06-8FB2-0D372CA5C264}
+		{424D5BEB-1914-4862-8B6A-E0FA6FE1B01F} = {571DAE9B-196B-49FF-B787-80E02387ECD4}
 	EndGlobalSection
 EndGlobal
