@@ -28,20 +28,20 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="System" />
-		<Reference Include="TerrariaServer, Version=1.3.2.1, Culture=neutral, PublicKeyToken=null">
+		<Reference Include="TerrariaServer">
 			<HintPath>..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="ArgsPool.cs" />
 		<Compile Include="Modification.cs" />
-		<Compile Include="PoolSocket/Client.cs" />
-		<Compile Include="PoolSocket/Pooling.cs" />
-		<Compile Include="PoolSocket/Receive.cs" />
-		<Compile Include="PoolSocket/Send.cs" />
-		<Compile Include="PoolSocket/Server.cs" />
-		<Compile Include="PoolSocket/SocketEventArgs.cs" />
-		<Compile Include="PoolSocket/Terraria.cs" />
+		<Compile Include="PoolSocket\Client.cs" />
+		<Compile Include="PoolSocket\Pooling.cs" />
+		<Compile Include="PoolSocket\Receive.cs" />
+		<Compile Include="PoolSocket\Send.cs" />
+		<Compile Include="PoolSocket\Server.cs" />
+		<Compile Include="PoolSocket\SocketEventArgs.cs" />
+		<Compile Include="PoolSocket\Terraria.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">

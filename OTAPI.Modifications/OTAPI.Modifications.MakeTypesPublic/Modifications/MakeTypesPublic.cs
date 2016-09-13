@@ -10,8 +10,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.2.1, Culture=neutral, PublicKeyToken=null",
-			"Terraria, Version=1.3.2.1, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.3.1, Culture=neutral, PublicKeyToken=null",
+			"Terraria, Version=1.3.3.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Making all types public...";
 		public override void Run()

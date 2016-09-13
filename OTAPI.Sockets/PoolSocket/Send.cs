@@ -49,6 +49,10 @@ namespace OTAPI.Sockets
             TrySend();
         }
 
+        void ISocket.SendQueuedPackets()
+        {
+        }
+
         int sendOffset;
         bool sending = false;
 

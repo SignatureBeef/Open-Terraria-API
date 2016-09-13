@@ -1,5 +1,5 @@
 #Use this script to prepare your OTAPI solution for building when you have a fresh clone
-#To execute, run the following line in the Package Manager Console window in Visual Studio
+#To execute, run the following line in the Package Manager Console window in Visual Studio (View->Other Windows->Package Manager Console)
 #	Invoke-Expression .\prebuild.ps1
 
 #OTAPI expected paths
@@ -88,7 +88,7 @@ Catch
 Write-Host "Extracting TerrariaServer.exe from $zipSavePath";
 #Open the zip archive
 $zip = [System.IO.Compression.ZipFile]::OpenRead($zipSavePath); #not working on PASH yet :c
-Write-Host "ASD";
+
 #Get the particular .exe we are after
 $entry = $zip.GetEntry("Dedicated Server/Windows/TerrariaServer.exe");
 
