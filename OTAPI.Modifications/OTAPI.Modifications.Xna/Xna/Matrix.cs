@@ -147,5 +147,67 @@ namespace Microsoft.Xna.Framework
             result.M44 = 1f;
             return result;
         }
+
+        // Microsoft.Xna.Framework.Matrix
+        public static Matrix Invert(Matrix matrix)
+        {
+            float m = matrix.M11;
+            float m2 = matrix.M12;
+            float m3 = matrix.M13;
+            float m4 = matrix.M14;
+            float m5 = matrix.M21;
+            float m6 = matrix.M22;
+            float m7 = matrix.M23;
+            float m8 = matrix.M24;
+            float m9 = matrix.M31;
+            float m10 = matrix.M32;
+            float m11 = matrix.M33;
+            float m12 = matrix.M34;
+            float m13 = matrix.M41;
+            float m14 = matrix.M42;
+            float m15 = matrix.M43;
+            float m16 = matrix.M44;
+            float num = m11 * m16 - m12 * m15;
+            float num2 = m10 * m16 - m12 * m14;
+            float num3 = m10 * m15 - m11 * m14;
+            float num4 = m9 * m16 - m12 * m13;
+            float num5 = m9 * m15 - m11 * m13;
+            float num6 = m9 * m14 - m10 * m13;
+            float num7 = m6 * num - m7 * num2 + m8 * num3;
+            float num8 = -(m5 * num - m7 * num4 + m8 * num5);
+            float num9 = m5 * num2 - m6 * num4 + m8 * num6;
+            float num10 = -(m5 * num3 - m6 * num5 + m7 * num6);
+            float num11 = 1f / (m * num7 + m2 * num8 + m3 * num9 + m4 * num10);
+            Matrix result;
+            result.M11 = num7 * num11;
+            result.M21 = num8 * num11;
+            result.M31 = num9 * num11;
+            result.M41 = num10 * num11;
+            result.M12 = -(m2 * num - m3 * num2 + m4 * num3) * num11;
+            result.M22 = (m * num - m3 * num4 + m4 * num5) * num11;
+            result.M32 = -(m * num2 - m2 * num4 + m4 * num6) * num11;
+            result.M42 = (m * num3 - m2 * num5 + m3 * num6) * num11;
+            float num12 = m7 * m16 - m8 * m15;
+            float num13 = m6 * m16 - m8 * m14;
+            float num14 = m6 * m15 - m7 * m14;
+            float num15 = m5 * m16 - m8 * m13;
+            float num16 = m5 * m15 - m7 * m13;
+            float num17 = m5 * m14 - m6 * m13;
+            result.M13 = (m2 * num12 - m3 * num13 + m4 * num14) * num11;
+            result.M23 = -(m * num12 - m3 * num15 + m4 * num16) * num11;
+            result.M33 = (m * num13 - m2 * num15 + m4 * num17) * num11;
+            result.M43 = -(m * num14 - m2 * num16 + m3 * num17) * num11;
+            float num18 = m7 * m12 - m8 * m11;
+            float num19 = m6 * m12 - m8 * m10;
+            float num20 = m6 * m11 - m7 * m10;
+            float num21 = m5 * m12 - m8 * m9;
+            float num22 = m5 * m11 - m7 * m9;
+            float num23 = m5 * m10 - m6 * m9;
+            result.M14 = -(m2 * num18 - m3 * num19 + m4 * num20) * num11;
+            result.M24 = (m * num18 - m3 * num21 + m4 * num22) * num11;
+            result.M34 = -(m * num19 - m2 * num21 + m4 * num23) * num11;
+            result.M44 = (m * num20 - m2 * num22 + m3 * num23) * num11;
+            return result;
+        }
     }
 }
