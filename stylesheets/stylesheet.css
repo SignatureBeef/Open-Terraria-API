@@ -243,3 +243,34 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+@keyframes otapiSupporter {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.otapi-supporter:hover {
+    background: rgba(255,255,255,.1);
+    border-bottom-color: #038069;
+    border-left-color: #038069;
+}
+.otapi-supporter {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    overflow: hidden;
+    color: #fff;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+}
+
+.otapi-supporter>DIV {
+    position: relative;
+    width: 100%;
+	animation: otapiSupporters 0.6s ease-out 1;
+}
