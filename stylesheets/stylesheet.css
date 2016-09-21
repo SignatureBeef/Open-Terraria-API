@@ -274,3 +274,10 @@ a {
     width: 100%;
     animation: otapiSupporter 0.6s ease-out 1;
 }
+@media screen and (max-width: 980px) {
+.otapi-supporter {
+    position: relative;
+    display: block;
+    width: initial;
+}
+}
