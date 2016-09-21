@@ -246,10 +246,10 @@ a {
 
 @keyframes otapiSupporter {
     0% {
-        transform: translateY(100%);
+        transform: translateX(100%);
     }
     100% {
-        transform: translateY(0);
+        transform: translateX(0);
     }
 }
 
@@ -272,5 +272,5 @@ a {
 .otapi-supporter>DIV {
     position: relative;
     width: 100%;
-	animation: otapiSupporters 0.6s ease-out 1;
+    animation: otapiSupporter 0.6s ease-out 1;
 }
