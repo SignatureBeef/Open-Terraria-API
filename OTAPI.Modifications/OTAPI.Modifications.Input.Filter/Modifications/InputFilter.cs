@@ -10,7 +10,7 @@ namespace OTAPI.Modifications.Input.Filter.Modifications
 	{
 		public override IEnumerable<string> AssemblyTargets => new[]
 		{
-			"Terraria, Version=1.3.3.2, Culture=neutral, PublicKeyToken=null"
+			"Terraria, Version=1.3.3.1, Culture=neutral, PublicKeyToken=null"
 		};
 
 		public override string Description => "Hooking keyboard filters";

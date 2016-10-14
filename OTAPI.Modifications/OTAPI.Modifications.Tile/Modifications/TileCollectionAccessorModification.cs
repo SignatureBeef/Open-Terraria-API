@@ -9,7 +9,7 @@ namespace OTAPI.Modification.Tile.Modifications
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.3.2, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.3.3, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Patching tile collections accessors...";
 

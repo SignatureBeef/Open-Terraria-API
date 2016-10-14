@@ -14,7 +14,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.3.2, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.3.3, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking Netplay.ServerLoop\\TcpSocket...";
 
