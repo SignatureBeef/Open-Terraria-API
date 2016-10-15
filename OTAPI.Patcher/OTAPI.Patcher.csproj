@@ -73,7 +73,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
+  <!-- <PropertyGroup>
     <PreBuildEvent>::Move up to the root
 SET OTAPI_ROOT_DIR=$(SolutionDir)
 ECHO [OTAPI] Pre build cleanup to ensure configuration items are cleaned up
@@ -85,7 +85,7 @@ echo [OTAPI] Removing %25OTAPI_ROOT_DIR%25OTAPI.Modifications\%25%25s\bin
 rmdir /s /q %25OTAPI_ROOT_DIR%25OTAPI.Modifications\%25%25s\bin
 )
 </PreBuildEvent>
-  </PropertyGroup>
+  </PropertyGroup> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

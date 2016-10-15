@@ -4,6 +4,10 @@ mono:
 solution: OTAPI.sln
 install:
   - mozroots --import --sync
+  - sudo apt-get install unzip
   - nuget restore OTAPI.sln
 script:
+  - wget -O server.zip http://terraria.org/system/dedicated_servers/archives/000/000/021/original/terraria-server-1333.zip?1475520626
+  - unzip server.zip -d tmp_server_zip
+  - cp "tmp_server_zip/Dedicated Server/Windows/TerrariaServer.exe" wrap/TerrariaServer/TerrariaServer.exe
   - xbuild /p:Configuration=Debug OTAPI.sln
