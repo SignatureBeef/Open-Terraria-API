@@ -4,6 +4,6 @@ mono:
 solution: OTAPI.sln
 install:
   - mozroots --import --sync
-  - nuget restore
+  - nuget restore OTAPI.sln
 script:
   - xbuild /p:Configuration=Debug OTAPI.sln
