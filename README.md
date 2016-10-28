@@ -1,7 +1,5 @@
 # Open Terraria API
 
-Open Terraria API is a Terraria modification that exposes hooks from within both the client and server executables.
+The Open Terraria API, known as OTAPI, is a unique low-level API for Terraria that exposes events and provides performance optimisations.
 
-Unlike the main branch this version will be shipped on NuGet using an OTAPI.dll which contains both the Terraria & OTAPI assemblies. This provides more flexibility for external projects who wish to run their application as the host.
-
-
+You can use this modification as a [NuGet package](https://www.nuget.org/packages/OTAPI/) to power your own project with minimal update downtime*, or you can build plugins for [NyxStudio's Orion](https://github.com/NyxStudios/Orion) which uses OTAPI under the hood.
