@@ -16,7 +16,7 @@ namespace OTAPI.Modifications.Main.Command.Modifications
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.3.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.4.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking console commands...";
 
@@ -47,7 +47,7 @@ namespace OTAPI.Modifications.Main.Command.Modifications
 			//Find the try block, there will be a "help" comparison 2 instructions in
 			var exceptionHandler = mStartDedInputCallBack.Body.ExceptionHandlers.Single(
 				x => x.TryStart.Next.OpCode == OpCodes.Ldstr
-					&& x.TryStart.Next.Operand.Equals("help")
+					&& x.TryStart.Next.Operand.Equals("CLI.Help_Command")
 			);
 
 			//Find the instruction to 'continue' to, ie the last instruction in the try

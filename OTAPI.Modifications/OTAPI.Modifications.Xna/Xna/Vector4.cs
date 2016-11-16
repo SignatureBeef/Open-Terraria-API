@@ -9,11 +9,13 @@
         public float Y;
         public float Z;
 
-        private static readonly Vector4 _one = new Vector4(1f, 1f, 1f, 1f);
+		private static Vector4 _zero = default(Vector4);
+		private static readonly Vector4 _one = new Vector4(1f, 1f, 1f, 1f);
 
-        public static Vector4 One { get { return _one; } }
+		public static Vector4 One => _one;
+		public static Vector4 Zero => _zero;
 
-        public Vector4(Vector2 value, float z, float w)
+		public Vector4(Vector2 value, float z, float w)
         {
             this.W = w;
             this.X = value.X;

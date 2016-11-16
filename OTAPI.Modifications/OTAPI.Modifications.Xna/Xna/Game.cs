@@ -20,7 +20,7 @@ namespace Microsoft.Xna.Framework
 
         public Game()
         {
-            Content = new ContentManager();
+            Content = new ContentManager(null);
             Window = new GameWindow();
         }
 

@@ -38,6 +38,13 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
 			//this.SetData<T>(0, null, data, startIndex, elementCount);
 		}
+		public void SetData<T>(T[] data) where T : struct
+		{
+
+		}
+		public void SetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct
+		{
+		}
 
 		public void GetData<T> (
 			T[] data

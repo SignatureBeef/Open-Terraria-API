@@ -12,7 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Player
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.3.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.4.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking NetMessage.GetData\\NameCollision";
 
@@ -26,7 +26,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Player
 			//Currently this is doing by looking for "Name is too long." and back tracking to the 
 			//first brfalse.s where we inject our callback.
 
-			var flag = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldstr && x.Operand.Equals("Name is too long."))
+			var flag = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Ldstr && x.Operand.Equals("Net.NameTooLong"))
 												.Previous(y => y.OpCode == OpCodes.Brfalse_S);
 
 			//Our arguments requires the player reference (which is easier than grabbing a bunch of details the player object already has)

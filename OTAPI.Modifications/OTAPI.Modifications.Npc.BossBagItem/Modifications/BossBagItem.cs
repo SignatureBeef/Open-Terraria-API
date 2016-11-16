@@ -17,13 +17,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.3.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.4.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking Npc.DropBossBag\\Item...";
 
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("DropBossBags");
+			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("DropItemInstanced");
 			var callback = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method("BossBagItem");
 
 			var il = vanilla.Body.GetILProcessor();
@@ -32,7 +32,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			var instructions = vanilla.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
 																&& x.Operand is MethodReference
 																&& (x.Operand as MethodReference).Name == "NewItem"
-																&& x.Next.OpCode == OpCodes.Stloc_1);
+																&& x.Next.OpCode == OpCodes.Stloc_0);
 			//Quick validation check
 			if (instructions.Count() != 1) throw new NotSupportedException("Only one server NewItem call expected in DropBossBags.");
 
@@ -45,8 +45,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			il.InsertBefore(ins, il.Create(OpCodes.Ldarg_0)); //Instance methods ldarg.0 is the instance object
 
 			//Now we start inserting our own if block to compare the call result.
-			var target = ins.Next/*stloc.1*/.Next; //Grabs a reference to the instruction after the stloc.1 opcode so we can insert sequentially
-			il.InsertBefore(target, il.Create(OpCodes.Ldloc_1)); //Load the num2 variable onto the stack
+			var target = ins.Next/*stloc.0*/.Next; //Grabs a reference to the instruction after the stloc.1 opcode so we can insert sequentially
+			il.InsertBefore(target, il.Create(OpCodes.Ldloc_0)); //Load the num variable onto the stack
 			il.InsertBefore(target, il.Create(OpCodes.Ldc_I4_M1)); //Load -1 onto the stack
 			il.InsertBefore(target, il.Create(OpCodes.Ceq)); //Consume & compare the two variables and push 1 (true) or 0 (false) onto the stack
 			il.InsertBefore(target, il.Create(OpCodes.Brfalse_S, target)); //if the output of ceq is 0 (false) then continue back on with the [target] instruction. In code terms, if the expression is not -1 then don't exit

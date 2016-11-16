@@ -19,5 +19,7 @@
         public void Stop(bool immediate)
         {
         }
-    }
+		public void Pause() { }
+		public void Resume() { }
+	}
 }

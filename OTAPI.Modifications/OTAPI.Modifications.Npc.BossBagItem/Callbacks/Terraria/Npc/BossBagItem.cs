@@ -8,7 +8,6 @@
         /// </summary>
         internal static int BossBagItem
         (
-            global::Terraria.NPC npc,
             int X,
             int Y,
             int Width,
@@ -18,8 +17,11 @@
             bool noBroadcast,
             int pfix,
             bool noGrabDelay,
-            bool reverseLookup
-        )
+            bool reverseLookup,
+
+			global::Terraria.NPC npc
+
+		)
         {
             //Allow altering of our local variables so the item can be changed etc
             if (Hooks.Npc.BossBagItem?.Invoke

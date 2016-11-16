@@ -11,12 +11,15 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.3.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.4.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Creating DropLoot";
 		public override void Run()
 		{
-			var newItem = SourceDefinition.Type("Terraria.Item").Method("NewItem");
+			var newItem = SourceDefinition.Type("Terraria.Item").Methods.Single(
+				x => x.Name == "NewItem"
+				&& x.Parameters.Count == 10
+			);
 
 			//In this patch we create a custom DropLoot method that will be the receiver
 			//of all Item.NewItem calls in NPCLoot.
