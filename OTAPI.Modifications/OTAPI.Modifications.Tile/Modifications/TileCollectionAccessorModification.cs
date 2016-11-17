@@ -1,7 +1,9 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
+using System.Collections.Generic;
 
 namespace OTAPI.Modification.Tile.Modifications
 {
@@ -9,7 +11,7 @@ namespace OTAPI.Modification.Tile.Modifications
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.4.1, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.4.2, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Patching tile collections accessors...";
 

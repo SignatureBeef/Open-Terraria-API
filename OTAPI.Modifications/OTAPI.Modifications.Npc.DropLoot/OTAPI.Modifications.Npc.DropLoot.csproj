@@ -61,6 +61,10 @@
       <Project>{D9439E01-19C1-4E89-9B33-2C19C804DDCF}</Project>
       <Name>OTAPI.Modifications.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OTAPI.Modifications.Xna\OTAPI.Modifications.Xna.csproj">
+      <Project>{4A980A83-9E64-4207-8281-4F29FBF2AD90}</Project>
+      <Name>OTAPI.Modifications.Xna</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

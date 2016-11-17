@@ -1,4 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace OTAPI.Tests
 {
@@ -13,6 +17,25 @@ namespace OTAPI.Tests
 		{
 			try
 			{
+				AppDomain.CurrentDomain.AssemblyResolve += delegate (object sender, ResolveEventArgs sargs)
+				{
+					var asm = typeof(Terraria.Program).Assembly;
+
+					var resourceName = new AssemblyName(sargs.Name).Name + ".dll";
+					var text = Array.Find(asm.GetManifestResourceNames(), (string element) => element.EndsWith(resourceName));
+					if (text == null)
+					{
+						return null;
+					}
+
+					using (Stream manifestResourceStream = asm.GetManifestResourceStream(text))
+					{
+						var array = new byte[manifestResourceStream.Length];
+						manifestResourceStream.Read(array, 0, array.Length);
+						return Assembly.Load(array);
+					}
+				};
+
 				Console.BackgroundColor = ConsoleColor.White;
 				Console.ForegroundColor = ConsoleColor.DarkCyan;
 				Console.Clear();
@@ -39,7 +62,7 @@ namespace OTAPI.Tests
 		static void StartServer(string[] args)
 		{
 			Console.WriteLine("Starting...");
-			Terraria.Main.SkipAssemblyLoad = true;
+			//Terraria.Main.SkipAssemblyLoad = true;
 			Terraria.WindowsLaunch.Main(args);
 		}
 

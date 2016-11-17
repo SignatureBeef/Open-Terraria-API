@@ -12,7 +12,7 @@ namespace OTAPI.Modification.Tile.Modifications
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.4.1, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.4.2, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Swapping all Terraria.Tile references to ITile...";
 
@@ -34,9 +34,9 @@ namespace OTAPI.Modification.Tile.Modifications
 
 			#region Tile constructor
 			//Swap all tile constructors to the OTAPI callback
-			var createTileCallback = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Callbacks.Terraria.Collection.CreateTile())
-			);
+			//var createTileCallback = this.SourceDefinition.MainModule.Import(
+			//	this.Method(() => OTAPI.Callbacks.Terraria.Collection.CreateTile())
+			//);
 			this.SourceDefinition.MainModule.ForEachInstruction((method, instruction) =>
 			{
 				if (instruction.OpCode == OpCodes.Newobj)
@@ -45,7 +45,13 @@ namespace OTAPI.Modification.Tile.Modifications
 					if (operandMethod.DeclaringType.FullName == "Terraria.Tile")
 					{
 						instruction.OpCode = OpCodes.Call;
-						instruction.Operand = createTileCallback;
+
+						//Find the appropriate create tile call, depending on the constructor parameters
+						var callback = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Collection").Methods.SingleOrDefault(
+							x => x.Name == "CreateTile"
+							&& x.Parameters.Count == operandMethod.Parameters.Count
+						);
+						instruction.Operand = this.SourceDefinition.MainModule.Import(callback);
 					}
 				}
 			});
@@ -62,12 +68,22 @@ namespace OTAPI.Modification.Tile.Modifications
 			this.SourceDefinition.MainModule.ForEachInstruction((method, instruction) =>
 			{
 				var operandMethod = instruction.Operand as MethodDefinition;
-				if (operandMethod != null && method.DeclaringType.FullName != "Terraria.Tile")
+
+				var selfDeclared = method.DeclaringType.FullName == "Terraria.Tile";
+				var ctorGetter = selfDeclared && method.IsConstructor && instruction.Previous != null && instruction.Previous.OpCode == OpCodes.Ldarg_1;
+				var selfMethod = selfDeclared && !method.IsConstructor && !method.IsStatic && instruction.Previous != null && instruction.Previous.OpCode == OpCodes.Ldarg_1;
+
+				if (operandMethod != null && (selfMethod || ctorGetter || method.IsStatic || method.DeclaringType.FullName != "Terraria.Tile"))
 				{
+					if (operandMethod.IsConstructor)
+						return;
+
 					if (operandMethod.DeclaringType.FullName == "Terraria.Tile" && !operandMethod.IsStatic)
 					{
-						//instruction.Operand = iTile.Method(operandMethod.Name, parameters: operandMethod.Parameters, skipParameters: 0);
-						var methods = iTile.Methods.Where(mth => mth.Name == operandMethod.Name && mth.Parameters.Count == operandMethod.Parameters.Count);
+						var methods = iTile.Methods.Where(mth =>
+							mth.Name == operandMethod.Name
+							&& mth.Parameters.Count == operandMethod.Parameters.Count
+						);
 
 						if (methods.Count() == 0)
 							throw new Exception($"Method `{operandMethod.Name}` is not found on {iTile.FullName}");
