@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2CA8A2CD-657F-499E-92C2-B2E0AC5488C4}"
 	ProjectSection(SolutionItems) = preProject
 		.travis.yml = .travis.yml
+		clean.bat = clean.bat
 		CONTRIBUTIONS.md = CONTRIBUTIONS.md
 		DEVELOPMENT.md = DEVELOPMENT.md
 		dnxtocsproj.ps1 = dnxtocsproj.ps1
@@ -285,7 +286,9 @@ Global
 		{96661B26-55C6-4760-8924-5FE2E19B59D0}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96661B26-55C6-4760-8924-5FE2E19B59D0}.Server-Release|Any CPU.Build.0 = Release|Any CPU
 		{47C0D2ED-DBCA-4ADF-8B55-F7043D736673}.Client-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47C0D2ED-DBCA-4ADF-8B55-F7043D736673}.Client-Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47C0D2ED-DBCA-4ADF-8B55-F7043D736673}.Client-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47C0D2ED-DBCA-4ADF-8B55-F7043D736673}.Client-Release|Any CPU.Build.0 = Release|Any CPU
 		{47C0D2ED-DBCA-4ADF-8B55-F7043D736673}.Server-Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47C0D2ED-DBCA-4ADF-8B55-F7043D736673}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47C0D2ED-DBCA-4ADF-8B55-F7043D736673}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU

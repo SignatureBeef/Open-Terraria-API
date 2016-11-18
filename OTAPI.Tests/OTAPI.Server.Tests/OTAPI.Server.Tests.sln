@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Tests", "OTAPI.Tests.csproj", "{BC2A8E46-50E2-4588-843C-24591DEBE6EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Server.Tests", "OTAPI.Server.Tests.csproj", "{BC2A8E46-50E2-4588-843C-24591DEBE6EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Tests.Common", "..\OTAPI.Tests.Common\OTAPI.Tests.Common.csproj", "{06F8C47F-1B5C-4AD5-A2DB-202F081D0FB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BC2A8E46-50E2-4588-843C-24591DEBE6EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC2A8E46-50E2-4588-843C-24591DEBE6EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC2A8E46-50E2-4588-843C-24591DEBE6EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06F8C47F-1B5C-4AD5-A2DB-202F081D0FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06F8C47F-1B5C-4AD5-A2DB-202F081D0FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06F8C47F-1B5C-4AD5-A2DB-202F081D0FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06F8C47F-1B5C-4AD5-A2DB-202F081D0FB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

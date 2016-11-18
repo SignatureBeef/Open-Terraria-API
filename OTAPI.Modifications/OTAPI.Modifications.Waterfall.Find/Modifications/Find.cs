@@ -7,7 +7,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Waterfall
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"Terraria, Version=1.3.3.1, Culture=neutral, PublicKeyToken=null"
+			"Terraria, Version=1.3.4.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking WaterfallManager.FindWaterfalls";
 		public override void Run()

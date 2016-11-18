@@ -19,7 +19,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 			{
 				if (methods.Any(x => x == instruction.Operand))
 				{
-					if(instruction.OpCode != OpCodes.Callvirt)
+					if (instruction.OpCode != OpCodes.Callvirt)
 					{
 						instruction.OpCode = OpCodes.Callvirt;
 					}
@@ -34,7 +34,33 @@ namespace OTAPI.Patcher.Engine.Extensions
 		/// <param name="nested">To make all nested classes public as well.</param>
 		public static void MakePublic(this TypeDefinition type, bool nested = true)
 		{
-			if (!nested) type.IsPublic = true;
+			var state = type.IsPublic;
+			if (type.IsNestedFamily)
+			{
+				type.IsNestedFamily = false;
+				type.IsNestedPublic = true;
+				state = false;
+			}
+			if (type.IsNestedFamilyAndAssembly)
+			{
+				type.IsNestedFamilyAndAssembly = false;
+				type.IsNestedPublic = true;
+				state = false;
+			}
+			if (type.IsNestedFamilyOrAssembly)
+			{
+				type.IsNestedFamilyOrAssembly = false;
+				type.IsNestedPublic = true;
+				state = false;
+			}
+			if (type.IsNestedPrivate)
+			{
+				type.IsNestedPrivate = false;
+				type.IsNestedPublic = true;
+				state = false;
+			}
+
+			type.IsPublic = state;
 
 			foreach (var itm in type.Methods)
 			{
@@ -82,7 +108,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 			}
 
 			foreach (var nt in type.NestedTypes)
-				nt.MakePublic(true);
+				nt.MakePublic();
 		}
 	}
 }

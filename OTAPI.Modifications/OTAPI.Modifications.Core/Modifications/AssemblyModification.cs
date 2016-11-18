@@ -8,8 +8,8 @@ namespace OTAPI.Modifications
 	{
 		public override IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.4.2, Culture=neutral, PublicKeyToken=null",
-			"Terraria, Version=1.3.3.1, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.4.3, Culture=neutral, PublicKeyToken=null",
+			"Terraria, Version=1.3.4.1, Culture=neutral, PublicKeyToken=null"
 		};
 
 		public override string Description => "Modifying assembly info";
