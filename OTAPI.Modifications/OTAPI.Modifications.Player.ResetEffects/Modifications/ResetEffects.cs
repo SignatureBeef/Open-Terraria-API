@@ -7,7 +7,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"Terraria, Version=1.3.4.1, Culture=neutral, PublicKeyToken=null"
+			"Terraria, Version=1.3.4.3, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking Player.ResetEffects";
 		public override void Run()

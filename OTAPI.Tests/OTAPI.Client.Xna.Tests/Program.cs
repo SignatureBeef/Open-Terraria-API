@@ -23,6 +23,7 @@ namespace OTAPI.Client.Xna.Tests
 
 		static void AttachHooks(object sender, EventArgs args)
 		{
+
 		}
 	}
 }
