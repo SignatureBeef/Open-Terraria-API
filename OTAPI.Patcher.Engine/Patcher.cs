@@ -306,7 +306,7 @@ namespace OTAPI.Patcher.Engine
             };
 
             //Generate the allow list of types from our modifications
-            AllowDuplcateModificationTypes(options.AllowedDuplicateTypes);
+            AllowDuplicateModificationTypes(options.AllowedDuplicateTypes);
 
             var repacker = new ILRepacking.ILRepack(options);
             repacker.Repack();
@@ -320,7 +320,7 @@ namespace OTAPI.Patcher.Engine
 		/// allowed list.
 		/// </summary>
 		/// <param name="allowedTypes"></param>
-		void AllowDuplcateModificationTypes(System.Collections.Hashtable allowedTypes)
+		void AllowDuplicateModificationTypes(System.Collections.Hashtable allowedTypes)
 		{
 			foreach (var mod in Modifications)
 			{

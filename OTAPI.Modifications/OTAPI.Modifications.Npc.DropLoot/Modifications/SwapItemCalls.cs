@@ -41,7 +41,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 				parameters.Add(new ParameterDefinition("npc", ParameterAttributes.In, npcType));
 				var dropLoot = SourceDefinition.Type("Terraria.NPC").Method("DropLoot",
 					parameters: parameters,
-					skipParameters: 0
+					skipMethodParameters: 0
 				);
 
 				//Swap to our custom method

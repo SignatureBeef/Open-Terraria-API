@@ -17,10 +17,19 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 				x => x.Name == "StartHardmode"
 				&& x.Parameters.Count() == 0
 			);
-
-
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.WorldGen").Method("HardmodeBegin", parameters: vanilla.Parameters);
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.WorldGen").Method("HardmodeEnd", parameters: vanilla.Parameters);
+			
+			var cbkBegin = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.WorldGen")
+				.Method("HardmodeBegin",
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
+			var cbkEnd = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.WorldGen")
+				.Method("HardmodeEnd",
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
 
 			vanilla.Wrap
 			(

@@ -46,7 +46,7 @@ namespace OTAPI.Callbacks.Terraria
 		/// <returns>ITile instance</returns>
 		private static Func<OTAPI.Tile.ITile, OTAPI.Tile.ITile> GetNewTileFromMethod()
 		{
-			var dm = new DynamicMethod("GetTileCollection", typeof(OTAPI.Tile.ITile), new[]
+			var dm = new DynamicMethod("GetTileFromCollection", typeof(OTAPI.Tile.ITile), new[]
 			{
 				typeof(OTAPI.Tile.ITile)
 			});
@@ -54,6 +54,7 @@ namespace OTAPI.Callbacks.Terraria
 			dm.DefineParameter(0, System.Reflection.ParameterAttributes.In, "copy");
 			var processor = dm.GetILGenerator();
 
+			processor.Emit(OpCodes.Ldarg_0);
 			processor.Emit(OpCodes.Newobj, typeof(global::Terraria.Tile).GetConstructors().Single(x => x.GetParameters().Length == 1));
 			processor.Emit(OpCodes.Ret);
 

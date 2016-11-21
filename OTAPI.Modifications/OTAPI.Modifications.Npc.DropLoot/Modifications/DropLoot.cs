@@ -45,12 +45,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 				//Collect the hooks
 				var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method(
 					"DropLootBegin",
-					parameters: dropLoot.Parameters
+					parameters: dropLoot.Parameters,
+					skipMethodParameters: 1
 				);
 				var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method(
 					"DropLootEnd",
 					parameters: dropLoot.Parameters,
-					skipParameters: 0
+					skipMethodParameters: 0
 				);
 
 				//Create the value to hold the new item id

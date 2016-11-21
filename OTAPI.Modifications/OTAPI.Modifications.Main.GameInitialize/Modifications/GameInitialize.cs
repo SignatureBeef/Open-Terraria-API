@@ -21,8 +21,18 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 			//Grab the Initialise method
 			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("Initialize");
 
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Main").Method("InitializeBegin", parameters: vanilla.Parameters);
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Main").Method("InitializeEnd", parameters: vanilla.Parameters);
+			var cbkBegin = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Main")
+				.Method("InitializeBegin", 
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
+			var cbkEnd = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Main")
+				.Method("InitializeEnd",
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
 			
 			vanilla.Wrap
 			(

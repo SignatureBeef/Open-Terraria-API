@@ -20,9 +20,18 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
 				&& x.Parameters.First().ParameterType == this.SourceDefinition.MainModule.TypeSystem.Int32
 			);
 
-
-			var cbkBegin = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Item").Method("NetDefaultsBegin", parameters: vanilla.Parameters);
-			var cbkEnd = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Item").Method("NetDefaultsEnd", parameters: vanilla.Parameters);
+			var cbkBegin = this.ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Item")
+				.Method("NetDefaultsBegin", 
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
+			var cbkEnd = this.ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Item")
+				.Method("NetDefaultsEnd", 
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
 
 			vanilla.Wrap
 			(

@@ -1,6 +1,6 @@
 ﻿namespace OTAPI.Callbacks.Terraria
 {
-    internal static partial class Console
+    internal partial class Console
     {
         internal static void Write(string message)
         {

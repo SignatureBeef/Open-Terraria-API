@@ -18,10 +18,19 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 				x => x.Name == "Update"
 				&& x.Parameters.Single().ParameterType == SourceDefinition.MainModule.TypeSystem.Int32
 			);
-
-
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Projectile").Method("UpdateBegin", parameters: vanilla.Parameters);
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Projectile").Method("UpdateEnd", parameters: vanilla.Parameters);
+			
+			var cbkBegin = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Projectile")
+				.Method("UpdateBegin",
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
+			var cbkEnd = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Projectile")
+				.Method("UpdateEnd", 
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
 
 			vanilla.Wrap
 			(

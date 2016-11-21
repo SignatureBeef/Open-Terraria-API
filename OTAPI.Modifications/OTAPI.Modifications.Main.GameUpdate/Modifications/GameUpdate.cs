@@ -20,8 +20,18 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 			//Grab the Update method
 			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("Update");
 
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Main").Method("UpdateBegin", parameters: vanilla.Parameters);
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Main").Method("UpdateEnd", parameters: vanilla.Parameters);
+			var cbkBegin = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Main")
+				.Method("UpdateBegin", 
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
+			var cbkEnd = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Main")
+				.Method("UpdateEnd", 
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
 			
 			vanilla.Wrap
 			(

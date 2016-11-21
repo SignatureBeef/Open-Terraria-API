@@ -20,10 +20,19 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 				x => x.Name == "SetDefaults"
 				&& x.Parameters.Single().ParameterType == SourceDefinition.MainModule.TypeSystem.Int32
 			);
-
-
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Projectile").Method("SetDefaultsByIdBegin", parameters: vanilla.Parameters);
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Projectile").Method("SetDefaultsByIdEnd", parameters: vanilla.Parameters);
+			
+			var cbkBegin = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Projectile")
+				.Method("SetDefaultsByIdBegin",
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
+			var cbkEnd = ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Projectile")
+				.Method("SetDefaultsByIdEnd", 
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
 
 			vanilla.Wrap
 			(

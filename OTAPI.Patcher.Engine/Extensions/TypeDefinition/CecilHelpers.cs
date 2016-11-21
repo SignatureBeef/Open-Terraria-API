@@ -1,6 +1,7 @@
 ﻿using Mono.Cecil;
 using Mono.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Extensions
@@ -15,21 +16,44 @@ namespace OTAPI.Patcher.Engine.Extensions
 		public static MethodDefinition Method(this TypeDefinition typeDefinition, string name,
 			bool? isStatic = null,
 			Collection<ParameterDefinition> parameters = null,
-			int skipParameters = 1
+			int skipMethodParameters = 0,
+			int skipInputParameters = 0,
+			bool acceptParamObjectTypes = false
 		)
 		{
-			var method = typeDefinition.Methods.Where(
-				x => x.Name == name
-				&& (isStatic == null || x.IsStatic == isStatic.Value)
-				&& (parameters == null || x.HasSameParameters(parameters, skipParameters))
+
+			IEnumerable<ParameterDefinition> parametersClone = null;
+			if (parameters != null)
+			{
+				if (skipInputParameters > 0)
+				{
+					parametersClone = parameters.ToArray().Skip(skipInputParameters);
+				}
+				else
+				{
+					parametersClone = parameters.ToArray();
+				}
+			}
+
+			var matches = typeDefinition.Methods.Where(
+				 x => x.Name == name
+				 && (isStatic == null || x.IsStatic == isStatic.Value)
 			);
 
-			if (method.Count() == 0)
-				throw new Exception($"Method `{name}` is not found in {typeDefinition.FullName}");
-			else if (method.Count() > 1)
+			if (parameters != null)
+			{
+				matches = matches.Where(x =>
+					(skipMethodParameters > 0 ? x.Parameters.Skip(skipMethodParameters) : x.Parameters)
+						.CompareParameterTypes(parametersClone, acceptParamObjectTypes)
+				);
+			}
+
+			if (matches.Count() == 0)
+				throw new Exception($"Method `{name}` is not found in {typeDefinition.FullName}. Expected {parametersClone.ToParamString()}.");
+			else if (matches.Count() > 1)
 				throw new Exception($"Too many methods named `{name}` found in {typeDefinition.FullName}");
 
-			return method.Single();
+			return matches.Single();
 		}
 
 		public static FieldDefinition Field(this TypeDefinition typeDefinition, string name)
@@ -47,12 +71,35 @@ namespace OTAPI.Patcher.Engine.Extensions
 			return typeDefinition.NestedTypes.Single(x => x.Name == name);
 		}
 
-		public static bool HasSameParameters(this MethodDefinition method, Collection<ParameterDefinition> parameters, int skipParameters = 1)
+		public static bool CompareParameterTypes(this IEnumerable<ParameterDefinition> source,
+			IEnumerable<ParameterDefinition> parameters,
+			bool acceptParamObjectTypes = false)
 		{
-			//TODO: fix this whole thing. this was initially designed for begin/end callbacks
-			var src = skipParameters > 0 && method.IsStatic ? method.Parameters.Skip(skipParameters) : method.Parameters;
-			return src.All(prm => parameters.Any(p => p.Name.Equals(prm.Name, System.StringComparison.CurrentCultureIgnoreCase)));
-			//&& src.Count() == parameters.Count;
+			if (source.Count() == parameters.Count())
+			{
+				for (var x = 0; x < source.Count(); x++)
+				{
+					var src = source.ElementAt(x).ParameterType;
+					var ext = parameters.ElementAt(x).ParameterType;
+
+					var referenceType = src as ByReferenceType;
+					if (referenceType != null)
+					{
+						src = referenceType.ElementType;
+					}
+
+					if (src.Name != ext.Name)
+					{
+						if (!(acceptParamObjectTypes && src.Name == "Object"))
+						{
+							return false;
+						}
+					}
+				}
+
+				return true;
+			}
+			return false;
 		}
 
 		public static void ForEachNestedType(this TypeDefinition parent, Action<TypeDefinition> callback)

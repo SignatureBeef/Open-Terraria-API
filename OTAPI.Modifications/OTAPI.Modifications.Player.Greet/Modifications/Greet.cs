@@ -20,10 +20,16 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 				.Method("greetPlayer");
 
 			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.NetMessage")
-				.Method("GreetPlayerBegin", parameters: vanilla.Parameters);
+				.Method("GreetPlayerBegin",
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 0
+				);
 
 			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.NetMessage")
-				.Method("GreetPlayerEnd", parameters: vanilla.Parameters);
+				.Method("GreetPlayerEnd",
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 0
+				);
 
 			vanilla.Wrap
 			(

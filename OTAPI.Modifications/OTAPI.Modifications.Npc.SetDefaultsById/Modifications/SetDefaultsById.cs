@@ -20,8 +20,18 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
                 && x.Parameters.Skip(1).First().ParameterType == this.SourceDefinition.MainModule.TypeSystem.Single
             );
 			
-            var cbkBegin = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method("SetDefaultsByIdBegin", parameters: vanilla.Parameters);
-            var cbkEnd = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method("SetDefaultsByIdEnd", parameters: vanilla.Parameters);
+            var cbkBegin = this.ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Npc")
+				.Method("SetDefaultsByIdBegin", 
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
+            var cbkEnd = this.ModificationDefinition
+				.Type("OTAPI.Callbacks.Terraria.Npc")
+				.Method("SetDefaultsByIdEnd", 
+					parameters: vanilla.Parameters,
+					skipMethodParameters: 1
+				);
 
             vanilla.Wrap
             (
