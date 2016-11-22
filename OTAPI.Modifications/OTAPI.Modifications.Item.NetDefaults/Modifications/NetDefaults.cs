@@ -15,23 +15,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
 		public override string Description => "Hooking Item.NetDefaults(int)...";
 		public override void Run()
 		{
-			var vanilla = this.SourceDefinition.Type("Terraria.Item").Methods.Single(
-				x => x.Name == "netDefaults"
-				&& x.Parameters.First().ParameterType == this.SourceDefinition.MainModule.TypeSystem.Int32
-			);
+			var vanilla = this.Method(() => (new Terraria.Item()).netDefaults(0));
 
-			var cbkBegin = this.ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Item")
-				.Method("NetDefaultsBegin", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-			var cbkEnd = this.ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Item")
-				.Method("NetDefaultsEnd", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
+			int tmp = 0;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Item.NetDefaultsBegin(null, ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Item.NetDefaultsEnd(null, ref tmp));
 
 			vanilla.Wrap
 			(

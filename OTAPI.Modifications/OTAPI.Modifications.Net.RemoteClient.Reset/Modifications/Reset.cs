@@ -10,10 +10,10 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.RemoteClient
 			"TerrariaServer, Version=1.3.4.3, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking RemoteClient.Reset...";
-		
+
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.RemoteClient").Method("Reset");
+			var vanilla = this.Method(() => (new Terraria.RemoteClient()).Reset());
 
 			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.RemoteClient.PreReset(null));
 			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.RemoteClient.PostReset(null));

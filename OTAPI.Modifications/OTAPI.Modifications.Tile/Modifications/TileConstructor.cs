@@ -25,7 +25,7 @@ namespace OTAPI.Modification.Tile.Modifications
 		public override void Run()
 		{
 			//Get the Terraria.Tile method definition
-			var terrariaTile = this.SourceDefinition.Type("Terraria.Tile");
+			var terrariaTile = this.Type<Terraria.Tile>();
 
 			//Create and add the new Tile method that will have the real constructor instructions.
 			var mInitialise = new MethodDefinition("Initialise",

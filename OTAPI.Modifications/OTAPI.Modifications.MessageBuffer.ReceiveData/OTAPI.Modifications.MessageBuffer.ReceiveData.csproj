@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\MessageBuffer\ReceiveData.cs" />
-    <Compile Include="Hooks\Net\ReceiveData.cs" />
+    <Compile Include="Callbacks\ReceiveData.cs" />
+    <Compile Include="Hooks\ReceiveData.cs" />
     <Compile Include="Modifications\ReceiveData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

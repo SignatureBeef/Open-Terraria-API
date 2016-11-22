@@ -47,8 +47,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\keyBoardInput.cs" />
-    <Compile Include="Hooks\Input\Filter.cs" />
+    <Compile Include="Callbacks\keyBoardInput.cs" />
+    <Compile Include="Hooks\Filter.cs" />
     <Compile Include="Modifications\InputFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

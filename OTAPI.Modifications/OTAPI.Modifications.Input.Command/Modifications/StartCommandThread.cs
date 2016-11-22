@@ -1,6 +1,5 @@
 ﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
-using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Command
 {
@@ -17,8 +16,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Command
 
 		public override void Run()
 		{
-			var target = this.SourceDefinition.Type("Terraria.Main").Method("startDedInput");
-			var callback = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Main").Methods.Single(x => x.Name == "startDedInput");
+			var target = this.Method(() => Terraria.Main.startDedInput());
+			var callback = this.Method(() => OTAPI.Callbacks.Terraria.Main.startDedInput());
 
 			target.Wrap
 			(

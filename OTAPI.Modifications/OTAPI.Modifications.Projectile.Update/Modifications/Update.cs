@@ -14,23 +14,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 		public override string Description => "Hooking Projectile.Update(int)...";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.Projectile").Methods.Single(
-				x => x.Name == "Update"
-				&& x.Parameters.Single().ParameterType == SourceDefinition.MainModule.TypeSystem.Int32
-			);
-			
-			var cbkBegin = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Projectile")
-				.Method("UpdateBegin",
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-			var cbkEnd = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Projectile")
-				.Method("UpdateEnd", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
+			var vanilla = this.Method(() => (new Terraria.Projectile()).Update(0));
+
+			int tmp = 0;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Projectile.UpdateBegin(null, ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Projectile.UpdateEnd(null, 0));
 
 			vanilla.Wrap
 			(

@@ -17,7 +17,7 @@ namespace OTAPI.Modifications.Input.Filter.Modifications
 
 		public override void Run()
 		{
-			var mth = this.SourceDefinition.Type("Terraria.keyBoardInput").StaticConstructor();
+			var mth = this.Type<Terraria.keyBoardInput>().StaticConstructor();
 
 			var ins = mth.Body.Instructions.Single(x =>
 				x.OpCode == OpCodes.Newobj

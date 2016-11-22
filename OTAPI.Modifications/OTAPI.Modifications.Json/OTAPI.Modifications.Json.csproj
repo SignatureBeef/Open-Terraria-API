@@ -50,8 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OTAPI.Modifications.Json\Modifications\PatchJson.cs" />
-    <Compile Include="OTAPI.Modifications.Json\Properties\AssemblyInfo.cs" />
+    <Compile Include="Modifications\PatchJson.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">

@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\NetMessage\SendData.cs" />
-    <Compile Include="Hooks\Net\SendData.cs" />
+    <Compile Include="Callbacks\SendData.cs" />
+    <Compile Include="Hooks\SendData.cs" />
     <Compile Include="Modifications\SendData.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -59,8 +59,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Npc\Strike.cs" />
-    <Compile Include="Hooks\Npc\Strike.cs" />
+    <Compile Include="Callbacks\Strike.cs" />
+    <Compile Include="Hooks\Strike.cs" />
     <Compile Include="Modifications\Strike.cs" />
   </ItemGroup>
   <ItemGroup>

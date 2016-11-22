@@ -25,7 +25,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 		public override void Run()
 		{
 			//Get the vanilla callback, as well as the imported OTAPI callback method
-			var vanilla = SourceDefinition.Type("Terraria.NetMessage").Method("SendData");
+			var vanilla = this.Method(() => Terraria.NetMessage.SendData(0, -1, -1, "", 0, 0, 0, 0, 0, 0, 0));
 			var callback = vanilla.Module.Import(this.Method(() =>
 				OTAPI.Callbacks.Terraria.NetMessage.SendUnknownPacket(0, null, 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0)
 			));

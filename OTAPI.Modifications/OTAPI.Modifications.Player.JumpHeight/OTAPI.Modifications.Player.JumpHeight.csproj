@@ -59,8 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Player\JumpHeight.cs" />
-    <Compile Include="Hooks\Player\JumpHeight.cs" />
+    <Compile Include="Callbacks\JumpHeight.cs" />
+    <Compile Include="Hooks\JumpHeight.cs" />
     <Compile Include="Modifications\JumpHeight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

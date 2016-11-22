@@ -12,8 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 		public override string Description => "Hooking Player.ResetEffects";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.Player")
-				.Method("ResetEffects");
+			var vanilla = this.Method(() => (new Terraria.Player()).ResetEffects());
 
 			var cbkBegin = this.SourceDefinition.MainModule.Import(
 				this.Method(() => OTAPI.Callbacks.Terraria.Player.ResetEffectsBegin(null))

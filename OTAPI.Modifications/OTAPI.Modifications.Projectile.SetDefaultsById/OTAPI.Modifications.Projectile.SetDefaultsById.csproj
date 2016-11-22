@@ -59,8 +59,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Projectile\SetDefaults.cs" />
-    <Compile Include="Hooks\Projectile\SetDefaults.cs" />
+    <Compile Include="Callbacks\SetDefaults.cs" />
+    <Compile Include="Hooks\SetDefaults.cs" />
     <Compile Include="Modifications\SetDefaultsById.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +76,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

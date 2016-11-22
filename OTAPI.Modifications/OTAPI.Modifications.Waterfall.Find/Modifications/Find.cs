@@ -13,7 +13,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Waterfall
 		public override void Run()
 		{
 			//Grab the Update method
-			var vanilla = this.SourceDefinition.Type("Terraria.WaterfallManager").Method("FindWaterfalls");
+			var vanilla = this.Method(() => (new Terraria.WaterfallManager()).FindWaterfalls(false));
 
 			bool tmp = false;
 			var cbkBegin = this.Method(() => Callbacks.Terraria.Waterfall.FindBegin(null, ref tmp));

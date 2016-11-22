@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\RemoteClient\Reset.cs" />
-    <Compile Include="Hooks\Net\RemoteClient\Reset.cs" />
+    <Compile Include="Callbacks\Reset.cs" />
+    <Compile Include="Hooks\Reset.cs" />
     <Compile Include="Modifications\Reset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

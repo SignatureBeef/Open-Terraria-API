@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Netplay\Create.cs" />
-    <Compile Include="Hooks\Net\Socket\Create.cs" />
+    <Compile Include="Callbacks\Create.cs" />
+    <Compile Include="Hooks\Create.cs" />
     <Compile Include="Modifications\Create.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Main\Command.cs" />
-    <Compile Include="Hooks\Command\CommandHooks.cs" />
+    <Compile Include="Callbacks\Command.cs" />
+    <Compile Include="Hooks\CommandHooks.cs" />
     <Compile Include="Modifications\Command.cs" />
     <Compile Include="Modifications\StartCommandThread.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,42 +4,29 @@ using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
 {
-    public class Load : ModificationBase
-    {
-        public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
-        {
-            "TerrariaServer, Version=1.3.4.3, Culture=neutral, PublicKeyToken=null"
-        };
-        public override string Description => "Hooking WorldFile.loadWorld(bool)...";
-        public override void Run()
-        {
-            var vanilla = SourceDefinition.Type("Terraria.IO.WorldFile").Methods.Single(
-                x => x.Name == "loadWorld"
-                && x.Parameters.Count() == 1
-                && x.Parameters[0].ParameterType == SourceDefinition.MainModule.TypeSystem.Boolean
-            );
+	public class Load : ModificationBase
+	{
+		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
+		{
+			"TerrariaServer, Version=1.3.4.3, Culture=neutral, PublicKeyToken=null"
+		};
+		public override string Description => "Hooking WorldFile.loadWorld(bool)...";
+		public override void Run()
+		{
+			var vanilla = this.Method(() => Terraria.IO.WorldFile.loadWorld(false));
 
-            var cbkBegin = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.WorldFile")
-				.Method("LoadWorldBegin", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 0
-				);
-            var cbkEnd = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.WorldFile")
-				.Method("LoadWorldEnd", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 0
-				);
+			bool tmp = false;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.WorldFile.LoadWorldBegin(ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.WorldFile.LoadWorldEnd(tmp));
 
-            vanilla.Wrap
-            (
-                beginCallback: cbkBegin,
-                endCallback: cbkEnd,
-                beginIsCancellable: true,
-                noEndHandling: false,
-                allowCallbackInstance: false
-            );
-        }
-    }
+			vanilla.Wrap
+			(
+				beginCallback: cbkBegin,
+				endCallback: cbkEnd,
+				beginIsCancellable: true,
+				noEndHandling: false,
+				allowCallbackInstance: false
+			);
+		}
+	}
 }

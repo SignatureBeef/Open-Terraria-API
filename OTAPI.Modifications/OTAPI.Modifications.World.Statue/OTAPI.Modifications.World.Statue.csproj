@@ -47,8 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StatueType.cs" />
-    <Compile Include="Callbacks\Terraria\World\MechSpawn.cs" />
-    <Compile Include="Hooks\World\Statue.cs" />
+    <Compile Include="Callbacks\MechSpawn.cs" />
+    <Compile Include="Hooks\Statue.cs" />
     <Compile Include="Modifications\Statue.cs" />
   </ItemGroup>
   <ItemGroup>

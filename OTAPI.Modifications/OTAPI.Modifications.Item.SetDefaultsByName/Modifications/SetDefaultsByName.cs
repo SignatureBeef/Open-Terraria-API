@@ -1,5 +1,6 @@
 ﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
+using System;
 using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
@@ -14,23 +15,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
 		public override string Description => "Hooking Item.SetDefaults(string)...";
 		public override void Run()
 		{
-			var vanilla = this.SourceDefinition.Type("Terraria.Item").Methods.Single(
-				x => x.Name == "SetDefaults"
-				&& x.Parameters.First().ParameterType == this.SourceDefinition.MainModule.TypeSystem.String
-			);
+			var vanilla = this.Method(() => (new Terraria.Item()).SetDefaults(String.Empty));
 
-			var cbkBegin = this.ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Item")
-				.Method("SetDefaultsByNameBegin", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-			var cbkEnd = this.ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Item")
-				.Method("SetDefaultsByNameEnd", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
+			string tmp = null;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Item.SetDefaultsByNameBegin(null, ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Item.SetDefaultsByNameEnd(null, ref tmp));
 
 			vanilla.Wrap
 			(

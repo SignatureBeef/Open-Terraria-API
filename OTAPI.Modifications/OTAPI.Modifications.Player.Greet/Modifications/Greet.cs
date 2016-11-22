@@ -16,20 +16,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 		public override string Description => "Hooking NetMessage.greetPlayer";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.NetMessage")
-				.Method("greetPlayer");
+			var vanilla = this.Method(() => Terraria.NetMessage.greetPlayer(0));
 
-			var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.NetMessage")
-				.Method("GreetPlayerBegin",
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 0
-				);
-
-			var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.NetMessage")
-				.Method("GreetPlayerEnd",
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 0
-				);
+			int tmp = 0;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.NetMessage.GreetPlayerBegin(ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.NetMessage.GreetPlayerEnd(0));
 
 			vanilla.Wrap
 			(

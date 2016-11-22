@@ -12,8 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 		public override string Description => "Hooking Player.LoadPlayer";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.Player")
-				.Method("LoadPlayer");
+			var vanilla = this.Method(() => Terraria.Player.LoadPlayer(null, false));
 
 			string tmp = null;
 			bool tmp2 = false;

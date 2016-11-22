@@ -17,9 +17,12 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("NewNPC");
-			var callback = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method("Create");
-
+			int tmpI = 0;
+			float tmpF = 0;
+			var vanilla = this.Method(() => Terraria.NPC.NewNPC(0, 0, 0, 0, 0, 0, 0, 0, 0));
+			var callback = this.Method(() => OTAPI.Callbacks.Terraria.Npc.Create(
+				ref tmpI, ref tmpI, ref tmpI, ref tmpI, ref tmpI, ref tmpF, ref tmpF, ref tmpF, ref tmpF, ref tmpI
+			));
 
 			var ctor = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
 						   && x.Operand is MethodReference

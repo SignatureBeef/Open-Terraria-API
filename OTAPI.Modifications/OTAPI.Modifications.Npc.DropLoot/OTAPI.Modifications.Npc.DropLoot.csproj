@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Npc\DropLoot.cs" />
-    <Compile Include="Hooks\Npc\DropLoot.cs" />
+    <Compile Include="Callbacks\DropLoot.cs" />
+    <Compile Include="Hooks\DropLoot.cs" />
     <Compile Include="Modifications\DropLoot.cs" />
     <Compile Include="Modifications\NetDrop.cs" />
     <Compile Include="Modifications\SwapItemCalls.cs" />

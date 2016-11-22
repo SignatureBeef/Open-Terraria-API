@@ -12,8 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 		public override string Description => "Hooking Player.SavePlayer";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.Player")
-				.Method("SavePlayer");
+			var vanilla = this.Method(() => Terraria.Player.SavePlayer(null, false));
 
 			bool tmp = false;
 			var cbkBegin = this.SourceDefinition.MainModule.Import(
@@ -21,7 +20,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 			);
 
 			var cbkEnd = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Callbacks.Terraria.Player.SavePlayerEnd(null,   tmp))
+				this.Method(() => OTAPI.Callbacks.Terraria.Player.SavePlayerEnd(null, tmp))
 			);
 
 			vanilla.Wrap

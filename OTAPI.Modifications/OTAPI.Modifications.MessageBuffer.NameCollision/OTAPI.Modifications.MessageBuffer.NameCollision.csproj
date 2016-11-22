@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\MessageBuffer\NameCollision.cs" />
-    <Compile Include="Hooks\Net\Player\NameCollision.cs" />
+    <Compile Include="Callbacks\NameCollision.cs" />
+    <Compile Include="Hooks\NameCollision.cs" />
     <Compile Include="Modifications\NameCollision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

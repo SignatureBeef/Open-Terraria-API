@@ -80,7 +80,7 @@ namespace OTAPI.Modification.Tile.Modifications
 			//the setter's parameters will also be satisfied as they are too, on the stack.
 
 			//Get the type definition of Terraria.Tile
-			var terrariaTile = this.SourceDefinition.Type("Terraria.Tile");
+			var terrariaTile = this.Type<Terraria.Tile>();
 
 			//var iTile = this.ModificationDefinition.Type("OTAPI.Tile.ITile");
 			//terrariaTile.Interfaces.Add(this.SourceDefinition.MainModule.Import(iTile));

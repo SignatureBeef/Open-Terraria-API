@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IEntity.cs" />
-    <Compile Include="Modifications\Collision\SwitchTilesEntity.cs" />
+    <Compile Include="Modifications\SwitchTilesEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -59,8 +59,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Npc\Killed.cs" />
-    <Compile Include="Hooks\Npc\Killed.cs" />
+    <Compile Include="Callbacks\Killed.cs" />
+    <Compile Include="Hooks\Killed.cs" />
     <Compile Include="Modifications\Killed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

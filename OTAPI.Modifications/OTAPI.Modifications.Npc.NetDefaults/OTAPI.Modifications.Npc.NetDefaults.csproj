@@ -59,8 +59,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Npc\NetDefaults.cs" />
-    <Compile Include="Hooks\Npc\NetDefaults.cs" />
+    <Compile Include="Callbacks\NetDefaults.cs" />
+    <Compile Include="Hooks\NetDefaults.cs" />
     <Compile Include="Modifications\NetDefaults.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,9 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		public override void Run()
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("DropItemInstanced");
-			var callback = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method("BossBagItem");
+			var callback = this.Method(
+				() => OTAPI.Callbacks.Terraria.Npc.BossBagItem(0, 0, 0, 0, 0, 0, false, 0, false, false, null)
+			);
 
 			var il = vanilla.Body.GetILProcessor();
 

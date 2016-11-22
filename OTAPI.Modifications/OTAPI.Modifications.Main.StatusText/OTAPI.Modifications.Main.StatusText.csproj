@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Main\StatusText.cs" />
-    <Compile Include="Hooks\Game\StatusText.cs" />
+    <Compile Include="Callbacks\StatusText.cs" />
+    <Compile Include="Hooks\StatusText.cs" />
     <Compile Include="Modifications\DedServModification.cs" />
     <Compile Include="Modifications\StatusTextModification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

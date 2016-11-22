@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Main.cs" />
-    <Compile Include="Hooks\Input\GetText.cs" />
+    <Compile Include="Callbacks\Main.cs" />
+    <Compile Include="Hooks\GetText.cs" />
     <Compile Include="Modifications\InputTextModification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

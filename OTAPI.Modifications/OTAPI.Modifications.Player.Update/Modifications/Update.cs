@@ -12,8 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 		public override string Description => "Hooking Player.Update";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.Player")
-				.Method("Update");
+			var vanilla = this.Method(() => (new Terraria.Player()).Update(0));
 
 			int tmp = 0;
 			var cbkBegin = this.SourceDefinition.MainModule.Import(

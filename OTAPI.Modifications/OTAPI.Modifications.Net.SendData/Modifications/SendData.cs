@@ -13,8 +13,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.NetMessage").Method("SendData");
-			var callback = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.NetMessage").Method("SendData");
+			int tmpI = 0;
+			float tmpF = 0;
+			string tmpS = null;
+
+			var vanilla = this.Method(() => Terraria.NetMessage.SendData(0, -1, -1, "", 0, 0, 0, 0, 0, 0, 0));
+			var callback = this.Method(() => OTAPI.Callbacks.Terraria.NetMessage.SendData(
+				ref tmpI, ref tmpI, ref tmpI, ref tmpS, ref tmpI, ref tmpF, ref tmpF, ref tmpF, ref tmpI, ref tmpI, ref tmpI
+			));
 
 			//Few stack issues arose trying to inject a callback before for lock, so i'll resort to 
 			//wrapping the method;

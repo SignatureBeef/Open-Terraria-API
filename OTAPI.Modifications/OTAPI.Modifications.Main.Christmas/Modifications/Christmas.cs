@@ -17,8 +17,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 		public override void Run()
 		{
 			//Grab the methods
-			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("checkXMas");
-			var callback = this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Main").Method("Christmas");
+			var vanilla = this.Method(() => Terraria.Main.checkXMas());
+			var callback = this.Method(() => OTAPI.Callbacks.Terraria.Main.Christmas());
 
 			//Inject only the begin call
 			vanilla.Wrap

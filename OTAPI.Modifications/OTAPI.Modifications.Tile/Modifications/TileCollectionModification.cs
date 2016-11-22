@@ -19,12 +19,12 @@ namespace OTAPI.Modification.Tile.Modifications
 		{
 			//Import the ITileCollection interface
 			var iTileCollection = this.SourceDefinition.MainModule.Import(
-				this.ModificationDefinition.Type("OTAPI.Tile.ITileCollection")
+				this.Type<OTAPI.Tile.ITileCollection>()
 			);
 
 			//Import the ITileCollection Create Hook
 			var callback = this.SourceDefinition.MainModule.Import(
-				this.ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Collection").Method("Create")
+				this.Method(() => OTAPI.Callbacks.Terraria.Collection.Create())
 			);
 
 
@@ -36,7 +36,7 @@ namespace OTAPI.Modification.Tile.Modifications
 			//but thats kind of over kill for whats actually needed.
 
 			//Manually swap the declared types of Tile[] to ITileCollection
-			this.SourceDefinition.Type("Terraria.Main").Field("tile").FieldType = iTileCollection;
+			this.Field(() => Terraria.Main.tile).FieldType = iTileCollection;
 			this.SourceDefinition.Type("Terraria.World.Generation.GenBase").Property("_tiles").PropertyType = iTileCollection;
 			this.SourceDefinition.Type("Terraria.GameContent.Liquid.LiquidRenderer").Field("_tiles").FieldType = iTileCollection;
 

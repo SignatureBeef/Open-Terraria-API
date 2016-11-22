@@ -16,23 +16,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.Projectile").Methods.Single(
-				x => x.Name == "SetDefaults"
-				&& x.Parameters.Single().ParameterType == SourceDefinition.MainModule.TypeSystem.Int32
-			);
-			
-			var cbkBegin = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Projectile")
-				.Method("SetDefaultsByIdBegin",
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-			var cbkEnd = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Projectile")
-				.Method("SetDefaultsByIdEnd", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
+			var vanilla = this.Method(() => (new Terraria.Projectile()).SetDefaults(0));
+
+			int tmp = 0;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Projectile.SetDefaultsByIdBegin(null, ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Projectile.SetDefaultsByIdEnd(null, 0));
 
 			vanilla.Wrap
 			(

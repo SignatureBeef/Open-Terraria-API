@@ -13,25 +13,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
 		public override string Description => "Hooking WorldFile.saveWorld(bool,bool)...";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.IO.WorldFile").Methods.Single(
-				x => x.Name == "saveWorld"
-				&& x.Parameters.Count() == 2
-				&& x.Parameters[0].ParameterType == SourceDefinition.MainModule.TypeSystem.Boolean
-				&& x.Parameters[1].ParameterType == SourceDefinition.MainModule.TypeSystem.Boolean
-			);
+			var vanilla = this.Method(() => Terraria.IO.WorldFile.saveWorld(false, false));
 
-			var cbkBegin = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.WorldFile")
-				.Method("SaveWorldBegin",
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 0
-				);
-			var cbkEnd = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.WorldFile")
-				.Method("SaveWorldEnd",
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 0
-				);
+			bool tmp = false;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.WorldFile.SaveWorldBegin(ref tmp, ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.WorldFile.SaveWorldEnd(tmp, tmp));
 
 			vanilla.Wrap
 			(

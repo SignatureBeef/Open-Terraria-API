@@ -14,23 +14,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		public override string Description => "Hooking Npc.NetDefaults(int)...";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.NPC").Methods.Single(
-				x => x.Name == "netDefaults"
-				&& x.Parameters.First().ParameterType == SourceDefinition.MainModule.TypeSystem.Int32
-			);
-			
-			var cbkBegin = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Npc")
-				.Method("NetDefaultsBegin", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-			var cbkEnd = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Npc")
-				.Method("NetDefaultsEnd", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
+			var vanilla = this.Method(() => (new Terraria.NPC()).netDefaults(0));
+
+			int tmp = 0;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Npc.NetDefaultsBegin(null, ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Npc.NetDefaultsEnd(null, ref tmp));
 
 			vanilla.Wrap
 			(

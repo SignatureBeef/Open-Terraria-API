@@ -59,8 +59,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Npc\Create.cs" />
-    <Compile Include="Hooks\Npc\Create.cs" />
+    <Compile Include="Callbacks\Create.cs" />
+    <Compile Include="Hooks\Create.cs" />
     <Compile Include="Modifications\Create.cs" />
   </ItemGroup>
   <ItemGroup>

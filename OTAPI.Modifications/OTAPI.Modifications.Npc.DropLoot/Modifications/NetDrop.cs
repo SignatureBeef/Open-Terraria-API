@@ -16,7 +16,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 
 		public override void Run()
 		{
-			var npcLoot = SourceDefinition.Type("Terraria.NPC").Method("NPCLoot");
+			var npcLoot = this.Method(() => (new Terraria.NPC()).NPCLoot());
 
 			//In the NPCLoot method there is a call to send packet 88 (after item drop).
 			//We will also want to hook this in the case the returned value from DropLoot

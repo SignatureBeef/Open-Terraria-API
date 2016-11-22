@@ -22,12 +22,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			 * killed.
 			 */
 
-			var checkDead = this.SourceDefinition.Type("Terraria.NPC").Method("checkDead");
+			var checkDead = this.Method(() => (new Terraria.NPC()).checkDead());
 			var callback = this.SourceDefinition.MainModule.Import(
 				this.Method(() => OTAPI.Callbacks.Terraria.Npc.Killed(null))
 			);
-
-
+			
 			var ins = checkDead.Body.Instructions.Where(x =>
 				//Check to see if we are updating a variable
 				x.OpCode == OpCodes.Stfld
@@ -42,8 +41,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 				.Single() //Get the only this.active = false
 				.Previous //Go back to ldc.i4.0
 				.Previous; //Go back to ldarg.0 (this) we can insert before
-
-
+			
 			var processor = checkDead.Body.GetILProcessor();
 
 			//Add the npc instance to the stack (this)

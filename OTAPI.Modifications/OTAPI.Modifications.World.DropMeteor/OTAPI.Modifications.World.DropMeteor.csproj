@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\WorldGen\DropMeteor.cs" />
-    <Compile Include="Hooks\World\DropMeteor.cs" />
+    <Compile Include="Callbacks\DropMeteor.cs" />
+    <Compile Include="Hooks\DropMeteor.cs" />
     <Compile Include="Modifications\DropMeteor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -64,6 +64,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

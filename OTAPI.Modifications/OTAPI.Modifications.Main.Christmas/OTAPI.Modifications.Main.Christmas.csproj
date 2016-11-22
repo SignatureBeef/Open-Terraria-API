@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Main\Christmas.cs" />
-    <Compile Include="Hooks\Game\Christmas.cs" />
+    <Compile Include="Callbacks\Christmas.cs" />
+    <Compile Include="Hooks\Christmas.cs" />
     <Compile Include="Modifications\Christmas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

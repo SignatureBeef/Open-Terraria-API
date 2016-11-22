@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Npc\BossBagItem.cs" />
-    <Compile Include="Hooks\Npc\BossBagItem.cs" />
+    <Compile Include="Callbacks\BossBagItem.cs" />
+    <Compile Include="Hooks\BossBagItem.cs" />
     <Compile Include="Modifications\BossBagItem.cs" />
   </ItemGroup>
   <ItemGroup>

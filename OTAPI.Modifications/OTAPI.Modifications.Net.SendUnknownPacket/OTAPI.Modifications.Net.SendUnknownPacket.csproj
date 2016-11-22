@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\NetMessage\SendUnknownPacket.cs" />
-    <Compile Include="Hooks\Net\SendUnknownPacket.cs" />
+    <Compile Include="Callbacks\SendUnknownPacket.cs" />
+    <Compile Include="Hooks\SendUnknownPacket.cs" />
     <Compile Include="Modifications\SendUnknownPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

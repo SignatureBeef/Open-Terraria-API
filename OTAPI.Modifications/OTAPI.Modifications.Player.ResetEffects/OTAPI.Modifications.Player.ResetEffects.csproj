@@ -59,8 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Player\ResetEffects.cs" />
-    <Compile Include="Hooks\Player\ResetEffects.cs" />
+    <Compile Include="Callbacks\ResetEffects.cs" />
+    <Compile Include="Hooks\ResetEffects.cs" />
     <Compile Include="Modifications\ResetEffects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -59,8 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Waterfall\Find.cs" />
-    <Compile Include="Hooks\Waterfall\Find.cs" />
+    <Compile Include="Callbacks\Find.cs" />
+    <Compile Include="Hooks\Find.cs" />
     <Compile Include="Modifications\Find.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

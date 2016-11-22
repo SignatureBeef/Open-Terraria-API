@@ -23,12 +23,17 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 		{
 			foreach (var type in new[]
 			{
-				new { TypeDef = SourceDefinition.Type("Terraria.NPC"), MechType = OpCodes.Ldc_I4_1 },
-				new { TypeDef = SourceDefinition.Type("Terraria.Item"), MechType = OpCodes.Ldc_I4_2 }
+				new { TypeDef = this.Type<Terraria.NPC>(), MechType = OpCodes.Ldc_I4_1 },
+				new { TypeDef = this.Type<Terraria.Item>(), MechType = OpCodes.Ldc_I4_2 }
 			})
 			{
-				var vanilla = type.TypeDef.Methods.Single(x => x.Name == "MechSpawn");
-				var hook = SourceDefinition.MainModule.Import(ModificationDefinition.Type("OTAPI.Callbacks.Terraria.World").Method("MechSpawn"));
+				var vanilla = type.TypeDef.Method("MechSpawn");
+				int tmp = 0;
+				var hook = SourceDefinition.MainModule.Import(
+					this.Method(() => OTAPI.Callbacks.Terraria.World.MechSpawn(
+						0, 0, 0, ref tmp, ref tmp, ref tmp, StatueType.Item
+					))
+				);
 
 				//Here we find the insertion point where we want to inject our callback at.
 				var iInsertionPoint = vanilla.Body.Instructions.Last(x => x.OpCode == OpCodes.Ldloc_1);

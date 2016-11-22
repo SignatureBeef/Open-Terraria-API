@@ -59,8 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Lighting\Swipe.cs" />
-    <Compile Include="Hooks\Lighting\Swipe.cs" />
+    <Compile Include="Callbacks\Swipe.cs" />
+    <Compile Include="Hooks\Swipe.cs" />
     <Compile Include="Modifications\Swipe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

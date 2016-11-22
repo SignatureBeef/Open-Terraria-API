@@ -45,8 +45,8 @@
   <ItemGroup>
     <Compile Include="DefaultTileCollection.cs" />
     <Compile Include="ITileCollection.cs" />
-    <Compile Include="Callbacks\Terraria\Tile\Collection.cs" />
-    <Compile Include="Hooks\Tile\Collection.cs" />
+    <Compile Include="Callbacks\Collection.cs" />
+    <Compile Include="Hooks\Collection.cs" />
     <Compile Include="Modifications\ITile.cs" />
     <Compile Include="Modifications\TileCollectionAccessorModification.cs" />
     <Compile Include="Modifications\TileCollectionModification.cs" />
@@ -67,35 +67,35 @@
   <Choose>
     <When Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' ">
       <ItemGroup>
-		<Reference Include="TerrariaServer">
-		  <HintPath>..\..\wrap\Terraria\Terraria.exe</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
-		</Reference>
-		<Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
-		</Reference>
-		<Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
-		</Reference>
-		<Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
-		</Reference>
+        <Reference Include="TerrariaServer">
+          <HintPath>..\..\wrap\Terraria\Terraria.exe</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
+        </Reference>
       </ItemGroup>
     </When>
     <Otherwise>
-	  <ItemGroup>
-		<Reference Include="TerrariaServer">
-		  <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
-		</Reference>
-
-		<ProjectReference Include="..\OTAPI.Modifications.Xna\OTAPI.Modifications.Xna.csproj">
-		  <Project>{4A980A83-9E64-4207-8281-4F29FBF2AD90}</Project>
-		  <Name>OTAPI.Modifications.Xna</Name>
-		</ProjectReference>
-	  </ItemGroup>
+      <ItemGroup>
+        <Reference Include="TerrariaServer">
+          <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
+        </Reference>
+        <ProjectReference Include="..\OTAPI.Modifications.Xna\OTAPI.Modifications.Xna.csproj">
+          <Project>{4A980A83-9E64-4207-8281-4F29FBF2AD90}</Project>
+          <Name>OTAPI.Modifications.Xna</Name>
+        </ProjectReference>
+      </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

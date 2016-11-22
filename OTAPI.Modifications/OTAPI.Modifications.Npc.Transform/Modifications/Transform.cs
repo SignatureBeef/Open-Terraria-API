@@ -16,7 +16,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		public override string Description => "Hooking Npc.Transform...";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("Transform");
+			var vanilla = this.Method(() => (new Terraria.NPC()).Transform(0));
 			int tmp = 0;
 			var preCallback = vanilla.Module.Import(this.Method(() => OTAPI.Callbacks.Terraria.Npc.PreTransform(null, ref tmp)));
 			var postCallback = vanilla.Module.Import(this.Method(() => OTAPI.Callbacks.Terraria.Npc.PostTransform(null)));

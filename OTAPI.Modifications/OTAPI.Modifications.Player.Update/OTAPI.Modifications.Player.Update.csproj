@@ -59,8 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Player\Update.cs" />
-    <Compile Include="Hooks\Player\Update.cs" />
+    <Compile Include="Callbacks\Update.cs" />
+    <Compile Include="Hooks\Update.cs" />
     <Compile Include="Modifications\Update.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

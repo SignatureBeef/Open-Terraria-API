@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ParameterDefinition\CollectionExtensions.cs" />
+    <Compile Include="Extensions\ParameterTypeExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\AssemblyDefinition\CecilHelpers.cs" />
     <Compile Include="Extensions\FieldDefinition\Replacements.cs" />
@@ -78,6 +79,8 @@
     <Compile Include="Framework\Glob.cs" />
     <Compile Include="Modification\ModificationBase.cs" />
     <Compile Include="Modification\OrderAttribute.cs" />
+    <Compile Include="Modification\ParameterType.cs" />
+    <Compile Include="Modification\ParameterTypeCollection.cs" />
     <Compile Include="NugetAssemblyResolver.cs" />
     <Compile Include="Patcher.cs" />
   </ItemGroup>

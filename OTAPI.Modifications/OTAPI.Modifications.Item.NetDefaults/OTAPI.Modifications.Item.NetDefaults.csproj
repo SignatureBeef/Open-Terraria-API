@@ -59,8 +59,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Item\NetDefaults.cs" />
-    <Compile Include="Hooks\Item\NetDefaults.cs" />
+    <Compile Include="Callbacks\NetDefaults.cs" />
+    <Compile Include="Hooks\NetDefaults.cs" />
     <Compile Include="Modifications\NetDefaults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

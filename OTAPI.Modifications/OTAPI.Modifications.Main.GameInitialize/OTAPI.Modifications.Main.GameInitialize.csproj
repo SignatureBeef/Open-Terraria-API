@@ -58,8 +58,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Main\GameInitialize.cs" />
-    <Compile Include="Hooks\Game\GameHooks.cs" />
+    <Compile Include="Callbacks\GameInitialize.cs" />
+    <Compile Include="Hooks\GameHooks.cs" />
     <Compile Include="Modifications\GameInitialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

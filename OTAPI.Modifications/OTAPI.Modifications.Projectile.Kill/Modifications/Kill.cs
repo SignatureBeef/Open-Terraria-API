@@ -14,7 +14,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.Projectile").Method("Kill");
+			var vanilla = this.Method(() => (new Terraria.Projectile()).Kill());
 
 			var cbkBegin = this.Method(() => Callbacks.Terraria.Projectile.KillBegin(null));
 			var cbkEnd = this.Method(() => Callbacks.Terraria.Projectile.KillEnd(null));

@@ -46,9 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Collision\PressurePlate.cs" />
-    <Compile Include="Hooks\Collision\PressurePlate.cs" />
-    <Compile Include="Modifications\Collision\PressurePlate.cs" />
+    <Compile Include="Callbacks\PressurePlate.cs" />
+    <Compile Include="Hooks\PressurePlate.cs" />
+    <Compile Include="Modifications\PressurePlate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

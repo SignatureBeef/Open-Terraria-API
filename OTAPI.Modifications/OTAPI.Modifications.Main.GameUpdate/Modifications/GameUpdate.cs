@@ -17,22 +17,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 		public override string Description => "Hooking Game.Update";
 		public override void Run()
 		{
-			//Grab the Update method
+			//Grab the Update method manually since it's protected
 			var vanilla = this.SourceDefinition.Type("Terraria.Main").Method("Update");
 
-			var cbkBegin = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Main")
-				.Method("UpdateBegin", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-			var cbkEnd = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Main")
-				.Method("UpdateEnd", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-			
+			var tmp = new Microsoft.Xna.Framework.GameTime();
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Main.UpdateBegin(null, ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Main.UpdateEnd(null, ref tmp));
+
 			vanilla.Wrap
 			(
 				beginCallback: cbkBegin,

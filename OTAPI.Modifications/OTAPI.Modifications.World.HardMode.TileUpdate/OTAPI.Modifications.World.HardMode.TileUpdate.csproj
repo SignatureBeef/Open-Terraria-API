@@ -46,9 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\WorldGen\TileUpdate.cs" />
-    <Compile Include="Hooks\World\HardmodeTileUpdateResult.cs" />
-    <Compile Include="Hooks\World\TileUpdate.cs" />
+    <Compile Include="Callbacks\TileUpdate.cs" />
+    <Compile Include="Hooks\HardmodeTileUpdateResult.cs" />
+    <Compile Include="Hooks\TileUpdate.cs" />
     <Compile Include="Modifications\PlaceTile.cs" />
     <Compile Include="Modifications\TileUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +70,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

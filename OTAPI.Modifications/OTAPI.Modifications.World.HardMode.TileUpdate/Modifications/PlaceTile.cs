@@ -17,10 +17,9 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 		public override void Run()
 		{
 			//Get the vanilla method reference
-			var vanilla = SourceDefinition.Type("Terraria.WorldGen").Method("hardUpdateWorld");
+			var vanilla = this.Method(() => Terraria.WorldGen.hardUpdateWorld(0, 0));
 
 			//Get the OTAPI callback method reference
-			//int tmp = 0;
 			var callback = this.SourceDefinition.MainModule.Import(
 				this.Method(() => OTAPI.Callbacks.Terraria.WorldGen.HardmodeTilePlace(0, 0, 0, false, false, 0, 0))
 			);
@@ -43,13 +42,12 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 			{
 				replacementPoint.Operand = callback;
 
-                
-                var insContinue = replacementPoint.Next.Next.Next(i =>
-                    i.OpCode == OpCodes.Call
-                    && (i.Operand as MethodReference).Name == "SendTileSquare"
-                ).Next;
+				var insContinue = replacementPoint.Next.Next.Next(i =>
+					i.OpCode == OpCodes.Call
+					&& (i.Operand as MethodReference).Name == "SendTileSquare"
+				).Next;
 
-                replacementPoint.Next.OpCode = OpCodes.Brtrue_S;
+				replacementPoint.Next.OpCode = OpCodes.Brtrue_S;
 				replacementPoint.Next.Operand = insContinue;
 
 				processor.InsertAfter(replacementPoint.Next, processor.Create(OpCodes.Ret));

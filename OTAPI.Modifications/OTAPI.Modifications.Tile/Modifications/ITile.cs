@@ -20,9 +20,9 @@ namespace OTAPI.Modification.Tile.Modifications
 		public override void Run()
 		{
 			//Get the type definition of Terraria.Tile
-			var terrariaTile = this.SourceDefinition.Type("Terraria.Tile");
+			var terrariaTile = this.Type<Terraria.Tile>();
 
-			var iTile = this.ModificationDefinition.Type("OTAPI.Tile.ITile");
+			var iTile = this.Type<OTAPI.Tile.ITile>();
 			var importedITile = this.SourceDefinition.MainModule.Import(iTile);
 
 			if (!iTile.SignatureMatches(terrariaTile))

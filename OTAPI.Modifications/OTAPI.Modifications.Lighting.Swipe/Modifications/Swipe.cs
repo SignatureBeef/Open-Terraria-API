@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 		public override void Run()
 		{
 			//Grab the methods
-			var tLighting = this.SourceDefinition.Type("Terraria.Lighting");
+			var tLighting = this.Type<Terraria.Lighting>();
 
 			var mCallback = this.SourceDefinition.MainModule.Import(
 				this.Method(() => OTAPI.Callbacks.Terraria.Lighting.Swipe(null))

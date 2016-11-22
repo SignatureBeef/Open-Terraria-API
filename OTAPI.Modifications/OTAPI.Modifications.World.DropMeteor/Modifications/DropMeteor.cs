@@ -21,7 +21,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 		public override void Run()
 		{
 			//Get the vanilla meteor method reference
-			var vanilla = SourceDefinition.Type("Terraria.WorldGen").Method("meteor");
+			var vanilla = this.Method(() => Terraria.WorldGen.meteor(0, 0));
 
 			//Get the OTAPI callback method reference
 			int tmp = 0;
@@ -43,8 +43,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 
 			//Get the instruction reference in which we use to continue
 			//on with vanilla code if our callback doesn't cancel the method.
-            //Since we are inserting before the stopDrops = true, we use the
-            //first instruction for the setter, which is ldc.i4.1 (which means (bool)true)
+			//Since we are inserting before the stopDrops = true, we use the
+			//first instruction for the setter, which is ldc.i4.1 (which means (bool)true)
 			var insContinue = stopDrops.Previous;
 
 			//Inject the callback IL
@@ -62,7 +62,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 				new { OpCodes.Ret } //return
 			);
 
-            /* We now should have code in meteor looking like:
+			/* We now should have code in meteor looking like:
                     }
                 }
 				if (!WorldGen.DropMeteor(ref i, ref j))
@@ -72,6 +72,6 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 				WorldGen.stopDrops = true;
 				num = WorldGen.genRand.Next(17, 23);
 			*/
-        }
-    }
+		}
+	}
 }

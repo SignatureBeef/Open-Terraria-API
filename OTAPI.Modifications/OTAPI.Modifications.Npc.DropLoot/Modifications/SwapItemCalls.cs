@@ -17,8 +17,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		public override string Description => "Hooking Npc.NPCLoot\\NewItem...";
 		public override void Run()
 		{
-			var npcType = SourceDefinition.Type("Terraria.NPC");
-			var npcLoot = npcType.Method("NPCLoot");
+			var npcType = this.Type<Terraria.NPC>();
+			var npcLoot = this.Method(() => (new Terraria.NPC()).NPCLoot());
 			//var dropLoot = SourceDefinition.Type("Terraria.NPC").Method("DropLoot");
 
 			//In this patch we swap all Item.NewItem calls in NPCLoot to use our previously
@@ -39,7 +39,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 					(call.Operand as MethodDefinition).Parameters.ToArray()
 				);
 				parameters.Add(new ParameterDefinition("npc", ParameterAttributes.In, npcType));
-				var dropLoot = SourceDefinition.Type("Terraria.NPC").Method("DropLoot",
+				var dropLoot = npcType.Method("DropLoot",
 					parameters: parameters,
 					skipMethodParameters: 0
 				);

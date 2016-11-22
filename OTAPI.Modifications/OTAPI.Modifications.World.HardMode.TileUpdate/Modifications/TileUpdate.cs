@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 		public override void Run()
 		{
 			//Get the vanilla method reference
-			var vanilla = SourceDefinition.Type("Terraria.WorldGen").Method("hardUpdateWorld");
+			var vanilla = this.Method(() => Terraria.WorldGen.hardUpdateWorld(0, 0));
 
 			//Get the OTAPI callback method reference
 			//int tmp = 0;
@@ -74,12 +74,12 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 				//It's safe to remove the tile load instruction now
 				processor.Remove(tileLoader);
 
-                var insContinue = insertionPoint.Next.Next(i =>
-                    i.OpCode == OpCodes.Call
-                    && (i.Operand as MethodReference).Name == "SendTileSquare"
-                ).Next;
-                
-                processor.InsertAfter(insertionPoint,
+				var insContinue = insertionPoint.Next.Next(i =>
+					i.OpCode == OpCodes.Call
+					&& (i.Operand as MethodReference).Name == "SendTileSquare"
+				).Next;
+
+				processor.InsertAfter(insertionPoint,
 					new { OpCodes.Brtrue_S, insContinue },
 					new { OpCodes.Ret }
 				);

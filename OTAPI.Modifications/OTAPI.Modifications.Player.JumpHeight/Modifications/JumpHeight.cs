@@ -12,8 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 		public override string Description => "Hooking Player.UpdateJumpHeight";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.Player")
-				.Method("UpdateJumpHeight");
+			var vanilla = this.Method(() => (new Terraria.Player()).UpdateJumpHeight());
 
 			var cbkBegin = this.SourceDefinition.MainModule.Import(
 				this.Method(() => OTAPI.Callbacks.Terraria.Player.UpdateJumpHeightBegin(null))

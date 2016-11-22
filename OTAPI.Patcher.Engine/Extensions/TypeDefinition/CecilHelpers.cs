@@ -3,6 +3,8 @@ using Mono.Collections.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
+using OTAPI.Patcher.Engine.Modification;
 
 namespace OTAPI.Patcher.Engine.Extensions
 {
@@ -14,15 +16,53 @@ namespace OTAPI.Patcher.Engine.Extensions
 		}
 
 		public static MethodDefinition Method(this TypeDefinition typeDefinition, string name,
+			Collection<ParameterDefinition> parameters,
 			bool? isStatic = null,
-			Collection<ParameterDefinition> parameters = null,
 			int skipMethodParameters = 0,
 			int skipInputParameters = 0,
-			bool acceptParamObjectTypes = false
+			bool acceptParamObjectTypes = false,
+			bool substituteByRefs = false
 		)
 		{
+			return typeDefinition.Method(name,
+				isStatic,
+				(ParameterTypeCollection)parameters,
+				skipMethodParameters,
+				skipInputParameters,
+				acceptParamObjectTypes,
+				substituteByRefs
+			);
+		}
 
-			IEnumerable<ParameterDefinition> parametersClone = null;
+		public static MethodDefinition Method(this TypeDefinition typeDefinition, string name,
+			System.Reflection.ParameterInfo[] parameters,
+			bool? isStatic = null,
+			int skipMethodParameters = 0,
+			int skipInputParameters = 0,
+			bool acceptParamObjectTypes = false,
+			bool substituteByRefs = false
+		)
+		{
+			return typeDefinition.Method(name,
+				isStatic,
+				(ParameterTypeCollection)parameters,
+				skipMethodParameters,
+				skipInputParameters,
+				acceptParamObjectTypes,
+				substituteByRefs
+			);
+		}
+
+		public static MethodDefinition Method(this TypeDefinition typeDefinition, string name,
+			bool? isStatic = null,
+			ParameterTypeCollection parameters = null,
+			int skipMethodParameters = 0,
+			int skipInputParameters = 0,
+			bool acceptParamObjectTypes = false,
+			bool substituteByRefs = false
+		)
+		{
+			IEnumerable<ParameterType> parametersClone = null;
 			if (parameters != null)
 			{
 				if (skipInputParameters > 0)
@@ -43,8 +83,11 @@ namespace OTAPI.Patcher.Engine.Extensions
 			if (parameters != null)
 			{
 				matches = matches.Where(x =>
-					(skipMethodParameters > 0 ? x.Parameters.Skip(skipMethodParameters) : x.Parameters)
-						.CompareParameterTypes(parametersClone, acceptParamObjectTypes)
+					(
+						skipMethodParameters > 0 ? 
+							x.Parameters.Skip(skipMethodParameters).ToParameters() : 
+							x.Parameters.ToParameters()
+					).CompareParameterTypes(parametersClone, acceptParamObjectTypes, substituteByRefs)
 				);
 			}
 
@@ -71,21 +114,25 @@ namespace OTAPI.Patcher.Engine.Extensions
 			return typeDefinition.NestedTypes.Single(x => x.Name == name);
 		}
 
-		public static bool CompareParameterTypes(this IEnumerable<ParameterDefinition> source,
-			IEnumerable<ParameterDefinition> parameters,
-			bool acceptParamObjectTypes = false)
+		public static bool CompareParameterTypes(this IEnumerable<ParameterType> source,
+			IEnumerable<ParameterType> parameters,
+			bool acceptParamObjectTypes = false,
+			bool substituteByRefs = false)
 		{
 			if (source.Count() == parameters.Count())
 			{
 				for (var x = 0; x < source.Count(); x++)
 				{
-					var src = source.ElementAt(x).ParameterType;
-					var ext = parameters.ElementAt(x).ParameterType;
+					var src = source.ElementAt(x);
+					var ext = parameters.ElementAt(x);
 
-					var referenceType = src as ByReferenceType;
-					if (referenceType != null)
+					if (substituteByRefs)
 					{
-						src = referenceType.ElementType;
+						var referenceType = src.Type as ByReferenceType;
+						if (referenceType != null)
+						{
+							src = ParameterType.From(referenceType.ElementType);
+						}
 					}
 
 					if (src.Name != ext.Name)

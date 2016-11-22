@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Npc\Transform.cs" />
-    <Compile Include="Hooks\Npc\Transform.cs" />
+    <Compile Include="Callbacks\Transform.cs" />
+    <Compile Include="Hooks\Transform.cs" />
     <Compile Include="Modifications\Transform.cs" />
   </ItemGroup>
   <ItemGroup>

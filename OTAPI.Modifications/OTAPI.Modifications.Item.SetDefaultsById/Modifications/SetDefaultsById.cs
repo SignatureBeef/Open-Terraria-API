@@ -14,27 +14,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
         public override string Description => "Hooking Item.SetDefaults(int,bool)...";
         public override void Run()
         {
-            var vanilla = SourceDefinition.Type("Terraria.Item").Methods.Single(
-                x => x.Name == "SetDefaults"
-                && x.Parameters.First().ParameterType == this.SourceDefinition.MainModule.TypeSystem.Int32
-                && x.Parameters.Skip(1).First().ParameterType == this.SourceDefinition.MainModule.TypeSystem.Boolean
-            );
+			var vanilla = this.Method(() => (new Terraria.Item()).SetDefaults(0, false));
 
+			int tmpI = 0;
+			bool tmpB = false;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Item.SetDefaultsByIdBegin(null, ref tmpI, ref tmpB));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Item.SetDefaultsByIdEnd(null, ref tmpI, ref tmpB));
 
-            var cbkBegin = this.ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Item")
-				.Method("SetDefaultsByIdBegin", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-            var cbkEnd = this.ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Item")
-				.Method("SetDefaultsByIdEnd", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-
-            vanilla.Wrap
+			vanilla.Wrap
             (
                 beginCallback: cbkBegin,
                 endCallback: cbkEnd,

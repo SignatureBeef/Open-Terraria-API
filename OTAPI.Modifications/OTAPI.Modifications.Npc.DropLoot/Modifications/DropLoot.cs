@@ -23,10 +23,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 				//In this patch we create a custom DropLoot method that will be the receiver
 				//of all Item.NewItem calls in NPCLoot.
 
+				var typeNpc = this.Type<Terraria.NPC>();
 
 				//Create the new DropLoot call in the Terraria.NPC class
 				var dropLoot = new MethodDefinition("DropLoot", MethodAttributes.Public | MethodAttributes.Static, newItem.ReturnType);
-				SourceDefinition.Type("Terraria.NPC").Methods.Add(dropLoot);
+				typeNpc.Methods.Add(dropLoot);
 
 				var il = dropLoot.Body.GetILProcessor();
 
@@ -34,7 +35,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 				foreach (var prm in newItem.Parameters)
 					dropLoot.Parameters.Add(prm);
 
-				dropLoot.Parameters.Add(new ParameterDefinition(SourceDefinition.Type("Terraria.NPC"))
+				dropLoot.Parameters.Add(new ParameterDefinition(typeNpc)
 				{
 					Name = "npc",
 					IsOptional = true,
@@ -46,12 +47,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 				var cbkBegin = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method(
 					"DropLootBegin",
 					parameters: dropLoot.Parameters,
-					skipMethodParameters: 1
+					skipMethodParameters: 1,
+					substituteByRefs: true
 				);
 				var cbkEnd = ModificationDefinition.Type("OTAPI.Callbacks.Terraria.Npc").Method(
 					"DropLootEnd",
 					parameters: dropLoot.Parameters,
-					skipMethodParameters: 0
+					skipMethodParameters: 0,
+					substituteByRefs: true
 				);
 
 				//Create the value to hold the new item id

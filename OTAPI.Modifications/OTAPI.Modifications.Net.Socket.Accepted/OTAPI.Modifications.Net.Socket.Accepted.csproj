@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Netplay\Accepted.cs" />
-    <Compile Include="Hooks\Net\Socket\Accepted.cs" />
+    <Compile Include="Callbacks\Accepted.cs" />
+    <Compile Include="Hooks\Accepted.cs" />
     <Compile Include="Modifications\Accepted.cs" />
   </ItemGroup>
   <ItemGroup>

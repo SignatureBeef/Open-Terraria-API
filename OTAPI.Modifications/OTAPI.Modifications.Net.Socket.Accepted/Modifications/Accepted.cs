@@ -13,6 +13,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
 
 		public override void Run()
 		{
+			//Get the private vanilla reference
 			var vanilla = SourceDefinition.Type("Terraria.Netplay").Method("OnConnectionAccepted");
 			var callback = SourceDefinition.MainModule.Import(
 				this.Method(() => OTAPI.Callbacks.Terraria.Netplay.OnConnectionAccepted(null))

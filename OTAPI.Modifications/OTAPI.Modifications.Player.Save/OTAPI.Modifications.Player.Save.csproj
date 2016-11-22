@@ -59,8 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Player\Save.cs" />
-    <Compile Include="Hooks\Player\Save.cs" />
+    <Compile Include="Callbacks\Save.cs" />
+    <Compile Include="Hooks\Save.cs" />
     <Compile Include="Modifications\Save.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

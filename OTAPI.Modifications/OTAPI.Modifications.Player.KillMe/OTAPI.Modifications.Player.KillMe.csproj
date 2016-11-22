@@ -59,8 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\Player\KillMe.cs" />
-    <Compile Include="Hooks\Player\KillMe.cs" />
+    <Compile Include="Callbacks\KillMe.cs" />
+    <Compile Include="Hooks\KillMe.cs" />
     <Compile Include="Modifications\KillMe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,6 +1,5 @@
 ﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
-using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 {
@@ -14,23 +13,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		public override string Description => "Hooking Npc.SetDefaults(string)...";
 		public override void Run()
 		{
-			var vanilla = SourceDefinition.Type("Terraria.NPC").Methods.Single(
-				x => x.Name == "SetDefaults"
-				&& x.Parameters.First().ParameterType == SourceDefinition.MainModule.TypeSystem.String
-			);
+			var vanilla = this.Method(() => (new Terraria.NPC()).SetDefaults(""));
 
-			var cbkBegin = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Npc")
-				.Method("SetDefaultsByNameBegin",
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
-			var cbkEnd = ModificationDefinition
-				.Type("OTAPI.Callbacks.Terraria.Npc")
-				.Method("SetDefaultsByNameEnd", 
-					parameters: vanilla.Parameters,
-					skipMethodParameters: 1
-				);
+			string tmp = null;
+			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Npc.SetDefaultsByNameBegin(null, ref tmp));
+			var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Npc.SetDefaultsByNameEnd(null, ref tmp));
 
 			vanilla.Wrap
 			(

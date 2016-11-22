@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Terraria\WorldGen\Hardmode.cs" />
-    <Compile Include="Hooks\World\Hardmode.cs" />
+    <Compile Include="Callbacks\Hardmode.cs" />
+    <Compile Include="Hooks\Hardmode.cs" />
     <Compile Include="Modifications\Hardmode.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +63,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
