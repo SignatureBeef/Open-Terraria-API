@@ -17,7 +17,7 @@ namespace OTAPI.Patcher
 			Console.WriteLine("Open Terraria API v2.0");
 
 			options = new OptionSet();
-			options.Add("in=|source=", "specifies the source assembly to patch", 
+			options.Add("in=|source=", "specifies the source assembly to patch",
 				op => sourceAsm = op);
 			options.Add("mod=|modifications=", "Glob specifying the path to modification assemblies that will run against the target assembly.",
 				op => modificationGlob = op);
@@ -33,7 +33,7 @@ namespace OTAPI.Patcher
 				return;
 			}
 
-			patcher = new Engine.Patcher(sourceAsm, modificationGlob, outputPath);
+			patcher = new Engine.Patcher(sourceAsm, new[] { modificationGlob }, outputPath);
 			patcher.Run();
 		}
 	}

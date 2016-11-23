@@ -61,14 +61,14 @@ namespace OTAPI.Patcher.Engine
 		/// Glob pattern for the list of modification assemblies that will run against the source
 		/// assembly.
 		/// </summary>
-		protected string modificationAssemblyGlob;
+		protected IEnumerable<string> modificationAssemblyGlob;
 
 		/// <summary>
 		/// Creates a new instance of the patcher with the specified source assembly path and
 		/// a glob containing all the modification assemblies.
 		/// </summary>
 		/// <param name="SourceAssemblyPath"></param>
-		public Patcher(string sourceAssemblyPath, string modificationAssemblyGlob, string outputAssemblyPath)
+		public Patcher(string sourceAssemblyPath, IEnumerable<string> modificationAssemblyGlob, string outputAssemblyPath)
 		{
 			this.SourceAssemblyPath = sourceAssemblyPath;
 			this.modificationAssemblyGlob = modificationAssemblyGlob;
@@ -158,9 +158,12 @@ namespace OTAPI.Patcher.Engine
 
 		protected IEnumerable<string> GlobModificationAssemblies()
 		{
-			foreach (var info in Glob.Glob.Expand(modificationAssemblyGlob))
+			foreach (var pattern in modificationAssemblyGlob)
 			{
-				yield return info.FullName;
+				foreach (var info in Glob.Glob.Expand(pattern))
+				{
+					yield return info.FullName;
+				}
 			}
 		}
 
