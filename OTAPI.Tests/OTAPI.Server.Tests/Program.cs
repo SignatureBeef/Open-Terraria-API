@@ -19,6 +19,11 @@ namespace OTAPI.Tests
 				//return new OTAPI.Sockets.PoolSocket();
 				return new Terraria.Net.Sockets.TcpSocket();
 			};
+			Hooks.Chest.QuickStack = (int playerId, Terraria.Item item, int chestIndex) =>
+			{
+				Console.WriteLine($"playerId:{playerId},item.type:{item.type},chestIndex:{chestIndex}");
+				return HookResult.Continue;
+			};
 			//Hooks.Command.Process = (lowered, raw) =>
 			//{
 			//	Console.WriteLine($"Processing: `{raw}`");

@@ -41,6 +41,11 @@ namespace OTAPI.Patcher.Engine.Modification
 		public abstract string Description { get; }
 
 		/// <summary>
+		/// The type system used in the source assembly
+		/// </summary>
+		public TypeSystem TypeSystem => this.SourceDefinition.MainModule.TypeSystem;
+
+		/// <summary>
 		/// Determines the sort order for the current modification.
 		/// </summary>
 		/// <returns></returns>

@@ -147,6 +147,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Project
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Net.Socket.Accepted", "OTAPI.Modifications\OTAPI.Modifications.Net.Socket.Accepted\OTAPI.Modifications.Net.Socket.Accepted.csproj", "{202661A3-1923-4F7A-982E-993C629CBA0F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chest", "Chest", "{1D45D297-6DDB-4FA0-BBB8-A9D3C6F5CAD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Chest.QuickStack", "OTAPI.Modifications\OTAPI.Modifications.Chest.Item.Add\OTAPI.Modifications.Chest.QuickStack.csproj", "{810E69DF-4736-49D5-8022-1EADECA376D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Client-Debug|Any CPU = Client-Debug|Any CPU
@@ -706,6 +710,18 @@ Global
 		{202661A3-1923-4F7A-982E-993C629CBA0F}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
 		{202661A3-1923-4F7A-982E-993C629CBA0F}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
 		{202661A3-1923-4F7A-982E-993C629CBA0F}.Server-Release|Any CPU.Build.0 = Release|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Client-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Client-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Client-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Client-Release|Any CPU.Build.0 = Release|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Server-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{810E69DF-4736-49D5-8022-1EADECA376D4}.Server-Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -773,5 +789,7 @@ Global
 		{4A980A83-9E64-4207-8281-4F29FBF2AD90} = {6F612C0E-1D67-4E06-8FB2-0D372CA5C264}
 		{6C022592-B51F-42A9-A6BA-F65BDF44B14B} = {3E6AAE36-62C4-4517-B7F9-F1741796F1F5}
 		{202661A3-1923-4F7A-982E-993C629CBA0F} = {8574CF28-01FD-4C01-96B0-4A4BAA401C53}
+		{1D45D297-6DDB-4FA0-BBB8-A9D3C6F5CAD7} = {6F612C0E-1D67-4E06-8FB2-0D372CA5C264}
+		{810E69DF-4736-49D5-8022-1EADECA376D4} = {1D45D297-6DDB-4FA0-BBB8-A9D3C6F5CAD7}
 	EndGlobalSection
 EndGlobal
