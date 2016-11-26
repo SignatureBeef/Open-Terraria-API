@@ -54,7 +54,8 @@ namespace OTAPI.Patcher.Engine.Extensions.ILProcessor
 				var instructionMethod = typeof(Instruction).GetMethods()
 					.Where(x => x.Name == "Create")
 					.Select(x => new { Method = x, Parameters = x.GetParameters() })
-					.Where(x => x.Parameters.Length == 2 && x.Parameters[1].ParameterType == propOperand.PropertyType)
+					//.Where(x => x.Parameters.Length == 2 && x.Parameters[1].ParameterType == propOperand.PropertyType)
+					.Where(x => x.Parameters.Length == 2 && x.Parameters[1].ParameterType.IsAssignableFrom(propOperand.PropertyType))
 					.SingleOrDefault();
 
 				if (instructionMethod == null)

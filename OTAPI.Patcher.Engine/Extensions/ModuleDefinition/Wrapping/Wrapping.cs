@@ -216,14 +216,24 @@ namespace OTAPI.Patcher.Engine.Extensions
 			//Inject our custom result variable by reference so the callback can alter it
 			il.InsertBefore(firstInstruction, il.Create(OpCodes.Ldloca_S, vrbResult));
 
+			var callbackParamOffset = 1;
+			//Here we are looking at the callback to see if it wants a reference parameter.
+			//If it does, and it also expects an instance to be passed, we must move the offset
+			//by one.
+			if (!current.IsStatic && callback.IsStatic)
+			{
+				callbackParamOffset++;
+			}
+
+			if (current.Parameters.Count != callback.Parameters.Count - callbackParamOffset)
+			{
+				throw new NotSupportedException("The method parameters do not match.");
+			}
+
 			//Inject the parameters for the callback to use
 			for (var i = 0; i < current.Parameters.Count; i++)
 			{
-				//Here we are looking at the callback to see if it wants a reference parameter.
-				//If it does, and it also expects an instance to be passed, we must move the offset
-				//by one to skip the previous ldarg_0 we added before.
-				var offset = (current.Attributes & MethodAttributes.Static) == 0 ? 1 : 0;
-				if (callback.Parameters[i + offset].ParameterType.IsByReference)
+				if (callback.Parameters[i + callbackParamOffset].ParameterType.IsByReference)
 				{
 					il.InsertBefore(firstInstruction, il.Create(OpCodes.Ldarga, current.Parameters[i]));
 				}

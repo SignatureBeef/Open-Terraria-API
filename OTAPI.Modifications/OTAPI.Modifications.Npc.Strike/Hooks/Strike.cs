@@ -14,7 +14,8 @@
                 ref int hitDirection,
                 ref bool crit,
                 ref bool noEffect,
-                ref bool fromNet
+                ref bool fromNet,
+				global::Terraria.Entity entity
             );
             #endregion
 
@@ -29,6 +30,7 @@
             ///     7:  crit
             ///     8:  no effect
             ///     9:  from net
+			///     10:	entity who may be striking the npc
             /// </summary>
             public static StrikeHandler Strike;
         }

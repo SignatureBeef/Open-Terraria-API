@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1CA910A2-F57D-4BE9-B6A2-C6DA9C13BC48}</ProjectGuid>
+    <ProjectGuid>{D10C5CA6-4D42-449D-BCFF-AE557819577F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>OTAPI.Modifications.Npc.Strike</RootNamespace>
-    <AssemblyName>OTAPI.Modifications.Npc.Strike</AssemblyName>
+    <RootNamespace>OTAPI.Modifications.Main.GameStarted</RootNamespace>
+    <AssemblyName>OTAPI.Modifications.Main.GameStarted</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\OTAPI.Modifications.Npc.Strike.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\OTAPI.Modifications.Main.GameStarted.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\OTAPI.Modifications.Npc.Strike.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\OTAPI.Modifications.Main.GameStarted.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
@@ -40,7 +40,6 @@
     <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' ">
@@ -59,10 +58,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Callbacks\Strike.cs" />
-    <Compile Include="Hooks\Strike.cs" />
-    <Compile Include="Modifications\Args.cs" />
-    <Compile Include="Modifications\Strike.cs" />
+    <Compile Include="Callbacks\GameStarted.cs" />
+    <Compile Include="Hooks\GameStarted.cs" />
+    <Compile Include="Modifications\GameStarted.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">

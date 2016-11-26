@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1CA910A2-F57D-4BE9-B6A2-C6DA9C13BC48}</ProjectGuid>
+    <ProjectGuid>{79D50DDF-2EE8-407D-9413-1505C28602B0}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>OTAPI.Modifications.Npc.Strike</RootNamespace>
-    <AssemblyName>OTAPI.Modifications.Npc.Strike</AssemblyName>
+    <RootNamespace>OTAPI.Modifications.Npc.AI</RootNamespace>
+    <AssemblyName>OTAPI.Modifications.Npc.AI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\OTAPI.Modifications.Npc.Strike.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\OTAPI.Modifications.Npc.AI.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\OTAPI.Modifications.Npc.Strike.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\OTAPI.Modifications.Npc.AI.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
@@ -59,10 +59,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Callbacks\Strike.cs" />
-    <Compile Include="Hooks\Strike.cs" />
-    <Compile Include="Modifications\Args.cs" />
-    <Compile Include="Modifications\Strike.cs" />
+    <Compile Include="Callbacks\AI.cs" />
+    <Compile Include="Hooks\AI.cs" />
+    <Compile Include="Modifications\AI.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">
@@ -77,6 +76,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
