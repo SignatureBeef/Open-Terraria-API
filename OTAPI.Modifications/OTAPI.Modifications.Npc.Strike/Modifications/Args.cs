@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Extensions.ILProcessor;
 using OTAPI.Patcher.Engine.Modification;
+using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 {
@@ -42,9 +43,22 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 						processor.InsertBefore(instruction,
 							new { OpCodes.Ldsfld, Operand = this.Field(() => Terraria.Main.player) },
 							new { OpCodes.Ldarg_0 },
-							new { OpCodes.Ldfld, Operand = this.Field(() => (new Terraria.Player()).whoAmI) },
+							new { OpCodes.Ldfld, Operand = this.Field(() => (new Terraria.MessageBuffer()).whoAmI) },
 							new { OpCodes.Ldelem_Ref }
 						);
+						//processor.InsertAfter(instruction,
+						//	new { OpCodes.Ldarg_0 },
+						//	new { OpCodes.Ldfld, Operand = this.Field(() => (new Terraria.MessageBuffer()).whoAmI) },
+						//	new
+						//	{
+						//		OpCodes.Call,
+						//		Operand = this.SourceDefinition.MainModule.Import(
+						//			typeof(System.Console).GetMethods().Single(x => x.Name == "WriteLine"
+						//				&& x.GetParameters().Count() == 1
+						//				&& x.GetParameters()[0].ParameterType.Name == "Int32"
+						//			))
+						//	}
+						//);
 					}
 					else processor.InsertBefore(instruction, processor.Create(OpCodes.Ldnull));
 				}

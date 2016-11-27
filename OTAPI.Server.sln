@@ -159,6 +159,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wiring", "Wiring", "{8CB625
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Wiring.AnnouncementBox", "OTAPI.Modifications\OTAPI.Modifications.Wiring.AnnouncementBox\OTAPI.Modifications.Wiring.AnnouncementBox.csproj", "{2B2B231B-2761-4723-8E17-05EF8A8351A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.MessageBuffer.ReceiveData.Exception", "OTAPI.Modifications\OTAPI.Modifications.MessageBuffer.ReceiveData.Exception\OTAPI.Modifications.MessageBuffer.ReceiveData.Exception.csproj", "{2E62E5AD-427A-416B-9B26-7C3181015AFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Client-Debug|Any CPU = Client-Debug|Any CPU
@@ -766,6 +768,18 @@ Global
 		{2B2B231B-2761-4723-8E17-05EF8A8351A8}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B2B231B-2761-4723-8E17-05EF8A8351A8}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B2B231B-2761-4723-8E17-05EF8A8351A8}.Server-Release|Any CPU.Build.0 = Release|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Client-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Client-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Client-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Client-Release|Any CPU.Build.0 = Release|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Server-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB}.Server-Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -839,5 +853,6 @@ Global
 		{D10C5CA6-4D42-449D-BCFF-AE557819577F} = {29C91099-E98D-44F1-9511-60C0DD9DB16D}
 		{8CB625F9-CB7D-4DC2-AB4F-6BD7F0D7EFFF} = {6F612C0E-1D67-4E06-8FB2-0D372CA5C264}
 		{2B2B231B-2761-4723-8E17-05EF8A8351A8} = {8CB625F9-CB7D-4DC2-AB4F-6BD7F0D7EFFF}
+		{2E62E5AD-427A-416B-9B26-7C3181015AFB} = {49223B0E-7182-4D4F-8811-9EFE99EC58C2}
 	EndGlobalSection
 EndGlobal
