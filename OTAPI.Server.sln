@@ -161,6 +161,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Message
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Sockets", "OTAPI.Modifications\OTAPI.Modifications.Sockets\OTAPI.Modifications.Sockets.csproj", "{E7544453-2F4D-45C5-ACC4-86CF656EC304}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Player.Announce", "OTAPI.Modifications\OTAPI.Modifications.Player.Announce\OTAPI.Modifications.Player.Announce.csproj", "{3F0452AB-A451-44D6-B038-AC598910DB67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Client-Debug|Any CPU = Client-Debug|Any CPU
@@ -782,6 +784,18 @@ Global
 		{E7544453-2F4D-45C5-ACC4-86CF656EC304}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7544453-2F4D-45C5-ACC4-86CF656EC304}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7544453-2F4D-45C5-ACC4-86CF656EC304}.Server-Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Client-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Client-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Client-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Client-Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Server-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0452AB-A451-44D6-B038-AC598910DB67}.Server-Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -856,5 +870,6 @@ Global
 		{2B2B231B-2761-4723-8E17-05EF8A8351A8} = {8CB625F9-CB7D-4DC2-AB4F-6BD7F0D7EFFF}
 		{2E62E5AD-427A-416B-9B26-7C3181015AFB} = {49223B0E-7182-4D4F-8811-9EFE99EC58C2}
 		{E7544453-2F4D-45C5-ACC4-86CF656EC304} = {6F612C0E-1D67-4E06-8FB2-0D372CA5C264}
+		{3F0452AB-A451-44D6-B038-AC598910DB67} = {615EBBCB-EF8A-449E-AD07-0BF2168B14B8}
 	EndGlobalSection
 EndGlobal
