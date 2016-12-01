@@ -1,110 +1,10 @@
 ﻿using OTAPI.Tests.Common;
 using System;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Threading;
 
 namespace OTAPI.Tests
 {
 	class Program
 	{
-
-		public static void StartForceLoad()
-		{
-			ThreadPool.QueueUserWorkItem(new WaitCallback(Program.ForceLoadThread));
-		}
-
-		public static void ForceLoadThread(object ThreadContext)
-		{
-			Console.WriteLine("Jitting");
-			Program.ForceLoadAssembly(Assembly.GetExecutingAssembly(), true);
-			Program.ForceLoadAssembly(typeof(Terraria.Chest).Assembly, true);
-			Console.WriteLine("JIT loaded, apparently");
-		}
-
-		public static void ForceJITOnAssembly(Assembly assembly)
-		{
-			try
-			{
-				Type[] types = assembly.GetTypes();
-				Type[] array = types;
-				for (int i = 0; i < array.Length; i++)
-				{
-					Type type = array[i];
-					try
-					{
-						MethodInfo[] methods = type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-						MethodInfo[] array2 = methods;
-						for (int j = 0; j < array2.Length; j++)
-						{
-							MethodInfo methodInfo = array2[j];
-							try
-							{
-								if (!methodInfo.IsAbstract && !methodInfo.ContainsGenericParameters && methodInfo.GetMethodBody() != null)
-								{
-									RuntimeHelpers.PrepareMethod(methodInfo.MethodHandle);
-								}
-							}
-							catch (Exception ex2)
-							{
-								Console.WriteLine($"ex2:{type.FullName}.{methodInfo.Name},{ex2}");
-							}
-						}
-					}
-					catch (Exception ex1)
-					{
-						Console.WriteLine($"ex1:{type.FullName},{ex1}");
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine($"ex:{ex}");
-			}
-		}
-
-		public static void ForceStaticInitializers(Assembly assembly)
-		{
-			Type[] types = assembly.GetTypes();
-			Type[] array = types;
-			for (int i = 0; i < array.Length; i++)
-			{
-				Type type = array[i];
-				if (!type.IsGenericType)
-				{
-					RuntimeHelpers.RunClassConstructor(type.TypeHandle);
-				}
-			}
-		}
-
-		public static void ForceLoadAssembly(Assembly assembly, bool initializeStaticMembers)
-		{
-			Program.ForceJITOnAssembly(assembly);
-			if (initializeStaticMembers)
-			{
-				Program.ForceStaticInitializers(assembly);
-			}
-		}
-
-		public static void ForceLoadAssembly(string name, bool initializeStaticMembers)
-		{
-			Assembly assembly = null;
-			Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-			for (int i = 0; i < assemblies.Length; i++)
-			{
-				if (assemblies[i].GetName().Name.Equals(name))
-				{
-					assembly = assemblies[i];
-					break;
-				}
-			}
-			if (assembly == null)
-			{
-				assembly = Assembly.Load(name);
-			}
-			Program.ForceLoadAssembly(assembly, initializeStaticMembers);
-		}
-
 		static void Main(string[] args)
 		{
 			var runner = new GameRunner();
@@ -114,13 +14,11 @@ namespace OTAPI.Tests
 
 		static void AttachHooks(object sender, EventArgs args)
 		{
-			StartForceLoad();
-
-			Hooks.Net.Socket.Create = () =>
-			{
-				return new OTAPI.Sockets.PoolSocket();
-				//return new Terraria.Net.Sockets.TcpSocket();
-			};
+			//Hooks.Net.Socket.Create = () =>
+			//{
+			//	return new OTAPI.Sockets.PoolSocket();
+			//	//return new Terraria.Net.Sockets.TcpSocket();
+			//};
 			//Hooks.Chest.QuickStack = (int playerId, Terraria.Item item, int chestIndex) =>
 			//{
 			//	Console.WriteLine($"playerId:{playerId},item.type:{item.type},chestIndex:{chestIndex}");

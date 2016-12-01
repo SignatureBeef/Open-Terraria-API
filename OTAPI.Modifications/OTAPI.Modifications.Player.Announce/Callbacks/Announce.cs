@@ -5,7 +5,7 @@
 		internal static bool Announce(int playerId)
 		{
 			var res = Hooks.Player.Announce?.Invoke(playerId);
-			if (res.Value == HookResult.Cancel)
+			if (res.HasValue && res.Value == HookResult.Cancel)
 			{
 				if (global::Terraria.Netplay.Clients[playerId].IsAnnouncementCompleted)
 				{
