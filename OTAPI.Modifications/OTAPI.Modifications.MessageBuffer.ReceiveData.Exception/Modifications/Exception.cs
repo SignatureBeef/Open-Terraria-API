@@ -22,43 +22,35 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
 			var handler = vanilla.Body.ExceptionHandlers.Single(x => x.HandlerType == ExceptionHandlerType.Catch);
 
-			try
-			{
-				var exType = this.SourceDefinition.MainModule.Import(
-					typeof(Exception)
-				);
-				var exVariable = new VariableDefinition("exceptionObject", exType);
+			var exType = this.SourceDefinition.MainModule.Import(
+				typeof(Exception)
+			);
+			var exVariable = new VariableDefinition("exceptionObject", exType);
 
-				vanilla.Body.Variables.Add(exVariable);
+			vanilla.Body.Variables.Add(exVariable);
 
-				handler.CatchType = this.SourceDefinition.MainModule.Import(
-					typeof(Exception)
-				);
+			handler.CatchType = this.SourceDefinition.MainModule.Import(
+				typeof(Exception)
+			);
 
-				handler.HandlerStart.OpCode = OpCodes.Stloc;
-				handler.HandlerStart.Operand = exVariable;
-				//Console.WriteLine(handler.CatchType);
+			handler.HandlerStart.OpCode = OpCodes.Stloc;
+			handler.HandlerStart.Operand = exVariable;
+			//Console.WriteLine(handler.CatchType);
 
-				var processor = vanilla.Body.GetILProcessor();
-				processor.InsertBefore(handler.HandlerEnd.Previous(x => x.OpCode == OpCodes.Leave_S),
-					new { OpCodes.Ldloc, exVariable },
-					new
-					{
-						OpCodes.Call,
-						Operand = this.SourceDefinition.MainModule.Import(
-						typeof(System.Console).GetMethods().Single(x => x.Name == "WriteLine"
-							&& x.GetParameters().Count() == 1
-							&& x.GetParameters()[0].ParameterType.Name == "Object"
-						)
+			var processor = vanilla.Body.GetILProcessor();
+			processor.InsertBefore(handler.HandlerEnd.Previous(x => x.OpCode == OpCodes.Leave_S),
+				new { OpCodes.Ldloc, exVariable },
+				new
+				{
+					OpCodes.Call,
+					Operand = this.SourceDefinition.MainModule.Import(
+					typeof(System.Console).GetMethods().Single(x => x.Name == "WriteLine"
+						&& x.GetParameters().Count() == 1
+						&& x.GetParameters()[0].ParameterType.Name == "Object"
 					)
-					}
-				);
-			}
-			catch (Exception ex)
-			{
-				System.Console.WriteLine(ex);
-			}
+				)
+				}
+			);
 		}
 	}
 }
-//InjectCallback
