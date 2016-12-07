@@ -3,7 +3,7 @@
   <metadata>
     <id>OTAPI</id>
     <title>Open Terraria API for Terraria</title>
-    <version>2.0.0.9</version>
+    <version>2.0.0.10</version>
     <authors>DeathCradle</authors>
     <owners>DeathCradle</owners>
     <licenseUrl>https://github.com/DeathCradle/Open-Terraria-API/blob/v2/LICENSE.txt</licenseUrl>
@@ -11,10 +11,10 @@
     <iconUrl>https://openterraria.com/images/ota-logo-small.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The Open Terraria API (OTAPI) is the core for the new generation of Terraria Server and Client mods.</description>
-    <summary>Open Terraria API 2.0.0.9 for Terraria 1.3.4.4</summary>
+    <summary>Open Terraria API 2.0.0.10 for Terraria 1.3.4.4</summary>
     <releaseNotes>
     Update for Terraria 1.3.4.4
-	Quick crash fix for GraphicsDevice
+	More GraphicsDevice shims
     </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>Terraria,OTAPI</tags>
