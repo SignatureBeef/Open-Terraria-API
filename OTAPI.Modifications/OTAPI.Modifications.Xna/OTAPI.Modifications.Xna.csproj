@@ -55,6 +55,8 @@
     <Compile Include="Xna\GameTime.cs" />
     <Compile Include="Xna\GameWindow.cs" />
     <Compile Include="Xna\GraphicsDeviceManager.cs" />
+    <Compile Include="Xna\Graphics\ResourceCreatedEventArgs.cs" />
+    <Compile Include="Xna\Graphics\ResourceDestroyedEventArgs.cs" />
     <Compile Include="Xna\IPackedVector.cs" />
     <Compile Include="Xna\MathHelper.cs" />
     <Compile Include="Xna\Matrix.cs" />

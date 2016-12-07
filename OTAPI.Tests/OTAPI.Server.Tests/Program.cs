@@ -7,9 +7,18 @@ namespace OTAPI.Tests
 	{
 		static void Main(string[] args)
 		{
-			var runner = new GameRunner();
-			runner.PreStart += AttachHooks;
-			runner.Main(args);
+			try
+			{
+				Terraria.Program.StartForceLoad();
+
+				var runner = new GameRunner();
+				runner.PreStart += AttachHooks;
+				runner.Main(args);
+			}
+			catch(Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
 		}
 
 		static void AttachHooks(object sender, EventArgs args)
