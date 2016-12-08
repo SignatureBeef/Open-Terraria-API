@@ -50,15 +50,23 @@ namespace OTAPI.Patcher.Engine
 		{
 			IPackage package = null;
 
-			package = localPackageRepo.FindPackage(name, version);
-			if (package == null)
+			try
 			{
-				package = packageRepo.FindPackage(name, version);
-			}
+				package = localPackageRepo.FindPackage(name, version);
+				if (package == null)
+				{
+					package = packageRepo.FindPackage(name, version);
+				}
 
-			if (package != null)
+				if (package != null)
+				{
+					packageManager.InstallPackage(package, ignoreDependencies: true, allowPrereleaseVersions: false);
+				}
+			}
+			catch (Exception ex)
 			{
-				packageManager.InstallPackage(package, ignoreDependencies: true, allowPrereleaseVersions: false);
+				Console.WriteLine($" * NuGet resolution failed on {name}");
+				package = null;
 			}
 
 			return package;
@@ -99,6 +107,18 @@ namespace OTAPI.Patcher.Engine
 							FilePath = libPath
 						});
 						return libPath;
+					}
+				}
+			}
+			else
+			{
+				foreach (var file in Directory.EnumerateFiles(Environment.CurrentDirectory, name + ".*"))
+				{
+					var extension = Path.GetExtension(file).ToLower();
+					if (new[] { ".exe", ".dll" }.Contains(extension))
+					{
+						Console.WriteLine($" * Found {name} locally");
+						return file;
 					}
 				}
 			}

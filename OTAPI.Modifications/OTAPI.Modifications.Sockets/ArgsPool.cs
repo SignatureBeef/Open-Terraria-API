@@ -33,7 +33,7 @@ namespace OTAPI.Sockets
                 if (_pool.Count == 0)
                 {
                     Capacity++;
-                    System.Diagnostics.Debug.WriteLine($"{this.GetType().Name} capacity now at {Capacity}");
+                    //System.Diagnostics.Debug.WriteLine($"{this.GetType().Name} capacity now at {Capacity}");
                     return new TSocketAsyncEventArgs();
                 }
 

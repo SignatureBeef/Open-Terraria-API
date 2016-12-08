@@ -41,6 +41,11 @@ namespace OTAPI.Patcher.Engine
 		/// </summary>
 		public List<ModificationBase> Modifications { get; set; } = new List<ModificationBase>();
 
+		/// <summary>
+		/// Gets or sets the flag to indicate that the source modification should be merged with the modifications
+		/// </summary>
+		public bool PackModifications { get; set; } = true;
+
 		protected NugetAssemblyResolver resolver;
 
 		protected ReaderParameters readerParams;
@@ -88,13 +93,13 @@ namespace OTAPI.Patcher.Engine
 
 		private void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
 		{
-			System.Diagnostics.Debug.WriteLine($"Loaded .net assembly: {args.LoadedAssembly.Location}");
+			Console.WriteLine($"Loaded .net assembly: {args.LoadedAssembly.Location}");
 		}
 
 		private List<String> resolvedAssemblies = new List<string>();
 		private void Resolver_OnResolved(object sender, NugetAssemblyResolvedEventArgs e)
 		{
-			System.Diagnostics.Debug.WriteLine($"Resolved nuget assembly: {e.FilePath}");
+			Console.WriteLine($"Resolved nuget assembly: {e.FilePath}");
 			resolvedAssemblies.Add(e.FilePath);
 		}
 
@@ -104,7 +109,7 @@ namespace OTAPI.Patcher.Engine
 
 			if (assemblyDefinition != null)
 			{
-				System.Diagnostics.Debug.WriteLine($"Resolved modification assembly: {reference.FullName}");
+				//System.Diagnostics.Debug.WriteLine($"Resolved modification assembly: {reference.FullName}");
 				return assemblyDefinition.ModificationDefinition;
 			}
 
@@ -171,7 +176,7 @@ namespace OTAPI.Patcher.Engine
 		{
 			object objectRef = Activator.CreateInstance(type);
 
-			System.Diagnostics.Debug.WriteLine($"Loaded modification {type.FullName}");
+			//System.Diagnostics.Debug.WriteLine($"Loaded modification {type.FullName}");
 
 			return objectRef as ModificationBase;
 		}
@@ -204,18 +209,18 @@ namespace OTAPI.Patcher.Engine
 									mod.SourceDefinition = SourceAssembly;
 									mod.SourceDefinitionFilePath = asmPath;
 
-									System.Diagnostics.Debug.WriteLine($"Ready to run modification {t.FullName}");
+									Console.WriteLine($"Ready to run modification {t.FullName}");
 									Modifications.Add(mod);
 								}
 								else
 								{
-									System.Diagnostics.Debug.WriteLine($"Modification {t.FullName} not supported");
+									Console.WriteLine($"Modification {t.FullName} not supported");
 								}
 							}
 						}
 						else
 						{
-							System.Diagnostics.Debug.WriteLine($"Skipping modification {t.FullName}");
+							Console.WriteLine($"Skipping modification {t.FullName}");
 						}
 					}
 				}
@@ -229,6 +234,12 @@ namespace OTAPI.Patcher.Engine
 
 					continue;
 				}
+				catch(Exception ex)
+				{
+					Console.Error.WriteLine($" * Error loading modification from {asmPath}, it will be skipped.\n{ex}");
+
+					continue;
+				}
 			}
 		}
 
@@ -238,7 +249,7 @@ namespace OTAPI.Patcher.Engine
 			{
 				try
 				{
-					System.Diagnostics.Debug.WriteLine($"Running modification {mod.GetType().FullName} from file {mod.SourceDefinitionFilePath}");
+					//System.Diagnostics.Debug.WriteLine($"Running modification {mod.GetType().FullName} from file {mod.SourceDefinitionFilePath}");
 					Console.Write(" -> " + mod.Description);
 					mod.Run();
 					Console.WriteLine();
@@ -267,53 +278,53 @@ namespace OTAPI.Patcher.Engine
 		{
 			tempPackedOutput = Path.GetTempFileName() + ".dll";
 
-            var options = new ILRepacking.RepackOptions()
-            {
-                //Get the list of input assemblies for merging, ensuring our source 
-                //assembly is first in the list so it can be granted as the target assembly.
-                InputAssemblies = new[] { tempSourceOutput }
-                    //Add the modifications for merging
-                    .Concat(Modifications.Select(x => x.SourceDefinitionFilePath))
+			var options = new ILRepacking.RepackOptions()
+			{
+				//Get the list of input assemblies for merging, ensuring our source 
+				//assembly is first in the list so it can be granted as the target assembly.
+				InputAssemblies = new[] { tempSourceOutput }
+					//Add the modifications for merging
+					.Concat(Modifications.Select(x => x.SourceDefinitionFilePath))
 
-                    .ToArray(),
+					.ToArray(),
 
-                OutputFile = tempPackedOutput,
-                TargetKind = ILRepacking.ILRepack.Kind.Dll,
+				OutputFile = tempPackedOutput,
+				TargetKind = ILRepacking.ILRepack.Kind.Dll,
 
-                //Setup where ILRepack can look for assemblies
-                SearchDirectories = GlobModificationAssemblies()
-                    //Translate full path files found via the glob mechanism
-                    //into a directory name
-                    .Select(x => Path.GetDirectoryName(x))
+				//Setup where ILRepack can look for assemblies
+				SearchDirectories = GlobModificationAssemblies()
+					//Translate full path files found via the glob mechanism
+					//into a directory name
+					.Select(x => Path.GetDirectoryName(x))
 
-                    //Additionally we may have resolved libraries using NuGet,
-                    //so we also append the directory of each assembly as well
-                    .Concat(resolvedAssemblies.Select(x => Path.GetDirectoryName(x)))
+					//Additionally we may have resolved libraries using NuGet,
+					//so we also append the directory of each assembly as well
+					.Concat(resolvedAssemblies.Select(x => Path.GetDirectoryName(x)))
 
-                    //ILRepack rolls is own silly cecil version, keeps the namespace and hides
-                    //custom assembly resolvers. We have to explicitly add in cecil or it wont 
-                    //be found
-                    .Concat(new[] { Path.GetDirectoryName(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location) })
+					//ILRepack rolls is own silly cecil version, keeps the namespace and hides
+					//custom assembly resolvers. We have to explicitly add in cecil or it wont 
+					//be found
+					.Concat(new[] { Path.GetDirectoryName(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location) })
 
-                    .Distinct()
-                    .ToArray(),
-                Parallel = true,
-                //Version = this.SourceAssembly., //perhaps check an option for this. if changed it should not allow repatching
-                CopyAttributes = true,
-                XmlDocumentation = true,
-                UnionMerge = true,
+					.Distinct()
+					.ToArray(),
+				Parallel = true,
+				//Version = this.SourceAssembly., //perhaps check an option for this. if changed it should not allow repatching
+				CopyAttributes = true,
+				XmlDocumentation = true,
+				UnionMerge = true,
 
 #if DEBUG
-                DebugInfo = true
+				DebugInfo = true
 #endif
-            };
+			};
 
-            //Generate the allow list of types from our modifications
-            AllowDuplicateModificationTypes(options.AllowedDuplicateTypes);
+			//Generate the allow list of types from our modifications
+			AllowDuplicateModificationTypes(options.AllowedDuplicateTypes);
 
-            var repacker = new ILRepacking.ILRepack(options);
-            repacker.Repack();
-        }
+			var repacker = new ILRepacking.ILRepack(options);
+			repacker.Repack();
+		}
 
 		/// <summary>
 		/// This will allow ILRepack to merge all our modifications into one assembly.
@@ -341,11 +352,6 @@ namespace OTAPI.Patcher.Engine
 		/// </summary>
 		protected void RemoveModificationsFromPackedAssembly()
 		{
-			if (string.IsNullOrEmpty(OutputAssemblyPath))
-			{
-				throw new ArgumentNullException(nameof(OutputAssemblyPath));
-			}
-
 			var assemblyName = Path.GetFileNameWithoutExtension(OutputAssemblyPath);
 
 			#region Xml Comments
@@ -442,25 +448,45 @@ namespace OTAPI.Patcher.Engine
 			}
 			catch (Exception ex)
 			{
-				Console.Error.WriteLine($"Error saving patched source assembly: {ex.Message}");
+				Console.Error.WriteLine($"Error saving patched source assembly: {ex}");
 				return;
 			}
 
-			Console.WriteLine("Packing source and modification assemblies.");
-			try
+			if (PackModifications)
 			{
-				PackAssemblies();
-			}
-			catch (Exception ex)
-			{
-				Console.Error.WriteLine($"Error packing assemblies: {ex.Message}");
-				return;
+				Console.WriteLine("Packing source and modification assemblies.");
+				try
+				{
+					PackAssemblies();
+				}
+				catch (Exception ex)
+				{
+					Console.Error.WriteLine($"Error packing assemblies: {ex.Message}");
+					return;
+				}
 			}
 
 			try
 			{
 				Console.WriteLine("Cleaning up assembly.");
-				RemoveModificationsFromPackedAssembly();
+
+				if (string.IsNullOrEmpty(OutputAssemblyPath))
+				{
+					throw new ArgumentNullException(nameof(OutputAssemblyPath));
+				}
+
+				if (PackModifications)
+				{
+					RemoveModificationsFromPackedAssembly();
+				}
+				else
+				{
+					if (File.Exists(OutputAssemblyPath))
+					{
+						File.Delete(OutputAssemblyPath);
+					}
+					File.Copy(tempSourceOutput, OutputAssemblyPath);
+				}
 				Cleanup();
 			}
 			catch (Exception ex)
@@ -468,6 +494,8 @@ namespace OTAPI.Patcher.Engine
 				Console.Error.WriteLine($"Error cleaning assembly: {ex.Message}");
 				return;
 			}
+
+			Console.WriteLine($"Patching complete. Output: {Path.GetFullPath(OutputAssemblyPath)}");
 		}
 	}
 }
