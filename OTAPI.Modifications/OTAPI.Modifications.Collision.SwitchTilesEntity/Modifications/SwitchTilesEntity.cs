@@ -34,7 +34,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
 			switchTiles.Parameters.Add(prmSender = new ParameterDefinition("sender", ParameterAttributes.None, iEntity)
 			{
 				HasDefault = true,
-				IsOptional = true
+				IsOptional = true,
+				Constant = null
 			});
 
 			//Update all references to the method so the caller adds themselves (currently they are all senders, woo!)
