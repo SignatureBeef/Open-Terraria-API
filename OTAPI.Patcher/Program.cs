@@ -16,6 +16,16 @@ namespace OTAPI.Patcher
 
 			Console.WriteLine("Open Terraria API v2.0");
 
+			if (args.Length == 0)
+			{
+				args = new[]
+				{
+					@"-in=../../../wrap/TerrariaServer/TerrariaServer.exe",
+					@"-mod=../../../OTAPI.Modifications/OTAPI.**/bin/Debug/OTAPI.**.dll",
+					@"-o=../../../OTAPI.dll"
+				};
+			}
+
 			options = new OptionSet();
 			options.Add("in=|source=", "specifies the source assembly to patch",
 				op => sourceAsm = op);

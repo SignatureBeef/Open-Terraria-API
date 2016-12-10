@@ -72,7 +72,9 @@ namespace OTAPI.Patcher.Engine
 		/// Creates a new instance of the patcher with the specified source assembly path and
 		/// a glob containing all the modification assemblies.
 		/// </summary>
-		/// <param name="SourceAssemblyPath"></param>
+		/// <param name="sourceAssemblyPath">Path to the source assembly that modifications need to applied to</param>
+		/// <param name="modificationAssemblyGlob">A list of globs that yields a list of modifications</param>
+		/// <param name="outputAssemblyPath">Path for the modified assembly to be saved</param>
 		public Patcher(string sourceAssemblyPath, IEnumerable<string> modificationAssemblyGlob, string outputAssemblyPath)
 		{
 			this.SourceAssemblyPath = sourceAssemblyPath;
@@ -93,13 +95,13 @@ namespace OTAPI.Patcher.Engine
 
 		private void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
 		{
-			Console.WriteLine($"Loaded .net assembly: {args.LoadedAssembly.Location}");
+			//Console.WriteLine($"Loaded .net assembly: {args.LoadedAssembly.Location}");
 		}
 
 		private List<String> resolvedAssemblies = new List<string>();
 		private void Resolver_OnResolved(object sender, NugetAssemblyResolvedEventArgs e)
 		{
-			Console.WriteLine($"Resolved nuget assembly: {e.FilePath}");
+			//Console.WriteLine($"Resolved nuget assembly: {e.FilePath}");
 			resolvedAssemblies.Add(e.FilePath);
 		}
 
@@ -209,7 +211,7 @@ namespace OTAPI.Patcher.Engine
 									mod.SourceDefinition = SourceAssembly;
 									mod.SourceDefinitionFilePath = asmPath;
 
-									Console.WriteLine($"Ready to run modification {t.FullName}");
+									//Console.WriteLine($"Ready to run modification {t.FullName}");
 									Modifications.Add(mod);
 								}
 								else
@@ -218,10 +220,10 @@ namespace OTAPI.Patcher.Engine
 								}
 							}
 						}
-						else
-						{
-							Console.WriteLine($"Skipping modification {t.FullName}");
-						}
+						//else
+						//{
+						//	Console.WriteLine($"Skipping modification {t.FullName}");
+						//}
 					}
 				}
 				catch (ReflectionTypeLoadException rtle)
@@ -234,7 +236,7 @@ namespace OTAPI.Patcher.Engine
 
 					continue;
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					Console.Error.WriteLine($" * Error loading modification from {asmPath}, it will be skipped.\n{ex}");
 
@@ -431,7 +433,7 @@ namespace OTAPI.Patcher.Engine
 			}
 			catch (Exception ex)
 			{
-				Console.Error.WriteLine($"Error reading source assembly: {ex.Message}\n{ex.StackTrace}");
+				Console.Error.WriteLine($"Error reading source assembly: {ex}");
 				return;
 			}
 
@@ -461,7 +463,7 @@ namespace OTAPI.Patcher.Engine
 				}
 				catch (Exception ex)
 				{
-					Console.Error.WriteLine($"Error packing assemblies: {ex.Message}");
+					Console.Error.WriteLine($"Error packing assemblies: {ex}");
 					return;
 				}
 			}
@@ -481,17 +483,42 @@ namespace OTAPI.Patcher.Engine
 				}
 				else
 				{
-					if (File.Exists(OutputAssemblyPath))
+					//Since nothing was packed our files need to be manually copied
+					//ILRepack would otherwise do this for us
+					foreach (var ext in new[]
 					{
-						File.Delete(OutputAssemblyPath);
+						"exe",
+						"dll",
+						"pdb",
+						"xml",
+						"exe.mdb",
+						"dll.mdb"
+					})
+					{
+						var source = Path.ChangeExtension(tempSourceOutput, ext);
+						if (!File.Exists(source))
+						{
+							source = Path.ChangeExtension(SourceAssemblyPath, ext);
+						}
+
+						if (File.Exists(source))
+						{
+							var dest = Path.ChangeExtension(OutputAssemblyPath, ext);
+
+							if (File.Exists(dest))
+							{
+								File.Delete(dest);
+							}
+							File.Copy(source, dest);
+						}
+						//else Console.WriteLine($"Failed to copy {source}");
 					}
-					File.Copy(tempSourceOutput, OutputAssemblyPath);
 				}
 				Cleanup();
 			}
 			catch (Exception ex)
 			{
-				Console.Error.WriteLine($"Error cleaning assembly: {ex.Message}");
+				Console.Error.WriteLine($"Error cleaning assembly: {ex}");
 				return;
 			}
 

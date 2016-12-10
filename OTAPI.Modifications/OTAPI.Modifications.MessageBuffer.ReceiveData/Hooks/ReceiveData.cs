@@ -11,8 +11,7 @@
                 ref byte packetId,
                 ref int readOffset,
                 ref int start,
-                ref int length,
-                ref int messageType
+                ref int length
             );
             #endregion
 
@@ -22,8 +21,7 @@
             //      2: packetId,
             //      3: readOffset,
             //      4: start,
-            //      5: length,
-            //      6: messageType
+            //      5: length
             /// </summary>
             public static ReceiveDataHandler ReceiveData;
         }

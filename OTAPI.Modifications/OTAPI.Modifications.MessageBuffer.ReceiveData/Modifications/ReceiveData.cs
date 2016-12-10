@@ -19,7 +19,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 			int tmp = 0;
 			byte tmpB = 0;
 			var vanilla = this.Method(() => (new Terraria.MessageBuffer()).GetData(0, 0, out tmp));
-			var callback = this.Method(() => OTAPI.Callbacks.Terraria.MessageBuffer.ReceiveData(null, ref tmpB, ref tmp, ref tmp, ref tmp, ref tmp));
+			var callback = this.Method(() => OTAPI.Callbacks.Terraria.MessageBuffer.ReceiveData(null, ref tmpB, ref tmp, ref tmp, ref tmp));
 
 			//In this episode we are injecting the hook in a place where it can modify the packet id
 			//as soon as it can. The target instruction will be the just after the packet id byte is
@@ -60,7 +60,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 			//Add parameters by reference
 			foreach (var prm in vanilla.Parameters)
 			{
-				il.InsertBefore(target, il.Create(OpCodes.Ldarga, prm));
+				if (prm.Name != "messageType")
+					il.InsertBefore(target, il.Create(OpCodes.Ldarga, prm));
 			}
 		}
 	}

@@ -17,10 +17,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			int tmpI = 0;
 			bool tmpB = false;
 			float tmpF = 0;
+			double tmpD = 0;
 			//var vanilla = this.Method(() => (new Terraria.NPC()).StrikeNPC(0, 0, 0, false, false, false));
 			var vanilla = this.Type<Terraria.NPC>().Method("StrikeNPC");
 			var callback = this.Method(() => OTAPI.Callbacks.Terraria.Npc.Strike(
-			   null, ref tmpI, ref tmpI, ref tmpF, ref tmpI, ref tmpB, ref tmpB, ref tmpB, null
+			   null, ref tmpD, ref tmpI, ref tmpF, ref tmpI, ref tmpB, ref tmpB, ref tmpB, null
 			));
 
 			vanilla.InjectNonVoidBeginCallback(callback);

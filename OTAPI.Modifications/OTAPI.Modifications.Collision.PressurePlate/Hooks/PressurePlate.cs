@@ -9,7 +9,7 @@
             (
                 ref int x,
                 ref int y,
-                ref global::Terraria.Entity entity
+                ref IEntity entity
             );
             #endregion
 

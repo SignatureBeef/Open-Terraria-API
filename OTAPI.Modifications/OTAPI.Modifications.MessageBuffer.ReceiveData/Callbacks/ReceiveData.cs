@@ -8,11 +8,10 @@
             ref byte packetId,
             ref int readOffset,
             ref int start,
-            ref int length,
-            ref int messageType
+            ref int length
         )
         {
-            if (Hooks.Net.ReceiveData?.Invoke(buffer, ref packetId, ref readOffset, ref start, ref length, ref messageType) == HookResult.Cancel)
+            if (Hooks.Net.ReceiveData?.Invoke(buffer, ref packetId, ref readOffset, ref start, ref length) == HookResult.Cancel)
                 return packetId = byte.MaxValue;
             return (int)packetId;
         }

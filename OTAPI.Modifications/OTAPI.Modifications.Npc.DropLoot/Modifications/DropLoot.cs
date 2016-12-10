@@ -29,6 +29,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 				var dropLoot = new MethodDefinition("DropLoot", MethodAttributes.Public | MethodAttributes.Static, newItem.ReturnType);
 				typeNpc.Methods.Add(dropLoot);
 
+				dropLoot.Body.InitLocals = true;
+
 				var il = dropLoot.Body.GetILProcessor();
 
 				//Clone the parameters from the Item.NewItem method (with no byreference)

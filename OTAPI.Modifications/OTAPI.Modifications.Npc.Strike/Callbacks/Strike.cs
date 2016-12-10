@@ -9,7 +9,7 @@
 		internal static bool Strike
 		(
 			global::Terraria.NPC npc,
-			ref int cancelResult,
+			ref double cancelResult,
 			ref int Damage,
 			ref float knockBack,
 			ref int hitDirection,
