@@ -163,6 +163,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Sockets
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Player.Announce", "OTAPI.Modifications\OTAPI.Modifications.Player.Announce\OTAPI.Modifications.Player.Announce.csproj", "{3F0452AB-A451-44D6-B038-AC598910DB67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Item.CheckMaterial", "OTAPI.Modifications\OTAPI.Modifications.Item.CheckMaterial\OTAPI.Modifications.Item.CheckMaterial.csproj", "{FA06F92B-AA84-4114-8DFA-C23C24324348}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Client-Debug|Any CPU = Client-Debug|Any CPU
@@ -796,6 +798,18 @@ Global
 		{3F0452AB-A451-44D6-B038-AC598910DB67}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F0452AB-A451-44D6-B038-AC598910DB67}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F0452AB-A451-44D6-B038-AC598910DB67}.Server-Release|Any CPU.Build.0 = Release|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Client-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Client-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Client-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Client-Release|Any CPU.Build.0 = Release|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Server-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA06F92B-AA84-4114-8DFA-C23C24324348}.Server-Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -871,5 +885,6 @@ Global
 		{2E62E5AD-427A-416B-9B26-7C3181015AFB} = {49223B0E-7182-4D4F-8811-9EFE99EC58C2}
 		{E7544453-2F4D-45C5-ACC4-86CF656EC304} = {6F612C0E-1D67-4E06-8FB2-0D372CA5C264}
 		{3F0452AB-A451-44D6-B038-AC598910DB67} = {615EBBCB-EF8A-449E-AD07-0BF2168B14B8}
+		{FA06F92B-AA84-4114-8DFA-C23C24324348} = {689C7D0C-9394-4E2E-83DB-9932C16F2D16}
 	EndGlobalSection
 EndGlobal

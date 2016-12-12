@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
 	/// method will also be ripped out as it's quicker and easier to do this than hacking ourselves
 	/// into the if blocks.
 	/// </summary>
-	public class PressurePlate : ModificationBase
+	public class SwitchTiles : ModificationBase
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{

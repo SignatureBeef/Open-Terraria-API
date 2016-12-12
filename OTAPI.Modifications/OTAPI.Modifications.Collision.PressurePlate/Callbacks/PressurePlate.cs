@@ -1,8 +1,6 @@
-﻿using OTAPI;
-
-namespace OTAPI.Callbacks.Terraria
+﻿namespace OTAPI.Callbacks.Terraria
 {
-    internal  partial class Collision
+	internal  partial class Collision
     {
         internal static void PressurePlate(int x, int y, IEntity entity)
         {
