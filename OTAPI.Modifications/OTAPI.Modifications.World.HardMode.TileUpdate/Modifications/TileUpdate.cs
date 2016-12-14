@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 {
+	[Ordered(4)]
 	public class TileUpdate : ModificationBase
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
@@ -39,6 +40,11 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 				&& (instruction.Operand as FieldReference).Name == "type"
 				&& (instruction.Operand as FieldReference).DeclaringType.FullName == "Terraria.Tile"
 			).ToArray();
+
+			if (targets.Length == 0)
+			{
+				throw new System.InvalidProgramException("Consider this modification may be be in the incorrect order");
+			}
 
 			var processor = vanilla.Body.GetILProcessor();
 

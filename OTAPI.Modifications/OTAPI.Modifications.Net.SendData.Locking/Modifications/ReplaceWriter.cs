@@ -297,7 +297,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 		void RemoveWriteBuffer()
 		{
 			this.Type<Terraria.MessageBuffer>().Fields.Remove(
-				this.Field(() => (new Terraria.MessageBuffer()).writeBuffer)
+				//this.Field(() => (new Terraria.MessageBuffer()).writeBuffer)
+				this.Type<Terraria.MessageBuffer>().Field("writeBuffer") //dont use the typed reference or IL Repack will fail
 			);
 		}
 	}
