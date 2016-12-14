@@ -231,6 +231,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 			{
 				throw new NotImplementedException("writeBuffer is still in use!");
 			}
+
+			RemoveWriteBuffer();
 		}
 
 		void ClearResetWriter()
@@ -290,6 +292,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 				}
 			});
 			return any;
+		}
+
+		void RemoveWriteBuffer()
+		{
+			this.Type<Terraria.MessageBuffer>().Fields.Remove(
+				this.Field(() => (new Terraria.MessageBuffer()).writeBuffer)
+			);
 		}
 	}
 }
