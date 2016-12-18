@@ -7,7 +7,18 @@ namespace OTAPI
 		public static partial class Player
 		{
 			#region Handlers
-			public delegate HookResult PreHurtHandler(ref double returnValue, global::Terraria.Player player, ref PlayerDeathReason damageSource, ref int Damage, ref int hitDirection, ref bool pvp, ref bool quiet, ref string deathText, ref bool Crit, ref int cooldownCounter);
+			public delegate HookResult PreHurtHandler
+			(
+				ref double returnValue, 
+				global::Terraria.Player player,
+				ref PlayerDeathReason damageSource,
+				ref int Damage, 
+				ref int hitDirection,
+				ref bool pvp, 
+				ref bool quiet, 
+				ref bool Crit, 
+				ref int cooldownCounter
+			);
 			#endregion
 
 			/// <summary>
