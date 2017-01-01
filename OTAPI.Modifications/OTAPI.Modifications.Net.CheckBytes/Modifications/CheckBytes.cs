@@ -1,14 +1,9 @@
-﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
-using OTAPI.Patcher.Engine.Extensions;
+﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
-
-using System;
-using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 {
-	public class SendBytes : ModificationBase
+	public class CheckBytes : ModificationBase
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
