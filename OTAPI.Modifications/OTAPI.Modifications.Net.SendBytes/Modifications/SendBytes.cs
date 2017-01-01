@@ -64,4 +64,3 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 		}
 	}
 }
-//InjectCallback

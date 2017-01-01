@@ -17,9 +17,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 			int tmp = 0;
 			bool tmp1 = false;
 			double tmp3 = 0;
-			Terraria.DataStructures.PlayerDeathReason   tmp4 = null;
 			var cbkBegin = //this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Callbacks.Terraria.Player.HurtBegin(ref tmp3, null, ref tmp4, ref tmp, ref tmp, ref tmp1, ref tmp1, ref tmp1, ref tmp));
+				this.Method(() => OTAPI.Callbacks.Terraria.Player.HurtBegin(null, ref tmp3, null, ref tmp, ref tmp, ref tmp1, ref tmp1, ref tmp1, ref tmp));
 			//);
 
 			vanilla.InjectNonVoidBeginCallback(cbkBegin);

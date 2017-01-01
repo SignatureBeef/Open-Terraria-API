@@ -3,6 +3,7 @@ using Mono.Cecil.Rocks;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
+using Terraria.Map;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 {

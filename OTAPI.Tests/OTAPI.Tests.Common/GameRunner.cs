@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -59,7 +60,25 @@ namespace OTAPI.Tests.Common
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex);
+				try
+				{
+					StackTrace st = new System.Diagnostics.StackTrace(ex);
+					string stackTrace = "";
+					foreach (StackFrame frame in st.GetFrames())
+					{
+						stackTrace = "at " + frame.GetMethod().Module.Name + "." +
+							frame.GetMethod().ReflectedType.Name + "."
+							+ frame.GetMethod().Name
+							+ "  (IL offset: 0x" + frame.GetILOffset().ToString("x") + ")\n" + stackTrace;
+					}
+					Console.Write(stackTrace);
+					Console.WriteLine(ex);
+				}
+				catch
+				{
+					Console.Write("");
+					Console.WriteLine(ex);
+				}
 				Console.ReadKey(true);
 			}
 		}

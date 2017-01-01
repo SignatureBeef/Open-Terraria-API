@@ -9,14 +9,14 @@ namespace OTAPI
 			#region Handlers
 			public delegate HookResult PreHurtHandler
 			(
-				ref double returnValue, 
+				ref double returnValue,
 				global::Terraria.Player player,
-				ref PlayerDeathReason damageSource,
-				ref int Damage, 
+				PlayerDeathReason damageSource,
+				ref int Damage,
 				ref int hitDirection,
-				ref bool pvp, 
-				ref bool quiet, 
-				ref bool Crit, 
+				ref bool pvp,
+				ref bool quiet,
+				ref bool Crit,
 				ref int cooldownCounter
 			);
 			#endregion

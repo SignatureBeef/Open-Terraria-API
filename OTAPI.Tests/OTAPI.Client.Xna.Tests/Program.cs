@@ -1,5 +1,10 @@
 ﻿using OTAPI.Tests.Common;
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace OTAPI.Client.Xna.Tests
 {
@@ -8,17 +13,9 @@ namespace OTAPI.Client.Xna.Tests
 		[STAThread]
 		static void Main(string[] args)
 		{
-			try
-			{
-				var runner = new GameRunner();
-				runner.PreStart += AttachHooks;
-				runner.Main(args);
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-				Console.ReadKey();
-			}
+			var runner = new GameRunner();
+			runner.PreStart += AttachHooks;
+			runner.Main(args);
 		}
 
 		static void AttachHooks(object sender, EventArgs args)

@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 		public override void Run()
 		{
 			foreach (var type in SourceDefinition.MainModule.Types)
-				type.MakePublic(false);
+				type.MakePublic();
 		}
 	}
 }

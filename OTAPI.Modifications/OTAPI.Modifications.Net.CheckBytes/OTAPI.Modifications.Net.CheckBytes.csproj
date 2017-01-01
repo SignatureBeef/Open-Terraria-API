@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D535BF82-F8FB-43CD-81B9-0A3983375D3A}</ProjectGuid>
+    <ProjectGuid>{1C55DB57-548B-401F-AC25-872BAB898DC2}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>OTAPI.Modifications.Net.SendData.Locking</RootNamespace>
-    <AssemblyName>OTAPI.Modifications.Net.SendData.Locking</AssemblyName>
+    <RootNamespace>OTAPI.Modifications.Net.CheckBytes</RootNamespace>
+    <AssemblyName>OTAPI.Modifications.Net.CheckBytes</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\OTAPI.Modifications.Net.SendData.Locking.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\OTAPI.Modifications.Net.CheckBytes.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\OTAPI.Modifications.Net.SendData.Locking.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\OTAPI.Modifications.Net.CheckBytes.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
@@ -41,26 +41,14 @@
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="TerrariaServer">
+      <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
+    </Reference>
   </ItemGroup>
-  <Choose>
-    <When Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' ">
-      <ItemGroup>
-        <Reference Include="Terraria">
-          <HintPath>..\..\wrap\Terraria\Terraria.exe</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="TerrariaServer">
-          <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
   <ItemGroup>
-    <Compile Include="Modifications\ReplaceWriter.cs" />
-    <Compile Include="Modifications\RemoveLocking.cs" />
+    <Compile Include="Callbacks\CheckBytes.cs" />
+    <Compile Include="Hooks\CheckBytes.cs" />
+    <Compile Include="Modifications\CheckBytes.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">

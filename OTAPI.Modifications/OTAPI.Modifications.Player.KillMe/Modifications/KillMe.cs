@@ -17,14 +17,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 			double tmp = 0;
 			int tmp1 = 0;
 			bool tmp2 = false;
-			string tmp3 = null;
 			Terraria.DataStructures.PlayerDeathReason tmpDs = null;
 			var cbkBegin = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Callbacks.Terraria.Player.KillMeBegin(null, ref tmpDs, ref tmp, ref tmp1, ref tmp2, ref tmp3))
+				this.Method(() => OTAPI.Callbacks.Terraria.Player.KillMeBegin(null, null, ref tmp, ref tmp1, ref tmp2))
 			);
 
 			var cbkEnd = this.SourceDefinition.MainModule.Import(
-				this.Method(() => OTAPI.Callbacks.Terraria.Player.KillMeEnd(null, null, 0, 0, false, null))
+				this.Method(() => OTAPI.Callbacks.Terraria.Player.KillMeEnd(null, null, 0, 0, false))
 			);
 
 			vanilla.Wrap
