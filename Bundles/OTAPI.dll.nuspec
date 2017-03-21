@@ -3,6 +3,7 @@
   <metadata>
     <id>OTAPI</id>
     <title>Open Terraria API for Terraria</title>
+    <version>2.0.0.17</version>
     <authors>DeathCradle</authors>
     <owners>DeathCradle</owners>
     <licenseUrl>https://github.com/DeathCradle/Open-Terraria-API/blob/v2/LICENSE.txt</licenseUrl>
@@ -10,7 +11,11 @@
     <iconUrl>https://openterraria.com/images/ota-logo-small.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The Open Terraria API (OTAPI) is the core for the new generation of Terraria Server and Client mods.</description>
+    <summary>Open Terraria API 2.0.0.17 for Terraria 1.3.4.4</summary>
     <releaseNotes>
+    Adds an autoSave check to prevent automatic saving when disabled
+	OTAPI.Sockets updates
+	Additional tile collision checks to prevent out of bounds access
     </releaseNotes>
     <copyright>Copyright 2016-2017</copyright>
     <tags>Terraria,OTAPI</tags>
