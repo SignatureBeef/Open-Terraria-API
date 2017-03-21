@@ -16,6 +16,9 @@ namespace OTAPI.Tile
 		/// <param name="y"></param>
 		/// <returns></returns>
 		ITile this[int x, int y] { get; set; }
+
+		int Width { get; }
+		int Height { get; }
 	}
 
 	/// <summary>

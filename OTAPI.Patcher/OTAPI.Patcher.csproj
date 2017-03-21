@@ -16,7 +16,6 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\OTAPI.Patcher.xml</DocumentationFile>
@@ -29,24 +28,37 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
-  <Choose>
-    <When Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' ">
-      <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <!--<Choose>
+    <When Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' ">-->
+      <!--<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Any CPU' ">
         <StartArguments>-in=../../../wrap/Terraria/Terraria.exe -mod=../../../OTAPI.Modifications/OTAPI.**/bin/Debug/OTAPI.**.dll -o=../../../OTAPI.dll</StartArguments>
       </PropertyGroup>
-      <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+      <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Any CPU' ">
         <StartArguments>-in=../../../wrap/Terraria/Terraria.exe -mod=../../../OTAPI.Modifications/OTAPI.**/bin/Release/OTAPI.**.dll -o=../../../OTAPI.dll</StartArguments>
+      </PropertyGroup>-->
+	  <PropertyGroup Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' And '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+			<DefineConstants>DEBUG;SLN_CLIENT</DefineConstants>
       </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+      <PropertyGroup Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' And '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+			<DefineConstants>DEBUG;SLN_CLIENT</DefineConstants>
+      </PropertyGroup>
+    <!--</When>
+    <Otherwise>-->
+      <!--<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Any CPU' ">
         <StartArguments>-in=../../../wrap/TerrariaServer/TerrariaServer.exe -mod=../../../OTAPI.Modifications/OTAPI.**/bin/Debug/OTAPI.**.dll -o=../../../OTAPI.dll</StartArguments>
       </PropertyGroup>
-      <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+      <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Any CPU' ">
         <StartArguments>-in=../../../wrap/TerrariaServer/TerrariaServer.exe -mod=../../../OTAPI.Modifications/OTAPI.**/bin/Release/OTAPI.**.dll -o=../../../OTAPI.dll</StartArguments>
+      </PropertyGroup>-->
+	  
+	  <PropertyGroup Condition=" '$(SolutionName)' != 'OTAPI.Client.Xna' And '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DefineConstants>DEBUG;SLN_SERVER</DefineConstants>
       </PropertyGroup>
-    </Otherwise>
-  </Choose>
+      <PropertyGroup Condition=" '$(SolutionName)' != 'OTAPI.Client.Xna' And '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DefineConstants>RELEASE;SLN_SERVER</DefineConstants>
+      </PropertyGroup>
+    <!--</Otherwise>
+  </Choose>-->
   <ItemGroup>
     <Reference Include="NDesk.Options, Version=0.2.1.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\NDesk.Options.0.2.1\lib\NDesk.Options.dll</HintPath>

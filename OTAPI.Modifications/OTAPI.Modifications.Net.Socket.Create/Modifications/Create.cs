@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
+using Terraria.Net.Sockets;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
 {
@@ -14,23 +15,35 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null",
+			"Terraria, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
 		};
-		public override string Description => "Hooking Netplay.ServerLoop\\TcpSocket...";
+		public override string Description => "Hooking TcpSocket creations...";
 
 		public override void Run()
 		{
 			var vanilla = this.Method(() => Terraria.Netplay.ServerLoop(null));
 			var callback = this.Method(() => OTAPI.Callbacks.Terraria.Netplay.ServerSocketCreate());
+			var tcp_socket = this.Type<TcpSocket>().FullName;
 
-			var iTcpSocket = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Newobj
-												&& x.Operand is MethodReference
-												&& (x.Operand as MethodReference).Name == ".ctor"
-												&& (x.Operand as MethodReference).DeclaringType.Name == "TcpSocket"
-			);
+			vanilla.DeclaringType.Module.ForEachInstruction((meth, ins) =>
+			{
+				if (ins.OpCode == OpCodes.Newobj)
+				{
+					var methodRef = ins.Operand as MethodReference;
 
-			iTcpSocket.OpCode = OpCodes.Call; //Replace newobj to be call as we need to execute out callback instead
-			iTcpSocket.Operand = vanilla.Module.Import(callback); //Replace the method reference from the TcpSocket constructor, to our callback
+					if (methodRef != null && methodRef.Name == ".ctor")
+					{
+						if (methodRef.DeclaringType.FullName == tcp_socket)
+						{
+							// replace the instruction with our interception callback
+							ins.OpCode = OpCodes.Call;
+							ins.Operand = vanilla.Module.Import(callback);
+							System.Console.WriteLine($"\t-> Replaced instance in {meth.FullName}");
+						}
+					}
+				}
+			});
 		}
 	}
 }

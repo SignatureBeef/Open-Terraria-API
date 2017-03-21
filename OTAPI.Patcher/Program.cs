@@ -18,12 +18,21 @@ namespace OTAPI.Patcher
 
 			if (args.Length == 0)
 			{
+#if SLN_CLIENT
+				args = new[]
+				{
+					@"-in=../../../wrap/Terraria/Terraria.exe",
+					@"-mod=../../../OTAPI.Modifications/OTAPI.**/bin/Debug/OTAPI.**.dll",
+					@"-o=../../../OTAPI.dll"
+				};
+#else
 				args = new[]
 				{
 					@"-in=../../../wrap/TerrariaServer/TerrariaServer.exe",
 					@"-mod=../../../OTAPI.Modifications/OTAPI.**/bin/Debug/OTAPI.**.dll",
 					@"-o=../../../OTAPI.dll"
 				};
+#endif
 			}
 
 			options = new OptionSet();

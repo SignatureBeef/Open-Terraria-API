@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2EFEE4C1-5A98-41F5-ADBD-57AE33280F5A}</ProjectGuid>
+    <ProjectGuid>{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>OTAPI.Modifications.World.Save</RootNamespace>
-    <AssemblyName>OTAPI.Modifications.World.Save</AssemblyName>
+    <RootNamespace>OTAPI.Modifications.Collision.GetEntityEdgeTiles</RootNamespace>
+    <AssemblyName>OTAPI.Modifications.Collision.GetEntityEdgeTiles</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\OTAPI.Modifications.World.Save.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\OTAPI.Modifications.Collision.GetEntityEdgeTiles.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\OTAPI.Modifications.World.Save.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\OTAPI.Modifications.Collision.GetEntityEdgeTiles.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
@@ -46,10 +46,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callbacks\Save.cs" />
-    <Compile Include="Hooks\Save.cs" />
-    <Compile Include="Modifications\SaveAndPlay.cs" />
-    <Compile Include="Modifications\Save.cs" />
+    <Compile Include="Callbacks\GetEntityEdgeTiles.cs" />
+    <Compile Include="Callbacks\GetEntityEdgeTiles.Point.cs" />
+    <Compile Include="Hooks\GetEntityEdgeTiles.cs" />
+    <Compile Include="Modifications\GetEntityEdgeTiles.Point.cs" />
+    <Compile Include="Modifications\GetEntityEdgeTiles.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">
@@ -59,6 +61,14 @@
     <ProjectReference Include="..\OTAPI.Modifications.Core\OTAPI.Modifications.Core.csproj">
       <Project>{D9439E01-19C1-4E89-9B33-2C19C804DDCF}</Project>
       <Name>OTAPI.Modifications.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OTAPI.Modifications.Tile\OTAPI.Modifications.Tile.csproj">
+      <Project>{47c0d2ed-dbca-4adf-8b55-f7043d736673}</Project>
+      <Name>OTAPI.Modifications.Tile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OTAPI.Modifications.Xna\OTAPI.Modifications.Xna.csproj">
+      <Project>{4A980A83-9E64-4207-8281-4F29FBF2AD90}</Project>
+      <Name>OTAPI.Modifications.Xna</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -28,20 +28,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="TerrariaServer">
-      <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
-    </Reference>
   </ItemGroup>
+  <Choose>
+    <When Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' ">
+      <ItemGroup>
+        <Reference Include="Terraria">
+          <HintPath>..\..\wrap\Terraria\Terraria.exe</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="TerrariaServer">
+          <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
-    <Compile Include="ArgsPool.cs" />
+    <Compile Include="AsyncArgsPool.cs" />
+    <Compile Include="AsyncSocket.cs" />
+    <Compile Include="AsyncSocketEventArgs.cs" />
     <Compile Include="Modification.cs" />
-    <Compile Include="PoolSocket\Client.cs" />
-    <Compile Include="PoolSocket\Pooling.cs" />
-    <Compile Include="PoolSocket\Receive.cs" />
-    <Compile Include="PoolSocket\Send.cs" />
-    <Compile Include="PoolSocket\Server.cs" />
-    <Compile Include="PoolSocket\SocketEventArgs.cs" />
-    <Compile Include="PoolSocket\Terraria.cs" />
+    <Compile Include="ReceiveEventArgs.cs" />
+    <Compile Include="SendEventArgs.cs" />
+    <Compile Include="SocketServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">

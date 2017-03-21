@@ -216,7 +216,7 @@ namespace OTAPI.Patcher.Engine
 								}
 								else
 								{
-									Console.WriteLine($"Modification {t.FullName} not supported");
+									Console.WriteLine($"Modification {t.FullName} does not support {SourceAssembly.Name.FullName}.");
 								}
 							}
 						}

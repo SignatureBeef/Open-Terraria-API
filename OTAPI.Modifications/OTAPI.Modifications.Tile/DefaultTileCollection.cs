@@ -11,6 +11,10 @@ namespace OTAPI.Tile
 	{
 		protected ITile[,] _tiles;
 
+		public int Width => this._tiles.GetLength(0);
+
+		public int Height => this._tiles.GetLength(1);
+
 		/// <summary>
 		/// Creates a new 2D array instance of ITile using the default Terraria.Tile implementation.
 		/// 

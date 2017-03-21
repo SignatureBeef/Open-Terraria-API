@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26014.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2CA8A2CD-657F-499E-92C2-B2E0AC5488C4}"
 	ProjectSection(SolutionItems) = preProject
@@ -180,6 +180,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.World.Generate", "OTAPI.Modifications\OTAPI.Modifications.World.Generate\OTAPI.Modifications.World.Generate.csproj", "{B09A9D8E-1B3D-4276-BBD8-4DE3A257D45E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Net.CheckBytes", "OTAPI.Modifications\OTAPI.Modifications.Net.CheckBytes\OTAPI.Modifications.Net.CheckBytes.csproj", "{1C55DB57-548B-401F-AC25-872BAB898DC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Collision.GetEntityEdgeTiles", "OTAPI.Modifications\OTAPI.Modifications.Collision.FixGetEntityEdgeTiles\OTAPI.Modifications.Collision.GetEntityEdgeTiles.csproj", "{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -922,6 +924,18 @@ Global
 		{1C55DB57-548B-401F-AC25-872BAB898DC2}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C55DB57-548B-401F-AC25-872BAB898DC2}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C55DB57-548B-401F-AC25-872BAB898DC2}.Server-Release|Any CPU.Build.0 = Release|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Client-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Client-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Client-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Client-Release|Any CPU.Build.0 = Release|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Server-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Server-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}.Server-Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1006,5 +1020,6 @@ Global
 		{549C5AF8-46BE-4BE7-A16A-23A5DD6893AC} = {D6DE4652-8079-493E-B6F0-220A24D96B7B}
 		{B09A9D8E-1B3D-4276-BBD8-4DE3A257D45E} = {D6DE4652-8079-493E-B6F0-220A24D96B7B}
 		{1C55DB57-548B-401F-AC25-872BAB898DC2} = {936CBC51-EB4E-4381-B992-AC7D9D4DBB7F}
+		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D} = {33765E63-95ED-40A7-BDB0-418BDA698C32}
 	EndGlobalSection
 EndGlobal

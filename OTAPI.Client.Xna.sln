@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Patcher", "OTAPI.Patc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Core", "OTAPI.Modifications\OTAPI.Modifications.Core\OTAPI.Modifications.Core.csproj", "{D9439E01-19C1-4E89-9B33-2C19C804DDCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Sockets", "OTAPI.Sockets\OTAPI.Sockets.csproj", "{E7544453-2F4D-45C5-ACC4-86CF656EC304}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Sockets", "OTAPI.Modifications\OTAPI.Modifications.Sockets\OTAPI.Modifications.Sockets.csproj", "{E7544453-2F4D-45C5-ACC4-86CF656EC304}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Collision.PressurePlate", "OTAPI.Modifications\OTAPI.Modifications.Collision.PressurePlate\OTAPI.Modifications.Collision.PressurePlate.csproj", "{2D24B5CA-42EA-48CB-81CE-7DFCED9EB110}"
 EndProject
