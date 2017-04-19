@@ -50,7 +50,11 @@
     <Compile Include="Modifications\RemoveXna.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xna\Color.cs" />
-    <Compile Include="Xna\ContentManager.cs" />
+    <Compile Include="Xna\Content\ContentManager.cs" />
+    <Compile Include="Xna\Content\ContentReader.cs" />
+    <Compile Include="Xna\Content\ContentTypeReader.cs" />
+    <Compile Include="Xna\Content\ContentTypeReaderManager.cs" />
+    <Compile Include="Xna\Content\ContentTypeReaderT.cs" />
     <Compile Include="Xna\Game.cs" />
     <Compile Include="Xna\GameTime.cs" />
     <Compile Include="Xna\GameWindow.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="Xna\Matrix.cs" />
     <Compile Include="Xna\PlayerIndex.cs" />
     <Compile Include="Xna\Point.cs" />
+    <Compile Include="Xna\Quaternion.cs" />
     <Compile Include="Xna\Rectangle.cs" />
     <Compile Include="Xna\Vector2.cs" />
     <Compile Include="Xna\Vector3.cs" />

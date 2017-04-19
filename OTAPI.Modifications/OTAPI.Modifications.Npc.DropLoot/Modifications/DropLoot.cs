@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.5.0, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Creating DropLoot";
 		public override void Run()

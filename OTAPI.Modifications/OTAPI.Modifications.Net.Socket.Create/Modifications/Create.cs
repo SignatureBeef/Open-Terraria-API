@@ -15,7 +15,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null",
+			"TerrariaServer, Version=1.3.5.0, Culture=neutral, PublicKeyToken=null",
 			"Terraria, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking TcpSocket creations...";
@@ -34,7 +34,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
 
 					if (methodRef != null && methodRef.Name == ".ctor")
 					{
-						if (methodRef.DeclaringType.FullName == tcp_socket)
+						if (methodRef.DeclaringType.FullName == tcp_socket && methodRef.Parameters.Count == 0)
 						{
 							// replace the instruction with our interception callback
 							ins.OpCode = OpCodes.Call;

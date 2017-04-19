@@ -11,8 +11,9 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
-		};
+			"TerrariaServer, Version=1.3.5.0, Culture=neutral, PublicKeyToken=null",
+            "ReLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+        };
 		public override string Description => "Removing Xna references...";
 
 		public override void Run()

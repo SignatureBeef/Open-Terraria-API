@@ -1,19 +1,99 @@
 ﻿using Microsoft.Xna.Framework;
 using OTAPI.Tests.Common;
 using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using Terraria;
 
 namespace OTAPI.Tests
 {
 	class Program
 	{
-		static void Main(string[] args)
+
+        public static void ForceLoadThread(object ThreadContext)
+        {
+            Program.ForceLoadAssembly(typeof(Terraria.Program).Assembly, true);
+            Terraria.Program.LoadedEverything = true;
+        }
+
+        public static void ForceJITOnAssembly(Assembly assembly)
+        {
+            try
+            {
+                Type[] types = assembly.GetTypes();
+                Type[] array = types;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Type type = array[i];
+                    MethodInfo[] methods = type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                    MethodInfo[] array2 = methods;
+                    for (int j = 0; j < array2.Length; j++)
+                    {
+                        MethodInfo methodInfo = array2[j];
+                        if (!methodInfo.IsAbstract && !methodInfo.ContainsGenericParameters && methodInfo.GetMethodBody() != null)
+                        {
+                            RuntimeHelpers.PrepareMethod(methodInfo.MethodHandle);
+                        }
+                    }
+                    Terraria.Program.ThingsLoaded++;
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        public static void ForceStaticInitializers(Assembly assembly)
+        {
+            Type[] types = assembly.GetTypes();
+            Type[] array = types;
+            for (int i = 0; i < array.Length; i++)
+            {
+                Type type = array[i];
+                if (!type.IsGenericType)
+                {
+                    RuntimeHelpers.RunClassConstructor(type.TypeHandle);
+                }
+            }
+        }
+
+        public static void ForceLoadAssembly(Assembly assembly, bool initializeStaticMembers)
+        {
+            Terraria.Program.ThingsToLoad = assembly.GetTypes().Length;
+            Program.ForceJITOnAssembly(assembly);
+            if (initializeStaticMembers)
+            {
+                Program.ForceStaticInitializers(assembly);
+            }
+        }
+
+        public static void ForceLoadAssembly(string name, bool initializeStaticMembers)
+        {
+            Assembly assembly = null;
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            for (int i = 0; i < assemblies.Length; i++)
+            {
+                if (assemblies[i].GetName().Name.Equals(name))
+                {
+                    assembly = assemblies[i];
+                    break;
+                }
+            }
+            if (assembly == null)
+            {
+                assembly = Assembly.Load(name);
+            }
+            Program.ForceLoadAssembly(assembly, initializeStaticMembers);
+        }
+        static void Main(string[] args)
 		{
 			try
 			{
-				Terraria.Program.StartForceLoad();
+                //Program.ForceLoadThread(null);
 
-				var runner = new GameRunner();
+                var runner = new GameRunner();
 				runner.PreStart += AttachHooks;
 				runner.Main(args);
 			}
@@ -64,11 +144,6 @@ namespace OTAPI.Tests
 				LogHook(nameof(Hooks.Item.PreSetDefaultsById));
 				return HookResult.Continue;
 			};
-			Hooks.Item.PreSetDefaultsByName = (Item item, ref string name) =>
-			{
-				LogHook(nameof(Hooks.Item.PreSetDefaultsByName));
-				return HookResult.Continue;
-			};
 			Hooks.Item.PreNetDefaults = (Item item, ref int type) =>
 			{
 				LogHook(nameof(Hooks.Item.PreNetDefaults));
@@ -81,7 +156,7 @@ namespace OTAPI.Tests
 			};
 			#endregion
 			#region Net Hooks
-			Hooks.Net.SendData = (ref int bufferId, ref int msgType, ref int remoteClient, ref int ignoreClient, ref string text,
+			Hooks.Net.SendData = (ref int bufferId, ref int msgType, ref int remoteClient, ref int ignoreClient, ref Terraria.Localization.NetworkText text,
 				  ref int number, ref float number2, ref float number3, ref float number4, ref int number5, ref int number6,
 				  ref int number7) =>
 			{
@@ -114,11 +189,6 @@ namespace OTAPI.Tests
 			Hooks.Npc.PreSetDefaultsById = (NPC npc, ref int type, ref float scaleOverride) =>
 			{
 				LogHook(nameof(Hooks.Npc.PreSetDefaultsById));
-				return HookResult.Continue;
-			};
-			Hooks.Npc.PreSetDefaultsByName = (NPC npc, ref string name) =>
-			{
-				LogHook(nameof(Hooks.Npc.PreSetDefaultsByName));
 				return HookResult.Continue;
 			};
 			Hooks.Npc.PreNetDefaults = (NPC npc, ref int type) =>

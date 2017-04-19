@@ -9,7 +9,7 @@
 			int msgType,
 			int remoteClient,
 			int ignoreClient,
-			string text,
+            global::Terraria.Localization.NetworkText text,
 			int number,
 			float number2,
 			float number3,

@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Modifications\RemoveNatFromNetplay.cs" />
     <Compile Include="Modifications\RemoveConsoleCtrlCheck.cs" />
-    <Compile Include="Modifications\RemoveNatFromConstructor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

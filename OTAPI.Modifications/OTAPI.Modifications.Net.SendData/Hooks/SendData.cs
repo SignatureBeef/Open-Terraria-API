@@ -11,7 +11,7 @@
                 ref int msgType,
                 ref int remoteClient,
                 ref int ignoreClient,
-                ref string text,
+                ref Terraria.Localization.NetworkText text,
                 ref int number,
                 ref float number2,
                 ref float number3,

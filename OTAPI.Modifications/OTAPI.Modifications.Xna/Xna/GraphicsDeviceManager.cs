@@ -15,5 +15,6 @@ namespace Microsoft.Xna.Framework
         public void ApplyChanges() { }
 
         public GraphicsDevice GraphicsDevice { get; set; }
+        public GraphicsProfile GraphicsProfile { get; set; }
     }
 }

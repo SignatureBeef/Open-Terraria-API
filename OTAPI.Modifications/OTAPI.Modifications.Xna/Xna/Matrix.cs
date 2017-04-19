@@ -148,6 +148,28 @@ namespace Microsoft.Xna.Framework
             return result;
         }
 
+        public static Matrix CreateTranslation(float xPosition, float yPosition, float zPosition)
+        {
+            Matrix result;
+            result.M11 = 1f;
+            result.M12 = 0f;
+            result.M13 = 0f;
+            result.M14 = 0f;
+            result.M21 = 0f;
+            result.M22 = 1f;
+            result.M23 = 0f;
+            result.M24 = 0f;
+            result.M31 = 0f;
+            result.M32 = 0f;
+            result.M33 = 1f;
+            result.M34 = 0f;
+            result.M41 = xPosition;
+            result.M42 = yPosition;
+            result.M43 = zPosition;
+            result.M44 = 1f;
+            return result;
+        }
+
         // Microsoft.Xna.Framework.Matrix
         public static Matrix Invert(Matrix matrix)
         {

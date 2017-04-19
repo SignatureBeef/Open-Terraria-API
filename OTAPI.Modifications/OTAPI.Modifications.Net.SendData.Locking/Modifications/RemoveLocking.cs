@@ -15,7 +15,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null",
+			"TerrariaServer, Version=1.3.5.0, Culture=neutral, PublicKeyToken=null",
 			"Terraria, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Removing locks in NetMessage.SendData...";
@@ -25,7 +25,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 			// what we need to do is remove the `lock(NetMessage.buffer[index]) { }`
 			// In IL terms this is secretly a call to Monitor.Enter, and Monitor.Exit
 
-			var sendData = this.Method(() => Terraria.NetMessage.SendData(0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0));
+			var sendData = this.Method(() => Terraria.NetMessage.SendData(0, 0, 0, Terraria.Localization.NetworkText.Empty, 0, 0, 0, 0, 0, 0, 0));
 
 			var monitorEnter = sendData.Body.Instructions.Single(
 				x => x.OpCode == OpCodes.Call

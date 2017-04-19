@@ -16,5 +16,11 @@
         {
             get { return default(DisplayModeCollection); }
         }
+
+        //[return: MarshalAs(UnmanagedType.U1)]
+        public bool IsProfileSupported(GraphicsProfile graphicsProfile)
+        {
+            return false;
+        }
     }
 }

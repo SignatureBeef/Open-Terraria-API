@@ -1,4 +1,6 @@
-﻿namespace OTAPI.Callbacks.Terraria
+﻿using System.Net.Sockets;
+
+namespace OTAPI.Callbacks.Terraria
 {
     internal static partial class Netplay
     {

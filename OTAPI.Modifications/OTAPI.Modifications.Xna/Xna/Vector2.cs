@@ -957,5 +957,13 @@ namespace Microsoft.Xna.Framework
             result.Y = value1.Y * num;
             return result;
         }
+
+        public static void Transform(ref Vector2 position, ref Matrix matrix, out Vector2 result)
+        {
+            float x = position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M41;
+            float y = position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M42;
+            result.X = x;
+            result.Y = y;
+        }
     }
 }
