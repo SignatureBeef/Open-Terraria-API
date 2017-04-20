@@ -19,7 +19,7 @@ namespace OTAPI.Modifications.Mono.Modifications
 	{
 		public override IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.0, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.5.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Removing console ctrl check";
 

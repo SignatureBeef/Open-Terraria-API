@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.0, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.5.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking hardmode tile placement...";
 		public override void Run()

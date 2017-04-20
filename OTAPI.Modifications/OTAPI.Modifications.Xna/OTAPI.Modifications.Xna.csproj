@@ -59,6 +59,7 @@
     <Compile Include="Xna\GameTime.cs" />
     <Compile Include="Xna\GameWindow.cs" />
     <Compile Include="Xna\GraphicsDeviceManager.cs" />
+    <Compile Include="Xna\Graphics\NoSuitableGraphicsDeviceException.cs" />
     <Compile Include="Xna\Graphics\ResourceCreatedEventArgs.cs" />
     <Compile Include="Xna\Graphics\ResourceDestroyedEventArgs.cs" />
     <Compile Include="Xna\IPackedVector.cs" />

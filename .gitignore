@@ -26,6 +26,8 @@ OTAPI.dll
 OTAPI.pdb
 OTAPI.xml
 TerrariaServer.dll
+Ionic.Zip.CF.dll
+Steamworks.NET.dll
 
 *.lock.json
 OTAPI.Core.Tests/lib/net451/OTAPI.Sockets.dll

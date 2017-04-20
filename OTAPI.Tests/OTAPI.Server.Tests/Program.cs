@@ -1,97 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
 using OTAPI.Tests.Common;
 using System;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using Terraria;
 
 namespace OTAPI.Tests
 {
 	class Program
 	{
-
-        public static void ForceLoadThread(object ThreadContext)
+        public static void ForceLoadThread()
         {
-            Program.ForceLoadAssembly(typeof(Terraria.Program).Assembly, true);
-            Terraria.Program.LoadedEverything = true;
+            Terraria.Program.ForceLoadAssembly(typeof(Terraria.Program).Assembly, true);
         }
 
-        public static void ForceJITOnAssembly(Assembly assembly)
-        {
-            try
-            {
-                Type[] types = assembly.GetTypes();
-                Type[] array = types;
-                for (int i = 0; i < array.Length; i++)
-                {
-                    Type type = array[i];
-                    MethodInfo[] methods = type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-                    MethodInfo[] array2 = methods;
-                    for (int j = 0; j < array2.Length; j++)
-                    {
-                        MethodInfo methodInfo = array2[j];
-                        if (!methodInfo.IsAbstract && !methodInfo.ContainsGenericParameters && methodInfo.GetMethodBody() != null)
-                        {
-                            RuntimeHelpers.PrepareMethod(methodInfo.MethodHandle);
-                        }
-                    }
-                    Terraria.Program.ThingsLoaded++;
-                }
-            }
-            catch(Exception ex)
-            {
-
-            }
-        }
-
-        public static void ForceStaticInitializers(Assembly assembly)
-        {
-            Type[] types = assembly.GetTypes();
-            Type[] array = types;
-            for (int i = 0; i < array.Length; i++)
-            {
-                Type type = array[i];
-                if (!type.IsGenericType)
-                {
-                    RuntimeHelpers.RunClassConstructor(type.TypeHandle);
-                }
-            }
-        }
-
-        public static void ForceLoadAssembly(Assembly assembly, bool initializeStaticMembers)
-        {
-            Terraria.Program.ThingsToLoad = assembly.GetTypes().Length;
-            Program.ForceJITOnAssembly(assembly);
-            if (initializeStaticMembers)
-            {
-                Program.ForceStaticInitializers(assembly);
-            }
-        }
-
-        public static void ForceLoadAssembly(string name, bool initializeStaticMembers)
-        {
-            Assembly assembly = null;
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            for (int i = 0; i < assemblies.Length; i++)
-            {
-                if (assemblies[i].GetName().Name.Equals(name))
-                {
-                    assembly = assemblies[i];
-                    break;
-                }
-            }
-            if (assembly == null)
-            {
-                assembly = Assembly.Load(name);
-            }
-            Program.ForceLoadAssembly(assembly, initializeStaticMembers);
-        }
         static void Main(string[] args)
 		{
 			try
 			{
-                //Program.ForceLoadThread(null);
+				// this ensures OTAPI has it's XNA shims in place
+                Program.ForceLoadThread();
 
                 var runner = new GameRunner();
 				runner.PreStart += AttachHooks;
