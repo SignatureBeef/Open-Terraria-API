@@ -64,34 +64,36 @@ namespace OTAPI.Patcher
                 return;
             }
 
-            var roptions = new ILRepacking.RepackOptions()
-            {
-                //Get the list of input assemblies for merging, ensuring our source 
-                //assembly is first in the list so it can be granted as the target assembly.
-                InputAssemblies = mergeInputs.ToArray(),
+			if (mergeInputs.Count > 0)
+			{
+				var roptions = new ILRepacking.RepackOptions()
+				{
+					//Get the list of input assemblies for merging
+					InputAssemblies = mergeInputs.ToArray(),
 
-                OutputFile = mergeOutput,
-                TargetKind = ILRepacking.ILRepack.Kind.Dll,
+					OutputFile = mergeOutput,
+					TargetKind = ILRepacking.ILRepack.Kind.Dll,
 
-                //Setup where ILRepack can look for assemblies
-                SearchDirectories = mergeInputs
-                    .Select(x => Path.GetDirectoryName(x))
-                    .Concat(new[] { Environment.CurrentDirectory })
-                    .Distinct()
-                    .ToArray(),
-                Parallel = true,
-                //Version = this.SourceAssembly., //perhaps check an option for this. if changed it should not allow repatching
-                CopyAttributes = true,
-                XmlDocumentation = true,
-                UnionMerge = true,
+					//Setup where ILRepack can look for assemblies
+					SearchDirectories = mergeInputs
+						.Select(x => Path.GetDirectoryName(x))
+						.Concat(new[] { Environment.CurrentDirectory })
+						.Distinct()
+						.ToArray(),
+
+					Parallel = true,
+					CopyAttributes = true,
+					XmlDocumentation = true,
+					UnionMerge = true,
 
 #if DEBUG
-                DebugInfo = true
+					DebugInfo = true
 #endif
-            };
+				};
 
-            var repacker = new ILRepacking.ILRepack(roptions);
-            repacker.Repack();
+				var repacker = new ILRepacking.ILRepack(roptions);
+				repacker.Repack();
+			}
 
             patcher = new Engine.Patcher(sourceAsm, new[] { modificationGlob }, outputPath);
             patcher.Run();
