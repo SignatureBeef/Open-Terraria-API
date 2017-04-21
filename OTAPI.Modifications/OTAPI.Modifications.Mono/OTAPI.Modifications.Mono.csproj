@@ -46,6 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Callbacks\IO.cs" />
+    <Compile Include="Modifications\HandlePlatformIO.cs" />
     <Compile Include="Modifications\RemoveNatFromNetplay.cs" />
     <Compile Include="Modifications\RemoveConsoleCtrlCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
