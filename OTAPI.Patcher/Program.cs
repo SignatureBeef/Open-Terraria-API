@@ -37,7 +37,7 @@ namespace OTAPI.Patcher
                     @"-pre-merge-in=../../../wrap/TerrariaServer/ReLogic.dll",
                     @"-pre-merge-out=../../../TerrariaServer.dll",
                     @"-in=../../../TerrariaServer.dll",
-                    @"-mod=../../../OTAPI.Modifications/OTAPI.**/bin/Debug/OTAPI.**.dll",
+                    @"-mod=../../../OTAPI.Modifications/OTAPI.Modifications.*/bin/Debug/OTAPI.*.dll",
                     @"-o=../../../OTAPI.dll"
                 };
 #endif

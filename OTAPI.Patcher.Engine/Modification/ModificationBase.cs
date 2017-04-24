@@ -3,6 +3,7 @@ using OTAPI.Patcher.Engine.Extensions;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace OTAPI.Patcher.Engine.Modification
 {
@@ -89,6 +90,24 @@ namespace OTAPI.Patcher.Engine.Modification
 			var type = this.ResolveType(method.DeclaringType);
 
 			return type.Method(method.Name, method.GetParameters());
+		}
+
+		public MethodDefinition Method<T>(string methodName, BindingFlags flags = new BindingFlags())
+		{
+			Type type = typeof(T);
+			var typeDef = ResolveType(type);
+			MethodInfo methodInfo;
+
+			if ((int)flags != 0)
+			{
+				methodInfo = type.GetMethod(methodName, flags);
+			}
+			else
+			{
+				methodInfo = type.GetMethod(methodName);
+			}
+
+			return typeDef.Method(methodInfo.Name, methodInfo.GetParameters());
 		}
 
 		public FieldDefinition Field<TProperty>(Expression<Func<TProperty>> expression)
