@@ -10,10 +10,10 @@ namespace OTAPI
 {
 	public static partial class Hooks
 	{
-		public static class BroadcastChatMessage
+		public static class SendChatMessageToClient
 		{
-			public static BeforeChatMessageHandler BeforeBroadcastChatMessage;
-			public static AfterChatMessageHandler AfterBroadcastChatMessage;
+			public static BeforeChatMessageHandler BeforeSendChatMessageToClient;
+			public static AfterChatMessageHandler AfterSendChatMessageToClient;
 		}
 	}
 }

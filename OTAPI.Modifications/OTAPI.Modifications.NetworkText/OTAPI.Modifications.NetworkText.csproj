@@ -59,8 +59,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Callbacks\SendChatMessageToClientCallback.cs" />
     <Compile Include="Callbacks\BroadcastChatMessageCallback.cs" />
+    <Compile Include="ChatMessageDelegates.cs" />
+    <Compile Include="Hooks\SendChatMessageToClient.cs" />
     <Compile Include="Hooks\BroadcastChatMessage.cs" />
+    <Compile Include="Modifications\SendChatMessageToClientModification.cs" />
     <Compile Include="Modifications\BroadcastChatMessageModification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

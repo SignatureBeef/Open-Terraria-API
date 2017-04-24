@@ -8,15 +8,15 @@ using XnaColor = Microsoft.Xna.Framework.Color;
 
 namespace OTAPI.Modifications.NetworkText.Callbacks
 {
-	internal static class BroadcastChatMessageCallback
+	internal static class SendChatMessageToClientCallback
 	{
 		/// <summary>
 		/// Injected into the start of Terraria.NetMessage.BroadcastChatMessage.  Return HookResult.Cancelled to supress the broadcast message.
 		/// </summary>
 		/// <returns>True if the program is to run vanilla code, false otherwise.</returns>
-		internal static bool BeforeBroadcastChatMessage(Terraria.Localization.NetworkText text, ref XnaColor color, ref int ignorePlayer)
+		internal static bool BeforeSendChatMessageToClient(Terraria.Localization.NetworkText text, ref XnaColor color, ref int ignorePlayer)
 		{
-			var beforeChatMessageHook = Hooks.BroadcastChatMessage.BeforeBroadcastChatMessage;
+			var beforeChatMessageHook = Hooks.SendChatMessageToClient.BeforeSendChatMessageToClient;
 			var nativeColor = Color.FromArgb(color.A, color.R, color.G, color.B);
 
 			return (beforeChatMessageHook?.Invoke(text, ref nativeColor, ref ignorePlayer) ?? HookResult.Continue) == HookResult.Continue;
@@ -26,9 +26,9 @@ namespace OTAPI.Modifications.NetworkText.Callbacks
 		/// Injected into the start of Terraria.NetMessage.BroadcastChatMessage.  Return HookResult.Cancelled to supress the broadcast message.
 		/// </summary>
 		/// <returns>True if the program is to run vanilla code, false otherwise.</returns>
-		internal static void AfterBroadcastChatMessage(Terraria.Localization.NetworkText text, ref XnaColor color, ref int ignorePlayer)
+		internal static void AfterSendChatMessageToClient(Terraria.Localization.NetworkText text, ref XnaColor color, ref int ignorePlayer)
 		{
-			var beforeChatMessageHook = Hooks.BroadcastChatMessage.AfterBroadcastChatMessage;
+			var beforeChatMessageHook = Hooks.SendChatMessageToClient.AfterSendChatMessageToClient;
 			var nativeColor = Color.FromArgb(color.A, color.R, color.G, color.B);
 
 			beforeChatMessageHook?.Invoke(text, ref nativeColor, ref ignorePlayer);
