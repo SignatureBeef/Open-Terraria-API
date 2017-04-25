@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OTAPI.Modifications.NetworkText.Modifications
 {
