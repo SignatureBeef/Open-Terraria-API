@@ -33,12 +33,12 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 			);
 
 			var messageBuffer = monitorEnter.Previous(
-				x => x.OpCode == OpCodes.Ldsfld
-				&& (x.Operand as FieldReference).Name == "buffer"
+				x => x.OpCode == OpCodes.Ldloc_1
+				//&& (x.Operand as FieldReference).Name == "buffer"
 			);
 
 			var processor = sendData.Body.GetILProcessor();
-
+			
 			while (messageBuffer.Next != monitorEnter)
 			{
 				processor.Remove(messageBuffer.Next);
@@ -59,7 +59,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
 			// update other branches that reference the leave short that will be removed
 			leaves.ReplaceTransfer(endfinally.Next, sendData);
-
+			
 			while (leaves.Next != endfinally)
 			{
 				processor.Remove(leaves.Next);
