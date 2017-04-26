@@ -10,7 +10,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.1, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking Game.DedServ...";
 
@@ -26,9 +26,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Main
 			var processor = vanilla.Body.GetILProcessor();
 
 			var insertionOffset = vanilla.Body.Instructions.Single(
-				x => x.OpCode == OpCodes.Ldloc_S
-					&& x.Previous.OpCode == OpCodes.Call
-					&& ((MethodReference)x.Previous.Operand).Name == "startDedInput"
+				x => x.OpCode == OpCodes.Call
+					&& ((MethodReference)x.Operand).Name == "startDedInput"
 			);
 
 			var insCallback = Instruction.Create(OpCodes.Call, callback);

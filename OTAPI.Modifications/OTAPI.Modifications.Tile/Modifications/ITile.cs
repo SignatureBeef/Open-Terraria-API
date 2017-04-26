@@ -12,7 +12,7 @@ namespace OTAPI.Modification.Tile.Modifications
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.1, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Swapping all Terraria.Tile references to ITile...";
 

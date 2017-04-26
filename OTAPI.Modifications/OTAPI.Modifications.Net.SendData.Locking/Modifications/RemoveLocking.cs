@@ -15,7 +15,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.1, Culture=neutral, PublicKeyToken=null",
+			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null",
 			"Terraria, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Removing locks in NetMessage.SendData...";
@@ -38,7 +38,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 			);
 
 			var processor = sendData.Body.GetILProcessor();
-			
+
 			while (messageBuffer.Next != monitorEnter)
 			{
 				processor.Remove(messageBuffer.Next);
@@ -59,7 +59,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
 			// update other branches that reference the leave short that will be removed
 			leaves.ReplaceTransfer(endfinally.Next, sendData);
-			
+
 			while (leaves.Next != endfinally)
 			{
 				processor.Remove(leaves.Next);
