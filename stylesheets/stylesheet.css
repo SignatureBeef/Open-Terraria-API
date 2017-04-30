@@ -264,12 +264,12 @@ a {
     right: 0;
     width: 20%;
     overflow: hidden;
-    color: #fff;
     border-left: 1px solid transparent;
     border-bottom: 1px solid transparent;
 }
 
-.otapi-supporter>DIV {
+.otapi-supporter>a {
+    color: #fff;
     position: relative;
     width: 100%;
     animation: otapiSupporter 0.6s ease-out 1;
