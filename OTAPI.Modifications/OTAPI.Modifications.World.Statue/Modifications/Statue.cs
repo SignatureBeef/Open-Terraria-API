@@ -57,8 +57,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 				//Trigger the method to run with the parameters on the stck
 				il.InsertBefore(iInsertionPoint, il.Create(OpCodes.Call, hook));
 
-				//If the result left on the stack is false, then jump to the "return false"
-				il.InsertBefore(iInsertionPoint, il.Create(OpCodes.Brfalse_S, iContinuePoint));
+				//Ignore any of the previous return conditions and use our own
+				il.InsertBefore(iInsertionPoint, il.Create(OpCodes.Ret));
 
 				vanilla.Body.OptimizeMacros();
 			}

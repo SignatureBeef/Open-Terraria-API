@@ -11,7 +11,8 @@
 		{
 			var res = Hooks.World.Statue?.Invoke(caller, x, y, type, ref num, ref num2, ref num3);
 			if (res.HasValue) return res.Value == HookResult.Continue;
-			return true;
+
+			return num2 < 3 && num3 < 6 && num < 10;
 		}
 	}
 }
