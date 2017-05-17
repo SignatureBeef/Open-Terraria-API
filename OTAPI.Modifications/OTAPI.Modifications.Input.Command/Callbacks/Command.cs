@@ -9,22 +9,18 @@
 		/// <returns>True to continue on to vanilla code, otherwise false</returns>
 		internal static bool startDedInput()
 		{
-			var res = Hooks.Command.StartCommandThread?.Invoke();
-			if (res.HasValue) return res.Value == HookResult.Continue;
-			return true;
+			return Hooks.Command.StartCommandThread?.Invoke() != HookResult.Cancel;
 		}
 
 		/// <summary>
 		/// Injected into startDedInput to capture all input from the ReadLine method.
 		/// </summary>
-		/// <param name="command"></param>
-		/// <param name="raw"></param>
-		/// <returns></returns>
-		internal static bool ProcessCommand(string command, string raw)
+		/// <param name="lowered">Lowered line read from the console</param>
+		/// <param name="raw">Raw text read from the console</param>
+		/// <returns>True to continue on to vanilla code, otherwise false</returns>
+		internal static bool ProcessCommand(string lowered, string raw)
 		{
-			var result = Hooks.Command.Process?.Invoke(command, raw);
-			if (result.Value == HookResult.Cancel) return false;
-			return true;
+			return Hooks.Command.Process?.Invoke(lowered, raw) != HookResult.Cancel;
 		}
 	}
 }

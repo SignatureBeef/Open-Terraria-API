@@ -4,7 +4,7 @@
 	{
 		internal static bool AnnouncementBox(int x, int y, int signId)
 		{
-			return Hooks.Wiring.AnnouncementBox?.Invoke(x, y, signId) == HookResult.Continue;
+			return Hooks.Wiring.AnnouncementBox?.Invoke(x, y, signId) != HookResult.Cancel;
 		}
 	}
 }

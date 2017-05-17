@@ -1,16 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace OTAPI.Modifications.NetworkText.Callbacks
+namespace OTAPI.Callbacks.Terraria
 {
-	internal static class SendChatMessageToClientCallback
+	internal static partial class NetMessage
 	{
 		/// <summary>
 		/// Injected into the start of Terraria.NetMessage.BroadcastChatMessage.  Return HookResult.Cancelled to supress the broadcast message.
 		/// </summary>
 		/// <returns>True if the program is to run vanilla code, false otherwise.</returns>
-		internal static bool BeforeSendChatMessageToClient(Terraria.Localization.NetworkText text, ref Color color, ref int ignorePlayer)
+		internal static bool BeforeSendChatMessageToClient(global::Terraria.Localization.NetworkText text, ref Color color, ref int ignorePlayer)
 		{
-			var beforeChatMessageHook = Hooks.SendChatMessageToClient.BeforeSendChatMessageToClient;
+			var beforeChatMessageHook = Hooks.Net.BeforeSendChatMessageToClient;
 
 			return (beforeChatMessageHook?.Invoke(text, ref color, ref ignorePlayer) ?? HookResult.Continue) == HookResult.Continue;
 		}
@@ -19,9 +19,9 @@ namespace OTAPI.Modifications.NetworkText.Callbacks
 		/// Injected into the start of Terraria.NetMessage.BroadcastChatMessage.  Return HookResult.Cancelled to supress the broadcast message.
 		/// </summary>
 		/// <returns>True if the program is to run vanilla code, false otherwise.</returns>
-		internal static void AfterSendChatMessageToClient(Terraria.Localization.NetworkText text, ref Color color, ref int ignorePlayer)
+		internal static void AfterSendChatMessageToClient(global::Terraria.Localization.NetworkText text, ref Color color, ref int ignorePlayer)
 		{
-			var beforeChatMessageHook = Hooks.SendChatMessageToClient.AfterSendChatMessageToClient;
+			var beforeChatMessageHook = Hooks.Net.AfterSendChatMessageToClient;
 
 			beforeChatMessageHook?.Invoke(text, ref color, ref ignorePlayer);
 		}

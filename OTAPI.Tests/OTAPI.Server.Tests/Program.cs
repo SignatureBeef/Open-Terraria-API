@@ -2,24 +2,25 @@
 using OTAPI.Tests.Common;
 using System;
 using Terraria;
+using Terraria.Localization;
 
 namespace OTAPI.Tests
 {
 	class Program
 	{
-        public static void ForceLoadThread()
-        {
-            Terraria.Program.ForceLoadAssembly(typeof(Terraria.Program).Assembly, true);
-        }
+		public static void ForceLoadThread()
+		{
+			Terraria.Program.ForceLoadAssembly(typeof(Terraria.Program).Assembly, true);
+		}
 
-        static void Main(string[] args)
+		static void Main(string[] args)
 		{
 			try
 			{
 				// this ensures OTAPI has it's XNA shims in place
-                Program.ForceLoadThread();
+				Program.ForceLoadThread();
 
-                var runner = new GameRunner();
+				var runner = new GameRunner();
 				runner.PreStart += AttachHooks;
 				runner.Main(args);
 			}
@@ -107,8 +108,26 @@ namespace OTAPI.Tests
 			};
 			Hooks.Player.NameCollision = (Player player) =>
 			{
-				LogHook(nameof(Hooks));
+				LogHook(nameof(Hooks.Player.NameCollision));
 				return HookResult.Continue;
+			};
+			Hooks.Net.BeforeBroadcastChatMessage = (NetworkText text, ref Color color, ref int ignorePlayer) =>
+			{
+				LogHook(nameof(Hooks.Net.BeforeBroadcastChatMessage));
+				return HookResult.Continue;
+			};
+			Hooks.Net.AfterBroadcastChatMessage = (NetworkText text, ref Color color, ref int ignorePlayer) =>
+			{
+				LogHook(nameof(Hooks.Net.AfterBroadcastChatMessage));
+			};
+			Hooks.Net.BeforeSendChatMessageToClient = (NetworkText text, ref Color color, ref int ignorePlayer) =>
+			{
+				LogHook(nameof(Hooks.Net.BeforeSendChatMessageToClient));
+				return HookResult.Continue;
+			};
+			Hooks.Net.AfterSendChatMessageToClient = (NetworkText text, ref Color color, ref int ignorePlayer) =>
+			{
+				LogHook(nameof(Hooks.Net.AfterSendChatMessageToClient));
 			};
 			#endregion
 			#region Npc Hooks
