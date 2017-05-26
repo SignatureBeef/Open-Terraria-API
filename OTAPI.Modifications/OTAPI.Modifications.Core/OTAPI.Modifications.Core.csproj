@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Hooks\HookHandler.cs" />
     <Compile Include="Hooks\HookResult.cs" />
+    <Compile Include="Modifications\PlatformModification.cs" />
     <Compile Include="Modifications\AssemblyModification.cs" />
     <Compile Include="NetMode.cs" />
     <Compile Include="Properties/AssemblyInfo.cs" />
