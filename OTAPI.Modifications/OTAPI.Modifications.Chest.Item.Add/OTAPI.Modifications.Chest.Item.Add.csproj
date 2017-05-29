@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{810E69DF-4736-49D5-8022-1EADECA376D4}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>OTAPI.Modifications.Chest.QuickStack</RootNamespace>
-    <AssemblyName>OTAPI.Modifications.Chest.QuickStack</AssemblyName>
+    <RootNamespace>OTAPI.Modifications.Chest.Item.Add</RootNamespace>
+    <AssemblyName>OTAPI.Modifications.Chest.Item.Add</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\OTAPI.Modifications.Chest.QuickStack.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\OTAPI.Modifications.Chest.Item.Add.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\OTAPI.Modifications.Chest.QuickStack.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\OTAPI.Modifications.Chest.Item.Add.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">

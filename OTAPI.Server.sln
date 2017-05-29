@@ -143,7 +143,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Net.Soc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chest", "Chest", "{1D45D297-6DDB-4FA0-BBB8-A9D3C6F5CAD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Chest.QuickStack", "OTAPI.Modifications\OTAPI.Modifications.Chest.Item.Add\OTAPI.Modifications.Chest.QuickStack.csproj", "{810E69DF-4736-49D5-8022-1EADECA376D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Chest.Item.Add", "OTAPI.Modifications\OTAPI.Modifications.Chest.Item.Add\OTAPI.Modifications.Chest.Item.Add.csproj", "{810E69DF-4736-49D5-8022-1EADECA376D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Npc.AI", "OTAPI.Modifications\OTAPI.Modifications.Npc.AI\OTAPI.Modifications.Npc.AI.csproj", "{79D50DDF-2EE8-407D-9413-1505C28602B0}"
 EndProject
@@ -177,9 +177,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.World.G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Net.CheckBytes", "OTAPI.Modifications\OTAPI.Modifications.Net.CheckBytes\OTAPI.Modifications.Net.CheckBytes.csproj", "{1C55DB57-548B-401F-AC25-872BAB898DC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Collision.GetEntityEdgeTiles", "OTAPI.Modifications\OTAPI.Modifications.Collision.FixGetEntityEdgeTiles\OTAPI.Modifications.Collision.GetEntityEdgeTiles.csproj", "{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Collision.GetEntityEdgeTiles", "OTAPI.Modifications\OTAPI.Modifications.Collision.GetEntityEdgeTiles\OTAPI.Modifications.Collision.GetEntityEdgeTiles.csproj", "{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Net.NetworkText", "OTAPI.Modifications\OTAPI.Modifications.NetworkText\OTAPI.Modifications.Net.NetworkText.csproj", "{C2F5A2DE-8A37-4633-96B4-2F636B8A028E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.Net.NetworkText", "OTAPI.Modifications\OTAPI.Modifications.Net.NetworkText\OTAPI.Modifications.Net.NetworkText.csproj", "{C2F5A2DE-8A37-4633-96B4-2F636B8A028E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Modifications.World.SpreadGrass", "OTAPI.Modifications\OTAPI.Modifications.World.SpreadGrass\OTAPI.Modifications.World.SpreadGrass.csproj", "{BD68AE57-0E7B-484F-9F90-57194FF0BF94}"
 EndProject
