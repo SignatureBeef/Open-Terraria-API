@@ -7,7 +7,7 @@ $serverSaveFile = [IO.Path]::Combine("wrap", "TerrariaServer", "TerrariaServer.e
 $zipSavePath = [IO.Path]::Combine("wrap", "TerrariaServer", "TerrariaServer.zip");
 
 $clientSaveFile = "wrap\Terraria\Terraria.exe"
-$clientSourcePath = "Steam\steamapps\common\Terraria\Terraria.exe"
+$clientSourcePath = "$((Get-ItemProperty HKLM:\SOFTWARE\WOW6432Node\re-logic\terraria\).exe_path)".Replace('/','\')
 
 #Gets the working path for the current script being executed
 Try
@@ -63,9 +63,9 @@ Catch
 
 #Find the zip url in the html content
 $html = [System.IO.File]::ReadAllText($terrariaHtml);
-$indexor = $html.LastIndexOf("'>Dedicated Server</a>")
+$indexor = $html.LastIndexOf('">Dedicated Server</a>')
 $html = $html.Substring(0, $indexor);
-$indexor = $html.LastIndexOf("'")
+$indexor = $html.LastIndexOf('"')
 $html = $html.Remove(0, $indexor + 1);
 #Found it, now prepare the variable so the download method can use it
 $downloadUrl = "https://terraria.org/" + $html;
