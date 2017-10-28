@@ -63,12 +63,26 @@ Catch
 
 #Find the zip url in the html content
 $html = [System.IO.File]::ReadAllText($terrariaHtml);
-$indexor = $html.LastIndexOf('">Dedicated Server</a>')
-$html = $html.Substring(0, $indexor);
-$indexor = $html.LastIndexOf('"')
+$indexor = $html.LastIndexOf('>Dedicated Server</a>');
+
+If($indexor -eq -1)
+{
+	Write-Host "Script needs an update";
+	Return;
+}
+
+$attr_char = $html[$indexor - 1];
+$html = $html.Substring(0, $indexor - 1);
+$indexor = $html.LastIndexOf($attr_char);
 $html = $html.Remove(0, $indexor + 1);
 #Found it, now prepare the variable so the download method can use it
 $downloadUrl = "https://terraria.org/" + $html;
+
+If($indexor -eq -1)
+{
+	Write-Host "Script needs an update: $attr_char";
+	Return;
+}
 
 #Download the latest zip
 Write-Host "Downloading $downloadUrl";
