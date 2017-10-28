@@ -77,6 +77,7 @@
     <Compile Include="Extensions\ModuleDefinition\Wrapping\Wrapping.cs" />
     <Compile Include="Extensions\TypeDefinition\Accessibility.cs" />
     <Compile Include="Extensions\TypeDefinition\CecilHelpers.cs" />
+    <Compile Include="Framework\EmbeddedResourceExtractor.cs" />
     <Compile Include="Framework\Glob.cs" />
     <Compile Include="Modification\ModificationBase.cs" />
     <Compile Include="Modification\OrderAttribute.cs" />

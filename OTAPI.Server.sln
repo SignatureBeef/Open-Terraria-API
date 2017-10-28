@@ -1,10 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2CA8A2CD-657F-499E-92C2-B2E0AC5488C4}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		.travis.yml = .travis.yml
 		CONTRIBUTIONS.md = CONTRIBUTIONS.md
 		DEVELOPMENT.md = DEVELOPMENT.md
@@ -1022,5 +1023,8 @@ Global
 		{0B5AD12E-3ED4-42EF-B5F6-7F082C96326D} = {33765E63-95ED-40A7-BDB0-418BDA698C32}
 		{C2F5A2DE-8A37-4633-96B4-2F636B8A028E} = {936CBC51-EB4E-4381-B992-AC7D9D4DBB7F}
 		{BD68AE57-0E7B-484F-9F90-57194FF0BF94} = {D6DE4652-8079-493E-B6F0-220A24D96B7B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {543F33EE-BF64-4D6A-9F08-463CDCF68762}
 	EndGlobalSection
 EndGlobal
