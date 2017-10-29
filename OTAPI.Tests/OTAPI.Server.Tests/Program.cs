@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using OTAPI.Sockets;
 using OTAPI.Tests.Common;
 using System;
 using Terraria;
@@ -32,6 +33,10 @@ namespace OTAPI.Tests
 
 		static void AttachHooks(object sender, EventArgs args)
 		{
+			Hooks.Net.Socket.Create = () =>
+			{
+				return new AsyncSocket();
+			};
 			Hooks.Tile.CreateCollection = () =>
 			{
 				LogHook(nameof(Hooks.Tile.CreateCollection));

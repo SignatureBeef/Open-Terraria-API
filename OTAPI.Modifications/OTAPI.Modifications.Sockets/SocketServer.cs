@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OTAPI.Sockets
 {
-	delegate void SocketAccepted(Socket socket);
-
-	class SocketServer
+	public class SocketServer
 	{
 		private IPAddress _ipaddress;
 		private int _port;
@@ -58,21 +58,42 @@ namespace OTAPI.Sockets
 			_listener.Stop();
 		}
 
+		private readonly object _sync = new object();
+
 		private void ListenThread(object state)
 		{
 			try
 			{
+				var reset = new AutoResetEvent(false);
 				while (!_disconnect)
 				{
-					_listener.Server.Poll(500000, SelectMode.SelectRead);
+					_listener.AcceptSocketAsync()
+						.ContinueWith(async (task) =>
+						{
+							reset.Set();
+							if (task != null && task.IsCompleted)
+							{
+								if (task.Result != null && task.Result.Connected)
+								{
+									var socket = task.Result;
+									socket.NoDelay = true;
 
-					if (_disconnect) break;
-
-					// Accept new clients
-					while (_listener.Pending())
-					{
-						this._socketAccepted(_listener.AcceptSocket());
-					}
+									await Task.Run(() =>
+									{
+										try
+										{
+											lock (_sync) // prevent slots being misallocated
+												this._socketAccepted(socket);
+										}
+										catch (Exception ex)
+										{
+											Console.WriteLine(ex);
+										}
+									});
+								}
+							}
+						});
+					reset.WaitOne();
 				}
 			}
 			catch (Exception ex)

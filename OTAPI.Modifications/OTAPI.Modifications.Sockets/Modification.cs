@@ -9,7 +9,7 @@ namespace OTAPI.Sockets
 			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null",
 			"Terraria, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
 		};
-		public override string Description => $"Merging in {nameof(AsyncSocket)}";
+		public override string Description => $"Merging in sockets";//{nameof(Sockets.Modification.)}";
 
 		public override void Run()
 		{

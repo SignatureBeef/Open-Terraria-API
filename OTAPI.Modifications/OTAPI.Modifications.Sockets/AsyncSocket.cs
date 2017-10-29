@@ -7,215 +7,87 @@ using Terraria.Net.Sockets;
 
 namespace OTAPI.Sockets
 {
+	/// <summary>
+	/// A socket that is used by terraria as a server and client socket which uses <see cref="SocketAsyncEventArgs"/>
+	/// </summary>
 	public class AsyncSocket : Terraria.Net.Sockets.ISocket
 	{
-		private SocketServer _server;
+		private AsyncServerSocket _server;
+		private AsyncClientSocket _client;
 		private RemoteAddress _remoteAddress;
 
-		private Socket _socket;
+		/// <summary>
+		/// Creates a new server socket
+		/// </summary>
+		public AsyncSocket() { }
 
-		private TcpClient _connection;
-
-		private static AsyncArgsPool<ReceiveEventArgs> _receivePool = new AsyncArgsPool<ReceiveEventArgs>();
-		private static AsyncArgsPool<SendEventArgs> _sendPool = new AsyncArgsPool<SendEventArgs>();
-
-		public AsyncSocket()
+		/// <summary>
+		/// Creates a new client socket
+		/// </summary>
+		/// <param name="server">The server which is creating the socket</param>
+		/// <param name="socket"></param>
+		public AsyncSocket(AsyncServerSocket server, Socket socket)
 		{
-		}
-
-		public void OnReceiveComplete(ReceiveEventArgs args)
-		{
-			if (args.SocketError != System.Net.Sockets.SocketError.Success || args.BytesTransferred == 0)
-			{
-				//Release back to the pool
-				args.Socket = null;
-				_receivePool.PushBack(args);
-
-				Close();
-			}
-			else
-			{
-				// give to terraria
-				args.ReceiveCallback(args.UserToken, args.BytesTransferred);
-
-				args.Socket = null;
-				_receivePool.PushBack(args);
-			}
-		}
-
-		public void OnSendComplete(SendEventArgs args)
-		{
-			if (args.SocketError != System.Net.Sockets.SocketError.Success)
-			{
-				//Release back to the pool
-				args.Socket = null;
-				_sendPool.PushBack(args);
-
-				Close();
-			}
-			else
-			{
-				// give to terraria
-				args.SendCallback(args.UserToken);
-
-				args.Socket = null;
-				_sendPool.PushBack(args);
-			}
-		}
-
-		public AsyncSocket(Socket socket)
-		{
-			this._socket = socket;
+			//client
+			_client = new AsyncClientSocket(server, socket);
 
 			var endpoint = (IPEndPoint)socket.RemoteEndPoint;
 			this._remoteAddress = new TcpAddress(endpoint.Address, endpoint.Port);
 		}
 
-		public bool IsConnected()
+		public void SetRemoteClient(RemoteClient remoteClient)
 		{
-			return
-				(_socket != null && _socket.Connected)
-				|| (_connection != null && _connection.Connected)
-			;
-		}
-
-		public bool IsDataAvailable()
-		{
-			if (_socket != null && _socket.Connected)
-				return _socket.Available > 0;
-			else if (_connection != null && _connection.Connected)
-				return _connection.Available > 0;
-
-			return false;
-		}
-
-		public RemoteAddress GetRemoteAddress()
-		{
-			return _remoteAddress;
-		}
-
-		public bool StartListening(SocketConnectionAccepted callback)
-		{
-			var any = IPAddress.Any;
-			string ipString;
-			if (Program.LaunchParameters.TryGetValue("-ip", out ipString) && !IPAddress.TryParse(ipString, out any))
-			{
-				any = IPAddress.Any;
-			}
-
-			_server = new SocketServer(any, Netplay.ListenPort);
-			_server.SetConnectionAcceptedCallback((socket) =>
-			{
-				socket.NoDelay = true;
-
-				var imp = new AsyncSocket(socket);
-				Console.WriteLine(imp.GetRemoteAddress() + " is connecting...");
-				callback(imp);
-			});
-			return _server.Start();
-		}
-
-		public void StopListening()
-		{
-			_server.Stop();
-		}
-
-		public void Close()
-		{
-			if (_server != null)
-			{
-				_server.Stop();
-			}
-
-			if (_socket != null)
-			{
-				try
-				{
-					_socket.Close();
-				}
-				catch (SocketException) { }
-				catch (ObjectDisposedException) { }
-			}
-
-			if (_connection != null)
-			{
-				try
-				{
-					_connection.Close();
-				}
-				catch (SocketException) { }
-				catch (ObjectDisposedException) { }
-			}
-		}
-
-		public void Connect(RemoteAddress address)
-		{
-			if (this._connection == null)
-			{
-				this._connection = new TcpClient();
-				this._connection.NoDelay = true;
-			}
-
-			TcpAddress tcpAddress = (TcpAddress)address;
-			this._connection.Connect(tcpAddress.Address, tcpAddress.Port);
-			this._remoteAddress = address;
+			_client.SetRemoteClient(remoteClient);
 		}
 
 		public void AsyncReceive(byte[] data, int offset, int size, SocketReceiveCallback callback, object state = null)
 		{
-			var arg = _receivePool.PopFront();
-			arg.SetBuffer(data, offset, size);
-			arg.ReceiveCallback = callback;
-			arg.UserToken = state;
-			arg.Socket = this;
-
-			if (_socket != null)
-			{
-				if (!_socket.ReceiveAsync(arg))
-				{
-					//The receive was processed synchronously which means the callback wont be executed.
-					OnReceiveComplete(arg);
-				}
-			}
-			else if (_connection != null)
-			{
-				if (!_connection.Client.ReceiveAsync(arg))
-				{
-					//The receive was processed synchronously which means the callback wont be executed.
-					OnReceiveComplete(arg);
-				}
-			}
+			_client?.AsyncReceive(data, offset, size, callback, state);
 		}
 
 		public void AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state = null)
 		{
-			var arg = _sendPool.PopFront();
-			arg.SetBuffer(data, offset, size);
-			arg.SendCallback = callback;
-			arg.UserToken = state;
-			arg.Socket = this;
-
-			if (_socket != null)
-			{
-				if (!_socket.SendAsync(arg))
-				{
-					//The receive was processed synchronously which means the callback wont be executed.
-					OnSendComplete(arg);
-				}
-			}
-			else if (_connection != null)
-			{
-				if (!_connection.Client.SendAsync(arg))
-				{
-					//The receive was processed synchronously which means the callback wont be executed.
-					OnSendComplete(arg);
-				}
-			}
+			_client?.AsyncSend(data, offset, size, callback, state);
 		}
+
+		public void Close()
+		{
+			_client?.Close();
+		}
+
+		public void Connect(RemoteAddress address)
+		{
+			throw new NotImplementedException();
+		}
+
+		public RemoteAddress GetRemoteAddress() => _remoteAddress;
+
+		public bool IsConnected() => _client?.IsActive == true;
+
+		public bool IsDataAvailable() => _client?.IsDataAvailable == true;
 
 		public void SendQueuedPackets()
 		{
 
+		}
+
+		public bool StartListening(SocketConnectionAccepted callback)
+		{
+			if (_server == null)
+			{
+				_server = new AsyncServerSocket(callback);
+			}
+			return _server.Listen();
+		}
+
+		public void StopListening()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void StartReading()
+		{
+			_client?.StartReading();
 		}
 	}
 }

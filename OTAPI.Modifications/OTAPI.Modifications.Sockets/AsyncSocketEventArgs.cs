@@ -4,6 +4,12 @@ namespace OTAPI.Sockets
 {
 	public class AsyncSocketEventArgs : SocketAsyncEventArgs
 	{
-		public AsyncSocket Socket { get; set; }
+		public volatile AsyncClientSocket conn;
+
+		//public long Id { get; internal set; }
+
+		protected override void OnCompleted(SocketAsyncEventArgs e)
+		{
+		}
 	}
 }

@@ -47,11 +47,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AsyncArgsPool.cs" />
+    <Compile Include="AsyncClientSocket.cs" />
+    <Compile Include="AsyncServerSocket.cs" />
     <Compile Include="AsyncSocket.cs" />
     <Compile Include="AsyncSocketEventArgs.cs" />
+    <Compile Include="Delegates.cs" />
     <Compile Include="Modification.cs" />
-    <Compile Include="ReceiveEventArgs.cs" />
-    <Compile Include="SendEventArgs.cs" />
+    <Compile Include="ReceiveArgs.cs" />
+    <Compile Include="SendArgs.cs" />
     <Compile Include="SocketServer.cs" />
   </ItemGroup>
   <ItemGroup>
