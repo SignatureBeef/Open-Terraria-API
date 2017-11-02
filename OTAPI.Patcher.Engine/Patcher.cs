@@ -315,10 +315,8 @@ namespace OTAPI.Patcher.Engine
 				CopyAttributes = true,
 				XmlDocumentation = true,
 				UnionMerge = true,
-
-#if DEBUG
+				
 				DebugInfo = true
-#endif
 			};
 
 			//Generate the allow list of types from our modifications

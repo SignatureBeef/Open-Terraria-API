@@ -26,6 +26,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
 			var callback = this.Method(() => OTAPI.Callbacks.Terraria.Netplay.ServerSocketCreate());
 			var tcp_socket = this.Type<TcpSocket>().FullName;
 
+			System.Console.WriteLine();
+
 			vanilla.DeclaringType.Module.ForEachInstruction((meth, ins) =>
 			{
 				if (ins.OpCode == OpCodes.Newobj)

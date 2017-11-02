@@ -21,11 +21,15 @@
     <DocumentationFile>bin\Debug\OTAPI.Patcher.xml</DocumentationFile>
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\OTAPI.Patcher.xml</DocumentationFile>
+    <ExternalConsole>true</ExternalConsole>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <!--<Choose>

@@ -38,7 +38,11 @@ namespace OTAPI.Patcher
 					@"-pre-merge-in=../../../wrap/TerrariaServer/ReLogic.dll",
 					@"-pre-merge-out=../../../TerrariaServer.dll",
 					@"-in=../../../TerrariaServer.dll",
+#if DEBUG
 					@"-mod=../../../OTAPI.Modifications/OTAPI.Modifications.*/bin/Debug/OTAPI.*.dll",
+#else
+					@"-mod=../../../OTAPI.Modifications/OTAPI.Modifications.*/bin/Release/OTAPI.*.dll",
+#endif
 					@"-o=../../../OTAPI.dll"
 				};
 #endif
@@ -112,10 +116,8 @@ namespace OTAPI.Patcher
 					CopyAttributes = true,
 					XmlDocumentation = true,
 					UnionMerge = true,
-
-#if DEBUG
+					
 					DebugInfo = true
-#endif
 				};
 
 				var repacker = new ILRepacking.ILRepack(roptions);

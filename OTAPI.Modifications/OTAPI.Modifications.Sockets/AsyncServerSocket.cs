@@ -10,8 +10,8 @@ namespace OTAPI.Sockets
 	{
 		private SocketServer _server;
 
-		public AsyncArgsPool<ReceiveArgs> ReceiveSocketPool = new AsyncArgsPool<ReceiveArgs>();
-		public AsyncArgsPool<SendArgs> SendSocketPool = new AsyncArgsPool<SendArgs>();
+		public AsyncArgsPool<ReceiveArgs> ReceiveSocketPool = new AsyncArgsPool<ReceiveArgs>(nameof(ReceiveArgs));
+		public AsyncArgsPool<SendArgs> SendSocketPool = new AsyncArgsPool<SendArgs>(nameof(SendArgs));
 
 		private SocketConnectionAccepted _callback;
 
