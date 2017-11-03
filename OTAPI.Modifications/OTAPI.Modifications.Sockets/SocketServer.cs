@@ -12,7 +12,7 @@ namespace OTAPI.Sockets
 		private int _port;
 
 		private TcpListener _listener;
-		private bool _disconnect;
+		private volatile bool _disconnect;
 
 		private SocketAccepted _socketAccepted;
 
@@ -46,7 +46,7 @@ namespace OTAPI.Sockets
 				return false;
 			}
 
-			new System.Threading.Thread(ListenThread).Start();
+			new Thread(ListenThread).Start();
 
 			return true;
 		}
@@ -76,14 +76,22 @@ namespace OTAPI.Sockets
 								if (task.Result != null && task.Result.Connected)
 								{
 									var socket = task.Result;
-									socket.NoDelay = true;
 
 									await Task.Run(() =>
 									{
 										try
 										{
 											lock (_sync) // prevent slots being misallocated
-												this._socketAccepted(socket);
+											{
+												if (!_disconnect)
+												{
+													this._socketAccepted(socket);
+												}
+												else
+												{
+													socket.Close();
+												}
+											}
 										}
 										catch (Exception ex)
 										{
@@ -100,6 +108,9 @@ namespace OTAPI.Sockets
 			{
 				Console.WriteLine($"{nameof(ListenThread)} terminated with exception\n{ex}");
 			}
+
+			Terraria.Netplay.IsListening = false;
+			Console.WriteLine($"{nameof(ListenThread)} has exited");
 		}
 	}
 }

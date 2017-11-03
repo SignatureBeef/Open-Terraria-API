@@ -82,7 +82,7 @@ namespace OTAPI.Sockets
 
 		public void StopListening()
 		{
-			throw new NotImplementedException();
+			_server.Stop();
 		}
 
 		public void StartReading()

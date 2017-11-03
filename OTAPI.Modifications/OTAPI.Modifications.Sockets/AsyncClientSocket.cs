@@ -30,6 +30,8 @@ namespace OTAPI.Sockets
 		{
 			this.Server = server;
 			this.Source = source;
+
+			source.LingerState = new LingerOption(true, 10);
 		}
 
 		public void StartReading()

@@ -20,6 +20,12 @@ namespace OTAPI.Sockets
 			_callback = callback;
 		}
 
+		public void Stop()
+		{
+			_server.Stop();
+			_server = null;
+		}
+
 		public bool Listen()
 		{
 			if (_server == null)
@@ -40,9 +46,16 @@ namespace OTAPI.Sockets
 						//Console.WriteLine(imp.GetRemoteAddress() + " is connecting...");
 						_callback(imp);
 
-						var remoteClient = Netplay.Clients.Single(x => x != null && x.Socket == imp);
-						imp.SetRemoteClient(remoteClient);
-						imp.StartReading();
+						var remoteClient = Netplay.Clients.SingleOrDefault(x => x != null && x.Socket == imp);
+						if (remoteClient != null)
+						{
+							imp.SetRemoteClient(remoteClient);
+							imp.StartReading();
+						}
+						else
+						{
+							socket.Close();
+						}
 					}
 					catch (Exception ex)
 					{

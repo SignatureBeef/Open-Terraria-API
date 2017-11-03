@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+using System.Collections.Concurrent;
 
 namespace OTAPI.Sockets
 {
 	public class AsyncArgsPool<TSocketAsyncEventArgs>
 		where TSocketAsyncEventArgs : AsyncSocketEventArgs, new()
 	{
-		private Queue<TSocketAsyncEventArgs> _pool = new Queue<TSocketAsyncEventArgs>();
-
-		public int Capacity => Interlocked.CompareExchange(ref capacity, 0, 0);
-
-		private int free = 0;
-		private int capacity = 0;
+		private ConcurrentStack<TSocketAsyncEventArgs> _pool = new ConcurrentStack<TSocketAsyncEventArgs>();
 
 		public string Prefix { get; set; }
 
@@ -23,23 +17,20 @@ namespace OTAPI.Sockets
 
 		public TSocketAsyncEventArgs PopFront()
 		{
-			var free_args = Interlocked.CompareExchange(ref free, 0, 0);
-			if (free_args <= 0)
-			{
-				Console.WriteLine($"[{Prefix} {typeof(TSocketAsyncEventArgs).Name}] capacity now at: {Capacity}");
-				return new TSocketAsyncEventArgs();
-			}
+			TSocketAsyncEventArgs args;
 
-			return _pool.Dequeue();
+			if (!_pool.TryPop(out args))
+			{
+				args = new TSocketAsyncEventArgs();
+			}
+			return args;
 		}
 
 		public void PushBack(TSocketAsyncEventArgs args)
 		{
 			if (args.conn != null) throw new InvalidOperationException($"Cannot push in a non released socket. Please reset {nameof(args.conn)}");
 
-			_pool.Enqueue(args);
-
-			Interlocked.Increment(ref free);
+			_pool.Push(args);
 		}
 	}
 }
