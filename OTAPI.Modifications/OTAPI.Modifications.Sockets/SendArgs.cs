@@ -57,11 +57,17 @@ namespace OTAPI.Sockets
 		/// <summary>
 		/// Prepares the arg for sending
 		/// </summary>
-		public void Prepare()
+		public bool Prepare()
 		{
-			// the base will pin these segments to native code when we do this
-			// this means we cannot alter the list after we do this
-			base.BufferList = segments;
+			if (segments.Count > 0)
+			{
+				// the base will pin these segments to native code when we do this
+				// this means we cannot alter the list after we do this
+				base.BufferList = segments;
+				return true;
+			}
+
+			return false;
 		}
 
 		/// <summary>

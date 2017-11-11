@@ -29,7 +29,7 @@ namespace OTAPI.Sockets
 		/// <summary>
 		/// Used to know if there is a send operation in progress to the client
 		/// </summary>
-		protected volatile bool sending = false;
+		protected bool sending = false;
 
 		/// <summary>
 		/// Store packets while an operation is in progress
@@ -184,12 +184,15 @@ namespace OTAPI.Sockets
 		{
 			outgoing.NotifySent();
 
-			sending = SendMore(outgoing);
-
-			if (!sending)
+			lock (_sendQueue)
 			{
-				outgoing.conn = null;
-				Server.SendSocketPool.PushBack(outgoing);
+				sending = SendMore(outgoing);
+
+				if (!sending)
+				{
+					outgoing.conn = null;
+					Server.SendSocketPool.PushBack(outgoing);
+				}
 			}
 		}
 
@@ -200,6 +203,15 @@ namespace OTAPI.Sockets
 
 		public void AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state = null)
 		{
+			if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
+			if (offset < 0 || size < 0 || size > data.Length - offset)
+			{
+				throw new ArgumentOutOfRangeException(nameof(data));
+			}
+
 			_sendQueue.Enqueue(new SendRequest()
 			{
 				segment = new ArraySegment<byte>(data, offset, size),
@@ -207,9 +219,12 @@ namespace OTAPI.Sockets
 				state = state
 			});
 
-			if (!sending)
+			lock (_sendQueue)
 			{
-				sending = SendMore();
+				if (!sending)
+				{
+					sending = SendMore();
+				}
 			}
 		}
 
@@ -236,19 +251,20 @@ namespace OTAPI.Sockets
 				preallocated.Enqueue(request);
 			}
 
-			preallocated.Prepare();
-
-			try
+			if (preallocated.Prepare())
 			{
-				queued = Source.SendAsync(preallocated);
-			}
-			catch (SocketException e)
-			{
-				HandleError(e.SocketErrorCode);
-			}
-			catch (ObjectDisposedException)
-			{
-				HandleError(SocketError.OperationAborted);
+				try
+				{
+					queued = Source.SendAsync(preallocated);
+				}
+				catch (SocketException e)
+				{
+					HandleError(e.SocketErrorCode);
+				}
+				catch (ObjectDisposedException)
+				{
+					HandleError(SocketError.OperationAborted);
+				}
 			}
 
 			return queued;
