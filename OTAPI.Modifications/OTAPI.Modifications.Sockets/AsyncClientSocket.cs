@@ -24,7 +24,7 @@ namespace OTAPI.Sockets
 		public bool IsActive { get; private set; }
 		public bool IsDataAvailable => recvBytes > 0;
 
-		public int MaxPacketsPerOperation { get; set; } = 100;
+		public int MaxPacketsPerOperation { get; set; } = 1024; //crazy high by default
 
 		/// <summary>
 		/// Used to know if there is a send operation in progress to the client
@@ -229,8 +229,9 @@ namespace OTAPI.Sockets
 			}
 
 			preallocated.conn = this;
-			
-			while (_sendQueue.TryDequeue(out SendRequest request))
+
+			var total = 0;
+			while (_sendQueue.TryDequeue(out SendRequest request) && total++ < MaxPacketsPerOperation)
 			{
 				preallocated.Enqueue(request);
 			}
