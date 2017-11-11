@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Net.Sockets;
 using System.Threading;
 using Terraria;
@@ -21,10 +22,21 @@ namespace OTAPI.Sockets
 		public string IpAddress { get; private set; }
 
 		public bool IsActive { get; private set; }
-		public bool IsDataAvailable => (recvBytes - recvBytesConsumed) > 0;
+		public bool IsDataAvailable => recvBytes > 0;
+
+		public int MaxPacketsPerOperation { get; set; } = 100;
+
+		/// <summary>
+		/// Used to know if there is a send operation in progress to the client
+		/// </summary>
+		protected volatile bool sending = false;
+
+		/// <summary>
+		/// Store packets while an operation is in progress
+		/// </summary>
+		protected ConcurrentQueue<SendRequest> _sendQueue = new ConcurrentQueue<SendRequest>();
 
 		protected int recvBytes;
-		protected int recvBytesConsumed;
 
 		public AsyncClientSocket(AsyncServerSocket server, Socket source)
 		{
@@ -85,6 +97,29 @@ namespace OTAPI.Sockets
 			}
 		}
 
+		/// <summary>
+		/// Despatches received data from the arg through to terrarias internal buffers
+		/// </summary>
+		protected virtual void DespatchData(ReceiveArgs args)
+		{
+			var id = this.RemoteClient.Id;
+			MessageBuffer obj = NetMessage.buffer[id];
+			lock (obj)
+			{
+				if (!this.RemoteClient.IsActive)
+				{
+					this.RemoteClient.IsActive = true;
+					this.RemoteClient.State = 0;
+				}
+
+				Buffer.BlockCopy(args.Buffer, args.Offset, NetMessage.buffer[id].readBuffer, NetMessage.buffer[id].totalData, recvBytes);
+				NetMessage.buffer[id].totalData += recvBytes;
+				NetMessage.buffer[id].checkBytes = true;
+
+				recvBytes = 0;
+			}
+		}
+
 		public virtual void ReceiveCompleted(ReceiveArgs args)
 		{
 			try
@@ -103,33 +138,14 @@ namespace OTAPI.Sockets
 				}
 				else
 				{
-					var bytes = args.BytesTransferred;
 					var receiving = false;
 					while (!receiving)
 					{
-						recvBytes += bytes;
+						recvBytes += args.BytesTransferred;
 
-						var id = this.RemoteClient.Id;
-						MessageBuffer obj = NetMessage.buffer[id];
-						lock (obj)
-						{
-							if (!this.RemoteClient.IsActive)
-							{
-								this.RemoteClient.IsActive = true;
-								this.RemoteClient.State = 0;
-							}
-
-							var len = recvBytes;
-							Buffer.BlockCopy(args.Buffer, 0, NetMessage.buffer[id].readBuffer, NetMessage.buffer[id].totalData, len);
-							NetMessage.buffer[id].totalData += len;
-							NetMessage.buffer[id].checkBytes = true;
-
-							recvBytes = 0;
-							recvBytesConsumed = 0;
-						}
+						this.DespatchData(args);
 
 						var left = args.Buffer.Length - recvBytes;
-
 						if (left <= 0)
 						{
 							return;
@@ -144,8 +160,6 @@ namespace OTAPI.Sockets
 						{
 							receiving = false;
 						}
-
-						if (receiving) bytes = args.BytesTransferred;
 					}
 
 					if (!receiving) release = true;
@@ -168,11 +182,15 @@ namespace OTAPI.Sockets
 
 		public virtual void SendCompleted(SendArgs outgoing)
 		{
-			outgoing.callback(outgoing.state);
-			outgoing.state = null;
-			outgoing.callback = null;
-			outgoing.conn = null;
-			Server.SendSocketPool.PushBack(outgoing);
+			outgoing.NotifySent();
+
+			sending = SendMore(outgoing);
+
+			if (!sending)
+			{
+				outgoing.conn = null;
+				Server.SendSocketPool.PushBack(outgoing);
+			}
 		}
 
 		public void AsyncReceive(byte[] data, int offset, int size, SocketReceiveCallback callback, object state = null)
@@ -182,18 +200,57 @@ namespace OTAPI.Sockets
 
 		public void AsyncSend(byte[] data, int offset, int size, SocketSendCallback callback, object state = null)
 		{
-			var outgoing = Server.SendSocketPool.PopFront();
-			outgoing.SetBuffer(data, offset, size);
-			outgoing.conn = this;
-			outgoing.callback = callback;
-			outgoing.state = state;
+			_sendQueue.Enqueue(new SendRequest()
+			{
+				segment = new ArraySegment<byte>(data, offset, size),
+				callback = callback,
+				state = state
+			});
+
+			if (!sending)
+			{
+				sending = SendMore();
+			}
+		}
+
+		/// <summary>
+		/// Attempts to send as many queued packets in one operation
+		/// </summary>
+		/// <param name="preallocated">A previously allocated arg</param>
+		/// <returns>True when the argument is queued to send</returns>
+		private bool SendMore(SendArgs preallocated = null)
+		{
+			bool queued = false;
+
+			if (preallocated == null)
+			{
+				preallocated = Server.SendSocketPool.PopFront();
+				preallocated.SetBuffer(null, 0, 0);
+			}
+
+			preallocated.conn = this;
+			
+			while (_sendQueue.TryDequeue(out SendRequest request))
+			{
+				preallocated.Enqueue(request);
+			}
+
+			preallocated.Prepare();
 
 			try
 			{
-				if (!Source.SendAsync(outgoing))
-					SendCompleted(outgoing);
+				queued = Source.SendAsync(preallocated);
 			}
-			catch (ObjectDisposedException) { }
+			catch (SocketException e)
+			{
+				HandleError(e.SocketErrorCode);
+			}
+			catch (ObjectDisposedException)
+			{
+				HandleError(SocketError.OperationAborted);
+			}
+
+			return queued;
 		}
 	}
 }
