@@ -63,8 +63,8 @@
   <!--</Otherwise>
   </Choose>-->
   <ItemGroup>
-    <Reference Include="ILRepack, Version=2.0.13.0, Culture=neutral, PublicKeyToken=c3e9373f1c31208e, processorArchitecture=MSIL">
-      <HintPath>..\packages\ILRepack.Lib.2.0.13\lib\net40\ILRepack.dll</HintPath>
+    <Reference Include="ILRepack, Version=2.0.15.0, Culture=neutral, PublicKeyToken=c3e9373f1c31208e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILRepack.Lib.2.0.15\lib\net40\ILRepack.dll</HintPath>
     </Reference>
     <Reference Include="NDesk.Options, Version=0.2.1.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\NDesk.Options.0.2.1\lib\NDesk.Options.dll</HintPath>
