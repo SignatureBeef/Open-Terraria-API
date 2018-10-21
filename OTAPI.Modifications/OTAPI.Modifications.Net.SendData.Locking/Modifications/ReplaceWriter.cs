@@ -152,8 +152,25 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 					   new { firstInstruction.OpCode, Operand = (ParameterDefinition)firstInstruction.Operand }
 				   );
 
-					firstInstruction.OpCode = OpCodes.Ldc_I4;
-					firstInstruction.Operand = 65535;
+					// Create "SendSectionBuffer" field
+					var sendSectionBufferSizeField = new FieldDefinition("sendSectionBufferSize",
+						FieldAttributes.Public | FieldAttributes.Static,
+						SourceDefinition.MainModule.TypeSystem.UInt32);
+					
+					sendSectionBufferSizeField.DeclaringType = sendData.DeclaringType;
+					sendData.DeclaringType.Fields.Add(sendSectionBufferSizeField);
+
+					var importedSendSectionBufferSize = this.SourceDefinition.MainModule.Import(sendSectionBufferSizeField);
+
+					// Init it in static constructor
+					var staticCtorProcessor = sendData.DeclaringType.StaticConstructor().Body.GetILProcessor();
+					staticCtorProcessor.InsertBefore(staticCtorProcessor.Body.Instructions[0],
+					   new { OpCodes.Ldc_I4, Operand = 65536 },
+					   new { OpCodes.Stsfld, Operand = importedSendSectionBufferSize }
+					);
+
+					firstInstruction.OpCode = OpCodes.Ldsfld;
+					firstInstruction.Operand = importedSendSectionBufferSize;
 
 					//find the position set, as we are starting from 0 with out new array
 					var argPosition = firstInstruction.Next(x => x.OpCode == OpCodes.Ldloc_3);
