@@ -132,70 +132,16 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 				VariableDefinition vrbBuffer = packetContents;
 				if (writeBuffer.Offset < offset.Offset)
 				{
-					//Needs a local buffer that gets written into our writer
+					processor.Replace(writeBuffer.Previous.Previous.Previous, Instruction.Create(OpCodes.Nop));
+					processor.Replace(writeBuffer.Previous.Previous, Instruction.Create(OpCodes.Nop));
+					processor.Replace(writeBuffer.Previous, Instruction.Create(OpCodes.Nop));
+					processor.Replace(writeBuffer, Instruction.Create(OpCodes.Ldloc_3));
 
-					//find the first argument (ldarg.s number)
-					var firstInstruction = writeBuffer.Previous(
-						x => x.OpCode == OpCodes.Ldarg_S
-						&& (x.Operand as ParameterReference).Name == "number"
-					);
+					var call = sendData.Body.Instructions.
+						Single(i => i.OpCode == OpCodes.Call && (i.Operand as MethodReference).Name == "CompressTileBlock");
 
-					VariableDefinition localBuffer;
-					sendData.Body.Variables.Add(localBuffer = new VariableDefinition(
-						this.SourceDefinition.MainModule.Import(typeof(byte[]))
-					));
-
-					processor.InsertAfter(firstInstruction,
-					   //new { OpCodes.Ldc_I4, Operand = 65536 },
-					   new { OpCodes.Newarr, Operand = this.SourceDefinition.MainModule.TypeSystem.Byte },
-					   new { OpCodes.Stloc, Operand = localBuffer },
-					   new { firstInstruction.OpCode, Operand = (ParameterDefinition)firstInstruction.Operand }
-				   );
-
-					firstInstruction.OpCode = OpCodes.Ldc_I4;
-					firstInstruction.Operand = 65535;
-
-					//find the position set, as we are starting from 0 with out new array
-					var argPosition = firstInstruction.Next(x => x.OpCode == OpCodes.Ldloc_3);
-					while (argPosition.Next.OpCode != OpCodes.Call)
-					{
-						processor.Remove(argPosition.Next);
-					}
-					argPosition.OpCode = OpCodes.Ldc_I4_0;
-
-					vrbBuffer = localBuffer;
-
-					// the local buffer is now in place
-					// we now need to send it off to the writer, instead of simply incrementing
-
-					// get the method call and skip the result variable and remove all instructions until the branch out
-					var call = writeBuffer.Next(
-						x => x.OpCode == OpCodes.Call
-						&& (x.Operand as MethodReference).Name == "CompressTileBlock"
-					).Next;
-
-					while (call.Next.OpCode != OpCodes.Br)
-					{
-						processor.Remove(call.Next);
-					}
-
-					processor.InsertAfter(call,
-						new { OpCode = binaryWriter },
-						new { OpCodes.Ldloc, localBuffer },
-						new { OpCodes.Ldc_I4_0 },
-						new { OpCodes.Ldloc_S, Operand = (VariableDefinition)call.Operand },
-						new
-						{
-							OpCodes.Callvirt,
-							Operand = this.SourceDefinition.MainModule.Import(typeof(BinaryWriter)
-								.GetMethods()
-								.Single(x => x.Name == "Write"
-									&& x.GetParameters().Count() == 3
-									&& x.GetParameters()[0].ParameterType == typeof(byte[])
-								)
-							)
-						}
-					);
+					call.Operand = this.SourceDefinition.MainModule.Import(this.Method(() => NetMessage.CompressTileBlock(0, 0, 0, 0, null, 0)));
+					continue;
 				}
 
 				var loadedBuffer = writeBuffer.Previous(
