@@ -11,6 +11,9 @@ namespace OTAPI.Modifications.Mono.Modifications
 	/// Since we use the Windows TerrariaServer.exe we need to handle windows specific code
 	/// In this case we need to replace all calls to 'FileOperationAPIWrapper.MoveToRecycleBin'
 	/// and redirect them to our own callback that will handle mono+.net
+	///
+	/// UPDATE: This PInvoke is apparently quite broken on .net core, so I have decided to remove it for all platforms.
+	/// - Kevin
 	/// </summary>
 	public class HandlePlatformIO : ModificationBase
 	{
