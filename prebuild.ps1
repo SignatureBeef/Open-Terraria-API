@@ -63,7 +63,7 @@ Catch
 
 #Find the zip url in the html content
 $html = [System.IO.File]::ReadAllText($terrariaHtml);
-$indexor = $html.LastIndexOf('>Dedicated Server</a>');
+$indexor = $html.LastIndexOf('>PC Dedicated Server</a>');
 
 If($indexor -eq -1)
 {

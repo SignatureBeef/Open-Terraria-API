@@ -18,12 +18,12 @@ namespace OTAPI.Modifications.NetworkText.Modifications
 		{
 			Color tmpColor = new Color();
 			int tmpInt = 0;
-			var broadcastChatMessage = Method<Terraria.NetMessage>("SendChatMessageToClient", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-			var broadcastChatMessageBeforeCallback = Method(() => Callbacks.Terraria.NetMessage.BeforeBroadcastChatMessage(null, ref tmpColor, ref tmpInt));
-			var broadcastChatMessageAfterCallback = Method(() => Callbacks.Terraria.NetMessage.AfterBroadcastChatMessage(null, ref tmpColor, ref tmpInt));
+			var sendChatMessage = Method<Terraria.NetMessage>("SendChatMessageToClient", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+			var sendChatMessageBeforeCallback = Method(() => Callbacks.Terraria.NetMessage.BeforeSendChatMessageToClient(null, ref tmpColor, ref tmpInt));
+			var sendChatMessageAfterCallback = Method(() => Callbacks.Terraria.NetMessage.AfterSendChatMessageToClient(null, ref tmpColor, ref tmpInt));
 
-			broadcastChatMessage.Wrap(broadcastChatMessageBeforeCallback, 
-				broadcastChatMessageAfterCallback,
+			sendChatMessage.Wrap(sendChatMessageBeforeCallback, 
+				sendChatMessageAfterCallback,
 				beginIsCancellable: true,
 				noEndHandling: true,
 				allowCallbackInstance: false);

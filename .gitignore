@@ -34,3 +34,4 @@ Steamworks.NET.dll
 
 *.lock.json
 OTAPI.Core.Tests/lib/net451/OTAPI.Sockets.dll
+/OTAPI.Server.sln.DotSettings.user
