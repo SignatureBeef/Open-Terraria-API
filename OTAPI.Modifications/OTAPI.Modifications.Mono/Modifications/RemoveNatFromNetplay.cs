@@ -30,8 +30,8 @@ namespace OTAPI.Modifications.Mono.Modifications
 				method.Body.ExceptionHandlers.Clear();
 			}
 
-			netplay.Fields.Remove(netplay.Field("mappings"));
-			netplay.Fields.Remove(netplay.Field("upnpnat"));
+			netplay.Fields.Remove(netplay.Field("_mappings"));
+			netplay.Fields.Remove(netplay.Field("_upnpnat"));
 
 			var typesToRemove = new List<TypeDefinition>();
 			this.SourceDefinition.MainModule.ForEachType(type =>

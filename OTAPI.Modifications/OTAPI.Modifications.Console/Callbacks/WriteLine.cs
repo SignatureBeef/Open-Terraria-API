@@ -41,5 +41,18 @@ namespace OTAPI.Callbacks.Terraria
 
 			System.Console.WriteLine(value);
 		}
+
+		internal static void WriteLine(string format, object arg) // i expect this to cause issues, as object[] ends up through here instead of params
+		{
+			if (Hooks.Console.WriteLine?.Invoke(new ConsoleHookArgs()
+			{
+				Format = null,
+				Arg1 = arg,
+				Arg2 = null
+			}) == HookResult.Cancel)
+				return;
+
+			System.Console.WriteLine(format, arg);
+		}
 	}
 }
