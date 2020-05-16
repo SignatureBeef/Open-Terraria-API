@@ -170,11 +170,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
 		void NurfWriteBuffer()
 		{
-			ClearResetWriter();
+            ClearResetWriter();
 			RemoveFromReset();
 			RemoveFromConstructor();
 
-			if (ScanForWriter())
+            RemoveOnConnectionAcceptedElse();
+            RemoveFromKickClient();
+
+            if (ScanForWriter())
 			{
 				throw new NotImplementedException("writeBuffer is still in use!");
 			}
@@ -182,7 +185,36 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 			RemoveWriteBuffer();
 		}
 
-		void ClearResetWriter()
+        void RemoveOnConnectionAcceptedElse()
+        {
+            var netplay = this.Type<Terraria.Netplay>();
+            var kickClient = netplay.Method("OnConnectionAccepted");
+            var procesor = kickClient.Body.GetILProcessor();
+
+            var offset = kickClient.Body.Instructions.First(x => x.OpCode == OpCodes.Ldsfld
+                && (x.Operand as FieldReference).Name == "fullBuffer"
+                && x.Previous.OpCode == OpCodes.Br_S
+            );
+
+            while (offset.Next.OpCode != OpCodes.Call)
+            {
+                procesor.Remove(offset.Next);
+            }
+        }
+
+        void RemoveFromKickClient()
+        {
+            var netplay = this.Type<Terraria.Netplay>();
+            var kickClient = netplay.Method("KickClient");
+            var procesor = kickClient.Body.GetILProcessor();
+
+            while (kickClient.Body.Instructions.Count > 1)
+            {
+                procesor.Remove(kickClient.Body.Instructions[0]);
+            }
+        }
+
+        void ClearResetWriter()
 		{
 			var resetWriter = this.Method(() => (new Terraria.MessageBuffer()).ResetWriter());
 			var procesor = resetWriter.Body.GetILProcessor();
@@ -248,5 +280,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 				this.Type<Terraria.MessageBuffer>().Field("writeBuffer") //dont use the typed reference or IL Repack will fail
 			);
 		}
+
+
 	}
 }

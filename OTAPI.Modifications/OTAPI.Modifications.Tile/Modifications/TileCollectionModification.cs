@@ -36,8 +36,8 @@ namespace OTAPI.Modification.Tile.Modifications
 
 			//Manually swap the declared types of Tile[] to ITileCollection
 			this.Field(() => Terraria.Main.tile).FieldType = iTileCollection;
-			this.SourceDefinition.Type("Terraria.World.Generation.GenBase").Property("_tiles").PropertyType = iTileCollection;
-			this.SourceDefinition.Type("Terraria.GameContent.Liquid.LiquidRenderer").Field("_tiles").FieldType = iTileCollection;
+			this.SourceDefinition.Type("Terraria.WorldBuilding.GenBase").Property("_tiles").PropertyType = iTileCollection;
+			this.SourceDefinition.Type("Terraria.GameContent.Liquid.LiquidRenderer").Property("Tiles").PropertyType = iTileCollection;
 
 			//The Terraria.Main.tile's static initialiser also needs to be corrected, as it's initialising
 			//the collection with Terraria.Tile[,] still.
