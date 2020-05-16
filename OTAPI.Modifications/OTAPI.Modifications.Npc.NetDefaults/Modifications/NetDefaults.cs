@@ -1,6 +1,7 @@
 ﻿using OTAPI.Patcher.Engine.Extensions;
 using OTAPI.Patcher.Engine.Modification;
 using System.Linq;
+using Terraria;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 {
@@ -17,8 +18,9 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
             var vanilla = this.Type<Terraria.NPC>().Method("SetDefaultsFromNetId");
 
             int tmp = 0;
-            var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Npc.NetDefaultsBegin(null, ref tmp));
-            var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Npc.NetDefaultsEnd(null, ref tmp));
+            NPCSpawnParams spawnparams = default(NPCSpawnParams);
+            var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.Npc.NetDefaultsBegin(null, ref tmp, ref spawnparams));
+            var cbkEnd = this.Method(() => OTAPI.Callbacks.Terraria.Npc.NetDefaultsEnd(null, ref tmp, ref spawnparams));
 
             vanilla.Wrap
             (
