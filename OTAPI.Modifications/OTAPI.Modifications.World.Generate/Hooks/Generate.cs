@@ -1,4 +1,4 @@
-﻿using Terraria.World.Generation;
+﻿using Terraria.WorldBuilding;
 
 namespace OTAPI
 {

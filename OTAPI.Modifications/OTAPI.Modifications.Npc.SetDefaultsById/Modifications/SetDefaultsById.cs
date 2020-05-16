@@ -14,7 +14,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		public override string Description => "Hooking Npc.SetDefaults(int,float)...";
 		public override void Run()
 		{
-			var vanilla = this.Method(() => (new Terraria.NPC()).SetDefaults(0, -1f));
+			var vanilla = this.Method(() => (new Terraria.NPC()).SetDefaults(0, default));
 
 			int tmpI = 0;
 			float tmpF = 0;

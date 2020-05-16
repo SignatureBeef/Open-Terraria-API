@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
 		public override string Description => "Hooking WorldFile.loadWorld(bool)...";
 		public override void Run()
 		{
-			var vanilla = this.Method(() => Terraria.IO.WorldFile.loadWorld(false));
+			var vanilla = this.Method(() => Terraria.IO.WorldFile.LoadWorld(false));
 
 			bool tmp = false;
 			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.WorldFile.LoadWorldBegin(ref tmp));

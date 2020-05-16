@@ -21,7 +21,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 		public override void Run()
 		{
 			//Get the vanilla meteor method reference
-			var vanilla = this.Method(() => Terraria.WorldGen.meteor(0, 0));
+			var vanilla = this.Method(() => Terraria.WorldGen.meteor(0, 0, false));
 
 			//Get the OTAPI callback method reference
 			int tmp = 0;

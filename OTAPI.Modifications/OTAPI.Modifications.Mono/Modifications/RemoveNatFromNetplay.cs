@@ -20,8 +20,8 @@ namespace OTAPI.Modifications.Mono.Modifications
 			var netplay = this.Type<Terraria.Netplay>();
 
 			foreach (var method in new[] {
-				this.Method(() => Terraria.Netplay.closePort()),
-				netplay.Method("OpenPort")
+                netplay.Method("OpenPort"),
+				netplay.Method("ClosePort")
 			})
 			{
 				method.Body.Instructions.Clear();

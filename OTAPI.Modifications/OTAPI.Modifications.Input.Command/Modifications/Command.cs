@@ -23,7 +23,7 @@ namespace OTAPI.Modifications.Main.Command.Modifications
 		public override void Run()
 		{
 			//Get the method references. One for vanilla, and imported version of our callback
-			var mStartDedInputCallBack = this.Method(() => Terraria.Main.startDedInputCallBack(null));
+			var mStartDedInputCallBack = this.Method(() => Terraria.Main.startDedInputCallBack());
 			var mCallback = this.SourceDefinition.MainModule.Import(
 				this.Method(() => OTAPI.Callbacks.Terraria.Main.ProcessCommand(null, null))
 			);

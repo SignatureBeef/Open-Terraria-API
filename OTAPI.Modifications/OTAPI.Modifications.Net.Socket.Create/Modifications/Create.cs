@@ -22,7 +22,9 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
 
 		public override void Run()
 		{
-			var vanilla = this.Method(() => Terraria.Netplay.ServerLoop(null));
+            var netplay = this.Type<Terraria.Netplay>();
+
+            var vanilla = netplay.Method("ServerLoop");
 			var callback = this.Method(() => OTAPI.Callbacks.Terraria.Netplay.ServerSocketCreate());
 			var tcp_socket = this.Type<TcpSocket>().FullName;
 
