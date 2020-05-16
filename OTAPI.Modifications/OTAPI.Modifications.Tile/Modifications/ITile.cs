@@ -88,7 +88,26 @@ namespace OTAPI.Modification.Tile.Modifications
 						if (methods.Count() == 0)
 							throw new Exception($"Method `{operandMethod.Name}` is not found on {iTile.FullName}");
 						else if (methods.Count() > 1)
-							throw new Exception($"Too many methods named `{operandMethod.Name}` found in {iTile.FullName}");
+						{
+							// quick fix, compare parameter types/refs
+
+							foreach(var mth in methods.ToArray())
+							{
+								for(var i = 0; i < operandMethod.Parameters.Count; i++)
+								{
+									var target = operandMethod.Parameters[i];
+									var matched = mth.Parameters[i];
+
+									if(target.ParameterType.FullName != matched.ParameterType.FullName)
+									{
+										methods = methods.Where(m => m != mth);
+									}
+								}
+							}
+
+							if (methods.Count() > 1)
+								throw new Exception($"Too many methods named `{operandMethod.Name}` found in {iTile.FullName}");
+						}
 
 						instruction.Operand = this.SourceDefinition.MainModule.Import(methods.Single());
 					}
