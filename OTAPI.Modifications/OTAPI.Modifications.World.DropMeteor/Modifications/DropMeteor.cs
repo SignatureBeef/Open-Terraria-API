@@ -15,13 +15,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking WorldGen.meteor(x,y)...";
 		public override void Run()
 		{
 			//Get the vanilla meteor method reference
-			var vanilla = this.Method(() => Terraria.WorldGen.meteor(0, 0));
+			var vanilla = this.Method(() => Terraria.WorldGen.meteor(0, 0, false));
 
 			//Get the OTAPI callback method reference
 			int tmp = 0;

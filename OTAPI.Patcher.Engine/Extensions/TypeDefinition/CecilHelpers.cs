@@ -135,7 +135,7 @@ namespace OTAPI.Patcher.Engine.Extensions
 						}
 					}
 
-					if (src.Name != ext.Name)
+					if (src.TypeName != ext.TypeName)
 					{
 						if (!(acceptParamObjectTypes && src.Name == "Object"))
 						{

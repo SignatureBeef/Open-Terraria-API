@@ -16,14 +16,14 @@ namespace OTAPI.Modifications.Main.Command.Modifications
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking console commands...";
 
 		public override void Run()
 		{
 			//Get the method references. One for vanilla, and imported version of our callback
-			var mStartDedInputCallBack = this.Method(() => Terraria.Main.startDedInputCallBack(null));
+			var mStartDedInputCallBack = this.Method(() => Terraria.Main.startDedInputCallBack());
 			var mCallback = this.SourceDefinition.MainModule.Import(
 				this.Method(() => OTAPI.Callbacks.Terraria.Main.ProcessCommand(null, null))
 			);

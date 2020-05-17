@@ -1,12 +1,14 @@
-﻿namespace OTAPI
+﻿using Terraria;
+
+namespace OTAPI
 {
     public static partial class Hooks
     {
         public static partial class Npc
         {
             #region Handlers
-            public delegate HookResult PreNetDefaultsHandler(global::Terraria.NPC npc, ref int type);
-            public delegate void PostNetDefaultsHandler(global::Terraria.NPC npc, ref int type);
+            public delegate HookResult PreNetDefaultsHandler(global::Terraria.NPC npc, ref int type, ref NPCSpawnParams spawnparams);
+            public delegate void PostNetDefaultsHandler(global::Terraria.NPC npc, ref int type, ref NPCSpawnParams spawnparams);
             #endregion
 
             /// <summary>

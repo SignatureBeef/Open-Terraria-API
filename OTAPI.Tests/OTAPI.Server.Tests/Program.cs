@@ -136,12 +136,12 @@ namespace OTAPI.Tests
 			};
 			#endregion
 			#region Npc Hooks
-			Hooks.Npc.PreSetDefaultsById = (NPC npc, ref int type, ref float scaleOverride) =>
+			Hooks.Npc.PreSetDefaultsById = (NPC npc, ref int type, ref NPCSpawnParams scaleOverride) =>
 			{
 				LogHook(nameof(Hooks.Npc.PreSetDefaultsById));
 				return HookResult.Continue;
 			};
-			Hooks.Npc.PreNetDefaults = (NPC npc, ref int type) =>
+			Hooks.Npc.PreNetDefaults = (NPC npc, ref int type, ref NPCSpawnParams spawnParams) =>
 			{
 				LogHook(nameof(Hooks.Npc.PreNetDefaults));
 				return HookResult.Continue;

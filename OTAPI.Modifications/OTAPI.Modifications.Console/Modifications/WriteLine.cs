@@ -10,12 +10,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking all Console.Write/Line calls...";
 
 		public override void Run()
 		{
+			return; // no one uses these afaik, and the write/line callbacks need to be 1:1, currently an object is receiving all overloads and thats not ideal
 			var redirectMethods = new[]
 			{
 				"Write",

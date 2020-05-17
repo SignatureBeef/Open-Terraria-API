@@ -8,12 +8,12 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking WorldFile.saveWorld(bool,bool)...";
 		public override void Run()
 		{
-			var vanilla = this.Method(() => Terraria.IO.WorldFile.saveWorld(false, false));
+			var vanilla = this.Method(() => Terraria.IO.WorldFile.SaveWorld(false, false));
 
 			bool tmp = false;
 			var cbkBegin = this.Method(() => OTAPI.Callbacks.Terraria.WorldFile.SaveWorldBegin(ref tmp, ref tmp));

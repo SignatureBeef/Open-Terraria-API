@@ -11,7 +11,7 @@ namespace OTAPI.Modifications.Mono.Modifications
 	{
 		public override IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Removing NAT from Netplay";
 
@@ -20,8 +20,8 @@ namespace OTAPI.Modifications.Mono.Modifications
 			var netplay = this.Type<Terraria.Netplay>();
 
 			foreach (var method in new[] {
-				this.Method(() => Terraria.Netplay.closePort()),
-				netplay.Method("OpenPort")
+                netplay.Method("OpenPort"),
+				netplay.Method("ClosePort")
 			})
 			{
 				method.Body.Instructions.Clear();
@@ -30,8 +30,8 @@ namespace OTAPI.Modifications.Mono.Modifications
 				method.Body.ExceptionHandlers.Clear();
 			}
 
-			netplay.Fields.Remove(netplay.Field("mappings"));
-			netplay.Fields.Remove(netplay.Field("upnpnat"));
+			netplay.Fields.Remove(netplay.Field("_mappings"));
+			netplay.Fields.Remove(netplay.Field("_upnpnat"));
 
 			var typesToRemove = new List<TypeDefinition>();
 			this.SourceDefinition.MainModule.ForEachType(type =>

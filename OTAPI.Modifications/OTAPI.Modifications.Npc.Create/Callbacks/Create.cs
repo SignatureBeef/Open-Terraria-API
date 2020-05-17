@@ -37,7 +37,7 @@
                 npc = new global::Terraria.NPC();
 
                 global::Terraria.Main.npc[index] = npc;
-                global::Terraria.Main.npc[index].SetDefaults(type, -1f);
+                global::Terraria.Main.npc[index].SetDefaults(type, default);
             }
 
             return npc;

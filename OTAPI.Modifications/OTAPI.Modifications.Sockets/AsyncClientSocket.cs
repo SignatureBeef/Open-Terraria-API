@@ -172,9 +172,9 @@ namespace OTAPI.Sockets
 					Server.ReceiveSocketPool.PushBack(args);
 				}
 
-				this.RemoteClient.IsReading = false;
-			}
-			catch (Exception ex)
+                Netplay.Connection.IsReading = true;
+            }
+            catch (Exception ex)
 			{
 				Console.WriteLine(ex);
 			}

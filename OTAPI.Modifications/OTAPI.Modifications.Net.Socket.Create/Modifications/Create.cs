@@ -15,14 +15,16 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Socket
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null",
+			"TerrariaServer, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null",
 			"Terraria, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking TcpSocket creations...";
 
 		public override void Run()
 		{
-			var vanilla = this.Method(() => Terraria.Netplay.ServerLoop(null));
+            var netplay = this.Type<Terraria.Netplay>();
+
+            var vanilla = netplay.Method("ServerLoop");
 			var callback = this.Method(() => OTAPI.Callbacks.Terraria.Netplay.ServerSocketCreate());
 			var tcp_socket = this.Type<TcpSocket>().FullName;
 

@@ -14,29 +14,33 @@
 
 		public static Vector4 One => _one;
 		public static Vector4 Zero => _zero;
-
-		public Vector4(Vector2 value, float z, float w)
-        {
-            this.W = w;
-            this.X = value.X;
-            this.Y = value.Y;
-            this.Z = z;
-        }
-
         public Vector4(float x, float y, float z, float w)
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
-            this.W = w;
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
+        }
+
+        public Vector4(Vector2 value, float z, float w)
+        {
+            X = value.X;
+            Y = value.Y;
+            Z = z;
+            W = w;
+        }
+
+        public Vector4(Vector3 value, float w)
+        {
+            X = value.X;
+            Y = value.Y;
+            Z = value.Z;
+            W = w;
         }
 
         public Vector4(float value)
         {
-            this.W = value;
-            this.Z = value;
-            this.Y = value;
-            this.X = value;
+            X = (Y = (Z = (W = value)));
         }
 
         public static Vector4 Lerp(Vector4 value1, Vector4 value2, float amount)
@@ -97,6 +101,26 @@
             return result;
         }
 
+        public static Vector4 operator /(Vector4 value1, Vector4 value2)
+        {
+            Vector4 result = default(Vector4);
+            result.X = value1.X / value2.X;
+            result.Y = value1.Y / value2.Y;
+            result.Z = value1.Z / value2.Z;
+            result.W = value1.W / value2.W;
+            return result;
+        }
+
+        public static Vector4 operator /(Vector4 value1, float divider)
+        {
+            float num = 1f / divider;
+            Vector4 result = default(Vector4);
+            result.X = value1.X * num;
+            result.Y = value1.Y * num;
+            result.Z = value1.Z * num;
+            result.W = value1.W * num;
+            return result;
+        }
 
         public bool Equals(Vector4 other)
         {
@@ -147,5 +171,24 @@
             result.W = p1.W - p2.W;
             return result;
         }
+
+        public static Vector4 Max(Vector4 value1, Vector4 value2)
+        {
+            Vector4 result = default(Vector4);
+            result.X = ((value1.X > value2.X) ? value1.X : value2.X);
+            result.Y = ((value1.Y > value2.Y) ? value1.Y : value2.Y);
+            result.Z = ((value1.Z > value2.Z) ? value1.Z : value2.Z);
+            result.W = ((value1.W > value2.W) ? value1.W : value2.W);
+            return result;
+        }
+
+        public static void Max(ref Vector4 value1, ref Vector4 value2, out Vector4 result)
+        {
+            result.X = ((value1.X > value2.X) ? value1.X : value2.X);
+            result.Y = ((value1.Y > value2.Y) ? value1.Y : value2.Y);
+            result.Z = ((value1.Z > value2.Z) ? value1.Z : value2.Z);
+            result.W = ((value1.W > value2.W) ? value1.W : value2.W);
+        }
+
     }
 }

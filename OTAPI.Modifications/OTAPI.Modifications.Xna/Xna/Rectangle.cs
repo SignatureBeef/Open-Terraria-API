@@ -60,39 +60,74 @@
 			this.Height = height;
 		}
 
-		public void Intersects (ref Rectangle value, out bool result)
+		public bool Intersects(Rectangle value)
 		{
-			result = (value.X < this.X + this.Width && this.X < value.X + value.Width && value.Y < this.Y + this.Height && this.Y < value.Y + value.Height);
-		}
-
-		public bool Intersects (Rectangle value)
-		{
-			return value.X < this.X + this.Width && this.X < value.X + value.Width && value.Y < this.Y + this.Height && this.Y < value.Y + value.Height;
-		}
-
-		public static void Intersect (ref Rectangle value1, ref Rectangle value2, out Rectangle result)
-		{
-			int r1r = value1.X + value1.Width;
-			int r2r = value2.X + value2.Width;
-			int r1b = value1.Y + value1.Height;
-			int r2b = value2.Y + value2.Height;
-			int maxX = (value1.X > value2.X) ? value1.X : value2.X;
-			int maxY = (value1.Y > value2.Y) ? value1.Y : value2.Y;
-			int minX = (r1r < r2r) ? r1r : r2r;
-			int minY = (r1b < r2b) ? r1b : r2b;
-			if (minX > maxX && minY > maxY)
+			if (value.X < X + Width && X < value.X + value.Width && value.Y < Y + Height)
 			{
-				result.X = maxX;
-				result.Y = maxY;
-				result.Width = minX - maxX;
-				result.Height = minY - maxY;
-				return;
+				return Y < value.Y + value.Height;
 			}
-			result.X = 0;
-			result.Y = 0;
-			result.Width = 0;
-			result.Height = 0;
+			return false;
 		}
+
+		public void Intersects(ref Rectangle value, out bool result)
+		{
+			result = (value.X < X + Width && X < value.X + value.Width && value.Y < Y + Height && Y < value.Y + value.Height);
+		}
+
+		public static Rectangle Intersect(Rectangle value1, Rectangle value2)
+		{
+			int num = value1.X + value1.Width;
+			int num2 = value2.X + value2.Width;
+			int num3 = value1.Y + value1.Height;
+			int num4 = value2.Y + value2.Height;
+			int num5 = (value1.X > value2.X) ? value1.X : value2.X;
+			int num6 = (value1.Y > value2.Y) ? value1.Y : value2.Y;
+			int num7 = (num < num2) ? num : num2;
+			int num8 = (num3 < num4) ? num3 : num4;
+			Rectangle result = default(Rectangle);
+			if (num7 > num5 && num8 > num6)
+			{
+				result.X = num5;
+				result.Y = num6;
+				result.Width = num7 - num5;
+				result.Height = num8 - num6;
+			}
+			else
+			{
+				result.X = 0;
+				result.Y = 0;
+				result.Width = 0;
+				result.Height = 0;
+			}
+			return result;
+		}
+
+		public static void Intersect(ref Rectangle value1, ref Rectangle value2, out Rectangle result)
+		{
+			int num = value1.X + value1.Width;
+			int num2 = value2.X + value2.Width;
+			int num3 = value1.Y + value1.Height;
+			int num4 = value2.Y + value2.Height;
+			int num5 = (value1.X > value2.X) ? value1.X : value2.X;
+			int num6 = (value1.Y > value2.Y) ? value1.Y : value2.Y;
+			int num7 = (num < num2) ? num : num2;
+			int num8 = (num3 < num4) ? num3 : num4;
+			if (num7 > num5 && num8 > num6)
+			{
+				result.X = num5;
+				result.Y = num6;
+				result.Width = num7 - num5;
+				result.Height = num8 - num6;
+			}
+			else
+			{
+				result.X = 0;
+				result.Y = 0;
+				result.Width = 0;
+				result.Height = 0;
+			}
+		}
+
 
 		public bool Contains (Point value)
 		{

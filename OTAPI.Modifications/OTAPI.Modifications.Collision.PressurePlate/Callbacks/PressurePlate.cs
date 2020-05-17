@@ -12,7 +12,7 @@
 			// In the patcher the below code is removed so we must action the logic ourselves.
 			// Broadcast to everyone.
 			global::Terraria.Wiring.HitSwitch(x, y);
-			global::Terraria.NetMessage.SendData(59, number: x, number2: y);
+			global::Terraria.NetMessage.TrySendData(59, number: x, number2: y);
 		}
 
 		internal static void HitSwitch(int x, int y, IEntity entity)
@@ -27,7 +27,7 @@
 			// In the patcher the below code is removed so we must action the logic ourselves.
 			// Broadcast to everyone except the player who triggered it.
 			global::Terraria.Wiring.HitSwitch(x, y);
-			global::Terraria.NetMessage.SendData(59, number: x, number2: y, ignoreClient: player.whoAmI);
+			global::Terraria.NetMessage.TrySendData(59, number: x, number2: y, ignoreClient: player.whoAmI);
 		}
 	}
 }

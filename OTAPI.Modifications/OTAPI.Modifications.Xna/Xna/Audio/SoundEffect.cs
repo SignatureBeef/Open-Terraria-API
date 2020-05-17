@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Xna.Framework.Audio
+﻿using System.IO;
+
+namespace Microsoft.Xna.Framework.Audio
 {
     public class SoundEffect
     {
@@ -8,5 +10,7 @@
         {
             return default(SoundEffectInstance);
         }
+
+        public static SoundEffect FromStream(Stream stream) => null;
     }
 }

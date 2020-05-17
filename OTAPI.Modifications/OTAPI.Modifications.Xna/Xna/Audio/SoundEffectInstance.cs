@@ -1,6 +1,8 @@
-﻿namespace Microsoft.Xna.Framework.Audio
+﻿using System;
+
+namespace Microsoft.Xna.Framework.Audio
 {
-    public class SoundEffectInstance
+    public class SoundEffectInstance : IDisposable
     {
         public static SoundEffectInstance[] Array;
 
@@ -21,5 +23,6 @@
         }
 		public void Pause() { }
 		public void Resume() { }
-	}
+		public void Dispose() { }
+    }
 }

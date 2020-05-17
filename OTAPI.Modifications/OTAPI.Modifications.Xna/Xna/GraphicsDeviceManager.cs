@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Microsoft.Xna.Framework
 {
@@ -16,5 +17,39 @@ namespace Microsoft.Xna.Framework
 
         public GraphicsDevice GraphicsDevice { get; set; }
         public GraphicsProfile GraphicsProfile { get; set; }
+
+        public event EventHandler<EventArgs> DeviceCreated;
+
+        public event EventHandler<EventArgs> DeviceResetting;
+
+		public event EventHandler<EventArgs> DeviceReset;
+
+		public event EventHandler<EventArgs> DeviceDisposing;
+
+		public event EventHandler<PreparingDeviceSettingsEventArgs> PreparingDeviceSettings;
+
+		public event EventHandler<EventArgs> Disposed;
+	}
+
+    public class GraphicsDeviceInformation
+    {
+        public GraphicsAdapter Adapter { get; set; }
+
+        public GraphicsProfile GraphicsProfile { get; set; }
+
+        public PresentationParameters PresentationParameters { get; set; }
+
+        public override bool Equals(object obj) => false;
+
+        public override int GetHashCode() => 0;
+
+        public GraphicsDeviceInformation Clone() => null;
+    }
+
+    public class PreparingDeviceSettingsEventArgs : EventArgs
+    {
+        public GraphicsDeviceInformation GraphicsDeviceInformation { get; }
+
+        public PreparingDeviceSettingsEventArgs(GraphicsDeviceInformation graphicsDeviceInformation) { }
     }
 }

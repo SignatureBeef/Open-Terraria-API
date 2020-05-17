@@ -10,12 +10,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.3.5.3, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Removing WindowsBase references...";
 
 		public override void Run()
 		{
+			return; // terraria now uses the threading dispatcher and not yet sure if shims or logic is required for servers
 			foreach (var reference in SourceDefinition.MainModule.AssemblyReferences
 				.Where(x => x.Name.StartsWith("WindowsBase")))
 			{
