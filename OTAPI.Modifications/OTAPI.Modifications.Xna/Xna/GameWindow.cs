@@ -21,5 +21,6 @@ namespace Microsoft.Xna.Framework
         public IntPtr Handle { get; set; }
 
         public bool AllowUserResizing { get; set; }
+        public Rectangle ClientBounds { get; }
     }
 }
