@@ -21,6 +21,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
 		public override void Run()
 		{
+			return;
 			// find the first writer and then remove all instructions up 
 			// until (an including) the writer position being reset to 0
 
