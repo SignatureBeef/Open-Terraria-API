@@ -323,4 +323,19 @@ namespace Microsoft.Xna.Framework.Graphics
 			set { }
 		}
 	}
+	public interface IGraphicsDeviceService
+	{
+		GraphicsDevice GraphicsDevice
+		{
+			get;
+		}
+
+		event EventHandler<EventArgs> DeviceDisposing;
+
+		event EventHandler<EventArgs> DeviceReset;
+
+		event EventHandler<EventArgs> DeviceResetting;
+
+		event EventHandler<EventArgs> DeviceCreated;
+	}
 }

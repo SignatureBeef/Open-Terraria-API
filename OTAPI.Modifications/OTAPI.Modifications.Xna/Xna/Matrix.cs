@@ -231,5 +231,149 @@ namespace Microsoft.Xna.Framework
             result.M44 = (m * num20 - m2 * num22 + m3 * num23) * num11;
             return result;
         }
+
+        public static Matrix CreateRotationX(float radians)
+        {
+            float num = (float)Math.Cos(radians);
+            float num2 = (float)Math.Sin(radians);
+            Matrix result = default(Matrix);
+            result.M11 = 1f;
+            result.M12 = 0f;
+            result.M13 = 0f;
+            result.M14 = 0f;
+            result.M21 = 0f;
+            result.M22 = num;
+            result.M23 = num2;
+            result.M24 = 0f;
+            result.M31 = 0f;
+            result.M32 = 0f - num2;
+            result.M33 = num;
+            result.M34 = 0f;
+            result.M41 = 0f;
+            result.M42 = 0f;
+            result.M43 = 0f;
+            result.M44 = 1f;
+            return result;
+        }
+
+        public static void CreateRotationX(float radians, out Matrix result)
+        {
+            float num = (float)Math.Cos(radians);
+            float num2 = (float)Math.Sin(radians);
+            result.M11 = 1f;
+            result.M12 = 0f;
+            result.M13 = 0f;
+            result.M14 = 0f;
+            result.M21 = 0f;
+            result.M22 = num;
+            result.M23 = num2;
+            result.M24 = 0f;
+            result.M31 = 0f;
+            result.M32 = 0f - num2;
+            result.M33 = num;
+            result.M34 = 0f;
+            result.M41 = 0f;
+            result.M42 = 0f;
+            result.M43 = 0f;
+            result.M44 = 1f;
+        }
+
+        public static Matrix CreateRotationY(float radians)
+        {
+            float num = (float)Math.Cos(radians);
+            float num2 = (float)Math.Sin(radians);
+            Matrix result = default(Matrix);
+            result.M11 = num;
+            result.M12 = 0f;
+            result.M13 = 0f - num2;
+            result.M14 = 0f;
+            result.M21 = 0f;
+            result.M22 = 1f;
+            result.M23 = 0f;
+            result.M24 = 0f;
+            result.M31 = num2;
+            result.M32 = 0f;
+            result.M33 = num;
+            result.M34 = 0f;
+            result.M41 = 0f;
+            result.M42 = 0f;
+            result.M43 = 0f;
+            result.M44 = 1f;
+            return result;
+        }
+
+        public static void CreateRotationY(float radians, out Matrix result)
+        {
+            float num = (float)Math.Cos(radians);
+            float num2 = (float)Math.Sin(radians);
+            result.M11 = num;
+            result.M12 = 0f;
+            result.M13 = 0f - num2;
+            result.M14 = 0f;
+            result.M21 = 0f;
+            result.M22 = 1f;
+            result.M23 = 0f;
+            result.M24 = 0f;
+            result.M31 = num2;
+            result.M32 = 0f;
+            result.M33 = num;
+            result.M34 = 0f;
+            result.M41 = 0f;
+            result.M42 = 0f;
+            result.M43 = 0f;
+            result.M44 = 1f;
+        }
+
+        public static void CreateRotationZ(float radians, out Matrix result)
+        {
+            float num = (float)Math.Cos(radians);
+            float num2 = (float)Math.Sin(radians);
+            result.M11 = num;
+            result.M12 = num2;
+            result.M13 = 0f;
+            result.M14 = 0f;
+            result.M21 = 0f - num2;
+            result.M22 = num;
+            result.M23 = 0f;
+            result.M24 = 0f;
+            result.M31 = 0f;
+            result.M32 = 0f;
+            result.M33 = 1f;
+            result.M34 = 0f;
+            result.M41 = 0f;
+            result.M42 = 0f;
+            result.M43 = 0f;
+            result.M44 = 1f;
+        }
+
+        public static Matrix CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane)
+        {
+            Matrix result = default(Matrix);
+            result.M11 = 2f / (right - left);
+            result.M12 = (result.M13 = (result.M14 = 0f));
+            result.M22 = 2f / (top - bottom);
+            result.M21 = (result.M23 = (result.M24 = 0f));
+            result.M33 = 1f / (zNearPlane - zFarPlane);
+            result.M31 = (result.M32 = (result.M34 = 0f));
+            result.M41 = (left + right) / (left - right);
+            result.M42 = (top + bottom) / (bottom - top);
+            result.M43 = zNearPlane / (zNearPlane - zFarPlane);
+            result.M44 = 1f;
+            return result;
+        }
+
+        public static void CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane, out Matrix result)
+        {
+            result.M11 = 2f / (right - left);
+            result.M12 = (result.M13 = (result.M14 = 0f));
+            result.M22 = 2f / (top - bottom);
+            result.M21 = (result.M23 = (result.M24 = 0f));
+            result.M33 = 1f / (zNearPlane - zFarPlane);
+            result.M31 = (result.M32 = (result.M34 = 0f));
+            result.M41 = (left + right) / (left - right);
+            result.M42 = (top + bottom) / (bottom - top);
+            result.M43 = zNearPlane / (zNearPlane - zFarPlane);
+            result.M44 = 1f;
+        }
     }
 }

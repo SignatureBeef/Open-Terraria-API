@@ -11,5 +11,6 @@ namespace System.Windows.Forms
 		public Size MinimumSize { get; set; }
 
 		public void SendToBack() { }
+		public void BringToFront() { }
 	}
 }
