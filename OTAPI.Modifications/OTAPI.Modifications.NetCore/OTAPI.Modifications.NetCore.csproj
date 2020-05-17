@@ -58,6 +58,7 @@
     <Compile Include="System.Windows.Forms\Form.cs" />
     <Compile Include="System.Windows.Forms\FormWindowState.cs" />
     <Compile Include="System.Windows.Forms\IMessageFilter.cs" />
+    <Compile Include="System.Windows.Forms\MessageBox.cs" />
     <Compile Include="System.Windows.Forms\Message.cs" />
   </ItemGroup>
   <ItemGroup>
