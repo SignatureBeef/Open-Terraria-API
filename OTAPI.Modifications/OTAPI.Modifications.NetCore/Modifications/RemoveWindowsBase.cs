@@ -16,14 +16,15 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 
 		public override void Run()
 		{
-			//foreach (var reference in SourceDefinition.MainModule.AssemblyReferences
-			//	.Where(x => x.Name.StartsWith("WindowsBase")))
-			//{
-			//	reference.Name = "OTAPI.Modifications.NetCore";
-			//	reference.PublicKey = ModificationDefinition.Name.PublicKey;
-			//	reference.PublicKeyToken = ModificationDefinition.Name.PublicKeyToken;
-			//	reference.Version = ModificationDefinition.Name.Version;
-			//}
+			return; // terraria now uses the threading dispatcher and not yet sure if shims or logic is required for servers
+			foreach (var reference in SourceDefinition.MainModule.AssemblyReferences
+				.Where(x => x.Name.StartsWith("WindowsBase")))
+			{
+				reference.Name = "OTAPI.Modifications.NetCore";
+				reference.PublicKey = ModificationDefinition.Name.PublicKey;
+				reference.PublicKeyToken = ModificationDefinition.Name.PublicKeyToken;
+				reference.Version = ModificationDefinition.Name.Version;
+			}
 		}
 	}
 }
