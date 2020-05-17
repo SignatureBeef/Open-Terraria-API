@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		.travis.yml = .travis.yml
 		CONTRIBUTIONS.md = CONTRIBUTIONS.md
 		DEVELOPMENT.md = DEVELOPMENT.md
-		dnxtocsproj.ps1 = dnxtocsproj.ps1
 		global.json = global.json
 		LICENSE.txt = LICENSE.txt
 		OTAPI.Common.targets = OTAPI.Common.targets
