@@ -18,7 +18,6 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
 
         public override void Run()
         {
-            return;
             var vanilla = this.SourceDefinition.Type("Terraria.MessageBuffer").Method("GetData");
             var callback = vanilla.Module.Import(
                 this.Method(() => OTAPI.Callbacks.Terraria.Collision.HitSwitch(0, 0, null))
@@ -50,7 +49,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
                 var from = call
                     .Next(x => x.OpCode == OpCodes.Call && (x.Operand as MethodReference).Name == "SetCurrentUser");
                 var stopAt = from
-                    .Next(x => x.OpCode == OpCodes.Call && (x.Operand as MethodReference).Name == "TrySendData").Next;
+                    .Next(x => x.OpCode == OpCodes.Call && (x.Operand as MethodReference).Name == "TrySendData")
+                    .Next(x => x.OpCode == OpCodes.Pop).Next;
                 for (; ; )
                 {
                     il.Remove(from.Next);
