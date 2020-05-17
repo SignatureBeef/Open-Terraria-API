@@ -16,6 +16,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
 		public override void Run()
 		{
+			return;
 			int tmp = 0;
 			byte tmpB = 0;
 			var vanilla = this.Method(() => (new Terraria.MessageBuffer()).GetData(0, 0, out tmp));

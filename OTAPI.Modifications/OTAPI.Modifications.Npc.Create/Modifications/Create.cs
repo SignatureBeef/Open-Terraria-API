@@ -17,6 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 
 		public override void Run()
 		{
+			return;
 			int tmpI = 0;
 			float tmpF = 0;
 			var vanilla = this.Method(() => Terraria.NPC.NewNPC(0, 0, 0, 0, 0, 0, 0, 0, 0));

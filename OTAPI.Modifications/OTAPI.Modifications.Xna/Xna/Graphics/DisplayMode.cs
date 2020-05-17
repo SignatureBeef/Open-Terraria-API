@@ -39,7 +39,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride, SetDataOptions options) where T : struct
         {
-            
+
         }
 
         public void SetData<T>(T value)
@@ -53,7 +53,7 @@ namespace Microsoft.Xna.Framework.Graphics
         SixteenBits
     }
 
-    public class DynamicIndexBuffer: IndexBuffer
+    public class DynamicIndexBuffer : IndexBuffer
     {
         public event EventHandler<EventArgs> ContentLost;
 
@@ -83,7 +83,13 @@ namespace Microsoft.Xna.Framework.Graphics
 
     public class VertexDeclaration : GraphicsResource
     {
+        public int VertexStride { get; }
 
+        public VertexDeclaration(int vertexStride, params VertexElement[] elements) { }
+
+        public VertexDeclaration(params VertexElement[] elements) { }
+
+        public VertexElement[] GetVertexElements() => null;
     }
 
     public struct VertexPositionColorTexture : IVertexType

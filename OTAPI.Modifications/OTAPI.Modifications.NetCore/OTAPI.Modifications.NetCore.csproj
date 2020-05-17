@@ -54,6 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System.IO\FileFormatException.cs" />
     <Compile Include="System.Windows.Forms\Application.cs" />
+    <Compile Include="System.Windows.Forms\Clipboard.cs" />
     <Compile Include="System.Windows.Forms\Screen.cs" />
     <Compile Include="System.Windows.Forms\Control.cs" />
     <Compile Include="System.Windows.Forms\Form.cs" />

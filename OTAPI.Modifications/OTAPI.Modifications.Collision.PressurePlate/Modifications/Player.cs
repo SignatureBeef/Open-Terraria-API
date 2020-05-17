@@ -18,6 +18,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Collision
 
         public override void Run()
         {
+            return;
             var vanilla = this.SourceDefinition.Type("Terraria.MessageBuffer").Method("GetData");
             var callback = vanilla.Module.Import(
                 this.Method(() => OTAPI.Callbacks.Terraria.Collision.HitSwitch(0, 0, null))

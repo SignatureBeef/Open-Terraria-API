@@ -18,6 +18,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net.Player
 
 		public override void Run()
 		{
+			return;
 			int tmp = 0;
 			var vanilla = this.Method(() => (new Terraria.MessageBuffer()).GetData(0, 0, out tmp));
 			var callback = this.Method(() => OTAPI.Callbacks.Terraria.MessageBuffer.NameCollision(null));

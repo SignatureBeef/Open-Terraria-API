@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.ObjectModel;
 
 namespace Microsoft.Xna.Framework
 {
@@ -70,9 +71,10 @@ namespace Microsoft.Xna.Framework
 
     public class GameServiceContainer : IServiceProvider
     {
-        public Object GetService(Type type)
-        {
-            return null;
-        }
+        public void AddService(Type type, object provider) { }
+
+        public void RemoveService(Type type) { }
+
+        public object GetService(Type type) => null;
     }
 }

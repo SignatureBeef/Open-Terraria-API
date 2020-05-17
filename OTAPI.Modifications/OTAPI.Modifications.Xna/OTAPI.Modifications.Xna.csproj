@@ -43,6 +43,7 @@
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="TerrariaServer">
       <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
     </Reference>
@@ -63,11 +64,13 @@
     <Compile Include="Xna\Graphics\NoSuitableGraphicsDeviceException.cs" />
     <Compile Include="Xna\Graphics\ResourceCreatedEventArgs.cs" />
     <Compile Include="Xna\Graphics\ResourceDestroyedEventArgs.cs" />
+    <Compile Include="Xna\Graphics\VertexElement.cs" />
     <Compile Include="Xna\IPackedVector.cs" />
     <Compile Include="Xna\MathHelper.cs" />
     <Compile Include="Xna\Matrix.cs" />
     <Compile Include="Xna\PlayerIndex.cs" />
     <Compile Include="Xna\Point.cs" />
+    <Compile Include="Xna\TitleContainer.cs" />
     <Compile Include="Xna\Quaternion.cs" />
     <Compile Include="Xna\Rectangle.cs" />
     <Compile Include="Xna\Vector2.cs" />
