@@ -16,6 +16,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 
 		public override void Run()
 		{
+			return; // no one uses these afaik, and the write/line callbacks need to be 1:1, currently an object is receiving all overloads and thats not ideal
 			var redirectMethods = new[]
 			{
 				"Write",
