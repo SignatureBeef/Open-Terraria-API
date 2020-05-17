@@ -15,6 +15,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Patches
 
 		public override void Run()
 		{
+			return;
 			SourceDefinition.MainModule.Architecture = Mono.Cecil.TargetArchitecture.I386;
 			SourceDefinition.MainModule.Attributes = Mono.Cecil.ModuleAttributes.ILOnly;
 		}
