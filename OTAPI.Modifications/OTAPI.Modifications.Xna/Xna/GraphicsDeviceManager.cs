@@ -17,7 +17,19 @@ namespace Microsoft.Xna.Framework
 
         public GraphicsDevice GraphicsDevice { get; set; }
         public GraphicsProfile GraphicsProfile { get; set; }
-    }
+
+        public event EventHandler<EventArgs> DeviceCreated;
+
+        public event EventHandler<EventArgs> DeviceResetting;
+
+		public event EventHandler<EventArgs> DeviceReset;
+
+		public event EventHandler<EventArgs> DeviceDisposing;
+
+		public event EventHandler<PreparingDeviceSettingsEventArgs> PreparingDeviceSettings;
+
+		public event EventHandler<EventArgs> Disposed;
+	}
 
     public class GraphicsDeviceInformation
     {
