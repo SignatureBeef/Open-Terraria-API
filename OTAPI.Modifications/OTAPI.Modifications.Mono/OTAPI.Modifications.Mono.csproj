@@ -44,9 +44,13 @@
     <Reference Include="TerrariaServer">
       <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
     </Reference>
+    <Reference Include="TerrariaServer">
+      <HintPath>..\..\wrap\TerrariaServer\ReLogic.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Callbacks\IO.cs" />
+    <Compile Include="Modifications\Sleep.cs" />
     <Compile Include="Modifications\HandlePlatformIO.cs" />
     <Compile Include="Modifications\RemoveNatFromNetplay.cs" />
     <Compile Include="Modifications\RemoveConsoleCtrlCheck.cs" />

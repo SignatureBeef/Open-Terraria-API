@@ -17,10 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 
 			foreach (var method in worldMap.Methods)
 			{
-				method.Body.Instructions.Clear();
-				method.Body.ExceptionHandlers.Clear();
-				method.Body.Variables.Clear();
-				method.EmitMethodEnding();
+				method.ClearBody();
 			}
 		}
 	}

@@ -220,5 +220,17 @@ namespace OTAPI.Patcher.Engine.Extensions
 
 			return retFirstInstruction;
 		}
+
+		/// <summary>
+		/// Clears the function entirely
+		/// </summary>
+		/// <param name="method"></param>
+		public static void ClearBody(this MethodDefinition method)
+		{
+			method.Body.Instructions.Clear();
+			method.Body.ExceptionHandlers.Clear();
+			method.Body.Variables.Clear();
+			method.EmitMethodEnding();
+		}
 	}
 }
