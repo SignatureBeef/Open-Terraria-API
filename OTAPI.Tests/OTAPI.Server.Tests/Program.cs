@@ -36,6 +36,16 @@ namespace OTAPI.Tests
 			//{
 			//	return new AsyncSocket();
 			//};
+			Hooks.Net.StartBroadCasting = () =>
+			{
+				LogHook(nameof(Hooks.Net.StartBroadCasting));
+				return HookResult.Continue;
+			};
+			Hooks.Net.StopBroadCasting = () =>
+			{
+				LogHook(nameof(Hooks.Net.StopBroadCasting));
+				return HookResult.Continue;
+			};
 			Hooks.Tile.CreateCollection = () =>
 			{
 				LogHook(nameof(Hooks.Tile.CreateCollection));
