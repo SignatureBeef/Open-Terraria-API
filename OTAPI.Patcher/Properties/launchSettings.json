@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "OTAPI.Patcher": {
-      "commandName": "OTAPI.Patcher",
-      "commandLineArgs": "--in wrap\\TerrariaServer\\TerrariaServer.exe --mod artifacts\\bin\\OTAPI.**\\Debug\\net451\\OTAPI.*.dll -o=OTAPI.dll",
-      "workingDirectory": "..\\"
-    }
-  }
-}
