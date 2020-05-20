@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoMod" Version="20.5.14.1" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="20.5.14.1" />
+    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="20.5.14.1" />
+    <PackageReference Include="MonoMod.Utils" Version="20.5.14.1" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Security.Permissions" Version="5.0.0-preview.4.20251.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
+    <ProjectReference Include="..\OTAPI.Shims\OTAPI.Shims.csproj" />
+    <ProjectReference Include="..\OTAPI\OTAPI.csproj" />
+  </ItemGroup>
+
+</Project>

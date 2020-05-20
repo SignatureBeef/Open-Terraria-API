@@ -1,0 +1,50 @@
+﻿using System;
+
+namespace Microsoft.Xna.Framework
+{
+    [Flags]
+    public enum DisplayOrientation
+    {
+        Default = 0x0,
+        LandscapeLeft = 0x1,
+        LandscapeRight = 0x2,
+        Portrait = 0x4
+    }
+
+    public class GameWindow
+    {
+        public event EventHandler<EventArgs> ScreenDeviceNameChanged;
+
+        public event EventHandler<EventArgs> ClientSizeChanged;
+
+        public event EventHandler<EventArgs> OrientationChanged;
+
+        public string Title
+        {
+            get
+            { return Console.Title; }
+            set
+            {
+                SetTitle(value);
+            }
+        }
+
+        public static void SetTitle(string title)
+        {
+        }
+
+        public IntPtr Handle { get; set; }
+
+        public bool AllowUserResizing { get; set; }
+        public Rectangle ClientBounds { get; }
+
+        public string ScreenDeviceName { get; }
+        public DisplayOrientation CurrentOrientation { get; }
+
+        public void BeginScreenDeviceChange(bool willBeFullScreen) { }
+
+        public void EndScreenDeviceChange(string screenDeviceName, int clientWidth, int clientHeight) { }
+
+        public void EndScreenDeviceChange(string screenDeviceName) { }
+    }
+}
