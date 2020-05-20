@@ -1,7 +1,12 @@
-﻿namespace OTAPI.Modifications.Runtime
+﻿using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using System;
+using System.Linq;
+
+namespace OTAPI.Modifications.Runtime
 {
     [Modification("Modifying Terraria.Item.MechSpawn")]
-    class ItemMechSpawn : NpcMechSpawn
+    class ItemMechSpawn
     {
         public ItemMechSpawn()
         {
@@ -14,6 +19,31 @@
                 }
                 return false;
             });
+        }
+
+        protected void Modify(ILContext il, Func<bool, float, float, int, int, int, int, int, Microsoft.Xna.Framework.Vector2, float, bool> callback)
+        {
+            // capture each return in the method body, then add all of the parameters and local variables to the stack, then call our callback.
+            // this would then be, callback(true/false, x, y, type. num, num2, num3);
+
+            ILCursor c = new ILCursor(il);
+            var returns = il.Body.Instructions.Where(x => x.OpCode == OpCodes.Ret).ToArray();
+
+            foreach (var ret in returns)
+            {
+                c.Goto(ret);
+                foreach (var parameter in il.Method.Parameters)
+                {
+                    //Console.WriteLine($"Added param:{parameter.ParameterType.FullName}");
+                    c.Emit(OpCodes.Ldarg, parameter);
+                }
+                foreach (var variable in il.Body.Variables)
+                {
+                    //Console.WriteLine($"Added var: {variable.VariableType.FullName}");
+                    c.Emit(OpCodes.Ldloc, variable);
+                }
+                c.EmitDelegate(callback);
+            }
         }
     }
 }

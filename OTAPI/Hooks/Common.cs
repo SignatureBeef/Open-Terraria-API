@@ -32,7 +32,7 @@ namespace OTAPI
         }
         public static class NPC
         {
-            public delegate HookResult MechSpawnHandler(float x, float y, int type, int num, int num2, int num3, int i, Microsoft.Xna.Framework.Vector2 vector, float num6);
+            public delegate HookResult MechSpawnHandler(float x, float y, int type, int num, int num2, int num3, int i, bool flag, Microsoft.Xna.Framework.Vector2 vector, float num6);
 
             public static MechSpawnHandler MechSpawn;
         }
