@@ -141,7 +141,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 					var call = sendData.Body.Instructions.
 						Single(i => i.OpCode == OpCodes.Call && (i.Operand as MethodReference).Name == "CompressTileBlock");
 
-					call.Operand = this.SourceDefinition.MainModule.Import(this.Method(() => NetMessage.CompressTileBlock(0, 0, 0, 0, null, 0)));
+					call.Operand = this.SourceDefinition.MainModule.Import(this.Method(() => Callbacks.Terraria.NetMessage.CompressTileBlock(0, 0, 0, 0, null, 0)));
 					continue;
 				}
 

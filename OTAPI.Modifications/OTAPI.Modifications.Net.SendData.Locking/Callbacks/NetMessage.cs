@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
+namespace OTAPI.Callbacks.Terraria
 {
-	internal partial class NetMessage
+	internal static partial class NetMessage
 	{
 		internal static int CompressTileBlock(int xStart, int yStart, short width, short height, BinaryWriter writer, int bufferStart)
 		{
@@ -20,7 +15,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 					binaryWriter.Write(yStart);
 					binaryWriter.Write(width);
 					binaryWriter.Write(height);
-					Terraria.NetMessage.CompressTileBlock_Inner(binaryWriter, xStart, yStart, (int)width, (int)height);
+					global::Terraria.NetMessage.CompressTileBlock_Inner(binaryWriter, xStart, yStart, (int)width, (int)height);
 					rawStream.Position = 0L;
 
 					MemoryStream compressedStream = new MemoryStream();
