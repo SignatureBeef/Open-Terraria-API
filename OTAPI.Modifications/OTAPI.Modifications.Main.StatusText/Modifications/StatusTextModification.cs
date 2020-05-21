@@ -13,7 +13,7 @@ namespace OTAPI.Modifications.StatusText.Modifications
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.0.3, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Patching Main.statusText updates";
 
