@@ -10,7 +10,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.0.3, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking NetMessage.GetData";
 
