@@ -10,9 +10,9 @@
     <projectUrl>https://github.com/DeathCradle/Open-Terraria-API</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The Open Terraria API (OTAPI) is the core for the new generation of Terraria Server mods.</description>
-    <summary>Open Terraria API 2.0.0.35 for Terraria 1.4.0.3</summary>
+    <summary>Open Terraria API 2.0.0.35 for Terraria 1.4.0.4</summary>
     <releaseNotes>
-      1.4.0.3 changes thanks to Patrikkk and brady1408
+      1.4.0.4 changes thanks to Patrikkk and brady1408
 	  Additional Changes:
 	  - New Netplay.Start/StopBroadcast hooks
 	  - Removed code body from Main.NeverSleep/YouCanSleepNow
