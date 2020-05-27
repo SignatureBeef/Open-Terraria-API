@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AA61D1E6-EC5A-431B-BDC9-ADF3B9FA666C}</ProjectGuid>
+    <ProjectGuid>{0BC81CBB-F62D-4B37-B17C-CD80BEC785DD}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>OTAPI.Modifications.Net.SendData</RootNamespace>
-    <AssemblyName>OTAPI.Modifications.Net.SendData</AssemblyName>
+    <RootNamespace>OTAPI.Modifications.NetManager.SendData</RootNamespace>
+    <AssemblyName>OTAPI.Modifications.NetManager.SendData</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\OTAPI.Modifications.Net.SendData.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\OTAPI.Modifications.NetManager.SendData.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\OTAPI.Modifications.Net.SendData.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\OTAPI.Modifications.NetManager.SendData.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
