@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OTAPI.Launcher
+﻿namespace OTAPI.Launcher
 {
     class Program
     {
@@ -11,7 +9,7 @@ namespace OTAPI.Launcher
                 Terraria.Main.SkipAssemblyLoad = true;
                 return HookResult.Continue;
             };
-            Terraria.WindowsLaunch.LaunchGame(args);
+            Terraria.WindowsLaunch.Main(args);
         }
     }
 }

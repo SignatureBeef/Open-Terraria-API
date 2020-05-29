@@ -17,20 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework">
-      <HintPath>..\TempReferences\Microsoft.Xna.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Game">
-      <HintPath>..\TempReferences\Microsoft.Xna.Framework.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Graphics">
-      <HintPath>..\TempReferences\Microsoft.Xna.Framework.Graphics.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Xact">
-      <HintPath>..\TempReferences\Microsoft.Xna.Framework.Xact.dll</HintPath>
-    </Reference>
-    <Reference Include="TerrariaServer">
-      <HintPath>..\OTAPI.Patcher\bin\x86\Debug\netcoreapp3.1\TerrariaServer.dll</HintPath>
+    <Reference Include="OTAPI">
+      <HintPath>..\OTAPI.Patcher\bin\Debug\netcoreapp3.1\OTAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
 

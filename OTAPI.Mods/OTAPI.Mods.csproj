@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>TerrariaServer.OTAPI.mm</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="MMHOOK_TerrariaServer">
+      <HintPath>..\OTAPI.Setup\bin\Debug\netcoreapp3.1\MMHOOK_TerrariaServer.dll</HintPath>
+    </Reference>
+    <Reference Include="TerrariaServer">
+      <HintPath>..\OTAPI.Setup\bin\Debug\netcoreapp3.1\terraria-server-1403\1403\Windows\TerrariaServer.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mono.Cecil" Version="0.11.2" />
+    <PackageReference Include="MonoMod" Version="20.5.21.5" />
+  </ItemGroup>
+
+</Project>

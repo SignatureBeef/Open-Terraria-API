@@ -3,7 +3,6 @@ using MonoMod;
 using MonoMod.RuntimeDetour.HookGen;
 using OTAPI.Common;
 using System.IO;
-using System.Linq;
 
 namespace OTAPI.Setup
 {
@@ -12,7 +11,6 @@ namespace OTAPI.Setup
         static void Main(string[] args)
         {
             var input = Remote.DownloadServer();
-
             var output = $"MMHOOK_{Path.GetFileNameWithoutExtension(input)}.dll";
             using (MonoModder mm = new MonoModder()
             {
