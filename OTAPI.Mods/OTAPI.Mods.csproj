@@ -10,7 +10,7 @@
       <HintPath>..\OTAPI.Setup\bin\Debug\netcoreapp3.1\MMHOOK_TerrariaServer.dll</HintPath>
     </Reference>
     <Reference Include="TerrariaServer">
-      <HintPath>..\OTAPI.Setup\bin\Debug\netcoreapp3.1\terraria-server-1403\1403\Windows\TerrariaServer.exe</HintPath>
+      <HintPath>..\OTAPI.Setup\bin\Debug\netcoreapp3.1\terraria-server-1404\1404\Windows\TerrariaServer.exe</HintPath>
     </Reference>
   </ItemGroup>
 

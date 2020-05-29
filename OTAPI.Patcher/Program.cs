@@ -35,22 +35,24 @@ namespace OTAPI.Patcher
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(pathIn);
 
-            var repacker = new ILRepacking.ILRepack(new ILRepacking.RepackOptions()
-            {
-                InputAssemblies = new[] { pathIn, Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)) }.ToArray(),
-                SearchDirectories = new[] { Path.GetDirectoryName(pathIn), embeddedResourcesDir },
+            // var repacker = new ILRepacking.ILRepack(new ILRepacking.RepackOptions()
+            // {
+            //     InputAssemblies = new[] { pathIn, Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)) }.ToArray(),
+            //     SearchDirectories = new[] { Path.GetDirectoryName(pathIn), embeddedResourcesDir },
 
-                OutputFile = "TerrariaServer.dll"
-            });
-            repacker.Repack();
+            //     OutputFile = "TerrariaServer.dll"
+            // });
+            // repacker.Repack();
 
             using (var mm = new MonoModder()
             {
-                InputPath = "TerrariaServer.dll",
+                InputPath = pathIn, //"TerrariaServer.dll",
                 OutputPath = "OTAPI.dll",
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
-                PublicEverything = true,
+                PublicEverything = true, // we want all of terraria exposed
+                
+                GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
             })
             {
                 //mm.AssemblyResolver = new ResourceAssemblyResolver(mm);
@@ -60,6 +62,7 @@ namespace OTAPI.Patcher
                 foreach (var path in new[] {
                     Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
                     Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
+                    Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
                     //Directory.GetParent(pathIn).FullName,
                     //"../../../../OTAPI.Mods/bin/Debug/netstandard2.0"
                 })

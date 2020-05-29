@@ -18,6 +18,8 @@ namespace OTAPI.Setup
                 OutputPath = output,
                 ReadingMode = ReadingMode.Deferred,
                 MissingDependencyThrow = false,
+
+                GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
             })
             {
                 mm.Read();
