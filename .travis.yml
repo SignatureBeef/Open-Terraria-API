@@ -4,6 +4,7 @@ dotnet: 3.1.300
 script:
  - dotnet restore OTAPI.Setup.sln
  - dotnet restore OTAPI.Mods.sln
+ - dotnet restore OTAPI.Launcher.sln
  - dotnet build OTAPI.Setup.sln
  - cd OTAPI.Setup/bin/Debug/netcoreapp3.1
  - dotnet run --project ../../../OTAPI.Setup.csproj
@@ -11,3 +12,5 @@ script:
  - dotnet build OTAPI.Mods.sln
  - cd OTAPI.Patcher/bin/Debug/netcoreapp3.1
  - dotnet run --project ../../../OTAPI.Patcher.csproj
+ - cd ../../../../
+ - dotnet build OTAPI.Launcher.sln
