@@ -31,7 +31,7 @@ namespace OTAPI
     }
 
     /// <summary>
-    /// Describes OTAPI modification instance
+    /// Describes an OTAPI modification instance
     /// </summary>
     public class ModificationAttribute : Attribute
     {

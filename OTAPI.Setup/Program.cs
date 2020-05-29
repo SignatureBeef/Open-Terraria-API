@@ -11,6 +11,8 @@ namespace OTAPI.Setup
         static void Main(string[] args)
         {
             var input = Remote.DownloadServer();
+
+            // allow for refs to the embedded resources, such as ReLogic.dll
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(input);
 

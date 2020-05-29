@@ -24,7 +24,7 @@ namespace Terraria
 {
     class patch_Program
     {
-        /** Begin Hook: Launch */
+        /** Begin Hook: LaunchGame */
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {

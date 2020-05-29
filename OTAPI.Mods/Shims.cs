@@ -19,6 +19,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using Mono.Cecil;
 using MonoMod;
 
+/* Forward all shims to the Shims mod DLL. As part of MonoMod, any mod DLLs will be merged into the final assembly */
+
 [assembly: AssemblyRedirector("Microsoft.Xna.Framework", "TerrariaServer.OTAPI.Shims.mm.dll")]
 [assembly: AssemblyRedirector("Microsoft.Xna.Framework.Game", "TerrariaServer.OTAPI.Shims.mm.dll")]
 [assembly: AssemblyRedirector("Microsoft.Xna.Framework.Graphics", "TerrariaServer.OTAPI.Shims.mm.dll")]
