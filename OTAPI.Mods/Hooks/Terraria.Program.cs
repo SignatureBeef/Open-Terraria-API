@@ -22,9 +22,8 @@ namespace OTAPI
     public static partial class Hooks
     {
         public static class Program
-
         {
-            public static HookResultHandler Launch;
+            public static HookResultHandler LaunchGame;
         }
     }
 }

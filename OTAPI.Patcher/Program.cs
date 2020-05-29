@@ -74,7 +74,7 @@ namespace OTAPI.Patcher
                 mm.MapDependencies();
                 mm.AutoPatch();
 
-                OTAPI.Mods.Modifier.Apply(OTAPI.Mods.ModificationType.Patchtime, mm);
+                OTAPI.Modifier.Apply(OTAPI.ModificationType.Patchtime, mm);
 
                 mm.Write();
 

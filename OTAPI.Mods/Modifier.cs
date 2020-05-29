@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace OTAPI.Mods
+namespace OTAPI
 {
     public static class Modifier
     {

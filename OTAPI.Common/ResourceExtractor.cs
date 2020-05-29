@@ -21,7 +21,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace OTAPI.Patcher
+namespace OTAPI.Common
 {
     public class ResourceExtractor
     {

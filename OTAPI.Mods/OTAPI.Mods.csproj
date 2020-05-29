@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>OTAPI</AssemblyName>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>TerrariaServer.OTAPI.mm</AssemblyName>
   </PropertyGroup>
@@ -11,6 +12,9 @@
     </Reference>
     <Reference Include="TerrariaServer">
       <HintPath>..\OTAPI.Setup\bin\Debug\netcoreapp3.1\terraria-server-1404\1404\Windows\TerrariaServer.exe</HintPath>
+    </Reference>
+    <Reference Include="ReLogic">
+      <HintPath>..\OTAPI.Setup\bin\Debug\netcoreapp3.1\terraria-server-1404\1404\Windows\EmbeddedResources\ReLogic.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 
-namespace OTAPI.Mods
+namespace OTAPI
 {
     /// <summary>
     /// Defines when the modification runs

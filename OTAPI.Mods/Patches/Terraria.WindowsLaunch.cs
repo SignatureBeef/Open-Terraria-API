@@ -22,14 +22,17 @@ namespace Terraria
 {
     class patch_WindowsLaunch //: Terraria.WindowsLaunch
     {
-        //private static extern void orig_Main(string[] args);
-        //private static void Main(string[] args)
-        //{
-        //    orig_Main(args);
-        //}
-        //public static void LaunchGame(string[] args)
-        //{
-        //    orig_Main(args);
-        //}
+        /** Begin Cross platform support - disable the kernel32 call when not on windows */
+        public delegate bool HandlerRoutine(object ctrlType);
+        public static extern bool orig_SetConsoleCtrlHandler(HandlerRoutine handler, bool add);
+        public static bool SetConsoleCtrlHandler(HandlerRoutine handler, bool add)
+        {
+            if(ReLogic.OS.Platform.IsWindows)
+            {
+                return orig_SetConsoleCtrlHandler(handler, add);
+            }
+            return false;
+        }
+        /** End Cross platform support - disable the kernel32 call when not on windows */
     }
 }

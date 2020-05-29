@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            OTAPI.Hooks.Program.Launch = () =>
+            OTAPI.Hooks.Program.LaunchGame = () =>
             {
                 Terraria.Main.SkipAssemblyLoad = true;
                 return HookResult.Continue;

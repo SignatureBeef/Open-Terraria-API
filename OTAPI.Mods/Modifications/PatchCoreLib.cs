@@ -19,9 +19,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using MonoMod;
 using System.Linq;
 
-namespace OTAPI.Mods.Modifications
+namespace OTAPI.Modifications
 {
     [Modification(ModificationType.Patchtime, "Removing hard references to System.Private.CoreLib")]
+    [MonoMod.MonoModIgnore]
     class PatchCoreLib
     {
         public PatchCoreLib(MonoModder modder)

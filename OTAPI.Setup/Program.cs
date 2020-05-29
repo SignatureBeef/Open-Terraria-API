@@ -11,6 +11,9 @@ namespace OTAPI.Setup
         static void Main(string[] args)
         {
             var input = Remote.DownloadServer();
+            var extractor = new ResourceExtractor();
+            var embeddedResourcesDir = extractor.Extract(input);
+
             var output = $"MMHOOK_{Path.GetFileNameWithoutExtension(input)}.dll";
             using (MonoModder mm = new MonoModder()
             {

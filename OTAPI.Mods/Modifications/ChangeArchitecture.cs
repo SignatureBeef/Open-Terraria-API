@@ -19,9 +19,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using Mono.Cecil;
 using MonoMod;
 
-namespace OTAPI.Mods.Modifications
+namespace OTAPI.Modifications
 {
     [Modification(ModificationType.Patchtime, "Changing architecture to AnyCPU (64-bit preferred)")]
+    [MonoMod.MonoModIgnore]
     class ChangeArchitecture
     {
         public ChangeArchitecture(MonoModder modder)

@@ -18,9 +18,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using MonoMod;
 
-namespace OTAPI.Mods.Modifications
+namespace OTAPI.Modifications
 {
     [Modification(ModificationType.Patchtime, "Changing TerrariaServer assembly name to OTAPI")]
+    [MonoMod.MonoModIgnore]
     class ChangeAssemblyName
     {
         public ChangeAssemblyName(MonoModder modder)

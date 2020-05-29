@@ -24,20 +24,23 @@ namespace Terraria
 {
     class patch_Program
     {
+        /** Begin Hook: Launch */
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            if (Hooks.Program.Launch == null || Hooks.Program.Launch() == HookResult.Continue)
+            if (Hooks.Program.LaunchGame == null || Hooks.Program.LaunchGame() == HookResult.Continue)
             {
                 orig_LaunchGame(args, monoArgs);
             }
         }
+        /** End Hook: Launch */
 
-        /// This is to avoid System.Windows.Forms
+        /** Begin Cross platform support - Avoid System.Windows.Forms */
         public static extern void orig_DisplayException(Exception e);
         private static void DisplayException(Exception e)
         {
             Console.WriteLine(e.ToString());
         }
+        /** End Cross platform support - Avoid System.Windows.Forms */
     }
 }
