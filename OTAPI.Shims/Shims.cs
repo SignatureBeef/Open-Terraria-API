@@ -26,3 +26,5 @@ using MonoMod;
 [assembly: AssemblyRedirector("Microsoft.Xna.Framework.Graphics", "TerrariaServer.OTAPI.Shims.mm.dll")]
 [assembly: AssemblyRedirector("Microsoft.Xna.Framework.Xact", "TerrariaServer.OTAPI.Shims.mm.dll")]
 [assembly: AssemblyRedirector("System.Windows.Forms", "TerrariaServer.OTAPI.Shims.mm.dll")]
+[assembly: AssemblyRedirector("System.Drawing.Graphics", "TerrariaServer.OTAPI.Shims.mm.dll")]
+[assembly: AssemblyRedirector("ReLogic", "TerrariaServer")]

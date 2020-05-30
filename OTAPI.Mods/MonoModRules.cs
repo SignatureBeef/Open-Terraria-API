@@ -23,23 +23,6 @@ using System.Linq;
 
 namespace MonoMod
 {
-    //[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
-    //public class ChangeArchitectureAttribute : Attribute
-    //{
-    //    public ChangeArchitectureAttribute(TargetArchitecture architecture, ModuleAttributes attributes) { }
-    //}
-
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
-    public class AssemblyRedirectorAttribute : Attribute
-    {
-        /// <summary>
-        /// Forwards all references to an assembly
-        /// </summary>
-        /// <param name="assemblyName"></param>
-        /// <param name="targetAssemblyName">The target assembly name to forward to (not fully qualified). Defaults to the source assembly.</param>
-        public AssemblyRedirectorAttribute(string assemblyName, string targetAssemblyName = null) { }
-    }
-
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class FieldsToPropertyTransformerAttribute : Attribute
     {
@@ -57,12 +40,6 @@ namespace MonoMod
             var mods = MonoModRule.Modder.Mods.Cast<ModuleDefinition>();
             foreach (var mod in mods)
             {
-                foreach (var attr in mod.GetCustomAttributes())
-                {
-                    TryProcessRedirectors(mod, attr);
-                    //TryProcessArchitecture(mod, attr);
-                }
-
                 foreach (var type in mod.Types)
                 {
                     ScanType(mod, type);
@@ -70,7 +47,6 @@ namespace MonoMod
 
                 foreach (var attr in new[]
                 {
-                    "MonoMod.AssemblyRedirectorAttribute",
                     "MonoMod.FieldsToPropertyTransformerAttribute",
                 })
                 {
@@ -93,41 +69,6 @@ namespace MonoMod
                     ScanType(mod, nested);
             }
         }
-
-        static void TryProcessRedirectors(ModuleDefinition mod, CustomAttribute attr)
-        {
-            if (attr.AttributeType.FullName == "MonoMod.AssemblyRedirectorAttribute")
-            {
-                string assemblyNamePattern = (string)attr.ConstructorArguments[0].Value;
-                string targetAssemblyName = (string)attr.ConstructorArguments[1].Value;
-
-                var targetAssembly = targetAssemblyName ?? mod.Name;
-
-                MonoModRule.RelinkModule(assemblyNamePattern, targetAssembly);
-
-                foreach (var asmref in MonoModRule.Modder.Module.AssemblyReferences.ToArray())
-                {
-                    if (asmref.Name.Equals(assemblyNamePattern))
-                    {
-                        MonoModRule.Modder.Module.AssemblyReferences.Remove(asmref);
-                    }
-                }
-            }
-        }
-
-        //static void TryProcessArchitecture(ModuleDefinition mod, CustomAttribute attr)
-        //{
-        //    if (attr.AttributeType.FullName == "MonoMod.ChangeArchitectureAttribute")
-        //    {
-        //        TargetArchitecture targetArchitecture = (TargetArchitecture)attr.ConstructorArguments[0].Value;
-        //        ModuleAttributes moduleAttributes = (ModuleAttributes)attr.ConstructorArguments[1].Value;
-
-        //        MonoModRule.Modder.Module.Architecture = targetArchitecture;
-        //        MonoModRule.Modder.Module.Attributes = moduleAttributes;
-
-        //        MonoModRule.Modder.Log($"Changed architecture {targetArchitecture} {moduleAttributes}");
-        //    }
-        //}
 
         static void TryProcessFieldToPropertyTransformers(ModuleDefinition mod, TypeDefinition type)
         {

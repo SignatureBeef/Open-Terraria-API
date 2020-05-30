@@ -31,17 +31,17 @@ namespace OTAPI.Patcher
         {
             var pathIn = Remote.DownloadServer();
 
-            Console.WriteLine($"[OTAPI] Extracting embedded binaries and packing into one binary...");
+            Console.WriteLine($"[OTAPI] Extracting embedded binaries for assembly resolution...");
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(pathIn);
 
             using (var mm = new MonoModder()
             {
-                InputPath = pathIn,
+                InputPath = "../../../../OTAPI.Setup/bin/Debug/netcoreapp3.1/TerrariaServer.dll",
                 OutputPath = "OTAPI.dll",
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
-                PublicEverything = true, // we want all of terraria exposed
+                // PublicEverything = true, // we want all of terraria exposed
                 
                 GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
             })
@@ -50,9 +50,9 @@ namespace OTAPI.Patcher
                 mm.Read();
 
                 foreach (var path in new[] {
-                    Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
+                    //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
                     Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
-                    Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
+                    // Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
                 })
                 {
                     mm.Log($"[MonoMod] Reading mod or directory: {path}");

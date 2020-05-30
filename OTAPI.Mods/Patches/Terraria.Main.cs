@@ -18,26 +18,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using MonoMod;
 
-namespace OTAPI.Modifications
+namespace Terraria
 {
-    [Modification(ModificationType.Patchtime, "Changing TerrariaServer assembly name to OTAPI")]
-    [MonoMod.MonoModIgnore]
-    class ChangeAssemblyName
+    class patch_Main
     {
-        public ChangeAssemblyName(MonoModder modder)
+        public extern void orig_NeverSleep();
+        public void NeverSleep()
         {
-            foreach (var asmref in modder.Module.AssemblyReferences)
-            {
-                if (asmref.Name == "TerrariaServer")
-                    asmref.Name = "OTAPI";
-            }
-            modder.Module.Name = modder.Module.Assembly.Name.Name = "OTAPI";
+            if (ReLogic.OS.Platform.IsWindows) orig_NeverSleep();
+        }
 
-            (modder.AssemblyResolver as Mono.Cecil.DefaultAssemblyResolver).ResolveFailure += (s, e) =>
-            {
-                if(e.Name == "OTAPI") return modder.Module.Assembly;
-                return null;
-            };
+        public extern void orig_YouCanSleepNow();
+        public void YouCanSleepNow()
+        {
+            if (ReLogic.OS.Platform.IsWindows) orig_YouCanSleepNow();
         }
     }
 }

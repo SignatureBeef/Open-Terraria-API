@@ -14,7 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
     <ProjectReference Include="..\OTAPI.Mods\OTAPI.Mods.csproj" />
-    <ProjectReference Include="..\OTAPI.Shims\OTAPI.Shims.csproj" />
   </ItemGroup>
 
 </Project>
