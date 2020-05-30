@@ -17,23 +17,37 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using MonoMod;
+using OTAPI;
+using System;
+using System.Collections.Generic;
 
 namespace Terraria
 {
-    class patch_Main
+    class patch_RemoteClient
     {
-        /** Begin Cross platform support - Avoid Windows specific calls */
-        public extern void orig_NeverSleep();
-        public void NeverSleep()
+        public Dictionary<string, object> Data { get; set; }
+
+        public string ClientUUID
         {
-            if (ReLogic.OS.Platform.IsWindows) orig_NeverSleep();
+            get => (Data[nameof(ClientUUID)] as string);
+            set => Data[nameof(ClientUUID)] = value;
         }
 
-        public extern void orig_YouCanSleepNow();
-        public void YouCanSleepNow()
+        /** Begin Patch: Extra data */
+        public extern void orig_ctor_RemoteClient();
+        [MonoMod.MonoModConstructor]
+        patch_RemoteClient()
         {
-            if (ReLogic.OS.Platform.IsWindows) orig_YouCanSleepNow();
+            orig_ctor_RemoteClient();
+            Data = new Dictionary<string, object>();
         }
-        /** End Cross platform support - Avoid Windows specific calls */
+
+        public extern void orig_Reset();
+        public void Reset()
+        {
+            orig_Reset();
+            Data.Clear();
+        }
+        /** End Hook: Extra data */
     }
 }

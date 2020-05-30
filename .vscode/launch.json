@@ -12,7 +12,7 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/netcoreapp3.1/OTAPI.Patcher.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/OTAPI.Patcher",
+            "cwd": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/netcoreapp3.1/",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

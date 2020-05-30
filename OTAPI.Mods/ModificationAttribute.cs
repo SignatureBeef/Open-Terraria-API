@@ -22,12 +22,22 @@ using System;
 namespace OTAPI
 {
     /// <summary>
-    /// Defines when the modification runs
+    /// Defines when the modification is applied to the target assembly
     /// </summary>
     public enum ModificationType
     {
         Patchtime = 1,
         Runtime = 2
+    }
+
+    /// <summary>
+    /// Defines the priority of the modification opposed to every other mod loaded
+    /// </summary>
+    public enum ModificationPriority
+    {
+        Early = -100,
+        Normal = 0,
+        Late = 100
     }
 
     /// <summary>
@@ -37,11 +47,15 @@ namespace OTAPI
     {
         public string Description { get; set; }
         public ModificationType Type { get; set; }
+        public ModificationPriority Priority { get; set; }
 
-        public ModificationAttribute(ModificationType type, string description)
+        public ModificationAttribute(ModificationType type, string description,
+            ModificationPriority priority = ModificationPriority.Normal
+        )
         {
             this.Description = description;
             this.Type = type;
+            this.Priority = priority;
         }
     }
 }

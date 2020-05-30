@@ -26,11 +26,15 @@ namespace OTAPI
 {
     public static class Modifier
     {
-        class Modification
+        class Modification : ModificationAttribute
         {
             public Type InstanceType { get; set; }
-            public ModificationType ModificationType { get; set; }
-            public string Description { get; set; }
+
+            public Modification(
+                ModificationType type,
+                string description,
+                ModificationPriority priority
+            ) : base(type, description, priority) { }
         }
 
         private static IEnumerable<Modification> Discover()
@@ -55,11 +59,13 @@ namespace OTAPI
                 var modificationAttr = type.CustomAttributes.SingleOrDefault(a => a.AttributeType == attr);
                 if (modificationAttr != null)
                 {
-                    yield return new Modification()
+                    yield return new Modification(
+                        (ModificationType)modificationAttr.ConstructorArguments[0].Value,
+                        (string)modificationAttr.ConstructorArguments[1].Value,
+                        (ModificationPriority)modificationAttr.ConstructorArguments[2].Value
+                    )
                     {
                         InstanceType = type,
-                        ModificationType = (ModificationType)modificationAttr.ConstructorArguments[0].Value,
-                        Description = (string)modificationAttr.ConstructorArguments[1].Value,
                     };
                 }
             }
@@ -75,7 +81,9 @@ namespace OTAPI
             };
 
             var modifications = Discover();
-            foreach (var modification in modifications.Where(x => x.ModificationType == modificationType))
+            foreach (var modification in modifications
+                .Where(x => x.Type == modificationType)
+                .OrderBy(x => x.Priority))
             {
                 modder.Log($"[OTAPI] {modification.Description}");
 

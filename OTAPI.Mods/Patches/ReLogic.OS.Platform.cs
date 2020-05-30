@@ -22,6 +22,7 @@ namespace ReLogic.OS
 {
     public abstract class patch_Platform
     {
+        /** Begin Cross platform support - Determine platform based on RuntimeInformation rather than compile time */
         public static readonly Platform Current;
         
         public static extern void orig_ctor_Platform();
@@ -36,5 +37,6 @@ namespace ReLogic.OS
             else
                 Current = new ReLogic.OS.Windows.WindowsPlatform();
         }
+        /** End Cross platform support - Determine platform based on RuntimeInformation rather than compile time */
     }
 }

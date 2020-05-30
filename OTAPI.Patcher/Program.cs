@@ -37,7 +37,7 @@ namespace OTAPI.Patcher
 
             using (var mm = new MonoModder()
             {
-                InputPath = "../../../../OTAPI.Setup/bin/Debug/netcoreapp3.1/TerrariaServer.dll",
+                InputPath = "TerrariaServer.dll", // exists when built, as its a depedency in OTAPI.Mods
                 OutputPath = "OTAPI.dll",
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
