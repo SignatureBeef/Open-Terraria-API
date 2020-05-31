@@ -27,18 +27,21 @@ namespace OTAPI
     public static class Extensions
     {
         public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference)
-            => new ILCursor(new ILContext(modder.Module.GetReference(reference)));
-        public static MethodDefinition GetReference(this MonoMod.MonoModder modder, Expression<Action> reference)
-            => modder.Module.GetReference(reference);
+            => new ILCursor(new ILContext(modder.Module.GetReference<MethodDefinition>(reference)));
 
-        public static MethodDefinition GetReference(this IMetadataTokenProvider token, Expression<Action> reference)
+        public static FieldDefinition GetReference<TReturn>(this MonoMod.MonoModder modder, Expression<Func<TReturn>> reference)
+            => modder.Module.GetReference<FieldDefinition>(reference);
+        public static MethodDefinition GetReference(this MonoMod.MonoModder modder, Expression<Action> reference)
+            => modder.Module.GetReference<MethodDefinition>(reference);
+
+        public static TReturn GetReference<TReturn>(this IMetadataTokenProvider token, LambdaExpression reference)
         {
-            // find the expression method in the meta, matching on the parameter count/types
-            var mce = reference.Body as MethodCallExpression;
-            if (mce != null)
+            var module = (token as ModuleDefinition) ?? (token as AssemblyDefinition)?.MainModule;
+            if (module != null)
             {
-                var module = (token as ModuleDefinition) ?? (token as AssemblyDefinition)?.MainModule;
-                if (module != null)
+                // find the expression method in the meta, matching on the parameter count/types
+                var mce = reference.Body as MethodCallExpression;
+                if (mce != null)
                 {
                     var type = module.Types.Single(t => t.FullName == mce.Method.DeclaringType.FullName);
                     if (type != null)
@@ -59,10 +62,20 @@ namespace OTAPI
                                     }
                                 }
 
-                                return method;
+                                return (TReturn)(object)method;
                             }
                         }
                     }
+                }
+            }
+
+            var me = reference.Body as MemberExpression;
+            if (me != null)
+            {
+                var type = module.Types.Single(t => t.FullName == me.Member.DeclaringType.FullName);
+                if (type != null)
+                {
+                    return (TReturn)(object)type.Fields.Single(f => f.Name == me.Member.Name);
                 }
             }
 
