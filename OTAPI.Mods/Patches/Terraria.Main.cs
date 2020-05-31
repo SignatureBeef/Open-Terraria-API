@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using MonoMod;
+using OTAPI;
+using Microsoft.Xna.Framework;
 
 namespace Terraria
 {
@@ -35,5 +37,29 @@ namespace Terraria
             if (ReLogic.OS.Platform.IsWindows) orig_YouCanSleepNow();
         }
         /** End Cross platform support - Avoid Windows specific calls */
+
+        /** Begin Hook - Pre/PostUpdate */
+        protected extern void orig_Update(GameTime gameTime);
+        protected void Update(GameTime gameTime)
+        {
+            if (Hooks.Main.PreUpdate == null || Hooks.Main.PreUpdate(ref gameTime) == HookResult.Continue)
+            {
+                orig_Update(gameTime);
+                Hooks.Main.PostUpdate?.Invoke(ref gameTime);
+            }
+        }
+        /** End Hook - Pre/PostUpdate */
+
+        /** Begin Hook - Pre/PostInitialize */
+        protected extern void orig_Initialize();
+        protected void Initialize()
+        {
+            if (Hooks.Main.PreInitialize == null || Hooks.Main.PreInitialize() == HookResult.Continue)
+            {
+                orig_Initialize();
+                Hooks.Main.PostInitialize?.Invoke();
+            }
+        }
+        /** End Hook - Pre/PostInitialize */
     }
 }
