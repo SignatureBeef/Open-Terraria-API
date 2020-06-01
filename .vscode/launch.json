@@ -1,18 +1,31 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
-   // Use hover for the description of the existing attributes
-   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-   "version": "0.2.0",
-   "configurations": [
+    // Use IntelliSense to find out which attributes exist for C# debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+    "version": "0.2.0",
+    "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": "Patcher",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build-mods",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/netcoreapp3.1/OTAPI.Patcher.dll",
             "args": [],
             "cwd": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/netcoreapp3.1/",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Setup",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-setup",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/OTAPI.Setup/bin/Debug/netcoreapp3.1/OTAPI.Setup.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/OTAPI.Setup/bin/Debug/netcoreapp3.1/",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

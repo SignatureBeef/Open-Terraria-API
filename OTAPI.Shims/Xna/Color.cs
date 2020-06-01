@@ -2010,7 +2010,7 @@ namespace Microsoft.Xna.Framework
         /// <param name="obj">A color object.</param>
         public override bool Equals(object obj)
         {
-            return obj is Color && this.Equals((Color)obj);
+            return obj is Color col && this.Equals(col);
         }
 
         /// <summary>Test a color to see if it is equal to the color in this instance.</summary>

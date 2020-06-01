@@ -56,9 +56,8 @@ namespace Microsoft.Xna.Framework
             //}
             //return result;
 
-            if (obj is Point)
+            if (obj is Point target)
             {
-                var target = (Point)obj;
                 return target.X == this.X && target.Y == this.Y;
             }
             return false;

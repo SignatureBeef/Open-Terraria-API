@@ -24,7 +24,7 @@ using MonoMod.Cil;
 
 namespace OTAPI
 {
-    public static class Extensions
+    public static partial class Extensions
     {
         public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference)
             => new ILCursor(new ILContext(modder.Module.GetReference<MethodDefinition>(reference)));
@@ -33,6 +33,11 @@ namespace OTAPI
             => modder.Module.GetReference<FieldDefinition>(reference);
         public static MethodDefinition GetReference(this MonoMod.MonoModder modder, Expression<Action> reference)
             => modder.Module.GetReference<MethodDefinition>(reference);
+        public static TypeDefinition GetReference<TType>(this MonoMod.MonoModder modder)
+        {
+            var target = typeof(TType).FullName;
+            return modder.Module.Types.Single(t => t.FullName == target);
+        }
 
         public static TReturn GetReference<TReturn>(this IMetadataTokenProvider token, LambdaExpression reference)
         {

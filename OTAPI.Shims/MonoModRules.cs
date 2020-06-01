@@ -76,11 +76,7 @@ namespace MonoMod
                 {
                     if (asmref.Name.Equals(assemblyNamePattern))
                     {
-                        asmref.Name = MonoModRule.Modder.Module.Assembly.Name.Name;
-                        asmref.Version = MonoModRule.Modder.Module.Assembly.Name.Version;
-                        asmref.PublicKey = MonoModRule.Modder.Module.Assembly.Name.PublicKey;
-                        asmref.PublicKeyToken = MonoModRule.Modder.Module.Assembly.Name.PublicKeyToken;
-                        // MonoModRule.Modder.Module.AssemblyReferences.Remove(asmref);
+                        MonoModRule.Modder.Module.AssemblyReferences.Remove(asmref);
                     }
                 }
             }

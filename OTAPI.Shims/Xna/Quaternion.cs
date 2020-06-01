@@ -80,9 +80,9 @@ namespace Microsoft.Xna.Framework
         public override bool Equals(object obj)
         {
             bool result = false;
-            if (obj is Quaternion)
+            if (obj is Quaternion q)
             {
-                result = this.Equals((Quaternion)obj);
+                result = this.Equals(q);
             }
             return result;
         }

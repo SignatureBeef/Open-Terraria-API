@@ -105,9 +105,9 @@ namespace Microsoft.Xna.Framework
         public override bool Equals(object obj)
         {
             bool result = false;
-            if (obj is Vector2)
+            if (obj is Vector2 vec)
             {
-                result = this.Equals((Vector2)obj);
+                result = this.Equals(vec);
             }
             return result;
         }

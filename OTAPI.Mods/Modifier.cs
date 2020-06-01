@@ -74,10 +74,12 @@ namespace OTAPI
         public static void Apply(ModificationType modificationType, MonoMod.MonoModder modder)
         {
             modder.Log($"Processing {modificationType} OTAPI mods");
-            var availableParameters = new Dictionary<Type, object>()
+            // var remapper = new Remapper(modder.Module);
+            var availableParameters = new List<object>()
             {
-                { typeof(MonoMod.MonoModder), modder},
-                { typeof(ModificationType), modificationType},
+                modder,
+                modificationType,
+                // remapper,
             };
 
             var modifications = Discover();
@@ -96,8 +98,8 @@ namespace OTAPI
                     for (var i = 0; i < modCtorParams.Count(); i++)
                     {
                         var param = modCtorParams.ElementAt(i);
-
-                        if (availableParameters.TryGetValue(param.ParameterType, out object paramValue))
+                        var paramValue = availableParameters.SingleOrDefault(p => p.GetType() == param.ParameterType);
+                        if (paramValue != null)
                         {
                             args[i] = paramValue;
                         }
@@ -105,8 +107,12 @@ namespace OTAPI
                     }
                 }
 
-                Activator.CreateInstance(modification.InstanceType, args, null);
+                var instance = Activator.CreateInstance(modification.InstanceType, args, null);
+                // remapper.Modifications.Add(instance);
             }
+
+            // // run any remap modifications
+            // remapper.Remap();
         }
     }
 }

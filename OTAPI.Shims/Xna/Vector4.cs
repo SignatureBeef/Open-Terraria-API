@@ -147,9 +147,8 @@ namespace Microsoft.Xna.Framework
 
         public override bool Equals(object obj)
         {
-            if (obj is Vector4)
+            if (obj is Vector4 vec)
             {
-                var vec = (Vector4)obj;
                 return this == vec;
             }
             return false;

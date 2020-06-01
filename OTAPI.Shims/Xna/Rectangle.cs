@@ -218,9 +218,9 @@ namespace Microsoft.Xna.Framework
 		public override bool Equals (object obj)
 		{
 			bool result = false;
-			if (obj is Rectangle)
+			if (obj is Rectangle rec)
 			{
-				result = this.Equals ((Rectangle)obj);
+				result = this.Equals (rec);
 			}
 			return result;
 		}
