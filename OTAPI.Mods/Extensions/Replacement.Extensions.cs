@@ -16,13 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using System;
-using System.Linq;
-using System.Linq.Expressions;
 using Mono.Cecil;
-using MonoMod.Cil;
 using MonoMod.Utils;
-using OTAPI.Emitters;
 
 namespace OTAPI
 {

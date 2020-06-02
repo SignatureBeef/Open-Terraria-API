@@ -45,17 +45,35 @@ namespace OTAPI
     /// </summary>
     public class ModificationAttribute : Attribute
     {
+        /// <summary>
+        /// Description of what the mod is doing
+        /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// What type of modifiction
+        /// </summary>
         public ModificationType Type { get; set; }
+
+        /// <summary>
+        /// When the modification should run
+        /// </summary>
         public ModificationPriority Priority { get; set; }
 
+        /// <summary>
+        /// What this modification needs to wait for in order to be executed
+        /// </summary>
+        public Type[] Dependencies { get; set; }
+
         public ModificationAttribute(ModificationType type, string description,
-            ModificationPriority priority = ModificationPriority.Normal
+            ModificationPriority priority = ModificationPriority.Normal,
+            Type[] dependencies = null
         )
         {
             this.Description = description;
             this.Type = type;
             this.Priority = priority;
+            this.Dependencies = dependencies;
         }
     }
 }

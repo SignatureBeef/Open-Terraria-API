@@ -33,8 +33,9 @@ namespace OTAPI
             public Modification(
                 ModificationType type,
                 string description,
-                ModificationPriority priority
-            ) : base(type, description, priority) { }
+                ModificationPriority priority,
+                Type[] dependencies
+            ) : base(type, description, priority, dependencies) { }
         }
 
         private static IEnumerable<Modification> Discover()
@@ -62,13 +63,28 @@ namespace OTAPI
                     yield return new Modification(
                         (ModificationType)modificationAttr.ConstructorArguments[0].Value,
                         (string)modificationAttr.ConstructorArguments[1].Value,
-                        (ModificationPriority)modificationAttr.ConstructorArguments[2].Value
+                        (ModificationPriority)modificationAttr.ConstructorArguments[2].Value,
+                        (Type[])modificationAttr.ConstructorArguments[3].Value
                     )
                     {
                         InstanceType = type,
                     };
                 }
             }
+        }
+
+        static int DeterminePriority(Modification modification, IEnumerable<Modification> modifications)
+        {
+            // rather than tracking what modifications have completed, just find the last priority of the
+            // dependencies and add 1 
+            if (modification.Dependencies != null)
+            {
+                var dependencyMods = from t in modification.Dependencies
+                                     join m in modifications on t equals m.InstanceType
+                                     select m;
+                return dependencyMods.Max(m => (int)m.Priority) + 1;
+            }
+            return (int)modification.Priority;
         }
 
         public static void Apply(ModificationType modificationType, MonoMod.MonoModder modder)
@@ -85,7 +101,7 @@ namespace OTAPI
             var modifications = Discover();
             foreach (var modification in modifications
                 .Where(x => x.Type == modificationType)
-                .OrderBy(x => x.Priority))
+                .OrderBy(x => DeterminePriority(x, modifications)))
             {
                 modder.Log($"[OTAPI] {modification.Description}");
 

@@ -2,11 +2,11 @@ using Mono.Cecil;
 using System.Linq;
 using MonoMod.Utils;
 
-namespace OTAPI.Emitters
+namespace OTAPI
 {
     public static class InterfaceEmitter
     {
-        public static TypeDefinition Emit(TypeDefinition ElementType)
+        public static TypeDefinition GenerateInterface(this TypeDefinition ElementType)
         {
             TypeDefinition collection = new TypeDefinition(
                 ElementType.Namespace,

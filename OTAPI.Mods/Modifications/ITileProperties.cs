@@ -21,18 +21,14 @@ using MonoMod;
 
 namespace OTAPI.Modifications
 {
-    [Modification(ModificationType.Patchtime, "Implementing ITile", Dependencies = new[] { typeof(ITileProperties) })]
+    [Modification(ModificationType.Patchtime, "Implementing Tile properties")]
     [MonoMod.MonoModIgnore]
-    class ITile
+    class ITileProperties
     {
-        public ITile(MonoModder modder)
+        public ITileProperties(MonoModder modder)
         {
             var tile = modder.GetReference<Terraria.Tile>();
 
-            var itile = tile.GenerateInterface();
-            modder.Module.Types.Add(itile);
-
-            tile.Interfaces.Add(new InterfaceImplementation(itile));
         }
     }
 }
