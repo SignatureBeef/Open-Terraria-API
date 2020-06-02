@@ -28,11 +28,7 @@ namespace OTAPI.Modifications
         public ITile(MonoModder modder)
         {
             var tile = modder.GetReference<Terraria.Tile>();
-
-            var itile = tile.GenerateInterface();
-            modder.Module.Types.Add(itile);
-
-            tile.Interfaces.Add(new InterfaceImplementation(itile));
+            var itile = tile.RemapWithInterface();
         }
     }
 }

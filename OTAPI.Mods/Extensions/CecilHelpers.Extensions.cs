@@ -86,5 +86,14 @@ namespace OTAPI
 
             throw new System.Exception($"Unable to find expression in assembly");
         }
+
+		public static MethodReference GetCoreLibMethod(this ModuleDefinition module, string @namespace, string type, string method)
+		{
+			var type_ref = new TypeReference(@namespace, type,
+				module.TypeSystem.String.Module,
+				module.TypeSystem.CoreLibrary
+			);
+			return new MethodReference(method, module.TypeSystem.Void, type_ref);
+		}
     }
 }

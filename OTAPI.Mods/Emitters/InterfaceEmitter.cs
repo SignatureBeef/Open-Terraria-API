@@ -1,4 +1,5 @@
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 using System.Linq;
 using MonoMod.Utils;
 
@@ -6,18 +7,18 @@ namespace OTAPI
 {
     public static class InterfaceEmitter
     {
-        public static TypeDefinition GenerateInterface(this TypeDefinition ElementType)
+        public static TypeDefinition RemapWithInterface(this TypeDefinition ElementType)
         {
-            TypeDefinition collection = new TypeDefinition(
+            TypeDefinition @interface = new TypeDefinition(
                 ElementType.Namespace,
                 $"I{ElementType.Name}",
                 TypeAttributes.Abstract | TypeAttributes.ClassSemanticMask | TypeAttributes.Public
             );
 
-            foreach(var field in ElementType.Fields.Where(f => !f.HasConstant))
+            foreach (var field in ElementType.Fields.Where(f => !f.HasConstant && !f.IsPrivate))
             {
                 var cf = field.Clone();
-                collection.Fields.Add(cf);
+                @interface.Fields.Add(cf);
             }
 
             foreach (var prop in ElementType.Properties)
@@ -28,9 +29,26 @@ namespace OTAPI
                 {
                     method.DeclaringType = null;
                     method.Body = null;
-                    collection.Methods.Add(method);
+
+                    // enforce interface requirements
+                    method.Attributes |= MethodAttributes.NewSlot | MethodAttributes.Abstract | MethodAttributes.Virtual;
+
+                    // remove any System.Runtime.CompilerServices.CompilerGeneratedAttribute
+                    var attr = method.CustomAttributes.SingleOrDefault(x =>
+                        x.AttributeType.FullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute"
+                    );
+                    if (attr != null)
+                        method.CustomAttributes.Remove(attr);
+
+                    @interface.Methods.Add(method);
                 }
-                collection.Properties.Add(cp);
+                @interface.Properties.Add(cp);
+
+                // satisfy the interface by marking the properties as implemented
+                if (prop.GetMethod != null)
+                    prop.GetMethod.IsNewSlot = prop.GetMethod.IsFinal = prop.GetMethod.IsVirtual = true;
+                if (prop.SetMethod != null)
+                    prop.SetMethod.IsNewSlot = prop.SetMethod.IsFinal = prop.SetMethod.IsVirtual = true;
             }
 
             foreach (var method in ElementType.Methods
@@ -46,10 +64,19 @@ namespace OTAPI
                 var cm = method.Clone();
                 cm.DeclaringType = null;
                 cm.Body = null;
-                collection.Methods.Add(cm);
+                // enforce interface requirements
+                cm.Attributes |= MethodAttributes.NewSlot | MethodAttributes.Abstract | MethodAttributes.Virtual;
+                @interface.Methods.Add(cm);
+
+                // satisfy the interface by marking the properties as implemented
+                method.IsNewSlot = method.IsFinal = method.IsVirtual = true;
             }
 
-            return collection;
+            ElementType.Module.Types.Add(@interface);
+
+            ElementType.Interfaces.Add(new InterfaceImplementation(@interface));
+
+            return @interface;
         }
     }
 }

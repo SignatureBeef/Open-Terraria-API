@@ -2,6 +2,18 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "build-setup",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/OTAPI.Setup.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "build-mods",
             "command": "dotnet",
             "type": "process",
@@ -14,12 +26,12 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "build-setup",
+            "label": "build-launcher",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/OTAPI.Setup.sln",
+                "${workspaceFolder}/OTAPI.Launcher.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

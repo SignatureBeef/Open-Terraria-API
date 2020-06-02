@@ -36,6 +36,11 @@ namespace OTAPI.Setup
                 (mm.AssemblyResolver as DefaultAssemblyResolver).AddSearchDirectory(embeddedResourcesDir);
                 mm.Read();
 
+                // prechange the assembly name to a dll
+                // monomod will also reference this when relinking so it must be correct
+                // in order for shims within this dll to work (relogic)
+                mm.Module.Name = Path.ChangeExtension(mm.Module.Name, ".dll");
+
                 foreach (var path in new[] {
                     Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
                     Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
@@ -63,7 +68,7 @@ namespace OTAPI.Setup
                     mOut.Write(output);
                 }
 
-                mm.OutputPath = $"{inputName}.dll"; // the merged TerrariaServer + ReLogic (so we can apply patches)
+                mm.OutputPath = mm.Module.Name; // the merged TerrariaServer + ReLogic (so we can apply patches)
 
                 // switch to any cpu so that we can compile and use types in mods
                 // this is usually in a modification otherwise

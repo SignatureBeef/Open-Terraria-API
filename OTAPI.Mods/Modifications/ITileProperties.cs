@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Mono.Cecil;
 using MonoMod;
+using System.Linq;
 
 namespace OTAPI.Modifications
 {
@@ -25,10 +26,10 @@ namespace OTAPI.Modifications
     [MonoMod.MonoModIgnore]
     class ITileProperties
     {
-        public ITileProperties(MonoModder modder)
+        public ITileProperties(MonoModder modder, Remapper remapper)
         {
             var tile = modder.GetReference<Terraria.Tile>();
-
+            tile.RemapFieldsToProperties(remapper);
         }
     }
 }

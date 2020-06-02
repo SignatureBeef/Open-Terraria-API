@@ -5,6 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Setup",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-setup",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/OTAPI.Setup/bin/Debug/netcoreapp3.1/OTAPI.Setup.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/OTAPI.Setup/bin/Debug/netcoreapp3.1/",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": "Patcher",
             "type": "coreclr",
             "request": "launch",
@@ -18,14 +31,14 @@
             "stopAtEntry": false
         },
         {
-            "name": "Setup",
+            "name": "Launcher",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build-setup",
+            "preLaunchTask": "build-launcher",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/OTAPI.Setup/bin/Debug/netcoreapp3.1/OTAPI.Setup.dll",
+            "program": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/netcoreapp3.1/OTAPI.Launcher.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/OTAPI.Setup/bin/Debug/netcoreapp3.1/",
+            "cwd": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/netcoreapp3.1/",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
