@@ -26,21 +26,8 @@ namespace OTAPI
 {
     public static class Modifier
     {
-        class Modification : ModificationAttribute
+        private static IEnumerable<ModificationAttribute> Discover()
         {
-            public Type InstanceType { get; set; }
-
-            public Modification(
-                ModificationType type,
-                string description,
-                ModificationPriority priority,
-                Type[] dependencies
-            ) : base(type, description, priority, dependencies) { }
-        }
-
-        private static IEnumerable<Modification> Discover()
-        {
-            var attr = typeof(ModificationAttribute);
             var asm = Assembly.GetExecutingAssembly();
 
             Type[] types;
@@ -57,23 +44,16 @@ namespace OTAPI
 
             foreach (var type in modificationTypes)
             {
-                var modificationAttr = type.CustomAttributes.SingleOrDefault(a => a.AttributeType == attr);
+                var modificationAttr = type.GetCustomAttribute<ModificationAttribute>();
                 if (modificationAttr != null)
                 {
-                    yield return new Modification(
-                        (ModificationType)modificationAttr.ConstructorArguments[0].Value,
-                        (string)modificationAttr.ConstructorArguments[1].Value,
-                        (ModificationPriority)modificationAttr.ConstructorArguments[2].Value,
-                        (Type[])modificationAttr.ConstructorArguments[3].Value
-                    )
-                    {
-                        InstanceType = type,
-                    };
+                    modificationAttr.InstanceType = type;
+                    yield return modificationAttr;
                 }
             }
         }
 
-        static int DeterminePriority(Modification modification, IEnumerable<Modification> modifications)
+        static int DeterminePriority(ModificationAttribute modification, IEnumerable<ModificationAttribute> modifications)
         {
             // rather than tracking what modifications have completed, just find the last priority of the
             // dependencies and add 1 
@@ -101,7 +81,8 @@ namespace OTAPI
             var modifications = Discover();
             foreach (var modification in modifications
                 .Where(x => x.Type == modificationType)
-                .OrderBy(x => DeterminePriority(x, modifications)))
+                .OrderBy(x => DeterminePriority(x, modifications))
+            )
             {
                 modder.Log($"[OTAPI] {modification.Description}");
 

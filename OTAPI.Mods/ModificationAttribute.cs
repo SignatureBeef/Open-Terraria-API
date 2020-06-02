@@ -75,5 +75,7 @@ namespace OTAPI
             this.Priority = priority;
             this.Dependencies = dependencies;
         }
+
+        public Type InstanceType { get; set; }
     }
 }
