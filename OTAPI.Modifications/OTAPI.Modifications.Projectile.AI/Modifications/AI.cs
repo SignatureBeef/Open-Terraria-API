@@ -7,7 +7,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Projectile
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.0.4, Culture=neutral, PublicKeyToken=null",
+			"TerrariaServer, Version=1.4.0.5, Culture=neutral, PublicKeyToken=null",
 			"Terraria, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
 
 		};
