@@ -16,19 +16,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using Mono.Cecil;
 using MonoMod;
 
 namespace OTAPI.Modifications
 {
-    [Modification(ModificationType.Patchtime, "Implementing ITile", Dependencies = new[] { typeof(ITileProperties) })]
+    [Modification(ModType.PreMerge, "Implementing ITile", Dependencies = new[]{
+        typeof(ITileCollection), // this mod uses Terraria.Tile directly so it will emit references to it that this needs to clean up
+        typeof(ITileProperties), // properties required first, interfaces do not like instance fields
+    })]
     [MonoMod.MonoModIgnore]
     class ITile
     {
         public ITile(MonoModder modder)
         {
-            var tile = modder.GetReference<Terraria.Tile>();
-            var itile = tile.RemapWithInterface();
+            var tile = modder.GetDefinition<Terraria.Tile>();
+            var itile = tile.RemapAsInterface();
         }
     }
 }

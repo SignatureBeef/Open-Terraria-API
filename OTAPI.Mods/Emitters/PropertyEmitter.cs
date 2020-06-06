@@ -1,9 +1,28 @@
+/*
+Copyright (C) 2020 DeathCradle
+
+This file is part of Open Terraria API v3 (OTAPI)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System.Linq;
 
 namespace OTAPI
 {
+    [MonoMod.MonoModIgnore]
     public class FieldToPropertyRemapper
     {
         FieldDefinition Field { get; set; }
@@ -52,6 +71,7 @@ namespace OTAPI
         }
     }
 
+    [MonoMod.MonoModIgnore]
     public static class PropertyEmitter
     {
         const MethodAttributes DefaultMethodAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
@@ -60,7 +80,7 @@ namespace OTAPI
         {
             var property = new PropertyDefinition(field.Name, PropertyAttributes.None, field.FieldType);
 
-            property.HasThis = true;
+            property.HasThis = !field.IsStatic;
             property.GetMethod = field.GenerateGetter();
             property.SetMethod = field.GenerateSetter();
 
@@ -83,9 +103,8 @@ namespace OTAPI
 
         public static void RemapFieldsToProperties(this TypeDefinition type, Remapper remapper)
         {
-            foreach (var field in type.Fields.Where(x => !x.HasConstant))
+            foreach (var field in type.Fields.Where(f => !f.HasConstant && !f.IsPrivate))
             {
-                // rename to the backing field
                 field.RemapAsProperty(remapper);
             }
         }

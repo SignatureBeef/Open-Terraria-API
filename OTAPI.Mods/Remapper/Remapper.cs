@@ -1,3 +1,21 @@
+/*
+Copyright (C) 2020 DeathCradle
+
+This file is part of Open Terraria API v3 (OTAPI)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System;
@@ -23,6 +41,9 @@ namespace OTAPI
 
         public void Remap()
         {
+            foreach (var task in Tasks)
+                System.Console.WriteLine($"[OTAPI] Remap task: {task.GetType().FullName}");
+
             var discoverer = new TokenDiscoverer();
             discoverer.Scan(Module, Tasks);
         }
@@ -83,30 +104,38 @@ namespace OTAPI
                 hook.Method.Invoke(hook.Instance, methodArgs);
         }
 
+
+        [MonoMod.MonoModCustomAttribute("TESTING")]
+        public void asd(MethodDefinition method)
+        {
+
+        }
+
         private void ScanType(TypeDefinition type)
         {
-            foreach (var method in type.Methods)
+            if (Hooks.ContainsKey(typeof(FieldDefinition)))
+                foreach (var field in type.Fields.ToArray())
+                    ApplyHook(field);
+
+            if (Hooks.ContainsKey(typeof(PropertyDefinition)))
+                foreach (var property in type.Properties.ToArray())
+                    ApplyHook(property);
+
+            foreach (var nestedType in type.NestedTypes.ToArray())
+                ScanType(nestedType);
+
+            // leave instructions last in case fields/properties are remapped
+            foreach (var method in type.Methods.ToArray())
             {
                 if (method.HasBody && Hooks.ContainsKey(typeof(Instruction)))
                 {
-                    foreach (var ins in method.Body.Instructions)
+                    foreach (var ins in method.Body.Instructions.ToArray())
                         ApplyHook(ins, method);
                 }
 
                 if (Hooks.ContainsKey(typeof(MethodDefinition)))
                     ApplyHook(method);
             }
-
-            if (Hooks.ContainsKey(typeof(FieldDefinition)))
-                foreach (var field in type.Fields)
-                    ApplyHook(field);
-
-            if (Hooks.ContainsKey(typeof(PropertyDefinition)))
-                foreach (var property in type.Properties)
-                    ApplyHook(property);
-
-            foreach (var nestedType in type.NestedTypes)
-                ScanType(nestedType);
         }
     }
 }

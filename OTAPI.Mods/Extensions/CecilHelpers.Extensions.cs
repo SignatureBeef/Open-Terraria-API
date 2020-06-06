@@ -27,19 +27,38 @@ namespace OTAPI
     public static partial class Extensions
     {
         public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference)
-            => new ILCursor(new ILContext(modder.Module.GetReference<MethodDefinition>(reference)));
+            => new ILCursor(new ILContext(modder.Module.GetDefinition<MethodDefinition>(reference)));
 
-        public static FieldDefinition GetReference<TReturn>(this MonoMod.MonoModder modder, Expression<Func<TReturn>> reference)
-            => modder.Module.GetReference<FieldDefinition>(reference);
-        public static MethodDefinition GetReference(this MonoMod.MonoModder modder, Expression<Action> reference)
-            => modder.Module.GetReference<MethodDefinition>(reference);
-        public static TypeDefinition GetReference<TType>(this MonoMod.MonoModder modder)
+        public static FieldDefinition GetDefinition<TReturn>(this MonoMod.MonoModder modder, Expression<Func<TReturn>> reference)
+            => modder.Module.GetDefinition<FieldDefinition>(reference);
+        public static MethodDefinition GetDefinition(this MonoMod.MonoModder modder, Expression<Action> reference)
+            => modder.Module.GetDefinition(reference);
+        public static TypeDefinition GetDefinition<TType>(this MonoMod.MonoModder modder)
+            => modder.Module.GetDefinition<TType>();
+
+        public static ILCursor GetILCursor(this ModuleDefinition module, Expression<Action> reference)
+            => new ILCursor(new ILContext(module.GetDefinition<MethodDefinition>(reference)));
+
+        public static FieldDefinition GetDefinition<TReturn>(this ModuleDefinition module, Expression<Func<TReturn>> reference)
+            => module.GetDefinition<FieldDefinition>(reference);
+        public static MethodDefinition GetDefinition(this ModuleDefinition module, Expression<Action> reference)
+            => module.GetDefinition<MethodDefinition>(reference);
+
+        public static MethodReference GetReference<TReturn>(this ModuleDefinition module, Expression<Func<TReturn>> reference)
+            => (MethodReference)module.GetMemberReference(reference);
+        public static MemberReference GetReference(this ModuleDefinition module, Expression<Action> reference)
+            => module.GetMemberReference(reference);
+
+        public static TypeDefinition GetDefinition<TType>(this ModuleDefinition module)
         {
             var target = typeof(TType).FullName;
-            return modder.Module.Types.Single(t => t.FullName == target);
+            return module.Types.Single(t => t.FullName == target);
         }
 
-        public static TReturn GetReference<TReturn>(this IMetadataTokenProvider token, LambdaExpression reference)
+        public static TReturn GetDefinition<TReturn>(this IMetadataTokenProvider token, LambdaExpression reference)
+                    => (TReturn)token.GetMemberReference(reference).Resolve();
+
+        public static MemberReference GetMemberReference(this IMetadataTokenProvider token, LambdaExpression reference)
         {
             var module = (token as ModuleDefinition) ?? (token as AssemblyDefinition)?.MainModule;
             if (module != null)
@@ -47,53 +66,26 @@ namespace OTAPI
                 // find the expression method in the meta, matching on the parameter count/types
                 var mce = reference.Body as MethodCallExpression;
                 if (mce != null)
-                {
-                    var type = module.Types.Single(t => t.FullName == mce.Method.DeclaringType.FullName);
-                    if (type != null)
-                    {
-                        var targetParameters = mce.Method.GetParameters();
-                        foreach (var method in type.Methods.Where(m => m.Name == mce.Method.Name))
-                        {
-                            if (method.Parameters.Count == targetParameters.Length)
-                            {
-                                if (method.Parameters.Count > 0)
-                                {
-                                    for (var i = 0; i < method.Parameters.Count; i++)
-                                    {
-                                        if (method.Parameters[i].ParameterType.FullName != targetParameters[i].ParameterType.FullName)
-                                        {
-                                            continue;
-                                        }
-                                    }
-                                }
-
-                                return (TReturn)(object)method;
-                            }
-                        }
-                    }
-                }
+                    return module.ImportReference(mce.Method);
             }
 
             var me = reference.Body as MemberExpression;
             if (me != null)
             {
-                var type = module.Types.Single(t => t.FullName == me.Member.DeclaringType.FullName);
-                if (type != null)
-                {
-                    return (TReturn)(object)type.Fields.Single(f => f.Name == me.Member.Name);
-                }
+                if (me.Member is System.Reflection.FieldInfo field)
+                    return module.ImportReference(field);
             }
 
             throw new System.Exception($"Unable to find expression in assembly");
         }
 
-		public static MethodReference GetCoreLibMethod(this ModuleDefinition module, string @namespace, string type, string method)
-		{
-			var type_ref = new TypeReference(@namespace, type,
-				module.TypeSystem.String.Module,
-				module.TypeSystem.CoreLibrary
-			);
-			return new MethodReference(method, module.TypeSystem.Void, type_ref);
-		}
+        public static MethodReference GetCoreLibMethod(this ModuleDefinition module, string @namespace, string type, string method)
+        {
+            var type_ref = new TypeReference(@namespace, type,
+                module.TypeSystem.String.Module,
+                module.TypeSystem.CoreLibrary
+            );
+            return new MethodReference(method, module.TypeSystem.Void, type_ref);
+        }
     }
 }

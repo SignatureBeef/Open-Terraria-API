@@ -21,17 +21,22 @@ using System.Linq;
 
 namespace OTAPI.Modifications
 {
-    [Modification(ModificationType.Patchtime, "Removing hard references to System.Private.CoreLib")]
+    [Modification(ModType.PostProcess, "Removing hard references to System.Private.CoreLib")]
     [MonoMod.MonoModIgnore]
     class PatchCoreLib
     {
         public PatchCoreLib(MonoModder modder)
         {
             foreach (var reference in modder.Module.AssemblyReferences
-                .Where(x => x.Name.StartsWith("System.Private.CoreLib")).ToArray())
+                .Where(x => x.Name.StartsWith("mscorlib") || x.Name.StartsWith("System.Private.CoreLib"))
+                .ToArray()
+            )
             {
-                reference.Name = modder.Module.TypeSystem.CoreLibrary.Name;
-                reference.Version = new System.Version("4.0.0.0");
+                var asm = modder.Module.TypeSystem.CoreLibrary as Mono.Cecil.AssemblyNameReference;
+                reference.Name = asm.Name;
+                reference.Version = asm.Version;
+                reference.PublicKey = asm.PublicKey;
+                reference.PublicKeyToken = asm.PublicKeyToken;
             }
         }
     }

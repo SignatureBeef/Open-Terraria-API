@@ -1,3 +1,21 @@
+/*
+Copyright (C) 2020 DeathCradle
+
+This file is part of Open Terraria API v3 (OTAPI)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System.Linq;
@@ -5,8 +23,18 @@ using MonoMod.Utils;
 
 namespace OTAPI
 {
+    [MonoMod.MonoModIgnore]
     public static class InterfaceEmitter
     {
+        public static TypeDefinition RemapAsInterface(this TypeDefinition ElementType)
+        {
+            var iitem = ElementType.RemapWithInterface();
+
+            // TODO queue a task to change all instances where declaring type != ElementType
+
+            return iitem;
+        }
+
         public static TypeDefinition RemapWithInterface(this TypeDefinition ElementType)
         {
             TypeDefinition @interface = new TypeDefinition(
@@ -15,11 +43,13 @@ namespace OTAPI
                 TypeAttributes.Abstract | TypeAttributes.ClassSemanticMask | TypeAttributes.Public
             );
 
-            foreach (var field in ElementType.Fields.Where(f => !f.HasConstant && !f.IsPrivate))
-            {
-                var cf = field.Clone();
-                @interface.Fields.Add(cf);
-            }
+            if (ElementType.Fields.Any(f => !f.HasConstant && !f.IsPrivate))
+                throw new System.NotSupportedException($"CS0525: Interfaces cannot contain instance fields");
+            // foreach (var field in ElementType.Fields.Where(f => !f.HasConstant && !f.IsPrivate))
+            // {
+            //     var cf = field.Clone();
+            //     @interface.Fields.Add(cf);
+            // }
 
             foreach (var prop in ElementType.Properties)
             {

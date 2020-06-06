@@ -23,7 +23,7 @@ using Mono.Cecil.Cil;
 namespace OTAPI.Modifications
 {
     // refer to https://github.com/Pryaxis/TShock/issues/1673
-    [Modification(ModificationType.Patchtime, "Patching zero-length packet exploits")]
+    [Modification(ModType.PreMerge, "Patching zero-length packet exploits")]
     [MonoMod.MonoModIgnore]
     class PatchZeroLengthPackets
     {

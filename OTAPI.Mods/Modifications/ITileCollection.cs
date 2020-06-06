@@ -18,10 +18,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using MonoMod;
 
-namespace Terraria
+namespace OTAPI.Modifications
 {
-    [FieldsToPropertyTransformer]
-    class patch_Tile : Terraria.Tile
+    [Modification(ModType.PreMerge, "Implementing Tile collections")]
+    [MonoMod.MonoModIgnore]
+    class ITileCollection
     {
+        public ITileCollection(MonoModder modder, Remapper remapper)
+        {
+            var tile = modder.GetDefinition<Terraria.Tile>();
+            remapper.Tasks.Add(new ArrayToCollectionRemapper(tile, modder));
+        }
     }
 }

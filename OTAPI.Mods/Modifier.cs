@@ -53,38 +53,55 @@ namespace OTAPI
             }
         }
 
-        static int DeterminePriority(ModificationAttribute modification, IEnumerable<ModificationAttribute> modifications)
+        static void IterateMods(IEnumerable<ModificationAttribute> mods, Action<ModificationAttribute> action, MonoMod.MonoModder modder)
         {
-            // rather than tracking what modifications have completed, just find the last priority of the
-            // dependencies and add 1 
-            if (modification.Dependencies != null)
+            var queue = mods.ToDictionary(i => i, k => false);
+            bool complete = queue.Count == 0;
+
+            Func<ModificationAttribute, bool> areDepsCompleted = (mod) =>
             {
-                var dependencyMods = from t in modification.Dependencies
-                                     join m in modifications on t equals m.InstanceType
-                                     select m;
-                return dependencyMods.Max(m => (int)m.Priority) + 1;
-            }
-            return (int)modification.Priority;
+                if (mod.Dependencies != null)
+                {
+                    return mod.Dependencies.All(d => mods.Any(m => m.InstanceType == d && queue[m]));
+                }
+                return true;
+            };
+
+            do
+            {
+                foreach (var pair in queue
+                    .Where(x => !x.Value)
+                    .ToDictionary(k => k.Key, v => v.Value)
+                )
+                {
+                    var is_ready = areDepsCompleted(pair.Key);
+                    if (is_ready)
+                    {
+                        action(pair.Key);
+                        queue[pair.Key] = true;
+                    }
+                    else modder.Log($"[OTAPI] Awaiting dependencies for {pair.Key.InstanceType.FullName}");
+                }
+
+                complete = queue.All(x => x.Value);
+            } while (!complete);
         }
 
-        public static void Apply(ModificationType modificationType, MonoMod.MonoModder modder)
+        public static void Apply(ModType modType, MonoMod.MonoModder modder)
         {
-            modder.Log($"Processing {modificationType} OTAPI mods");
+            modder.Log($"Processing {modType} OTAPI mods");
             var remapper = new Remapper(modder.Module);
             var availableParameters = new List<object>()
             {
                 modder,
-                modificationType,
+                modType,
                 remapper,
             };
 
-            var modifications = Discover();
-            foreach (var modification in modifications
-                .Where(x => x.Type == modificationType)
-                .OrderBy(x => DeterminePriority(x, modifications))
-            )
+            var modifications = Discover().Where(x => x.Type == modType);
+            IterateMods(modifications, (modification) =>
             {
-                modder.Log($"[OTAPI] {modification.Description}");
+                modder.Log($"[OTAPI:{modType}] {modification.Description}");
 
                 var modCtor = modification.InstanceType.GetConstructors().Single();
                 var modCtorParams = modCtor.GetParameters();
@@ -95,7 +112,9 @@ namespace OTAPI
                     for (var i = 0; i < modCtorParams.Count(); i++)
                     {
                         var param = modCtorParams.ElementAt(i);
-                        var paramValue = availableParameters.SingleOrDefault(p => p.GetType() == param.ParameterType);
+                        var paramValue = availableParameters.SingleOrDefault(p =>
+                            param.ParameterType.IsAssignableFrom(p.GetType())
+                        );
                         if (paramValue != null)
                         {
                             args[i] = paramValue;
@@ -106,7 +125,7 @@ namespace OTAPI
 
                 var instance = Activator.CreateInstance(modification.InstanceType, args, null);
                 remapper.Tasks.Add(instance);
-            }
+            }, modder);
 
             // run any remap modifications
             remapper.Remap();

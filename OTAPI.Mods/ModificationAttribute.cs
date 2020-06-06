@@ -24,20 +24,37 @@ namespace OTAPI
     /// <summary>
     /// Defines when the modification is applied to the target assembly
     /// </summary>
-    public enum ModificationType
+    public enum ModType
     {
-        Patchtime = 1,
-        Runtime = 2
+        PreMerge = 1,
+        PostProcess = 2,
+        Runtime = 3
     }
 
     /// <summary>
-    /// Defines the priority of the modification opposed to every other mod loaded
+    /// Defines a generalised order in which the mod is applied
     /// </summary>
-    public enum ModificationPriority
+    public enum ModPriority : int
     {
+        /// <summary>
+        /// May run slightly earlier than other mods 
+        /// </summary>
         Early = -100,
-        Normal = 0,
-        Late = 100
+
+        /// <summary>
+        /// Default priority, no preference or requirements
+        /// </summary>
+        Default = 0,
+
+        /// <summary>
+        /// May run later than most mods
+        /// </summary>
+        Late = 50,
+
+        /// <summary>
+        /// May be one of the last mods to be ran
+        /// </summary>
+        Last = 100,
     }
 
     /// <summary>
@@ -53,27 +70,26 @@ namespace OTAPI
         /// <summary>
         /// What type of modifiction
         /// </summary>
-        public ModificationType Type { get; set; }
+        public ModType Type { get; set; }
 
         /// <summary>
-        /// When the modification should run
+        /// A positive or negative value defining the priority of this mod against the others in it's type.
         /// </summary>
-        public ModificationPriority Priority { get; set; }
+        public ModPriority Priority { get; set; }
 
         /// <summary>
         /// What this modification needs to wait for in order to be executed
         /// </summary>
         public Type[] Dependencies { get; set; }
 
-        public ModificationAttribute(ModificationType type, string description,
-            ModificationPriority priority = ModificationPriority.Normal,
+        public ModificationAttribute(ModType type, string description,
+            ModPriority priority = ModPriority.Default,
             Type[] dependencies = null
         )
         {
             this.Description = description;
             this.Type = type;
             this.Priority = priority;
-            this.Dependencies = dependencies;
         }
 
         public Type InstanceType { get; set; }

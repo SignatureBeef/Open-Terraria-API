@@ -20,7 +20,7 @@ using MonoMod;
 
 namespace OTAPI.Modifications
 {
-    [Modification(ModificationType.Patchtime, "Changing TerrariaServer assembly name to OTAPI", ModificationPriority.Late)]
+    [Modification(ModType.PreMerge, "Changing TerrariaServer assembly name to OTAPI")]
     [MonoMod.MonoModIgnore]
     class ChangeAssemblyName
     {

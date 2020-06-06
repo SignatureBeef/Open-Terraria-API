@@ -25,6 +25,15 @@ using System.Linq;
 
 namespace OTAPI.Patcher
 {
+    class OTAPIModder : MonoMod.MonoModder
+    {
+        public override void PatchRefs()
+        {
+            OTAPI.Modifier.Apply(OTAPI.ModType.PreMerge, this);
+            base.PatchRefs();
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -35,14 +44,14 @@ namespace OTAPI.Patcher
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(pathIn);
 
-            using (var mm = new MonoModder()
+            using (var mm = new OTAPIModder()
             {
                 InputPath = "TerrariaServer.dll", // exists when built, as its a depedency in OTAPI.Mods
                 OutputPath = "OTAPI.dll",
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
                 // PublicEverything = true, // we want all of terraria exposed
-                
+
                 GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
             })
             {
@@ -62,7 +71,7 @@ namespace OTAPI.Patcher
                 mm.MapDependencies();
                 mm.AutoPatch();
 
-                OTAPI.Modifier.Apply(OTAPI.ModificationType.Patchtime, mm);
+                OTAPI.Modifier.Apply(OTAPI.ModType.PostProcess, mm);
 
                 mm.Write();
 

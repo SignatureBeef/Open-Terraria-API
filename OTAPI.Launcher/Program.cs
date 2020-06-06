@@ -6,7 +6,7 @@
         {
             OTAPI.Hooks.Program.LaunchGame = () =>
             {
-                Terraria.Main.SkipAssemblyLoad = true;
+                // Terraria.Main.SkipAssemblyLoad = true;
                 return HookResult.Continue;
             };
             Terraria.WindowsLaunch.Main(args);

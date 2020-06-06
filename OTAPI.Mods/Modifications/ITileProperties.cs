@@ -22,13 +22,13 @@ using System.Linq;
 
 namespace OTAPI.Modifications
 {
-    [Modification(ModificationType.Patchtime, "Implementing Tile properties")]
+    [Modification(ModType.PreMerge, "Implementing Tile properties")]
     [MonoMod.MonoModIgnore]
     class ITileProperties
     {
         public ITileProperties(MonoModder modder, Remapper remapper)
         {
-            var tile = modder.GetReference<Terraria.Tile>();
+            var tile = modder.GetDefinition<Terraria.Tile>();
             tile.RemapFieldsToProperties(remapper);
         }
     }

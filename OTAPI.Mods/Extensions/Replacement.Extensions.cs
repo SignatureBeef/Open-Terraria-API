@@ -44,42 +44,5 @@ namespace OTAPI
 
             return prop;
         }
-
-        // public static string GetBackingName(this FieldDefinition field)
-        // {
-        // 	return $"<{field.Name}>k__BackingField";
-        // }
-
-        // public static PropertyDefinition AsProperty(this FieldDefinition field)
-        // {
-        // 	var emitter = new PropertyEmitter(field.Name, field.FieldType, field.DeclaringType,
-        // 		getterAttributes: MethodAttributes.Public | MethodAttributes.Virtual | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.SpecialName,
-        // 		setterAttributes: MethodAttributes.Public | MethodAttributes.Virtual | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.SpecialName
-        // 	);
-
-        // 	field.Name = field.GetBackingName();
-        // 	field.IsPublic = false;
-        // 	field.IsPrivate = true;
-
-        // 	//field.CustomAttributes.Add(new CustomAttribute(
-        // 	//	field.DeclaringType.Module.ImportReference(
-        // 	//		typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute)
-        // 	//			.GetConstructors()
-        // 	//			.Single()
-        // 	//	)
-        // 	//));
-
-        // 	return emitter.Emit();
-        // }
-
-        // public static PropertyDefinition AsVirtual(this PropertyDefinition property)
-        // {
-        // 	if (property.GetMethod != null)
-        // 		property.GetMethod.IsVirtual = property.GetMethod.IsNewSlot = true;
-        // 	if (property.SetMethod != null)
-        // 		property.SetMethod.IsVirtual = property.SetMethod.IsNewSlot = true;
-
-        // 	return property;
-        // }
     }
 }
