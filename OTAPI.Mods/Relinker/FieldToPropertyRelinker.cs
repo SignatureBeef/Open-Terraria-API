@@ -37,24 +37,13 @@ namespace OTAPI.Mods.Relinker
 
         public override void Relink(MethodBody body, Instruction instr)
         {
-            if (body.Method.Name == "FixHeart")
-            {
-
-            }
-
             switch (instr.OpCode.OperandType)
             {
                 case OperandType.InlineField:
                     if (instr.Operand is FieldReference field)
                     {
-                        if (field.DeclaringType.FullName.IndexOf("ITile") > -1)
-                        {
-
-                        }
-
                         if (field.DeclaringType.FullName == this.Field.DeclaringType.FullName
                             || field.DeclaringType.FullName == this.Property.DeclaringType.FullName
-                        // || field.DeclaringType.FullName == a?.FullName
                         )
                         {
                             if (field.Name == this.Field.Name || field.Name == this.Property.Name)
@@ -64,9 +53,7 @@ namespace OTAPI.Mods.Relinker
 
                                 if (instr.OpCode == OpCodes.Ldfld)
                                 {
-                                    // var c = this.GetRedirectedReference(field.DeclaringType);
                                     instr.OpCode = OpCodes.Call;
-                                    // instr.Operand = body.Method.Module.ImportReference(this.Property.GetMethod);
                                     instr.Operand = this.Property.GetMethod;
                                 }
                                 else if (instr.OpCode == OpCodes.Stfld)

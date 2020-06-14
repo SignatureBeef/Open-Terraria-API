@@ -23,18 +23,6 @@ using System.Linq;
 
 namespace OTAPI.Mods.Relinker
 {
-    public static class InterfaceRelinkerExtensions
-    {
-        public static TypeReference GetRedirectedReference(this RelinkTask task, TypeReference searchType)
-        {
-            return (task.RelinkProvider.Tasks
-                .FirstOrDefault(t => t is InterfaceRelinker relinker
-                    && relinker.SearchType.FullName == searchType.FullName
-                ) as InterfaceRelinker
-            )?.ReplacementType;
-        }
-    }
-
     public class InterfaceRelinker : RelinkTask
     {
         public TypeReference SearchType { get; set; }
@@ -107,11 +95,6 @@ namespace OTAPI.Mods.Relinker
         {
             var methodIsDeclaredByType = body.Method.DeclaringType.FullName == SearchType.FullName;
 
-            if (body.Method.Name == "FixHeart")
-            {
-
-            }
-
             if (instr.Operand is MethodReference methodRef)
             {
                 // interreference is where the same class references itself, but since we are switching types
@@ -139,8 +122,6 @@ namespace OTAPI.Mods.Relinker
                     mr.ReturnType = methodRef.ReturnType;
 
                     instr.Operand = body.Method.Module.ImportReference(mr);
-                    // methodRef.DeclaringType = (ReplacementType);
-                    // instr.Operand = body.Method.Module.ImportReference((IMetadataTokenProvider)methodRef);
 
                     methodRef = mr;
                 }

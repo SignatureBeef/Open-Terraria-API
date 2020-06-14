@@ -81,10 +81,6 @@ namespace OTAPI.Mods.Relinker
 
         public override void Relink(MethodBody body, Instruction instr)
         {
-            if (body.Method.Name == "FixHeart")
-            {
-
-            }
             RelinkConstructors(body, instr);
             RemapFields(body, instr);
             RemapMethods(body, instr);
