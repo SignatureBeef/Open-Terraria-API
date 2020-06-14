@@ -1,7 +1,8 @@
 language: csharp
 mono: none
-dotnet: 5.0.100-preview.5.20279.10
 script:
+ - "curl -H 'Cache-Control: no-cache' -L https://aka.ms/install-dotnet-preview -o install-dotnet-preview.sh"
+ - sudo bash install-dotnet-preview.sh
  - dotnet restore OTAPI.Setup.sln
  - dotnet restore OTAPI.Mods.sln
  - dotnet restore OTAPI.Launcher.sln
