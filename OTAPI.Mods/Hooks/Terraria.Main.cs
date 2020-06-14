@@ -24,13 +24,11 @@ namespace OTAPI
     {
         public static class Main
         {
-            public delegate HookResult UpdateHandler(ref GameTime gameTime);
+            public delegate HookResult UpdateHandler(HookEvent @event, ref GameTime gameTime);
+            public static UpdateHandler Update;
 
-            public static UpdateHandler PreUpdate;
-            public static UpdateHandler PostUpdate;
-
-            public static HookResultHandler PreInitialize;
-            public static HookResultHandler PostInitialize;
+            public delegate HookResult InitializeHandler(HookEvent @event);
+            public static InitializeHandler Initialize;
         }
     }
 }

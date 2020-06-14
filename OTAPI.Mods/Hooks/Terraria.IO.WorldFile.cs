@@ -17,14 +17,28 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
+
 namespace OTAPI
 {
+    public enum HookEvent
+    {
+        Pre,
+        Post
+    }
+
     public static partial class Hooks
     {
-        public static class Program
+        public static partial class IO
         {
-            public delegate HookResult LaunchGameHandler();
-            public static LaunchGameHandler LaunchGame;
+            public static class WorldFile
+            {
+                public delegate HookResult LoadWorldHandler(HookEvent @event, ref bool loadFromCloud, Action<bool> originalMethod);
+                public static LoadWorldHandler LoadWorld;
+
+                public delegate HookResult SaveWorldHandler(HookEvent @event, ref bool useCloudSaving, ref bool resetTime, Action<bool, bool> originalMethod);
+                public static SaveWorldHandler SaveWorld;
+            }
         }
     }
 }

@@ -51,7 +51,7 @@ namespace OTAPI
             //     @interface.Fields.Add(cf);
             // }
 
-            foreach (var prop in ElementType.Properties)
+            foreach (var prop in ElementType.Properties.Where(p => p.HasThis))
             {
                 var cp = prop.Clone();
                 cp.DeclaringType = null;

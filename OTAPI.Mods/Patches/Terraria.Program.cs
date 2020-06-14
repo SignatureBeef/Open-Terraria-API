@@ -28,7 +28,7 @@ namespace Terraria
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            if (Hooks.Program.LaunchGame == null || Hooks.Program.LaunchGame() == HookResult.Continue)
+            if (Hooks.Program.LaunchGame?.Invoke() != HookResult.Cancel)
             {
                 orig_LaunchGame(args, monoArgs);
             }

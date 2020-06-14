@@ -41,10 +41,10 @@ namespace Terraria
         protected extern void orig_Update(GameTime gameTime);
         protected void Update(GameTime gameTime)
         {
-            if (Hooks.Main.PreUpdate == null || Hooks.Main.PreUpdate(ref gameTime) == HookResult.Continue)
+            if (Hooks.Main.Update?.Invoke(HookEvent.Pre, ref gameTime) == HookResult.Continue)
             {
                 orig_Update(gameTime);
-                Hooks.Main.PostUpdate?.Invoke(ref gameTime);
+                Hooks.Main.Update?.Invoke(HookEvent.Post, ref gameTime);
             }
         }
         /** End Hook - Pre/PostUpdate */
@@ -53,10 +53,10 @@ namespace Terraria
         protected extern void orig_Initialize();
         protected void Initialize()
         {
-            if (Hooks.Main.PreInitialize == null || Hooks.Main.PreInitialize() == HookResult.Continue)
+            if (Hooks.Main.Initialize?.Invoke(HookEvent.Pre) == HookResult.Continue)
             {
                 orig_Initialize();
-                Hooks.Main.PostInitialize?.Invoke();
+                Hooks.Main.Initialize?.Invoke(HookEvent.Post);
             }
         }
         /** End Hook - Pre/PostInitialize */
