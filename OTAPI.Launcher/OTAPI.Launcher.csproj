@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <Reference Include="OTAPI">
-      <HintPath>..\OTAPI.Patcher\bin\Debug\netcoreapp3.1\OTAPI.dll</HintPath>
+      <HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
 

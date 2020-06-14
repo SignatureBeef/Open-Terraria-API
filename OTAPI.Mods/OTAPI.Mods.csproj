@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <AssemblyName>OTAPI</AssemblyName>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>TerrariaServer.OTAPI.mm</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="MMHOOK_TerrariaServer">
-      <HintPath>..\OTAPI.Setup\bin\Debug\netcoreapp3.1\MMHOOK_TerrariaServer.dll</HintPath>
+      <HintPath>..\OTAPI.Setup\bin\Debug\net5.0\MMHOOK_TerrariaServer.dll</HintPath>
     </Reference>
     <Reference Include="TerrariaServer">
-      <HintPath>..\OTAPI.Setup\bin\Debug\netcoreapp3.1\TerrariaServer.dll</HintPath>
+      <HintPath>..\OTAPI.Setup\bin\Debug\net5.0\TerrariaServer.dll</HintPath>
     </Reference>
   </ItemGroup>
 
