@@ -90,12 +90,10 @@ namespace OTAPI
         public static void Apply(ModType modType, MonoMod.MonoModder modder)
         {
             modder.Log($"Processing {modType} OTAPI mods");
-            var remapper = new Remapper(modder.Module);
             var availableParameters = new List<object>()
             {
                 modder,
                 modType,
-                remapper,
             };
 
             var modifications = Discover().Where(x => x.Type == modType);
@@ -123,12 +121,8 @@ namespace OTAPI
                     }
                 }
 
-                var instance = Activator.CreateInstance(modification.InstanceType, args, null);
-                remapper.Tasks.Add(instance);
+                Activator.CreateInstance(modification.InstanceType, args, null);
             }, modder);
-
-            // run any remap modifications
-            remapper.Remap();
         }
     }
 }

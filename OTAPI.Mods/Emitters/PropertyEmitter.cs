@@ -18,74 +18,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using OTAPI.Mods.Relinker;
 using System.Linq;
 
 namespace OTAPI
 {
-    [MonoMod.MonoModIgnore]
-    public class FieldToPropertyRemapper
-    {
-        FieldDefinition Field { get; set; }
-        PropertyDefinition Property { get; set; }
-
-        public FieldToPropertyRemapper(FieldDefinition field, PropertyDefinition property)
-        {
-            this.Field = field;
-            this.Property = property;
-        }
-
-        [RemapHook]
-        public void Remap(Instruction ins, MethodDefinition method)
-        {
-            switch (ins.OpCode.OperandType)
-            {
-                case OperandType.InlineField:
-                    if (ins.Operand is FieldReference field)
-                    {
-                        if (field.DeclaringType.FullName == this.Field.DeclaringType.FullName)
-                        {
-                            if (field.Name == this.Field.Name || field.Name == this.Property.Name)
-                            {
-                                if (method == this.Property.GetMethod || method == this.Property.SetMethod)
-                                    return;
-
-                                if (ins.OpCode == OpCodes.Ldfld)
-                                {
-                                    ins.OpCode = OpCodes.Call;
-                                    ins.Operand = this.Property.GetMethod;
-                                }
-                                else if (ins.OpCode == OpCodes.Stfld)
-                                {
-                                    ins.OpCode = OpCodes.Call;
-                                    ins.Operand = this.Property.SetMethod;
-                                }
-                                else
-                                {
-
-                                }
-                            }
-                        }
-                    }
-                    break;
-            }
-        }
-    }
 
     [MonoMod.MonoModIgnore]
     public static class PropertyEmitter
     {
         const MethodAttributes DefaultMethodAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
 
-        public static PropertyDefinition RemapAsProperty(this FieldDefinition field, Remapper remapper)
+        public static PropertyDefinition RemapAsProperty(this FieldDefinition field, IRelinkProvider relinkProvider)
         {
             var property = new PropertyDefinition(field.Name, PropertyAttributes.None, field.FieldType);
 
             property.HasThis = !field.IsStatic;
             property.GetMethod = field.GenerateGetter();
             property.SetMethod = field.GenerateSetter();
-
-            field.Name = $"<{field.Name}>k__BackingField";
-            field.Attributes = FieldAttributes.Private;
 
             //Add the CompilerGeneratedAttribute or if you decompile the getter body will be shown
             field.CustomAttributes.Add(new CustomAttribute(
@@ -96,16 +46,19 @@ namespace OTAPI
             field.DeclaringType.Properties.Add(property);
 
             // add a task to rewrite the field accessors to properties
-            remapper.Tasks.Add(new FieldToPropertyRemapper(field, property));
+            relinkProvider.AddTask(new FieldToPropertyRelinker(field, property));
+
+            field.Name = $"<{field.Name}>k__BackingField";
+            field.Attributes = FieldAttributes.Private;
 
             return property;
         }
 
-        public static void RemapFieldsToProperties(this TypeDefinition type, Remapper remapper)
+        public static void RemapFieldsToProperties(this TypeDefinition type, IRelinkProvider relinkProvider)
         {
             foreach (var field in type.Fields.Where(f => !f.HasConstant && !f.IsPrivate))
             {
-                field.RemapAsProperty(remapper);
+                field.RemapAsProperty(relinkProvider);
             }
         }
 

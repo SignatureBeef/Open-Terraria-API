@@ -17,20 +17,20 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Mono.Cecil;
-using Mono.Cecil.Cil;
-using System.Linq;
 using MonoMod.Utils;
+using OTAPI.Mods.Relinker;
+using System.Linq;
 
 namespace OTAPI
 {
     [MonoMod.MonoModIgnore]
     public static class InterfaceEmitter
     {
-        public static TypeDefinition RemapAsInterface(this TypeDefinition ElementType)
+        public static TypeDefinition RemapAsInterface(this TypeDefinition ElementType, IRelinkProvider relinkProvider)
         {
             var iitem = ElementType.RemapWithInterface();
 
-            // TODO queue a task to change all instances where declaring type != ElementType
+            relinkProvider.AddTask(new InterfaceRelinker(ElementType, iitem));
 
             return iitem;
         }

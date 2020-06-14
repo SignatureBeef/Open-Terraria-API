@@ -17,23 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Mono.Cecil;
-using MonoMod;
 using OTAPI.Common;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace OTAPI.Patcher
 {
-    class OTAPIModder : MonoMod.MonoModder
-    {
-        public override void PatchRefs()
-        {
-            OTAPI.Modifier.Apply(OTAPI.ModType.PreMerge, this);
-            base.PatchRefs();
-        }
-    }
-
     class Program
     {
         static void Main(string[] args)

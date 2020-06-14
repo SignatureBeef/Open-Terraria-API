@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using MonoMod;
+using OTAPI.Mods.Relinker;
 
 namespace OTAPI.Modifications
 {
@@ -27,10 +28,10 @@ namespace OTAPI.Modifications
     [MonoMod.MonoModIgnore]
     class ITile
     {
-        public ITile(MonoModder modder)
+        public ITile(MonoModder modder, IRelinkProvider relinkProvider)
         {
             var tile = modder.GetDefinition<Terraria.Tile>();
-            var itile = tile.RemapAsInterface();
+            var itile = tile.RemapAsInterface(relinkProvider);
         }
     }
 }

@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OTAPI.Shims\OTAPI.Shims.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="OTAPI">
       <HintPath>..\OTAPI.Patcher\bin\Debug\netcoreapp3.1\OTAPI.dll</HintPath>
     </Reference>

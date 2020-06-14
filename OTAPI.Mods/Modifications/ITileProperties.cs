@@ -16,9 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using Mono.Cecil;
 using MonoMod;
-using System.Linq;
+using OTAPI.Mods.Relinker;
 
 namespace OTAPI.Modifications
 {
@@ -26,10 +25,10 @@ namespace OTAPI.Modifications
     [MonoMod.MonoModIgnore]
     class ITileProperties
     {
-        public ITileProperties(MonoModder modder, Remapper remapper)
+        public ITileProperties(MonoModder modder, IRelinkProvider relinkProvider)
         {
             var tile = modder.GetDefinition<Terraria.Tile>();
-            tile.RemapFieldsToProperties(remapper);
+            tile.RemapFieldsToProperties(relinkProvider);
         }
     }
 }
