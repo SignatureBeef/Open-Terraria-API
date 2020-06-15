@@ -16,17 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
-#pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
-namespace Terraria
+namespace OTAPI.Callbacks
 {
-    class patch_WorldGen : Terraria.WorldGen
+    public static class Main
     {
-        private static extern void orig_hardUpdateWorld(int i, int j);
-        public static void hardUpdateWorld(int i, int j)
-        {
-            orig_hardUpdateWorld(i, j);
-        }
+        public static bool CommandProcess(string lowered, string raw)
+            => Hooks.Main.CommandProcess?.Invoke(raw, lowered) != HookResult.Cancel;
     }
 }

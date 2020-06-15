@@ -27,20 +27,20 @@ namespace Terraria
         public static extern void orig_loadWorld(bool loadFromCloud);
         public static void loadWorld(bool loadFromCloud)
         {
-            if (Hooks.IO.WorldFile.LoadWorld?.Invoke(HookEvent.Pre, ref loadFromCloud, orig_loadWorld) != HookResult.Cancel)
+            if (Hooks.IO.WorldFile.LoadWorld?.Invoke(HookEvent.Before, ref loadFromCloud, orig_loadWorld) != HookResult.Cancel)
             {
                 orig_loadWorld(loadFromCloud);
-                Hooks.IO.WorldFile.LoadWorld?.Invoke(HookEvent.Post, ref loadFromCloud, orig_loadWorld);
+                Hooks.IO.WorldFile.LoadWorld?.Invoke(HookEvent.After, ref loadFromCloud, orig_loadWorld);
             }
         }
 
         public static extern void orig_saveWorld(bool useCloudSaving, bool resetTime = false);
         public static void saveWorld(bool useCloudSaving, bool resetTime = false)
         {
-            if (Hooks.IO.WorldFile.SaveWorld?.Invoke(HookEvent.Pre, ref useCloudSaving, ref resetTime, orig_saveWorld) != HookResult.Cancel)
+            if (Hooks.IO.WorldFile.SaveWorld?.Invoke(HookEvent.Before, ref useCloudSaving, ref resetTime, orig_saveWorld) != HookResult.Cancel)
             {
                 orig_saveWorld(useCloudSaving, resetTime);
-                Hooks.IO.WorldFile.SaveWorld?.Invoke(HookEvent.Post, ref useCloudSaving, ref resetTime, orig_saveWorld);
+                Hooks.IO.WorldFile.SaveWorld?.Invoke(HookEvent.After, ref useCloudSaving, ref resetTime, orig_saveWorld);
             }
         }
     }

@@ -20,6 +20,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 using MonoMod.Cil;
 
 namespace OTAPI
@@ -27,7 +28,7 @@ namespace OTAPI
     public static partial class Extensions
     {
         public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference)
-            => new ILCursor(new ILContext(modder.Module.GetDefinition<MethodDefinition>(reference)));
+            => new ILCursor(new ILContext(modder.Module.GetDefinition<MethodDefinition>(reference)) { ReferenceBag = RuntimeILReferenceBag.Instance });
 
         public static FieldDefinition GetDefinition<TReturn>(this MonoMod.MonoModder modder, Expression<Func<TReturn>> reference)
             => modder.Module.GetDefinition<FieldDefinition>(reference);
@@ -56,11 +57,26 @@ namespace OTAPI
         }
 
         public static TReturn GetDefinition<TReturn>(this IMetadataTokenProvider token, LambdaExpression reference)
-                    => (TReturn)token.GetMemberReference(reference).Resolve();
+        {
+            //=> (TReturn)token.GetModule().MetadataResolver.Resolve(token.GetMemberReference(reference));
+            var memberReference = token.GetMemberReference(reference);
+
+            // try and resolve back to the token module rather than the reference module.
+            if(memberReference is MethodReference methodReference)
+            {
+                var module = token.GetModule();
+                methodReference.DeclaringType = module.GetType(methodReference.DeclaringType.FullName);
+                return (TReturn)(object)module.MetadataResolver.Resolve(methodReference);
+            }
+
+            return (TReturn)memberReference.Resolve();
+        }
+
+        public static ModuleDefinition GetModule(this IMetadataTokenProvider token) => (token as ModuleDefinition) ?? (token as AssemblyDefinition)?.MainModule;
 
         public static MemberReference GetMemberReference(this IMetadataTokenProvider token, LambdaExpression reference)
         {
-            var module = (token as ModuleDefinition) ?? (token as AssemblyDefinition)?.MainModule;
+            var module = token.GetModule();
             if (module != null)
             {
                 // find the expression method in the meta, matching on the parameter count/types
@@ -86,6 +102,34 @@ namespace OTAPI
                 module.TypeSystem.CoreLibrary
             );
             return new MethodReference(method, module.TypeSystem.Void, type_ref);
+        }
+
+        public static void ReplaceTransfer(this Instruction current, Instruction newTarget, MethodDefinition originalMethod)
+        {
+            //If a method has a body then check the instruction targets & exceptions
+            if (originalMethod.HasBody)
+            {
+                //Replaces instruction references from the old instruction to the new instruction
+                foreach (var ins in originalMethod.Body.Instructions.Where(x => x.Operand == current))
+                    ins.Operand = newTarget;
+
+                //If there are exception handlers, it's possible that they will also need to be switched over
+                if (originalMethod.Body.HasExceptionHandlers)
+                {
+                    foreach (var handler in originalMethod.Body.ExceptionHandlers)
+                    {
+                        if (handler.FilterStart == current) handler.FilterStart = newTarget;
+                        if (handler.HandlerEnd == current) handler.HandlerEnd = newTarget;
+                        if (handler.HandlerStart == current) handler.HandlerStart = newTarget;
+                        if (handler.TryEnd == current) handler.TryEnd = newTarget;
+                        if (handler.TryStart == current) handler.TryStart = newTarget;
+                    }
+                }
+
+                //Update the new target to take the old targets place
+                newTarget.Offset = current.Offset;
+                newTarget.Offset++;
+            }
         }
     }
 }

@@ -23,8 +23,8 @@ namespace OTAPI
 {
     public enum HookEvent
     {
-        Pre,
-        Post
+        Before,
+        After
     }
 
     public static partial class Hooks

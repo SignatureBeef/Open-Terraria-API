@@ -81,6 +81,9 @@ namespace OTAPI.Mods.Relinker
 
         public override void Relink(MethodBody body, Instruction instr)
         {
+            if (body.Method.ReturnType is ArrayType arrayType && arrayType.ElementType.FullName == this.Type.FullName)
+                body.Method.ReturnType = ICollectionGen;
+
             RelinkConstructors(body, instr);
             RemapFields(body, instr);
             RemapMethods(body, instr);
@@ -88,9 +91,7 @@ namespace OTAPI.Mods.Relinker
 
         public void RelinkConstructors(MethodBody body, Instruction instr)
         {
-            if (instr.OpCode == OpCodes.Newobj
-                && instr.Operand is MethodReference ctorMethod
-            )
+            if (instr.OpCode == OpCodes.Newobj && instr.Operand is MethodReference ctorMethod)
             {
                 if (ctorMethod.DeclaringType is ArrayType array)
                 {
@@ -116,21 +117,27 @@ namespace OTAPI.Mods.Relinker
 
         public void RemapMethods(MethodBody body, Instruction instr)
         {
-            if (instr.Operand is MethodReference methodRef
-                && methodRef.DeclaringType is ArrayType methodArray
-                && methodArray.ElementType.FullName == this.Type.FullName
-            )
+            if (instr.Operand is MethodReference methodRef)
             {
-                methodRef.DeclaringType = this.ICollectionGen;
-                methodRef.ReturnType = methodRef.Name == "Get" ? this.ICollectionDef.GenericParameters[0] : methodRef.Module.TypeSystem.Void;
-
-                if (methodRef.Name == "Set")
+                if (methodRef.DeclaringType is ArrayType methodArray && methodArray.ElementType.FullName == this.Type.FullName
+                )
                 {
-                    methodRef.Parameters[2].ParameterType = this.ICollectionDef.GenericParameters[0];
-                }
-                methodRef.Name = $"{methodRef.Name.ToLower()}_Item";
+                    methodRef.DeclaringType = this.ICollectionGen;
+                    methodRef.ReturnType = methodRef.Name == "Get" ? this.ICollectionDef.GenericParameters[0] : methodRef.Module.TypeSystem.Void;
 
-                instr.OpCode = OpCodes.Callvirt;
+                    if (methodRef.Name == "Set")
+                    {
+                        methodRef.Parameters[2].ParameterType = this.ICollectionDef.GenericParameters[0];
+                    }
+                    methodRef.Name = $"{methodRef.Name.ToLower()}_Item";
+
+                    instr.OpCode = OpCodes.Callvirt;
+                }
+
+                if (methodRef.ReturnType is ArrayType arrayType && arrayType.ElementType.FullName == this.Type.FullName)
+                {
+                    methodRef.ReturnType = ICollectionGen;
+                }
             }
         }
     }

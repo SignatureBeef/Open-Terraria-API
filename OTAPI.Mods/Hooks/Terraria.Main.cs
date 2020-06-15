@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Microsoft.Xna.Framework;
+using System;
 
 namespace OTAPI
 {
@@ -29,6 +30,12 @@ namespace OTAPI
 
             public delegate HookResult InitializeHandler(HookEvent @event);
             public static InitializeHandler Initialize;
+
+            public delegate HookResult startDedInputHandler(HookEvent @event, Action originalMethod);
+            public static startDedInputHandler startDedInput;
+
+            public delegate HookResult CommandProcessHandler(string command, string lowered);
+            public static CommandProcessHandler CommandProcess;
         }
     }
 }

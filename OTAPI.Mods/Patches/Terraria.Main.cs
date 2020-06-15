@@ -37,28 +37,40 @@ namespace Terraria
         }
         /** End Cross platform support - Avoid Windows specific calls */
 
-        /** Begin Hook - Pre/PostUpdate */
+        /** Begin Hook - Update */
         protected extern void orig_Update(GameTime gameTime);
         protected void Update(GameTime gameTime)
         {
-            if (Hooks.Main.Update?.Invoke(HookEvent.Pre, ref gameTime) == HookResult.Continue)
+            if (Hooks.Main.Update?.Invoke(HookEvent.Before, ref gameTime) != HookResult.Cancel)
             {
                 orig_Update(gameTime);
-                Hooks.Main.Update?.Invoke(HookEvent.Post, ref gameTime);
+                Hooks.Main.Update?.Invoke(HookEvent.After, ref gameTime);
             }
         }
-        /** End Hook - Pre/PostUpdate */
+        /** End Hook - Update */
 
-        /** Begin Hook - Pre/PostInitialize */
+        /** Begin Hook - Initialize */
         protected extern void orig_Initialize();
         protected void Initialize()
         {
-            if (Hooks.Main.Initialize?.Invoke(HookEvent.Pre) == HookResult.Continue)
+            if (Hooks.Main.Initialize?.Invoke(HookEvent.Before) != HookResult.Cancel)
             {
                 orig_Initialize();
-                Hooks.Main.Initialize?.Invoke(HookEvent.Post);
+                Hooks.Main.Initialize?.Invoke(HookEvent.After);
             }
         }
-        /** End Hook - Pre/PostInitialize */
+        /** End Hook - Initialize */
+
+        /** Begin Hook - startDedInput */
+        public extern static void orig_startDedInput();
+        public static void startDedInput()
+        {
+            if (Hooks.Main.startDedInput?.Invoke(HookEvent.Before, orig_startDedInput) != HookResult.Cancel)
+            {
+                orig_startDedInput();
+                Hooks.Main.startDedInput?.Invoke(HookEvent.After, orig_startDedInput);
+            }
+        }
+        /** End Hook - startDedInput */
     }
 }
