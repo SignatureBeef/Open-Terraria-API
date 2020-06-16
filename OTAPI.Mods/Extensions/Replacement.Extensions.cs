@@ -21,7 +21,8 @@ using MonoMod.Utils;
 
 namespace OTAPI
 {
-    public static partial class Extensions
+    [MonoMod.MonoModIgnore]
+    public static class ReplacementExtensions
     {
         public static FieldDefinition Clone(this FieldDefinition field)
         {

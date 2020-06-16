@@ -23,6 +23,7 @@ using System.Collections.Generic;
 
 namespace OTAPI.Mods.Relinker
 {
+    [MonoMod.MonoModIgnore]
     public abstract class RelinkTask
     {
         public MonoModder Modder { get; set; }
@@ -43,6 +44,7 @@ namespace OTAPI.Mods.Relinker
         public virtual void Relink(MethodBody body, Instruction instr) { }
     }
 
+    [MonoMod.MonoModIgnore]
     public interface IRelinkProvider
     {
         bool AllowInterreferenceReplacements { get; set; }

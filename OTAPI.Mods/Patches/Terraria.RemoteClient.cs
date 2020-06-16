@@ -16,11 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using OTAPI;
 using System.Collections.Generic;
 
 namespace Terraria
 {
-    class patch_RemoteClient
+    class patch_RemoteClient : Terraria.RemoteClient
     {
         public Dictionary<string, object> Data { get; set; }
 
@@ -39,12 +40,19 @@ namespace Terraria
             Data = new Dictionary<string, object>();
         }
 
+        /** End Hook: Extra data */
+
+        /** Begin Hook - Reset / Extra data */
         public extern void orig_Reset();
         public void Reset()
         {
-            orig_Reset();
-            Data.Clear();
+            if (OTAPI.Hooks.RemoteClient.Reset?.Invoke(HookEvent.Before, this, orig_Reset) != HookResult.Cancel)
+            {
+                orig_Reset();
+                Data.Clear();
+                OTAPI.Hooks.RemoteClient.Reset?.Invoke(HookEvent.After, this, orig_Reset);
+            }
         }
-        /** End Hook: Extra data */
+        /** End Hook - Reset / Extra data */
     }
 }

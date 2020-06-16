@@ -31,7 +31,7 @@ namespace OTAPI.Modifications
         {
             // find the occurance of downedClown and insert the SSC field to the missing BitsByte instance
             var sendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default));
-            var sscField = modder.GetDefinition(() => Terraria.Main.ServerSideCharacter);
+            var sscField = modder.GetFieldDefinition(() => Terraria.Main.ServerSideCharacter);
 
             sendData.GotoNext(MoveType.After, (ins) => ins.MatchLdsfld("Terraria.NPC", "downedClown"));
             sendData.GotoNext(MoveType.After, (ins) => ins.OpCode == OpCodes.Call);

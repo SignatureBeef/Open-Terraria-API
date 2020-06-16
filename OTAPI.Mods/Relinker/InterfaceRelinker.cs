@@ -23,6 +23,7 @@ using System.Linq;
 
 namespace OTAPI.Mods.Relinker
 {
+    [MonoMod.MonoModIgnore]
     public class InterfaceRelinker : RelinkTask
     {
         public TypeReference SearchType { get; set; }
@@ -39,56 +40,56 @@ namespace OTAPI.Mods.Relinker
         public override void Relink(MethodDefinition method)
         {
             if (method.ReturnType.FullName == SearchType.FullName)
-                method.ReturnType = (ReplacementType);
+                method.ReturnType = ReplacementType;
 
             if (method.ReturnType is ArrayType arrayType)
                 if (arrayType.ElementType.FullName == SearchType.FullName)
-                    method.ReturnType = new ArrayType((ReplacementType), arrayType.Rank);
+                    method.ReturnType = new ArrayType(ReplacementType, arrayType.Rank);
         }
 
         public override void Relink(MethodDefinition method, VariableDefinition variable)
         {
             if (variable.VariableType.FullName == SearchType.FullName)
-                variable.VariableType = (ReplacementType);
+                variable.VariableType = ReplacementType;
 
             if (variable.VariableType is ArrayType arrayType)
                 if (arrayType.ElementType.FullName == SearchType.FullName)
-                    variable.VariableType = new ArrayType((ReplacementType), arrayType.Rank);
+                    variable.VariableType = new ArrayType(ReplacementType, arrayType.Rank);
         }
 
         public override void Relink(MethodDefinition method, ParameterDefinition parameter)
         {
             if (parameter.ParameterType.FullName == SearchType.FullName)
-                parameter.ParameterType = (ReplacementType);
+                parameter.ParameterType = ReplacementType;
 
             if (parameter.ParameterType is ArrayType arrayType)
                 if (arrayType.ElementType.FullName == SearchType.FullName)
-                    parameter.ParameterType = new ArrayType((ReplacementType), arrayType.Rank);
+                    parameter.ParameterType = new ArrayType(ReplacementType, arrayType.Rank);
         }
         public override void Relink(PropertyDefinition property)
         {
             if (property.PropertyType.FullName == SearchType.FullName)
-                property.PropertyType = (ReplacementType);
+                property.PropertyType = ReplacementType;
 
             if (property.PropertyType is ArrayType arrayType)
                 if (arrayType.ElementType.FullName == SearchType.FullName)
-                    property.PropertyType = new ArrayType((ReplacementType), arrayType.Rank);
+                    property.PropertyType = new ArrayType(ReplacementType, arrayType.Rank);
         }
 
         public override void Relink(FieldDefinition field)
         {
             if (field.FieldType.FullName == SearchType.FullName)
-                field.FieldType = (ReplacementType);
+                field.FieldType = ReplacementType;
 
             if (field.FieldType is GenericInstanceType genericInstanceType)
                 if (genericInstanceType.HasGenericArguments)
                     for (var i = 0; i < genericInstanceType.GenericArguments.Count; i++)
                         if (genericInstanceType.GenericArguments[i].FullName == SearchType.FullName)
-                            genericInstanceType.GenericArguments[i] = (ReplacementType);
+                            genericInstanceType.GenericArguments[i] = ReplacementType;
 
             if (field.FieldType is ArrayType arrayType)
                 if (arrayType.ElementType.FullName == SearchType.FullName)
-                    field.FieldType = new ArrayType((ReplacementType), arrayType.Rank);
+                    field.FieldType = new ArrayType(ReplacementType, arrayType.Rank);
         }
 
         public override void Relink(MethodBody body, Instruction instr)
@@ -97,6 +98,8 @@ namespace OTAPI.Mods.Relinker
 
             if (instr.Operand is MethodReference methodRef)
             {
+                var methodRefIsDeclaredByType = methodRef.DeclaringType.FullName == SearchType.FullName;
+
                 // interreference is where the same class references itself, but since we are switching types
                 // we must only do so when its not 'this'.
                 var isInterreference = RelinkProvider.AllowInterreferenceReplacements && methodIsDeclaredByType
@@ -104,7 +107,7 @@ namespace OTAPI.Mods.Relinker
                         && instr.Previous?.OpCode == OpCodes.Ldarg_1
                         && methodRef.HasThis;
 
-                if (instr.OpCode == OpCodes.Newobj || (!body.Method.IsStatic && methodIsDeclaredByType && !isInterreference))
+                if ((instr.OpCode == OpCodes.Newobj && methodRefIsDeclaredByType) || (!body.Method.IsStatic && methodIsDeclaredByType && !isInterreference))
                     return;
 
                 if (methodRef.DeclaringType.FullName == SearchType.FullName && methodRef.HasThis)
@@ -127,22 +130,22 @@ namespace OTAPI.Mods.Relinker
                 }
 
                 if (methodRef.ReturnType.FullName == SearchType.FullName)
-                    methodRef.ReturnType = (ReplacementType);
+                    methodRef.ReturnType = ReplacementType;
 
                 if (methodRef.HasParameters)
                     for (var i = 0; i < methodRef.Parameters.Count; i++)
                         if (methodRef.Parameters[i].ParameterType.FullName == SearchType.FullName)
-                            methodRef.Parameters[i].ParameterType = (ReplacementType);
+                            methodRef.Parameters[i].ParameterType = ReplacementType;
 
                 if (methodRef.DeclaringType is GenericInstanceType genericInstanceType)
                     if (genericInstanceType.HasGenericArguments)
                         for (var i = 0; i < genericInstanceType.GenericArguments.Count; i++)
                             if (genericInstanceType.GenericArguments[i].FullName == SearchType.FullName)
-                                genericInstanceType.GenericArguments[i] = (ReplacementType);
+                                genericInstanceType.GenericArguments[i] = ReplacementType;
 
                 if (methodRef.DeclaringType is ArrayType arrayType)
                     if (arrayType.ElementType.FullName == SearchType.FullName)
-                        methodRef.DeclaringType = new ArrayType((ReplacementType), arrayType.Rank);
+                        methodRef.DeclaringType = new ArrayType(ReplacementType, arrayType.Rank);
 
                 // upgrade call to callvirt
                 if (instr.OpCode == OpCodes.Call && methodRef.DeclaringType.FullName == ReplacementType.FullName)
@@ -153,19 +156,22 @@ namespace OTAPI.Mods.Relinker
             {
                 if (methodIsDeclaredByType) return;
 
+                if (fieldReference.FieldType.FullName == SearchType.FullName)
+                    fieldReference.FieldType = ReplacementType;
+
                 if (fieldReference.DeclaringType.FullName == SearchType.FullName)
-                    fieldReference.DeclaringType = (ReplacementType);
+                    fieldReference.DeclaringType = ReplacementType;
 
                 // relink calls to the field
                 if (fieldReference.FieldType is GenericInstanceType genericInstanceType1)
                     if (genericInstanceType1.HasGenericArguments)
                         for (var i = 0; i < genericInstanceType1.GenericArguments.Count; i++)
                             if (genericInstanceType1.GenericArguments[i].FullName == SearchType.FullName)
-                                genericInstanceType1.GenericArguments[i] = (ReplacementType);
+                                genericInstanceType1.GenericArguments[i] = ReplacementType;
 
                 if (fieldReference.FieldType is ArrayType arrayType)
                     if (arrayType.ElementType.FullName == SearchType.FullName)
-                        fieldReference.FieldType = new ArrayType((ReplacementType), arrayType.Rank);
+                        fieldReference.FieldType = new ArrayType(ReplacementType, arrayType.Rank);
             }
         }
     }

@@ -20,7 +20,7 @@ using MonoMod;
 
 namespace OTAPI.Modifications
 {
-    [Modification(ModType.PreMerge, "Changing TerrariaServer assembly name to OTAPI")]
+    [Modification(ModType.PostProcess, "Changing TerrariaServer assembly name to OTAPI", ModPriority.Last)]
     [MonoMod.MonoModIgnore]
     class ChangeAssemblyName
     {
@@ -38,6 +38,11 @@ namespace OTAPI.Modifications
                 if(e.Name == "OTAPI") return modder.Module.Assembly;
                 return null;
             };
+
+
+            var from = "TerrariaServer";
+            modder.Log($"[OTAPI] RelinkModule: {from} -> {modder.Module.Name}");
+            modder.RelinkModuleMap[from] = modder.Module;
         }
     }
 }

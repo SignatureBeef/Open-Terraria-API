@@ -23,6 +23,7 @@ using OTAPI.Mods.Relinker;
 
 namespace OTAPI.Mods.Relinker
 {
+    [MonoMod.MonoModIgnore]
     public class ArrayToCollectionRelinker : RelinkTask
     {
         public TypeDefinition Type { get; set; }
@@ -145,6 +146,7 @@ namespace OTAPI.Mods.Relinker
 
 namespace OTAPI
 {
+    [MonoMod.MonoModIgnore]
     public static class ArrayToCollectionRelinkerMixin
     {
         public static void RelinkAsCollection(this TypeDefinition sourceType, IRelinkProvider relinkProvider, MonoModder modder)

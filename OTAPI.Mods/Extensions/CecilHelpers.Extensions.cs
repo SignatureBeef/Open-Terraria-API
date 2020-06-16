@@ -25,25 +25,22 @@ using MonoMod.Cil;
 
 namespace OTAPI
 {
-    public static partial class Extensions
+    [MonoMod.MonoModIgnore]
+    public static partial class CecilHelpersExtensions
     {
         public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference)
             => new ILCursor(new ILContext(modder.Module.GetDefinition<MethodDefinition>(reference)) { ReferenceBag = RuntimeILReferenceBag.Instance });
 
-        public static FieldDefinition GetDefinition<TReturn>(this MonoMod.MonoModder modder, Expression<Func<TReturn>> reference)
+        public static MethodDefinition GetMethodDefinition(this MonoMod.MonoModder modder, Expression<Action> reference)
+            => modder.Module.GetDefinition<MethodDefinition>(reference);
+        public static FieldDefinition GetFieldDefinition<TResult>(this MonoMod.MonoModder modder, Expression<Func<TResult>> reference)
             => modder.Module.GetDefinition<FieldDefinition>(reference);
-        public static MethodDefinition GetDefinition(this MonoMod.MonoModder modder, Expression<Action> reference)
-            => modder.Module.GetDefinition(reference);
+        
         public static TypeDefinition GetDefinition<TType>(this MonoMod.MonoModder modder)
             => modder.Module.GetDefinition<TType>();
 
         public static ILCursor GetILCursor(this ModuleDefinition module, Expression<Action> reference)
             => new ILCursor(new ILContext(module.GetDefinition<MethodDefinition>(reference)));
-
-        public static FieldDefinition GetDefinition<TReturn>(this ModuleDefinition module, Expression<Func<TReturn>> reference)
-            => module.GetDefinition<FieldDefinition>(reference);
-        public static MethodDefinition GetDefinition(this ModuleDefinition module, Expression<Action> reference)
-            => module.GetDefinition<MethodDefinition>(reference);
 
         public static MethodReference GetReference<TReturn>(this ModuleDefinition module, Expression<Func<TReturn>> reference)
             => (MethodReference)module.GetMemberReference(reference);
