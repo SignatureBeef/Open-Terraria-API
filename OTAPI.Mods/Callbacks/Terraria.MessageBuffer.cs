@@ -33,7 +33,7 @@ namespace OTAPI.Callbacks
             {
                 var clientUUID = reader.ReadString();
 
-                ((dynamic)Terraria.Netplay.Clients[instance.whoAmI]).ClientUUID = clientUUID;
+                ((Terraria.patch_RemoteClient)Terraria.Netplay.Clients[instance.whoAmI]).ClientUUID = clientUUID;
 
                 Hooks.MessageBuffer.ClientUUIDReceived?.Invoke(HookEvent.After, instance, reader, start, length, messageType);
             }
