@@ -36,11 +36,14 @@ namespace Terraria
             orig_BroadcastThread();
         }
 
-        public extern void orig_StopBroadCasting();
+        public extern static void orig_StopBroadCasting();
         public static void StopBroadCasting()
         {
             BroadcastThreadActive = false;
             Terraria.Netplay.broadcastThread.Join();
+            Terraria.Netplay.broadcastThread = null;
+
+            orig_StopBroadCasting();
         }
         /** End Fix - Thread abort */
     }
