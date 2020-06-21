@@ -20,27 +20,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 using OTAPI;
 
-namespace Terraria
+namespace Terraria.IO
 {
     public class patch_WorldFile
     {
-        public static extern void orig_loadWorld(bool loadFromCloud);
-        public static void loadWorld(bool loadFromCloud)
+        public static extern void orig_LoadWorld(bool loadFromCloud);
+        public static void LoadWorld(bool loadFromCloud)
         {
-            if (Hooks.IO.WorldFile.LoadWorld?.Invoke(HookEvent.Before, ref loadFromCloud, orig_loadWorld) != HookResult.Cancel)
+            if (Hooks.IO.WorldFile.LoadWorld?.Invoke(HookEvent.Before, ref loadFromCloud, orig_LoadWorld) != HookResult.Cancel)
             {
-                orig_loadWorld(loadFromCloud);
-                Hooks.IO.WorldFile.LoadWorld?.Invoke(HookEvent.After, ref loadFromCloud, orig_loadWorld);
+                orig_LoadWorld(loadFromCloud);
+                Hooks.IO.WorldFile.LoadWorld?.Invoke(HookEvent.After, ref loadFromCloud, orig_LoadWorld);
             }
         }
 
-        public static extern void orig_saveWorld(bool useCloudSaving, bool resetTime = false);
-        public static void saveWorld(bool useCloudSaving, bool resetTime = false)
+        public static extern void orig_SaveWorld(bool useCloudSaving, bool resetTime = false);
+        public static void SaveWorld(bool useCloudSaving, bool resetTime = false)
         {
-            if (Hooks.IO.WorldFile.SaveWorld?.Invoke(HookEvent.Before, ref useCloudSaving, ref resetTime, orig_saveWorld) != HookResult.Cancel)
+            if (Hooks.IO.WorldFile.SaveWorld?.Invoke(HookEvent.Before, ref useCloudSaving, ref resetTime, orig_SaveWorld) != HookResult.Cancel)
             {
-                orig_saveWorld(useCloudSaving, resetTime);
-                Hooks.IO.WorldFile.SaveWorld?.Invoke(HookEvent.After, ref useCloudSaving, ref resetTime, orig_saveWorld);
+                orig_SaveWorld(useCloudSaving, resetTime);
+                Hooks.IO.WorldFile.SaveWorld?.Invoke(HookEvent.After, ref useCloudSaving, ref resetTime, orig_SaveWorld);
             }
         }
     }

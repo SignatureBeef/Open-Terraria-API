@@ -28,7 +28,8 @@ namespace OTAPI
     {
         PreMerge = 1,
         PostProcess = 2,
-        Runtime = 3
+        Runtime = 3,
+        PrePatch = 4,
     }
 
     /// <summary>

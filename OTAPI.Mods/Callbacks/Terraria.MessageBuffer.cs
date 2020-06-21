@@ -23,5 +23,20 @@ namespace OTAPI.Callbacks
     {
         public static bool GetData(global::Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, int maxPackets)
             => Hooks.MessageBuffer.GetData?.Invoke(instance, ref packetId, ref readOffset, ref start, ref length, ref messageType, ref maxPackets) != HookResult.Cancel && packetId < maxPackets;
+
+        /// <summary>
+        /// Called when Terraria receives a ClientUUID(#68) packet from a connection
+        /// </summary>
+        public static void ReadClientUUID(Terraria.MessageBuffer instance, System.IO.BinaryReader reader, int start, int length, ref int messageType)
+        {
+            if (Hooks.MessageBuffer.ClientUUIDReceived?.Invoke(HookEvent.Before, instance, reader, start, length, messageType) != HookResult.Cancel)
+            {
+                var clientUUID = reader.ReadString();
+
+                ((dynamic)Terraria.Netplay.Clients[instance.whoAmI]).ClientUUID = clientUUID;
+
+                Hooks.MessageBuffer.ClientUUIDReceived?.Invoke(HookEvent.After, instance, reader, start, length, messageType);
+            }
+        }
     }
 }

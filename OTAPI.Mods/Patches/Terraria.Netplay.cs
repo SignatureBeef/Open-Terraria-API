@@ -16,25 +16,32 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-namespace OTAPI.Launcher
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            OTAPI.Hooks.Program.LaunchGame = () =>
-            {
-                Terraria.Main.SkipAssemblyLoad = true;
-                return HookResult.Continue;
-            };
-            OTAPI.Hooks.MessageBuffer.ClientUUIDReceived = (@event, instance, reader, start, length, messageType) =>
-            {
-                if (@event == HookEvent.After)
-                    System.Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[instance.whoAmI].ClientUUID}");
 
-                return HookResult.Continue;
-            };
-            Terraria.WindowsLaunch.Main(args);
+using OTAPI;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+
+namespace Terraria
+{
+    class patch_Netplay : Terraria.Netplay
+    {
+        /** Begin Fix - Thread abort */
+        public static bool BroadcastThreadActive = false;
+        public extern static void orig_BroadcastThread();
+        public static void BroadcastThread()
+        {
+            BroadcastThreadActive = true;
+            orig_BroadcastThread();
         }
+
+        public extern void orig_StopBroadCasting();
+        public static void StopBroadCasting()
+        {
+            BroadcastThreadActive = false;
+            Terraria.Netplay.broadcastThread.Join();
+        }
+        /** End Fix - Thread abort */
     }
 }

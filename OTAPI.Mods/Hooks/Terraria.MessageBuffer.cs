@@ -36,6 +36,9 @@ namespace OTAPI
 
             public delegate HookResult GetDataHandler(Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, ref int maxPackets);
             public static GetDataHandler GetData;
+
+            public delegate HookResult ClientUUIDReceivedHandler(HookEvent @event, Terraria.MessageBuffer instance, System.IO.BinaryReader reader, int start, int length, int messageType);
+            public static ClientUUIDReceivedHandler ClientUUIDReceived;
         }
     }
 }

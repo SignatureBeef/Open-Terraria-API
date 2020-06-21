@@ -58,6 +58,9 @@ namespace OTAPI.Patcher
                 }
 
                 mm.MapDependencies();
+
+                OTAPI.Modifier.Apply(OTAPI.ModType.PrePatch, mm);
+
                 mm.AutoPatch();
 
                 OTAPI.Modifier.Apply(OTAPI.ModType.PostProcess, mm);

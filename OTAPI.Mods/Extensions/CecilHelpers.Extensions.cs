@@ -40,7 +40,10 @@ namespace OTAPI
             => modder.Module.GetDefinition<TType>();
 
         public static ILCursor GetILCursor(this ModuleDefinition module, Expression<Action> reference)
-            => new ILCursor(new ILContext(module.GetDefinition<MethodDefinition>(reference)));
+            => new ILCursor(new ILContext(module.GetDefinition<MethodDefinition>(reference)) { ReferenceBag = RuntimeILReferenceBag.Instance });
+
+        public static ILCursor GetILCursor(this MethodDefinition method)
+            => new ILCursor(new ILContext(method) { ReferenceBag = RuntimeILReferenceBag.Instance });
 
         public static MethodReference GetReference<TReturn>(this ModuleDefinition module, Expression<Func<TReturn>> reference)
             => (MethodReference)module.GetMemberReference(reference);
