@@ -39,7 +39,6 @@ namespace OTAPI.Modifications
                 return null;
             };
 
-
             var from = "TerrariaServer";
             modder.Log($"[OTAPI] RelinkModule: {from} -> {modder.Module.Name}");
             modder.RelinkModuleMap[from] = modder.Module;

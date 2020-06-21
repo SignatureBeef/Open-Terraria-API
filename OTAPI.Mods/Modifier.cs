@@ -26,34 +26,38 @@ namespace OTAPI
 {
     public static class Modifier
     {
-        private static IEnumerable<ModificationAttribute> Discover()
+        private static IEnumerable<ModificationAttribute> Discover(List<Assembly> assemblies = null)
         {
-            var asm = Assembly.GetExecutingAssembly();
+            var asms = assemblies ?? new List<Assembly>();
+            asms.Insert(0, Assembly.GetExecutingAssembly());
 
-            Type[] types;
-            try
+            foreach (var asm in asms)
             {
-                types = asm.GetTypes();
-            }
-            catch (ReflectionTypeLoadException ex)
-            {
-                types = ex.Types;
-            }
-
-            var modificationTypes = types.Where(x => x != null && !x.IsAbstract);
-
-            foreach (var type in modificationTypes)
-            {
-                var modificationAttr = type.GetCustomAttribute<ModificationAttribute>();
-                if (modificationAttr != null)
+                Type[] types;
+                try
                 {
-                    modificationAttr.InstanceType = type;
-                    yield return modificationAttr;
+                    types = asm.GetTypes();
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    types = ex.Types;
+                }
+
+                var modificationTypes = types.Where(x => x != null && !x.IsAbstract);
+
+                foreach (var type in modificationTypes)
+                {
+                    var modificationAttr = type.GetCustomAttribute<ModificationAttribute>();
+                    if (modificationAttr != null)
+                    {
+                        modificationAttr.InstanceType = type;
+                        yield return modificationAttr;
+                    }
                 }
             }
         }
 
-        static void IterateMods(IEnumerable<ModificationAttribute> mods, Action<ModificationAttribute> action, MonoMod.MonoModder modder)
+        static void IterateMods(IEnumerable<ModificationAttribute> mods, Action<ModificationAttribute> action)
         {
             var queue = mods.ToDictionary(i => i, k => false);
             bool complete = queue.Count == 0;
@@ -80,26 +84,27 @@ namespace OTAPI
                         action(pair.Key);
                         queue[pair.Key] = true;
                     }
-                    else modder.Log($"[OTAPI] Awaiting dependencies for {pair.Key.InstanceType.FullName}");
+                    else Console.WriteLine($"[OTAPI] Awaiting dependencies for {pair.Key.InstanceType.FullName}");
                 }
 
                 complete = queue.All(x => x.Value);
             } while (!complete);
         }
 
-        public static void Apply(ModType modType, MonoMod.MonoModder modder)
+        public static void Apply(ModType modType, MonoMod.MonoModder modder = null, List<Assembly> assemblies = null)
         {
-            modder.Log($"Processing {modType} OTAPI mods");
+            Console.WriteLine($"[OTAPI:{modType}] Applying mods...");
             var availableParameters = new List<object>()
             {
-                modder,
                 modType,
             };
 
-            var modifications = Discover().Where(x => x.Type == modType);
+            if (modder != null) availableParameters.Add(modder);
+
+            var modifications = Discover(assemblies).Where(x => x.Type == modType);
             IterateMods(modifications, (modification) =>
             {
-                modder.Log($"[OTAPI:{modType}] {modification.Description}");
+                Console.WriteLine($"[OTAPI:{modType}] {modification.Description}");
 
                 var modCtor = modification.InstanceType.GetConstructors().Single();
                 var modCtorParams = modCtor.GetParameters();
@@ -122,7 +127,7 @@ namespace OTAPI
                 }
 
                 Activator.CreateInstance(modification.InstanceType, args, null);
-            }, modder);
+            });
         }
     }
 }

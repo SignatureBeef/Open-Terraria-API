@@ -20,6 +20,7 @@ using Mono.Cecil;
 using OTAPI.Common;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace OTAPI.Patcher
 {
@@ -67,7 +68,16 @@ namespace OTAPI.Patcher
 
                 mm.Write();
 
-                mm.Log("[MonoMod] Done.");
+                mm.Log("[OTAPI] Generating OTAPI.Runtime.dll");
+                var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, Path.GetFileName("OTAPI.Runtime.dll"));
+                using (ModuleDefinition mOut = gen.OutputModule)
+                {
+                    gen.Generate();
+
+                    mOut.Write($"OTAPI.Runtime.dll");
+                }
+
+                mm.Log("[OTAPI] Done.");
             }
         }
     }

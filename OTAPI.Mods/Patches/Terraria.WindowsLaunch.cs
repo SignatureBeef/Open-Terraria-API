@@ -18,20 +18,59 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Runtime.Loader;
+
 namespace Terraria
 {
     class patch_WindowsLaunch //: Terraria.WindowsLaunch
     {
+        //public static AssemblyLoadContext Modifications = new AssemblyLoadContext("OTAPI", true);
+
         /** Begin Cross platform support - disable the kernel32 call when not on windows */
         public static extern bool orig_SetConsoleCtrlHandler(Terraria.WindowsLaunch.HandlerRoutine handler, bool add);
         public static bool SetConsoleCtrlHandler(Terraria.WindowsLaunch.HandlerRoutine handler, bool add)
         {
-            if(ReLogic.OS.Platform.IsWindows)
+            if (ReLogic.OS.Platform.IsWindows)
             {
                 return orig_SetConsoleCtrlHandler(handler, add);
             }
             return false;
         }
         /** End Cross platform support - disable the kernel32 call when not on windows */
+
+        /** Begin OTAPI Startup */
+        public static extern void orig_Main(string[] args);
+        [System.STAThread]
+        public static void Main(string[] args)
+        {
+            var mods = new List<Assembly>();
+            if (Directory.Exists("modifications"))
+            {
+                foreach (var file in Directory.EnumerateFiles("modifications", "*.dll", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        Console.WriteLine($"[OTAPI:Startup] Loading {file}");
+                        //var asm = Modifications.LoadFromAssemblyPath(file); TODO: CoreLib support in target assembly
+                        var asm = System.Reflection.Assembly.Load(System.IO.File.ReadAllBytes(file));
+
+                        mods.Add(asm);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[OTAPI:Startup] Load failed {ex}");
+                    }
+                }
+            }
+
+            Console.WriteLine($"[OTAPI] Starting up.");
+            OTAPI.Modifier.Apply(OTAPI.ModType.Runtime, assemblies: mods);
+            orig_Main(args);
+        }
+        /** End OTAPI Startup */
     }
 }

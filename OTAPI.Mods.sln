@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OTAPI.Patcher", "OTAPI.Patc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OTAPI.Common", "OTAPI.Common\OTAPI.Common.csproj", "{FAF70B3B-C91A-4146-AB81-E0CDB3FA0C9B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OTAPI.Shims", "OTAPI.Shims\OTAPI.Shims.csproj", "{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2E966B91-7856-4982-B293-1000AA015EF5}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -107,30 +105,6 @@ Global
 		{FAF70B3B-C91A-4146-AB81-E0CDB3FA0C9B}.ReleaseTrace|Any CPU.Build.0 = Release|Any CPU
 		{FAF70B3B-C91A-4146-AB81-E0CDB3FA0C9B}.ReleaseTrace|x86.ActiveCfg = Release|Any CPU
 		{FAF70B3B-C91A-4146-AB81-E0CDB3FA0C9B}.ReleaseTrace|x86.Build.0 = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.Debug|x86.Build.0 = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.DebugLegacy|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.DebugLegacy|Any CPU.Build.0 = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.DebugLegacy|x86.ActiveCfg = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.DebugLegacy|x86.Build.0 = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.DebugTrace|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.DebugTrace|Any CPU.Build.0 = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.DebugTrace|x86.ActiveCfg = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.DebugTrace|x86.Build.0 = Debug|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.Release|x86.ActiveCfg = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.Release|x86.Build.0 = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.ReleaseLegacy|Any CPU.ActiveCfg = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.ReleaseLegacy|Any CPU.Build.0 = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.ReleaseLegacy|x86.ActiveCfg = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.ReleaseLegacy|x86.Build.0 = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.ReleaseTrace|Any CPU.ActiveCfg = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.ReleaseTrace|Any CPU.Build.0 = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.ReleaseTrace|x86.ActiveCfg = Release|Any CPU
-		{5D64C9FF-C8DC-4B1E-8C85-186CFAE97123}.ReleaseTrace|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
