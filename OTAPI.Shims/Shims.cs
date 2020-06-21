@@ -28,3 +28,4 @@ using MonoMod;
 [assembly: AssemblyRedirector("System.Windows.Forms", "TerrariaServer.OTAPI.Shims.mm.dll")]
 [assembly: AssemblyRedirector("System.Drawing.Graphics", "TerrariaServer.OTAPI.Shims.mm.dll")]
 [assembly: AssemblyRedirector("ReLogic", "TerrariaServer")]
+[assembly: AssemblyRedirector("System.Private.CoreLib", "mscorlib")]

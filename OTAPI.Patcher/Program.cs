@@ -66,6 +66,11 @@ namespace OTAPI.Patcher
 
                 OTAPI.Modifier.Apply(OTAPI.ModType.PostProcess, mm);
 
+#if tModLoaderServer_V1_3
+                mm.WriterParameters.SymbolWriterProvider = null;
+                mm.WriterParameters.WriteSymbols = false;
+#endif
+
                 mm.Write();
 
                 mm.Log("[OTAPI] Generating OTAPI.Runtime.dll");

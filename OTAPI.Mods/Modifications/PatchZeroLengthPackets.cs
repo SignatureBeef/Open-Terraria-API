@@ -34,7 +34,7 @@ namespace OTAPI.Modifications
 
             var toUInt16 = checkBytes.GotoNext(MoveType.After, (ins) => ins.MatchCall("System.BitConverter", "ToUInt16"));
             var storageVariable = toUInt16.Next.Operand as Mono.Cecil.Cil.VariableReference;
-            var breakTo = toUInt16.GotoNext((ins) => ins.OpCode == OpCodes.Blt).Next.Operand as Instruction;
+            var breakTo = toUInt16.GotoNext((ins) => ins.OpCode == OpCodes.Blt || ins.OpCode == OpCodes.Blt_S).Next.Operand as Instruction;
 
             toUInt16.Index++;
             toUInt16

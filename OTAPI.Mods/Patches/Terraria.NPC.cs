@@ -23,6 +23,7 @@ namespace Terraria
 {
     class patch_NPC : Terraria.NPC
     {
+#if TerrariaServer_V1_4
         /** Begin Hook - SetDefaults */
         public extern void orig_SetDefaults(int Type, NPCSpawnParams spawnparams);
         public void SetDefaults(int Type, NPCSpawnParams spawnparams = default(NPCSpawnParams))
@@ -46,5 +47,6 @@ namespace Terraria
             }
         }
         /** End Hook - UpdateNPC */
+#endif
     }
 }

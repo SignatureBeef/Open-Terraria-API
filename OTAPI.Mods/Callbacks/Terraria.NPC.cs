@@ -25,6 +25,8 @@ namespace OTAPI.Callbacks
             => Hooks.NPC.Killed?.Invoke(instance);
         public static bool Spawn(ref int index)
             => Hooks.NPC.Spawn?.Invoke(ref index) != HookResult.Cancel;
+
+#if TerrariaServer_V1_4
         public static int DropLoot(
                 int X, int Y, int Width, int Height, int Type,
                 int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup,
@@ -38,5 +40,6 @@ namespace OTAPI.Callbacks
             }
             return itemIndex;
         }
+#endif
     }
 }

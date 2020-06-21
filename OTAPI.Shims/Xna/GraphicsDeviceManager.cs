@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Windows.Markup;
 
 namespace Microsoft.Xna.Framework
 {
@@ -40,14 +41,17 @@ namespace Microsoft.Xna.Framework
 
         public event EventHandler<EventArgs> DeviceResetting;
 
-		public event EventHandler<EventArgs> DeviceReset;
+        public event EventHandler<EventArgs> DeviceReset;
 
-		public event EventHandler<EventArgs> DeviceDisposing;
+        public event EventHandler<EventArgs> DeviceDisposing;
 
-		public event EventHandler<PreparingDeviceSettingsEventArgs> PreparingDeviceSettings;
+        public event EventHandler<PreparingDeviceSettingsEventArgs> PreparingDeviceSettings;
 
-		public event EventHandler<EventArgs> Disposed;
-	}
+        public event EventHandler<EventArgs> Disposed;
+
+        protected virtual bool CanResetDevice(GraphicsDeviceInformation newDeviceInfo) => false;
+
+    }
 
     public class GraphicsDeviceInformation
     {

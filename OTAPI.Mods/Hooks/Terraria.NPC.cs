@@ -25,23 +25,25 @@ namespace OTAPI
     {
         public static class NPC
         {
+#if TerrariaServer_V1_4
             public delegate HookResult SetDefaultsHandler(HookEvent @event, Terraria.NPC instance, ref int type, ref Terraria.NPCSpawnParams spawnparams, Action<int, Terraria.NPCSpawnParams> originalMethod);
             public static SetDefaultsHandler SetDefaults;
 
             public delegate HookResult UpdateNPCHandler(HookEvent @event, Terraria.NPC instance, ref int i, Action<int> originalMethod);
             public static UpdateNPCHandler UpdateNPC;
 
-            public delegate void KilledHandler(Terraria.NPC instance);
-            public static KilledHandler Killed;
-
-            public delegate HookResult SpawnHandler(ref int index);
-            public static SpawnHandler Spawn;
-
             public delegate HookResult DropLootHandler(HookEvent @event, Terraria.NPC instance, ref int itemIndex,
                 ref int X, ref int Y, ref int Width, ref int Height, ref int Type,
                 ref int Stack, ref bool noBroadcast, ref int pfix, ref bool noGrabDelay, ref bool reverseLookup
             );
             public static DropLootHandler DropLoot;
+#endif
+
+            public delegate void KilledHandler(Terraria.NPC instance);
+            public static KilledHandler Killed;
+
+            public delegate HookResult SpawnHandler(ref int index);
+            public static SpawnHandler Spawn;
         }
     }
 }

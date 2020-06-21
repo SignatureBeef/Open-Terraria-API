@@ -41,7 +41,7 @@ namespace OTAPI.Modifications
 
 			//Remove the embedded Newtonsoft resource
 			modder.Module.Resources.Remove(
-				modder.Module.Resources.Single(x => x.Name == "Terraria.Libraries.JSON.NET.Newtonsoft.Json.dll")
+				modder.Module.Resources.Single(x => x.Name.EndsWith("Newtonsoft.Json.dll"))
 			);
 		}
     }

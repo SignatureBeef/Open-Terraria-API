@@ -8,10 +8,10 @@ script:
  - dotnet restore OTAPI.Launcher.sln
  - dotnet build OTAPI.Setup.sln
  - cd OTAPI.Setup/bin/Debug/net5.0
- - dotnet run --project ../../../OTAPI.Setup.csproj
+ - dotnet run --project ../../../OTAPI.Setup.csproj -patchTarget=v -latestVanilla=n
  - cd ../../../../
  - dotnet build OTAPI.Mods.sln
  - cd OTAPI.Patcher/bin/Debug/net5.0
- - dotnet run --project ../../../OTAPI.Patcher.csproj
+ - dotnet run --project ../../../OTAPI.Patcher.csproj -patchTarget=v -latestVanilla=n
  - cd ../../../../
  - dotnet build OTAPI.Launcher.sln

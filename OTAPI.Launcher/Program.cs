@@ -22,6 +22,9 @@ namespace OTAPI.Launcher
     {
         static void Main(string[] args)
         {
+#if tModLoaderServer_V1_3
+            Terraria.Program.SavePath = "ModLoader";
+#endif
             OTAPI.Hooks.Program.LaunchGame = () =>
             {
                 Terraria.Main.SkipAssemblyLoad = true;
