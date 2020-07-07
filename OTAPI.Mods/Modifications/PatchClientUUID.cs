@@ -21,7 +21,7 @@ using MonoMod;
 
 namespace OTAPI.Modifications
 {
-    [Modification(ModType.PostProcess, "Patching in Client UUID")]
+    [Modification(ModType.PostPatch, "Patching in Client UUID")]
     [MonoMod.MonoModIgnore]
     class PatchClientUUID
     {

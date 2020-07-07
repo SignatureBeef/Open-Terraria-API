@@ -16,39 +16,41 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.IO;
 
-namespace LuaApi
+namespace CSharpScript
 {
-    [OTAPI.Modification(OTAPI.ModType.Runtime, "Loading LUA interface")]
-    public class LuaApi
+    [OTAPI.Modification(OTAPI.ModType.Read, "Loading CSharpScript interface")]
+    public class CSharpScript
     {
-        public Triton.Lua runtime;
-
-        public LuaApi()
+        public CSharpScript()
         {
-            System.Console.WriteLine($"[LUA] Starting runtime");
-            runtime = new Triton.Lua();
+            System.Console.WriteLine($"[CSS] Starting runtime");
 
             LoadPlugins();
         }
 
         void LoadPlugins()
         {
-            if (Directory.Exists("lua"))
+            if (Directory.Exists("csharp"))
             {
-                foreach (var file in Directory.EnumerateFiles("lua", "*.lua", SearchOption.AllDirectories))
+                foreach (var file in Directory.EnumerateFiles("csharp", "*.cs", SearchOption.AllDirectories))
                 {
-                    System.Console.WriteLine($"[LUA] Loading plugin: {file}");
+                    System.Console.WriteLine($"[CSS] Loading plugin: {file}");
                     try
                     {
                         var contents = File.ReadAllText(file);
-                        runtime.DoString(contents);
+                        var result = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript.EvaluateAsync(contents).Result;
                     }
-                    catch(Exception ex)
+                    catch (CompilationErrorException e)
                     {
-                        System.Console.WriteLine($"[LUA] Load error: {ex}");
+                        Console.WriteLine(string.Join(Environment.NewLine, e.Diagnostics));
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine($"[CSS] Load error: {ex}");
                     }
                 }
             }

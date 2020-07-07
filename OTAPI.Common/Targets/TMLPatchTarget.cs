@@ -16,33 +16,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using MonoMod;
+using System.IO;
 using System.Linq;
 
-namespace OTAPI.Modifications
+namespace OTAPI.Common.Targets
 {
-    [Modification(ModType.PostPatch, "Upgrading Newtonsoft.Json")]
-    [MonoMod.MonoModIgnore]
-    class PatchNewtonsoftJson
+    public class TMLPatchTarget : IPatchTarget
     {
-        public PatchNewtonsoftJson(MonoModder modder)
-		{
-			var desired = typeof(Newtonsoft.Json.JsonConvert).Assembly.GetName().Version;
+        public string GetZipUrl()
+        {
+            return $"https://github.com/tModLoader/tModLoader/releases/download/v0.11.7.5/tModLoader.Windows.v0.11.7.5.zip";
+        }
 
-			//Update the references to match what is installed to OTAPI.Modifications.Json
-			foreach (var reference in modder.Module.AssemblyReferences)
-			{
-				if (reference.Name == "Newtonsoft.Json")
-				{
-					reference.Version = desired;
-					break;
-				}
-			}
-
-			//Remove the embedded Newtonsoft resource
-			modder.Module.Resources.Remove(
-				modder.Module.Resources.Single(x => x.Name.EndsWith("Newtonsoft.Json.dll"))
-			);
-		}
+        public string DetermineInputAssembly(string extractedFolder)
+        {
+            return Directory.EnumerateFiles(extractedFolder, "tModLoaderServer.exe", SearchOption.TopDirectoryOnly).Single();
+        }
     }
 }

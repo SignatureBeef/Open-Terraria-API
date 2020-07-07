@@ -26,12 +26,9 @@ namespace OTAPI
 {
     public static class Modifier
     {
-        private static IEnumerable<ModificationAttribute> Discover(List<Assembly> assemblies = null)
+        private static IEnumerable<ModificationAttribute> Discover(IEnumerable<Assembly> assemblies)
         {
-            var asms = assemblies ?? new List<Assembly>();
-            asms.Insert(0, Assembly.GetExecutingAssembly());
-
-            foreach (var asm in asms)
+            foreach (var asm in assemblies)
             {
                 Type[] types;
                 try
@@ -91,7 +88,7 @@ namespace OTAPI
             } while (!complete);
         }
 
-        public static void Apply(ModType modType, MonoMod.MonoModder modder = null, List<Assembly> assemblies = null)
+        public static void Apply(ModType modType, MonoMod.MonoModder modder = null, IEnumerable<Assembly> assemblies = null)
         {
             Console.WriteLine($"[OTAPI:{modType}] Applying mods...");
             var availableParameters = new List<object>()
@@ -101,7 +98,7 @@ namespace OTAPI
 
             if (modder != null) availableParameters.Add(modder);
 
-            var modifications = Discover(assemblies).Where(x => x.Type == modType);
+            var modifications = Discover(assemblies ?? OTAPI.Plugins.PluginLoader.Assemblies).Where(x => x.Type == modType);
             IterateMods(modifications, (modification) =>
             {
                 Console.WriteLine($"[OTAPI:{modType}] {modification.Description}");

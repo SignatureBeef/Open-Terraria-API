@@ -47,28 +47,9 @@ namespace Terraria
         [System.STAThread]
         public static void Main(string[] args)
         {
-            var mods = new List<Assembly>();
-            if (Directory.Exists("modifications"))
-            {
-                foreach (var file in Directory.EnumerateFiles("modifications", "*.dll", SearchOption.AllDirectories))
-                {
-                    try
-                    {
-                        Console.WriteLine($"[OTAPI:Startup] Loading {file}");
-                        //var asm = Modifications.LoadFromAssemblyPath(file); TODO: CoreLib support in target assembly
-                        var asm = System.Reflection.Assembly.Load(System.IO.File.ReadAllBytes(file));
-
-                        mods.Add(asm);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[OTAPI:Startup] Load failed {ex}");
-                    }
-                }
-            }
-
+            OTAPI.Plugins.PluginLoader.TryLoad();
             Console.WriteLine($"[OTAPI] Starting up.");
-            OTAPI.Modifier.Apply(OTAPI.ModType.Runtime, assemblies: mods);
+            OTAPI.Modifier.Apply(OTAPI.ModType.Runtime);
             orig_Main(args);
         }
         /** End OTAPI Startup */

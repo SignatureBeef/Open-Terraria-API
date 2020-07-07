@@ -22,14 +22,34 @@ using System;
 namespace OTAPI
 {
     /// <summary>
-    /// Defines when the modification is applied to the target assembly
+    /// Defines when the mod is ran
     /// </summary>
     public enum ModType
     {
-        PreMerge = 1,
-        PostProcess = 2,
-        Runtime = 3,
-        PrePatch = 4,
+        /// <summary>
+        /// Occurs when the binary is about to be read and patched
+        /// </summary>
+        Read,
+
+        /// <summary>
+        /// Occurs before MonoMod starts merging binaries together
+        /// </summary>
+        PreMerge,
+
+        /// <summary>
+        /// Occurs before MonoMod applies patches
+        /// </summary>
+        PrePatch,
+
+        /// <summary>
+        /// Occurs after MonoMod has completed processing all patches
+        /// </summary>
+        PostPatch,
+
+        /// <summary>
+        /// Occurs when the patched binary has started
+        /// </summary>
+        Runtime,
     }
 
     /// <summary>

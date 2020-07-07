@@ -21,7 +21,7 @@ using System.Linq;
 
 namespace OTAPI.Modifications
 {
-    [Modification(ModType.PostProcess, "Removing hard references to System.Private.CoreLib")]
+    [Modification(ModType.PostPatch, "Removing hard references to System.Private.CoreLib")]
     [MonoMod.MonoModIgnore]
     class PatchCoreLib
     {

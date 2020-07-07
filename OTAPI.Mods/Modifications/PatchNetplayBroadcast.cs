@@ -25,7 +25,7 @@ using System.Linq;
 
 namespace OTAPI.Modifications
 {
-    [Modification(ModType.PostProcess, "Patching Netplay Broadcast")]
+    [Modification(ModType.PostPatch, "Patching Netplay Broadcast")]
     [MonoMod.MonoModIgnore]
     class PatchNetplayBroadcast
     {

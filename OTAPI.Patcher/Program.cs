@@ -34,6 +34,9 @@ namespace OTAPI.Patcher
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(pathIn);
 
+            OTAPI.Plugins.PluginLoader.TryLoad();
+            OTAPI.Modifier.Apply(OTAPI.ModType.Read);
+
             using (var mm = new OTAPIModder()
             {
                 InputPath = "TerrariaServer.dll", // exists when built, as its a depedency in OTAPI.Mods
@@ -64,7 +67,7 @@ namespace OTAPI.Patcher
 
                 mm.AutoPatch();
 
-                OTAPI.Modifier.Apply(OTAPI.ModType.PostProcess, mm);
+                OTAPI.Modifier.Apply(OTAPI.ModType.PostPatch, mm);
 
 #if tModLoaderServer_V1_3
                 mm.WriterParameters.SymbolWriterProvider = null;
