@@ -67,7 +67,6 @@ namespace OTAPI.Setup
                     Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
                 })
                 {
-                    mm.Log($"[MonoMod] Reading mod or directory: {path}");
                     mm.ReadMod(path);
                 }
 

@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+Copyright (C) 2020 DeathCradle
+
+This file is part of Open Terraria API v3 (OTAPI)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -10,6 +28,8 @@ namespace OTAPI.Plugins
         private static List<Assembly> _assemblies;
 
         public static IEnumerable<Assembly> Assemblies => _assemblies;
+
+        public static IAssemblyLoader AssemblyLoader { get; set; } = new DefaultAssemblyLoader();
 
         public static bool TryLoad()
         {
@@ -25,9 +45,7 @@ namespace OTAPI.Plugins
                         try
                         {
                             Console.WriteLine($"[OTAPI:Startup] Loading {file}");
-                            // todo allow for AssemblyLoadContext
-                            var asm = System.Reflection.Assembly.Load(System.IO.File.ReadAllBytes(file));
-
+                            var asm = AssemblyLoader.Load(file);
                             _assemblies.Add(asm);
                         }
                         catch (Exception ex)

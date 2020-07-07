@@ -52,12 +52,10 @@ namespace OTAPI.Patcher
                 mm.Read();
 
                 foreach (var path in new[] {
-                    //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
+                    Path.Combine(System.Environment.CurrentDirectory, "OTAPI.Common.dll"),
                     Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
-                    // Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
                 })
                 {
-                    mm.Log($"[MonoMod] Reading mod or directory: {path}");
                     mm.ReadMod(path);
                 }
 
