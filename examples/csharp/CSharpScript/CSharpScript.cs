@@ -17,11 +17,22 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Microsoft.CodeAnalysis.Scripting;
+using OTAPI.Mods.Relinker;
 using System;
 using System.IO;
 
 namespace CSharpScript
 {
+    public class ScriptGlobals
+    {
+        // undecided on this yet
+        public void RegisterModification(OTAPI.ModType type, string name, Action callback)
+        {
+            Console.WriteLine($"Added mod: {type}, {name}");
+            callback();
+        }
+    }
+
     [OTAPI.Modification(OTAPI.ModType.Read, "Loading CSharpScript interface")]
     public class CSharpScript
     {
@@ -29,11 +40,6 @@ namespace CSharpScript
         {
             System.Console.WriteLine($"[CSS] Starting runtime");
 
-            LoadPlugins();
-        }
-
-        void LoadPlugins()
-        {
             if (Directory.Exists("csharp"))
             {
                 foreach (var file in Directory.EnumerateFiles("csharp", "*.cs", SearchOption.AllDirectories))
@@ -42,7 +48,13 @@ namespace CSharpScript
                     try
                     {
                         var contents = File.ReadAllText(file);
-                        var result = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript.EvaluateAsync(contents).Result;
+                        var script = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript.Create(contents,
+                            options: ScriptOptions.Default
+                            .WithReferences(typeof(OTAPI.ModType).Assembly, typeof(IRelinkProvider).Assembly, typeof(MonoMod.MonoModder).Assembly),
+                            globalsType: typeof(ScriptGlobals)
+                        );
+
+                        _ = script.RunAsync(new ScriptGlobals()).Result;
                     }
                     catch (CompilationErrorException e)
                     {

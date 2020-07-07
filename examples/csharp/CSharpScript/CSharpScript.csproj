@@ -5,24 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="scripts\Modification.cs" />
     <Compile Remove="scripts\Test.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="scripts\Modification.cs" />
     <None Include="scripts\Test.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.7.0-3.final" />
+    <PackageReference Include="MonoMod" Version="20.5.21.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\OTAPI.Common\OTAPI.Common.csproj" />
+    <ProjectReference Include="..\..\..\OTAPI.Mods\OTAPI.Mods.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <CSScripts Include="scripts/*.cs" />
   </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Copy SourceFiles="@(CSScripts)" DestinationFolder="$(TargetDir)..\..\..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\csharp" SkipUnchangedFiles="true" />
     

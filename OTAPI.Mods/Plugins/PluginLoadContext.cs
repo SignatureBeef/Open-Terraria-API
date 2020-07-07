@@ -39,7 +39,7 @@ namespace OTAPI.Plugins
             if (assemblyPath != null)
                 return LoadFromAssemblyPath(assemblyPath);
 
-            return base.Load(assemblyName);
+            return AssemblyLoadContext.Default.LoadFromAssemblyName(assemblyName);
         }
     }
 }
