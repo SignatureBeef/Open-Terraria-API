@@ -1,4 +1,4 @@
-﻿// below is an OTAPI patch. you can 
+﻿// below is an OTAPI patching hook. you can perform relinking or low level il alterations
 [Modification(ModType.PostPatch, "Testing a patch", ModPriority.Last)]
 void Patch(MonoModder modder, IRelinkProvider relinkProvider)
 {
