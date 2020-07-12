@@ -16,16 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using ModFramework.Relinker;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
-using OTAPI.Mods.Relinker;
 using System;
 using System.Collections.Generic;
 
-namespace OTAPI.Patcher
+namespace ModFramework
 {
-    public class OTAPIModder : MonoMod.MonoModder, IRelinkProvider
+    public class ModFwModder : MonoMod.MonoModder, IRelinkProvider
     {
         public bool AllowInterreferenceReplacements { get; set; } = true;
         protected List<RelinkTask> _tasks { get; set; } = new List<RelinkTask>();
@@ -45,7 +45,7 @@ namespace OTAPI.Patcher
                 callback(task);
         }
 
-        public OTAPIModder()
+        public ModFwModder()
         {
             MethodParser = (MonoModder modder, MethodBody body, Instruction instr, ref int instri) =>
             {
@@ -69,7 +69,7 @@ namespace OTAPI.Patcher
 
         public override void PatchRefs()
         {
-            OTAPI.Modifier.Apply(OTAPI.ModType.PreMerge, this);
+            Modifier.Apply(ModType.PreMerge, this);
             base.PatchRefs();
         }
 

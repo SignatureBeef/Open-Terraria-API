@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace OTAPI.Mods.Relinker
+namespace ModFramework.Relinker
 {
     [MonoMod.MonoModIgnore]
     public class FieldToPropertyRelinker : RelinkTask

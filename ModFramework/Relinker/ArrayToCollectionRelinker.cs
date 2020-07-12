@@ -19,9 +19,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
-using OTAPI.Mods.Relinker;
+using ModFramework.Relinker;
 
-namespace OTAPI.Mods.Relinker
+namespace ModFramework.Relinker
 {
     [MonoMod.MonoModIgnore]
     public class ArrayToCollectionRelinker : RelinkTask
@@ -42,8 +42,8 @@ namespace OTAPI.Mods.Relinker
         {
             this.Type = type;
 
-            ICollectionRef = modder.FindType($"OTAPI.{nameof(OTAPI.ICollection<object>)}`1");
-            CollectionRef = modder.FindType($"OTAPI.{nameof(OTAPI.DefaultCollection<object>)}`1");
+            ICollectionRef = modder.FindType($"ModFramework.{nameof(ModFramework.ICollection<object>)}`1");
+            CollectionRef = modder.FindType($"ModFramework.{nameof(ModFramework.DefaultCollection<object>)}`1");
 
             ICollectionDef = ICollectionRef.Resolve();
             CollectionDef = CollectionRef.Resolve();
@@ -59,9 +59,9 @@ namespace OTAPI.Mods.Relinker
             ICollectionTItem.GenericArguments.Clear();
             ICollectionTItem.GenericArguments.Add(ICollectionDef.GenericParameters[0]);
 
-            CreateCollectionMethod = type.Module.GetReference(() => DefaultCollection<Terraria.Tile>.CreateCollection(1, 1));
-            CreateCollectionMethod.DeclaringType = CollectionGen;
-            CreateCollectionMethod.ReturnType = ICollectionTItem;
+            CreateCollectionMethod = new MethodReference(nameof(ModFramework.DefaultCollection<object>.CreateCollection), ICollectionTItem, CollectionGen);
+            CreateCollectionMethod.Parameters.Add(new ParameterDefinition(type.Module.TypeSystem.Int32));
+            CreateCollectionMethod.Parameters.Add(new ParameterDefinition(type.Module.TypeSystem.Int32));
 
             System.Console.WriteLine($"[OTAPI] Relinking to collection {type.FullName}=>{ICollectionDef.FullName}");
         }
@@ -144,7 +144,7 @@ namespace OTAPI.Mods.Relinker
     }
 }
 
-namespace OTAPI
+namespace ModFramework
 {
     [MonoMod.MonoModIgnore]
     public static class ArrayToCollectionRelinkerMixin

@@ -16,21 +16,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using OTAPI.Common.Targets;
+using ModFramework.Targets;
 using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 
-namespace OTAPI.Common
+namespace ModFramework
 {
     [MonoMod.MonoModIgnore]
     public static class Remote
     {
         static void Log(string message)
         {
-            Console.WriteLine($"[OTAPI] [Setup] {message}");
+            Console.WriteLine($"[ModFw] [Setup] {message}");
         }
         public static void Log(this IPatchTarget target, string message) => Log(message);
 

@@ -18,6 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
+using ModFramework;
+using ModFramework.Plugins;
 using System;
 
 namespace Terraria
@@ -43,10 +45,10 @@ namespace Terraria
         [System.STAThread]
         public static void Main(string[] args)
         {
-            OTAPI.Plugins.PluginLoader.AssemblyLoader = new OTAPI.Plugins.LegacyAssemblyResolver(); // terraria depends on mscorlib, System.Runtime.Loader is not available here yet 
-            OTAPI.Plugins.PluginLoader.TryLoad();
+            PluginLoader.AssemblyLoader = new LegacyAssemblyResolver(); // terraria depends on mscorlib, System.Runtime.Loader is not available here yet 
+            PluginLoader.TryLoad();
             Console.WriteLine($"[OTAPI] Starting up.");
-            OTAPI.Modifier.Apply(OTAPI.ModType.Runtime);
+            Modifier.Apply(ModType.Runtime);
             orig_Main(args);
         }
         /** End OTAPI Startup */

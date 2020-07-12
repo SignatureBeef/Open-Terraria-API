@@ -18,10 +18,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Mono.Cecil;
 using MonoMod.Utils;
-using OTAPI.Mods.Relinker;
+using ModFramework.Relinker;
 using System.Linq;
 
-namespace OTAPI
+namespace ModFramework
 {
     [MonoMod.MonoModIgnore]
     public static class InterfaceEmitter

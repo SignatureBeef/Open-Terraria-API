@@ -21,7 +21,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace OTAPI
+namespace ModFramework
 {
     /// <summary>
     /// Defines when the mod is ran

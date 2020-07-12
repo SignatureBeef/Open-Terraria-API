@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+using ModFramework.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace OTAPI
+namespace ModFramework
 {
     public static class Modifier
     {
@@ -93,7 +94,7 @@ namespace OTAPI
                         action(pair.Key);
                         queue[pair.Key] = true;
                     }
-                    else Console.WriteLine($"[OTAPI] Awaiting dependencies for {pair.Key.MethodBase.DeclaringType.FullName}");
+                    else Console.WriteLine($"[ModFw] Awaiting dependencies for {pair.Key.MethodBase.DeclaringType.FullName}");
                 }
 
                 complete = queue.All(x => x.Value);
@@ -102,7 +103,7 @@ namespace OTAPI
 
         public static void Apply(ModType modType, MonoMod.MonoModder modder = null, IEnumerable<Assembly> assemblies = null)
         {
-            Console.WriteLine($"[OTAPI:{modType}] Applying mods...");
+            Console.WriteLine($"[ModFw:{modType}] Applying mods...");
             var availableParameters = new List<object>()
             {
                 modType,
@@ -110,10 +111,10 @@ namespace OTAPI
 
             if (modder != null) availableParameters.Add(modder);
 
-            var modifications = Discover(assemblies ?? OTAPI.Plugins.PluginLoader.Assemblies).Where(x => x.Type == modType);
+            var modifications = Discover(assemblies ?? PluginLoader.Assemblies).Where(x => x.Type == modType);
             IterateMods(modifications, (modification) =>
             {
-                Console.WriteLine($"[OTAPI:{modType}] {modification.Description}");
+                Console.WriteLine($"[ModFw:{modType}] {modification.Description}");
 
                 MethodBase modCtor = modification.MethodBase; //.DeclaringType.GetConstructors().Single();
                 var modCtorParams = modCtor.GetParameters();

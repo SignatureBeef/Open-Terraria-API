@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System.IO;
 using System.Linq;
 
-namespace OTAPI.Common.Targets
+namespace ModFramework.Targets
 {
     [MonoMod.MonoModIgnore]
     public class TMLPatchTarget : IPatchTarget

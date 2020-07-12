@@ -20,7 +20,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace OTAPI.Plugins
+namespace ModFramework.Plugins
 {
     public class DefaultAssemblyLoader : IAssemblyLoader
     {

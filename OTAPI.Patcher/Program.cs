@@ -16,11 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using ModFramework;
+using ModFramework.Plugins;
 using Mono.Cecil;
-using OTAPI.Common;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace OTAPI.Patcher
 {
@@ -34,9 +34,9 @@ namespace OTAPI.Patcher
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(pathIn);
 
-            OTAPI.Plugins.PluginLoader.TryLoad();
+            PluginLoader.TryLoad();
 
-            using (var mm = new OTAPIModder()
+            using (var mm = new ModFwModder()
             {
                 InputPath = "TerrariaServer.dll", // exists when built, as its a depedency in OTAPI.Mods
                 OutputPath = "OTAPI.dll",
@@ -50,10 +50,10 @@ namespace OTAPI.Patcher
                 (mm.AssemblyResolver as DefaultAssemblyResolver).AddSearchDirectory(embeddedResourcesDir);
                 mm.Read();
 
-                OTAPI.Modifier.Apply(OTAPI.ModType.Read, mm);
+                Modifier.Apply(ModType.Read, mm);
 
                 foreach (var path in new[] {
-                    Path.Combine(System.Environment.CurrentDirectory, "OTAPI.Common.dll"),
+                    Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
                     Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
                 })
                 {
@@ -62,11 +62,11 @@ namespace OTAPI.Patcher
 
                 mm.MapDependencies();
 
-                OTAPI.Modifier.Apply(OTAPI.ModType.PrePatch);
+                Modifier.Apply(ModType.PrePatch);
 
                 mm.AutoPatch();
 
-                OTAPI.Modifier.Apply(OTAPI.ModType.PostPatch, mm);
+                Modifier.Apply(ModType.PostPatch, mm);
 
 #if tModLoaderServer_V1_3
                 mm.WriterParameters.SymbolWriterProvider = null;

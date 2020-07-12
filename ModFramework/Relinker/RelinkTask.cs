@@ -21,7 +21,7 @@ using Mono.Cecil.Cil;
 using MonoMod;
 using System.Collections.Generic;
 
-namespace OTAPI.Mods.Relinker
+namespace ModFramework.Relinker
 {
     [MonoMod.MonoModIgnore]
     public abstract class RelinkTask

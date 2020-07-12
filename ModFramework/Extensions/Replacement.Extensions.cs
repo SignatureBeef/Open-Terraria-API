@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using Mono.Cecil;
 using MonoMod.Utils;
 
-namespace OTAPI
+namespace ModFramework
 {
     [MonoMod.MonoModIgnore]
     public static class ReplacementExtensions

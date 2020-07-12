@@ -20,7 +20,7 @@ using Mono.Cecil;
 using System.IO;
 using System.Linq;
 
-namespace OTAPI.Common
+namespace ModFramework
 {
     [MonoMod.MonoModIgnore]
     public class ResourceExtractor

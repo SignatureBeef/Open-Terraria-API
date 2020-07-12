@@ -23,7 +23,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 
-namespace OTAPI
+namespace ModFramework
 {
     [MonoMod.MonoModIgnore]
     public static partial class CecilHelpersExtensions

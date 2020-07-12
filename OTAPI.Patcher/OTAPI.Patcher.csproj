@@ -13,14 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
+    <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
     <ProjectReference Include="..\OTAPI.Mods\OTAPI.Mods.csproj" />
   </ItemGroup>
   
   <ItemGroup>
-    <Reference Include="MMHOOK_TerrariaServer">
-      <HintPath>..\OTAPI.Setup\bin\Debug\net5.0\MMHOOK_TerrariaServer.dll</HintPath>
-    </Reference>
     <Reference Include="TerrariaServer">
       <HintPath>..\OTAPI.Setup\bin\Debug\net5.0\TerrariaServer.dll</HintPath>
     </Reference>

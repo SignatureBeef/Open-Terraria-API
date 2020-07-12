@@ -19,9 +19,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
-namespace OTAPI.Plugins
+namespace ModFramework.Plugins
 {
     public static class PluginLoader
     {
@@ -41,24 +42,33 @@ namespace OTAPI.Plugins
             if (_assemblies == null)
             {
                 _assemblies = new List<Assembly>();
-                _assemblies.Add(Assembly.GetExecutingAssembly());
+                _assemblies.AddRange(new[] {
+                    Assembly.GetExecutingAssembly(),
+                    Assembly.GetCallingAssembly(),
+                    Assembly.GetCallingAssembly()
+                }.Distinct());
+
+                IEnumerable<string> files = Directory.EnumerateFiles(Environment.CurrentDirectory, "*.mm.dll", SearchOption.AllDirectories);
 
                 if (Directory.Exists("modifications"))
                 {
-                    foreach (var file in Directory.EnumerateFiles("modifications", "*.dll", SearchOption.AllDirectories))
+                    files = files.Concat(Directory.EnumerateFiles("modifications", "*.dll", SearchOption.AllDirectories));
+                }
+
+                foreach (var file in files.Distinct())
+                {
+                    try
                     {
-                        try
-                        {
-                            Console.WriteLine($"[OTAPI:Startup] Loading {file}");
-                            var asm = AssemblyLoader.Load(file);
-                            _assemblies.Add(asm);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"[OTAPI:Startup] Load failed {ex}");
-                        }
+                        Console.WriteLine($"[ModFw:Startup] Loading {file}");
+                        var asm = AssemblyLoader.Load(file);
+                        _assemblies.Add(asm);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[ModFw:Startup] Load failed {ex}");
                     }
                 }
+
                 return true;
             }
             return false;

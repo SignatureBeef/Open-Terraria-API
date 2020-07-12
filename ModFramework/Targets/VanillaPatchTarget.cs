@@ -21,7 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 
-namespace OTAPI.Common.Targets
+namespace ModFramework.Targets
 {
     [MonoMod.MonoModIgnore]
     public class VanillaPatchTarget : IPatchTarget

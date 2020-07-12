@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
+    <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
     <ProjectReference Include="..\OTAPI.Shims\OTAPI.Shims.csproj" />
   </ItemGroup>
 

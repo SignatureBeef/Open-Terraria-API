@@ -16,13 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System.IO;
 using System.Reflection;
 
-namespace OTAPI.Plugins
+namespace ModFramework.Plugins
 {
-    public interface IAssemblyLoader
+    public class LegacyAssemblyResolver : IAssemblyLoader
     {
-        Assembly Load(string path);
-        Assembly Load(System.IO.MemoryStream assembly);
+        public Assembly Load(string path) => Assembly.Load(System.IO.File.ReadAllBytes(path));
+
+        public Assembly Load(MemoryStream assembly) => Assembly.Load(assembly.ToArray());
     }
 }
