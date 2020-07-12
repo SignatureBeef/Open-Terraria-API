@@ -22,6 +22,7 @@ using System.Linq;
 
 namespace OTAPI.Common
 {
+    [MonoMod.MonoModIgnore]
     public class ResourceExtractor
     {
         public string Extract(string inputFile)

@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 namespace OTAPI.Common.Targets
 {
+    [MonoMod.MonoModIgnore]
     public interface IPatchTarget
     {
         string GetZipUrl();

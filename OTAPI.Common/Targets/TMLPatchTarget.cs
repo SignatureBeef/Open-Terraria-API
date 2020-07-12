@@ -21,6 +21,7 @@ using System.Linq;
 
 namespace OTAPI.Common.Targets
 {
+    [MonoMod.MonoModIgnore]
     public class TMLPatchTarget : IPatchTarget
     {
         public string GetZipUrl()

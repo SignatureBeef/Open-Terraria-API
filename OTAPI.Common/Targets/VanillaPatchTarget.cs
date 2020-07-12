@@ -23,6 +23,7 @@ using System.Net.Http;
 
 namespace OTAPI.Common.Targets
 {
+    [MonoMod.MonoModIgnore]
     public class VanillaPatchTarget : IPatchTarget
     {
         const String TerrariaWebsite = "https://terraria.org";

@@ -25,6 +25,7 @@ using System.Net.Http;
 
 namespace OTAPI.Common
 {
+    [MonoMod.MonoModIgnore]
     public static class Remote
     {
         static void Log(string message)

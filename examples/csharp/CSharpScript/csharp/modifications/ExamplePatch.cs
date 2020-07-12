@@ -1,6 +1,6 @@
 ﻿// below is an OTAPI patching hook. you can perform relinking or low level il alterations
-[Modification(ModType.PostPatch, "Testing a patch", ModPriority.Last)]
-void Patch(MonoModder modder, IRelinkProvider relinkProvider)
+[OTAPI.Modification(OTAPI.ModType.PostPatch, "Testing a patch", ModPriority.Last)]
+void Patch(MonoMod.MonoModder modder, IRelinkProvider relinkProvider)
 {
     Console.WriteLine("Modder? " + (modder != null ? "yes" : "no"));
     Console.WriteLine("RelinkProvider? " + (relinkProvider != null ? "yes" : "no"));

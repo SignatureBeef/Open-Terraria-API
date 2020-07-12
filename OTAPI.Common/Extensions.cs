@@ -21,6 +21,7 @@ using System;
 
 namespace OTAPI.Common
 {
+    [MonoMod.MonoModIgnore]
     public static class Extensions
     {
         public static string GetCliValue(this IPatchTarget target, string key)
