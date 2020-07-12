@@ -18,6 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace OTAPI
 {
@@ -113,6 +115,11 @@ namespace OTAPI
             this.Priority = priority;
         }
 
-        public Type InstanceType { get; set; }
+        //public Type InstanceType { get; set; }
+
+        public MethodBase MethodBase { get; set; }
+        public object Instance { get; set; }
+
+        public virtual MethodBase GetExecutionMethod() => MethodBase; // ?? InstanceType.GetConstructors().Single();
     }
 }

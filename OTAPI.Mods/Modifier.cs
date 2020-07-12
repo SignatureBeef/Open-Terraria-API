@@ -40,15 +40,27 @@ namespace OTAPI
                     types = ex.Types;
                 }
 
-                var modificationTypes = types.Where(x => x != null && !x.IsAbstract);
+                var modificationTypes = types.Where(x => x != null); // && !x.IsAbstract);
 
                 foreach (var type in modificationTypes)
                 {
                     var modificationAttr = type.GetCustomAttribute<ModificationAttribute>();
                     if (modificationAttr != null)
                     {
-                        modificationAttr.InstanceType = type;
+                        //modificationAttr.InstanceType = type;
+                        modificationAttr.MethodBase = type.GetConstructors().Single();
                         yield return modificationAttr;
+                    }
+
+                    var methods = type.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
+                    foreach (var method in methods)
+                    {
+                        modificationAttr = method.GetCustomAttribute<ModificationAttribute>();
+                        if (modificationAttr != null)
+                        {
+                            modificationAttr.MethodBase = method;
+                            yield return modificationAttr;
+                        }
                     }
                 }
             }
@@ -63,7 +75,7 @@ namespace OTAPI
             {
                 if (mod.Dependencies != null)
                 {
-                    return mod.Dependencies.All(d => mods.Any(m => m.InstanceType == d && queue[m]));
+                    return mod.Dependencies.All(d => mods.Any(m => m.MethodBase.DeclaringType == d && queue[m]));
                 }
                 return true;
             };
@@ -81,7 +93,7 @@ namespace OTAPI
                         action(pair.Key);
                         queue[pair.Key] = true;
                     }
-                    else Console.WriteLine($"[OTAPI] Awaiting dependencies for {pair.Key.InstanceType.FullName}");
+                    else Console.WriteLine($"[OTAPI] Awaiting dependencies for {pair.Key.MethodBase.DeclaringType.FullName}");
                 }
 
                 complete = queue.All(x => x.Value);
@@ -103,7 +115,7 @@ namespace OTAPI
             {
                 Console.WriteLine($"[OTAPI:{modType}] {modification.Description}");
 
-                var modCtor = modification.InstanceType.GetConstructors().Single();
+                MethodBase modCtor = modification.MethodBase; //.DeclaringType.GetConstructors().Single();
                 var modCtorParams = modCtor.GetParameters();
 
                 // bind arguments
@@ -119,11 +131,13 @@ namespace OTAPI
                         {
                             args[i] = paramValue;
                         }
-                        else throw new Exception($"No valid for parameter ${param.Name} in modification {modification.InstanceType.FullName}");
+                        else throw new Exception($"No valid for parameter ${param.Name} in modification {modification.MethodBase.DeclaringType.FullName}");
                     }
                 }
 
-                Activator.CreateInstance(modification.InstanceType, args, null);
+                if (modification.MethodBase.IsConstructor)
+                    Activator.CreateInstance(modification.MethodBase.DeclaringType, args, null);
+                else modification.MethodBase.Invoke(modification.Instance, args);
             });
         }
     }

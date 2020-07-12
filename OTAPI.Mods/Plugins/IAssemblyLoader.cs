@@ -20,8 +20,9 @@ using System.Reflection;
 
 namespace OTAPI.Plugins
 {
-    public interface  IAssemblyLoader
+    public interface IAssemblyLoader
     {
         Assembly Load(string path);
+        Assembly Load(System.IO.MemoryStream assembly);
     }
 }

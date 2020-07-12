@@ -35,7 +35,6 @@ namespace OTAPI.Patcher
             var embeddedResourcesDir = extractor.Extract(pathIn);
 
             OTAPI.Plugins.PluginLoader.TryLoad();
-            OTAPI.Modifier.Apply(OTAPI.ModType.Read);
 
             using (var mm = new OTAPIModder()
             {
@@ -51,6 +50,8 @@ namespace OTAPI.Patcher
                 (mm.AssemblyResolver as DefaultAssemblyResolver).AddSearchDirectory(embeddedResourcesDir);
                 mm.Read();
 
+                OTAPI.Modifier.Apply(OTAPI.ModType.Read, mm);
+
                 foreach (var path in new[] {
                     Path.Combine(System.Environment.CurrentDirectory, "OTAPI.Common.dll"),
                     Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
@@ -61,7 +62,7 @@ namespace OTAPI.Patcher
 
                 mm.MapDependencies();
 
-                OTAPI.Modifier.Apply(OTAPI.ModType.PrePatch, mm);
+                OTAPI.Modifier.Apply(OTAPI.ModType.PrePatch);
 
                 mm.AutoPatch();
 

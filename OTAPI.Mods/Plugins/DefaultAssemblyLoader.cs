@@ -30,16 +30,21 @@ namespace OTAPI.Plugins
 
             var resolver = new AssemblyDependencyResolver(path);
 
-            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += (System.Runtime.Loader.AssemblyLoadContext arg1, AssemblyName arg2) =>
+            AssemblyLoadContext.Default.Resolving += (AssemblyLoadContext arg1, AssemblyName arg2) =>
             {
                 string assemblyPath = resolver.ResolveAssemblyToPath(arg2);
                 if (assemblyPath != null)
-                    return System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
+                    return AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
 
                 return null;
             };
 
-            return System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+            return AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+        }
+
+        public Assembly Load(System.IO.MemoryStream assembly)
+        {
+            return AssemblyLoadContext.Default.LoadFromStream(assembly);
         }
     }
 }

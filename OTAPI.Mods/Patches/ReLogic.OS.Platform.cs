@@ -24,7 +24,7 @@ namespace ReLogic.OS
     {
         /** Begin Cross platform support - Determine platform based on RuntimeInformation rather than compile time */
         public static readonly Platform Current;
-        
+
         public static extern void orig_ctor_Platform();
         [MonoMod.MonoModConstructor]
         static patch_Platform()

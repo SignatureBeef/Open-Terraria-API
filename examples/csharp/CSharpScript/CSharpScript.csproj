@@ -3,17 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="scripts\Modification.cs" />
-    <Compile Remove="scripts\Test.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="scripts\Modification.cs" />
-    <None Include="scripts\Test.cs" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.7.0-3.final" />
     <PackageReference Include="MonoMod" Version="20.5.21.5" />
@@ -25,11 +14,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <CSScripts Include="scripts/*.cs" />
+    <Reference Include="MMHOOK_TerrariaServer">
+      <HintPath>..\..\..\OTAPI.Setup\bin\Debug\net5.0\MMHOOK_TerrariaServer.dll</HintPath>
+    </Reference>
+    <Reference Include="TerrariaServer">
+      <HintPath>..\..\..\OTAPI.Setup\bin\Debug\net5.0\TerrariaServer.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <CSScripts Include="csharp/modifications/*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="csharp\modifications\*" />
+    <None Include="csharp\modifications\*" />
+  </ItemGroup>
+  
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Copy SourceFiles="@(CSScripts)" DestinationFolder="$(TargetDir)..\..\..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\csharp" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(CSScripts)" DestinationFolder="$(TargetDir)..\..\..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\csharp\modifications" SkipUnchangedFiles="true" />
     
     <Exec Command="COPY $(TargetDir)$(TargetFileName) $(TargetDir)..\..\..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\modifications\$(TargetFileName)" />
     <Exec Command="COPY $(TargetDir)CSharpScript.deps.json $(TargetDir)..\..\..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\modifications\" />

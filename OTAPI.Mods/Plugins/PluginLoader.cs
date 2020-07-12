@@ -31,6 +31,11 @@ namespace OTAPI.Plugins
 
         public static IAssemblyLoader AssemblyLoader { get; set; } = new DefaultAssemblyLoader();
 
+        public static void AddAssembly(Assembly assembly)
+        {
+            _assemblies.Add(assembly);
+        }
+
         public static bool TryLoad()
         {
             if (_assemblies == null)
