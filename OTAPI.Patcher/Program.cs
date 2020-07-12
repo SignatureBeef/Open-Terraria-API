@@ -54,7 +54,7 @@ namespace OTAPI.Patcher
 
                 foreach (var path in new[] {
                     Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
-                    Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
+                    //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
                 })
                 {
                     mm.ReadMod(path);

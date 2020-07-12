@@ -81,7 +81,7 @@ namespace ModFramework
     }
 
     /// <summary>
-    /// Describes an OTAPI modification instance
+    /// Describes a modification instance
     /// </summary>
     public class ModificationAttribute : Attribute
     {
@@ -103,11 +103,16 @@ namespace ModFramework
         /// <summary>
         /// What this modification needs to wait for in order to be executed
         /// </summary>
-        public Type[] Dependencies { get; set; }
+        public string[] Dependencies { get; set; }
+
+        /// <summary>
+        /// The unique name for this modification in order to determine the dependencies
+        /// </summary>
+        public string UniqueName { get; set; }
 
         public ModificationAttribute(ModType type, string description,
             ModPriority priority = ModPriority.Default,
-            Type[] dependencies = null
+            string[] dependencies = null
         )
         {
             this.Description = description;

@@ -32,7 +32,7 @@ namespace ModFramework.Relinker
             this.Field = field;
             this.Property = property;
 
-            System.Console.WriteLine($"[OTAPI] Relinking to property {field.FullName}=>{property.FullName}");
+            System.Console.WriteLine($"[ModFw] Relinking to property {field.FullName}=>{property.FullName}");
         }
 
         public override void Relink(MethodBody body, Instruction instr)

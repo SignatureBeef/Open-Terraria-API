@@ -63,7 +63,7 @@ namespace ModFramework.Relinker
             CreateCollectionMethod.Parameters.Add(new ParameterDefinition(type.Module.TypeSystem.Int32));
             CreateCollectionMethod.Parameters.Add(new ParameterDefinition(type.Module.TypeSystem.Int32));
 
-            System.Console.WriteLine($"[OTAPI] Relinking to collection {type.FullName}=>{ICollectionDef.FullName}");
+            System.Console.WriteLine($"[ModFw] Relinking to collection {type.FullName}=>{ICollectionDef.FullName}");
         }
 
         public override void Relink(FieldDefinition field)

@@ -9,12 +9,12 @@
     <PackageReference Include="Mono.Cecil" Version="0.11.2" />
     <PackageReference Include="MonoMod" Version="20.5.21.5" />
     <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="20.5.21.5" />
-    <PackageReference Include="System.Security.Permissions" Version="5.0.0-preview.4.20251.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Security.Permissions" Version="5.0.0-preview.6.20305.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
-    <ProjectReference Include="..\OTAPI.Mods\OTAPI.Mods.csproj" />
   </ItemGroup>
   
   <ItemGroup>
@@ -33,6 +33,12 @@
       <Link>csharp\modifications\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\OTAPI.Scripts\**\*.*">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </None>
   </ItemGroup>
 
 </Project>

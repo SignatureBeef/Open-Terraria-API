@@ -60,6 +60,7 @@ namespace ModFramework
                         if (modificationAttr != null)
                         {
                             modificationAttr.MethodBase = method;
+                            modificationAttr.UniqueName = method.Name.Replace("<$Main>g__", "").Replace("|0_0", "");
                             yield return modificationAttr;
                         }
                     }
@@ -76,7 +77,7 @@ namespace ModFramework
             {
                 if (mod.Dependencies != null)
                 {
-                    return mod.Dependencies.All(d => mods.Any(m => m.MethodBase.DeclaringType == d && queue[m]));
+                    return mod.Dependencies.All(d => mods.Any(m => (m.MethodBase.DeclaringType.Name == d || (m.UniqueName != null && m.UniqueName == d)) && queue[m]));
                 }
                 return true;
             };

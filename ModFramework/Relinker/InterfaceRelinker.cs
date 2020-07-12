@@ -34,7 +34,7 @@ namespace ModFramework.Relinker
         {
             SearchType = searchType;
             ReplacementType = replacementType;
-            Console.WriteLine($"[OTAPI] Relinking interface {searchType.FullName}=>{replacementType.FullName}");
+            Console.WriteLine($"[ModFw] Relinking interface {searchType.FullName}=>{replacementType.FullName}");
         }
 
         public override void Relink(MethodDefinition method)

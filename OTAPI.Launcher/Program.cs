@@ -28,14 +28,14 @@ namespace OTAPI.Launcher
             OTAPI.Hooks.Program.LaunchGame = () =>
             {
                 Terraria.Main.SkipAssemblyLoad = true;
-                return HookResult.Continue;
+                return ModFramework.HookResult.Continue;
             };
             OTAPI.Hooks.MessageBuffer.ClientUUIDReceived = (@event, instance, reader, start, length, messageType) =>
             {
-                if (@event == HookEvent.After)
+                if (@event == ModFramework.HookEvent.After)
                     System.Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[instance.whoAmI].ClientUUID}");
 
-                return HookResult.Continue;
+                return ModFramework.HookResult.Continue;
             };
             Terraria.WindowsLaunch.Main(args);
         }
