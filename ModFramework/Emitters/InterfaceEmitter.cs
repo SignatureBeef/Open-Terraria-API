@@ -44,7 +44,7 @@ namespace ModFramework
             );
 
             if (ElementType.Fields.Any(f => !f.HasConstant && !f.IsPrivate))
-                throw new System.NotSupportedException($"CS0525: Interfaces cannot contain instance fields");
+                throw new System.NotSupportedException("CS0525: Interfaces cannot contain instance fields");
             // foreach (var field in ElementType.Fields.Where(f => !f.HasConstant && !f.IsPrivate))
             // {
             //     var cf = field.Clone();

@@ -26,7 +26,7 @@ using MonoMod.Cil;
 namespace ModFramework
 {
     [MonoMod.MonoModIgnore]
-    public static partial class CecilHelpersExtensions
+    public static class CecilHelpersExtensions
     {
         public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference)
             => new ILCursor(new ILContext(modder.Module.GetDefinition<MethodDefinition>(reference)) { ReferenceBag = RuntimeILReferenceBag.Instance });
@@ -35,7 +35,7 @@ namespace ModFramework
             => modder.Module.GetDefinition<MethodDefinition>(reference);
         public static FieldDefinition GetFieldDefinition<TResult>(this MonoMod.MonoModder modder, Expression<Func<TResult>> reference)
             => modder.Module.GetDefinition<FieldDefinition>(reference);
-        
+
         public static TypeDefinition GetDefinition<TType>(this MonoMod.MonoModder modder)
             => modder.Module.GetDefinition<TType>();
 
@@ -62,7 +62,7 @@ namespace ModFramework
             var memberReference = token.GetMemberReference(reference);
 
             // try and resolve back to the token module rather than the reference module.
-            if(memberReference is MethodReference methodReference)
+            if (memberReference is MethodReference methodReference)
             {
                 var module = token.GetModule();
                 methodReference.DeclaringType = module.GetType(methodReference.DeclaringType.FullName);
@@ -79,20 +79,14 @@ namespace ModFramework
             var module = token.GetModule();
             if (module != null)
             {
-                // find the expression method in the meta, matching on the parameter count/types
-                var mce = reference.Body as MethodCallExpression;
-                if (mce != null)
+                if (reference.Body is MethodCallExpression mce)
                     return module.ImportReference(mce.Method);
-            }
 
-            var me = reference.Body as MemberExpression;
-            if (me != null)
-            {
-                if (me.Member is System.Reflection.FieldInfo field)
+                if (reference.Body is MemberExpression me && me.Member is System.Reflection.FieldInfo field)
                     return module.ImportReference(field);
             }
 
-            throw new System.Exception($"Unable to find expression in assembly");
+            throw new System.Exception("Unable to find expression in assembly");
         }
 
         public static MethodReference GetCoreLibMethod(this ModuleDefinition module, string @namespace, string type, string method)

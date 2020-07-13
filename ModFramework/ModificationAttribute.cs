@@ -60,7 +60,7 @@ namespace ModFramework
     public enum ModPriority : int
     {
         /// <summary>
-        /// May run slightly earlier than other mods 
+        /// May run slightly earlier than other mods
         /// </summary>
         Early = -100,
 
@@ -83,6 +83,7 @@ namespace ModFramework
     /// <summary>
     /// Describes a modification instance
     /// </summary>
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public class ModificationAttribute : Attribute
     {
         /// <summary>

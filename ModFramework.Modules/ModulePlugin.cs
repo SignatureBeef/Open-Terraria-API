@@ -20,7 +20,7 @@ namespace ModFramework.Modules
         {
             Modder = modder;
 
-            System.Console.WriteLine($"[CSS] Starting runtime");
+            System.Console.WriteLine("[CSS] Starting runtime");
             RunModules();
         }
 

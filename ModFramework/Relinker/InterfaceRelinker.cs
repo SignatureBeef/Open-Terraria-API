@@ -112,8 +112,10 @@ namespace ModFramework.Relinker
 
                 if (methodRef.DeclaringType.FullName == SearchType.FullName && methodRef.HasThis)
                 {
-                    var mr = new MethodReference(methodRef.Name, methodRef.ReturnType, ReplacementType);
-                    mr.HasThis = methodRef.HasThis;
+                    var mr = new MethodReference(methodRef.Name, methodRef.ReturnType, ReplacementType)
+                    {
+                        HasThis = methodRef.HasThis
+                    };
 
                     foreach (var prm in methodRef.Parameters)
                     {

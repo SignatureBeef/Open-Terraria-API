@@ -26,7 +26,7 @@ namespace ModFramework.Targets
     {
         public string GetZipUrl()
         {
-            return $"https://github.com/tModLoader/tModLoader/releases/download/v0.11.7.5/tModLoader.Windows.v0.11.7.5.zip";
+            return "https://github.com/tModLoader/tModLoader/releases/download/v0.11.7.5/tModLoader.Windows.v0.11.7.5.zip";
         }
 
         public string DetermineInputAssembly(string extractedFolder)

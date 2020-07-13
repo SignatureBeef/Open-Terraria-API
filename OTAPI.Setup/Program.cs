@@ -26,21 +26,21 @@ using System.Linq;
 
 namespace OTAPI.Setup
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
             var input = Remote.DownloadServer();
 
-            Console.WriteLine($"[OTAPI] Extracting embedded binaries and packing into one binary...");
+            Console.WriteLine("[OTAPI] Extracting embedded binaries and packing into one binary...");
 
             // allow for refs to the embedded resources, such as ReLogic.dll
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(input);
             var inputName = Path.GetFileNameWithoutExtension(input);
 
-            var output = $"MMHOOK_TerrariaServer.dll";
-            using (MonoModder mm = new MonoModder()
+            const string output = "MMHOOK_TerrariaServer.dll";
+            using MonoModder mm = new MonoModder()
             {
                 InputPath = input,
                 OutputPath = output,
@@ -49,79 +49,77 @@ namespace OTAPI.Setup
                 PublicEverything = true, // we want all of terraria exposed
 
                 GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
-            })
-            {
-                (mm.AssemblyResolver as DefaultAssemblyResolver).AddSearchDirectory(embeddedResourcesDir);
-                mm.Read();
+            };
+            (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
+            mm.Read();
 
-                var initialModuleName = mm.Module.Name;
+            var initialModuleName = mm.Module.Name;
 
-                // prechange the assembly name to a dll
-                // monomod will also reference this when relinking so it must be correct
-                // in order for shims within this dll to work (relogic)
-                mm.Module.Name = "TerrariaServer.dll";
-                mm.Module.Assembly.Name.Name = "TerrariaServer";
+            // prechange the assembly name to a dll
+            // monomod will also reference this when relinking so it must be correct
+            // in order for shims within this dll to work (relogic)
+            mm.Module.Name = "TerrariaServer.dll";
+            mm.Module.Assembly.Name.Name = "TerrariaServer";
 
-                foreach (var path in new[] {
+            foreach (var path in new[] {
                     Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
                     Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
                 })
-                {
-                    mm.ReadMod(path);
-                }
+            {
+                mm.ReadMod(path);
+            }
 
-                // add the SourceAssembly name attribute
-                {
-                    var sac = mm.Module.ImportReference(typeof(OTAPI.SourceAssemblyAttribute).GetConstructor(Type.EmptyTypes));
-                    var sa = new CustomAttribute(sac);
-                    sa.Fields.Add(new CustomAttributeNamedArgument("ModuleName", new CustomAttributeArgument(mm.Module.TypeSystem.String, initialModuleName)));
-                    sa.Fields.Add(new CustomAttributeNamedArgument("FileName", new CustomAttributeArgument(mm.Module.TypeSystem.String, inputName)));
-                    mm.Module.Assembly.CustomAttributes.Add(sa);
-                }
+            // add the SourceAssembly name attribute
+            {
+                var sac = mm.Module.ImportReference(typeof(OTAPI.SourceAssemblyAttribute).GetConstructor(Type.EmptyTypes));
+                var sa = new CustomAttribute(sac);
+                sa.Fields.Add(new CustomAttributeNamedArgument("ModuleName", new CustomAttributeArgument(mm.Module.TypeSystem.String, initialModuleName)));
+                sa.Fields.Add(new CustomAttributeNamedArgument("FileName", new CustomAttributeArgument(mm.Module.TypeSystem.String, inputName)));
+                mm.Module.Assembly.CustomAttributes.Add(sa);
+            }
 
-                mm.MapDependencies();
-                mm.AutoPatch();
+            mm.MapDependencies();
+            mm.AutoPatch();
 
-                if (File.Exists(output))
-                {
-                    mm.Log($"[HookGen] Clearing {output}");
-                    File.Delete(output);
-                }
+            if (File.Exists(output))
+            {
+                mm.Log($"[HookGen] Clearing {output}");
+                File.Delete(output);
+            }
 
-                mm.Log("[HookGen] Starting HookGenerator");
-                var gen = new HookGenerator(mm, Path.GetFileName(output));
-                using (ModuleDefinition mOut = gen.OutputModule)
-                {
-                    gen.Generate();
+            mm.Log("[HookGen] Starting HookGenerator");
+            var gen = new HookGenerator(mm, Path.GetFileName(output));
+            using (ModuleDefinition mOut = gen.OutputModule)
+            {
+                gen.Generate();
 
-                    mOut.Write(output);
-                }
+                mOut.Write(output);
+            }
 
-                mm.OutputPath = mm.Module.Name; // the merged TerrariaServer + ReLogic (so we can apply patches)
+            mm.OutputPath = mm.Module.Name; // the merged TerrariaServer + ReLogic (so we can apply patches)
 
-                // switch to any cpu so that we can compile and use types in mods
-                // this is usually in a modification otherwise
-                mm.Module.Architecture = TargetArchitecture.I386;
-                mm.Module.Attributes = ModuleAttributes.ILOnly;
+            // switch to any cpu so that we can compile and use types in mods
+            // this is usually in a modification otherwise
+            mm.Module.Architecture = TargetArchitecture.I386;
+            mm.Module.Attributes = ModuleAttributes.ILOnly;
 
-                mm.Write();
+            mm.Write();
 
-                mm.Log("[HookGen] Done.");
+            mm.Log("[HookGen] Done.");
 
-                var const_major = $"{inputName}_V{mm.Module.Assembly.Name.Version.Major}_{mm.Module.Assembly.Name.Version.Minor}";
-                var const_fullname = $"{inputName}_{mm.Module.Assembly.Name.Version.ToString().Replace(".", "_")}";
+            var const_major = $"{inputName}_V{mm.Module.Assembly.Name.Version.Major}_{mm.Module.Assembly.Name.Version.Minor}";
+            var const_fullname = $"{inputName}_{mm.Module.Assembly.Name.Version.ToString().Replace(".", "_")}";
 
-                File.WriteAllText("AutoGenerated.target", @$"<!-- DO NOT EDIT THIS FILE! It was auto generated by the setup project  -->
+            File.WriteAllText("AutoGenerated.target", @$"<!-- DO NOT EDIT THIS FILE! It was auto generated by the setup project  -->
 <Project xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"">
   <PropertyGroup>
     <DefineConstants>{inputName};{const_major};{const_fullname}</DefineConstants>
   </PropertyGroup>
 </Project>");
-                File.WriteAllText("AutoGenerated.cs", @$"#define {inputName}
+            File.WriteAllText("AutoGenerated.cs", @$"#define {inputName}
 #define {const_major}
 #define {const_fullname}
 ");
-            }
         }
     }
 }

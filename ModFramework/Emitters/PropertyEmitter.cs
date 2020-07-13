@@ -23,7 +23,6 @@ using System.Linq;
 
 namespace ModFramework
 {
-
     [MonoMod.MonoModIgnore]
     public static class PropertyEmitter
     {
@@ -31,11 +30,12 @@ namespace ModFramework
 
         public static PropertyDefinition RemapAsProperty(this FieldDefinition field, IRelinkProvider relinkProvider)
         {
-            var property = new PropertyDefinition(field.Name, PropertyAttributes.None, field.FieldType);
-
-            property.HasThis = !field.IsStatic;
-            property.GetMethod = field.GenerateGetter();
-            property.SetMethod = field.GenerateSetter();
+            var property = new PropertyDefinition(field.Name, PropertyAttributes.None, field.FieldType)
+            {
+                HasThis = !field.IsStatic,
+                GetMethod = field.GenerateGetter(),
+                SetMethod = field.GenerateSetter()
+            };
 
             //Add the CompilerGeneratedAttribute or if you decompile the getter body will be shown
             field.CustomAttributes.Add(new CustomAttribute(

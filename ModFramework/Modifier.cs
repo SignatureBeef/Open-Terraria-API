@@ -73,14 +73,14 @@ namespace ModFramework
             var queue = mods.ToDictionary(i => i, k => false);
             bool complete = queue.Count == 0;
 
-            Func<ModificationAttribute, bool> areDepsCompleted = (mod) =>
+            bool areDepsCompleted(ModificationAttribute mod)
             {
                 if (mod.Dependencies != null)
                 {
                     return mod.Dependencies.All(d => mods.Any(m => (m.MethodBase.DeclaringType.Name == d || (m.UniqueName != null && m.UniqueName == d)) && queue[m]));
                 }
                 return true;
-            };
+            }
 
             do
             {
@@ -121,18 +121,17 @@ namespace ModFramework
                 var modCtorParams = modCtor.GetParameters();
 
                 // bind arguments
-                var args = new object[modCtorParams.Count()];
+                var args = new object[modCtorParams.Length];
                 {
-                    for (var i = 0; i < modCtorParams.Count(); i++)
+                    for (var i = 0; i < modCtorParams.Length; i++)
                     {
-                        var param = modCtorParams.ElementAt(i);
+                        var param = modCtorParams[i];
                         var paramValue = availableParameters.SingleOrDefault(p =>
                             param.ParameterType.IsAssignableFrom(p.GetType())
                         );
+
                         if (paramValue != null)
-                        {
                             args[i] = paramValue;
-                        }
                         else throw new Exception($"No valid for parameter ${param.Name} in modification {modification.MethodBase.DeclaringType.FullName}");
                     }
                 }

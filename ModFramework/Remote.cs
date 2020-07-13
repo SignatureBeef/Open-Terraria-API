@@ -45,11 +45,9 @@ namespace ModFramework
 
                 if (!File.Exists(savePath))
                 {
-                    using (var client = new HttpClient())
-                    {
-                        var data = client.GetByteArrayAsync(url).Result;
-                        File.WriteAllBytes(savePath, data);
-                    }
+                    using var client = new HttpClient();
+                    var data = client.GetByteArrayAsync(url).Result;
+                    File.WriteAllBytes(savePath, data);
                 }
 
                 return savePath;
@@ -76,7 +74,7 @@ namespace ModFramework
         public static string GetCliValue(string key)
         {
             string find = $"-{key}=";
-            var match = Environment.GetCommandLineArgs().FirstOrDefault(x => x.StartsWith(find, StringComparison.CurrentCultureIgnoreCase));
+            var match = Array.Find(Environment.GetCommandLineArgs(), x => x.StartsWith(find, StringComparison.CurrentCultureIgnoreCase));
             return match?.Substring(find.Length)?.ToLower();
         }
 

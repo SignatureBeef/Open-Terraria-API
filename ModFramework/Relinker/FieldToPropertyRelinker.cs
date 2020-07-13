@@ -24,8 +24,8 @@ namespace ModFramework.Relinker
     [MonoMod.MonoModIgnore]
     public class FieldToPropertyRelinker : RelinkTask
     {
-        FieldDefinition Field { get; set; }
-        PropertyDefinition Property { get; set; }
+        FieldDefinition Field { get; }
+        PropertyDefinition Property { get; }
 
         public FieldToPropertyRelinker(FieldDefinition field, PropertyDefinition property)
         {

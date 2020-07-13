@@ -18,7 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 namespace OTAPI.Launcher
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {

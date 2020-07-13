@@ -24,19 +24,19 @@ using System.IO;
 
 namespace OTAPI.Patcher
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
             var pathIn = Remote.DownloadServer();
 
-            Console.WriteLine($"[OTAPI] Extracting embedded binaries for assembly resolution...");
+            Console.WriteLine("[OTAPI] Extracting embedded binaries for assembly resolution...");
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(pathIn);
 
             PluginLoader.TryLoad();
 
-            using (var mm = new ModFwModder()
+            using var mm = new ModFwModder()
             {
                 InputPath = "TerrariaServer.dll", // exists when built, as its a depedency in OTAPI.Mods
                 OutputPath = "OTAPI.dll",
@@ -45,47 +45,45 @@ namespace OTAPI.Patcher
                 // PublicEverything = true, // we want all of terraria exposed
 
                 GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
-            })
-            {
-                (mm.AssemblyResolver as DefaultAssemblyResolver).AddSearchDirectory(embeddedResourcesDir);
-                mm.Read();
+            };
+            (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
+            mm.Read();
 
-                Modifier.Apply(ModType.Read, mm);
+            Modifier.Apply(ModType.Read, mm);
 
-                foreach (var path in new[] {
+            foreach (var path in new[] {
                     Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
                     //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
                 })
-                {
-                    mm.ReadMod(path);
-                }
+            {
+                mm.ReadMod(path);
+            }
 
-                mm.MapDependencies();
+            mm.MapDependencies();
 
-                Modifier.Apply(ModType.PrePatch);
+            Modifier.Apply(ModType.PrePatch);
 
-                mm.AutoPatch();
+            mm.AutoPatch();
 
-                Modifier.Apply(ModType.PostPatch, mm);
+            Modifier.Apply(ModType.PostPatch, mm);
 
 #if tModLoaderServer_V1_3
                 mm.WriterParameters.SymbolWriterProvider = null;
                 mm.WriterParameters.WriteSymbols = false;
 #endif
 
-                mm.Write();
+            mm.Write();
 
-                mm.Log("[OTAPI] Generating OTAPI.Runtime.dll");
-                var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, Path.GetFileName("OTAPI.Runtime.dll"));
-                using (ModuleDefinition mOut = gen.OutputModule)
-                {
-                    gen.Generate();
+            mm.Log("[OTAPI] Generating OTAPI.Runtime.dll");
+            var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, Path.GetFileName("OTAPI.Runtime.dll"));
+            using (ModuleDefinition mOut = gen.OutputModule)
+            {
+                gen.Generate();
 
-                    mOut.Write($"OTAPI.Runtime.dll");
-                }
-
-                mm.Log("[OTAPI] Done.");
+                mOut.Write("OTAPI.Runtime.dll");
             }
+
+            mm.Log("[OTAPI] Done.");
         }
     }
 }

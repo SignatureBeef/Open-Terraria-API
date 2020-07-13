@@ -28,29 +28,26 @@ namespace ModFramework
     public class ModFwModder : MonoMod.MonoModder, IRelinkProvider
     {
         public bool AllowInterreferenceReplacements { get; set; } = true;
-        protected List<RelinkTask> _tasks { get; set; } = new List<RelinkTask>();
-        public IEnumerable<RelinkTask> Tasks => _tasks;
+        protected List<RelinkTask> TaskList { get; set; } = new List<RelinkTask>();
+        public IEnumerable<RelinkTask> Tasks => TaskList;
 
         public virtual void AddTask(RelinkTask task)
         {
             task.Modder = this;
             task.RelinkProvider = this;
-            _tasks.Add(task);
-            _tasks.Sort((a, b) => a.Order - b.Order);
+            TaskList.Add(task);
+            TaskList.Sort((a, b) => a.Order - b.Order);
         }
 
         public virtual void RunTasks(Action<RelinkTask> callback)
         {
-            foreach (var task in _tasks)
+            foreach (var task in TaskList)
                 callback(task);
         }
 
         public ModFwModder()
         {
-            MethodParser = (MonoModder modder, MethodBody body, Instruction instr, ref int instri) =>
-            {
-                return true;
-            };
+            MethodParser = (MonoModder modder, MethodBody body, Instruction instr, ref int instri) => true;
             MethodRewriter = (MonoModder modder, MethodDefinition method) =>
             {
                 if (method.Body?.HasVariables == true)
@@ -61,10 +58,7 @@ namespace ModFramework
                     foreach (var parameter in method.Parameters)
                         RunTasks(t => t.Relink(method, parameter));
             };
-            MethodBodyRewriter = (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
-            {
-                RunTasks(t => t.Relink(body, instr));
-            };
+            MethodBodyRewriter = (MonoModder modder, MethodBody body, Instruction instr, int instri) => RunTasks(t => t.Relink(body, instr));
         }
 
         public override void PatchRefs()

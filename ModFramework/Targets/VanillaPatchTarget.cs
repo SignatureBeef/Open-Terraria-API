@@ -30,27 +30,26 @@ namespace ModFramework.Targets
 
         public string AquireLatestBinaryUrl()
         {
-            this.Log($"Determining the latest TerrariaServer.exe...");
-            using (var client = new HttpClient())
-            {
-                var data = client.GetByteArrayAsync(TerrariaWebsite).Result;
-                var html = System.Text.Encoding.UTF8.GetString(data);
+            this.Log("Determining the latest TerrariaServer.exe...");
+            using var client = new HttpClient();
 
-                const String Lookup = ">PC Dedicated Server";
+            var data = client.GetByteArrayAsync(TerrariaWebsite).Result;
+            var html = System.Text.Encoding.UTF8.GetString(data);
 
-                var offset = html.IndexOf(Lookup, StringComparison.CurrentCultureIgnoreCase);
-                if (offset == -1) throw new NotSupportedException();
+            const String Lookup = ">PC Dedicated Server";
 
-                var attr_character = html[offset - 1];
+            var offset = html.IndexOf(Lookup, StringComparison.CurrentCultureIgnoreCase);
+            if (offset == -1) throw new NotSupportedException();
 
-                var url = html.Substring(0, offset - 1);
-                var url_begin_offset = url.LastIndexOf(attr_character);
-                if (url_begin_offset == -1) throw new NotSupportedException();
+            var attr_character = html[offset - 1];
 
-                url = url.Remove(0, url_begin_offset + 1);
+            var url = html.Substring(0, offset - 1);
+            var url_begin_offset = url.LastIndexOf(attr_character);
+            if (url_begin_offset == -1) throw new NotSupportedException();
 
-                return TerrariaWebsite + url;
-            }
+            url = url.Remove(0, url_begin_offset + 1);
+
+            return TerrariaWebsite + url;
         }
 
         public string DetermineInputAssembly(string extractedFolder)
@@ -75,13 +74,12 @@ namespace ModFramework.Targets
 
                     if (input.Equals("y", StringComparison.CurrentCultureIgnoreCase))
                         return AquireLatestBinaryUrl();
-
                     else if (input.Equals("n", StringComparison.CurrentCultureIgnoreCase))
                         break;
                 } while (attempts-- > 0);
             }
 
-            return $"https://terraria.org/system/dedicated_servers/archives/000/000/039/original/terraria-server-1405.zip?1591301368";
+            return "https://terraria.org/system/dedicated_servers/archives/000/000/039/original/terraria-server-1405.zip?1591301368";
         }
     }
 }
