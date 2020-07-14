@@ -15,6 +15,7 @@ namespace ModFramework.Modules
     [Modification(ModType.Read, "Loading CSharpScript interface")]
     public class ModulePlugin
     {
+        const string ModulePrefix = "CSharpScript_";
         public MonoMod.MonoModder Modder { get; set; }
 
         public ModulePlugin(MonoMod.MonoModder modder)
@@ -25,7 +26,12 @@ namespace ModFramework.Modules
 
             modder.OnReadMod += (m, module) =>
             {
-                Modder.RelinkModuleMap[module.Assembly.Name.Name] = modder.Module;
+                if (module.Assembly.Name.Name.StartsWith(ModulePrefix))
+                {
+                    // remove the program class
+                    module.Types.Remove(module.GetType("$Program"));
+                    Modder.RelinkModuleMap[module.Assembly.Name.Name] = modder.Module;
+                }
             };
 
             RunModules();
@@ -67,7 +73,7 @@ namespace ModFramework.Modules
                         var assemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
                         EmitResult Compile(bool dll)
                         {
-                            var compilation = CSharpCompilation.Create($"CSharpScript_{Guid.NewGuid():N}", new[] { parsedSyntaxTree }, new[]
+                            var compilation = CSharpCompilation.Create($"{ModulePrefix}{Guid.NewGuid():N}", new[] { parsedSyntaxTree }, new[]
                             {
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Private.CoreLib.dll")),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Console.dll")),
