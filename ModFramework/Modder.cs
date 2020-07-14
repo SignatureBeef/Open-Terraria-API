@@ -59,6 +59,8 @@ namespace ModFramework
                         RunTasks(t => t.Relink(method, parameter));
             };
             MethodBodyRewriter = (MonoModder modder, MethodBody body, Instruction instr, int instri) => RunTasks(t => t.Relink(body, instr));
+
+            AddTask(new EventDelegateRelinker());
         }
 
         public override void PatchRefs()
@@ -70,6 +72,10 @@ namespace ModFramework
         public override void PatchRefsInType(TypeDefinition type)
         {
             base.PatchRefsInType(type);
+
+            if (type.HasEvents)
+                foreach (var typeEvent in type.Events)
+                    RunTasks(t => t.Relink(typeEvent));
 
             if (type.HasFields)
                 foreach (var field in type.Fields)

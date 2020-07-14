@@ -42,6 +42,7 @@ namespace ModFramework.Relinker
         public virtual void Relink(FieldDefinition field) { }
         public virtual void Relink(PropertyDefinition property) { }
         public virtual void Relink(MethodBody body, Instruction instr) { }
+        public virtual void Relink(EventDefinition typeEvent) { }
     }
 
     [MonoMod.MonoModIgnore]

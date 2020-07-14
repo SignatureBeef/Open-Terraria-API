@@ -104,7 +104,7 @@ namespace ModFramework.Modules
                         }
                         else
                         {
-                            Console.WriteLine("Compilation done with error.");
+                            Console.WriteLine($"Compilation errors for file: {Path.GetFileName(file)}");
 
                             var failures = compilationResult.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);
 

@@ -158,14 +158,16 @@ namespace ModFramework
     public interface ICollection<TItem>
     {
         TItem this[int x, int y] { get; set; }
+        int Width { get; }
+        int Height { get; }
     }
 
     public class DefaultCollection<TItem> : ICollection<TItem>
     {
         protected TItem[,] _items;
 
-        protected int Width { get; set; }
-        protected int Height { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         public DefaultCollection(int width, int height)
         {
