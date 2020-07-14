@@ -32,11 +32,11 @@ namespace Terraria
         //}
 
         /** Begin Patch: Extra data */
-        public extern void orig_ctor_RemoteClient();
+        //public extern void orig_ctor_RemoteClient();
         [MonoMod.MonoModConstructor]
         patch_RemoteClient()
         {
-            orig_ctor_RemoteClient();
+            //orig_ctor_RemoteClient();
             Data = new Dictionary<string, object>();
         }
 

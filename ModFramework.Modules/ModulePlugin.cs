@@ -30,7 +30,7 @@ namespace ModFramework.Modules
                 {
                     // remove the program class
                     module.Types.Remove(module.GetType("$Program"));
-                    Modder.RelinkModuleMap[module.Assembly.Name.Name] = modder.Module;
+                    Modder.RelinkAssembly(module);
                 }
             };
 

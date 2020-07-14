@@ -64,6 +64,13 @@ namespace ModFramework
             AddTask(new EventDelegateRelinker());
         }
 
+        public override void Read()
+        {
+            base.Read();
+
+            Modifier.Apply(ModType.Read, this);
+        }
+
         public override void PatchRefs()
         {
             Modifier.Apply(ModType.PreMerge, this);
@@ -92,6 +99,23 @@ namespace ModFramework
             base.PatchRefsInMethod(method);
 
             RunTasks(t => t.Relink(method));
+        }
+
+        public override void AutoPatch()
+        {
+            Modifier.Apply(ModType.PrePatch, this);
+
+            base.AutoPatch();
+
+            Modifier.Apply(ModType.PostPatch, this);
+
+            foreach (var relinked in RelinkModuleMap)
+            {
+                // remove the references
+                foreach (var asmref in Module.AssemblyReferences.ToArray())
+                    if (asmref.Name.Equals(relinked.Key))
+                        Module.AssemblyReferences.Remove(asmref);
+            }
         }
     }
 }

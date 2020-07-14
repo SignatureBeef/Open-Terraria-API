@@ -49,8 +49,6 @@ namespace OTAPI.Patcher
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             mm.Read();
 
-            Modifier.Apply(ModType.Read, mm);
-
             foreach (var path in new[] {
                     Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
                     //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
@@ -61,11 +59,7 @@ namespace OTAPI.Patcher
 
             mm.MapDependencies();
 
-            Modifier.Apply(ModType.PrePatch);
-
             mm.AutoPatch();
-
-            Modifier.Apply(ModType.PostPatch, mm);
 
 #if tModLoaderServer_V1_3
                 mm.WriterParameters.SymbolWriterProvider = null;

@@ -36,4 +36,5 @@ void ChangeAssemblyName(MonoModder modder)
     var from = "TerrariaServer";
     modder.Log($"[OTAPI] RelinkModule: {from} -> {modder.Module.Name}");
     modder.RelinkModuleMap[from] = modder.Module;
+    modder.RelinkModuleMap["OTAPI"] = modder.Module;
 }
