@@ -31,7 +31,7 @@ namespace ModFramework.Relinker
         public override void Relink(EventDefinition typeEvent)
         {
             var delegateMember = typeEvent.DeclaringType.Fields.SingleOrDefault(f => f.Name == typeEvent.Name);
-            if(delegateMember != null && delegateMember.IsPublic)
+            if(delegateMember?.IsPublic == true)
             {
                 delegateMember.IsPublic = false;
                 delegateMember.IsPrivate = true;

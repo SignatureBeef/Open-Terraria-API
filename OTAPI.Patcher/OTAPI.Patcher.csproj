@@ -34,11 +34,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="..\OTAPI.Scripts\**\*.*">
-      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
-    </None>
-  </ItemGroup>
 
 </Project>

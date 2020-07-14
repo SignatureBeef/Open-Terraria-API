@@ -25,6 +25,7 @@ using System.Collections.Generic;
 
 namespace ModFramework
 {
+    [MonoMod.MonoModIgnore]
     public class ModFwModder : MonoMod.MonoModder, IRelinkProvider
     {
         public bool AllowInterreferenceReplacements { get; set; } = true;

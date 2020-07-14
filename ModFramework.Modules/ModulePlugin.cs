@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.Text;
 using ModFramework.Plugins;
 using ModFramework.Relinker;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -20,7 +21,13 @@ namespace ModFramework.Modules
         {
             Modder = modder;
 
-            System.Console.WriteLine("[CSS] Starting runtime");
+            Console.WriteLine("[CSS] Starting runtime");
+
+            modder.OnReadMod += (m, module) =>
+            {
+                Modder.RelinkModuleMap[module.Assembly.Name.Name] = modder.Module;
+            };
+
             RunModules();
         }
 
@@ -37,10 +44,18 @@ namespace ModFramework.Modules
 
                 foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories))
                 {
-                    System.Console.WriteLine($"[CSS] Loading module: {file}");
+                    Console.WriteLine($"[CSS] Loading module: {file}");
                     try
                     {
-                        var contents = constants + "\nusing System;\nusing ModFramework;\nusing MonoMod;\nusing ModFramework.Relinker; " + File.ReadAllText(file);
+                        var contents = string.Join(Environment.NewLine, new []
+                        {
+                            constants,
+                            "using System;",
+                            "using ModFramework;",
+                            "using MonoMod;",
+                            "using ModFramework.Relinker;",
+                            File.ReadAllText(file),
+                        });
 
                         var codeString = SourceText.From(contents);
                         var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview); // allows toplevel functions
@@ -52,7 +67,7 @@ namespace ModFramework.Modules
                         var assemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
                         EmitResult Compile(bool dll)
                         {
-                            var compilation = CSharpCompilation.Create($"CSharpScript_{Guid.NewGuid()}", new[] { parsedSyntaxTree }, new[]
+                            var compilation = CSharpCompilation.Create($"CSharpScript_{Guid.NewGuid():N}", new[] { parsedSyntaxTree }, new[]
                             {
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Private.CoreLib.dll")),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Console.dll")),
@@ -94,21 +109,23 @@ namespace ModFramework.Modules
                             dllStream.Seek(0, SeekOrigin.Begin);
 
                             var asm = PluginLoader.AssemblyLoader.Load(dllStream);
+                            PluginLoader.AddAssembly(asm);
 
                             var outPath = Path.Combine(outDir, $"{asm.GetName().Name}.dll");
                             var data = dllStream.ToArray();
                             File.WriteAllBytes(outPath, data);
 
-                            PluginLoader.AddAssembly(asm);
                             Modder.ReadMod(outPath);
+
+                            //Modder.Mods.Single(m => m is Mono.Cecil.AssemblyDefinition asm && asm.FullName == outDir)
+
+                            //Modder.RelinkModuleMap[from] = Modder.Module;
                         }
                         else
                         {
                             Console.WriteLine($"Compilation errors for file: {Path.GetFileName(file)}");
 
-                            var failures = compilationResult.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);
-
-                            foreach (var diagnostic in failures)
+                            foreach (var diagnostic in compilationResult.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error))
                             {
                                 Console.Error.WriteLine("{0}: {1}", diagnostic.Id, diagnostic.GetMessage());
                             }
@@ -116,7 +133,7 @@ namespace ModFramework.Modules
                     }
                     catch (Exception ex)
                     {
-                        System.Console.WriteLine($"[CSS] Load error: {ex}");
+                        Console.WriteLine($"[CSS] Load error: {ex}");
                     }
                 }
             }
