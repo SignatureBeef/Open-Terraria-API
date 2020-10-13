@@ -12,7 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.0.5, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.1.0, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking WorldFile.loadWorld(bool)...";
 		public override void Run()
@@ -32,37 +32,39 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
 				allowCallbackInstance: false
 			);
 
-			var handler = vanilla.Body.ExceptionHandlers.Skip(1).Single(x => x.HandlerType == ExceptionHandlerType.Catch);
+			var nameId = 0;
+			foreach (var handler in vanilla.Body.ExceptionHandlers.Skip(1).Where(x => x.HandlerType == ExceptionHandlerType.Catch))
+			{
+				var exType = this.SourceDefinition.MainModule.Import(
+					typeof(Exception)
+				);
+				var exVariable = new VariableDefinition($"exceptionObject{++nameId}", exType);
 
-			var exType = this.SourceDefinition.MainModule.Import(
-				typeof(Exception)
-			);
-			var exVariable = new VariableDefinition("exceptionObject", exType);
+				vanilla.Body.Variables.Add(exVariable);
 
-			vanilla.Body.Variables.Add(exVariable);
+				handler.CatchType = this.SourceDefinition.MainModule.Import(
+					typeof(Exception)
+				);
 
-			handler.CatchType = this.SourceDefinition.MainModule.Import(
-				typeof(Exception)
-			);
+				handler.HandlerStart.OpCode = OpCodes.Stloc;
+				handler.HandlerStart.Operand = exVariable;
 
-			handler.HandlerStart.OpCode = OpCodes.Stloc;
-			handler.HandlerStart.Operand = exVariable;
-
-			var processor = vanilla.Body.GetILProcessor();
-			processor.InsertAfter(handler.HandlerEnd.Previous(x => x.OpCode == OpCodes.Stsfld
-				&& (x.Operand as FieldReference).Name == "loadSuccess"),
-				new { OpCodes.Ldloc, exVariable },
-				new
-				{
-					OpCodes.Call,
-					Operand = this.SourceDefinition.MainModule.Import(
-					typeof(System.Console).GetMethods().Single(x => x.Name == "WriteLine"
-						&& x.GetParameters().Count() == 1
-						&& x.GetParameters()[0].ParameterType.Name == "Object"
+				var processor = vanilla.Body.GetILProcessor();
+				processor.InsertAfter(handler.HandlerEnd.Previous(x => x.OpCode == OpCodes.Stsfld
+					&& (x.Operand as FieldReference).Name == "loadSuccess"),
+					new { OpCodes.Ldloc, exVariable },
+					new
+					{
+						OpCodes.Call,
+						Operand = this.SourceDefinition.MainModule.Import(
+						typeof(System.Console).GetMethods().Single(x => x.Name == "WriteLine"
+							&& x.GetParameters().Count() == 1
+							&& x.GetParameters()[0].ParameterType.Name == "Object"
+						)
 					)
-				)
-				}
-			);
+					}
+				);
+			}
 		}
 	}
 }

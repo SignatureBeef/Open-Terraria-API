@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4072F0EB-0D17-4DAD-93DB-6B8D6D8B2643}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SteelSeriesEngineWrapper</RootNamespace>
+    <AssemblyName>SteelSeriesEngineWrapper</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FullSerializer\fsAotCompilationManager.cs" />
+    <Compile Include="FullSerializer\fsBaseConverter.cs" />
+    <Compile Include="FullSerializer\fsConfig.cs" />
+    <Compile Include="FullSerializer\fsContext.cs" />
+    <Compile Include="FullSerializer\fsConverter.cs" />
+    <Compile Include="FullSerializer\fsConverterRegistrar.cs" />
+    <Compile Include="FullSerializer\fsData.cs" />
+    <Compile Include="FullSerializer\fsDataType.cs" />
+    <Compile Include="FullSerializer\fsDirectConverter.2.cs" />
+    <Compile Include="FullSerializer\fsDirectConverter.cs" />
+    <Compile Include="FullSerializer\fsDuplicateVersionNameException.cs" />
+    <Compile Include="FullSerializer\fsForwardAttribute.cs" />
+    <Compile Include="FullSerializer\fsGlobalConfig.cs" />
+    <Compile Include="FullSerializer\fsIgnoreAttribute.cs" />
+    <Compile Include="FullSerializer\fsISerializationCallbacks.cs" />
+    <Compile Include="FullSerializer\fsJsonParser.cs" />
+    <Compile Include="FullSerializer\fsJsonPrinter.cs" />
+    <Compile Include="FullSerializer\fsMemberSerialization.cs" />
+    <Compile Include="FullSerializer\fsMetaType.cs" />
+    <Compile Include="FullSerializer\fsMissingVersionConstructorException.cs" />
+    <Compile Include="FullSerializer\fsObjectAttribute.cs" />
+    <Compile Include="FullSerializer\fsObjectProcessor.cs" />
+    <Compile Include="FullSerializer\fsPropertyAttribute.cs" />
+    <Compile Include="FullSerializer\fsResult.cs" />
+    <Compile Include="FullSerializer\fsSerializer.cs" />
+    <Compile Include="FullSerializer\fsTypeExtensions.cs" />
+    <Compile Include="FullSerializer\Internal\fsArrayConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsCyclicReferenceManager.cs" />
+    <Compile Include="FullSerializer\Internal\fsDateConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsDictionaryConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsEnumConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsForwardConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsGuidConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsIEnumerableConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsKeyValuePairConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsMetaProperty.cs" />
+    <Compile Include="FullSerializer\Internal\fsNullableConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsOption.2.cs" />
+    <Compile Include="FullSerializer\Internal\fsOption.cs" />
+    <Compile Include="FullSerializer\Internal\fsPortableReflection.cs" />
+    <Compile Include="FullSerializer\Internal\fsPrimitiveConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsReflectedConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsReflectionUtility.cs" />
+    <Compile Include="FullSerializer\Internal\fsSerializationCallbackProcessor.cs" />
+    <Compile Include="FullSerializer\Internal\fsTypeCache.cs" />
+    <Compile Include="FullSerializer\Internal\fsTypeConverter.cs" />
+    <Compile Include="FullSerializer\Internal\fsVersionedType.cs" />
+    <Compile Include="FullSerializer\Internal\fsVersionManager.cs" />
+    <Compile Include="FullSerializer\Internal\fsWeakReferenceConverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SteelSeries\GameSense\AbstractColor.cs" />
+    <Compile Include="SteelSeries\GameSense\AbstractColor_Nonrecursive.cs" />
+    <Compile Include="SteelSeries\GameSense\AbstractHandler.cs" />
+    <Compile Include="SteelSeries\GameSense\AbstractRate.cs" />
+    <Compile Include="SteelSeries\GameSense\AbstractTactilePattern.cs" />
+    <Compile Include="SteelSeries\GameSense\BindEventConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\BindEventLocalizations.cs" />
+    <Compile Include="SteelSeries\GameSense\BindEventLocalizationsConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\Bind_Event.cs" />
+    <Compile Include="SteelSeries\GameSense\BitmapEventHandlerType.cs" />
+    <Compile Include="SteelSeries\GameSense\BitmapEventTypeConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\ClientState.cs" />
+    <Compile Include="SteelSeries\GameSense\ColorEffect.cs" />
+    <Compile Include="SteelSeries\GameSense\ColorGradient.cs" />
+    <Compile Include="SteelSeries\GameSense\ColorHandler.cs" />
+    <Compile Include="SteelSeries\GameSense\ColorHandlerConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\ColorRange.cs" />
+    <Compile Include="SteelSeries\GameSense\ColorRangeConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\ColorRanges.cs" />
+    <Compile Include="SteelSeries\GameSense\ColorStatic.cs" />
+    <Compile Include="SteelSeries\GameSense\ContextColorEventHandlerType.cs" />
+    <Compile Include="SteelSeries\GameSense\ContextColorEventTypeConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\coreProps.cs" />
+    <Compile Include="SteelSeries\GameSense\CriticalMessageIllFormedException.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\AbstarctGenericTactile_Zone.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\AbstractDevice_Zone.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\AbstractIlluminationDevice_CustomZone.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\AbstractIlluminationDevice_StandardZone.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\AbstractIlluminationDevice_Zone.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\AbstractTactileDevice_Zone.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\Headset.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\HeadsetZoneEarcups.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\IlluminationZone.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\Indicator.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\IndicatorZoneOne.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\Keyboard.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\KeyboardZoneFunctionKeys.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\KeyboardZoneKeypad.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\KeyboardZoneMacroKeys.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\KeyboardZoneMainKeyboard.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\KeyboardZoneNumberKeys.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\Mouse.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\MouseZoneBase.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\MouseZoneLogo.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\MouseZoneWheel.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBFiveZoneFive.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBFiveZoneFour.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBFiveZoneOne.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBFiveZoneThree.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBFiveZoneTwo.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBOneZoneOne.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkey.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneAll.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneAllMacroKeys.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneArrows.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneCustom.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneFunctionKeys.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneKeypad.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneKeypadNumbers.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneMacroKeys.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneMainKeyboard.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneNavCluster.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneNumberKeys.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneRowA.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneRowQ.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBPerkeyZoneRowZ.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBThreeZoneOne.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBThreeZoneThree.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBThreeZoneTwo.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBTwoZoneOne.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBTwoZoneTwo.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\RGBZonedDevice.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\TactileZone.cs" />
+    <Compile Include="SteelSeries\GameSense\DeviceZone\TactileZoneOne.cs" />
+    <Compile Include="SteelSeries\GameSense\EventData.cs" />
+    <Compile Include="SteelSeries\GameSense\EventIconId.cs" />
+    <Compile Include="SteelSeries\GameSense\FreqRepeatLimitPair.cs" />
+    <Compile Include="SteelSeries\GameSense\Frequency.cs" />
+    <Compile Include="SteelSeries\GameSense\Game.cs" />
+    <Compile Include="SteelSeries\GameSense\Gradient.cs" />
+    <Compile Include="SteelSeries\GameSense\HIDCodes.cs" />
+    <Compile Include="SteelSeries\GameSense\IconColor.cs" />
+    <Compile Include="SteelSeries\GameSense\IlluminationMode.cs" />
+    <Compile Include="SteelSeries\GameSense\JsonMsg.cs" />
+    <Compile Include="SteelSeries\GameSense\LocklessQueue.cs" />
+    <Compile Include="SteelSeries\GameSense\OurEventTemplate.cs" />
+    <Compile Include="SteelSeries\GameSense\PartialBitmapEventHandlerType.cs" />
+    <Compile Include="SteelSeries\GameSense\PartialBitmapEventTypeConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\QueueMsg.cs" />
+    <Compile Include="SteelSeries\GameSense\QueueMsgBindEvent.cs" />
+    <Compile Include="SteelSeries\GameSense\QueueMsgRegisterEvent.cs" />
+    <Compile Include="SteelSeries\GameSense\QueueMsgRegisterGame.cs" />
+    <Compile Include="SteelSeries\GameSense\QueueMsgRemoveGame.cs" />
+    <Compile Include="SteelSeries\GameSense\QueueMsgSendEvent.cs" />
+    <Compile Include="SteelSeries\GameSense\QueueMsgSendHeartbeat.cs" />
+    <Compile Include="SteelSeries\GameSense\RangeColorEffect.cs" />
+    <Compile Include="SteelSeries\GameSense\RateMode.cs" />
+    <Compile Include="SteelSeries\GameSense\RateRange.cs" />
+    <Compile Include="SteelSeries\GameSense\RateRangeConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\RateStatic.cs" />
+    <Compile Include="SteelSeries\GameSense\RateStaticConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\RegisterEventConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\RegisterGameConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\Register_Event.cs" />
+    <Compile Include="SteelSeries\GameSense\Register_Game.cs" />
+    <Compile Include="SteelSeries\GameSense\RepeatLimit.cs" />
+    <Compile Include="SteelSeries\GameSense\RepeatLimitConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\RGB.cs" />
+    <Compile Include="SteelSeries\GameSense\SendEventConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\Send_Event.cs" />
+    <Compile Include="SteelSeries\GameSense\ServerDownException.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileEffectCustom.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileEffectCustomConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileEffectRange.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileEffectRangeConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileEffectSimple.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileEffectSimpleConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileEffectType.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileHandler.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileHandlerConverter.cs" />
+    <Compile Include="SteelSeries\GameSense\TactileMode.cs" />
+    <Compile Include="SteelSeries\GameSense\TactilePatternCustom.cs" />
+    <Compile Include="SteelSeries\GameSense\TactilePatternRange.cs" />
+    <Compile Include="SteelSeries\GameSense\TactilePatternSimple.cs" />
+    <Compile Include="SteelSeries\GameSense\TactilePatternType.cs" />
+    <Compile Include="SteelSeries\GameSense\TactilePattern_Nonrecursive.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

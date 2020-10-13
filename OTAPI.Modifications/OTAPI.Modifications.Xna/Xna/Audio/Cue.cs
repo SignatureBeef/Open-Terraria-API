@@ -5,6 +5,7 @@
         public static Cue[] Array;
         public bool IsPaused { get; set; }
         public bool IsPlaying { get; set; }
+        public bool IsStopped { get; set; }
 
         public void Play() { }
         public void Pause() { }

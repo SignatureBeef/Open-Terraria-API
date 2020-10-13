@@ -36,6 +36,8 @@ namespace OTAPI.Patcher
 				{
 					@"-pre-merge-in=../../../wrap/TerrariaServer/TerrariaServer.exe",
 					@"-pre-merge-in=../../../wrap/TerrariaServer/ReLogic.dll",
+					@"-pre-merge-in=../../../wrap/TerrariaServer/SteelSeriesEngineWrapper.dll",
+					//@"-pre-merge-in=../../../OTAPI.Modifications/SteelSeriesEngineWrapper/bin/Debug/SteelSeriesEngineWrapper.dll",
 					@"-pre-merge-out=../../../TerrariaServer.dll",
 					@"-in=../../../TerrariaServer.dll",
 #if DEBUG
