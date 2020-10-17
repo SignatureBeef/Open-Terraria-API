@@ -24,6 +24,13 @@ namespace OTAPI.Tests.Common
                 runner.PreStart += AttachHooks;
                 runner.Main(args);
             }
+            catch(System.Reflection.ReflectionTypeLoadException le)
+            {
+                foreach(var err in le.LoaderExceptions)
+                {
+                    Console.WriteLine(err);
+                }
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
