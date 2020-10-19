@@ -79,7 +79,7 @@ namespace ModFramework.Targets
                 } while (attempts-- > 0);
             }
 
-            return "https://terraria.org/system/dedicated_servers/archives/000/000/039/original/terraria-server-1405.zip?1591301368";
+            return "https://terraria.org/system/dedicated_servers/archives/000/000/041/original/terraria-server-1411.zip?1602713512";
         }
     }
 }

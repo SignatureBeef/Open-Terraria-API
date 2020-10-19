@@ -18,19 +18,6 @@
             "stopAtEntry": false
         },
         {
-            "name": "Setup (TML)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build-setup",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/OTAPI.Setup/bin/Debug/net5.0/OTAPI.Setup.dll",
-            "args": ["-patchTarget=m"],
-            "cwd": "${workspaceFolder}/OTAPI.Setup/bin/Debug/net5.0/",
-            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
             "name": "Patcher (Vanilla)",
             "type": "coreclr",
             "request": "launch",
@@ -44,19 +31,6 @@
             "stopAtEntry": false
         },
         {
-            "name": "Patcher (TML)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build-mods",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/net5.0/OTAPI.Patcher.dll",
-            "args": ["-patchTarget=m"],
-            "cwd": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/net5.0/",
-            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
             "name": "Launcher (Vanilla)",
             "type": "coreclr",
             "request": "launch",
@@ -64,18 +38,6 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net5.0/OTAPI.Launcher.dll",
             "args": ["-patchTarget=v", "-latestVanilla=n"],
-            "cwd": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net5.0/", // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Launcher (TML)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build-launcher",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net5.0/OTAPI.Launcher.dll",
-            "args": ["-patchTarget=m"],
             "cwd": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net5.0/", // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
