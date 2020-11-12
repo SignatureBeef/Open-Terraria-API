@@ -6,5 +6,7 @@
 
         public WaveBank(AudioEngine audioEngine, string nonStreamingWaveBankFilename) { }
         public WaveBank(AudioEngine audioEngine, string streamingWaveBankFilename, int offset, short packetsize) { }
+
+        public bool IsPrepared { get; set; }
     }
 }

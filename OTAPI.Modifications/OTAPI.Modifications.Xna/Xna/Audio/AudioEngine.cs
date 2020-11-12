@@ -7,29 +7,31 @@ namespace Microsoft.Xna.Framework.Audio
     public class AudioEngine
     {
         public AudioEngine(string settingsFile) { }
-	}
 
-	[Serializable]
-	public sealed class NoAudioHardwareException : ExternalException
-	{
-		public NoAudioHardwareException()
-		{
-		}
+        public void Update() { }
+    }
 
-		public NoAudioHardwareException(string message)
-			: base(message)
-		{
-		}
+    [Serializable]
+    public sealed class NoAudioHardwareException : ExternalException
+    {
+        public NoAudioHardwareException()
+        {
+        }
 
-		public NoAudioHardwareException(string message, Exception inner)
-			: base(message, inner)
-		{
-		}
+        public NoAudioHardwareException(string message)
+            : base(message)
+        {
+        }
 
-		private NoAudioHardwareException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-		}
-	}
+        public NoAudioHardwareException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+        private NoAudioHardwareException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+    }
 
 }
