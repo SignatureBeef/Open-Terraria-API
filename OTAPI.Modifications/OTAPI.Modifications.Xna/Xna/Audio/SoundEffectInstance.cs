@@ -10,8 +10,9 @@ namespace Microsoft.Xna.Framework.Audio
         public float Pan { get; set; }
         public float Pitch { get; set; }
         public SoundState State { get; set; }
+        public virtual bool IsLooped { get; set; }
 
-        public void Play() { }
+        public virtual void Play() { }
 
         public void Stop()
         {
@@ -21,8 +22,13 @@ namespace Microsoft.Xna.Framework.Audio
         public void Stop(bool immediate)
         {
         }
-		public void Pause() { }
-		public void Resume() { }
-		public void Dispose() { }
+        public void Pause() { }
+        public void Resume() { }
+        public void Dispose() { }
+
+        protected virtual void Dispose(bool disposing)
+        {
+
+        }
     }
 }

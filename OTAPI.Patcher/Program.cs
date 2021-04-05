@@ -15,9 +15,9 @@ namespace OTAPI.Patcher
 		public static void Main(String[] args)
 		{
 			string sourceAsm = null;
-			string modificationGlob = null;
 			string outputPath = null;
 			List<string> mergeInputs = new List<string>();
+			List<string> modificationGlobs = new List<string>();
 			string mergeOutput = null;
 
 			Console.WriteLine("Open Terraria API v2.0");
@@ -35,12 +35,13 @@ namespace OTAPI.Patcher
 				args = new[]
 				{
 					@"-pre-merge-in=../../../wrap/TerrariaServer/TerrariaServer.exe",
-					@"-pre-merge-in=../../../wrap/TerrariaServer/ReLogic.dll",
 #if DEBUG
 					@"-pre-merge-in=../../../OTAPI.Modifications/SteelSeriesEngineWrapper/bin/Debug/SteelSeriesEngineWrapper.dll",
 #else
 					@"-pre-merge-in=../../../OTAPI.Modifications/SteelSeriesEngineWrapper/bin/Release/SteelSeriesEngineWrapper.dll",
 #endif
+					@"-pre-merge-in=../../../wrap/TerrariaServer/ReLogic.dll",
+					@"-pre-merge-in=../../../wrap/TerrariaServer/CsvHelper.dll",
 					@"-pre-merge-out=../../../TerrariaServer.dll",
 					@"-in=../../../TerrariaServer.dll",
 #if DEBUG
@@ -57,7 +58,7 @@ namespace OTAPI.Patcher
 			options.Add("in=|source=", "specifies the source assembly to patch",
 				op => sourceAsm = op);
 			options.Add("mod=|modifications=", "Glob specifying the path to modification assemblies that will run against the target assembly.",
-				op => modificationGlob = op);
+				op => modificationGlobs.Add(op));
 			options.Add("o=|output=", "Specifies the output assembly that has had all modifications applied.",
 				op => outputPath = op);
 			options.Add("pre-merge-in=", "Specifies an assembly to be combined before any modifications are applied",
@@ -67,12 +68,16 @@ namespace OTAPI.Patcher
 
 			options.Parse(args);
 
-			if (string.IsNullOrEmpty(sourceAsm) == true
-				|| string.IsNullOrEmpty(modificationGlob) == true)
+			modificationGlobs.RemoveAll(x => string.IsNullOrEmpty(x));
+
+			if (String.IsNullOrEmpty(sourceAsm) == true
+				|| !modificationGlobs.Any())
 			{
 				options.WriteOptionDescriptions(Console.Out);
 				return;
 			}
+
+			patcher = new Engine.Patcher(sourceAsm, modificationGlobs, outputPath);
 
 			if (mergeInputs.Count > 0)
 			{
@@ -100,6 +105,44 @@ namespace OTAPI.Patcher
 						File.Delete(dest);
 
 					File.Move(input, dest);
+
+					patcher.AddReference(dest);
+				}
+
+				// shims
+
+#if DEBUG
+				var path_shims = "../../../OTAPI.Modifications/OTAPI.Modifications.Xna/bin/Debug/OTAPI.Modifications.Xna.dll";
+#else
+			var path_shims = "../../../OTAPI.Modifications/OTAPI.Modifications.Xna/bin/Release/OTAPI.Modifications.Xna.dll";
+#endif
+				mergeInputs.Add(path_shims);
+				var asm_shims = patcher.AddReference(path_shims);
+				for (var i = 0; i < mergeInputs.Count(); i++)
+				{
+					var input = mergeInputs.ElementAt(i);
+					var asm = patcher.AddReference(input);
+
+					var xnaFramework = asm.MainModule.AssemblyReferences
+						.Where(x => x.Name.StartsWith("Microsoft.Xna.Framework"))
+						.ToArray();
+
+					for (var x = 0; x < xnaFramework.Length; x++)
+					{
+						xnaFramework[x].Name = "OTAPI.Modifications.Xna"; //TODO: Fix me, ILRepack is adding .dll to the asm name      Context.OTAPI.Assembly.Name.Name;
+						xnaFramework[x].PublicKey = asm_shims.Name.PublicKey;
+						xnaFramework[x].PublicKeyToken = asm_shims.Name.PublicKeyToken;
+						xnaFramework[x].Version = asm_shims.Name.Version;
+					}
+
+					var outputFile = $"{input}.shim";
+
+					if (File.Exists(outputFile))
+						File.Delete(outputFile);
+
+					asm.Write(outputFile);
+
+					mergeInputs[i] = outputFile;
 				}
 
 				var roptions = new ILRepacking.RepackOptions()
@@ -121,15 +164,16 @@ namespace OTAPI.Patcher
 					CopyAttributes = true,
 					XmlDocumentation = true,
 					UnionMerge = true,
-					
+
 					DebugInfo = true
 				};
 
+
+				Console.WriteLine($"Saving premerge run as {mergeOutput}...");
 				var repacker = new ILRepacking.ILRepack(roptions);
 				repacker.Repack();
 			}
 
-			patcher = new Engine.Patcher(sourceAsm, new[] { modificationGlob }, outputPath);
 			patcher.Run();
 		}
 	}

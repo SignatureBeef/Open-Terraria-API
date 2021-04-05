@@ -3,6 +3,7 @@ using OTAPI.Patcher.Engine.Modification;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 {
+	[Ordered(3)]
 	public class CheckBytes : ModificationBase
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]

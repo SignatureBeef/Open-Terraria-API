@@ -68,6 +68,8 @@ namespace OTAPI.Patcher.Engine
 		/// </summary>
 		protected IEnumerable<string> modificationAssemblyGlob;
 
+		protected List<(AssemblyDefinition Assembly, string Path)> modificationAssemblies = new List<(AssemblyDefinition Assembly, string Path)>();
+
 		/// <summary>
 		/// Creates a new instance of the patcher with the specified source assembly path and
 		/// a glob containing all the modification assemblies.
@@ -82,6 +84,7 @@ namespace OTAPI.Patcher.Engine
 			this.OutputAssemblyPath = outputAssemblyPath;
 
 			resolver = new NugetAssemblyResolver();
+            resolver.OnResolving += Resolver_OnResolving;
 			resolver.OnResolved += Resolver_OnResolved;
 			readerParams = new ReaderParameters(ReadingMode.Immediate)
 			{
@@ -93,7 +96,20 @@ namespace OTAPI.Patcher.Engine
 			resolver.ResolveFailure += Resolver_ResolveFailure;
 		}
 
-		private void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        private void Resolver_OnResolving(object sender, NugetAssemblyResolvingEventArgs e)
+		{
+			// try globs instead
+			{
+				var assemblyDefinition = GetModificationAssemblies().FirstOrDefault(x => x.Assembly.Name.Name == e.Name);
+				if (assemblyDefinition.Assembly != null)
+				{
+					e.FileLocation = assemblyDefinition.Path;
+					return;
+				}
+			}
+		}
+
+        private void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
 		{
 			//Console.WriteLine($"Loaded .net assembly: {args.LoadedAssembly.Location}");
 		}
@@ -107,14 +123,22 @@ namespace OTAPI.Patcher.Engine
 
 		private AssemblyDefinition Resolver_ResolveFailure(object sender, AssemblyNameReference reference)
 		{
-			var assemblyDefinition = this.Modifications.FirstOrDefault(x => x.ModificationDefinition.Name.FullName == reference.FullName);
+			var modification = this.Modifications.FirstOrDefault(x => x.ModificationDefinition.Name.FullName == reference.FullName);
 
-			if (assemblyDefinition != null)
+			if (modification != null)
 			{
 				//System.Diagnostics.Debug.WriteLine($"Resolved modification assembly: {reference.FullName}");
-				return assemblyDefinition.ModificationDefinition;
+				return modification.ModificationDefinition;
 			}
 
+			// try globs instead
+			{
+				var assemblyDefinition = GetModificationAssemblies().FirstOrDefault(x => x.Assembly.Name.FullName == reference.FullName);
+				if (assemblyDefinition.Assembly != null)
+				{
+					return assemblyDefinition.Assembly;
+				}
+			}
 			return null;
 		}
 
@@ -153,25 +177,42 @@ namespace OTAPI.Patcher.Engine
 			return null;
 		}
 
-		protected void LoadSourceAssembly()
+		public AssemblyDefinition ReadAssembly(string filePath)
 		{
-			if (string.IsNullOrEmpty(SourceAssemblyPath))
+			if (string.IsNullOrEmpty(filePath))
 			{
-				throw new ArgumentNullException(nameof(SourceAssemblyPath));
+				throw new ArgumentNullException(nameof(filePath));
 			}
 
-			SourceAssembly = AssemblyDefinition.ReadAssembly(SourceAssemblyPath, readerParams);
+			return AssemblyDefinition.ReadAssembly(filePath, readerParams);
+		}
+
+		protected void LoadSourceAssembly()
+		{
+			SourceAssembly = ReadAssembly(SourceAssemblyPath);
 		}
 
 		protected IEnumerable<string> GlobModificationAssemblies()
 		{
+			var assemblies = new Dictionary<string, (DateTime LastWriteTimeUtc, string FullPath)>();
+
 			foreach (var pattern in modificationAssemblyGlob)
 			{
 				foreach (var info in Glob.Glob.Expand(pattern))
 				{
-					yield return info.FullName;
+					if(assemblies.ContainsKey(info.Name))
+                    {
+						if(assemblies[info.Name].LastWriteTimeUtc < info.LastWriteTimeUtc)
+                        {
+							assemblies[info.Name] = new(info.LastWriteTimeUtc, info.FullName);
+						}
+                    }
+					else assemblies.Add(info.Name, new(info.LastWriteTimeUtc, info.FullName));
 				}
 			}
+
+			var paths = assemblies.Select(x => x.Value.FullPath).ToArray();
+			return paths;
 		}
 
 		protected ModificationBase LoadModification(Type type)
@@ -183,8 +224,40 @@ namespace OTAPI.Patcher.Engine
 			return objectRef as ModificationBase;
 		}
 
+		protected IEnumerable<(AssemblyDefinition Assembly, string Path)> GetModificationAssemblies()
+        {
+			//if (modificationAssemblies == null || modificationAssemblies.Count() == 0)
+			//{
+			//	var assemblies = new List<(AssemblyDefinition Assembly, string Path)>();
+			//	modificationAssemblies = assemblies;
+
+			//	foreach (string asmPath in GlobModificationAssemblies())
+			//	{
+			//		assemblies.Add(new(ReadAssembly(asmPath), asmPath));
+			//	}
+			//}
+
+			return modificationAssemblies;
+		}
+
+		public AssemblyDefinition AddReference(string path)
+		{
+			var asm = ReadAssembly(path);
+
+			if (!modificationAssemblies.Any(x => x.Assembly.FullName == asm.FullName))
+			{
+				modificationAssemblies.Add(new(asm, path));
+				return asm;
+			}
+
+			return asm;
+		}
+
 		protected void LoadModificationAssemblies()
 		{
+			//var assemblies = new List<(AssemblyDefinition Assembly, string Path)>();
+			//modificationAssemblies = assemblies;
+
 			foreach (string asmPath in GlobModificationAssemblies())
 			{
 				Assembly asm = null;
@@ -192,7 +265,12 @@ namespace OTAPI.Patcher.Engine
 				{
 					asm = Assembly.LoadFile(asmPath);
 
-					foreach (Type t in asm.GetTypes())
+					AddReference(asmPath);
+
+					//assemblies.Add(new(ReadAssembly(asmPath), asmPath));
+
+					var types = asm.GetTypes();
+					foreach (Type t in types)
 					{
 						if (t.BaseType != typeof(ModificationBase))
 						{

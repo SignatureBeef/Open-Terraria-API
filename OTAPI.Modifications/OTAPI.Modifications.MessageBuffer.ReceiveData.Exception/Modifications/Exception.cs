@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 {
+	[Ordered(2)]
 	public class ReceiveDataException : ModificationBase
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
