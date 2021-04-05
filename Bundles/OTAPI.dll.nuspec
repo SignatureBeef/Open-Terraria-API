@@ -14,7 +14,7 @@
     <releaseNotes>
       Preliminary Terraria 1.4.2.1
     </releaseNotes>
-    <copyright>Copyright 2016-2020</copyright>
+    <copyright>Copyright 2016-2021</copyright>
     <tags>Terraria,OTAPI</tags>
     <dependencies>
 	  <group targetFramework=".NETFramework4.5.1">
