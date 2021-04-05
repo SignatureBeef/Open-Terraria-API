@@ -16,7 +16,7 @@ namespace OTAPI.Modifications.Main.Command.Modifications
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.1.2, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.2.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking console commands...";
 
