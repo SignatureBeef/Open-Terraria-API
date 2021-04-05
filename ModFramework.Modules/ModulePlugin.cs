@@ -15,6 +15,7 @@ namespace ModFramework.Modules
     [Modification(ModType.Read, "Loading CSharpScript interface")]
     public class ModulePlugin
     {
+        const string ConsolePrefix = "CSharp";
         const string ModulePrefix = "CSharpScript_";
         public MonoMod.MonoModder Modder { get; set; }
 
@@ -22,7 +23,7 @@ namespace ModFramework.Modules
         {
             Modder = modder;
 
-            Console.WriteLine("[CSS] Starting runtime");
+            Console.WriteLine($"[{ConsolePrefix}] Starting runtime");
 
             modder.OnReadMod += (m, module) =>
             {
@@ -50,7 +51,7 @@ namespace ModFramework.Modules
 
                 foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories))
                 {
-                    Console.WriteLine($"[CSS] Loading module: {file}");
+                    Console.WriteLine($"[{ConsolePrefix}] Loading module: {file}");
                     try
                     {
                         var contents = string.Join(Environment.NewLine, new []
@@ -139,7 +140,7 @@ namespace ModFramework.Modules
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"[CSS] Load error: {ex}");
+                        Console.WriteLine($"[{ConsolePrefix}] Load error: {ex}");
                     }
                 }
             }

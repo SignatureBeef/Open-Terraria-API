@@ -7,14 +7,15 @@
 
   <ItemGroup>
     <PackageReference Include="Mono.Cecil" Version="0.11.3" />
-    <PackageReference Include="MonoMod" Version="20.8.3.5" />
-    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="20.8.3.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.Security.Permissions" Version="5.0.0-preview.6.20305.6" />
+    <PackageReference Include="MonoMod" Version="21.4.2.3" />
+    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
+    <ProjectReference Include="..\ModFramework.Modules\ModFramework.Modules.csproj" />
   </ItemGroup>
   
   <ItemGroup>

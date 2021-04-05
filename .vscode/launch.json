@@ -39,7 +39,7 @@
             "program": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net5.0/OTAPI.Launcher.dll",
             "args": ["-patchTarget=v", "-latestVanilla=n"],
             "cwd": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net5.0/", // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "externalTerminal",
             "stopAtEntry": false
         },
         {

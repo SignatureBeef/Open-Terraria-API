@@ -60,7 +60,7 @@ namespace ModFramework
                         if (modificationAttr != null)
                         {
                             modificationAttr.MethodBase = method;
-                            modificationAttr.UniqueName = method.Name.Replace("<$Main>g__", "").Replace("|0_0", "");
+                            modificationAttr.UniqueName = method.Name.Replace("<<Main>$>g__", "").Replace("<$Main>g__", "").Replace("|0_0", "");
                             yield return modificationAttr;
                         }
                     }
@@ -73,29 +73,32 @@ namespace ModFramework
             var queue = mods.ToDictionary(i => i, k => false);
             bool complete = queue.Count == 0;
 
-            bool areDepsCompleted(ModificationAttribute mod)
+            var emptyDeps = new Dictionary<string, bool>();
+            Dictionary<string, bool> GetDependencyStatus(ModificationAttribute mod)
             {
                 if (mod.Dependencies != null)
                 {
-                    return mod.Dependencies.All(d => mods.Any(m => (m.MethodBase.DeclaringType.Name == d || (m.UniqueName != null && m.UniqueName == d)) && queue[m]));
+                    return mod.Dependencies.ToDictionary(d => d, d => mods.Any(m => (m.MethodBase.DeclaringType.Name == d || (m.UniqueName != null && m.UniqueName == d)) && queue[m]));
                 }
-                return true;
+                return emptyDeps;
             }
 
             do
             {
-                foreach (var pair in queue
+                var tasks = queue
                     .Where(x => !x.Value)
-                    .ToDictionary(k => k.Key, v => v.Value)
-                )
+                    .ToDictionary(k => k.Key, v => v.Value);
+                foreach (var pair in tasks)
                 {
-                    var is_ready = areDepsCompleted(pair.Key);
+                    var deps = GetDependencyStatus(pair.Key);
+                    var not_ready = deps.Where(x => !x.Value);
+                    var is_ready = !not_ready.Any();
                     if (is_ready)
                     {
                         action(pair.Key);
                         queue[pair.Key] = true;
                     }
-                    else Console.WriteLine($"[ModFw] Awaiting dependencies for {pair.Key.MethodBase.DeclaringType.FullName}");
+                    else Console.WriteLine($"[ModFw] Awaiting dependencies for {pair.Key.MethodBase.DeclaringType.FullName} ({pair.Key.Description}) needs: {String.Join(",", not_ready.Select(x => x.Key))}");
                 }
 
                 complete = queue.All(x => x.Value);
