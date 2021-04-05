@@ -10,7 +10,6 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <StartupObject>OTAPI.Patcher.Program</StartupObject>
     <TargetFrameworkProfile />
-    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

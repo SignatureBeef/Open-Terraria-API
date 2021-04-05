@@ -16,6 +16,12 @@ namespace OTAPI.Patcher.Engine
 	/// </summary>
 	public class Patcher
 	{
+		protected class ModAssembly
+        {
+			public AssemblyDefinition Assembly { get; set; }
+			public string Path { get; set; }
+		}
+
 		/// <summary>
 		/// Gets or sets the path on disk for the source assembly that will have all
 		/// the patches run against it.
@@ -68,7 +74,7 @@ namespace OTAPI.Patcher.Engine
 		/// </summary>
 		protected IEnumerable<string> modificationAssemblyGlob;
 
-		protected List<(AssemblyDefinition Assembly, string Path)> modificationAssemblies = new List<(AssemblyDefinition Assembly, string Path)>();
+		protected List<ModAssembly> modificationAssemblies = new List<ModAssembly>();
 
 		/// <summary>
 		/// Creates a new instance of the patcher with the specified source assembly path and
@@ -192,9 +198,15 @@ namespace OTAPI.Patcher.Engine
 			SourceAssembly = ReadAssembly(SourceAssemblyPath);
 		}
 
+		class LatestMod
+		{
+			public DateTime LastWriteTimeUtc { get; set; }
+			public string FullPath { get; set; }
+		}
+		
 		protected IEnumerable<string> GlobModificationAssemblies()
 		{
-			var assemblies = new Dictionary<string, (DateTime LastWriteTimeUtc, string FullPath)>();
+			var assemblies = new Dictionary<string, LatestMod>();
 
 			foreach (var pattern in modificationAssemblyGlob)
 			{
@@ -204,10 +216,18 @@ namespace OTAPI.Patcher.Engine
                     {
 						if(assemblies[info.Name].LastWriteTimeUtc < info.LastWriteTimeUtc)
                         {
-							assemblies[info.Name] = new(info.LastWriteTimeUtc, info.FullName);
+							assemblies[info.Name] = new LatestMod()
+							{
+								LastWriteTimeUtc = info.LastWriteTimeUtc,
+								FullPath = info.FullName
+							};
 						}
                     }
-					else assemblies.Add(info.Name, new(info.LastWriteTimeUtc, info.FullName));
+					else assemblies.Add(info.Name, new LatestMod()
+					{
+						LastWriteTimeUtc = info.LastWriteTimeUtc,
+						FullPath = info.FullName
+					});
 				}
 			}
 
@@ -224,7 +244,7 @@ namespace OTAPI.Patcher.Engine
 			return objectRef as ModificationBase;
 		}
 
-		protected IEnumerable<(AssemblyDefinition Assembly, string Path)> GetModificationAssemblies()
+		protected IEnumerable<ModAssembly> GetModificationAssemblies()
         {
 			//if (modificationAssemblies == null || modificationAssemblies.Count() == 0)
 			//{
@@ -246,7 +266,11 @@ namespace OTAPI.Patcher.Engine
 
 			if (!modificationAssemblies.Any(x => x.Assembly.FullName == asm.FullName))
 			{
-				modificationAssemblies.Add(new(asm, path));
+				modificationAssemblies.Add(new ModAssembly()
+				{
+					Assembly = asm,
+					Path = path
+				});
 				return asm;
 			}
 
