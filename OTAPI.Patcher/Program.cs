@@ -77,7 +77,32 @@ namespace OTAPI.Patcher
                 mOut.Write("OTAPI.Runtime.dll");
             }
 
+
+            mm.Log("[OTAPI] Building NuGet package...");
+            BuildNuGetPackage();
+
             mm.Log("[OTAPI] Done.");
+        }
+
+        static void BuildNuGetPackage()
+        {
+            const string packageFile = "OTAPI.nupkg";
+
+            using (var nuspec = File.OpenRead("../../../../OTAPI.nuspec"))
+            {
+                var manifest = NuGet.Packaging.Manifest.ReadFrom(nuspec, validateSchema: true);
+                var packageBuilder = new NuGet.Packaging.PackageBuilder();
+                packageBuilder.Populate(manifest.Metadata);
+
+                packageBuilder.AddFiles("../../../../", "COPYING.txt", "COPYING.txt");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "package\\lib\\net451");
+
+                if (File.Exists(packageFile))
+                    File.Delete(packageFile);
+
+                using (var srm = File.OpenWrite(packageFile))
+                    packageBuilder.Save(srm);
+            }
         }
     }
 }
