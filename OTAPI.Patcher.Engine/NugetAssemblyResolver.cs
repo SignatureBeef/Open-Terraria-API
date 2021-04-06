@@ -10,6 +10,13 @@ namespace OTAPI.Patcher.Engine
 	{
 		public string FilePath { get; set; }
 	}
+	public class NugetAssemblyResolvingEventArgs : EventArgs
+	{
+		public string Name { get; set; }
+		public Version Version { get; set; }
+
+		public string FileLocation { get; set; }
+	}
 
 	public class NugetAssemblyResolver : DefaultAssemblyResolver
 	{
@@ -21,6 +28,7 @@ namespace OTAPI.Patcher.Engine
 
 		public string PackagesDirectory => packageInstallDir;
 
+		public event EventHandler<NugetAssemblyResolvingEventArgs> OnResolving;
 		public event EventHandler<NugetAssemblyResolvedEventArgs> OnResolved;
 
 		public NugetAssemblyResolver()
@@ -80,6 +88,28 @@ namespace OTAPI.Patcher.Engine
 		/// <returns>File path if the nuget package is found</returns>
 		protected string ResolvePackage(string name, Version version)
 		{
+			var args = new NugetAssemblyResolvingEventArgs()
+			{
+				Name = name,
+				Version = version
+			};
+			OnResolving?.Invoke(this, args);
+
+			if (!String.IsNullOrWhiteSpace(args.FileLocation))
+				return args.FileLocation;
+
+			// search locally
+			foreach (var file in Directory.EnumerateFiles(Environment.CurrentDirectory, name + ".*"))
+			{
+				var extension = Path.GetExtension(file).ToLower();
+				if (new[] { ".exe", ".dll" }.Contains(extension))
+				{
+					Console.WriteLine($" * Found {name} locally");
+					return file;
+				}
+			}
+
+			// remote search
 			SemanticVersion vers = SemanticVersion.ParseOptionalVersion($"{version.Major}.{version.Minor}.*");
 			IPackage package = ResolvePackage(name, vers);
 
@@ -110,18 +140,9 @@ namespace OTAPI.Patcher.Engine
 					}
 				}
 			}
-			else
-			{
-				foreach (var file in Directory.EnumerateFiles(Environment.CurrentDirectory, name + ".*"))
-				{
-					var extension = Path.GetExtension(file).ToLower();
-					if (new[] { ".exe", ".dll" }.Contains(extension))
-					{
-						Console.WriteLine($" * Found {name} locally");
-						return file;
-					}
-				}
-			}
+			//else
+			//{
+			//}
 
 			return null;
 		}

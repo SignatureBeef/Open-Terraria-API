@@ -1,0 +1,902 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+    <assembly>
+        <name>TerrariaServer</name>
+    </assembly>
+    <members>
+        <member name="T:OTAPI.Patcher.Engine.Modifications.Patches.RemoveXna">
+            <summary>
+            Replaces all Xna references to use OTAPI.Xna.dll
+            </summary>
+        </member>
+        <member name="T:Microsoft.Xna.Framework.Color">
+            <summary>Represents a four-component color using red, green, blue, and alpha data.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.R">
+            <summary>Gets or sets the red component value of this Color.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.G">
+            <summary>Gets or sets the green component value of this Color.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.B">
+            <summary>Gets or sets the blue component value of this Color.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.A">
+            <summary>Gets or sets the alpha component value.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.PackedValue">
+            <summary>Gets the current color as a packed value.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Transparent">
+            <summary>Gets a system-defined color with the value R:0 G:0 B:0 A:0.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.AliceBlue">
+            <summary>Gets a system-defined color with the value R:240 G:248 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.AntiqueWhite">
+            <summary>Gets a system-defined color with the value R:250 G:235 B:215 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Aqua">
+            <summary>Gets a system-defined color with the value R:0 G:255 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Aquamarine">
+            <summary>Gets a system-defined color with the value R:127 G:255 B:212 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Azure">
+            <summary>Gets a system-defined color with the value R:240 G:255 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Beige">
+            <summary>Gets a system-defined color with the value R:245 G:245 B:220 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Bisque">
+            <summary>Gets a system-defined color with the value R:255 G:228 B:196 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Black">
+            <summary>Gets a system-defined color with the value R:0 G:0 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.BlanchedAlmond">
+            <summary>Gets a system-defined color with the value R:255 G:235 B:205 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Blue">
+            <summary>Gets a system-defined color with the value R:0 G:0 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.BlueViolet">
+            <summary>Gets a system-defined color with the value R:138 G:43 B:226 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Brown">
+            <summary>Gets a system-defined color with the value R:165 G:42 B:42 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.BurlyWood">
+            <summary>Gets a system-defined color with the value R:222 G:184 B:135 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.CadetBlue">
+            <summary>Gets a system-defined color with the value R:95 G:158 B:160 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Chartreuse">
+            <summary>Gets a system-defined color with the value R:127 G:255 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Chocolate">
+            <summary>Gets a system-defined color with the value R:210 G:105 B:30 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Coral">
+            <summary>Gets a system-defined color with the value R:255 G:127 B:80 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.CornflowerBlue">
+            <summary>Gets a system-defined color with the value R:100 G:149 B:237 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Cornsilk">
+            <summary>Gets a system-defined color with the value R:255 G:248 B:220 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Crimson">
+            <summary>Gets a system-defined color with the value R:220 G:20 B:60 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Cyan">
+            <summary>Gets a system-defined color with the value R:0 G:255 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkBlue">
+            <summary>Gets a system-defined color with the value R:0 G:0 B:139 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkCyan">
+            <summary>Gets a system-defined color with the value R:0 G:139 B:139 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkGoldenrod">
+            <summary>Gets a system-defined color with the value R:184 G:134 B:11 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkGray">
+            <summary>Gets a system-defined color with the value R:169 G:169 B:169 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkGreen">
+            <summary>Gets a system-defined color with the value R:0 G:100 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkKhaki">
+            <summary>Gets a system-defined color with the value R:189 G:183 B:107 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkMagenta">
+            <summary>Gets a system-defined color with the value R:139 G:0 B:139 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkOliveGreen">
+            <summary>Gets a system-defined color with the value R:85 G:107 B:47 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkOrange">
+            <summary>Gets a system-defined color with the value R:255 G:140 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkOrchid">
+            <summary>Gets a system-defined color with the value R:153 G:50 B:204 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkRed">
+            <summary>Gets a system-defined color with the value R:139 G:0 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkSalmon">
+            <summary>Gets a system-defined color with the value R:233 G:150 B:122 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkSeaGreen">
+            <summary>Gets a system-defined color with the value R:143 G:188 B:139 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkSlateBlue">
+            <summary>Gets a system-defined color with the value R:72 G:61 B:139 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkSlateGray">
+            <summary>Gets a system-defined color with the value R:47 G:79 B:79 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkTurquoise">
+            <summary>Gets a system-defined color with the value R:0 G:206 B:209 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DarkViolet">
+            <summary>Gets a system-defined color with the value R:148 G:0 B:211 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DeepPink">
+            <summary>Gets a system-defined color with the value R:255 G:20 B:147 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DeepSkyBlue">
+            <summary>Gets a system-defined color with the value R:0 G:191 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DimGray">
+            <summary>Gets a system-defined color with the value R:105 G:105 B:105 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.DodgerBlue">
+            <summary>Gets a system-defined color with the value R:30 G:144 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Firebrick">
+            <summary>Gets a system-defined color with the value R:178 G:34 B:34 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.FloralWhite">
+            <summary>Gets a system-defined color with the value R:255 G:250 B:240 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.ForestGreen">
+            <summary>Gets a system-defined color with the value R:34 G:139 B:34 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Fuchsia">
+            <summary>Gets a system-defined color with the value R:255 G:0 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Gainsboro">
+            <summary>Gets a system-defined color with the value R:220 G:220 B:220 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.GhostWhite">
+            <summary>Gets a system-defined color with the value R:248 G:248 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Gold">
+            <summary>Gets a system-defined color with the value R:255 G:215 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Goldenrod">
+            <summary>Gets a system-defined color with the value R:218 G:165 B:32 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Gray">
+            <summary>Gets a system-defined color with the value R:128 G:128 B:128 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Green">
+            <summary>Gets a system-defined color with the value R:0 G:128 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.GreenYellow">
+            <summary>Gets a system-defined color with the value R:173 G:255 B:47 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Honeydew">
+            <summary>Gets a system-defined color with the value R:240 G:255 B:240 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.HotPink">
+            <summary>Gets a system-defined color with the value R:255 G:105 B:180 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.IndianRed">
+            <summary>Gets a system-defined color with the value R:205 G:92 B:92 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Indigo">
+            <summary>Gets a system-defined color with the value R:75 G:0 B:130 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Ivory">
+            <summary>Gets a system-defined color with the value R:255 G:255 B:240 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Khaki">
+            <summary>Gets a system-defined color with the value R:240 G:230 B:140 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Lavender">
+            <summary>Gets a system-defined color with the value R:230 G:230 B:250 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LavenderBlush">
+            <summary>Gets a system-defined color with the value R:255 G:240 B:245 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LawnGreen">
+            <summary>Gets a system-defined color with the value R:124 G:252 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LemonChiffon">
+            <summary>Gets a system-defined color with the value R:255 G:250 B:205 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightBlue">
+            <summary>Gets a system-defined color with the value R:173 G:216 B:230 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightCoral">
+            <summary>Gets a system-defined color with the value R:240 G:128 B:128 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightCyan">
+            <summary>Gets a system-defined color with the value R:224 G:255 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightGoldenrodYellow">
+            <summary>Gets a system-defined color with the value R:250 G:250 B:210 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightGreen">
+            <summary>Gets a system-defined color with the value R:144 G:238 B:144 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightGray">
+            <summary>Gets a system-defined color with the value R:211 G:211 B:211 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightPink">
+            <summary>Gets a system-defined color with the value R:255 G:182 B:193 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightSalmon">
+            <summary>Gets a system-defined color with the value R:255 G:160 B:122 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightSeaGreen">
+            <summary>Gets a system-defined color with the value R:32 G:178 B:170 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightSkyBlue">
+            <summary>Gets a system-defined color with the value R:135 G:206 B:250 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightSlateGray">
+            <summary>Gets a system-defined color with the value R:119 G:136 B:153 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightSteelBlue">
+            <summary>Gets a system-defined color with the value R:176 G:196 B:222 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LightYellow">
+            <summary>Gets a system-defined color with the value R:255 G:255 B:224 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Lime">
+            <summary>Gets a system-defined color with the value R:0 G:255 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.LimeGreen">
+            <summary>Gets a system-defined color with the value R:50 G:205 B:50 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Linen">
+            <summary>Gets a system-defined color with the value R:250 G:240 B:230 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Magenta">
+            <summary>Gets a system-defined color with the value R:255 G:0 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Maroon">
+            <summary>Gets a system-defined color with the value R:128 G:0 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MediumAquamarine">
+            <summary>Gets a system-defined color with the value R:102 G:205 B:170 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MediumBlue">
+            <summary>Gets a system-defined color with the value R:0 G:0 B:205 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MediumOrchid">
+            <summary>Gets a system-defined color with the value R:186 G:85 B:211 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MediumPurple">
+            <summary>Gets a system-defined color with the value R:147 G:112 B:219 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MediumSeaGreen">
+            <summary>Gets a system-defined color with the value R:60 G:179 B:113 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MediumSlateBlue">
+            <summary>Gets a system-defined color with the value R:123 G:104 B:238 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MediumSpringGreen">
+            <summary>Gets a system-defined color with the value R:0 G:250 B:154 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MediumTurquoise">
+            <summary>Gets a system-defined color with the value R:72 G:209 B:204 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MediumVioletRed">
+            <summary>Gets a system-defined color with the value R:199 G:21 B:133 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MidnightBlue">
+            <summary>Gets a system-defined color with the value R:25 G:25 B:112 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MintCream">
+            <summary>Gets a system-defined color with the value R:245 G:255 B:250 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.MistyRose">
+            <summary>Gets a system-defined color with the value R:255 G:228 B:225 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Moccasin">
+            <summary>Gets a system-defined color with the value R:255 G:228 B:181 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.NavajoWhite">
+            <summary>Gets a system-defined color with the value R:255 G:222 B:173 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Navy">
+            <summary>Gets a system-defined color R:0 G:0 B:128 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.OldLace">
+            <summary>Gets a system-defined color with the value R:253 G:245 B:230 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Olive">
+            <summary>Gets a system-defined color with the value R:128 G:128 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.OliveDrab">
+            <summary>Gets a system-defined color with the value R:107 G:142 B:35 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Orange">
+            <summary>Gets a system-defined color with the value R:255 G:165 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.OrangeRed">
+            <summary>Gets a system-defined color with the value R:255 G:69 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Orchid">
+            <summary>Gets a system-defined color with the value R:218 G:112 B:214 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.PaleGoldenrod">
+            <summary>Gets a system-defined color with the value R:238 G:232 B:170 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.PaleGreen">
+            <summary>Gets a system-defined color with the value R:152 G:251 B:152 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.PaleTurquoise">
+            <summary>Gets a system-defined color with the value R:175 G:238 B:238 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.PaleVioletRed">
+            <summary>Gets a system-defined color with the value R:219 G:112 B:147 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.PapayaWhip">
+            <summary>Gets a system-defined color with the value R:255 G:239 B:213 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.PeachPuff">
+            <summary>Gets a system-defined color with the value R:255 G:218 B:185 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Peru">
+            <summary>Gets a system-defined color with the value R:205 G:133 B:63 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Pink">
+            <summary>Gets a system-defined color with the value R:255 G:192 B:203 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Plum">
+            <summary>Gets a system-defined color with the value R:221 G:160 B:221 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.PowderBlue">
+            <summary>Gets a system-defined color with the value R:176 G:224 B:230 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Purple">
+            <summary>Gets a system-defined color with the value R:128 G:0 B:128 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Red">
+            <summary>Gets a system-defined color with the value R:255 G:0 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.RosyBrown">
+            <summary>Gets a system-defined color with the value R:188 G:143 B:143 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.RoyalBlue">
+            <summary>Gets a system-defined color with the value R:65 G:105 B:225 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.SaddleBrown">
+            <summary>Gets a system-defined color with the value R:139 G:69 B:19 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Salmon">
+            <summary>Gets a system-defined color with the value R:250 G:128 B:114 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.SandyBrown">
+            <summary>Gets a system-defined color with the value R:244 G:164 B:96 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.SeaGreen">
+            <summary>Gets a system-defined color with the value R:46 G:139 B:87 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.SeaShell">
+            <summary>Gets a system-defined color with the value R:255 G:245 B:238 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Sienna">
+            <summary>Gets a system-defined color with the value R:160 G:82 B:45 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Silver">
+            <summary>Gets a system-defined color with the value R:192 G:192 B:192 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.SkyBlue">
+            <summary>Gets a system-defined color with the value R:135 G:206 B:235 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.SlateBlue">
+            <summary>Gets a system-defined color with the value R:106 G:90 B:205 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.SlateGray">
+            <summary>Gets a system-defined color with the value R:112 G:128 B:144 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Snow">
+            <summary>Gets a system-defined color with the value R:255 G:250 B:250 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.SpringGreen">
+            <summary>Gets a system-defined color with the value R:0 G:255 B:127 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.SteelBlue">
+            <summary>Gets a system-defined color with the value R:70 G:130 B:180 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Tan">
+            <summary>Gets a system-defined color with the value R:210 G:180 B:140 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Teal">
+            <summary>Gets a system-defined color with the value R:0 G:128 B:128 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Thistle">
+            <summary>Gets a system-defined color with the value R:216 G:191 B:216 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Tomato">
+            <summary>Gets a system-defined color with the value R:255 G:99 B:71 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Turquoise">
+            <summary>Gets a system-defined color with the value R:64 G:224 B:208 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Violet">
+            <summary>Gets a system-defined color with the value R:238 G:130 B:238 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Wheat">
+            <summary>Gets a system-defined color with the value R:245 G:222 B:179 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.White">
+            <summary>Gets a system-defined color with the value R:255 G:255 B:255 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.WhiteSmoke">
+            <summary>Gets a system-defined color with the value R:245 G:245 B:245 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.Yellow">
+            <summary>Gets a system-defined color with the value R:255 G:255 B:0 A:255.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Color.YellowGreen">
+            <summary>Gets a system-defined color with the value R:154 G:205 B:50 A:255.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>Creates a new instance of the class.</summary>
+            <param name="r">Red component.</param>
+            <param name="g">Green component.</param>
+            <param name="b">Blue component.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>Creates a new instance of the class.</summary>
+            <param name="r">Red component.</param>
+            <param name="g">Green component.</param>
+            <param name="b">Blue component.</param>
+            <param name="a">Alpha component.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.#ctor(System.Single,System.Single,System.Single)">
+            <summary>Creates a new instance of the class.</summary>
+            <param name="r">Red component.</param>
+            <param name="g">Green component.</param>
+            <param name="b">Blue component.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>Creates a new instance of the class.</summary>
+            <param name="r">Red component.</param>
+            <param name="g">Green component.</param>
+            <param name="b">Blue component.</param>
+            <param name="a">Alpha component.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.#ctor(Microsoft.Xna.Framework.Vector3)">
+            <summary>Creates a new instance of the class.</summary>
+            <param name="vector">A three-component color.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.#ctor(Microsoft.Xna.Framework.Vector4)">
+            <summary>Creates a new instance of the class.</summary>
+            <param name="vector">A four-component color.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.Microsoft#Xna#Framework#IPackedVector#PackFromVector4(Microsoft.Xna.Framework.Vector4)">
+            <summary>Pack a four-component color from a vector format into the format of a color object.</summary>
+            <param name="vector">A four-component color.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.FromNonPremultiplied(Microsoft.Xna.Framework.Vector4)">
+            <summary>Convert a non premultipled color into color data that contains alpha.</summary>
+            <param name="vector">A four-component color.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.FromNonPremultiplied(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>Converts a non-premultipled alpha color to a color that contains premultiplied alpha.</summary>
+            <param name="r">Red component.</param>
+            <param name="g">Green component.</param>
+            <param name="b">Blue component.</param>
+            <param name="a">Alpha component.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.ToVector3">
+            <summary>Gets a three-component vector representation for this object.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.ToVector4">
+            <summary>Gets a four-component vector representation for this object.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.Lerp(Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,System.Single)">
+            <summary>Linearly interpolate a color.</summary>
+            <param name="value1">A four-component color.</param>
+            <param name="value2">A four-component color.</param>
+            <param name="amount">Interpolation factor.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.Multiply(Microsoft.Xna.Framework.Color,System.Single)">
+            <summary>Multiply each color component by the scale factor.</summary>
+            <param name="value">The source, four-component color.</param>
+            <param name="scale">The scale factor.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.op_Multiply(Microsoft.Xna.Framework.Color,System.Single)">
+            <summary>Multiply operator.</summary>
+            <param name="value">A four-component color</param>
+            <param name="scale">Scale factor.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.ToString">
+            <summary>Gets a string representation of this object.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.GetHashCode">
+            <summary>Serves as a hash function for a particular type.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.Equals(System.Object)">
+            <summary>Test an instance of a color object to see if it is equal to this object.</summary>
+            <param name="obj">A color object.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.Equals(Microsoft.Xna.Framework.Color)">
+            <summary>Test a color to see if it is equal to the color in this instance.</summary>
+            <param name="other">A four-component color.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.op_Equality(Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color)">
+            <summary>Equality operator.</summary>
+            <param name="a">A four-component color.</param>
+            <param name="b">A four-component color.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Color.op_Inequality(Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color)">
+            <summary>Equality operator for Testing two color objects to see if they are equal.</summary>
+            <param name="a">A four-component color.</param>
+            <param name="b">A four-component color.</param>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Graphics.EffectPassCollection.Item(System.String)">
+            <summary>Gets a specific element in the collection by using a name.</summary>
+            <param name="name">Name of the EffectPass to get.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.IPackedVector.ToVector4">
+            <summary>Expands the packed representation into a Vector4.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.IPackedVector.PackFromVector4(Microsoft.Xna.Framework.Vector4)">
+            <summary>Sets the packed representation from a Vector4.</summary>
+            <param name="vector">The vector to create the packed representation from.</param>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.IPackedVector`1.PackedValue">
+            <summary>Directly gets or sets the packed representation of the value.</summary>
+        </member>
+        <member name="F:Microsoft.Xna.Framework.Vector2.X">
+            <summary>Gets or sets the x-component of the vector.</summary>
+        </member>
+        <member name="F:Microsoft.Xna.Framework.Vector2.Y">
+            <summary>Gets or sets the y-component of the vector.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Vector2.Zero">
+            <summary>Returns a Vector2 with all of its components set to zero.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Vector2.One">
+            <summary>Returns a Vector2 with both of its components set to one.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Vector2.UnitX">
+            <summary>Returns the unit vector for the x-axis.</summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Vector2.UnitY">
+            <summary>Returns the unit vector for the y-axis.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.#ctor(System.Single,System.Single)">
+            <summary>Initializes a new instance of Vector2.</summary>
+            <param name="x">Initial value for the x-component of the vector.</param>
+            <param name="y">Initial value for the y-component of the vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.#ctor(System.Single)">
+            <summary>Creates a new instance of Vector2.</summary>
+            <param name="value">Value to initialize both components to.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.ToString">
+            <summary>Retrieves a string representation of the current object.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Equals(Microsoft.Xna.Framework.Vector2)">
+            <summary>Determines whether the specified Object is equal to the Vector2.</summary>
+            <param name="other">The Object to compare with the current Vector2.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Equals(System.Object)">
+            <summary>Returns a value that indicates whether the current instance is equal to a specified object.</summary>
+            <param name="obj">Object to make the comparison with.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.GetHashCode">
+            <summary>Gets the hash code of the vector object.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Length">
+            <summary>Calculates the length of the vector.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.LengthSquared">
+            <summary>Calculates the length of the vector squared.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Distance(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Calculates the distance between two vectors.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Distance(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,System.Single@)">
+            <summary>Calculates the distance between two vectors.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="result">[OutAttribute] The distance between the vectors.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.DistanceSquared(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Calculates the distance between two vectors squared.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.DistanceSquared(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,System.Single@)">
+            <summary>Calculates the distance between two vectors squared.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="result">[OutAttribute] The distance between the vectors squared.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Dot(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Calculates the dot product of two vectors. If the two vectors are unit vectors, the dot product returns a floating point value between -1 and 1 that can be used to determine some properties of the angle between two vectors. For example, it can show whether the vectors are orthogonal, parallel, or have an acute or obtuse angle between them.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Dot(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,System.Single@)">
+            <summary>Calculates the dot product of two vectors and writes the result to a user-specified variable. If the two vectors are unit vectors, the dot product returns a floating point value between -1 and 1 that can be used to determine some properties of the angle between two vectors. For example, it can show whether the vectors are orthogonal, parallel, or have an acute or obtuse angle between them.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="result">[OutAttribute] The dot product of the two vectors.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Normalize">
+            <summary>Turns the current vector into a unit vector. The result is a vector one unit in length pointing in the same direction as the original vector.</summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Normalize(Microsoft.Xna.Framework.Vector2)">
+            <summary>Creates a unit vector from the specified vector. The result is a vector one unit in length pointing in the same direction as the original vector.</summary>
+            <param name="value">Source Vector2.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Normalize(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Creates a unit vector from the specified vector, writing the result to a user-specified variable. The result is a vector one unit in length pointing in the same direction as the original vector.</summary>
+            <param name="value">Source vector.</param>
+            <param name="result">[OutAttribute] Normalized vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Reflect(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Determines the reflect vector of the given vector and normal.</summary>
+            <param name="vector">Source vector.</param>
+            <param name="normal">Normal of vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Reflect(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Determines the reflect vector of the given vector and normal.</summary>
+            <param name="vector">Source vector.</param>
+            <param name="normal">Normal of vector.</param>
+            <param name="result">[OutAttribute] The created reflect vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Min(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Returns a vector that contains the lowest value from each matching pair of components.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Min(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Returns a vector that contains the lowest value from each matching pair of components.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="result">[OutAttribute] The minimized vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Max(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Returns a vector that contains the highest value from each matching pair of components.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Max(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Returns a vector that contains the highest value from each matching pair of components.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="result">[OutAttribute] The maximized vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Clamp(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Restricts a value to be within a specified range.</summary>
+            <param name="value1">The value to clamp.</param>
+            <param name="min">The minimum value.</param>
+            <param name="max">The maximum value.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Clamp(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Restricts a value to be within a specified range.</summary>
+            <param name="value1">The value to clamp.</param>
+            <param name="min">The minimum value.</param>
+            <param name="max">The maximum value.</param>
+            <param name="result">[OutAttribute] The clamped value.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Lerp(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>Performs a linear interpolation between two vectors.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="amount">Value between 0 and 1 indicating the weight of value2.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Lerp(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,System.Single,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Performs a linear interpolation between two vectors.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="amount">Value between 0 and 1 indicating the weight of value2.</param>
+            <param name="result">[OutAttribute] The result of the interpolation.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Barycentric(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single)">
+            <summary>Returns a Vector2 containing the 2D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 2D triangle.</summary>
+            <param name="value1">A Vector2 containing the 2D Cartesian coordinates of vertex 1 of the triangle.</param>
+            <param name="value2">A Vector2 containing the 2D Cartesian coordinates of vertex 2 of the triangle.</param>
+            <param name="value3">A Vector2 containing the 2D Cartesian coordinates of vertex 3 of the triangle.</param>
+            <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in value2).</param>
+            <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in value3).</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Barycentric(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,System.Single,System.Single,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Returns a Vector2 containing the 2D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 2D triangle.</summary>
+            <param name="value1">A Vector2 containing the 2D Cartesian coordinates of vertex 1 of the triangle.</param>
+            <param name="value2">A Vector2 containing the 2D Cartesian coordinates of vertex 2 of the triangle.</param>
+            <param name="value3">A Vector2 containing the 2D Cartesian coordinates of vertex 3 of the triangle.</param>
+            <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in value2).</param>
+            <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in value3).</param>
+            <param name="result">[OutAttribute] The 2D Cartesian coordinates of the specified point are placed in this Vector2 on exit.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.SmoothStep(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>Interpolates between two values using a cubic equation.</summary>
+            <param name="value1">Source value.</param>
+            <param name="value2">Source value.</param>
+            <param name="amount">Weighting value.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.SmoothStep(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,System.Single,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Interpolates between two values using a cubic equation.</summary>
+            <param name="value1">Source value.</param>
+            <param name="value2">Source value.</param>
+            <param name="amount">Weighting value.</param>
+            <param name="result">[OutAttribute] The interpolated value.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.CatmullRom(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>Performs a Catmull-Rom interpolation using the specified positions.</summary>
+            <param name="value1">The first position in the interpolation.</param>
+            <param name="value2">The second position in the interpolation.</param>
+            <param name="value3">The third position in the interpolation.</param>
+            <param name="value4">The fourth position in the interpolation.</param>
+            <param name="amount">Weighting factor.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.CatmullRom(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,System.Single,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Performs a Catmull-Rom interpolation using the specified positions.</summary>
+            <param name="value1">The first position in the interpolation.</param>
+            <param name="value2">The second position in the interpolation.</param>
+            <param name="value3">The third position in the interpolation.</param>
+            <param name="value4">The fourth position in the interpolation.</param>
+            <param name="amount">Weighting factor.</param>
+            <param name="result">[OutAttribute] A vector that is the result of the Catmull-Rom interpolation.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Hermite(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>Performs a Hermite spline interpolation.</summary>
+            <param name="value1">Source position vector.</param>
+            <param name="tangent1">Source tangent vector.</param>
+            <param name="value2">Source position vector.</param>
+            <param name="tangent2">Source tangent vector.</param>
+            <param name="amount">Weighting factor.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Hermite(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,System.Single,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Performs a Hermite spline interpolation.</summary>
+            <param name="value1">Source position vector.</param>
+            <param name="tangent1">Source tangent vector.</param>
+            <param name="value2">Source position vector.</param>
+            <param name="tangent2">Source tangent vector.</param>
+            <param name="amount">Weighting factor.</param>
+            <param name="result">[OutAttribute] The result of the Hermite spline interpolation.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Negate(Microsoft.Xna.Framework.Vector2)">
+            <summary>Returns a vector pointing in the opposite direction.</summary>
+            <param name="value">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Negate(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Returns a vector pointing in the opposite direction.</summary>
+            <param name="value">Source vector.</param>
+            <param name="result">[OutAttribute] Vector pointing in the opposite direction.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Add(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Adds two vectors.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Add(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Adds two vectors.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="result">[OutAttribute] Sum of the source vectors.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Subtract(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Subtracts a vector from a vector.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Subtract(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Subtracts a vector from a vector.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="result">[OutAttribute] The result of the subtraction.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Multiply(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Multiplies the components of two vectors by each other.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Multiply(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Multiplies the components of two vectors by each other.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+            <param name="result">[OutAttribute] The result of the multiplication.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Multiply(Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>Multiplies a vector by a scalar value.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="scaleFactor">Scalar value.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Multiply(Microsoft.Xna.Framework.Vector2@,System.Single,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Multiplies a vector by a scalar value.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="scaleFactor">Scalar value.</param>
+            <param name="result">[OutAttribute] The result of the multiplication.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Divide(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Divides the components of a vector by the components of another vector.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Divisor vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Divide(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Divides the components of a vector by the components of another vector.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">The divisor.</param>
+            <param name="result">[OutAttribute] The result of the division.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Divide(Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>Divides a vector by a scalar value.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="divider">The divisor.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.Divide(Microsoft.Xna.Framework.Vector2@,System.Single,Microsoft.Xna.Framework.Vector2@)">
+            <summary>Divides a vector by a scalar value.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="divider">The divisor.</param>
+            <param name="result">[OutAttribute] The result of the division.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_UnaryNegation(Microsoft.Xna.Framework.Vector2)">
+            <summary>Returns a vector pointing in the opposite direction.</summary>
+            <param name="value">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_Equality(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Tests vectors for equality.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_Inequality(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Tests vectors for inequality.</summary>
+            <param name="value1">Vector to compare.</param>
+            <param name="value2">Vector to compare.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_Addition(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Adds two vectors.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_Subtraction(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Subtracts a vector from a vector.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_Multiply(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Multiplies the components of two vectors by each other.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_Multiply(Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>Multiplies a vector by a scalar value.</summary>
+            <param name="value">Source vector.</param>
+            <param name="scaleFactor">Scalar value.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_Multiply(System.Single,Microsoft.Xna.Framework.Vector2)">
+            <summary>Multiplies a vector by a scalar value.</summary>
+            <param name="scaleFactor">Scalar value.</param>
+            <param name="value">Source vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_Division(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>Divides the components of a vector by the components of another vector.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="value2">Divisor vector.</param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Vector2.op_Division(Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>Divides a vector by a scalar value.</summary>
+            <param name="value1">Source vector.</param>
+            <param name="divider">The divisor.</param>
+        </member>
+    </members>
+</doc>

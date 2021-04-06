@@ -3,6 +3,7 @@
 *.pidb
 *.userprefs
 *.nupkg
+*.shim
 
 artifacts/
 packages/
@@ -15,6 +16,7 @@ wrap/TerrariaServer/Newtonsoft.Json.dll
 wrap/TerrariaServer/Steamworks.NET.dll
 wrap/TerrariaServer/Ionic.Zip.CF.dll
 wrap/Terraria/Terraria.exe
+wrap/TerrariaServer/CsvHelper.dll
 
 .DS_Store
 .vs

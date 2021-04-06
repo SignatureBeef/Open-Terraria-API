@@ -122,6 +122,8 @@
     <Compile Include="Xna\Input\Keys.cs" />
     <Compile Include="Xna\Input\Mouse.cs" />
     <Compile Include="Xna\Input\MouseState.cs" />
+    <Compile Include="Xna\Audio\AudioChannels.cs" />
+    <Compile Include="Xna\Audio\DynamicSoundEffectInstance.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OTAPI.Patcher.Engine\OTAPI.Patcher.Engine.csproj">
