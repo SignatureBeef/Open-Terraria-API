@@ -62,9 +62,9 @@ namespace OTAPI.Setup
             mm.Module.Assembly.Name.Name = "TerrariaServer";
 
             foreach (var path in new[] {
-                    Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
-                    Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
-                })
+                Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
+                Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
+            })
             {
                 mm.ReadMod(path);
             }

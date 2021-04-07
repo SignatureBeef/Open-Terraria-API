@@ -20,8 +20,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using ModFramework.Targets;
 
-namespace ModFramework.Targets
+namespace OTAPI.Setup.Targets
 {
     [MonoMod.MonoModIgnore]
     public class VanillaPatchTarget : IPatchTarget

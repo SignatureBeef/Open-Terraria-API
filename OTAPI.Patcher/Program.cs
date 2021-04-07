@@ -28,21 +28,22 @@ namespace OTAPI.Patcher
     {
         static void Main(string[] args)
         {
-            var pathIn = Remote.DownloadServer();
+            var pathIn = "TerrariaServer.dll"; // exists when built, as its a depedency in OTAPI.Patcher
 
             Console.WriteLine("[OTAPI] Extracting embedded binaries for assembly resolution...");
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(pathIn);
 
+            // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
             PluginLoader.TryLoad();
 
             using var mm = new ModFwModder()
             {
-                InputPath = "TerrariaServer.dll", // exists when built, as its a depedency in OTAPI.Mods
+                InputPath = pathIn,
                 OutputPath = "OTAPI.dll",
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
-                // PublicEverything = true, // we want all of terraria exposed
+                // PublicEverything = true, // this is done in setup
 
                 GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
             };
@@ -50,9 +51,9 @@ namespace OTAPI.Patcher
             mm.Read();
 
             foreach (var path in new[] {
-                    Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
-                    //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
-                })
+                Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
+                //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
+            })
             {
                 mm.ReadMod(path);
             }

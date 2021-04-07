@@ -16,4 +16,7 @@
     <ProjectReference Include="..\OTAPI.Shims\OTAPI.Shims.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Targets\" />
+  </ItemGroup>
 </Project>

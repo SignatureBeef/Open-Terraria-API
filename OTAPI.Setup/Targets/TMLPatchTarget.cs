@@ -16,12 +16,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-namespace ModFramework.Targets
+using System.IO;
+using System.Linq;
+using ModFramework.Targets;
+
+namespace OTAPI.Setup.Targets
 {
     [MonoMod.MonoModIgnore]
-    public static class Extensions
+    public class TMLPatchTarget : IPatchTarget
     {
-        public static string GetCliValue(this IPatchTarget target, string key)
-            => Remote.GetCliValue(key);
+        public string GetZipUrl()
+        {
+            return "https://github.com/tModLoader/tModLoader/releases/download/v0.11.7.5/tModLoader.Windows.v0.11.7.5.zip";
+        }
+
+        public string DetermineInputAssembly(string extractedFolder)
+        {
+            return Directory.EnumerateFiles(extractedFolder, "tModLoaderServer.exe", SearchOption.TopDirectoryOnly).Single();
+        }
     }
 }

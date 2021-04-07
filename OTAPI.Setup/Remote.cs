@@ -16,14 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using ModFramework.Targets;
 using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
+using ModFramework.Targets;
+using OTAPI.Setup.Targets;
 
-namespace ModFramework
+namespace OTAPI.Setup
 {
     [MonoMod.MonoModIgnore]
     public static class Remote
