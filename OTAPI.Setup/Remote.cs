@@ -97,6 +97,9 @@ namespace OTAPI.Setup
 
                 if (input.Equals("v", StringComparison.CurrentCultureIgnoreCase))
                     break;
+
+                if (String.IsNullOrWhiteSpace(input)) // no key entered
+                    break;
             } while (attempts-- > 0);
 
             return new VanillaPatchTarget();

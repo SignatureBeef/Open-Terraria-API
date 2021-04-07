@@ -77,6 +77,10 @@ namespace OTAPI.Setup.Targets
                         return AquireLatestBinaryUrl();
                     else if (input.Equals("n", StringComparison.CurrentCultureIgnoreCase))
                         break;
+
+                    if (String.IsNullOrWhiteSpace(input)) // no key entered
+                        break;
+
                 } while (attempts-- > 0);
             }
 
