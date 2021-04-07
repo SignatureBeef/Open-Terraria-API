@@ -107,7 +107,7 @@ namespace OTAPI.Patcher.Engine
 			// try globs instead
 			{
 				var assemblyDefinition = GetModificationAssemblies().FirstOrDefault(x => x.Assembly.Name.Name == e.Name);
-				if (assemblyDefinition.Assembly != null)
+				if (assemblyDefinition?.Assembly != null)
 				{
 					e.FileLocation = assemblyDefinition.Path;
 					return;
