@@ -1,4 +1,4 @@
-# Open Terraria API [![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) ![Nuget](https://img.shields.io/nuget/v/OTAPI)
+# Open Terraria API [![Build Status](https://travis-ci.org/DeathCradle/Open-Terraria-API.svg?branch=master)](https://travis-ci.org/DeathCradle/Open-Terraria-API) [![Nuget](https://img.shields.io/nuget/v/OTAPI)](https://www.nuget.org/packages/OTAPI/)
 
 The Open Terraria API, known as OTAPI, is a unique low-level API for [Terraria](https://terraria.org) that exposes events and provides performance optimisations while supporting both client and server executables on all official platforms.
 
