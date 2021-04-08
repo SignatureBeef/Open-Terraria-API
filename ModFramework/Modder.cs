@@ -22,6 +22,7 @@ using Mono.Cecil.Cil;
 using MonoMod;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ModFramework
 {
@@ -38,6 +39,7 @@ namespace ModFramework
             task.RelinkProvider = this;
             TaskList.Add(task);
             TaskList.Sort((a, b) => a.Order - b.Order);
+            task.Registered();
         }
 
         public virtual void RunTasks(Action<RelinkTask> callback)

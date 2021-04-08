@@ -33,7 +33,7 @@
   <ItemGroup>
     <Content Include="..\OTAPI.Scripts\**\*.*">
       <Link>csharp\modifications\%(RecursiveDir)%(Filename)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

@@ -53,6 +53,25 @@ namespace OTAPI.Setup
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             mm.Read();
 
+            //{
+            //    if (File.Exists(output))
+            //    {
+            //        mm.Log($"[HookGen] Clearing {output}");
+            //        File.Delete(output);
+            //    }
+
+            //    mm.Log("[HookGen] Starting HookGenerator");
+            //    var gen = new HookGenerator(mm, Path.GetFileName(output));
+            //    using (ModuleDefinition mOut = gen.OutputModule)
+            //    {
+            //        gen.Generate();
+
+            //        mOut.Write(output);
+            //    }
+
+            //    mm.ReadMod(output);
+            //}
+
             var initialModuleName = mm.Module.Name;
 
             // prechange the assembly name to a dll
@@ -80,21 +99,6 @@ namespace OTAPI.Setup
 
             mm.MapDependencies();
             mm.AutoPatch();
-
-            if (File.Exists(output))
-            {
-                mm.Log($"[HookGen] Clearing {output}");
-                File.Delete(output);
-            }
-
-            mm.Log("[HookGen] Starting HookGenerator");
-            var gen = new HookGenerator(mm, Path.GetFileName(output));
-            using (ModuleDefinition mOut = gen.OutputModule)
-            {
-                gen.Generate();
-
-                mOut.Write(output);
-            }
 
             mm.OutputPath = mm.Module.Name; // the merged TerrariaServer + ReLogic (so we can apply patches)
 

@@ -18,20 +18,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using ModFramework;
 using MonoMod;
+using System;
 using System.Linq;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 [Modification(ModType.PostPatch, "Removing hard references to System.Private.CoreLib")]
 void PatchCoreLib(MonoModder modder)
 {
-    foreach (var reference in modder.Module.AssemblyReferences
-        .Where(x => x.Name.StartsWith("mscorlib") || x.Name.StartsWith("System.Private.CoreLib"))
-        .ToArray()
-    )
-    {
-        var asm = modder.Module.TypeSystem.CoreLibrary as Mono.Cecil.AssemblyNameReference;
-        reference.Name = asm.Name;
-        reference.Version = asm.Version;
-        reference.PublicKey = asm.PublicKey;
-        reference.PublicKeyToken = asm.PublicKeyToken;
-    }
+    //var systemRuntime = AppDomain.CurrentDomain.GetAssemblies().Single(mr => mr.GetName().Name == "netstandard");
+
+    //var asm = new AssemblyNameReference(systemRuntime.GetName().Name, systemRuntime.GetName().Version)
+    //{
+    //    PublicKeyToken = systemRuntime.GetName().GetPublicKeyToken()
+    //};
+
+    //foreach (var reference in modder.Module.AssemblyReferences
+    //    .Where(x => x.Name.StartsWith("mscorlib") || x.Name.StartsWith("System.Private.CoreLib"))
+    //    .ToArray()
+    //)
+    //{
+    //    reference.Name = asm.Name;
+    //    reference.Version = asm.Version;
+    //    reference.PublicKey = asm.PublicKey;
+    //    reference.PublicKeyToken = asm.PublicKeyToken;
+    //}
 }

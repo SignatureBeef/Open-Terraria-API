@@ -73,5 +73,10 @@ namespace ModFramework.Plugins
             }
             return false;
         }
+
+        public static void Clear()
+        {
+            _assemblies.Clear();
+        }
     }
 }

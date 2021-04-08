@@ -30,6 +30,8 @@ namespace ModFramework.Relinker
         public IRelinkProvider RelinkProvider { get; set; }
         public virtual int Order { get; set; } = 100;
 
+        public virtual void Registered() { }
+
         //public RelinkTask(MonoModder modder, IRelinkProvider relinkProvider = null)
         //{
         //    Modder = modder;

@@ -42,7 +42,7 @@ namespace Terraria
 
         /** Begin OTAPI Startup */
         public static extern void orig_Main(string[] args);
-        [System.STAThread]
+
         public static void Main(string[] args)
         {
             PluginLoader.AssemblyLoader = new LegacyAssemblyResolver(); // terraria depends on mscorlib, System.Runtime.Loader is not available here yet 

@@ -37,7 +37,14 @@ namespace OTAPI.Launcher
 
                 return ModFramework.HookResult.Continue;
             };
+            On.Terraria.WindowsLaunch.Main += WindowsLaunch_Main;
             Terraria.WindowsLaunch.Main(args);
+        }
+
+        private static void WindowsLaunch_Main(On.Terraria.WindowsLaunch.orig_Main orig, string[] args)
+        {
+            System.Console.WriteLine($"MonoMod runtime hooks active");
+            orig(args); // now call the original Terraria.WindowsLaunch.Main instance
         }
     }
 }

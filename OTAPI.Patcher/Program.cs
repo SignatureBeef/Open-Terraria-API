@@ -21,6 +21,7 @@ using ModFramework.Plugins;
 using Mono.Cecil;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace OTAPI.Patcher
 {
@@ -37,10 +38,18 @@ namespace OTAPI.Patcher
             // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
             PluginLoader.TryLoad();
 
+            Directory.CreateDirectory("outputs");
+
+            var assembly_output = Path.Combine("outputs", "OTAPI.dll");
+            var runtime_output = Path.Combine("outputs", "OTAPI.Runtime.dll");
+
+            //var assembly_output = "OTAPI.dll";
+            //var runtime_output = "OTAPI.Runtime.dll";
+
             using var mm = new ModFwModder()
             {
                 InputPath = pathIn,
-                OutputPath = "OTAPI.dll",
+                OutputPath = assembly_output,
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
                 // PublicEverything = true, // this is done in setup
@@ -70,19 +79,50 @@ namespace OTAPI.Patcher
             mm.Write();
 
             mm.Log("[OTAPI] Generating OTAPI.Runtime.dll");
-            var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, Path.GetFileName("OTAPI.Runtime.dll"));
+            var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, "OTAPI.Runtime.dll");
             using (ModuleDefinition mOut = gen.OutputModule)
             {
                 gen.Generate();
 
-                mOut.Write("OTAPI.Runtime.dll");
+                mOut.Write(runtime_output);
             }
 
+            PostProcessCoreLib(assembly_output, runtime_output);
 
             mm.Log("[OTAPI] Building NuGet package...");
             BuildNuGetPackage();
 
             mm.Log("[OTAPI] Done.");
+        }
+
+        static void PostProcessCoreLib(params string[] inputs)
+        {
+            PluginLoader.Clear();
+
+            foreach (var input in inputs)
+            {
+                using var mm = new ModFwModder()
+                {
+                    InputPath = input,
+                    OutputPath = Path.GetFileName(input),
+                    MissingDependencyThrow = false,
+                    //LogVerboseEnabled = true,
+                    // PublicEverything = true, // this is done in setup
+
+                    GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+                };
+                mm.Log($"[OTAPI] Processing corelibs to be netstandard: {Path.GetFileName(input)}");
+
+                //(mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
+                mm.Read();
+
+                mm.AddTask(new ModFramework.Relinker.CoreLibRelinker());
+
+                mm.MapDependencies();
+                mm.AutoPatch();
+
+                mm.Write();
+            }
         }
 
         static void BuildNuGetPackage()
@@ -97,6 +137,7 @@ namespace OTAPI.Patcher
 
                 packageBuilder.AddFiles("../../../../", "COPYING.txt", "COPYING.txt");
                 packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "package\\lib\\net451");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "package\\lib\\net451");
 
                 if (File.Exists(packageFile))
                     File.Delete(packageFile);
