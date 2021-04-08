@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System.Linq;
+
 namespace OTAPI.Launcher
 {
     static class Program
@@ -37,8 +39,19 @@ namespace OTAPI.Launcher
 
                 return ModFramework.HookResult.Continue;
             };
+
             On.Terraria.WindowsLaunch.Main += WindowsLaunch_Main;
+
+            // if testing (
+            if (args.Any(x => x.ToLower() == "-test-init"))
+                On.Terraria.Main.DedServ += Main_DedServ;
+
             Terraria.WindowsLaunch.Main(args);
+        }
+
+        private static void Main_DedServ(On.Terraria.Main.orig_DedServ orig, Terraria.Main self)
+        {
+            System.Console.WriteLine($"Server init process successful");
         }
 
         private static void WindowsLaunch_Main(On.Terraria.WindowsLaunch.orig_Main orig, string[] args)

@@ -14,3 +14,5 @@ script:
  - dotnet run --project ../../../OTAPI.Patcher.csproj -patchTarget=v -latestVanilla=n
  - cd ../../../../
  - dotnet build OTAPI.Launcher.sln
+ - cd OTAPI.Launcher/bin/Debug/net5.0
+ - dotnet OTAPI.Launcher.dll -test-init
