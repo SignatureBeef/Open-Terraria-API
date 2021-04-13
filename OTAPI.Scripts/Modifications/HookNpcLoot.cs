@@ -21,7 +21,7 @@ using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
-        
+
 [Modification(ModType.PreMerge, "Hooking Terraria.GameContent.ItemDropRules.CommonCode.DropItemFromNPC")]
 void HookNpcLoot(MonoModder modder)
 {

@@ -32,11 +32,12 @@ void HookNpcKilled(MonoModder modder)
         , i => i.OpCode == OpCodes.Stfld && i.Operand is FieldReference fieldReference && fieldReference.Name == "active" && fieldReference.DeclaringType.FullName == "Terraria.Entity"
     );
 
-    checkDead.EmitDelegate<NpcKilledHandler>(OTAPI.Callbacks.NPC.Killed);
+    checkDead.EmitDelegate<NpcKilledCallback>(OTAPI.Callbacks.NPC.Killed);
     checkDead.Emit(OpCodes.Ldarg_0);
 }
 
-public delegate void NpcKilledHandler(global::Terraria.NPC instance);
+[MonoMod.MonoModIgnore]
+public delegate void NpcKilledCallback(global::Terraria.NPC instance);
 
 namespace OTAPI.Callbacks
 {

@@ -29,6 +29,8 @@ namespace OTAPI.Patcher
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Open Terraria API v3");
+
             var pathIn = "TerrariaServer.dll"; // exists when built, as its a depedency in OTAPI.Patcher
 
             Console.WriteLine("[OTAPI] Extracting embedded binaries for assembly resolution...");

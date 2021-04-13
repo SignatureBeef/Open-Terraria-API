@@ -29,8 +29,12 @@ namespace ModFramework.Modules
             {
                 if (module.Assembly.Name.Name.StartsWith(ModulePrefix))
                 {
-                    // remove the program class
-                    module.Types.Remove(module.GetType("$Program"));
+                    // remove the top level program class
+                    var tlc = module.GetType("<Program>$");
+                    if (tlc != null)
+                    {
+                        module.Types.Remove(tlc);
+                    }
                     Modder.RelinkAssembly(module);
                 }
             };
@@ -54,7 +58,7 @@ namespace ModFramework.Modules
                     Console.WriteLine($"[{ConsolePrefix}] Loading module: {file}");
                     try
                     {
-                        var contents = string.Join(Environment.NewLine, new []
+                        var contents = string.Join(Environment.NewLine, new[]
                         {
                             constants,
                             "using System;",
