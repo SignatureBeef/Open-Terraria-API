@@ -56,7 +56,7 @@ public delegate bool GetDataHandler(global::Terraria.MessageBuffer instance, ref
 
 namespace OTAPI.Callbacks
 {
-    public static class MessageBuffer
+    public static partial class MessageBuffer
     {
         public static bool GetData(global::Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, int maxPackets)
             => Hooks.MessageBuffer.GetData?.Invoke(instance, ref packetId, ref readOffset, ref start, ref length, ref messageType, ref maxPackets) != HookResult.Cancel && packetId < maxPackets;
@@ -67,7 +67,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class MessageBuffer
+        public static partial class MessageBuffer
         {
             public delegate HookResult GetDataHandler(Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, ref int maxPackets);
             public static GetDataHandler GetData;

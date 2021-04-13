@@ -27,7 +27,7 @@ using System.Net.Sockets;
 
 namespace Terraria
 {
-    class patch_Netplay : Terraria.Netplay
+    partial class patch_Netplay : Terraria.Netplay
     {
 
     }

@@ -18,10 +18,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Microsoft.Xna.Framework;
 using OTAPI;
+using ModFramework;
+using System;
 
 namespace Terraria.Net
 {
-    class patch_NetManager : Terraria.Net.NetManager
+    partial class patch_NetManager : Terraria.Net.NetManager
     {
         /** Begin Hook - SendData */
         public extern void orig_SendData(Terraria.Net.Sockets.ISocket socket, Terraria.Net.NetPacket packet);
@@ -41,9 +43,9 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class Net
+        public static partial class Net
         {
-            public static class NetManager
+            public static partial class NetManager
             {
                 public delegate HookResult SendDataHandler(HookEvent @event, Terraria.Net.NetManager manager, Terraria.Net.Sockets.ISocket socket, ref Terraria.Net.NetPacket packet, Action<Terraria.Net.Sockets.ISocket, Terraria.Net.NetPacket> originalMethod);
                 public static SendDataHandler SendData;

@@ -55,7 +55,7 @@ void HookCommandProcessing(MonoModder modder)
 
 namespace OTAPI.Callbacks
 {
-    public static class Main
+    public static partial class Main
     {
         public static bool CommandProcess(string lowered, string raw)
             => Hooks.Main.CommandProcess?.Invoke(raw, lowered) != HookResult.Cancel;
@@ -66,7 +66,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class Main
+        public static partial class Main
         {
             public delegate HookResult CommandProcessHandler(string command, string lowered);
             public static CommandProcessHandler CommandProcess;

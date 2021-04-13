@@ -35,11 +35,9 @@ void HookNpcLoot(MonoModder modder)
     NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Callbacks.NPC.DropLoot(default, default, default, default, default, default, default, default, default, default, default));
 }
 
-public delegate bool NpcSpawnHandler(ref int index);
-
 namespace OTAPI.Callbacks
 {
-    public static class NPC
+    public static partial class NPC
     {
         public static int DropLoot(
                 int X, int Y, int Width, int Height, int Type,
@@ -60,7 +58,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class NPC
+        public static partial class NPC
         {
             public delegate HookResult DropLootHandler(HookEvent @event, Terraria.NPC instance, ref int itemIndex,
                 ref int X, ref int Y, ref int Width, ref int Height, ref int Type,

@@ -18,10 +18,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 using OTAPI;
+using ModFramework;
+using System;
 
 namespace Terraria
 {
-    class patch_Projectile : Terraria.Projectile
+    partial class patch_Projectile : Terraria.Projectile
     {
         /** Begin Hook - SetDefaults */
         public extern void orig_SetDefaults(int Type);
@@ -53,7 +55,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class Projectile
+        public static partial class Projectile
         {
             public delegate HookResult SetDefaultsHandler(HookEvent @event, Terraria.Projectile instance, ref int type, Action<int> originalMethod);
             public static SetDefaultsHandler SetDefaults;

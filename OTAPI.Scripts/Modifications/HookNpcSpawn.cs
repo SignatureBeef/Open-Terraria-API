@@ -43,7 +43,7 @@ public delegate bool NpcSpawnHandler(ref int index);
 
 namespace OTAPI.Callbacks
 {
-    public static class NPC
+    public static partial class NPC
     {
         public static bool Spawn(ref int index)
             => Hooks.NPC.Spawn?.Invoke(ref index) != HookResult.Cancel;
@@ -54,7 +54,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class NPC
+        public static partial class NPC
         {
             public delegate HookResult SpawnHandler(ref int index);
             public static SpawnHandler Spawn;

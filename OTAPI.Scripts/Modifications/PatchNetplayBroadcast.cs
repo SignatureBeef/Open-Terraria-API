@@ -55,7 +55,7 @@ void PatchNetplayBroadcast(MonoModder modder)
 
 namespace Terraria
 {
-    class patch_Netplay : Terraria.Netplay
+    partial class patch_Netplay : Terraria.Netplay
     {
         /** Begin Fix - Thread abort */
         public static bool BroadcastThreadActive = false;

@@ -18,11 +18,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using MonoMod;
 using OTAPI;
+using ModFramework;
 using System;
 
 namespace Terraria
 {
-    class patch_Program
+    partial class patch_Program
     {
         /** Begin Hook: LaunchGame */
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
@@ -49,7 +50,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class Program
+        public static partial class Program
         {
             public delegate HookResult LaunchGameHandler();
             public static LaunchGameHandler LaunchGame;

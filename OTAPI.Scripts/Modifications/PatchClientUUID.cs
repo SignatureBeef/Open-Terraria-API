@@ -69,7 +69,7 @@ void PatchClientUUID(MonoModder modder)
 
 namespace OTAPI.Callbacks
 {
-    public static class MessageBuffer
+    public static partial class MessageBuffer
     {
         /// <summary>
         /// Called when Terraria receives a ClientUUID(#68) packet from a connection
@@ -92,7 +92,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class MessageBuffer
+        public static partial class MessageBuffer
         {
             public delegate HookResult ClientUUIDReceivedHandler(HookEvent @event, Terraria.MessageBuffer instance, System.IO.BinaryReader reader, int start, int length, int messageType);
             public static ClientUUIDReceivedHandler ClientUUIDReceived;
@@ -102,13 +102,13 @@ namespace OTAPI
 
 namespace Terraria
 {
-    class patch_RemoteClient : Terraria.RemoteClient
+    partial class patch_RemoteClient : Terraria.RemoteClient
     {
         public Dictionary<string, object> Data { get; set; }
 
         public string ClientUUID
         {
-            get => (Data[nameof(ClientUUID)] as string);
+            get => Data[nameof(ClientUUID)] as string;
             set => Data[nameof(ClientUUID)] = value;
         }
     }

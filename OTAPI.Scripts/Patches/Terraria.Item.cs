@@ -18,10 +18,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 using OTAPI;
+using ModFramework;
+using System;
 
 namespace Terraria
 {
-    class patch_Item: Terraria.Item
+    partial class patch_Item: Terraria.Item
     {
         /** Begin Hook - SetDefaults */
         public extern void orig_SetDefaults(int Type, bool noMatCheck = false);
@@ -53,7 +55,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class Item
+        public static partial class Item
         {
             public delegate HookResult SetDefaultsHandler(HookEvent @event, Terraria.Item instance, ref int type, ref bool noMatCheck, Action<int, bool> originalMethod);
             public static SetDefaultsHandler SetDefaults;

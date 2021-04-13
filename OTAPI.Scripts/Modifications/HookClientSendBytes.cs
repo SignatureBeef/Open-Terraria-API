@@ -55,7 +55,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class NetMessage
+        public static partial class NetMessage
         {
             public delegate HookResult SendBytesHandler(
                 ref Terraria.Net.Sockets.ISocket socket, ref int remoteClient, ref byte[] data, ref int offset, ref int size, ref global::Terraria.Net.Sockets.SocketSendCallback callback, ref object state);
@@ -66,7 +66,7 @@ namespace OTAPI
 
 namespace OTAPI.Callbacks
 {
-    public static class NetMessage
+    public static partial class NetMessage
     {
         public static void SendBytes(Terraria.Net.Sockets.ISocket socket, byte[] data, int offset, int size, global::Terraria.Net.Sockets.SocketSendCallback callback, object state, int remoteClient)
         {

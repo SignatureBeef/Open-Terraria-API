@@ -18,6 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Microsoft.Xna.Framework;
 using OTAPI;
+using ModFramework;
+using System;
 
 namespace Terraria
 {
@@ -79,7 +81,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class Main
+        public static partial class Main
         {
             public delegate HookResult UpdateHandler(HookEvent @event, ref GameTime gameTime);
             public static UpdateHandler Update;

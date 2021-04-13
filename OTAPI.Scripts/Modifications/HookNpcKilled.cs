@@ -40,7 +40,7 @@ public delegate void NpcKilledHandler(global::Terraria.NPC instance);
 
 namespace OTAPI.Callbacks
 {
-    public static class NPC
+    public static partial class NPC
     {
         public static void Killed(Terraria.NPC instance)
             => Hooks.NPC.Killed?.Invoke(instance);
@@ -52,7 +52,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class NPC
+        public static partial class NPC
         {
             public delegate void KilledHandler(Terraria.NPC instance);
             public static KilledHandler Killed;

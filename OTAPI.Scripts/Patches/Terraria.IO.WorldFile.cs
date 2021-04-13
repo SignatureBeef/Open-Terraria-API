@@ -19,6 +19,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 using OTAPI;
+using ModFramework;
+using System;
 
 namespace Terraria.IO
 {
@@ -52,7 +54,7 @@ namespace OTAPI
     {
         public static partial class IO
         {
-            public static class WorldFile
+            public static partial class WorldFile
             {
                 public delegate HookResult LoadWorldHandler(HookEvent @event, ref bool loadFromCloud, Action<bool> originalMethod);
                 public static LoadWorldHandler LoadWorld;

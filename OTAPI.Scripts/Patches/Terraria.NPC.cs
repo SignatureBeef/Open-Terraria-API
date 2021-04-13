@@ -18,6 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 using OTAPI;
+using ModFramework;
+using System;
 
 namespace Terraria
 {
@@ -54,7 +56,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class NPC
+        public static partial class NPC
         {
 #if !tModLoaderServer_V1_3
             public delegate HookResult SetDefaultsHandler(HookEvent @event, Terraria.NPC instance, ref int type, ref Terraria.NPCSpawnParams spawnparams, Action<int, Terraria.NPCSpawnParams> originalMethod);

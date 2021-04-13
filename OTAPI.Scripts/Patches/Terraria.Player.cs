@@ -20,6 +20,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
 using OTAPI;
+using ModFramework;
+using System;
 
 namespace Terraria
 {
@@ -44,7 +46,7 @@ namespace OTAPI
 {
     public static partial class Hooks
     {
-        public static class Player
+        public static partial class Player
         {
             public delegate HookResult UpdateHandler(HookEvent @event, Terraria.Player instance, ref int i, Action<int> originalMethod);
             public static UpdateHandler Update;
