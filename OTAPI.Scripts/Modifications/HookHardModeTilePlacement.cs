@@ -60,7 +60,6 @@ void HardModeTilePlacement(MonoModder modder)
     }
 }
 
-
 namespace OTAPI.Callbacks
 {
     public static partial class WorldGen

@@ -16,20 +16,40 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+#pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
 #if !tModLoaderServer_V1_3
 
-using OTAPI;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
+using System;
+using ModFramework;
 
 namespace Terraria
 {
     partial class patch_Netplay : Terraria.Netplay
     {
-
+        private static extern void orig_StartServer();
+        public static void StartServer()
+        {
+            if (OTAPI.Hooks.Netplay.StartServer?.Invoke(HookEvent.Before, orig_StartServer) != HookResult.Cancel)
+            {
+                orig_StartServer();
+                OTAPI.Hooks.Netplay.StartServer?.Invoke(HookEvent.After, orig_StartServer);
+            }
+        }
     }
 }
+
+namespace OTAPI
+{
+    public static partial class Hooks
+    {
+        public static partial class Netplay
+        {
+            public delegate HookResult StartServerHandler(HookEvent @event, Action originalMethod);
+            public static StartServerHandler StartServer;
+        }
+    }
+}
+
 #endif
