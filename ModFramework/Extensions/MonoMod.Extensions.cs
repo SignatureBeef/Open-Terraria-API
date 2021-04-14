@@ -16,7 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System.Collections.Generic;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 
 namespace ModFramework
 {
@@ -30,7 +33,16 @@ namespace ModFramework
             // register the mapping
             modder.RelinkModuleMap[source.Assembly.Name.Name] = target;
 
-            // references are cleaned up in the fr modder after auto patching
+            // references are cleaned up in the fw modder after auto patching
+        }
+
+        public static void EmitAll(this ILCursor cursor, params object[] instructions)
+        {
+            foreach (var instruction in instructions)
+            {
+                var parsed = CecilHelpersExtensions.AnonymousToInstruction(instruction);
+                cursor.Emit(parsed.OpCode, parsed.Operand);
+            }
         }
     }
 }

@@ -33,7 +33,8 @@ partial class Development
     [Modification(ModType.PreMerge, "Hooking chest stacking")]
     static void HookChestQuickStack(ModFwModder modder)
     {
-        PutItemInNearbyChest = modder.GetMethodDefinition(() => Terraria.Chest.PutItemInNearbyChest(null, default));
+        var csr = modder.GetILCursor(() => Terraria.Chest.PutItemInNearbyChest(null, default));
+        PutItemInNearbyChest = csr.Method;
 
         modder.OnRewritingMethodBody += Modder_OnRewritingMethodBody;
 
@@ -43,6 +44,23 @@ partial class Development
              ParameterAttributes.None,
             modder.Module.TypeSystem.Int32
         ));
+
+        // inject the hook
+        {
+            var beginInstruction = csr.Method.Body.Instructions.Single(x => x.OpCode == OpCodes.Bge_Un);
+            var endInstruction = beginInstruction.Next(x => x.OpCode == OpCodes.Ldc_I4_0);
+
+            csr.Goto(beginInstruction, MoveType.After);
+
+            csr.EmitAll(
+                new { OpCodes.Ldarg, Operand = csr.Method.Parameters.Skip(2).SingleOrDefault() },
+                new { OpCodes.Ldarg, Operand = csr.Method.Parameters.First() },
+                new { OpCodes.Ldloc_0 },
+                new { OpCodes.Call, Operand = modder.GetMethodDefinition(() => OTAPI.Callbacks.Chest.QuickStack(0, null, 0)) },
+                new { OpCodes.Brtrue, endInstruction },
+                new { OpCodes.Br, Operand = (Instruction)beginInstruction.Operand }
+            );
+        }
     }
 
     static List<string> completed = new List<string>();
@@ -82,6 +100,29 @@ partial class Development
                         throw new NotImplementedException($"{body.Method.Name} is not a supported caller for this modification");
                 }
             }
+        }
+    }
+}
+
+namespace OTAPI.Callbacks
+{
+    public static partial class Chest
+    {
+        public static bool QuickStack(int playerId, Terraria.Item item, int chestIndex)
+        {
+            return Hooks.Chest.QuickStack?.Invoke(playerId, item, chestIndex) != HookResult.Cancel;
+        }
+    }
+}
+
+namespace OTAPI
+{
+    public static partial class Hooks
+    {
+        public static partial class Chest
+        {
+            public delegate HookResult QuickStackHandler(int playerId, Terraria.Item item, int chestIndex);
+            public static QuickStackHandler QuickStack;
         }
     }
 }
