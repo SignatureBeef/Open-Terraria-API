@@ -24,44 +24,42 @@ using MonoMod.Cil;
 using System;
 using System.Linq;
 
-partial class Development
+[Modification(ModType.PreMerge, "Hooking hardmode tile placements")]
+void HardModeTilePlacement(MonoModder modder)
 {
-    [Modification(ModType.PreMerge, "Hooking hardmode tile placements")]
-    static void HardModeTilePlacement(MonoModder modder)
+    var csr = modder.GetILCursor(() => Terraria.WorldGen.hardUpdateWorld(0, 0), followRedirect: true);
+    var callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.WorldGen.HardmodeTilePlace(0, 0, 0, false, false, 0, 0));
+
+    var targets = csr.Body.Instructions.Where(instruction =>
+        instruction.OpCode == OpCodes.Call
+        && (instruction.Operand as MethodReference).Name == "PlaceTile"
+
+        && instruction.Next.OpCode == OpCodes.Pop
+    ).ToArray();
+
+    if (targets.Length == 0)
+        throw new Exception($"{nameof(Terraria.WorldGen.hardUpdateWorld)} is invalid");
+
+    foreach (var replacementPoint in targets)
     {
-        var csr = modder.GetILCursor(() => Terraria.WorldGen.hardUpdateWorld(0, 0), followRedirect: true);
-        var callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.WorldGen.HardmodeTilePlace(0, 0, 0, false, false, 0, 0));
+        replacementPoint.Operand = callback;
 
-        var targets = csr.Body.Instructions.Where(instruction =>
-            instruction.OpCode == OpCodes.Call
-            && (instruction.Operand as MethodReference).Name == "PlaceTile"
+        var newcsr = csr.Goto(replacementPoint, MoveType.After);
 
-            && instruction.Next.OpCode == OpCodes.Pop
-        ).ToArray();
+        var ins_pop = csr.Next;
+        if (ins_pop.OpCode != OpCodes.Pop)
+            throw new Exception($"{nameof(Terraria.WorldGen.hardUpdateWorld)} expected POP instruction");
 
-        if (targets.Length == 0)
-            throw new Exception($"{nameof(Terraria.WorldGen.hardUpdateWorld)} is invalid");
+        csr.GotoNext(MoveType.After, ins => ins.OpCode == OpCodes.Call && (ins.Operand as MethodReference).Name == "SendTileSquare");
 
-        foreach (var replacementPoint in targets)
-        {
-            replacementPoint.Operand = callback;
+        var continueOn = csr.Next;
 
-            var newcsr = csr.Goto(replacementPoint, MoveType.After);
-
-            var ins_pop = csr.Next;
-            if (ins_pop.OpCode != OpCodes.Pop)
-                throw new Exception($"{nameof(Terraria.WorldGen.hardUpdateWorld)} expected POP instruction");
-
-            csr.GotoNext(MoveType.After, ins => ins.OpCode == OpCodes.Call && (ins.Operand as MethodReference).Name == "SendTileSquare");
-
-            var continueOn = csr.Next;
-
-            // change the POP instruction to SKIP the SendTileSquare if false was returned
-            ins_pop.OpCode = OpCodes.Brfalse_S;
-            ins_pop.Operand = continueOn;
-        }
+        // change the POP instruction to SKIP the SendTileSquare if false was returned
+        ins_pop.OpCode = OpCodes.Brfalse_S;
+        ins_pop.Operand = continueOn;
     }
 }
+
 
 namespace OTAPI.Callbacks
 {
