@@ -33,6 +33,9 @@ namespace ModFramework
         protected List<RelinkTask> TaskList { get; set; } = new List<RelinkTask>();
         public IEnumerable<RelinkTask> Tasks => TaskList;
 
+        public event MonoMod.MethodRewriter OnRewritingMethod;
+        public event MonoMod.MethodBodyRewriter OnRewritingMethodBody;
+
         public virtual void AddTask(RelinkTask task)
         {
             task.Modder = this;
@@ -60,8 +63,14 @@ namespace ModFramework
                 if (method.HasParameters)
                     foreach (var parameter in method.Parameters)
                         RunTasks(t => t.Relink(method, parameter));
+
+                OnRewritingMethod?.Invoke(modder, method);
             };
-            MethodBodyRewriter = (MonoModder modder, MethodBody body, Instruction instr, int instri) => RunTasks(t => t.Relink(body, instr));
+            MethodBodyRewriter = (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
+            {
+                RunTasks(t => t.Relink(body, instr));
+                OnRewritingMethodBody?.Invoke(modder, body, instr, instri);
+            };
 
             AddTask(new EventDelegateRelinker());
         }

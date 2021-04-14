@@ -29,43 +29,44 @@ namespace ModFramework
     {
         private static IEnumerable<ModificationAttribute> Discover(IEnumerable<Assembly> assemblies)
         {
-            foreach (var asm in assemblies)
-            {
-                Type[] types;
-                try
+            if (assemblies != null)
+                foreach (var asm in assemblies)
                 {
-                    types = asm.GetTypes();
-                }
-                catch (ReflectionTypeLoadException ex)
-                {
-                    types = ex.Types;
-                }
-
-                var modificationTypes = types.Where(x => x != null); // && !x.IsAbstract);
-
-                foreach (var type in modificationTypes)
-                {
-                    var modificationAttr = type.GetCustomAttribute<ModificationAttribute>();
-                    if (modificationAttr != null)
+                    Type[] types;
+                    try
                     {
-                        //modificationAttr.InstanceType = type;
-                        modificationAttr.MethodBase = type.GetConstructors().Single();
-                        yield return modificationAttr;
+                        types = asm.GetTypes();
+                    }
+                    catch (ReflectionTypeLoadException ex)
+                    {
+                        types = ex.Types;
                     }
 
-                    var methods = type.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
-                    foreach (var method in methods)
+                    var modificationTypes = types.Where(x => x != null); // && !x.IsAbstract);
+
+                    foreach (var type in modificationTypes)
                     {
-                        modificationAttr = method.GetCustomAttribute<ModificationAttribute>();
+                        var modificationAttr = type.GetCustomAttribute<ModificationAttribute>();
                         if (modificationAttr != null)
                         {
-                            modificationAttr.MethodBase = method;
-                            modificationAttr.UniqueName = method.Name.Replace("<<Main>$>g__", "").Replace("<$Main>g__", "").Replace("|0_0", "");
+                            //modificationAttr.InstanceType = type;
+                            modificationAttr.MethodBase = type.GetConstructors().Single();
                             yield return modificationAttr;
+                        }
+
+                        var methods = type.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
+                        foreach (var method in methods)
+                        {
+                            modificationAttr = method.GetCustomAttribute<ModificationAttribute>();
+                            if (modificationAttr != null)
+                            {
+                                modificationAttr.MethodBase = method;
+                                modificationAttr.UniqueName = method.Name.Replace("<<Main>$>g__", "").Replace("<$Main>g__", "").Replace("|0_0", "");
+                                yield return modificationAttr;
+                            }
                         }
                     }
                 }
-            }
         }
 
         static void IterateMods(IEnumerable<ModificationAttribute> mods, Action<ModificationAttribute> action)

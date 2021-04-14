@@ -39,7 +39,10 @@ namespace OTAPI.Setup
             var embeddedResourcesDir = extractor.Extract(input);
             var inputName = Path.GetFileNameWithoutExtension(input);
 
-            const string output = "MMHOOK_TerrariaServer.dll";
+            Directory.CreateDirectory("outputs");
+
+            var output = Path.Combine("outputs", "TerrariaServer.dll");
+
             using MonoModder mm = new MonoModder()
             {
                 InputPath = input,
@@ -100,7 +103,7 @@ namespace OTAPI.Setup
             mm.MapDependencies();
             mm.AutoPatch();
 
-            mm.OutputPath = mm.Module.Name; // the merged TerrariaServer + ReLogic (so we can apply patches)
+            //mm.OutputPath = mm.Module.Name; // the merged TerrariaServer + ReLogic (so we can apply patches)
 
             // switch to any cpu so that we can compile and use types in mods
             // this is usually in a modification otherwise
@@ -108,8 +111,6 @@ namespace OTAPI.Setup
             mm.Module.Attributes = ModuleAttributes.ILOnly;
 
             mm.Write();
-
-            mm.Log("[HookGen] Done.");
 
             var const_major = $"{inputName}_V{mm.Module.Assembly.Name.Version.Major}_{mm.Module.Assembly.Name.Version.Minor}";
             var const_fullname = $"{inputName}_{mm.Module.Assembly.Name.Version.ToString().Replace(".", "_")}";
@@ -124,6 +125,9 @@ namespace OTAPI.Setup
 #define {const_major}
 #define {const_fullname}
 ");
+
+            // convert the libary to netstandard
+            ModFramework.Relinker.CoreLibRelinker.PostProcessCoreLib(mm.OutputPath);
         }
     }
 }

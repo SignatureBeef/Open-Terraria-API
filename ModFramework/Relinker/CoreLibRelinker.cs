@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -18,6 +19,40 @@ namespace ModFramework.Relinker
             {
                 PublicKeyToken = systemRuntime.GetName().GetPublicKeyToken()
             };
+        }
+
+        public static void PostProcessCoreLib(params string[] inputs)
+        {
+            Plugins.PluginLoader.Clear();
+
+            foreach (var input in inputs)
+            {
+                using var mm = new ModFwModder()
+                {
+                    InputPath = input,
+                    OutputPath = Path.GetFileName(input),
+                    MissingDependencyThrow = false,
+                    //LogVerboseEnabled = true,
+                    // PublicEverything = true, // this is done in setup
+
+                    GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+                };
+                mm.Log($"[OTAPI] Processing corelibs to be netstandard: {Path.GetFileName(input)}");
+
+                var extractor = new ResourceExtractor();
+                var embeddedResourcesDir = extractor.Extract(input);
+
+                (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
+
+                mm.Read();
+
+                mm.AddTask(new ModFramework.Relinker.CoreLibRelinker());
+
+                mm.MapDependencies();
+                mm.AutoPatch();
+
+                mm.Write();
+            }
         }
 
         public override void Registered()
