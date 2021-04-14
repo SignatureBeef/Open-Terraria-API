@@ -24,20 +24,11 @@ using Mono.Cecil.Cil;
 using MonoMod;
 using MonoMod.Cil;
 
-partial class Development
+[Modification(ModType.PreMerge, "Hooking statue spawning")]
+void HookMechSpawn(MonoModder modder)
 {
-    [MonoModIgnore]
-    class Task
+    foreach (var task in new[]
     {
-        public Expression<Action> Method { get; set; }
-        public MechSpawnCallback Callback { get; set; }
-    }
-
-    [Modification(ModType.PreMerge, "Hooking statue spawning")]
-    static void HookMechSpawn(MonoModder modder)
-    {
-        foreach (var task in new[]
-        {
             new Task()
             {
                 Method = () => Terraria.NPC.MechSpawn(0,0,0),
@@ -49,32 +40,38 @@ partial class Development
                 Callback = OTAPI.Callbacks.Item.MechSpawn,
             },
         })
+    {
+        var csr = modder.GetILCursor(task.Method);
+
+        //while (csr.TryFindNext(out ILCursor[] matches, ins => ins.OpCode == OpCodes.Ret))
+        var matches = csr.Body.Instructions.Where(x => x.OpCode == OpCodes.Ret).ToArray();
         {
-            var csr = modder.GetILCursor(task.Method);
-
-            //while (csr.TryFindNext(out ILCursor[] matches, ins => ins.OpCode == OpCodes.Ret))
-            var matches = csr.Body.Instructions.Where(x => x.OpCode == OpCodes.Ret).ToArray();
+            foreach (var ret in matches)
             {
-                foreach (var ret in matches)
-                {
-                    csr.Goto(ret, MoveType.Before);
+                csr.Goto(ret, MoveType.Before);
 
-                    // add the method params to the stack.
-                    foreach (var prm in csr.Method.Parameters)
-                        csr.Emit(OpCodes.Ldarg, prm);
+                // add the method params to the stack.
+                foreach (var prm in csr.Method.Parameters)
+                    csr.Emit(OpCodes.Ldarg, prm);
 
-                    var www = csr.Body.Variables.Where(x => x.VariableType == csr.Module.TypeSystem.Int32).Take(3);
-                    if (www.Count() != 3)
-                        throw new Exception($"{csr.Method.FullName} was expected to contain 3 integer variables.");
+                var www = csr.Body.Variables.Where(x => x.VariableType == csr.Module.TypeSystem.Int32).Take(3);
+                if (www.Count() != 3)
+                    throw new Exception($"{csr.Method.FullName} was expected to contain 3 integer variables.");
 
-                    foreach (var lv in www)
-                        csr.Emit(OpCodes.Ldloc, lv);
+                foreach (var lv in www)
+                    csr.Emit(OpCodes.Ldloc, lv);
 
-                    csr.EmitDelegate(task.Callback);
-                }
+                csr.EmitDelegate(task.Callback);
             }
         }
     }
+}
+
+[MonoModIgnore]
+class Task
+{
+    public Expression<Action> Method { get; set; }
+    public MechSpawnCallback Callback { get; set; }
 }
 
 // this is merely the callback signature 

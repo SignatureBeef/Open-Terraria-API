@@ -25,7 +25,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-partial class Development
+[MonoModIgnore]
+partial class ChestHooks
 {
     static MethodDefinition PutItemInNearbyChest { get; set; }
     static ParameterDefinition PlayerID { get; set; }
