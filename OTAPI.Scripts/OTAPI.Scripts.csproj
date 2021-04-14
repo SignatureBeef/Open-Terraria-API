@@ -14,5 +14,4 @@
 			<HintPath>..\OTAPI.Setup\bin\Debug\net5.0\TerrariaServer.dll</HintPath>
 		</Reference>
 	</ItemGroup>
-
 </Project>

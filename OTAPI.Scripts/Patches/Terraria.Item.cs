@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+#pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
 using OTAPI;
 using ModFramework;
@@ -23,7 +25,7 @@ using System;
 
 namespace Terraria
 {
-    partial class patch_Item: Terraria.Item
+    partial class patch_Item : Terraria.Item
     {
         /** Begin Hook - SetDefaults */
         public extern void orig_SetDefaults(int Type, bool noMatCheck = false);
@@ -31,7 +33,7 @@ namespace Terraria
         {
             if (Hooks.Item.SetDefaults?.Invoke(HookEvent.Before, this, ref Type, ref noMatCheck, orig_SetDefaults) != HookResult.Cancel)
             {
-                orig_SetDefaults(Type);
+                orig_SetDefaults(Type, noMatCheck);
                 Hooks.Item.SetDefaults?.Invoke(HookEvent.After, this, ref Type, ref noMatCheck, orig_SetDefaults);
             }
         }
@@ -48,6 +50,16 @@ namespace Terraria
             }
         }
         /** End Hook - Update */
+
+        public extern void orig_netDefaults(int type);
+        public void netDefaults(int type)
+        {
+            if (Hooks.Item.NetDefaults?.Invoke(HookEvent.Before, this, ref type) != HookResult.Cancel)
+            {
+                orig_netDefaults(type);
+                Hooks.Item.NetDefaults?.Invoke(HookEvent.After, this, ref type);
+            }
+        }
     }
 }
 
@@ -62,6 +74,9 @@ namespace OTAPI
 
             public delegate HookResult UpdateItemHandler(HookEvent @event, Terraria.Item instance, ref int i, Action<int> originalMethod);
             public static UpdateItemHandler UpdateItem;
+
+            public delegate HookResult NetDefaultsHandler(HookEvent @event, Terraria.Item instance, ref int type);
+            public static NetDefaultsHandler NetDefaults;
         }
     }
 }
