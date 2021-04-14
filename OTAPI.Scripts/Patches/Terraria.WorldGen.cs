@@ -19,14 +19,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
+using ModFramework;
+using System;
+
 namespace Terraria
 {
     class patch_WorldGen : Terraria.WorldGen
     {
-        private static extern void orig_hardUpdateWorld(int i, int j);
-        public static void hardUpdateWorld(int i, int j)
+        private static extern void orig_hardUpdateWorld(int x, int y);
+        public static void hardUpdateWorld(int x, int y)
         {
-            orig_hardUpdateWorld(i, j);
+            if (OTAPI.Hooks.WorldGen.HardUpdateWorld?.Invoke(HookEvent.Before, ref x, ref y, orig_hardUpdateWorld) != HookResult.Cancel)
+            {
+                orig_hardUpdateWorld(x, y);
+                OTAPI.Hooks.WorldGen.HardUpdateWorld?.Invoke(HookEvent.After, ref x, ref y, orig_hardUpdateWorld);
+            }
         }
     }
 }
+
+namespace OTAPI
+{
+    public static partial class Hooks
+    {
+        public static partial class WorldGen
+        {
+            public delegate HookResult HardUpdateWorldHandler(HookEvent @event, ref int x, ref int y, Action<int, int> originalMethod);
+            public static HardUpdateWorldHandler HardUpdateWorld;
+        }
+    }
+}
+
