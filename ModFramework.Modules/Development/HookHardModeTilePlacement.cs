@@ -24,18 +24,13 @@ using MonoMod.Cil;
 using System;
 using System.Linq;
 
-class ASD
+partial class Development
 {
     [Modification(ModType.PreMerge, "Hooking hardmode tile placements")]
     static void HardModeTilePlacement(MonoModder modder)
     {
         var csr = modder.GetILCursor(() => Terraria.WorldGen.hardUpdateWorld(0, 0), followRedirect: true);
         var callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.WorldGen.HardmodeTilePlace(0, 0, 0, false, false, 0, 0));
-
-        /* In this particular hardmode tile mod we replace all WorldGen.PlaceTile
-         * calls to a custom callback version, then replace the Pop instruction
-         * with cancelable IL.
-         */
 
         var targets = csr.Body.Instructions.Where(instruction =>
             instruction.OpCode == OpCodes.Call
@@ -47,11 +42,7 @@ class ASD
         if (targets.Length == 0)
             throw new Exception($"{nameof(Terraria.WorldGen.hardUpdateWorld)} is invalid");
 
-        Console.WriteLine("targets: " + targets.Length);
-
-        //var processor = vanilla.Body.GetILProcessor();
-
-        foreach (var replacementPoint in targets)//.Take(1))
+        foreach (var replacementPoint in targets)
         {
             replacementPoint.Operand = callback;
 
@@ -84,11 +75,7 @@ namespace OTAPI.Callbacks
                 return false;
 
             else if (result == HardmodeTileUpdateResult.Continue)
-            {
                 Terraria.WorldGen.PlaceTile(x, y, type, mute, forced, plr, style);
-                if (Terraria.Main.netMode == 2)
-                    Terraria.NetMessage.SendTileSquare(-1, x, y, 1);
-            }
 
             return true;
         }
