@@ -12,6 +12,7 @@ using System.Reflection;
 
 namespace ModFramework.Modules
 {
+    [MonoMod.MonoModIgnore]
     [Modification(ModType.Read, "Loading CSharpScript interface")]
     public class ModulePlugin
     {
@@ -22,6 +23,9 @@ namespace ModFramework.Modules
         public ModulePlugin(MonoMod.MonoModder modder)
         {
             Modder = modder;
+
+            // this is only needed for development of new modifications
+            modder.ReadMod(typeof(ModulePlugin).Assembly.Location);
 
             Console.WriteLine($"[{ConsolePrefix}] Starting runtime");
 

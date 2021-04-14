@@ -24,10 +24,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ModuleOutputDll Include="$(TargetDir)ModFramework.Modules.dll" />
-    <ModuleOutputDeps Include="$(TargetDir)ModFramework.Modules.deps.json" />
+    <Folder Include="Development\" />
   </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <MakeDir Directories="$(TargetDir)..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\modifications\" />
     <Copy SourceFiles="@(ModuleOutputDll)" DestinationFolder="$(TargetDir)..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\modifications" SkipUnchangedFiles="false" />

@@ -28,8 +28,8 @@ namespace ModFramework
     [MonoMod.MonoModIgnore]
     public static class CecilHelpersExtensions
     {
-        public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference)
-            => new ILCursor(new ILContext(modder.Module.GetDefinition<MethodDefinition>(reference)) { ReferenceBag = RuntimeILReferenceBag.Instance });
+        public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference, bool followRedirect = false)
+            => new ILCursor(new ILContext(modder.Module.GetDefinition<MethodDefinition>(reference, followRedirect)) { ReferenceBag = RuntimeILReferenceBag.Instance });
 
         public static MethodDefinition GetMethodDefinition(this MonoMod.MonoModder modder, Expression<Action> reference)
             => modder.Module.GetDefinition<MethodDefinition>(reference);
@@ -56,7 +56,7 @@ namespace ModFramework
             return module.Types.Single(t => t.FullName == target);
         }
 
-        public static TReturn GetDefinition<TReturn>(this IMetadataTokenProvider token, LambdaExpression reference)
+        public static TReturn GetDefinition<TReturn>(this IMetadataTokenProvider token, LambdaExpression reference, bool followRedirect = false)
         {
             //=> (TReturn)token.GetModule().MetadataResolver.Resolve(token.GetMemberReference(reference));
             var memberReference = token.GetMemberReference(reference);
@@ -66,6 +66,16 @@ namespace ModFramework
             {
                 var module = token.GetModule();
                 methodReference.DeclaringType = module.GetType(methodReference.DeclaringType.FullName);
+
+                if(followRedirect)
+                {
+                    var redirected = methodReference.DeclaringType.Resolve().Methods.SingleOrDefault(m => m.Name == "orig_" + methodReference.Name);
+                    if(redirected != null)
+                    {
+                        return (TReturn)(object)redirected;
+                    }
+                }
+
                 return (TReturn)(object)module.MetadataResolver.Resolve(methodReference);
             }
 
