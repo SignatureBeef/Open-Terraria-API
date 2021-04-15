@@ -64,8 +64,6 @@ partial class ChestHooks
         }
     }
 
-    static List<string> completed = new List<string>();
-
     private static void Modder_OnRewritingMethodBody(MonoModder modder, MethodBody body, Instruction instr, int instri)
     {
         if (instr.Operand is MethodReference methodReference)
@@ -73,13 +71,11 @@ partial class ChestHooks
             if (methodReference.DeclaringType.Name == PutItemInNearbyChest.DeclaringType.Name
                 && methodReference.Name == PutItemInNearbyChest.Name)
             {
-                if (completed.Contains(body.Method.Name)) return;
-                completed.Add(body.Method.Name);
-
-                if (!methodReference.Parameters.Any(x => x.Name == PlayerID.Name))
+                if (methodReference.Parameters.Any(x => x.Name == PlayerID.Name))
                 {
-                    methodReference.Parameters.Add(PlayerID);
+                    return;
                 }
+                methodReference.Parameters.Add(PlayerID);
 
                 switch (body.Method.Name)
                 {
