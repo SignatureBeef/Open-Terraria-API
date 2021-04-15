@@ -36,13 +36,16 @@ namespace ModFramework
             // references are cleaned up in the fw modder after auto patching
         }
 
-        public static void EmitAll(this ILCursor cursor, params object[] instructions)
+        public static IEnumerable<Instruction> EmitAll(this ILCursor cursor, params object[] instructions)
         {
+            var emitted = new List<Instruction>();
             foreach (var instruction in instructions)
             {
                 var parsed = CecilHelpersExtensions.AnonymousToInstruction(instruction);
                 cursor.Emit(parsed.OpCode, parsed.Operand);
+                emitted.Add(parsed);
             }
+            return emitted;
         }
     }
 }
