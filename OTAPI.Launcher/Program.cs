@@ -27,11 +27,7 @@ namespace OTAPI.Launcher
 #if tModLoaderServer_V1_3
             Terraria.Program.SavePath = "ModLoader";
 #endif
-            OTAPI.Hooks.Program.LaunchGame = () =>
-            {
-                Terraria.Main.SkipAssemblyLoad = true;
-                return ModFramework.HookResult.Continue;
-            };
+            On.Terraria.Program.LaunchGame += Program_LaunchGame;
             OTAPI.Hooks.MessageBuffer.ClientUUIDReceived = (@event, instance, reader, start, length, messageType) =>
             {
                 if (@event == ModFramework.HookEvent.After)
@@ -47,6 +43,12 @@ namespace OTAPI.Launcher
                 On.Terraria.Main.DedServ += Main_DedServ;
 
             Terraria.WindowsLaunch.Main(args);
+        }
+
+        private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
+        {
+            Terraria.Main.SkipAssemblyLoad = true;
+            orig(args, monoArgs);
         }
 
         private static void Main_DedServ(On.Terraria.Main.orig_DedServ orig, Terraria.Main self)
