@@ -26,7 +26,7 @@ using MonoMod.Cil;
 void EnableServerSideCharacters(MonoModder modder)
 {
     // find the occurance of downedClown and insert the SSC field to the missing BitsByte instance
-    var sendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default));
+    var sendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default), followRedirect: true);
     var sscField = modder.GetFieldDefinition(() => Terraria.Main.ServerSideCharacter);
 
     sendData.GotoNext(MoveType.After, (ins) => ins.MatchLdsfld("Terraria.NPC", "downedClown"));

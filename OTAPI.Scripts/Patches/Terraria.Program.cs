@@ -25,16 +25,16 @@ namespace Terraria
 {
     partial class patch_Program
     {
-        /** Begin Hook: LaunchGame */
-        public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
-        public static void LaunchGame(string[] args, bool monoArgs = false)
-        {
-            if (Hooks.Program.LaunchGame?.Invoke() != HookResult.Cancel)
-            {
-                orig_LaunchGame(args, monoArgs);
-            }
-        }
-        /** End Hook: Launch */
+        ///** Begin Hook: LaunchGame */
+        //public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
+        //public static void LaunchGame(string[] args, bool monoArgs = false)
+        //{
+        //    if (Hooks.Program.LaunchGame?.Invoke() != HookResult.Cancel)
+        //    {
+        //        orig_LaunchGame(args, monoArgs);
+        //    }
+        //}
+        ///** End Hook: Launch */
 
         /** Begin Cross platform support - Avoid System.Windows.Forms */
         public static extern void orig_DisplayException(Exception e);
@@ -46,15 +46,15 @@ namespace Terraria
     }
 }
 
-namespace OTAPI
-{
-    public static partial class Hooks
-    {
-        public static partial class Program
-        {
-            public delegate HookResult LaunchGameHandler();
-            public static LaunchGameHandler LaunchGame;
-        }
-    }
-}
+//namespace OTAPI
+//{
+//    public static partial class Hooks
+//    {
+//        public static partial class Program
+//        {
+//            public delegate HookResult LaunchGameHandler();
+//            public static LaunchGameHandler LaunchGame;
+//        }
+//    }
+//}
 

@@ -48,25 +48,25 @@ namespace Terraria
         public extern void orig_Reset();
         public void Reset()
         {
-            if (OTAPI.Hooks.RemoteClient.Reset?.Invoke(HookEvent.Before, this, orig_Reset) != HookResult.Cancel)
-            {
-                orig_Reset();
-                Data.Clear();
-                OTAPI.Hooks.RemoteClient.Reset?.Invoke(HookEvent.After, this, orig_Reset);
-            }
+            //if (OTAPI.Hooks.RemoteClient.Reset?.Invoke(HookEvent.Before, this, orig_Reset) != HookResult.Cancel)
+            //{
+            orig_Reset();
+            Data.Clear();
+            //    OTAPI.Hooks.RemoteClient.Reset?.Invoke(HookEvent.After, this, orig_Reset);
+            //}
         }
         /** End Hook - Reset / Extra data */
     }
 }
 
-namespace OTAPI
-{
-    public static partial class Hooks
-    {
-        public static partial class RemoteClient
-        {
-            public delegate HookResult ResetHandler(HookEvent @event, Terraria.RemoteClient instance, Action originalMethod);
-            public static ResetHandler Reset;
-        }
-    }
-}
+//namespace OTAPI
+//{
+//    public static partial class Hooks
+//    {
+//        public static partial class RemoteClient
+//        {
+//            public delegate HookResult ResetHandler(HookEvent @event, Terraria.RemoteClient instance, Action originalMethod);
+//            public static ResetHandler Reset;
+//        }
+//    }
+//}
