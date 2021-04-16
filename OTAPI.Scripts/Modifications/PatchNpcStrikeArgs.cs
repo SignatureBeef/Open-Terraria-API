@@ -6,7 +6,8 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 
-partial class Development
+[MonoModIgnore]
+partial class NpcStrikeArgs
 {
     static ParameterDefinition Entity { get; set; }
     static MethodDefinition StrikeNPC { get; set; }

@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework", "ModFramewor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules", "ModFramework.Modules\ModFramework.Modules.csproj", "{29005E29-969C-4220-8C9B-BC4D9F3CE0BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Scripts", "OTAPI.Scripts\OTAPI.Scripts.csproj", "{E0EAF0F7-C4BA-44CD-83A4-2422E4AD1C34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Scripts", "OTAPI.Scripts\OTAPI.Scripts.csproj", "{7E98E868-6CA5-41F0-BE98-47F9B37992B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,8 +49,8 @@ Global
 		{29005E29-969C-4220-8C9B-BC4D9F3CE0BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29005E29-969C-4220-8C9B-BC4D9F3CE0BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29005E29-969C-4220-8C9B-BC4D9F3CE0BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0EAF0F7-C4BA-44CD-83A4-2422E4AD1C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0EAF0F7-C4BA-44CD-83A4-2422E4AD1C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E98E868-6CA5-41F0-BE98-47F9B37992B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E98E868-6CA5-41F0-BE98-47F9B37992B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
