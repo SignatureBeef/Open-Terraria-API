@@ -65,17 +65,6 @@ namespace ModFramework
                 method.IsFinal = false;
             }
 
-            //var properties = type.Properties.Where(p => p.HasThis).ToArray();
-            //foreach (var property in properties)
-            //{
-            //    foreach (var method in new[] { property.GetMethod, property.SetMethod })
-            //        if (method != null)
-            //        {
-            //            method.IsNewSlot = method.IsVirtual = true;
-            //            method.IsFinal = false;
-            //        }
-            //}
-
             modder.OnRewritingMethodBody += (MonoMod.MonoModder modder, MethodBody body, Instruction instr, int instri) =>
             {
                 if (methods.Any(x => x == instr.Operand))

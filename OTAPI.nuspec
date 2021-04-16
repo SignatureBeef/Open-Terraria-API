@@ -3,7 +3,7 @@
   <metadata>
     <id>OTAPI</id>
     <title>Open Terraria API for Terraria</title>
-    <version>3.0.0.0</version>
+    <version>[INJECT_VERSION]</version>
     <authors>DeathCradle</authors>
     <owners>DeathCradle</owners>
     <license type="file">COPYING.txt</license>

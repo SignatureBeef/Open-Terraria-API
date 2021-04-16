@@ -22,6 +22,8 @@ using Mono.Cecil;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace OTAPI.Patcher
 {
@@ -29,7 +31,7 @@ namespace OTAPI.Patcher
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Open Terraria API v3");
+            Console.WriteLine($"Open Terraria API v{GetVersion()}");
 
             var pathIn = "TerrariaServer.dll"; // exists when built, as its a depedency in OTAPI.Patcher
 
@@ -78,6 +80,13 @@ namespace OTAPI.Patcher
                 mm.WriterParameters.WriteSymbols = false;
 #endif
 
+            {
+                var sac = mm.Module.ImportReference(typeof(AssemblyInformationalVersionAttribute).GetConstructors()[0]);
+                var sa = new CustomAttribute(sac);
+                sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, GetVersion()));
+                mm.Module.Assembly.CustomAttributes.Add(sa);
+            }
+
             mm.Write();
 
             mm.Log("[OTAPI] Generating OTAPI.Runtime.dll");
@@ -97,11 +106,19 @@ namespace OTAPI.Patcher
             mm.Log("[OTAPI] Done.");
         }
 
+        static string GetVersion()
+        {
+            return typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+        }
+
         static void BuildNuGetPackage()
         {
             const string packageFile = "OTAPI.nupkg";
 
-            using (var nuspec = File.OpenRead("../../../../OTAPI.nuspec"))
+            var nuspec_xml = File.ReadAllText("../../../../OTAPI.nuspec");
+            nuspec_xml = nuspec_xml.Replace("[INJECT_VERSION]", GetVersion());
+
+            using (var nuspec = new MemoryStream(Encoding.UTF8.GetBytes(nuspec_xml)))
             {
                 var manifest = NuGet.Packaging.Manifest.ReadFrom(nuspec, validateSchema: true);
                 var packageBuilder = new NuGet.Packaging.PackageBuilder();

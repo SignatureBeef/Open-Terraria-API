@@ -51,6 +51,11 @@ namespace ModFramework
         public static MemberReference GetReference(this ModuleDefinition module, Expression<Action> reference)
             => module.GetMemberReference(reference);
 
+        public static MethodReference GetReference<TReturn>(this MonoMod.MonoModder modder, Expression<Func<TReturn>> reference)
+            => modder.Module.GetReference<TReturn>(reference);
+        public static MemberReference GetReference(this MonoMod.MonoModder modder, Expression<Action> reference)
+            => modder.Module.GetReference(reference);
+
         public static TypeDefinition GetDefinition<TType>(this ModuleDefinition module)
         {
             var target = typeof(TType).FullName;

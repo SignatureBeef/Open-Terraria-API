@@ -42,8 +42,13 @@ namespace ModFramework.Relinker
         {
             this.Type = type;
 
-            ICollectionRef = modder.FindType($"ModFramework.{nameof(ModFramework.ICollection<object>)}`1");
-            CollectionRef = modder.FindType($"ModFramework.{nameof(ModFramework.DefaultCollection<object>)}`1");
+            //ICollectionRef = modder.FindType($"ModFramework.{nameof(ModFramework.ICollection<object>)}`1");
+            //CollectionRef = modder.FindType($"ModFramework.{nameof(ModFramework.DefaultCollection<object>)}`1");
+
+            //var asdasd = modder.GetReference(() => ICollection<object>);
+            ICollectionRef = modder.Module.ImportReference(typeof(ICollection<>));
+            CollectionRef = modder.Module.ImportReference(typeof(DefaultCollection<>));
+
 
             ICollectionDef = ICollectionRef.Resolve();
             CollectionDef = CollectionRef.Resolve();
@@ -59,9 +64,9 @@ namespace ModFramework.Relinker
             ICollectionTItem.GenericArguments.Clear();
             ICollectionTItem.GenericArguments.Add(ICollectionDef.GenericParameters[0]);
 
-            CreateCollectionMethod = new MethodReference(nameof(ModFramework.DefaultCollection<object>.CreateCollection), ICollectionTItem, CollectionGen);
-            CreateCollectionMethod.Parameters.Add(new ParameterDefinition(type.Module.TypeSystem.Int32));
-            CreateCollectionMethod.Parameters.Add(new ParameterDefinition(type.Module.TypeSystem.Int32));
+            CreateCollectionMethod = modder.GetReference(() => DefaultCollection<object>.CreateCollection(0, 0, ""));
+            CreateCollectionMethod.ReturnType = ICollectionTItem;
+            CreateCollectionMethod.DeclaringType = CollectionGen;
 
             System.Console.WriteLine($"[ModFw] Relinking to collection {type.FullName}=>{ICollectionDef.FullName}");
         }
@@ -98,6 +103,7 @@ namespace ModFramework.Relinker
                 {
                     if (array.ElementType.FullName == this.Type.FullName)
                     {
+                        body.GetILProcessor().InsertBefore(instr, Instruction.Create(OpCodes.Ldstr, body.Method.FullName));
                         instr.OpCode = OpCodes.Call;
                         instr.Operand = CreateCollectionMethod;
                     }
@@ -187,9 +193,14 @@ namespace ModFramework
             set => _items[x, y] = value;
         }
 
-        public static ICollection<TItem> CreateCollection(int width, int height)
+        public delegate ICollection<TItem> CreateCollectionHandler(int width, int height, string source);
+        public static event CreateCollectionHandler OnCreateCollection;
+
+        public static ICollection<TItem> CreateCollection(int width, int height, string source)
         {
-            return new DefaultCollection<TItem>(width, height);
+            var collection = OnCreateCollection?.Invoke(width, height, source) ?? new DefaultCollection<TItem>(width, height);
+            System.Console.WriteLine($"Created new {collection.Width}x{collection.Height} {collection.GetType().Name} for source: {source}");
+            return collection;
         }
     }
 }
