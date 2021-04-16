@@ -167,6 +167,8 @@ namespace ModFramework
                 //must be the operand.
                 var propOperand = properties.Where(x => x != propOpcode).Single();
 
+                var operand = propOperand.GetMethod.Invoke(anon, null);
+
                 //Now find the Instruction.Create method that takes the same type that is 
                 //specified by the operands type.
                 //E.g. Instruction.Create(OpCode, FieldReference)
@@ -174,7 +176,13 @@ namespace ModFramework
                     .Where(x => x.Name == "Create")
                     .Select(x => new { Method = x, Parameters = x.GetParameters() })
                     //.Where(x => x.Parameters.Length == 2 && x.Parameters[1].ParameterType == propOperand.PropertyType)
-                    .Where(x => x.Parameters.Length == 2 && x.Parameters[1].ParameterType.IsAssignableFrom(propOperand.PropertyType))
+                    .Where(x => x.Parameters.Length == 2 &&
+                        (
+                            x.Parameters[1].ParameterType.IsAssignableFrom(propOperand.PropertyType)
+                            ||
+                            x.Parameters[1].ParameterType.IsAssignableFrom(operand.GetType())
+                        )
+                    )
                     .SingleOrDefault();
 
                 if (instructionMethod == null)
@@ -182,7 +190,7 @@ namespace ModFramework
 
                 //Get the operand value and pass it to the Instruction.Create method to create
                 //the instruction.
-                var operand = propOperand.GetMethod.Invoke(anon, null);
+                //var operand = propOperand.GetMethod.Invoke(anon, null);
                 ins = (Instruction)instructionMethod.Method.Invoke(anon, new[] { opcode, operand });
             }
             else

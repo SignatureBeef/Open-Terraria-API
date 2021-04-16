@@ -21,7 +21,7 @@ using ModFramework.Relinker;
 using MonoMod;
 
 [Modification(ModType.PreMerge, "Implementing Tile properties")]
-void ITileProperties(MonoModder modder, IRelinkProvider relinkProvider)
+void ITileProperties(ModFwModder modder, IRelinkProvider relinkProvider)
 {
     var tile = modder.GetDefinition<Terraria.Tile>();
     tile.RemapFieldsToProperties(relinkProvider);
