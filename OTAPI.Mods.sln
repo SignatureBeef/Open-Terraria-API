@@ -13,13 +13,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		.vscode\launch.json = .vscode\launch.json
 		README.md = README.md
 		.vscode\tasks.json = .vscode\tasks.json
+		OTAPI.nuspec = OTAPI.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework", "ModFramework\ModFramework.csproj", "{69AC5BCF-E2C2-4B87-976C-16B00829AFA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules", "ModFramework.Modules\ModFramework.Modules.csproj", "{29005E29-969C-4220-8C9B-BC4D9F3CE0BB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Scripts", "OTAPI.Scripts\OTAPI.Scripts.csproj", "{7E98E868-6CA5-41F0-BE98-47F9B37992B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules", "ModFramework.Modules\ModFramework.Modules.csproj", "{362CBAFF-327E-4F75-9552-D0CC773F0587}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,12 +46,12 @@ Global
 		{69AC5BCF-E2C2-4B87-976C-16B00829AFA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69AC5BCF-E2C2-4B87-976C-16B00829AFA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69AC5BCF-E2C2-4B87-976C-16B00829AFA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29005E29-969C-4220-8C9B-BC4D9F3CE0BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29005E29-969C-4220-8C9B-BC4D9F3CE0BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29005E29-969C-4220-8C9B-BC4D9F3CE0BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29005E29-969C-4220-8C9B-BC4D9F3CE0BB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E98E868-6CA5-41F0-BE98-47F9B37992B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E98E868-6CA5-41F0-BE98-47F9B37992B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{362CBAFF-327E-4F75-9552-D0CC773F0587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{362CBAFF-327E-4F75-9552-D0CC773F0587}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{362CBAFF-327E-4F75-9552-D0CC773F0587}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{362CBAFF-327E-4F75-9552-D0CC773F0587}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

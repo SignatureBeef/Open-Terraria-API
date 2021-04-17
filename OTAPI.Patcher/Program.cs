@@ -63,12 +63,14 @@ namespace OTAPI.Patcher
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             mm.Read();
 
-            foreach (var path in new[] {
-                Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
-                //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.mm.dll"),
-            })
+            // merge in ModFramework
             {
-                mm.ReadMod(path);
+                mm.OnReadMod += (m, module) =>
+                {
+                    if (module.Assembly.Name.Name.StartsWith("ModFramework"))
+                        mm.RelinkAssembly(module);
+                };
+                mm.ReadMod(Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"));
             }
 
             mm.MapDependencies();
@@ -125,8 +127,10 @@ namespace OTAPI.Patcher
                 packageBuilder.Populate(manifest.Metadata);
 
                 packageBuilder.AddFiles("../../../../", "COPYING.txt", "COPYING.txt");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "package\\lib\\net451");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "package\\lib\\net451");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\net5.0");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\net5.0");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\netstandard2.0");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\netstandard2.0");
 
                 if (File.Exists(packageFile))
                     File.Delete(packageFile);

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>OTAPI</id>
+    <id>OTAPI.Upcoming</id>
     <title>Open Terraria API for Terraria</title>
     <version>[INJECT_VERSION]</version>
     <authors>DeathCradle</authors>
@@ -10,15 +10,22 @@
     <projectUrl>https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The Open Terraria API (OTAPI) is the core for the new generation of Terraria Server mods.</description>
-    <summary>Open Terraria API 3.0.0.0 for Terraria 1.4.2.1</summary>
+    <summary>Open Terraria API [INJECT_VERSION] for Terraria 1.4.2.1</summary>
     <releaseNotes>
       Preliminary Terraria 1.4.2.1
     </releaseNotes>
     <copyright>Copyright 2016-2021</copyright>
     <tags>Terraria,OTAPI</tags>
     <dependencies>
-	  <group targetFramework=".NETFramework4.5.1">
-		<dependency id="Newtonsoft.Json" version="10.0.3" />
+	  <group targetFramework="net5.0">
+		<dependency id="Newtonsoft.Json" version="13.0.1" />
+		<dependency id="MonoMod" version="21.4.2.3" />
+		<dependency id="MonoMod.RuntimeDetour" version="21.4.2.3" />
+	  </group>
+	  <group targetFramework="netstandard2.0">
+		<dependency id="Newtonsoft.Json" version="13.0.1" />
+		<dependency id="MonoMod" version="21.4.2.3" />
+		<dependency id="MonoMod.RuntimeDetour" version="21.4.2.3" />
 	  </group>
     </dependencies>
   </metadata>

@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <PackageVersion>1.0.0-alpha1</PackageVersion>
+    <PackageId>ModFramework.Modules</PackageId>
+    <Authors>DeathCradle</Authors>
+    <PackOnBuild>true</PackOnBuild>
+    <Copyright>Copyright 2016-2021</Copyright>
+    <PackageLicenseUrl>https://github.com/DeathCradle/Open-Terraria-API/blob/upcoming/COPYING.txt</PackageLicenseUrl>
+    <Owners>DeathCradle</Owners>
+    <PackageProjectUrl>https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming</PackageProjectUrl>
+    <Summary>Initial alpha version</Summary>
+    <Title>ModFramework</Title>
+    <Description>A plugin for ModFramework that loads CSharp scripts</Description>
+    <PackageReleaseNotes>A plugin for ModFramework that loads CSharp scripts</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,9 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="MMHOOK_TerrariaServer">
-      <HintPath>..\OTAPI.Setup\bin\Debug\net5.0\MMHOOK_TerrariaServer.dll</HintPath>
-    </Reference>
     <Reference Include="TerrariaServer">
       <HintPath>..\OTAPI.Setup\bin\Debug\net5.0\TerrariaServer.dll</HintPath>
     </Reference>
@@ -26,14 +35,5 @@
   <ItemGroup>
     <Folder Include="Development\" />
   </ItemGroup>
-  <ItemGroup>
-    <ModuleOutputDll Include="$(TargetDir)ModFramework.Modules.dll" />
-    <ModuleOutputDeps Include="$(TargetDir)ModFramework.Modules.deps.json" />
-  </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <MakeDir Directories="$(TargetDir)..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\modifications\" />
-    <Copy SourceFiles="@(ModuleOutputDll)" DestinationFolder="$(TargetDir)..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\modifications" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="@(ModuleOutputDeps)" DestinationFolder="$(TargetDir)..\..\..\..\OTAPI.Patcher\bin\Debug\net5.0\modifications" SkipUnchangedFiles="false" />
-  </Target>
 
 </Project>

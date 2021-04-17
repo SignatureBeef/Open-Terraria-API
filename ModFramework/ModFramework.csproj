@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <PackageVersion>1.0.0-alpha1</PackageVersion>
+    <PackageId>ModFramework</PackageId>
+    <Authors>DeathCradle</Authors>
+    <PackOnBuild>true</PackOnBuild>
+    <Copyright>Copyright 2016-2021</Copyright>
+    <PackageLicenseUrl>https://github.com/DeathCradle/Open-Terraria-API/blob/upcoming/COPYING.txt</PackageLicenseUrl>
+    <Owners>DeathCradle</Owners>
+    <PackageProjectUrl>https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming</PackageProjectUrl>
+    <Summary>Initial alpha version</Summary>
+    <Title>ModFramework</Title>
+    <Description>A tool for rewriting .net binaries. Can allow rewriting of Types to Interfaces, Arrays to Extensible Collections, or even Fields to Properties.</Description>
+    <PackageReleaseNotes>Initial alpha version of the ModFramework.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

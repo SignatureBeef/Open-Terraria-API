@@ -90,6 +90,7 @@ namespace ModFramework.Modules
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Collections.dll")),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Linq.dll")),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Linq.Expressions.dll")),
+                                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Threading.Thread.dll")),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "mscorlib.dll")),
                                 MetadataReference.CreateFromFile(typeof(ModType).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location),

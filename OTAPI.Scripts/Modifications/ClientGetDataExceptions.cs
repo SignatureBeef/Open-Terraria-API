@@ -3,7 +3,7 @@ using System.Linq;
 using ModFramework;
 using Mono.Cecil.Cil;
 
-[Modification(ModType.PreMerge, "ALlowing GetData exceptions debugging")]
+[Modification(ModType.PreMerge, "Allowing GetData exceptions debugging")]
 void ClientGetDataExceptions(ModFramework.ModFwModder modder)
 {
     var vanilla = modder.GetMethodDefinition(() => Terraria.NetMessage.CheckBytes(0), followRedirect: true);
