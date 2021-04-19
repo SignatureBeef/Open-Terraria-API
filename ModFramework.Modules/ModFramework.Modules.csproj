@@ -32,8 +32,4 @@
     </Reference>
   </ItemGroup>
   
-  <ItemGroup>
-    <Folder Include="Development\" />
-  </ItemGroup>
-
 </Project>

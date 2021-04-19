@@ -23,6 +23,6 @@ namespace ModFramework.Plugins
     public interface IAssemblyLoader
     {
         Assembly Load(string path);
-        Assembly Load(System.IO.MemoryStream assembly);
+        Assembly Load(System.IO.MemoryStream assembly, System.IO.MemoryStream pdbsymbols);
     }
 }

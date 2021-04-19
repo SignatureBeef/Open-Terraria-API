@@ -45,7 +45,7 @@ namespace Terraria
 
         public static void Main(string[] args)
         {
-            PluginLoader.AssemblyLoader = new LegacyAssemblyResolver(); // terraria depends on mscorlib, System.Runtime.Loader is not available here yet 
+            //PluginLoader.AssemblyLoader = new LegacyAssemblyResolver(); // terraria depends on mscorlib, System.Runtime.Loader is not available here yet 
             PluginLoader.TryLoad();
             Console.WriteLine($"[OTAPI] Starting up.");
             Modifier.Apply(ModType.Runtime);

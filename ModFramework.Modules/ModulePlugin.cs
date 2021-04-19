@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.CodeAnalysis.Text;
 using ModFramework.Plugins;
 using ModFramework.Relinker;
@@ -23,9 +24,6 @@ namespace ModFramework.Modules
         public ModulePlugin(MonoMod.MonoModder modder)
         {
             Modder = modder;
-
-            // this is only needed for development of new modifications
-            modder.ReadMod(typeof(ModulePlugin).Assembly.Location);
 
             Console.WriteLine($"[{ConsolePrefix}] Starting runtime");
 
@@ -62,27 +60,32 @@ namespace ModFramework.Modules
                     Console.WriteLine($"[{ConsolePrefix}] Loading module: {file}");
                     try
                     {
-                        var contents = string.Join(Environment.NewLine, new[]
+                        var encoding = System.Text.Encoding.UTF8;
+                        var options = CSharpParseOptions.Default
+                               .WithLanguageVersion(LanguageVersion.Preview); // allows toplevel functions
+
+                        SyntaxTree encoded;
+                        SourceText source;
+                        using (var stream = File.OpenRead(file))
                         {
-                            constants,
-                            "using System;",
-                            "using ModFramework;",
-                            "using MonoMod;",
-                            "using ModFramework.Relinker;",
-                            File.ReadAllText(file),
-                        });
-
-                        var codeString = SourceText.From(contents);
-                        var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview); // allows toplevel functions
-
-                        var parsedSyntaxTree = SyntaxFactory.ParseSyntaxTree(codeString, options);
+                            source = SourceText.From(stream, encoding, canBeEmbedded: true);
+                            encoded = CSharpSyntaxTree.ParseText(source, options, file);
+                        }
 
                         using var dllStream = new MemoryStream();
+                        using var pdbStream = new MemoryStream();
+                        using var xmlStream = new MemoryStream();
+
+                        var assemblyName = $"{ModulePrefix}{Guid.NewGuid():N}";
+
+                        var outAsmPath = Path.Combine(outDir, $"{assemblyName}.dll");
+                        var outPdbPath = Path.Combine(outDir, $"{assemblyName}.pdb");
 
                         var assemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
+
                         EmitResult Compile(bool dll)
                         {
-                            var compilation = CSharpCompilation.Create($"{ModulePrefix}{Guid.NewGuid():N}", new[] { parsedSyntaxTree }, new[]
+                            var compilation = CSharpCompilation.Create(assemblyName, new[] { encoded }, new[]
                             {
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Private.CoreLib.dll")),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Console.dll")),
@@ -98,16 +101,36 @@ namespace ModFramework.Modules
                                 MetadataReference.CreateFromFile(typeof(IRelinkProvider).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(MonoMod.MonoModder).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Terraria.WindowsLaunch).Assembly.Location),
-                                //MetadataReference.CreateFromFile(typeof(On.Terraria.WindowsLaunch).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(System.Runtime.InteropServices.RuntimeInformation).Assembly.Location)
-                            }.Concat(typeof(MonoMod.MonoModder).Assembly.GetReferencedAssemblies().Select(asm => MetadataReference.CreateFromFile(Assembly.Load(asm).Location))));
+                            }
+                                .Concat(typeof(MonoMod.MonoModder).Assembly.GetReferencedAssemblies()
+                                .Select(asm => MetadataReference.CreateFromFile(Assembly.Load(asm).Location)))
+                            );
 
                             if (dll)
                             {
-                                compilation = compilation.WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+                                compilation = compilation
+                                    .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+                                    .WithOptimizationLevel(OptimizationLevel.Debug)
+                                    .WithPlatform(Platform.AnyCpu));
                             }
 
-                            return compilation.Emit(dllStream);
+                            var emitOptions = new EmitOptions(
+                                    debugInformationFormat: DebugInformationFormat.PortablePdb,
+                                    pdbFilePath: outPdbPath);
+
+                            var embeddedTexts = new List<EmbeddedText>
+                            {
+                                EmbeddedText.FromSource(file, source),
+                            };
+
+                            EmitResult result = compilation.Emit(
+                                peStream: dllStream,
+                                pdbStream: pdbStream,
+                                embeddedTexts: embeddedTexts,
+                                options: emitOptions);
+
+                            return result;
                         }
 
                         var compilationResult = Compile(false);
@@ -123,19 +146,15 @@ namespace ModFramework.Modules
                             // then register the reflected assembly, then the monomod variant for patches
 
                             dllStream.Seek(0, SeekOrigin.Begin);
+                            pdbStream.Seek(0, SeekOrigin.Begin);
 
-                            var asm = PluginLoader.AssemblyLoader.Load(dllStream);
+                            var asm = PluginLoader.AssemblyLoader.Load(dllStream, pdbStream);
                             PluginLoader.AddAssembly(asm);
 
-                            var outPath = Path.Combine(outDir, $"{asm.GetName().Name}.dll");
-                            var data = dllStream.ToArray();
-                            File.WriteAllBytes(outPath, data);
+                            File.WriteAllBytes(outAsmPath, dllStream.ToArray());
+                            File.WriteAllBytes(outPdbPath, pdbStream.ToArray());
 
-                            Modder.ReadMod(outPath);
-
-                            //Modder.Mods.Single(m => m is Mono.Cecil.AssemblyDefinition asm && asm.FullName == outDir)
-
-                            //Modder.RelinkModuleMap[from] = Modder.Module;
+                            Modder.ReadMod(outAsmPath);
                         }
                         else
                         {

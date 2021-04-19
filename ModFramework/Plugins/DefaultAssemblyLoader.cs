@@ -42,9 +42,9 @@ namespace ModFramework.Plugins
             return AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
         }
 
-        public Assembly Load(System.IO.MemoryStream assembly)
+        public Assembly Load(System.IO.MemoryStream assembly, System.IO.MemoryStream symbols = null)
         {
-            return AssemblyLoadContext.Default.LoadFromStream(assembly);
+            return AssemblyLoadContext.Default.LoadFromStream(assembly, symbols);
         }
     }
 }
