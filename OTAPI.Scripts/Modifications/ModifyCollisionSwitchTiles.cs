@@ -15,7 +15,7 @@ partial class CollisionSwitchTiles
     [Modification(ModType.PreMerge, "Patching Collision.SwitchTiles")]
     static void ModifyCollisionSwitchTiles(ModFramework.ModFwModder modder)
     {
-        var csr = modder.GetILCursor(() => Terraria.Collision.SwitchTiles(default, 0, 0, default, 0), followRedirect: true);
+        var csr = modder.GetILCursor(() => Terraria.Collision.SwitchTiles(default, 0, 0, default, 0));
         SwitchTiles = csr.Method;
 
         csr.Method.Parameters.Add(Entity = new ParameterDefinition("entity",

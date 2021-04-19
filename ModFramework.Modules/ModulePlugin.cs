@@ -97,6 +97,7 @@ namespace ModFramework.Modules
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "mscorlib.dll")),
                                 MetadataReference.CreateFromFile(typeof(ModType).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location),
+                                MetadataReference.CreateFromFile(typeof(Mono.Cecil.Rocks.ILParser).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Newtonsoft.Json.JsonConvert).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(IRelinkProvider).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(MonoMod.MonoModder).Assembly.Location),

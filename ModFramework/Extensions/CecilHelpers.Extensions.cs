@@ -29,10 +29,10 @@ namespace ModFramework
     [MonoMod.MonoModIgnore]
     public static class CecilHelpersExtensions
     {
-        public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference, bool followRedirect = false)
+        public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference, bool followRedirect = true)
             => new ILCursor(new ILContext(modder.Module.GetDefinition<MethodDefinition>(reference, followRedirect)) { ReferenceBag = RuntimeILReferenceBag.Instance });
 
-        public static MethodDefinition GetMethodDefinition(this MonoMod.MonoModder modder, Expression<Action> reference, bool followRedirect = false)
+        public static MethodDefinition GetMethodDefinition(this MonoMod.MonoModder modder, Expression<Action> reference, bool followRedirect = true)
             => modder.Module.GetDefinition<MethodDefinition>(reference, followRedirect: followRedirect);
         public static FieldDefinition GetFieldDefinition<TResult>(this MonoMod.MonoModder modder, Expression<Func<TResult>> reference)
             => modder.Module.GetDefinition<FieldDefinition>(reference);

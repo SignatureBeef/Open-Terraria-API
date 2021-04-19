@@ -29,7 +29,7 @@ void HardModeTileUpdates(MonoModder modder)
 {
     var tile = modder.GetFieldDefinition(() => Terraria.Main.tile);
     var tileType = (tile.FieldType as ArrayType).ElementType;
-    var csr = modder.GetILCursor(() => Terraria.WorldGen.hardUpdateWorld(0, 0), followRedirect: true);
+    var csr = modder.GetILCursor(() => Terraria.WorldGen.hardUpdateWorld(0, 0));
     //var callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.WorldGen.HardmodeTilePlace(0, 0, 0, false, false, 0, 0));
 
     var targets = csr.Body.Instructions.Where(ins =>

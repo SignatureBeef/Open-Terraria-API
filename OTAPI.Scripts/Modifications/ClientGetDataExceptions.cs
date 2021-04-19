@@ -6,7 +6,7 @@ using Mono.Cecil.Cil;
 [Modification(ModType.PreMerge, "Allowing GetData exceptions debugging")]
 void ClientGetDataExceptions(ModFramework.ModFwModder modder)
 {
-    var vanilla = modder.GetMethodDefinition(() => Terraria.NetMessage.CheckBytes(0), followRedirect: true);
+    var vanilla = modder.GetMethodDefinition(() => Terraria.NetMessage.CheckBytes(0));
 
     var handler = vanilla.Body.ExceptionHandlers.Single(x => x.HandlerType == ExceptionHandlerType.Catch);
 
