@@ -33,10 +33,8 @@ using System.Net.Sockets;
 void PatchNetplayBroadcast(MonoModder modder)
 {
     const string Name_BroadcastThreadActive = nameof(Terraria.patch_Netplay.BroadcastThreadActive);
-    const string Name_BroadcastThread = nameof(Terraria.patch_Netplay.orig_BroadcastThread);
-
-    var BroadcastThread = modder.GetDefinition<Terraria.Netplay>().Methods.Single(m => m.Name == Name_BroadcastThread).GetILCursor();
-    var keepAlive = modder.GetDefinition<Terraria.Netplay>().Fields.Single(m => m.Name == Name_BroadcastThreadActive);
+    var BroadcastThread = modder.GetILCursor(() => Terraria.Netplay.BroadcastThread());
+    var BroadcastThreadActive = BroadcastThread.Method.DeclaringType.Fields.Single(m => m.Name == Name_BroadcastThreadActive);
 
     BroadcastThread.GotoNext(
         i => i.OpCode == OpCodes.Call
@@ -47,7 +45,7 @@ void PatchNetplayBroadcast(MonoModder modder)
 
     BroadcastThread.Index++;
 
-    BroadcastThread.Emit(OpCodes.Ldsfld, keepAlive);
+    BroadcastThread.Emit(OpCodes.Ldsfld, BroadcastThreadActive);
     BroadcastThread.Next.OpCode = OpCodes.Brtrue;
     BroadcastThread.Index++;
     BroadcastThread.Emit(OpCodes.Ret);

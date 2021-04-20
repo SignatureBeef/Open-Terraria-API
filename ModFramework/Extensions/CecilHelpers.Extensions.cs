@@ -58,8 +58,19 @@ namespace ModFramework
 
         public static TypeDefinition GetDefinition<TType>(this ModuleDefinition module)
         {
+            // resolve via the module meta data, otherwise try external refs (ie System.*)
             var target = typeof(TType).FullName;
-            return module.Types.Single(t => t.FullName == target);
+            var def = module.Types.SingleOrDefault(t => t.FullName == target);
+            if (def == null)
+            {
+                var reference = module.ImportReference(typeof(TType));
+                def = reference.Resolve();
+            }
+
+            if (def == null)
+                throw new Exception($"Failed to resolve type: {typeof(TType).FullName}");
+
+            return def;
         }
 
         public static TReturn GetDefinition<TReturn>(this IMetadataTokenProvider token, LambdaExpression reference, bool followRedirect = false)
@@ -100,6 +111,9 @@ namespace ModFramework
 
                 if (reference.Body is MemberExpression me && me.Member is System.Reflection.FieldInfo field)
                     return module.ImportReference(field);
+
+                if (reference.Body is NewExpression ne)
+                    return module.ImportReference(ne.Constructor);
             }
 
             throw new System.Exception("Unable to find expression in assembly");

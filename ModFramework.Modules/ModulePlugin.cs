@@ -99,6 +99,7 @@ namespace ModFramework.Modules
                                 MetadataReference.CreateFromFile(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Mono.Cecil.Rocks.ILParser).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Newtonsoft.Json.JsonConvert).Assembly.Location),
+                                MetadataReference.CreateFromFile(typeof(System.IO.Compression.DeflateStream).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(IRelinkProvider).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(MonoMod.MonoModder).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Terraria.WindowsLaunch).Assembly.Location),
@@ -165,11 +166,13 @@ namespace ModFramework.Modules
                             {
                                 Console.Error.WriteLine("{0}: {1}", diagnostic.Id, diagnostic.GetMessage());
                             }
+                            throw new Exception("Compilation failed");
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"[{ConsolePrefix}] Load error: {ex}");
+                        throw;
                     }
                 }
             }
