@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
@@ -73,6 +74,15 @@ namespace ModFramework
                         instr.OpCode = OpCodes.Callvirt;
                 }
             };
+        }
+
+        public static void RemoveWhile(this ILCursor cursor, Func<Instruction, bool> condition, bool removeAfterCondition = true)
+        {
+            while (condition(cursor.Next))
+                cursor.Remove();
+
+            if (removeAfterCondition)
+                cursor.Remove();
         }
     }
 }

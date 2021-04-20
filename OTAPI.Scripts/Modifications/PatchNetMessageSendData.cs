@@ -36,47 +36,34 @@ void PatchNetMessageSendData(MonoModder modder)
     if (locks.Count() != 1)
         throw new Exception($"{SendData.Method.FullName} expected only 1 lock.");
 
-    // remove the monitor.enter
-    // find the continuation
-    // replace transfers
-    // remove all finally segment
-    // remove handler
-
     var the_lock = locks.Single();
 
     // transform short codes to actual variable references.
     // this saves a bit of complexity in finding the variables to be removed
     SendData.Body.SimplifyMacros();
 
-
     var startOfLock = FindStartOfLock(SendData, the_lock);
 
+    // leave any branches/transfers intact
+    startOfLock.Ins.OpCode = OpCodes.Nop;
+    startOfLock.Ins.Operand = null;
+    startOfLock = startOfLock.Next;
 
-    //SendData.Body.OptimizeMacros();
+    // remove the start of the lock
+    SendData.Goto(startOfLock.Ins);
+    SendData.RemoveWhile(ins => !(ins.Operand is MethodReference mref
+            && mref.DeclaringType.FullName == "System.Threading.Monitor"
+            && mref.Name == "Enter"));
 
-    //SendData.Goto(the_lock.TryStart);
+    // remove the handler
+    SendData.Goto(the_lock.HandlerStart);
+    SendData.RemoveWhile(ins => SendData.Next.OpCode != OpCodes.Endfinally);
 
-    //if (the_lock.TryStart.OpCode != OpCodes.Ldloc)
-    //    throw new Exception($"{SendData.Method.FullName} unable to determine the reference variable to remove the lock.");
+    // remove the now useless try/finally
+    SendData.Body.ExceptionHandlers.Remove(the_lock);
 
-    //var variable = (VariableDefinition)the_lock.TryStart.Operand;
-
-    //SendData.GotoPrev(ins => ins.OpCode == OpCodes.Stloc && ins.Operand == variable);
-
-    //var count = CountStack(SendData.Method);
-    //var offset = count.Single(x => x.Ins == SendData.Next);
-
-    //var startOfLock = offset.FindPrevious(c => c.OnStackBefore == 0);
-
-    //// find the stloc/setter of this, then traverse back to the source variable.
-    //// from the source into the System.Threading.Monitor.Enter can safely be removed
-
-    ////while (!(SendData.Next.Operand is MethodReference mref && mref.DeclaringType.FullName == "System.Threading.Monitor"
-    ////        && mref.Name == "Enter"))
-    ////    SendData.Remove();
-
-    ////SendData.Remove();
-
+    // reapply optimisations that we undone
+    SendData.Body.OptimizeMacros();
 }
 
 ILCount FindStartOfLock(ILCursor cursor, ExceptionHandler exlock)
