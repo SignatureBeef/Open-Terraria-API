@@ -20,7 +20,7 @@ namespace ModFramework
                 var pop = instruction.OpCode.StackBehaviourPop;
                 var push = instruction.OpCode.StackBehaviourPush;
 
-                if (pop == StackBehaviour.PopAll)
+                if (pop.In(StackBehaviour.PopAll, StackBehaviour.Varpop, StackBehaviour.Varpush))
                     count = 0;
                 else
                     count += GetStackBehaviourElements(pop);
@@ -75,6 +75,10 @@ namespace ModFramework
                 case StackBehaviour.PopAll:
                     throw new NotImplementedException("Unable to determine stack count to offset");
 
+                // calls, rets (consumes stack)
+                case StackBehaviour.Varpop:
+                    throw new NotImplementedException("Unable to determine call stack count to offset");
+
                 case StackBehaviour.Push1:
                 case StackBehaviour.Pushi:
                 case StackBehaviour.Pushi8:
@@ -88,7 +92,6 @@ namespace ModFramework
 
                 case StackBehaviour.Pop0:
                 case StackBehaviour.Push0:
-                case StackBehaviour.Varpop:
                 case StackBehaviour.Varpush:
                 default:
                     return 0;

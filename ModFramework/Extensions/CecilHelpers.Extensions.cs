@@ -73,10 +73,10 @@ namespace ModFramework
                 var module = token.GetModule();
                 methodReference.DeclaringType = module.GetType(methodReference.DeclaringType.FullName);
 
-                if(followRedirect)
+                if (followRedirect)
                 {
                     var redirected = methodReference.DeclaringType.Resolve().Methods.SingleOrDefault(m => m.Name == "orig_" + methodReference.Name);
-                    if(redirected != null)
+                    if (redirected != null)
                     {
                         return (TReturn)(object)redirected;
                     }
@@ -298,6 +298,16 @@ namespace ModFramework
             }
 
             return instructions;
+        }
+
+        public static bool In(this OpCode opCode, params OpCode[] opCodes)
+        {
+            return opCodes.Any(oc => oc == opCode);
+        }
+
+        public static bool In(this StackBehaviour stackBehaviour, params StackBehaviour[] stackBehaviours)
+        {
+            return stackBehaviours.Any(sb => sb == stackBehaviour);
         }
     }
 }

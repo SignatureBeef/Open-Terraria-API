@@ -27,7 +27,7 @@ using System.Linq;
 using Mono.Cecil.Rocks;
 
 [Modification(ModType.PreMerge, "Removing NetMessage.SendData locks")]
-void PatchNetMessageSendData(MonoModder modder)
+void PatchSendDataLocks(MonoModder modder)
 {
     var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default));
 
