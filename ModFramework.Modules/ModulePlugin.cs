@@ -44,6 +44,26 @@ namespace ModFramework.Modules
             RunModules();
         }
 
+        IEnumerable<MetadataReference> LoadExternalRefs(string path)
+        {
+            var refs = System.IO.File.ReadLines(Path.Combine(path, "Metadata.refs"));
+
+            var assemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
+
+            foreach (var ref_file in refs)
+            {
+                var sys_path = Path.Combine(assemblyPath, ref_file);
+
+                if (File.Exists(ref_file))
+                    yield return MetadataReference.CreateFromFile(ref_file);
+
+                else if (File.Exists(sys_path))
+                    yield return MetadataReference.CreateFromFile(sys_path);
+
+                else throw new Exception($"Unable to resolve external reference: {ref_file} (Metadata.refs) in dir {Environment.CurrentDirectory}");
+            }
+        }
+
         void RunModules()
         {
             var path = Path.Combine("csharp", "modifications");
@@ -85,28 +105,24 @@ namespace ModFramework.Modules
 
                         EmitResult Compile(bool dll)
                         {
-                            var compilation = CSharpCompilation.Create(assemblyName, new[] { encoded }, new[]
+                            var refs = LoadExternalRefs(path).ToArray();
+
+                            var compilation = CSharpCompilation.Create(assemblyName, new[] { encoded }, new MetadataReference[]
                             {
-                                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Private.CoreLib.dll")),
-                                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Console.dll")),
+                                // runtime refs
+                                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Runtime.dll")),
-                                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Collections.dll")),
-                                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Linq.dll")),
-                                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Linq.Expressions.dll")),
-                                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Threading.Thread.dll")),
-                                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "mscorlib.dll")),
+
+                                // global refs
                                 MetadataReference.CreateFromFile(typeof(ModType).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Mono.Cecil.AssemblyDefinition).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Mono.Cecil.Rocks.ILParser).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(Newtonsoft.Json.JsonConvert).Assembly.Location),
-                                MetadataReference.CreateFromFile(typeof(System.IO.Compression.DeflateStream).Assembly.Location),
-                                MetadataReference.CreateFromFile(typeof(IRelinkProvider).Assembly.Location),
                                 MetadataReference.CreateFromFile(typeof(MonoMod.MonoModder).Assembly.Location),
-                                MetadataReference.CreateFromFile(typeof(Terraria.WindowsLaunch).Assembly.Location),
-                                MetadataReference.CreateFromFile(typeof(System.Runtime.InteropServices.RuntimeInformation).Assembly.Location)
                             }
                                 .Concat(typeof(MonoMod.MonoModder).Assembly.GetReferencedAssemblies()
                                 .Select(asm => MetadataReference.CreateFromFile(Assembly.Load(asm).Location)))
+                                .Concat(refs)
                             );
 
                             if (dll)
@@ -160,13 +176,14 @@ namespace ModFramework.Modules
                         }
                         else
                         {
-                            Console.WriteLine($"Compilation errors for file: {Path.GetFileName(file)}");
+                            //Console.WriteLine($"Compilation errors for file: {Path.GetFileName(file)}");
 
                             foreach (var diagnostic in compilationResult.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error))
                             {
                                 Console.Error.WriteLine("{0}: {1}", diagnostic.Id, diagnostic.GetMessage());
                             }
-                            throw new Exception("Compilation failed");
+
+                            throw new Exception($"Compilation errors above for file: {Path.GetFileName(file)}");
                         }
                     }
                     catch (Exception ex)

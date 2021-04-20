@@ -25,11 +25,5 @@
   <ItemGroup>
     <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="TerrariaServer">
-      <HintPath>..\OTAPI.Setup\bin\Debug\net5.0\TerrariaServer.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   
 </Project>

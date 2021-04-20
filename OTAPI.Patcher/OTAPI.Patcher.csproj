@@ -36,11 +36,16 @@
       <Link>csharp\modifications\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\OTAPI.Scripts\**\*.refs">
+      <Link>csharp\modifications\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <MakeDir Directories="$(TargetDir)modifications\" />
     <Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules\bin\Debug\net5.0\ModFramework.Modules.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules\bin\Debug\net5.0\ModFramework.Modules.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules\bin\Debug\net5.0\ModFramework.Modules.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
   </Target>
 
