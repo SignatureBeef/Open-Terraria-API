@@ -16,45 +16,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using MonoMod;
-using OTAPI;
-using ModFramework;
+#pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
+
 using System;
 
 namespace Terraria
 {
     partial class patch_Program
     {
-        ///** Begin Hook: LaunchGame */
-        //public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
-        //public static void LaunchGame(string[] args, bool monoArgs = false)
-        //{
-        //    if (Hooks.Program.LaunchGame?.Invoke() != HookResult.Cancel)
-        //    {
-        //        orig_LaunchGame(args, monoArgs);
-        //    }
-        //}
-        ///** End Hook: Launch */
-
-        /** Begin Cross platform support - Avoid System.Windows.Forms */
         public static extern void orig_DisplayException(Exception e);
         private static void DisplayException(Exception e)
         {
             Console.WriteLine(e.ToString());
         }
-        /** End Cross platform support - Avoid System.Windows.Forms */
     }
 }
-
-//namespace OTAPI
-//{
-//    public static partial class Hooks
-//    {
-//        public static partial class Program
-//        {
-//            public delegate HookResult LaunchGameHandler();
-//            public static LaunchGameHandler LaunchGame;
-//        }
-//    }
-//}
-

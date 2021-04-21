@@ -48,17 +48,6 @@ namespace Terraria
                 OTAPI.Hooks.NetMessage.SendData?.Invoke(HookEvent.After, bufferIndex, ref msgType, ref remoteClient, ref ignoreClient, ref text, ref number, ref number2, ref number3, ref number4, ref number5, ref number6, ref number7);
             }
         }
-
-        //public static extern void orig_greetPlayer(int plr);
-        //public static void greetPlayer(int plr)
-        //{
-        //    if (OTAPI.Hooks.NetMessage.GreetPlayer?.Invoke(HookEvent.Before, ref plr) != HookResult.Cancel)
-        //    {
-        //        orig_greetPlayer(plr);
-        //        OTAPI.Hooks.NetMessage.GreetPlayer?.Invoke(HookEvent.After, ref plr);
-        //    }
-        //}
-
     }
 }
 
@@ -92,9 +81,6 @@ namespace OTAPI
                 ref int number7
             );
             public static SendDataHandler SendData;
-
-            //public delegate HookResult GreetPlayerHandler(HookEvent @event, ref int playerId);
-            //public static GreetPlayerHandler GreetPlayer;
         }
     }
 }

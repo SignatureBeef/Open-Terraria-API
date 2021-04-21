@@ -18,17 +18,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
+
 using ModFramework;
 using ModFramework.Plugins;
 using System;
 
 namespace Terraria
 {
-    class patch_WindowsLaunch //: Terraria.WindowsLaunch
+    class patch_WindowsLaunch
     {
-        //public static AssemblyLoadContext Modifications = new AssemblyLoadContext("OTAPI", true);
-
-        /** Begin Cross platform support - disable the kernel32 call when not on windows */
         public static extern bool orig_SetConsoleCtrlHandler(Terraria.WindowsLaunch.HandlerRoutine handler, bool add);
         public static bool SetConsoleCtrlHandler(Terraria.WindowsLaunch.HandlerRoutine handler, bool add)
         {
@@ -38,19 +36,14 @@ namespace Terraria
             }
             return false;
         }
-        /** End Cross platform support - disable the kernel32 call when not on windows */
 
-        /** Begin OTAPI Startup */
         public static extern void orig_Main(string[] args);
-
         public static void Main(string[] args)
         {
-            //PluginLoader.AssemblyLoader = new LegacyAssemblyResolver(); // terraria depends on mscorlib, System.Runtime.Loader is not available here yet 
             PluginLoader.TryLoad();
             Console.WriteLine($"[OTAPI] Starting up.");
             Modifier.Apply(ModType.Runtime);
             orig_Main(args);
         }
-        /** End OTAPI Startup */
     }
 }

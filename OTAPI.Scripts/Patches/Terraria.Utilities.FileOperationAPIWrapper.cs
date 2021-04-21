@@ -26,7 +26,6 @@ namespace Terraria.Utilities
     public static class patch_FileOperationAPIWrapper
     {
         public static extern bool orig_MoveToRecycleBin(string path);
-
         public static bool MoveToRecycleBin(string path)
         {
             if (!orig_MoveToRecycleBin(path))

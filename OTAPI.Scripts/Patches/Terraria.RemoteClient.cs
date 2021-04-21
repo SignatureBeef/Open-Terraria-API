@@ -16,10 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using System;
-using OTAPI;
+
 using System.Collections.Generic;
-using ModFramework;
 
 namespace Terraria
 {
@@ -27,46 +25,17 @@ namespace Terraria
     {
         public Dictionary<string, object> Data { get; set; }
 
-        //public string ClientUUID
-        //{
-        //    get => (Data[nameof(ClientUUID)] as string);
-        //    set => Data[nameof(ClientUUID)] = value;
-        //}
-
-        /** Begin Patch: Extra data */
-        //public extern void orig_ctor_RemoteClient();
         [MonoMod.MonoModConstructor]
         patch_RemoteClient()
         {
-            //orig_ctor_RemoteClient();
             Data = new Dictionary<string, object>();
         }
 
-        /** End Hook: Extra data */
-
-        /** Begin Hook - Reset / Extra data */
         public extern void orig_Reset();
         public void Reset()
         {
-            //if (OTAPI.Hooks.RemoteClient.Reset?.Invoke(HookEvent.Before, this, orig_Reset) != HookResult.Cancel)
-            //{
             orig_Reset();
             Data.Clear();
-            //    OTAPI.Hooks.RemoteClient.Reset?.Invoke(HookEvent.After, this, orig_Reset);
-            //}
         }
-        /** End Hook - Reset / Extra data */
     }
 }
-
-//namespace OTAPI
-//{
-//    public static partial class Hooks
-//    {
-//        public static partial class RemoteClient
-//        {
-//            public delegate HookResult ResetHandler(HookEvent @event, Terraria.RemoteClient instance, Action originalMethod);
-//            public static ResetHandler Reset;
-//        }
-//    }
-//}

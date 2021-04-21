@@ -16,13 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+#pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
+
 using System.Runtime.InteropServices;
 
 namespace ReLogic.OS
 {
     public abstract class patch_Platform
     {
-        /** Begin Cross platform support - Determine platform based on RuntimeInformation rather than compile time */
         public static readonly Platform Current;
 
         public static extern void orig_ctor_Platform();
@@ -47,6 +48,5 @@ namespace ReLogic.OS
                 Current = new ReLogic.OS.WindowsPlatform();
 #endif
         }
-        /** End Cross platform support - Determine platform based on RuntimeInformation rather than compile time */
     }
 }

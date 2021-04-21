@@ -16,16 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using Microsoft.Xna.Framework;
-using OTAPI;
-using ModFramework;
-using System;
+#pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
 namespace Terraria
 {
     class patch_Main
     {
-        /** Begin Cross platform support - Avoid Windows specific calls */
         public extern void orig_NeverSleep();
         public void NeverSleep()
         {
@@ -37,60 +33,5 @@ namespace Terraria
         {
             if (ReLogic.OS.Platform.IsWindows) orig_YouCanSleepNow();
         }
-        /** End Cross platform support - Avoid Windows specific calls */
-
-        ///** Begin Hook - Update */
-        //protected extern void orig_Update(GameTime gameTime);
-        //protected void Update(GameTime gameTime)
-        //{
-        //    if (Hooks.Main.Update?.Invoke(HookEvent.Before, ref gameTime) != HookResult.Cancel)
-        //    {
-        //        orig_Update(gameTime);
-        //        Hooks.Main.Update?.Invoke(HookEvent.After, ref gameTime);
-        //    }
-        //}
-        ///** End Hook - Update */
-
-        ///** Begin Hook - Initialize */
-        //protected extern void orig_Initialize();
-        //protected void Initialize()
-        //{
-        //    if (Hooks.Main.Initialize?.Invoke(HookEvent.Before) != HookResult.Cancel)
-        //    {
-        //        orig_Initialize();
-        //        Hooks.Main.Initialize?.Invoke(HookEvent.After);
-        //    }
-        //}
-        ///** End Hook - Initialize */
-
-        ///** Begin Hook - startDedInput */
-        //public extern static void orig_startDedInput();
-        //public static void startDedInput()
-        //{
-        //    if (Hooks.Main.startDedInput?.Invoke(HookEvent.Before, orig_startDedInput) != HookResult.Cancel)
-        //    {
-        //        orig_startDedInput();
-        //        Hooks.Main.startDedInput?.Invoke(HookEvent.After, orig_startDedInput);
-        //    }
-        //}
-        ///** End Hook - startDedInput */
     }
 }
-
-//namespace OTAPI
-//{
-//    public static partial class Hooks
-//    {
-//        public static partial class Main
-//        {
-//            public delegate HookResult UpdateHandler(HookEvent @event, ref GameTime gameTime);
-//            public static UpdateHandler Update;
-
-//            public delegate HookResult InitializeHandler(HookEvent @event);
-//            public static InitializeHandler Initialize;
-
-//            public delegate HookResult startDedInputHandler(HookEvent @event, Action originalMethod);
-//            public static startDedInputHandler startDedInput;
-//        }
-//    }
-//}
