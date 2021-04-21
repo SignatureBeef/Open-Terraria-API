@@ -28,11 +28,21 @@ namespace OTAPI.Launcher
             Terraria.Program.SavePath = "ModLoader";
 #endif
             On.Terraria.Program.LaunchGame += Program_LaunchGame;
-            OTAPI.Hooks.MessageBuffer.ClientUUIDReceived = (@event, instance, reader, start, length, messageType) =>
+            Hooks.MessageBuffer.ClientUUIDReceived = (@event, instance, reader, start, length, messageType) =>
             {
                 if (@event == ModFramework.HookEvent.After)
                     System.Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[instance.whoAmI].ClientUUID}");
 
+                return ModFramework.HookResult.Continue;
+            };
+            Hooks.NPC.MechSpawn = (float x, float y, int type, int num, int num2, int num3) =>
+            {
+                System.Console.WriteLine($"Hooks.NPC.MechSpawn x={x}, y={y}, type={type}, num={num}, num2={num2}, num3={num3}");
+                return ModFramework.HookResult.Continue;
+            };
+            Hooks.Item.MechSpawn = (float x, float y, int type, int num, int num2, int num3) =>
+            {
+                System.Console.WriteLine($"Hooks.Item.MechSpawn x={x}, y={y}, type={type}, num={num}, num2={num2}, num3={num3}");
                 return ModFramework.HookResult.Continue;
             };
 
@@ -47,7 +57,7 @@ namespace OTAPI.Launcher
 
         private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
         {
-            Terraria.Main.SkipAssemblyLoad = true;
+            //Terraria.Main.SkipAssemblyLoad = true;
             orig(args, monoArgs);
         }
 
