@@ -25,10 +25,16 @@ namespace Terraria.Utilities
 {
     public static class patch_FileOperationAPIWrapper
     {
+        public static extern bool orig_MoveToRecycleBin(string path);
+
         public static bool MoveToRecycleBin(string path)
         {
-            File.Delete(path);
-            return !File.Exists(path);
+            if (!orig_MoveToRecycleBin(path))
+            {
+                File.Delete(path);
+                return !File.Exists(path);
+            }
+            return false;
         }
     }
 }
