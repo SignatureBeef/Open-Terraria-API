@@ -57,7 +57,7 @@ namespace OTAPI.Launcher
 
         private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
         {
-            //Terraria.Main.SkipAssemblyLoad = true;
+            Terraria.Main.SkipAssemblyLoad = true;
             orig(args, monoArgs);
         }
 

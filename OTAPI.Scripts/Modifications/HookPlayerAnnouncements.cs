@@ -28,7 +28,7 @@ void HookPlayerAnnouncements(ModFwModder modder)
 {
     var syncOne = modder.GetReference(() => Terraria.NetMessage.SyncOnePlayer(0, 0, 0));
     var broadcast = modder.GetReference(() => Terraria.Chat.ChatHelper.BroadcastChatMessage(null, default, 0));
-    var callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.NetMessage.PlayerAnnounce(null, default, 0));
+    var callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.NetMessage.PlayerAnnounce(null, default, 0, 0, 0, 0));
 
     modder.OnRewritingMethodBody += (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
     {
@@ -37,6 +37,8 @@ void HookPlayerAnnouncements(ModFwModder modder)
             && body.Method.FullName == syncOne.FullName
         )
         {
+            foreach (var prm in body.Method.Parameters)
+                body.GetILProcessor().InsertBefore(instr, Instruction.Create(OpCodes.Ldarg, prm));
             instr.Operand = callback;
         }
     };
@@ -46,9 +48,9 @@ namespace OTAPI.Callbacks
 {
     public static partial class NetMessage
     {
-        public static void PlayerAnnounce(NetworkText text, Color color, int excludedPlayer = -1)
+        public static void PlayerAnnounce(NetworkText text, Color color, int excludedPlayer, int plr, int toWho, int fromWho)
         {
-            var result = Hooks.NetMessage.PlayerAnnounce?.Invoke(text, color, excludedPlayer);
+            var result = Hooks.NetMessage.PlayerAnnounce?.Invoke(text, color, excludedPlayer, plr, toWho, fromWho);
 
             if (result != HookResult.Cancel)
                 Terraria.Chat.ChatHelper.BroadcastChatMessage(text, color, excludedPlayer);
@@ -62,7 +64,7 @@ namespace OTAPI
     {
         public static partial class NetMessage
         {
-            public delegate HookResult PlayerAnnounceHandler(NetworkText text, Color color, int excludedPlayer = -1);
+            public delegate HookResult PlayerAnnounceHandler(NetworkText text, Color color, int excludedPlayer, int plr, int toWho, int fromWho);
             public static PlayerAnnounceHandler PlayerAnnounce;
         }
     }
