@@ -11,7 +11,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Player
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.2.1, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.2.2, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking NetMessage.greetPlayer";
 		public override void Run()

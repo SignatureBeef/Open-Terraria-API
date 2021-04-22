@@ -104,7 +104,7 @@ Write-Host "Extracting TerrariaServer.exe from $zipSavePath";
 $zip = [System.IO.Compression.ZipFile]::OpenRead($zipSavePath); #not working on PASH yet :c
 
 #Get the particular .exe we are after
-$entry = $zip.GetEntry("1421/Windows/TerrariaServer.exe");
+$entry = $zip.GetEntry("1422/Windows/TerrariaServer.exe");
 
 #Write the new zip to disk
 $output = New-Object IO.StreamWriter $serverSaveFile;
