@@ -44,8 +44,9 @@
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="TerrariaServer">
-      <HintPath>..\..\TerrariaServer.exe</HintPath>
+    <Reference Include="TerrariaServer, Version=1.4.2.3, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

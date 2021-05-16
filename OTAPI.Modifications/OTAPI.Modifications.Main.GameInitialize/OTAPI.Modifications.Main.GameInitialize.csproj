@@ -40,6 +40,10 @@
     <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
+    <Reference Include="TerrariaServer, Version=1.4.2.3, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition=" '$(SolutionName)' == 'OTAPI.Client.Xna' ">
@@ -49,13 +53,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="TerrariaServer">
-          <HintPath>..\..\TerrariaServer.exe</HintPath>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
+    <Otherwise />
   </Choose>
   <ItemGroup>
     <Compile Include="Callbacks\GameInitialize.cs" />
