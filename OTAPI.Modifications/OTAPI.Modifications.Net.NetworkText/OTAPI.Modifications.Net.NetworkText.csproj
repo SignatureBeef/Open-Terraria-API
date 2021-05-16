@@ -54,7 +54,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="TerrariaServer">
-      <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
+      <HintPath>..\..\TerrariaServer.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
