@@ -3,16 +3,16 @@
   <metadata>
     <id>OTAPI</id>
     <title>Open Terraria API for Terraria</title>
-    <version>2.0.0.42</version>
+    <version>2.0.0.43</version>
     <authors>DeathCradle</authors>
     <owners>DeathCradle</owners>
     <license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/DeathCradle/Open-Terraria-API</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The Open Terraria API (OTAPI) is the core for the new generation of Terraria Server mods.</description>
-    <summary>Open Terraria API 2.0.0.42 for Terraria 1.4.2.2</summary>
+    <summary>Open Terraria API 2.0.0.43 for Terraria 1.4.2.3</summary>
     <releaseNotes>
-      Preliminary Terraria 1.4.2.2
+      Preliminary Terraria 1.4.2.3 by Death and Moneylover3246
     </releaseNotes>
     <copyright>Copyright 2016-2021</copyright>
     <tags>Terraria,OTAPI</tags>

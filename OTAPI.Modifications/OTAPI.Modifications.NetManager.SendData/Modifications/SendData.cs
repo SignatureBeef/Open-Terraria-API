@@ -7,7 +7,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.NetManager
     {
         public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
         {
-            "TerrariaServer, Version=1.4.2.2, Culture=neutral, PublicKeyToken=null"
+            "TerrariaServer, Version=1.4.2.3, Culture=neutral, PublicKeyToken=null"
         };
         public override string Description => "Hooking NetManager.SendData...";
 

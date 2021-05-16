@@ -12,7 +12,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World.IO
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.2.2, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.2.3, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Adding autoSave check to saveAndPlay";
 		public override void Run()
