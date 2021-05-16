@@ -41,9 +41,6 @@
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="TerrariaServer">
-      <HintPath>..\..\TerrariaServer.exe</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modifications\MakeTypesPublic.cs" />

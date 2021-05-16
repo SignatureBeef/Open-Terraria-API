@@ -9,7 +9,7 @@ namespace OTAPI.Modifications.NetworkText.Modifications
 	{
 		public override IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.2.3, Culture=neutral, PublicKeyToken=null",
+			"TerrariaServer, Version=1.4.2.2, Culture=neutral, PublicKeyToken=null",
 		};
 
 		public override string Description => "Hooking Terraria.NetMessage.BroadcastChatMessage";

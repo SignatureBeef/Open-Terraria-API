@@ -40,7 +40,7 @@
     <Otherwise>
       <ItemGroup>
         <Reference Include="TerrariaServer">
-          <HintPath>..\..\TerrariaServer.exe</HintPath>
+          <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
         </Reference>
       </ItemGroup>
     </Otherwise>

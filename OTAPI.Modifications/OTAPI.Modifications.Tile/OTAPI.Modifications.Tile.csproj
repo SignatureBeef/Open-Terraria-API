@@ -83,7 +83,7 @@
     <Otherwise>
       <ItemGroup>
         <Reference Include="TerrariaServer">
-          <HintPath>..\..\TerrariaServer.exe</HintPath>
+          <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
         </Reference>
         <ProjectReference Include="..\OTAPI.Modifications.Xna\OTAPI.Modifications.Xna.csproj">
           <Project>{4A980A83-9E64-4207-8281-4F29FBF2AD90}</Project>

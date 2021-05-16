@@ -42,7 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="TerrariaServer">
-      <HintPath>..\..\TerrariaServer.exe</HintPath>
+      <HintPath>..\..\wrap\TerrariaServer\TerrariaServer.exe</HintPath>
     </Reference>
     <Reference Include="TerrariaServer">
       <HintPath>..\..\wrap\TerrariaServer\ReLogic.dll</HintPath>
