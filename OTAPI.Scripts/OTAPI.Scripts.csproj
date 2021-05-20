@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Reference Include="TerrariaServer">
 			<HintPath>..\OTAPI.Setup\bin\Debug\net5.0\TerrariaServer.dll</HintPath>
 		</Reference>
 	</ItemGroup>
+	<PropertyGroup>
+		<PreserveCompilationReferences>true</PreserveCompilationReferences>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+	</PropertyGroup>
 </Project>

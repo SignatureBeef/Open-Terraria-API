@@ -18,7 +18,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Windows.Markup;
 
 namespace Microsoft.Xna.Framework
 {

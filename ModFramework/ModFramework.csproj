@@ -17,8 +17,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MonoMod" Version="21.4.2.3" />
-    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.2.3" />
+    <PackageReference Include="MonoMod" Version="21.4.29.1" />
+    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.29.1" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

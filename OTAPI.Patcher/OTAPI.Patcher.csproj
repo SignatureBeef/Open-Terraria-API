@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Mono.Cecil" Version="0.11.3" />
-    <PackageReference Include="MonoMod" Version="21.4.2.3" />
-    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.2.3" />
+    <PackageReference Include="MonoMod" Version="21.4.29.1" />
+    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.29.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
-    <PackageReference Include="NuGet.Packaging" Version="5.9.0" />
+    <PackageReference Include="NuGet.Packaging" Version="5.9.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -84,7 +84,7 @@ namespace OTAPI.Setup.Targets
                 } while (attempts-- > 0);
             }
 
-            return "https://terraria.org/system/dedicated_servers/archives/000/000/044/original/terraria-server-1421.zip?1617223487";
+            return "https://terraria.org/system/dedicated_servers/archives/000/000/046/original/terraria-server-1423.zip";
         }
     }
 }

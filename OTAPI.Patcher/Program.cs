@@ -63,15 +63,15 @@ namespace OTAPI.Patcher
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             mm.Read();
 
-            // merge in ModFramework
-            {
-                mm.OnReadMod += (m, module) =>
-                {
-                    if (module.Assembly.Name.Name.StartsWith("ModFramework"))
-                        mm.RelinkAssembly(module);
-                };
-                mm.ReadMod(Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"));
-            }
+            //// merge in ModFramework
+            //{
+            //    mm.OnReadMod += (m, module) =>
+            //    {
+            //        if (module.Assembly.Name.Name.StartsWith("ModFramework"))
+            //            mm.RelinkAssembly(module);
+            //    };
+            //    mm.ReadMod(Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"));
+            //}
 
             mm.MapDependencies();
 

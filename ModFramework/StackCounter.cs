@@ -23,6 +23,7 @@ using Mono.Cecil.Cil;
 
 namespace ModFramework
 {
+    [MonoMod.MonoModIgnore]
     public static class StackCounter
     {
         public static List<ILCount> Count(MethodDefinition method)

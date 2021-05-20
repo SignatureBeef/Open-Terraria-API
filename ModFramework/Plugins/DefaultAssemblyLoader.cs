@@ -28,16 +28,15 @@ namespace ModFramework.Plugins
         {
             path = Path.GetFullPath(path);
 
-            var resolver = new AssemblyDependencyResolver(path);
-
-            AssemblyLoadContext.Default.Resolving += (AssemblyLoadContext arg1, AssemblyName arg2) =>
-            {
-                string assemblyPath = resolver.ResolveAssemblyToPath(arg2);
-                if (assemblyPath != null)
-                    return AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
-
-                return null;
-            };
+            // most likely better to have in the host app
+            //var resolver = new AssemblyDependencyResolver(path);
+            //AssemblyLoadContext.Default.Resolving += (AssemblyLoadContext arg1, AssemblyName arg2) =>
+            //{
+            //    string assemblyPath = resolver.ResolveAssemblyToPath(arg2);
+            //    if (assemblyPath != null)
+            //        return AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
+            //    return null;
+            //};
 
             return AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
         }

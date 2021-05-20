@@ -16,7 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace OTAPI.Launcher
 {
@@ -31,18 +34,18 @@ namespace OTAPI.Launcher
             Hooks.MessageBuffer.ClientUUIDReceived = (@event, instance, reader, start, length, messageType) =>
             {
                 if (@event == ModFramework.HookEvent.After)
-                    System.Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[instance.whoAmI].ClientUUID}");
+                    Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[instance.whoAmI].ClientUUID}");
 
                 return ModFramework.HookResult.Continue;
             };
             Hooks.NPC.MechSpawn = (float x, float y, int type, int num, int num2, int num3) =>
             {
-                System.Console.WriteLine($"Hooks.NPC.MechSpawn x={x}, y={y}, type={type}, num={num}, num2={num2}, num3={num3}");
+                Console.WriteLine($"Hooks.NPC.MechSpawn x={x}, y={y}, type={type}, num={num}, num2={num2}, num3={num3}");
                 return ModFramework.HookResult.Continue;
             };
             Hooks.Item.MechSpawn = (float x, float y, int type, int num, int num2, int num3) =>
             {
-                System.Console.WriteLine($"Hooks.Item.MechSpawn x={x}, y={y}, type={type}, num={num}, num2={num2}, num3={num3}");
+                Console.WriteLine($"Hooks.Item.MechSpawn x={x}, y={y}, type={type}, num={num}, num2={num2}, num3={num3}");
                 return ModFramework.HookResult.Continue;
             };
 
@@ -58,17 +61,18 @@ namespace OTAPI.Launcher
         private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
         {
             Terraria.Main.SkipAssemblyLoad = true;
+            //Terraria.Program.ForceLoadThread(null);
             orig(args, monoArgs);
         }
 
         private static void Main_DedServ(On.Terraria.Main.orig_DedServ orig, Terraria.Main self)
         {
-            System.Console.WriteLine($"Server init process successful");
+            Console.WriteLine($"Server init process successful");
         }
 
         private static void WindowsLaunch_Main(On.Terraria.WindowsLaunch.orig_Main orig, string[] args)
         {
-            System.Console.WriteLine($"MonoMod runtime hooks active");
+            Console.WriteLine($"MonoMod runtime hooks active");
             orig(args); // now call the original Terraria.WindowsLaunch.Main instance
         }
     }

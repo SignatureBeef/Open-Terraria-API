@@ -38,6 +38,7 @@ namespace ModFramework.Relinker
         //    RelinkProvider = relinkProvider ?? modder as IRelinkProvider;
         //}
 
+        public virtual void Relink(TypeDefinition type) { }
         public virtual void Relink(MethodDefinition method) { }
         public virtual void Relink(MethodDefinition method, VariableDefinition variable) { }
         public virtual void Relink(MethodDefinition method, ParameterDefinition parameter) { }

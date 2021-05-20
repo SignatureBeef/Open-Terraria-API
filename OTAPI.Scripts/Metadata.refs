@@ -3,7 +3,9 @@ System.Linq.dll
 System.Linq.Expressions.dll
 System.Console.dll
 System.Runtime.InteropServices.RuntimeInformation.dll
+System.Runtime.Loader.dll
 System.Collections.dll
 System.Threading.Thread.dll
+System.IO.dll
 System.IO.Compression.dll
 System.IO.FileSystem.dll

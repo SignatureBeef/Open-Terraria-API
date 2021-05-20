@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using Mono.Cecil;
 using MonoMod;
 
 /* Forward all shims to the Shims mod DLL. As part of MonoMod, any mod DLLs will be merged into the final assembly */
@@ -28,3 +27,4 @@ using MonoMod;
 [assembly: AssemblyRedirector("System.Windows.Forms", "TerrariaServer.OTAPI.Shims.mm.dll")]
 [assembly: AssemblyRedirector("System.Drawing.Graphics", "TerrariaServer.OTAPI.Shims.mm.dll")]
 [assembly: AssemblyRedirector("ReLogic", "TerrariaServer")]
+[assembly: AssemblyRedirector("Steamworks.NET", "TerrariaServer")]

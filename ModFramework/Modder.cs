@@ -20,6 +20,7 @@ using ModFramework.Relinker;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
+using MonoMod.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -91,6 +92,8 @@ namespace ModFramework
         public override void PatchRefsInType(TypeDefinition type)
         {
             base.PatchRefsInType(type);
+
+            RunTasks(t => t.Relink(type));
 
             if (type.HasEvents)
                 foreach (var typeEvent in type.Events)

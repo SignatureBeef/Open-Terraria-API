@@ -19,7 +19,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using ModFramework;
 using Mono.Cecil;
 using MonoMod;
-using MonoMod.RuntimeDetour.HookGen;
 using System;
 using System.IO;
 using System.Linq;
@@ -51,29 +50,13 @@ namespace OTAPI.Setup
                 MissingDependencyThrow = false,
                 PublicEverything = true, // we want all of terraria exposed
 
+                LogVerboseEnabled = false,
+
                 GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
             };
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             mm.Read();
 
-            //{
-            //    if (File.Exists(output))
-            //    {
-            //        mm.Log($"[HookGen] Clearing {output}");
-            //        File.Delete(output);
-            //    }
-
-            //    mm.Log("[HookGen] Starting HookGenerator");
-            //    var gen = new HookGenerator(mm, Path.GetFileName(output));
-            //    using (ModuleDefinition mOut = gen.OutputModule)
-            //    {
-            //        gen.Generate();
-
-            //        mOut.Write(output);
-            //    }
-
-            //    mm.ReadMod(output);
-            //}
 
             var initialModuleName = mm.Module.Name;
 
@@ -85,7 +68,9 @@ namespace OTAPI.Setup
 
             foreach (var path in new[] {
                 Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
+                //Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
                 Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
+                Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("Steamworks.NET.dll", StringComparison.CurrentCultureIgnoreCase)),
             })
             {
                 mm.ReadMod(path);
@@ -110,6 +95,7 @@ namespace OTAPI.Setup
             mm.Module.Architecture = TargetArchitecture.I386;
             mm.Module.Attributes = ModuleAttributes.ILOnly;
 
+            Console.WriteLine($"[OTAPI] Saving {mm.OutputPath}");
             mm.Write();
 
             var const_major = $"{inputName}_V{mm.Module.Assembly.Name.Version.Major}_{mm.Module.Assembly.Name.Version.Minor}";
@@ -126,7 +112,7 @@ namespace OTAPI.Setup
 #define {const_fullname}
 ");
 
-            // convert the libary to netstandard
+            // convert the libary to net5
             ModFramework.Relinker.CoreLibRelinker.PostProcessCoreLib(mm.OutputPath);
         }
     }

@@ -17,26 +17,61 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 
 namespace ModFramework.Relinker
 {
     [MonoMod.MonoModIgnore]
     public class CoreLibRelinker : RelinkTask
     {
-        private AssemblyNameReference RuntimeRef;
-
-        public CoreLibRelinker()
+        class SystemType
         {
-            var systemRuntime = AppDomain.CurrentDomain.GetAssemblies().Single(mr => mr.GetName().Name == "netstandard");
+            public string FilePath { get; set; }
+            public AssemblyDefinition Assembly { get; set; }
+            public ExportedType Type { get; set; }
+        }
+        static IEnumerable<SystemType> SystemTypes { get; set; } = GetSystemType();
 
-            RuntimeRef = new AssemblyNameReference(systemRuntime.GetName().Name, systemRuntime.GetName().Version)
-            {
-                PublicKeyToken = systemRuntime.GetName().GetPublicKeyToken()
-            };
+        static SystemType[] GetSystemType()
+        {
+            var assemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
+
+            var runtimeAssemblies = Directory.GetFiles(assemblyPath, "*.dll")
+                .Select(x =>
+                {
+                    try
+                    {
+                        return new
+                        {
+                            asm = AssemblyDefinition.ReadAssembly(x),
+                            path = x,
+                        };
+                    }
+                    catch (Exception ex)
+                    {
+                        // discard assemblies that cecil cannot parse. e.g. api-ms**.dll on windows
+                        return null;
+                    }
+                })
+                .Where(x => x != null);
+
+            var forwardTypes = runtimeAssemblies.SelectMany(ra =>
+                ra.asm.MainModule.ExportedTypes
+                    .Where(x => x.IsForwarder)
+                    .Select(x => new SystemType()
+                    {
+                        Type = x,
+                        Assembly = ra.asm,
+                        FilePath = ra.path,
+                    })
+            );
+
+            return forwardTypes.ToArray();
         }
 
         public static void PostProcessCoreLib(params string[] inputs)
@@ -55,7 +90,7 @@ namespace ModFramework.Relinker
 
                     GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
                 };
-                mm.Log($"[OTAPI] Processing corelibs to be netstandard: {Path.GetFileName(input)}");
+                mm.Log($"[OTAPI] Processing corelibs to be net5: {Path.GetFileName(input)}");
 
                 var extractor = new ResourceExtractor();
                 var embeddedResourcesDir = extractor.Extract(input);
@@ -64,7 +99,7 @@ namespace ModFramework.Relinker
 
                 mm.Read();
 
-                mm.AddTask(new ModFramework.Relinker.CoreLibRelinker());
+                mm.AddTask(new CoreLibRelinker());
 
                 mm.MapDependencies();
                 mm.AutoPatch();
@@ -73,75 +108,219 @@ namespace ModFramework.Relinker
             }
         }
 
+        void PatchTargetFramework()
+        {
+            var tfa = Modder.Module.Assembly.CustomAttributes.SingleOrDefault(ca =>
+                ca.AttributeType.FullName == "System.Runtime.Versioning.TargetFrameworkAttribute");
+
+            if (tfa != null)
+            {
+                tfa.ConstructorArguments[0] = new CustomAttributeArgument(
+                    tfa.ConstructorArguments[0].Type,
+                    ".NETCoreApp,Version=v5.0"
+                );
+                var fdm = tfa.Properties.Single();
+                tfa.Properties[0] = new CustomAttributeNamedArgument(
+                    fdm.Name,
+                    new CustomAttributeArgument(fdm.Argument.Type, "")
+                );
+            }
+        }
+
         public override void Registered()
         {
             base.Registered();
 
-            foreach (var reference in Modder.Module.AssemblyReferences
-                .Where(x => x.Name.StartsWith("mscorlib") || x.Name.StartsWith("System.Private.CoreLib"))
-                .ToArray()
-            )
+            PatchTargetFramework();
+
+            FixAttributes(Modder.Module.Assembly.CustomAttributes);
+            FixAttributes(Modder.Module.Assembly.MainModule.CustomAttributes);
+
+            foreach (var sd in Modder.Module.Assembly.SecurityDeclarations)
             {
-                reference.Name = RuntimeRef.Name;
-                reference.Version = RuntimeRef.Version;
-                reference.PublicKey = RuntimeRef.PublicKey;
-                reference.PublicKeyToken = RuntimeRef.PublicKeyToken;
+                foreach (var sa in sd.SecurityAttributes)
+                {
+                    FixType(sa.AttributeType);
+
+                    foreach (var prop in sa.Properties)
+                        FixType(prop.Argument.Type);
+
+                    foreach (var fld in sa.Fields)
+                        FixType(fld.Argument.Type);
+                }
             }
         }
 
-        //TypeReference FixType(TypeReference type)
-        //{
-        //    if (type.Scope.Name == "mscorlib")
-        //    {
-        //        type.Scope = RuntimeRef;
-        //    }
+        void FixType(TypeReference type)
+        {
+            if (type is TypeSpecification ts)
+            {
+                FixType(ts.ElementType);
+            }
+            //else if (type is PointerType ptr)
+            //{
+            //    FixType(ptr.ElementType);
+            //}
+            //else if (type is GenericInstanceType git)
+            //{
+            //    FixType(git.ElementType);
+            //}
+            //else if (type is ByReferenceType brt)
+            //{
+            //    FixType(brt.ElementType);
+            //}
+            //else if (type is ArrayType at)
+            //{
+            //    FixType(at.ElementType);
+            //}
+            else if (type is GenericParameter gp)
+            {
+                FixAttributes(gp.CustomAttributes);
 
-        //    if (type.Scope.Name == "System.Private.CoreLib")
-        //    {
-        //        type.Scope = RuntimeRef;
-        //    }
+                foreach (var prm in gp.GenericParameters)
+                    FixType(prm);
+            }
+            else if (type.Scope.Name == "mscorlib" || type.Scope.Name == "System.Private.CoreLib")
+            {
+                var searchType = type.FullName;
 
-        //    return type;
-        //}
+                var match = SystemTypes
+                    .Where(x => x.Type.FullName == searchType)
+                    // pick the assembly with the highest version.
+                    // TODO: consider if this will ever need to target other fw's
+                    .OrderByDescending(x => x.Assembly.Name.Version)
+                    .FirstOrDefault();
 
-        //public override void Relink(MethodBody body, Instruction instr)
-        //{
-        //    base.Relink(body, instr);
+                if (match != null)
+                {
+                    if (type.Scope is AssemblyNameReference anr)
+                    {
+                        var existing = type.Module.AssemblyReferences.SingleOrDefault(x => x.Name == match.Assembly.Name.Name);
 
-        //    if (instr.Operand is MethodReference mref)
-        //    {
-        //        FixType(mref.DeclaringType);
-        //    }
-        //}
+                        if (existing != null)
+                        {
+                            type.Scope = existing;
+                        }
+                        else
+                        {
+                            var version = match.Assembly.Name.Version;
+                            var newref = new AssemblyNameReference(match.Assembly.Name.Name, version)
+                            {
+                                PublicKey = match.Assembly.Name.PublicKey,
+                                PublicKeyToken = match.Assembly.Name.PublicKeyToken,
+                                Culture = match.Assembly.Name.Culture,
+                                Hash = match.Assembly.Name.Hash,
+                                HashAlgorithm = match.Assembly.Name.HashAlgorithm,
+                                Attributes = match.Assembly.Name.Attributes
+                            };
+                            type.Scope = newref;
+                            type.Module.AssemblyReferences.Add(newref);
 
-        //public override void Relink(EventDefinition typeEvent)
-        //{
-        //    base.Relink(typeEvent);
-        //}
+                            // this is only needed for ilspy to pick up .net5 libs on osx
+                            var filename = Path.GetFileName(match.FilePath);
+                            if (!File.Exists(filename))
+                                File.Copy(match.FilePath, filename);
+                        }
+                    }
+                    else throw new NotImplementedException();
+                }
+                else throw new NotImplementedException();
+            }
+        }
 
-        //public override void Relink(FieldDefinition field)
-        //{
-        //    base.Relink(field);
-        //}
+        public override void Relink(MethodBody body, Instruction instr)
+        {
+            base.Relink(body, instr);
 
-        //public override void Relink(MethodDefinition method)
-        //{
-        //    base.Relink(method);
-        //}
+            if (instr.Operand is MethodReference mref)
+            {
+                if (mref is GenericInstanceMethod gim)
+                    FixType(gim.ElementMethod.DeclaringType);
+                else
+                    FixType(mref.DeclaringType);
 
-        //public override void Relink(MethodDefinition method, ParameterDefinition parameter)
-        //{
-        //    base.Relink(method, parameter);
-        //}
+                FixType(mref.ReturnType);
 
-        //public override void Relink(MethodDefinition method, VariableDefinition variable)
-        //{
-        //    base.Relink(method, variable);
-        //}
+                foreach (var prm in mref.Parameters)
+                {
+                    FixType(prm.ParameterType);
 
-        //public override void Relink(PropertyDefinition property)
-        //{
-        //    base.Relink(property);
-        //}
+                    FixAttributes(prm.CustomAttributes);
+                }
+            }
+
+            if (instr.Operand is FieldReference fref)
+            {
+                FixType(fref.DeclaringType);
+                FixType(fref.FieldType);
+            }
+        }
+
+        public override void Relink(TypeDefinition type)
+        {
+            base.Relink(type);
+
+            if (type.BaseType != null)
+                FixType(type.BaseType);
+        }
+
+        public override void Relink(EventDefinition typeEvent)
+        {
+            base.Relink(typeEvent);
+            FixType(typeEvent.EventType);
+        }
+
+        public override void Relink(FieldDefinition field)
+        {
+            base.Relink(field);
+            FixType(field.FieldType);
+        }
+
+        void FixAttributes(Collection<CustomAttribute> attributes)
+        {
+            foreach (var attr in attributes)
+            {
+                FixType(attr.AttributeType);
+
+                foreach (var ca in attr.ConstructorArguments)
+                    FixType(ca.Type);
+
+                foreach (var fld in attr.Fields)
+                {
+                    FixType(fld.Argument.Type);
+                }
+
+                foreach (var prop in attr.Properties)
+                    FixType(prop.Argument.Type);
+            }
+        }
+
+        public override void Relink(MethodDefinition method)
+        {
+            base.Relink(method);
+
+            foreach (var prm in method.Parameters)
+                FixType(prm.ParameterType);
+
+            FixAttributes(method.CustomAttributes);
+        }
+
+        public override void Relink(MethodDefinition method, ParameterDefinition parameter)
+        {
+            base.Relink(method, parameter);
+            FixType(parameter.ParameterType);
+        }
+
+        public override void Relink(MethodDefinition method, VariableDefinition variable)
+        {
+            base.Relink(method, variable);
+            FixType(variable.VariableType);
+        }
+
+        public override void Relink(PropertyDefinition property)
+        {
+            base.Relink(property);
+            FixType(property.PropertyType);
+        }
     }
 }

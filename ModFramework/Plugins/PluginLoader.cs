@@ -45,7 +45,6 @@ namespace ModFramework.Plugins
                 _assemblies.AddRange(new[] {
                     Assembly.GetExecutingAssembly(),
                     Assembly.GetCallingAssembly(),
-                    Assembly.GetCallingAssembly()
                 }.Distinct());
 
                 IEnumerable<string> files = Directory.EnumerateFiles(Environment.CurrentDirectory, "*.mm.dll", SearchOption.AllDirectories);
