@@ -9,3 +9,4 @@ System.Threading.Thread.dll
 System.IO.dll
 System.IO.Compression.dll
 System.IO.FileSystem.dll
+System.Runtime.Extensions.dll
