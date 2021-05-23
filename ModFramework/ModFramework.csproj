@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <PackageVersion>1.0.0-alpha1</PackageVersion>
+    <PackageVersion>1.0.0-alpha2</PackageVersion>
     <PackageId>ModFramework</PackageId>
     <Authors>DeathCradle</Authors>
     <PackOnBuild>true</PackOnBuild>
