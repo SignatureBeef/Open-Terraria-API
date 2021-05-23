@@ -26,13 +26,21 @@ void HookMeteors(ModFramework.ModFwModder modder)
 {
     var csr = modder.GetILCursor(() => Terraria.WorldGen.meteor(0, 0, false));
 
-    // look for stopDrops = true in the vanilla methods instructions
-    csr.GotoNext(MonoMod.Cil.MoveType.Before, instruction =>
-         instruction.OpCode == OpCodes.Stsfld
-        && instruction.Operand is FieldReference
-        && (instruction.Operand as FieldReference).Name == "stopDrops"
+    // look for stopDrops = true in the vanilla methods instructions to find the
+    // continuation instruction that follows it.
+    //csr.GotoNext(MonoMod.Cil.MoveType.After, instruction =>
+    //     instruction.OpCode == OpCodes.Stsfld
+    //    && instruction.Operand is FieldReference
+    //    && (instruction.Operand as FieldReference).Name == "stopDrops"
 
-        && instruction.Previous.OpCode == OpCodes.Ldc_I4_1);
+    //    && instruction.Previous.OpCode == OpCodes.Ldc_I4_1);
+    csr.GotoNext(MonoMod.Cil.MoveType.Before, instruction =>
+        instruction.OpCode == OpCodes.Ldc_I4_1
+
+        && instruction.Next.OpCode == OpCodes.Stsfld
+        && instruction.Next.Operand is FieldReference
+        && (instruction.Next.Operand as FieldReference).Name == "stopDrops"
+    );
 
     var insContinue = csr.Next;
 

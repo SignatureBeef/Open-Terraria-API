@@ -5,7 +5,7 @@ The Open Terraria API, known as OTAPI, is a low-level API for [Terraria](https:/
 OTAPI is primarily a server modification and is available as a cross platform package via NuGet.
 
 Version 3.0 is now a .NET5 library thanks to ModFramework being able to retarget the .NET4 vanilla assembly up to .NET5.
-This means that any mod you create can be written in as a .NET5 module and later merged into the patched assembly thanks to MonoMod.
+This means that any mod you create can be written as a .NET5 module and later merged into the patched assembly thanks to MonoMod.
 
 Here is what is now possible:
  - Native Runtime hooks, just reference OTAPI.Runtime.dll and register to MonoMod events generated from the Terraria assembly.
