@@ -77,10 +77,10 @@ ILCount FindStartOfLock(ILCursor cursor, ExceptionHandler exlock)
 
     cursor.GotoPrev(ins => ins.OpCode == OpCodes.Stloc && ins.Operand == variable);
 
-    var count = StackCounter.Count(cursor.Method);
+    var count = cursor.Method.GetStack();
     var offset = count.Single(x => x.Ins == cursor.Next);
 
-    return offset.FindPrevious(c => c.OnStackBefore == 0);
+    return offset.FindRoot();
 }
 
 IEnumerable<ExceptionHandler> FindLocks(ILCursor cursor)

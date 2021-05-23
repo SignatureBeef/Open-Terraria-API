@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using ModFramework;
 using ModFramework.Relinker;
 using Mono.Cecil;
@@ -37,6 +38,7 @@ void ITile(ModFwModder modder, IRelinkProvider relinkProvider)
     // replace ctor/new instances and route to a hook
     {
         var createTile = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Callbacks.Tile.Create()));
+        var createTileRef = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Callbacks.Tile.Create(null)));
 
         modder.OnRewritingMethodBody += (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
         {
@@ -45,8 +47,17 @@ void ITile(ModFwModder modder, IRelinkProvider relinkProvider)
                 && !body.Method.DeclaringType.Namespace.StartsWith("OTAPI")
             )
             {
-                instr.OpCode = OpCodes.Call;
-                instr.Operand = createTile;
+                if (mref.Parameters.Count == 0)
+                {
+                    instr.OpCode = OpCodes.Call;
+                    instr.Operand = createTile;
+                }
+                else if (mref.Parameters.Count == 1)
+                {
+                    instr.OpCode = OpCodes.Call;
+                    instr.Operand = createTileRef;
+                }
+                else throw new NotImplementedException();
             }
         };
     }
@@ -60,6 +71,11 @@ namespace OTAPI.Callbacks
         {
             return Hooks.Tile.Create?.Invoke() ?? new Terraria.Tile();
         }
+
+        public static Terraria.Tile Create(Terraria.Tile existing)
+        {
+            return Hooks.Tile.Create?.Invoke(existing) ?? new Terraria.Tile(existing);
+        }
     }
 }
 
@@ -69,7 +85,7 @@ namespace OTAPI
     {
         public static partial class Tile
         {
-            public delegate Terraria.Tile CreateHandler();
+            public delegate Terraria.Tile CreateHandler(Terraria.Tile existing = null);
             public static CreateHandler Create;
         }
     }

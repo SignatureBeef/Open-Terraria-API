@@ -24,16 +24,16 @@ namespace Microsoft.Xna.Framework.Content
     {
         public string RootDirectory { get; set; }
 
-		public IServiceProvider ServiceProvider { get; }
+        public IServiceProvider ServiceProvider { get; }
 
-		public ContentManager(IServiceProvider serviceProvider) : this(serviceProvider, string.Empty)
-		{
-		}
+        public ContentManager(IServiceProvider serviceProvider) : this(serviceProvider, string.Empty)
+        {
+        }
 
-		public ContentManager(IServiceProvider serviceProvider, string rootDirectory)
-		{ }
+        public ContentManager(IServiceProvider serviceProvider, string rootDirectory)
+        { }
 
-		public T Load<T>(string path)
+        public T Load<T>(string path)
         {
             return default(T);
         }
@@ -41,5 +41,10 @@ namespace Microsoft.Xna.Framework.Content
         //{
         //    return default(Effect);
         //}
+
+        public T ReadAsset<T>(string name, Action<IDisposable> _)
+        {
+            return default(T);
+        }
     }
 }

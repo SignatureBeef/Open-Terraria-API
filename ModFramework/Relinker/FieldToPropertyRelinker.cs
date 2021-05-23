@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -32,7 +33,7 @@ namespace ModFramework.Relinker
             this.Field = field;
             this.Property = property;
 
-            System.Console.WriteLine($"[ModFw] Relinking to property {field.FullName}=>{property.FullName}");
+            Console.WriteLine($"[ModFw] Relinking to property {field.FullName}=>{property.FullName}");
         }
 
         public override void Relink(MethodBody body, Instruction instr)
@@ -61,6 +62,20 @@ namespace ModFramework.Relinker
                                     instr.OpCode = OpCodes.Call;
                                     instr.Operand = this.Property.SetMethod;
                                 }
+                                else if (instr.OpCode == OpCodes.Ldflda)
+                                {
+                                    instr.OpCode = OpCodes.Call;
+                                    instr.Operand = this.Property.GetMethod;
+
+                                    var vrb = new VariableDefinition(this.Property.GetMethod.ReturnType);
+                                    body.Variables.Add(vrb);
+
+                                    var ilp = body.GetILProcessor();
+
+                                    ilp.InsertAfter(instr, ilp.Create(OpCodes.Ldloca, vrb));
+                                    ilp.InsertAfter(instr, ilp.Create(OpCodes.Stloc, vrb));
+                                }
+                                else throw new NotImplementedException();
                             }
                         }
                     }

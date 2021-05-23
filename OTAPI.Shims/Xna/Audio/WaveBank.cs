@@ -22,6 +22,8 @@ namespace Microsoft.Xna.Framework.Audio
     {
         public static WaveBank[] Array;
 
+        public bool IsPrepared { get; set; }
+
         public WaveBank(AudioEngine audioEngine, string nonStreamingWaveBankFilename) { }
         public WaveBank(AudioEngine audioEngine, string streamingWaveBankFilename, int offset, short packetsize) { }
     }

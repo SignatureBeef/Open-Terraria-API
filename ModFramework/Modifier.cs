@@ -64,7 +64,12 @@ namespace ModFramework
             } while (!complete);
         }
 
-        public static void Apply(ModType modType, MonoMod.MonoModder modder = null, IEnumerable<Assembly> assemblies = null)
+        /* mainly to expose an Apply function without the need of MonoMod */
+        public static void Apply(ModType modType) => Apply(modType, null, null);
+        public static void Apply(ModType modType, IEnumerable<Assembly> assemblies) => Apply(modType, null, assemblies);
+        public static void Apply(ModType modType, MonoMod.MonoModder modder) => Apply(modType, modder, null);
+
+        public static void Apply(ModType modType, MonoMod.MonoModder modder, IEnumerable<Assembly> assemblies)
         {
             Console.WriteLine($"[ModFw:{modType}] Applying mods...");
             var availableParameters = new List<object>()

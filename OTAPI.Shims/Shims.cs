@@ -20,11 +20,11 @@ using MonoMod;
 
 /* Forward all shims to the Shims mod DLL. As part of MonoMod, any mod DLLs will be merged into the final assembly */
 
-[assembly: AssemblyRedirector("Microsoft.Xna.Framework", "TerrariaServer.OTAPI.Shims.mm.dll")]
-[assembly: AssemblyRedirector("Microsoft.Xna.Framework.Game", "TerrariaServer.OTAPI.Shims.mm.dll")]
-[assembly: AssemblyRedirector("Microsoft.Xna.Framework.Graphics", "TerrariaServer.OTAPI.Shims.mm.dll")]
-[assembly: AssemblyRedirector("Microsoft.Xna.Framework.Xact", "TerrariaServer.OTAPI.Shims.mm.dll")]
-[assembly: AssemblyRedirector("System.Windows.Forms", "TerrariaServer.OTAPI.Shims.mm.dll")]
-[assembly: AssemblyRedirector("System.Drawing.Graphics", "TerrariaServer.OTAPI.Shims.mm.dll")]
+[assembly: AssemblyRedirector("Microsoft.Xna.Framework", "TerrariaServer")]
+[assembly: AssemblyRedirector("Microsoft.Xna.Framework.Game", "TerrariaServer")]
+[assembly: AssemblyRedirector("Microsoft.Xna.Framework.Graphics", "TerrariaServer")]
+[assembly: AssemblyRedirector("Microsoft.Xna.Framework.Xact", "TerrariaServer")]
+[assembly: AssemblyRedirector("System.Windows.Forms", "TerrariaServer")]
+[assembly: AssemblyRedirector("System.Drawing.Graphics", "TerrariaServer")]
 [assembly: AssemblyRedirector("ReLogic", "TerrariaServer")]
 [assembly: AssemblyRedirector("Steamworks.NET", "TerrariaServer")]

@@ -26,7 +26,16 @@ namespace ModFramework
     [MonoMod.MonoModIgnore]
     public static class StackCounter
     {
-        public static List<ILCount> Count(MethodDefinition method)
+        public static int CountStackInputSize(this MethodReference method)
+        {
+            int count = 0;
+            if (method.HasThis) count++;
+            count += method.Parameters.Count;
+
+            return count;
+        }
+
+        public static List<ILCount> GetStack(this MethodDefinition method)
         {
             var instructions = new List<ILCount>();
 
@@ -39,12 +48,12 @@ namespace ModFramework
                 var pop = instruction.OpCode.StackBehaviourPop;
                 var push = instruction.OpCode.StackBehaviourPush;
 
-                if (pop.In(StackBehaviour.PopAll, StackBehaviour.Varpop, StackBehaviour.Varpush))
+                if (pop.In(StackBehaviour.PopAll, StackBehaviour.Varpush))
                     count = 0;
                 else
-                    count += GetStackBehaviourElements(pop);
+                    count += instruction.GetStackBehaviourElements(pop);
 
-                count += GetStackBehaviourElements(push);
+                count += instruction.GetStackBehaviourElements(push);
 
                 var data = new ILCount()
                 {
@@ -64,7 +73,7 @@ namespace ModFramework
             return instructions;
         }
 
-        public static int GetStackBehaviourElements(StackBehaviour stackBehaviour)
+        public static int GetStackBehaviourElements(this Instruction instruction, StackBehaviour stackBehaviour)
         {
             switch (stackBehaviour)
             {
@@ -72,6 +81,16 @@ namespace ModFramework
                 case StackBehaviour.Popi:
                 case StackBehaviour.Popref:
                     return -1;
+
+                case StackBehaviour.Varpush:
+                    {
+                        if (instruction.Operand is MethodReference mref)
+                        {
+                            var is_void = mref.ReturnType == mref.Module.TypeSystem.Void;
+                            return is_void ? 0 : 1;
+                        }
+                        throw new NotImplementedException("Unable to determine call stack count to offset");
+                    }
 
                 case StackBehaviour.Pop1_pop1:
                 case StackBehaviour.Popi_pop1:
@@ -94,9 +113,18 @@ namespace ModFramework
                 case StackBehaviour.PopAll:
                     throw new NotImplementedException("Unable to determine stack count to offset");
 
-                // calls, rets (consumes stack)
+                // calls, rets (consumes some of the stack)
                 case StackBehaviour.Varpop:
-                    throw new NotImplementedException("Unable to determine call stack count to offset");
+                    {
+                        if (instruction.OpCode == OpCodes.Ret)
+                            return 0;
+                        else if (instruction.Operand is MethodReference mref)
+                        {
+                            var inputSize = mref.CountStackInputSize();
+                            return -inputSize;
+                        }
+                        throw new NotImplementedException("Unable to determine call stack count to offset");
+                    }
 
                 case StackBehaviour.Push1:
                 case StackBehaviour.Pushi:
@@ -111,7 +139,6 @@ namespace ModFramework
 
                 case StackBehaviour.Pop0:
                 case StackBehaviour.Push0:
-                case StackBehaviour.Varpush:
                 default:
                     return 0;
             }
@@ -125,6 +152,47 @@ namespace ModFramework
         public int OnStackAfter { get; set; }
         public ILCount Previous { get; set; }
         public ILCount Next { get; set; }
+
+        public ILCount FindCallStart()
+        {
+            //var ctx = FindRoot();
+
+            var method = Ins.Operand as MethodReference;
+
+            if (method is null)
+                throw new Exception($"Expected the current operand to be a method reference");
+
+            // calc num stack to consume
+            // find that offset in the stack offset
+
+            var count = method.CountStackInputSize();
+            //var count = 0;
+
+            //if (method.HasThis) count++;
+            //count += method.Parameters.Count;
+
+            var offset = this.OnStackBefore - count;
+
+            if (offset < 0)
+            {
+                var pop = this.Ins.OpCode.StackBehaviourPop;
+                var push = this.Ins.OpCode.StackBehaviourPush;
+                var aasdasd1 = this.Ins.GetStackBehaviourElements(pop);
+                var aasdasd2 = this.Ins.GetStackBehaviourElements(push);
+                throw new InvalidOperationException();
+            }
+
+            var callStart = FindPrevious(r => r.OnStackBefore == offset);
+
+            //if (ctx != callStart)
+            //{
+
+            //}
+
+            return callStart;
+        }
+
+        public ILCount FindRoot() => FindPrevious(c => c.OnStackBefore == 0);
 
         public ILCount FindPrevious(Func<ILCount, bool> condition)
         {

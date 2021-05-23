@@ -18,7 +18,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
+using MonoMod.Utils;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ModFramework.Relinker
@@ -37,59 +40,93 @@ namespace ModFramework.Relinker
             Console.WriteLine($"[ModFw] Relinking interface {searchType.FullName}=>{replacementType.FullName}");
         }
 
+        public override void Relink(TypeDefinition type)
+        {
+            base.Relink(type);
+
+            if (type.BaseType != null)
+                ResolveType(type.BaseType, nr => type.BaseType = nr);
+
+            if (type.HasNestedTypes)
+                foreach (var nt in type.NestedTypes)
+                {
+                    Relink(nt);
+                }
+        }
+
         public override void Relink(MethodDefinition method)
         {
-            if (method.ReturnType.FullName == SearchType.FullName)
-                method.ReturnType = ReplacementType;
+            ResolveType(method.ReturnType, nr => method.ReturnType = nr);
 
-            if (method.ReturnType is ArrayType arrayType)
-                if (arrayType.ElementType.FullName == SearchType.FullName)
-                    method.ReturnType = new ArrayType(ReplacementType, arrayType.Rank);
+            foreach (var prm in method.Parameters)
+                Relink(method, prm);
+
+            if (method.HasBody)
+                foreach (var vrb in method.Body.Variables)
+                    Relink(method, vrb);
         }
 
         public override void Relink(MethodDefinition method, VariableDefinition variable)
         {
-            if (variable.VariableType.FullName == SearchType.FullName)
-                variable.VariableType = ReplacementType;
-
-            if (variable.VariableType is ArrayType arrayType)
-                if (arrayType.ElementType.FullName == SearchType.FullName)
-                    variable.VariableType = new ArrayType(ReplacementType, arrayType.Rank);
+            ResolveType(variable.VariableType, nr => variable.VariableType = nr);
         }
 
         public override void Relink(MethodDefinition method, ParameterDefinition parameter)
         {
-            if (parameter.ParameterType.FullName == SearchType.FullName)
-                parameter.ParameterType = ReplacementType;
-
-            if (parameter.ParameterType is ArrayType arrayType)
-                if (arrayType.ElementType.FullName == SearchType.FullName)
-                    parameter.ParameterType = new ArrayType(ReplacementType, arrayType.Rank);
+            ResolveType(parameter.ParameterType, nr => parameter.ParameterType = nr);
         }
+
         public override void Relink(PropertyDefinition property)
         {
-            if (property.PropertyType.FullName == SearchType.FullName)
-                property.PropertyType = ReplacementType;
-
-            if (property.PropertyType is ArrayType arrayType)
-                if (arrayType.ElementType.FullName == SearchType.FullName)
-                    property.PropertyType = new ArrayType(ReplacementType, arrayType.Rank);
+            ResolveType(property.PropertyType, nr => property.PropertyType = nr);
         }
 
         public override void Relink(FieldDefinition field)
         {
-            if (field.FieldType.FullName == SearchType.FullName)
-                field.FieldType = ReplacementType;
+            ResolveType(field.FieldType, nr => field.FieldType = nr);
+        }
 
-            if (field.FieldType is GenericInstanceType genericInstanceType)
+        void ResolveType<TRef>(TRef typeRef, Action<TRef> update)
+             where TRef : TypeReference
+        {
+            var original = typeRef;
+            if (typeRef.FullName == SearchType.FullName)
+            {
+                typeRef = (TRef)ReplacementType;
+            }
+            else if (typeRef is GenericInstanceType genericInstanceType)
+            {
                 if (genericInstanceType.HasGenericArguments)
                     for (var i = 0; i < genericInstanceType.GenericArguments.Count; i++)
-                        if (genericInstanceType.GenericArguments[i].FullName == SearchType.FullName)
-                            genericInstanceType.GenericArguments[i] = ReplacementType;
-
-            if (field.FieldType is ArrayType arrayType)
+                        ResolveType(
+                            genericInstanceType.GenericArguments[i],
+                            nr => genericInstanceType.GenericArguments[i] = nr
+                        );
+            }
+            else if (typeRef is ArrayType arrayType)
+            {
                 if (arrayType.ElementType.FullName == SearchType.FullName)
-                    field.FieldType = new ArrayType(ReplacementType, arrayType.Rank);
+                    typeRef = (TRef)(object)new ArrayType(ReplacementType, arrayType.Rank);
+            }
+            else if (typeRef is ByReferenceType byRefType)
+            {
+                if (byRefType.ElementType.FullName == SearchType.FullName)
+                    typeRef = (TRef)(object)new ByReferenceType(ReplacementType);
+            }
+
+            if (typeRef.HasGenericParameters)
+                for (int i = 0; i < typeRef.GenericParameters.Count; i++)
+                {
+                    ResolveType(
+                        typeRef.GenericParameters[i],
+                        nr => typeRef.GenericParameters[i] = nr
+                    );
+                }
+
+            if (typeRef != original)
+            {
+                update(typeRef);
+            }
         }
 
         public override void Relink(MethodBody body, Instruction instr)
@@ -99,81 +136,142 @@ namespace ModFramework.Relinker
             if (instr.Operand is MethodReference methodRef)
             {
                 var methodRefIsDeclaredByType = methodRef.DeclaringType.FullName == SearchType.FullName;
+                var isSelfDefined = SearchType.Resolve().Methods.Any(x => x.FullName == methodRef.FullName);
 
-                // interreference is where the same class references itself, but since we are switching types
-                // we must only do so when its not 'this'.
-                var isInterreference = RelinkProvider.AllowInterreferenceReplacements && methodIsDeclaredByType
-                        && (instr.OpCode == OpCodes.Call || instr.OpCode == OpCodes.Callvirt)
-                        && instr.Previous?.OpCode == OpCodes.Ldarg_1
-                        && methodRef.HasThis;
-
-                if ((instr.OpCode == OpCodes.Newobj && methodRefIsDeclaredByType) || (!body.Method.IsStatic && methodIsDeclaredByType && !isInterreference))
-                    return;
-
-                if (methodRef.DeclaringType.FullName == SearchType.FullName && methodRef.HasThis)
+                // if the method is in the class we are replacing, and the method is self defined we dont need to replace it
+                if (methodIsDeclaredByType && isSelfDefined)
                 {
-                    var mr = new MethodReference(methodRef.Name, methodRef.ReturnType, ReplacementType)
-                    {
-                        HasThis = methodRef.HasThis
-                    };
+                    var cnt = body.Method.GetStack();
+                    var offset = cnt.Single(x => x.Ins == instr);
+                    var start = offset.FindCallStart();
 
-                    foreach (var prm in methodRef.Parameters)
+                    bool isExternal = false;
+                    if (start.Ins?.Operand is ParameterReference par)
                     {
-                        mr.Parameters.Add(
-                            new ParameterDefinition(prm.Name, prm.Attributes, prm.ParameterType)
-                        );
+                        isExternal = par.ParameterType.FullName != SearchType.FullName;
+                    }
+                    else if (start.Ins?.OpCode == OpCodes.Ldarg_0)
+                    {
+                        if (body.Method.IsStatic)
+                        {
+                            isExternal = body.Method.Parameters[0].ParameterType.FullName != SearchType.FullName;
+                        }
+                        else
+                        {
+                            isExternal = body.Method.DeclaringType.FullName != SearchType.FullName;
+                        }
+                    }
+                    else if (start.Ins?.OpCode == OpCodes.Ldarg_1)
+                    {
+                        if (body.Method.IsStatic)
+                        {
+                            isExternal = body.Method.Parameters[1].ParameterType.FullName != SearchType.FullName;
+                        }
+                        else
+                        {
+                            isExternal = body.Method.Parameters[0].ParameterType.FullName != SearchType.FullName;
+                        }
+                    }
+                    else if (start.Ins?.OpCode == OpCodes.Ldarg_2)
+                    {
+                        if (body.Method.IsStatic)
+                        {
+                            isExternal = body.Method.Parameters[2].ParameterType.FullName != SearchType.FullName;
+                        }
+                        else
+                        {
+                            isExternal = body.Method.Parameters[1].ParameterType.FullName != SearchType.FullName;
+                        }
+                    }
+                    else if (start.Ins?.OpCode == OpCodes.Ldarg_3)
+                    {
+                        if (body.Method.IsStatic)
+                        {
+                            isExternal = body.Method.Parameters[3].ParameterType.FullName != SearchType.FullName;
+                        }
+                        else
+                        {
+                            isExternal = body.Method.Parameters[2].ParameterType.FullName != SearchType.FullName;
+                        }
+                    }
+                    else if (start.Ins?.OpCode == OpCodes.Ldloc_0)
+                    {
+                        isExternal = body.Variables[0].VariableType.FullName != SearchType.FullName;
+                    }
+                    else
+                    {
+
                     }
 
-                    mr.ReturnType = methodRef.ReturnType;
-
-                    instr.Operand = body.Method.Module.ImportReference(mr);
-
-                    methodRef = mr;
+                    if (!isExternal)
+                        return;
                 }
 
-                if (methodRef.ReturnType.FullName == SearchType.FullName)
-                    methodRef.ReturnType = ReplacementType;
+                // cannot new up interfaces.
+                if (instr.OpCode == OpCodes.Newobj)
+                {
+                    if (instr.Operand is MethodReference mref)
+                    {
+                        foreach (var prm in mref.Parameters)
+                        {
+                            ResolveType(prm.ParameterType, nr => prm.ParameterType = nr);
+                        }
+                    }
+                    return;
+                }
+
+                ResolveType(methodRef.ReturnType, nr => methodRef.ReturnType = nr);
 
                 if (methodRef.HasParameters)
                     for (var i = 0; i < methodRef.Parameters.Count; i++)
-                        if (methodRef.Parameters[i].ParameterType.FullName == SearchType.FullName)
-                            methodRef.Parameters[i].ParameterType = ReplacementType;
+                    {
+                        var prm = methodRef.Parameters[i];
 
-                if (methodRef.DeclaringType is GenericInstanceType genericInstanceType)
-                    if (genericInstanceType.HasGenericArguments)
-                        for (var i = 0; i < genericInstanceType.GenericArguments.Count; i++)
-                            if (genericInstanceType.GenericArguments[i].FullName == SearchType.FullName)
-                                genericInstanceType.GenericArguments[i] = ReplacementType;
+                        ResolveType(prm.ParameterType, nr => prm.ParameterType = nr);
+                    }
 
-                if (methodRef.DeclaringType is ArrayType arrayType)
-                    if (arrayType.ElementType.FullName == SearchType.FullName)
-                        methodRef.DeclaringType = new ArrayType(ReplacementType, arrayType.Rank);
+                ResolveType(methodRef.DeclaringType, nr =>
+                {
+                    if (methodRef.HasThis)
+                    {
+                        // this is important not to do.
+                        // it appears as if they are cached in memory somewhere, and replacing this will
+                        // cause problems for other Operands - so the method ref changes but not in the saved IL
+                        //methodRef.DeclaringType = nr;
+
+                        var mr = new MethodReference(methodRef.Name, methodRef.ReturnType, ReplacementType)
+                        {
+                            HasThis = methodRef.HasThis
+                        };
+                        foreach (var prm in methodRef.Parameters)
+                        {
+                            mr.Parameters.Add(prm.Clone());
+                        }
+
+                        instr.Operand = body.Method.Module.ImportReference(mr);
+                    }
+                });
 
                 // upgrade call to callvirt
                 if (instr.OpCode == OpCodes.Call && methodRef.DeclaringType.FullName == ReplacementType.FullName)
                     instr.OpCode = OpCodes.Callvirt;
+
             }
 
             if (instr.Operand is FieldReference fieldReference)
             {
-                if (methodIsDeclaredByType) return;
+                var fieldIsDeclaredByType = fieldReference.DeclaringType.FullName == SearchType.FullName;
+                var isBackingField = fieldIsDeclaredByType && fieldReference.FullName.Contains("k__BackingField");
+                if (isBackingField)
+                    return;
 
-                if (fieldReference.FieldType.FullName == SearchType.FullName)
-                    fieldReference.FieldType = ReplacementType;
+                ResolveType(fieldReference.FieldType, nr => fieldReference.FieldType = nr);
+                ResolveType(fieldReference.DeclaringType, nr => fieldReference.DeclaringType = nr);
+            }
 
-                if (fieldReference.DeclaringType.FullName == SearchType.FullName)
-                    fieldReference.DeclaringType = ReplacementType;
-
-                // relink calls to the field
-                if (fieldReference.FieldType is GenericInstanceType genericInstanceType1)
-                    if (genericInstanceType1.HasGenericArguments)
-                        for (var i = 0; i < genericInstanceType1.GenericArguments.Count; i++)
-                            if (genericInstanceType1.GenericArguments[i].FullName == SearchType.FullName)
-                                genericInstanceType1.GenericArguments[i] = ReplacementType;
-
-                if (fieldReference.FieldType is ArrayType arrayType)
-                    if (arrayType.ElementType.FullName == SearchType.FullName)
-                        fieldReference.FieldType = new ArrayType(ReplacementType, arrayType.Rank);
+            if (instr.Operand is VariableReference varRef)
+            {
+                ResolveType(varRef.VariableType, nr => varRef.VariableType = nr);
             }
         }
     }

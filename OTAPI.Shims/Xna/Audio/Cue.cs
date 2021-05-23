@@ -16,13 +16,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+
 namespace Microsoft.Xna.Framework.Audio
 {
-    public class Cue
+    public class Cue : IDisposable
     {
         public static Cue[] Array;
         public bool IsPaused { get; set; }
         public bool IsPlaying { get; set; }
+        public bool IsStopped { get; set; }
+        public bool IsPrepared { get; set; }
 
         public void Play() { }
         public void Pause() { }
@@ -30,5 +34,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         public void Stop(AudioStopOptions options) { }
         public void SetVariable(string name, float value) { }
+
+        public void Dispose() { }
     }
 }

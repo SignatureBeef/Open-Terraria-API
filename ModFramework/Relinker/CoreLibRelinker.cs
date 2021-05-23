@@ -157,22 +157,6 @@ namespace ModFramework.Relinker
             {
                 FixType(ts.ElementType);
             }
-            //else if (type is PointerType ptr)
-            //{
-            //    FixType(ptr.ElementType);
-            //}
-            //else if (type is GenericInstanceType git)
-            //{
-            //    FixType(git.ElementType);
-            //}
-            //else if (type is ByReferenceType brt)
-            //{
-            //    FixType(brt.ElementType);
-            //}
-            //else if (type is ArrayType at)
-            //{
-            //    FixType(at.ElementType);
-            //}
             else if (type is GenericParameter gp)
             {
                 FixAttributes(gp.CustomAttributes);

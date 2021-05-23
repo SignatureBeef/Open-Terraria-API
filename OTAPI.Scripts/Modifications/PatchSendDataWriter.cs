@@ -34,7 +34,7 @@ void PatchSendDataWriter(MonoModder modder)
     // make it easier to track down variables
     SendData.Body.SimplifyMacros();
 
-    var stack = StackCounter.Count(SendData.Method);
+    var stack = SendData.Method.GetStack();
 
     // remove `buffer[num].writer;` instructions
     VariableDefinition binaryWriter;
@@ -50,7 +50,7 @@ void PatchSendDataWriter(MonoModder modder)
         var setter = setters.First();
 
         var stackOffset = stack.Single(s => s.Ins == setter);
-        var initialVariable = stackOffset.FindPrevious(c => c.OnStackBefore == 0);
+        var initialVariable = stackOffset.FindRoot();
 
         SendData.Goto(initialVariable.Ins);
 
