@@ -27,14 +27,43 @@ using Mono.Collections.Generic;
 namespace ModFramework.Relinker
 {
     [MonoMod.MonoModIgnore]
+    public class SystemType
+    {
+        public string FilePath { get; set; }
+        public AssemblyDefinition Assembly { get; set; }
+        public ExportedType Type { get; set; }
+
+        public AssemblyNameReference AsNameReference() => Assembly.AsNameReference();
+
+        public override string ToString() => Type.ToString();
+    }
+
+    [MonoMod.MonoModIgnore]
+    public static partial class Extensions
+    {
+        public static AssemblyNameReference AsNameReference(this AssemblyDefinition assembly)
+        {
+            var name = assembly.Name;
+            return new AssemblyNameReference(name.Name, name.Version)
+            {
+                PublicKey = name.PublicKey,
+                PublicKeyToken = name.PublicKeyToken,
+                Culture = name.Culture,
+                Hash = name.Hash,
+                HashAlgorithm = name.HashAlgorithm,
+                Attributes = name.Attributes
+            };
+        }
+    }
+
+    [MonoMod.MonoModIgnore]
+    public delegate AssemblyNameReference ResolveCoreLibHandler(TypeReference target);
+
+    [MonoMod.MonoModIgnore]
     public class CoreLibRelinker : RelinkTask
     {
-        class SystemType
-        {
-            public string FilePath { get; set; }
-            public AssemblyDefinition Assembly { get; set; }
-            public ExportedType Type { get; set; }
-        }
+        public event ResolveCoreLibHandler Resolve;
+
         static IEnumerable<SystemType> SystemTypes { get; set; } = GetSystemType();
 
         static SystemType[] GetSystemType()
@@ -76,8 +105,11 @@ namespace ModFramework.Relinker
 
         public static void PostProcessCoreLib(params string[] inputs)
         {
-            Plugins.PluginLoader.Clear();
+            PostProcessCoreLib(null, inputs);
+        }
 
+        public static void PostProcessCoreLib(CoreLibRelinker task, params string[] inputs)
+        {
             foreach (var input in inputs)
             {
                 using var mm = new ModFwModder()
@@ -99,7 +131,7 @@ namespace ModFramework.Relinker
 
                 mm.Read();
 
-                mm.AddTask(new CoreLibRelinker());
+                mm.AddTask(task ?? new CoreLibRelinker());
 
                 mm.MapDependencies();
                 mm.AutoPatch();
@@ -151,9 +183,103 @@ namespace ModFramework.Relinker
             }
         }
 
+        AssemblyNameReference ResolveSystemType(TypeReference type)
+        {
+            var searchType = type.FullName;
+
+            var matches = SystemTypes
+                .Where(x => x.Type.FullName == searchType
+                    && x.Assembly.Name.Name != "mscorlib"
+                    && x.Assembly.Name.Name != "System.Private.CoreLib"
+                )
+                // pick the assembly with the highest version.
+                // TODO: consider if this will ever need to target other fw's
+                .OrderByDescending(x => x.Assembly.Name.Version);
+            var match = matches.FirstOrDefault();
+
+            if (match is not null)
+            {
+                // this is only needed for ilspy to pick up .net5 libs on osx
+                var filename = Path.GetFileName(match.FilePath);
+                if (!File.Exists(filename))
+                    File.Copy(match.FilePath, filename);
+
+                return match.AsNameReference();
+            }
+            return null;
+        }
+
+        AssemblyNameReference ResolveDependency(TypeReference type)
+        {
+            var depds = Modder.DependencyCache.Values
+                .Select(m => new
+                {
+                    Module = m,
+                    Types = m.Types.Where(x => x.FullName == type.FullName
+                        && m.Assembly.Name.Name != "mscorlib"
+                        && m.Assembly.Name.Name != "System.Private.CoreLib"
+                    )
+                })
+                .Where(x => x.Types.Any())
+                // pick the assembly with the highest version.
+                // TODO: consider if this will ever need to target other fw's
+                .OrderByDescending(x => x.Module.Assembly.Name.Version); ;
+
+            var first = depds.FirstOrDefault();
+            if (first is not null)
+            {
+                return first.Module.Assembly.AsNameReference();
+            }
+            return null;
+        }
+
+        AssemblyNameReference ResolveRedirection(TypeReference type)
+        {
+            foreach (var mod in Modder.Mods)
+            {
+
+            }
+
+            return null;
+        }
+
+        AssemblyNameReference ResolveAssembly(TypeReference type)
+        {
+            var res = Resolve?.Invoke(type);
+            if (res is null)
+            {
+                if (type.Scope is AssemblyNameReference anr)
+                {
+                    var redirected = ResolveRedirection(type);
+                    if (redirected is not null)
+                        return redirected;
+
+                    var dependencyMatch = ResolveDependency(type);
+                    if (dependencyMatch is not null)
+                        return dependencyMatch;
+
+                    var systemMatch = ResolveSystemType(type);
+                    if (systemMatch is not null)
+                        return systemMatch;
+
+                    throw new MissingMemberException();
+                }
+                else throw new NotImplementedException();
+            }
+
+            if (res.Name == "mscorlib" || res.Name == "System.Private.CoreLib")
+                throw new NotSupportedException();
+
+            return res;
+        }
+
         void FixType(TypeReference type)
         {
-            if (type is TypeSpecification ts)
+            if (type.IsNested)
+            {
+                FixType(type.DeclaringType);
+            }
+            else if (type is TypeSpecification ts)
             {
                 FixType(ts.ElementType);
             }
@@ -164,58 +290,28 @@ namespace ModFramework.Relinker
                 foreach (var prm in gp.GenericParameters)
                     FixType(prm);
             }
-            else if (type.Scope.Name == "mscorlib" || type.Scope.Name == "System.Private.CoreLib")
+            else if (type.Scope.Name == "mscorlib"
+                || type.Scope.Name == "netstandard"
+                || type.Scope.Name == "System.Private.CoreLib"
+            )
             {
-                var searchType = type.FullName;
+                var asm = ResolveAssembly(type);
 
-                var match = SystemTypes
-                    .Where(x => x.Type.FullName == searchType)
-                    // pick the assembly with the highest version.
-                    // TODO: consider if this will ever need to target other fw's
-                    .OrderByDescending(x => x.Assembly.Name.Version)
-                    .FirstOrDefault();
-
-                if (match != null)
+                var existing = type.Module.AssemblyReferences.SingleOrDefault(x => x.Name == asm.Name);
+                if (existing != null)
                 {
-                    if (type.Scope is AssemblyNameReference anr)
-                    {
-                        var existing = type.Module.AssemblyReferences.SingleOrDefault(x => x.Name == match.Assembly.Name.Name);
-
-                        if (existing != null)
-                        {
-                            type.Scope = existing;
-                        }
-                        else
-                        {
-                            var version = match.Assembly.Name.Version;
-                            var newref = new AssemblyNameReference(match.Assembly.Name.Name, version)
-                            {
-                                PublicKey = match.Assembly.Name.PublicKey,
-                                PublicKeyToken = match.Assembly.Name.PublicKeyToken,
-                                Culture = match.Assembly.Name.Culture,
-                                Hash = match.Assembly.Name.Hash,
-                                HashAlgorithm = match.Assembly.Name.HashAlgorithm,
-                                Attributes = match.Assembly.Name.Attributes
-                            };
-                            type.Scope = newref;
-                            type.Module.AssemblyReferences.Add(newref);
-
-                            // this is only needed for ilspy to pick up .net5 libs on osx
-                            var filename = Path.GetFileName(match.FilePath);
-                            if (!File.Exists(filename))
-                                File.Copy(match.FilePath, filename);
-                        }
-                    }
-                    else throw new NotImplementedException();
+                    type.Scope = existing;
                 }
-                else throw new NotImplementedException();
+                else
+                {
+                    type.Scope = asm;
+                    type.Module.AssemblyReferences.Add(asm);
+                }
             }
         }
 
-        public override void Relink(MethodBody body, Instruction instr)
+        public void Relink(Instruction instr)
         {
-            base.Relink(body, instr);
-
             if (instr.Operand is MethodReference mref)
             {
                 if (mref is GenericInstanceMethod gim)
@@ -232,12 +328,57 @@ namespace ModFramework.Relinker
                     FixAttributes(prm.CustomAttributes);
                 }
             }
-
-            if (instr.Operand is FieldReference fref)
+            else if (instr.Operand is FieldReference fref)
             {
                 FixType(fref.DeclaringType);
                 FixType(fref.FieldType);
             }
+            else if (instr.Operand is TypeSpecification ts)
+            {
+                FixType(ts.ElementType);
+            }
+            else if (instr.Operand is TypeReference tr)
+            {
+                FixType(tr);
+            }
+            else if (instr.Operand is VariableDefinition vd)
+            {
+                FixType(vd.VariableType);
+            }
+            else if (instr.Operand is ParameterDefinition pd)
+            {
+                FixType(pd.ParameterType);
+            }
+            else if (instr.Operand is Instruction[] instructions)
+            {
+                foreach (var ins in instructions)
+                    Relink(ins);
+            }
+            else if (!(
+                instr.Operand is null
+                || instr.Operand is Instruction
+                || instr.Operand is Int16
+                || instr.Operand is Int32
+                || instr.Operand is Int64
+                || instr.Operand is UInt16
+                || instr.Operand is UInt32
+                || instr.Operand is UInt64
+                || instr.Operand is string
+                || instr.Operand is byte
+                || instr.Operand is sbyte
+                || instr.Operand is Single
+                || instr.Operand is Double
+            ))
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        public override void Relink(MethodBody body, Instruction instr)
+        {
+            base.Relink(body, instr);
+
+            Relink(instr);
         }
 
         public override void Relink(TypeDefinition type)

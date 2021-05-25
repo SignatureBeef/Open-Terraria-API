@@ -27,6 +27,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public bool IsContentLost { get { return false; } set { } }
 
+		public event EventHandler<EventArgs> ContentLost;
+
 		public RenderTarget2D (GraphicsDevice graphicsDevice, int width, int height)
             : base(graphicsDevice, width, height)
 		{

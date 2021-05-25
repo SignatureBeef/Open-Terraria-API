@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class GraphicsResource
@@ -23,6 +25,7 @@ namespace Microsoft.Xna.Framework.Graphics
         public void Dispose()
         {
         }
+        public event EventHandler<EventArgs> Disposing;
 
         public GraphicsDevice GraphicsDevice { get; set; }
 

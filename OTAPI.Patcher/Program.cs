@@ -100,6 +100,7 @@ namespace OTAPI.Patcher
                 mOut.Write(runtime_output);
             }
 
+            PluginLoader.Clear();
             ModFramework.Relinker.CoreLibRelinker.PostProcessCoreLib(assembly_output, runtime_output);
 
             mm.Log("[OTAPI] Building NuGet package...");

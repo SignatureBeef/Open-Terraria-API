@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using ModFramework;
+using ModFramework.Plugins;
+using ModFramework.Relinker;
 using Mono.Cecil;
 using MonoMod;
 using System;
@@ -42,7 +44,7 @@ namespace OTAPI.Setup
 
             var output = Path.Combine("outputs", "TerrariaServer.dll");
 
-            using MonoModder mm = new MonoModder()
+            using ModFwModder mm = new ModFwModder()
             {
                 InputPath = input,
                 OutputPath = output,
@@ -78,7 +80,7 @@ namespace OTAPI.Setup
 
             // add the SourceAssembly name attribute
             {
-                var sac = mm.Module.ImportReference(typeof(OTAPI.SourceAssemblyAttribute).GetConstructor(Type.EmptyTypes));
+                var sac = mm.Module.ImportReference(typeof(SourceAssemblyAttribute).GetConstructor(Type.EmptyTypes));
                 var sa = new CustomAttribute(sac);
                 sa.Fields.Add(new CustomAttributeNamedArgument("ModuleName", new CustomAttributeArgument(mm.Module.TypeSystem.String, initialModuleName)));
                 sa.Fields.Add(new CustomAttributeNamedArgument("FileName", new CustomAttributeArgument(mm.Module.TypeSystem.String, inputName)));
@@ -86,6 +88,7 @@ namespace OTAPI.Setup
             }
 
             mm.MapDependencies();
+            mm.AddTask(new CoreLibRelinker());
             mm.AutoPatch();
 
             //mm.OutputPath = mm.Module.Name; // the merged TerrariaServer + ReLogic (so we can apply patches)
@@ -112,8 +115,13 @@ namespace OTAPI.Setup
 #define {const_fullname}
 ");
 
-            // convert the libary to net5
-            ModFramework.Relinker.CoreLibRelinker.PostProcessCoreLib(mm.OutputPath);
+            PluginLoader.Clear();
+
+            //// convert the libary to net5
+            //CoreLibRelinker.PostProcessCoreLib(mm.OutputPath);
+            var dest = Path.GetFileName(output);
+            if (File.Exists(dest)) File.Delete(dest);
+            File.Copy(output, dest);
         }
     }
 }

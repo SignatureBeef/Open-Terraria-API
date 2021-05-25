@@ -146,7 +146,7 @@ namespace ModFramework.Modules
                             .Create(assemblyName, new[] { encoded }, options: compile_options)
                             .AddReferences(
                                 MetadataReference.CreateFromFile(typeof(Object).Assembly.Location),
-                                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "netstandard.dll")),
+                                //MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "netstandard.dll")),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.dll")),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Core.dll")),
                                 MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Runtime.dll")),
