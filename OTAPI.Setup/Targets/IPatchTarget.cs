@@ -16,12 +16,30 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-namespace ModFramework.Targets
+namespace OTAPI.Setup.Targets
 {
     [MonoMod.MonoModIgnore]
     public interface IPatchTarget
     {
-        string GetZipUrl();
-        string DetermineInputAssembly(string extractedFolder);
+        //string GetZipUrl();
+        //string DetermineInputAssembly(string extractedFolder);
+
+        string DisplayText { get; }
+
+        //PatchType PatchType { get; }
+
+        ///// <summary>
+        ///// Initialises the patch target process and returns the target assembly path
+        ///// </summary>
+        ///// <returns></returns>
+        //string Initialise();
+
+        void Patch();
     }
+
+    //public enum PatchType
+    //{
+    //    Server,
+    //    Client
+    //}
 }

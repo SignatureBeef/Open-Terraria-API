@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
-using ModFramework.Targets;
 using OTAPI.Setup.Targets;
 
 namespace OTAPI.Setup
@@ -35,7 +35,7 @@ namespace OTAPI.Setup
         }
         public static void Log(this IPatchTarget target, string message) => Log(message);
 
-        static string DownloadZip(string url)
+        public static string DownloadZip(string url)
         {
             Log($"Downloading {url}");
             var uri = new Uri(url);
@@ -56,7 +56,7 @@ namespace OTAPI.Setup
             else throw new NotSupportedException();
         }
 
-        static string ExtractZip(string zipPath)
+        public static string ExtractZip(string zipPath)
         {
             var directory = Path.GetFileNameWithoutExtension(zipPath);
             var info = new DirectoryInfo(directory);
@@ -70,49 +70,6 @@ namespace OTAPI.Setup
                 ZipFile.ExtractToDirectory(zipPath, directory);
 
             return directory;
-        }
-
-        public static string GetCliValue(string key)
-        {
-            string find = $"-{key}=";
-            var match = Array.Find(Environment.GetCommandLineArgs(), x => x.StartsWith(find, StringComparison.CurrentCultureIgnoreCase));
-            return match?.Substring(find.Length)?.ToLower();
-        }
-
-        static IPatchTarget DeterminePatchTarget()
-        {
-            var cli = GetCliValue("patchTarget");
-            if (cli == "m") return new TMLPatchTarget();
-            if (cli == "v") return new VanillaPatchTarget();
-
-            int attempts = 5;
-            do
-            {
-                Console.Write("What (v)anilla or t(m)odloader? m/[V]: ");
-
-                var input = Console.ReadLine().ToLower();
-
-                if (input.Equals("m", StringComparison.CurrentCultureIgnoreCase))
-                    return new TMLPatchTarget();
-
-                if (input.Equals("v", StringComparison.CurrentCultureIgnoreCase))
-                    break;
-
-                if (String.IsNullOrWhiteSpace(input)) // no key entered
-                    break;
-            } while (attempts-- > 0);
-
-            return new VanillaPatchTarget();
-        }
-
-        public static string DownloadServer()
-        {
-            var target = DeterminePatchTarget();
-            var zipUrl = target.GetZipUrl();
-            var zipPath = DownloadZip(zipUrl);
-            var extracted = ExtractZip(zipPath);
-
-            return target.DetermineInputAssembly(extracted);
         }
     }
 }

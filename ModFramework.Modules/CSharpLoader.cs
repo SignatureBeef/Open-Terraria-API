@@ -29,12 +29,18 @@ using System.Reflection;
 
 namespace ModFramework.Modules
 {
+    public delegate HookResult AssemblyFoundHandler(string filepath);
+
     [MonoMod.MonoModIgnore]
     public class CSharpLoader
     {
         const string ConsolePrefix = "CSharp";
         const string ModulePrefix = "CSharpScript_";
+
         public MonoMod.MonoModder Modder { get; set; }
+
+        public static event AssemblyFoundHandler AssemblyFound;
+        public static List<string> GlobalAssemblies { get; } = new List<string>();
 
         public CSharpLoader SetModder(MonoMod.MonoModder modder)
         {
@@ -105,9 +111,13 @@ namespace ModFramework.Modules
 
                 foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories))
                 {
-                    Console.WriteLine($"[{ConsolePrefix}] Loading module: {file}");
                     try
                     {
+                        if (AssemblyFound?.Invoke(file) == HookResult.Cancel)
+                            continue; // event was cancelled, they do not wish to use this file. skip to the next.
+
+                        Console.WriteLine($"[{ConsolePrefix}] Loading module: {file}");
+
                         var assemblyPath = Path.GetDirectoryName(typeof(object).GetTypeInfo().Assembly.Location);
 
                         var folder = Path.GetFileName(Path.GetDirectoryName(file));
@@ -120,9 +130,10 @@ namespace ModFramework.Modules
 
                         SyntaxTree encoded;
                         SourceText source;
-                        using (var stream = File.OpenRead(file))
+                        //using (var stream = File.OpenRead(file))
                         {
-                            source = SourceText.From(stream, encoding, canBeEmbedded: true);
+                            var src = File.ReadAllText(file);
+                            source = SourceText.From($"{constants}\n{src}", encoding);
                             encoded = CSharpSyntaxTree.ParseText(source, options, file);
                         }
 
@@ -135,7 +146,12 @@ namespace ModFramework.Modules
                         var outAsmPath = Path.Combine(outDir, $"{assemblyName}.dll");
                         var outPdbPath = Path.Combine(outDir, $"{assemblyName}.pdb");
 
-                        var refs = LoadExternalRefs(path).ToArray();
+                        var refs = LoadExternalRefs(path).ToList();
+
+                        foreach(var globalPath in GlobalAssemblies)
+                        {
+                            refs.Add(MetadataReference.CreateFromFile(globalPath));
+                        }
 
                         var compile_options = new CSharpCompilationOptions(
                             is_top_level_script ? OutputKind.ConsoleApplication : OutputKind.DynamicallyLinkedLibrary)

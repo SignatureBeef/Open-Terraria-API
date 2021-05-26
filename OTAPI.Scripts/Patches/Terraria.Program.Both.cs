@@ -24,10 +24,27 @@ namespace Terraria
 {
     partial class patch_Program
     {
+#if !Terraria
         public static extern void orig_DisplayException(Exception e);
-        private static void DisplayException(Exception e)
+        public static void DisplayException(Exception e)
         {
             Console.WriteLine(e.ToString());
         }
+#endif
+
+#if !TerrariaServer
+        public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
+        public static void LaunchGame(string[] args, bool monoArgs = false)
+        {
+            //PluginLoader.TryLoad();
+            Console.WriteLine($"[OTAPI] Starting up.");
+            //Modifier.Apply(ModType.Runtime);
+
+            Main.versionNumber += " OTAPI";
+            Main.versionNumber2 += " OTAPI";
+
+            orig_LaunchGame(args, monoArgs);
+        }
+#endif
     }
 }

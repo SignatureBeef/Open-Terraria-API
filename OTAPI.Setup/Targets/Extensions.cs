@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-using ModFramework.Targets;
 
 namespace OTAPI.Setup.Targets
 {
@@ -24,6 +23,6 @@ namespace OTAPI.Setup.Targets
     public static class Extensions
     {
         public static string GetCliValue(this IPatchTarget target, string key)
-            => Remote.GetCliValue(key);
+            => PatchTargets.GetCliValue(key);
     }
 }
