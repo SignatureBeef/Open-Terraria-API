@@ -17,6 +17,7 @@
 // using System;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using ModFramework;
 using ModFramework.Plugins;
@@ -54,9 +55,9 @@ namespace OTAPI.Patcher.Targets
 
             var installPath = DetermineClientInstallPath();
             var resources = Path.Combine(installPath, "Resources");
-            var assembly_output = Path.Combine(installPath, "Resources/Terraria.patched.exe");
+            var assembly_output = Path.Combine(installPath, "Resources/OTAPI.exe");
             var runtime_output = Path.Combine(installPath, "Resources/Terraria.Runtime.dll");
-            var mfw_output = Path.Combine(installPath, "Resources/ModFramework.dll");
+            //var mfw_output = Path.Combine(installPath, "Resources/ModFramework.dll");
 
             // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
             PluginLoader.AssemblyFound += CanLoadFile;
@@ -69,7 +70,7 @@ namespace OTAPI.Patcher.Targets
             using var mm = new ModFwModder()
             {
                 InputPath = localPath,
-                OutputPath = assembly_output,
+                OutputPath = "OTAPI.exe",
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
                 // PublicEverything = true, // this is done in setup
@@ -79,6 +80,14 @@ namespace OTAPI.Patcher.Targets
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(Path.Combine(installPath, "Resources"));
             mm.Read();
+
+            var initialModuleName = mm.Module.Name;
+
+            //// prechange the assembly name to a dll
+            //// monomod will also reference this when relinking so it must be correct
+            //// in order for shims within this dll to work (relogic)
+            //mm.Module.Name = "TerrariaServer.dll";
+            //mm.Module.Assembly.Name.Name = "TerrariaServer";
 
             //// merge in ModFramework
             //{
@@ -108,25 +117,44 @@ namespace OTAPI.Patcher.Targets
 
             foreach (var asmref in mm.Module.AssemblyReferences.ToArray())
             {
-                if (asmref.Name.Contains("System.Private.CoreLib"))
+                if (asmref.Name.Contains("System.Private.CoreLib") || asmref.Name.Contains("netstandard"))
                 {
                     mm.Module.AssemblyReferences.Remove(asmref);
                 }
             }
 
+            foreach (var mmt in mm.Module.Types.Where(x => x.Namespace == "MonoMod").ToArray())
+            {
+                mm.Module.Types.Remove(mmt);
+            }
+
             mm.Write();
 
-            mm.Log("[OTAPI] Generating OTAPI.Runtime.dll");
-            var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, "OTAPI.Runtime.dll");
+            if (File.Exists(assembly_output)) File.Delete(assembly_output);
+            File.Copy("OTAPI.exe", assembly_output);
+
+            mm.Log("[OTAPI] Generating Terraria.Runtime.dll");
+            var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, "Terraria.Runtime.dll");
             using (ModuleDefinition mOut = gen.OutputModule)
             {
                 gen.Generate();
 
-                mOut.Write(runtime_output);
+
+                foreach (var asmref in mOut.AssemblyReferences.ToArray())
+                {
+                    if (asmref.Name.Contains("System.Private.CoreLib") || asmref.Name.Contains("netstandard"))
+                    {
+                        mOut.AssemblyReferences.Remove(asmref);
+                    }
+                }
+
+                mOut.Write("Terraria.Runtime.dll");
+                if (File.Exists(runtime_output)) File.Delete(runtime_output);
+                File.Copy("Terraria.Runtime.dll", runtime_output);
             }
 
-            if (File.Exists(mfw_output)) File.Delete(mfw_output);
-            File.Copy("ModFramework.dll", mfw_output);
+            //if (File.Exists(mfw_output)) File.Delete(mfw_output);
+            //File.Copy("ModFramework.dll", mfw_output);
 
             mm.Log("[OTAPI] Done.");
         }

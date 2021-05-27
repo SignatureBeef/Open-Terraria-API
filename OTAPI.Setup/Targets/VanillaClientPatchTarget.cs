@@ -168,7 +168,7 @@ namespace OTAPI.Setup.Targets
                 }
 
                 var contents = File.ReadAllText(launch_script);
-                var patched = contents.Replace("./Terraria.bin.osx $@", "./Terraria.patched.bin.osx $@");
+                var patched = contents.Replace("./Terraria.bin.osx $@", "./OTAPI.Client.bin.osx $@");
 
                 if (contents != patched)
                 {
@@ -178,7 +178,7 @@ namespace OTAPI.Setup.Targets
 
             {
                 var bin = Path.Combine(installPath, "MacOS/Terraria.bin.osx");
-                var patched_bin = Path.Combine(installPath, "MacOS/Terraria.patched.bin.osx");
+                var patched_bin = Path.Combine(installPath, "MacOS/OTAPI.Client.bin.osx");
 
                 if (!File.Exists(patched_bin))
                 {

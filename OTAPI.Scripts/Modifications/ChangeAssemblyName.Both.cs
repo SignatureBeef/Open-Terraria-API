@@ -19,8 +19,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using ModFramework;
 using MonoMod;
 
+#if !Terraria
 [Modification(ModType.PostPatch, "Changing TerrariaServer assembly name to OTAPI", ModPriority.Last)]
-void ChangeAssemblyName(MonoModder modder)
+void ChangeServerAssemblyName(MonoModder modder)
 {
     foreach (var asmref in modder.Module.AssemblyReferences)
     {
@@ -40,3 +41,28 @@ void ChangeAssemblyName(MonoModder modder)
     modder.RelinkModuleMap[from] = modder.Module;
     modder.RelinkModuleMap["OTAPI"] = modder.Module;
 }
+#endif
+
+#if !TerrariaServer
+[Modification(ModType.PostPatch, "Changing Terraria assembly name to OTAPI", ModPriority.Last)]
+void ChangeClientAssemblyName(MonoModder modder)
+{
+    foreach (var asmref in modder.Module.AssemblyReferences)
+    {
+        if (asmref.Name == "Terraria")
+            asmref.Name = "OTAPI";
+    }
+    modder.Module.Name = modder.Module.Assembly.Name.Name = "OTAPI";
+
+    (modder.AssemblyResolver as Mono.Cecil.DefaultAssemblyResolver).ResolveFailure += (s, e) =>
+    {
+        if (e.Name == "OTAPI") return modder.Module.Assembly;
+        return null;
+    };
+
+    var from = "Terraria";
+    modder.Log($"[OTAPI] RelinkModule: {from} -> {modder.Module.Name}");
+    modder.RelinkModuleMap[from] = modder.Module;
+    modder.RelinkModuleMap["OTAPI"] = modder.Module;
+}
+#endif

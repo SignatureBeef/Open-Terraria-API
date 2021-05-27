@@ -33,6 +33,7 @@ namespace Terraria
 #endif
 
 #if !TerrariaServer
+        public static event EventHandler OnLaunched;
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
@@ -42,6 +43,8 @@ namespace Terraria
 
             Main.versionNumber += " OTAPI";
             Main.versionNumber2 += " OTAPI";
+
+            OnLaunched?.Invoke(null, EventArgs.Empty);
 
             orig_LaunchGame(args, monoArgs);
         }
