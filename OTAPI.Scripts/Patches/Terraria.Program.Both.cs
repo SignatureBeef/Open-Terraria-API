@@ -34,6 +34,7 @@ namespace Terraria
 
 #if !TerrariaServer
         public static event EventHandler OnLaunched;
+
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {

@@ -16,11 +16,11 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System;
 
-namespace OTAPI.Client
+namespace OTAPI.Client.Host
 {
-    class MainClass
+    class Program
     {
-        static System.Reflection.Assembly Terraria;
+        static System.Reflection.Assembly TerrariaAssembly;
 
         public static void Main(string[] args)
         {
@@ -29,7 +29,6 @@ namespace OTAPI.Client
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             AppDomain.CurrentDomain.TypeResolve += CurrentDomain_TypeResolve;
 
-
             using (var lua = new Triton.Lua())
             {
                 lua.ImportNamespace("System");
@@ -37,9 +36,25 @@ namespace OTAPI.Client
                 lua.ImportType(typeof(System.Console));
                 lua.DoString("Console.WriteLine('test from lua')");
             }
-            Console.WriteLine("[OTAPI.Client] LUA");
 
             Console.WriteLine("[OTAPI.Client] Starting!");
+
+            //Terraria.Program.OnLaunched += (_, _) =>
+            //{
+            //    Console.WriteLine("Launched");
+
+            //    Terraria.Main.versionNumber += " [OTAPI.Client]";
+            //    Terraria.Main.versionNumber2 += " [OTAPI.Client]";
+
+            //    using (var lua = new Triton.Lua())
+            //    {
+            //        lua.ImportNamespace("Terraria");
+            //        lua.DoString(@"
+            //            Main.versionNumber = Main.versionNumber .. ' Hellow from LUA'
+            //        ");
+            //    }
+            //};
+            //Terraria.MacLaunch.Main(args);
             IsolatedLaunch.Launch(args);
         }
 
@@ -54,15 +69,15 @@ namespace OTAPI.Client
             Console.WriteLine("Looking for: " + args.Name);
             if (args.Name.StartsWith("Terraria") || args.Name.StartsWith("OTAPI"))
             {
-                if (Terraria is null)
+                if (TerrariaAssembly is null)
                 {
-                    Terraria = System.Reflection.Assembly.LoadFile(
+                    TerrariaAssembly = System.Reflection.Assembly.LoadFile(
                         System.IO.Path.Combine(Environment.CurrentDirectory, "Terraria.patched.exe")
                     );
                     Console.WriteLine("Loaded terraria");
                 }
                 Console.WriteLine("Returning terraria");
-                return Terraria;
+                return TerrariaAssembly;
             }
             return null;
         }

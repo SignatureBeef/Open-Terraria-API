@@ -21,23 +21,19 @@ namespace OTAPI.Patcher.Targets
 {
     public static class PatchTargets
     {
-        public static string GetCliValue(string key)
-        {
-            string find = $"-{key}=";
-            var match = Array.Find(Environment.GetCommandLineArgs(), x => x.StartsWith(find, StringComparison.CurrentCultureIgnoreCase));
-            return match?.Substring(find.Length)?.ToLower();
-        }
+        public static void Log(this IPatchTarget target, string message) => Common.Log(message);
+        public static string GetCliValue(this IPatchTarget target, string key) => Common.GetCliValue(key);
 
         static Dictionary<string, IPatchTarget> _targets = new Dictionary<string, IPatchTarget>()
         {
             //{"m", new TMLPatchTarget() },
-            {"o", new OTAPIServerTarget() },
-            {"c", new VanillaClientPatchTarget() },
+            {"s", new OTAPIServerTarget() },
+            {"c", new OTAPIClientLightweightTarget() },
         };
 
         public static IPatchTarget DeterminePatchTarget()
         {
-            var cli = GetCliValue("patchTarget");
+            var cli = Common.GetCliValue("patchTarget");
 
             if (!String.IsNullOrWhiteSpace(cli) && _targets.TryGetValue(cli, out IPatchTarget match))
                 return match;

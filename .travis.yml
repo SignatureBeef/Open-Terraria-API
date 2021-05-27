@@ -2,17 +2,12 @@ language: csharp
 mono: none
 dotnet: 5.0.201
 script:
- - dotnet restore OTAPI.Setup.sln
  - dotnet restore OTAPI.Mods.sln
- - dotnet restore OTAPI.Launcher.sln
- - dotnet build OTAPI.Setup.sln
- - cd OTAPI.Setup/bin/Debug/net5.0
- - dotnet run --project ../../../OTAPI.Setup.csproj -patchTarget=s -latestVanilla=n
- - cd ../../../../
+ - dotnet restore OTAPI.Server.Launcher.sln
  - dotnet build OTAPI.Mods.sln
  - cd OTAPI.Patcher/bin/Debug/net5.0
- - dotnet run --project ../../../OTAPI.Patcher.csproj -patchTarget=o -latestVanilla=n
+ - dotnet run --project ../../../OTAPI.Patcher.csproj -patchTarget=s -latestVanilla=n
  - cd ../../../../
- - dotnet build OTAPI.Launcher.sln
- - cd OTAPI.Launcher/bin/Debug/net5.0
- - dotnet OTAPI.Launcher.dll -test-init
+ - dotnet build OTAPI.Server.Launcher.sln
+ - cd OTAPI.Server.Launcher/bin/Debug/net5.0
+ - dotnet OTAPI.Server.Launcher.dll -test-init

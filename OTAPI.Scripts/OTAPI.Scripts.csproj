@@ -7,8 +7,8 @@
 		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="TerrariaServer">
-			<HintPath>..\OTAPI.Setup\bin\Debug\net5.0\TerrariaServer.dll</HintPath>
+		<Reference Include="TerrariaClientOrServer">
+			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\refs.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<PropertyGroup>

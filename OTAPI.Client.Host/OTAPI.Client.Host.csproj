@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net472</TargetFramework>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Triton" Version="1.0.0" GeneratePathProperty="true" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="OTAPI">
+			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.exe</HintPath>
+		</Reference>
+	</ItemGroup>
+</Project>

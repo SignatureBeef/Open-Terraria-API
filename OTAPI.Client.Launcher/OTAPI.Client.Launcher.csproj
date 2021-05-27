@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="NuGet.Packaging.Core" Version="5.9.1" />
+	  <PackageReference Include="NuGet.Packaging" Version="5.9.1" />
+	  <PackageReference Include="NuGet.Protocol" Version="5.9.1" />
+	</ItemGroup>
+</Project>
