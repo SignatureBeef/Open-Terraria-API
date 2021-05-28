@@ -19,6 +19,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
 using System;
+using ModFramework;
+using ModFramework.Plugins;
 
 namespace Terraria
 {
@@ -38,9 +40,10 @@ namespace Terraria
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            //PluginLoader.TryLoad();
             Console.WriteLine($"[OTAPI] Starting up.");
-            //Modifier.Apply(ModType.Runtime);
+            ModFramework.Plugins.PluginLoader.AssemblyLoader = new ModFramework.Plugins.LegacyAssemblyResolver();
+            ModFramework.Plugins.PluginLoader.TryLoad();
+            ModFramework.Modifier.Apply(ModFramework.ModType.Runtime);
 
             Main.versionNumber += " OTAPI";
             Main.versionNumber2 += " OTAPI";

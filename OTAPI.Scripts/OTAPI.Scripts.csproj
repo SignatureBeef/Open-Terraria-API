@@ -10,6 +10,9 @@
 		<Reference Include="TerrariaClientOrServer">
 			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\refs.dll</HintPath>
 		</Reference>
+		<Reference Include="Steamworks.NET">
+		  <HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\EmbeddedResources\Steamworks.NET.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 	<PropertyGroup>
 		<PreserveCompilationReferences>true</PreserveCompilationReferences>

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using System.Linq;
 using ModFramework;
 using Mono.Cecil.Cil;
@@ -49,8 +50,20 @@ namespace OTAPI
     {
         public static partial class MessageBuffer
         {
-            public delegate HookResult NameCollisionHandler(Terraria.Player player);
-            public static NameCollisionHandler NameCollision;
+            public class NameCollisionEventArgs : EventArgs
+            {
+                public HookEvent Event { get; set; }
+                public HookResult? Result { get; set; }
+
+                public Terraria.Player player { get; set; }
+            }
+            public static event EventHandler<NameCollisionEventArgs> NameCollision;
+
+            public static HookResult? InvokeNameCollision(NameCollisionEventArgs args)
+            {
+                NameCollision?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }
@@ -61,7 +74,11 @@ namespace OTAPI.Callbacks
     {
         public static bool NameCollision(Terraria.Player player)
         {
-            return Hooks.MessageBuffer.NameCollision?.Invoke(player) != HookResult.Cancel;
+            var args = new Hooks.MessageBuffer.NameCollisionEventArgs()
+            {
+                player = player
+            };
+            return Hooks.MessageBuffer.InvokeNameCollision(args) != HookResult.Cancel;
         }
     }
 }

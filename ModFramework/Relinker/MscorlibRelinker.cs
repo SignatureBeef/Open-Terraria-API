@@ -27,89 +27,16 @@ using Mono.Collections.Generic;
 namespace ModFramework.Relinker
 {
     [MonoMod.MonoModIgnore]
-    public class SystemType
-    {
-        public string FilePath { get; set; }
-        public AssemblyDefinition Assembly { get; set; }
-        public ExportedType Type { get; set; }
-
-        public AssemblyNameReference AsNameReference() => Assembly.AsNameReference();
-
-        public override string ToString() => Type.ToString();
-
-
-        public static IEnumerable<SystemType> SystemTypes { get; set; } = GetSystemType();
-
-        static SystemType[] GetSystemType()
-        {
-            var assemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
-
-            var runtimeAssemblies = Directory.GetFiles(assemblyPath, "*.dll")
-                .Select(x =>
-                {
-                    try
-                    {
-                        return new
-                        {
-                            asm = AssemblyDefinition.ReadAssembly(x),
-                            path = x,
-                        };
-                    }
-                    catch (Exception ex)
-                    {
-                        // discard assemblies that cecil cannot parse. e.g. api-ms**.dll on windows
-                        return null;
-                    }
-                })
-                .Where(x => x != null);
-
-            var forwardTypes = runtimeAssemblies.SelectMany(ra =>
-                ra.asm.MainModule.ExportedTypes
-                    .Where(x => x.IsForwarder)
-                    .Select(x => new SystemType()
-                    {
-                        Type = x,
-                        Assembly = ra.asm,
-                        FilePath = ra.path,
-                    })
-            );
-
-            return forwardTypes.ToArray();
-        }
-    }
-
-    [MonoMod.MonoModIgnore]
-    public static partial class Extensions
-    {
-        public static AssemblyNameReference AsNameReference(this AssemblyDefinition assembly)
-        {
-            var name = assembly.Name;
-            return new AssemblyNameReference(name.Name, name.Version)
-            {
-                PublicKey = name.PublicKey,
-                PublicKeyToken = name.PublicKeyToken,
-                Culture = name.Culture,
-                Hash = name.Hash,
-                HashAlgorithm = name.HashAlgorithm,
-                Attributes = name.Attributes
-            };
-        }
-    }
-
-    [MonoMod.MonoModIgnore]
-    public delegate AssemblyNameReference ResolveCoreLibHandler(TypeReference target);
-
-    [MonoMod.MonoModIgnore]
-    public class CoreLibRelinker : RelinkTask
+    public class MscorlibRelinker : RelinkTask
     {
         public event ResolveCoreLibHandler Resolve;
 
-        public static void PostProcessCoreLib(params string[] inputs)
+        public static void PostProcessMscorLib(params string[] inputs)
         {
-            PostProcessCoreLib(null, inputs);
+            PostProcessMscorLib(null, inputs);
         }
 
-        public static void PostProcessCoreLib(CoreLibRelinker task, params string[] inputs)
+        public static void PostProcessMscorLib(MscorlibRelinker task, params string[] inputs)
         {
             foreach (var input in inputs)
             {
@@ -123,7 +50,7 @@ namespace ModFramework.Relinker
 
                     GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
                 };
-                mm.Log($"[OTAPI] Processing corelibs to be net5: {Path.GetFileName(input)}");
+                mm.Log($"[OTAPI] Processing corelibs to be net4: {Path.GetFileName(input)}");
 
                 var extractor = new ResourceExtractor();
                 var embeddedResourcesDir = extractor.Extract(input);
@@ -132,7 +59,7 @@ namespace ModFramework.Relinker
 
                 mm.Read();
 
-                mm.AddTask(task ?? new CoreLibRelinker());
+                mm.AddTask(task ?? new MscorlibRelinker());
 
                 mm.MapDependencies();
                 mm.AutoPatch();
@@ -141,30 +68,11 @@ namespace ModFramework.Relinker
             }
         }
 
-        void PatchTargetFramework()
-        {
-            var tfa = Modder.Module.Assembly.CustomAttributes.SingleOrDefault(ca =>
-                ca.AttributeType.FullName == "System.Runtime.Versioning.TargetFrameworkAttribute");
-
-            if (tfa != null)
-            {
-                tfa.ConstructorArguments[0] = new CustomAttributeArgument(
-                    tfa.ConstructorArguments[0].Type,
-                    ".NETCoreApp,Version=v5.0"
-                );
-                var fdm = tfa.Properties.Single();
-                tfa.Properties[0] = new CustomAttributeNamedArgument(
-                    fdm.Name,
-                    new CustomAttributeArgument(fdm.Argument.Type, "")
-                );
-            }
-        }
-
         public override void Registered()
         {
             base.Registered();
 
-            PatchTargetFramework();
+            //PatchTargetFramework();
 
             FixAttributes(Modder.Module.Assembly.CustomAttributes);
             FixAttributes(Modder.Module.Assembly.MainModule.CustomAttributes);
@@ -217,7 +125,7 @@ namespace ModFramework.Relinker
                 {
                     Module = m,
                     Types = m.Types.Where(x => x.FullName == type.FullName
-                        && m.Assembly.Name.Name != "mscorlib"
+                        && m.Assembly.Name.Name != "netstandard"
                         && m.Assembly.Name.Name != "System.Private.CoreLib"
                     )
                 })
@@ -268,7 +176,7 @@ namespace ModFramework.Relinker
                 else throw new NotImplementedException();
             }
 
-            if (res.Name == "mscorlib" || res.Name == "System.Private.CoreLib")
+            if (res.Name == "netstandard" || res.Name == "System.Private.CoreLib")
                 throw new NotSupportedException();
 
             return res;
@@ -291,8 +199,7 @@ namespace ModFramework.Relinker
                 foreach (var prm in gp.GenericParameters)
                     FixType(prm);
             }
-            else if (type.Scope.Name == "mscorlib"
-                || type.Scope.Name == "netstandard"
+            else if (type.Scope.Name == "netstandard"
                 || type.Scope.Name == "System.Private.CoreLib"
             )
             {

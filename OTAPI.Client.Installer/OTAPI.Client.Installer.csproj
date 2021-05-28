@@ -2,14 +2,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net472</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
+	  <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="NuGet.Packaging.Core" Version="5.9.1" />
-	  <PackageReference Include="NuGet.Packaging" Version="5.9.1" />
-	  <PackageReference Include="NuGet.Protocol" Version="5.9.1" />
+	  <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.29.1" />
+	  <PackageReference Include="MonoMod" Version="21.4.29.1" />
 	</ItemGroup>
 </Project>

@@ -24,7 +24,7 @@ using System.Reflection;
 
 namespace ModFramework.Plugins
 {
-    public delegate HookResult AssemblyFoundHandler(string filepath);
+    public delegate bool AssemblyFoundHandler(string filepath);
 
     public static class PluginLoader
     {
@@ -32,7 +32,7 @@ namespace ModFramework.Plugins
 
         public static IEnumerable<Assembly> Assemblies => _assemblies;
 
-        public static IAssemblyLoader AssemblyLoader { get; set; } = new DefaultAssemblyLoader();
+        public static IAssemblyLoader AssemblyLoader { get; set; }
 
         public static event AssemblyFoundHandler AssemblyFound;
 
@@ -45,6 +45,9 @@ namespace ModFramework.Plugins
         {
             if (_assemblies == null)
             {
+                if (AssemblyLoader == null)
+                    AssemblyLoader = new DefaultAssemblyLoader();
+
                 _assemblies = new List<Assembly>();
                 _assemblies.AddRange(new[] {
                     Assembly.GetExecutingAssembly(),
@@ -62,7 +65,7 @@ namespace ModFramework.Plugins
                 {
                     try
                     {
-                        if (AssemblyFound?.Invoke(file) == HookResult.Cancel)
+                        if (AssemblyFound?.Invoke(file) == false)
                             continue; // event was cancelled, they do not wish to use this file. skip to the next.
 
                         Console.WriteLine($"[ModFw:Startup] Loading {file}");

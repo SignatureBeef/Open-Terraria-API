@@ -64,18 +64,29 @@ namespace OTAPI
     {
         public static partial class NPC
         {
-            public delegate HookResult BossBagHandler(Terraria.NPC npc,
-                ref int X,
-                ref int Y,
-                ref int Width,
-                ref int Height,
-                ref int Type,
-                ref int Stack,
-                ref bool noBroadcast,
-                ref int pfix,
-                ref bool noGrabDelay,
-                ref bool reverseLookup);
-            public static BossBagHandler BossBag;
+            public class BossBagEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public Terraria.NPC npc { get; set; }
+                public int X { get; set; }
+                public int Y { get; set; }
+                public int Width { get; set; }
+                public int Height { get; set; }
+                public int Type { get; set; }
+                public int Stack { get; set; }
+                public bool noBroadcast { get; set; }
+                public int pfix { get; set; }
+                public bool noGrabDelay { get; set; }
+                public bool reverseLookup { get; set; }
+            }
+            public static event EventHandler<BossBagEventArgs> BossBag;
+
+            public static HookResult? InvokeBossBag(BossBagEventArgs args)
+            {
+                BossBag?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }
@@ -97,10 +108,24 @@ namespace OTAPI.Callbacks
             bool reverseLookup,
             Terraria.NPC npc)
         {
-            if (Hooks.NPC.BossBag?.Invoke(npc, ref X, ref Y, ref Width, ref Height, ref Type, ref Stack, ref noBroadcast, ref pfix, ref noGrabDelay, ref reverseLookup) == HookResult.Cancel)
+            var args = new Hooks.NPC.BossBagEventArgs()
+            {
+                X = X,
+                Y = Y,
+                Width = Width,
+                Height = Height,
+                Type = Type,
+                Stack = Stack,
+                noBroadcast = noBroadcast,
+                pfix = pfix,
+                noGrabDelay = noGrabDelay,
+                reverseLookup = reverseLookup,
+                npc = npc,
+            };
+            if (Hooks.NPC.InvokeBossBag(args) == HookResult.Cancel)
                 return -1;
 
-            return Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+            return Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.noBroadcast, args.pfix, args.noGrabDelay, args.reverseLookup);
         }
     }
 }

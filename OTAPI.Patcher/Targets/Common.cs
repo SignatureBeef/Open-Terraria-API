@@ -3,6 +3,7 @@ using System.Reflection;
 
 namespace OTAPI.Patcher.Targets
 {
+    [MonoMod.MonoModIgnore]
     public static class Common
     {
         public static string GetVersion()

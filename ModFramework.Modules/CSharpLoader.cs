@@ -29,7 +29,7 @@ using System.Reflection;
 
 namespace ModFramework.Modules
 {
-    public delegate HookResult AssemblyFoundHandler(string filepath);
+    public delegate bool AssemblyFoundHandler(string filepath);
 
     [MonoMod.MonoModIgnore]
     public class CSharpLoader
@@ -113,7 +113,7 @@ namespace ModFramework.Modules
                 {
                     try
                     {
-                        if (AssemblyFound?.Invoke(file) == HookResult.Cancel)
+                        if (AssemblyFound?.Invoke(file) == false)
                             continue; // event was cancelled, they do not wish to use this file. skip to the next.
 
                         Console.WriteLine($"[{ConsolePrefix}] Loading module: {file}");

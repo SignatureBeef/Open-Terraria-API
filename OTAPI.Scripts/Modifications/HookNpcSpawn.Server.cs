@@ -20,6 +20,7 @@ using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
+using System;
 using System.Linq;
 
 [Modification(ModType.PreMerge, "Hooking Terraria.NPC.NewNPC(Spawn)")]
@@ -47,7 +48,17 @@ namespace OTAPI.Callbacks
     public static partial class NPC
     {
         public static bool Spawn(ref int index)
-            => Hooks.NPC.Spawn?.Invoke(ref index) != HookResult.Cancel;
+        {
+            var args = new Hooks.NPC.SpawnEventArgs()
+            {
+                index = index,
+            };
+            var result = Hooks.NPC.InvokeSpawn(args);
+
+            index = args.index;
+
+            return result != HookResult.Cancel;
+        }
     }
 }
 
@@ -57,8 +68,19 @@ namespace OTAPI
     {
         public static partial class NPC
         {
-            public delegate HookResult SpawnHandler(ref int index);
-            public static SpawnHandler Spawn;
+            public class SpawnEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public int index { get; set; }
+            }
+            public static event EventHandler<SpawnEventArgs> Spawn;
+
+            public static HookResult? InvokeSpawn(SpawnEventArgs args)
+            {
+                Spawn?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

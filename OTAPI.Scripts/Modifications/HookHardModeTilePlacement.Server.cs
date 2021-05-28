@@ -66,13 +66,23 @@ namespace OTAPI.Callbacks
     {
         public static bool HardmodeTilePlace(int x, int y, int type, bool mute, bool forced, int plr, int style)
         {
-            var result = Hooks.WorldGen.HardmodeTilePlace?.Invoke(ref x, ref y, ref type, ref mute, ref forced, ref plr, ref style);
+            var args = new Hooks.WorldGen.HardmodeTilePlaceEventArgs()
+            {
+                x = x,
+                y = y,
+                type = type,
+                mute = mute,
+                forced = forced,
+                plr = plr,
+                style = style,
+            };
+            var result = Hooks.WorldGen.InvokeHardmodeTilePlace(args);
 
             if (result == HardmodeTileUpdateResult.Cancel)
                 return false;
 
             else if (result == HardmodeTileUpdateResult.Continue)
-                Terraria.WorldGen.PlaceTile(x, y, type, mute, forced, plr, style);
+                Terraria.WorldGen.PlaceTile(args.x, args.y, args.type, args.mute, args.forced, args.plr, args.style);
 
             return true;
         }
@@ -103,8 +113,25 @@ namespace OTAPI
     {
         public static partial class WorldGen
         {
-            public delegate HardmodeTileUpdateResult HardmodeTilePlaceHandler(ref int x, ref int y, ref int type, ref bool mute, ref bool forced, ref int plr, ref int style);
-            public static HardmodeTilePlaceHandler HardmodeTilePlace;
+            public class HardmodeTilePlaceEventArgs : EventArgs
+            {
+                public HardmodeTileUpdateResult? Result { get; set; }
+
+                public int x { get; set; }
+                public int y { get; set; }
+                public int type { get; set; }
+                public bool mute { get; set; }
+                public bool forced { get; set; }
+                public int plr { get; set; }
+                public int style { get; set; }
+            }
+            public static event EventHandler<HardmodeTilePlaceEventArgs> HardmodeTilePlace;
+
+            public static HardmodeTileUpdateResult? InvokeHardmodeTilePlace(HardmodeTilePlaceEventArgs args)
+            {
+                HardmodeTilePlace?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

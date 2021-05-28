@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ModFramework\ModFramework.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OTAPI.Runtime">
+      <HintPath>..\..\OTAPI.Client.Installer\bin\Debug\net472\OTAPI.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="OTAPI">
+      <HintPath>..\..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

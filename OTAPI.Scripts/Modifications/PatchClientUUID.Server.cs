@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using ModFramework;
 using Mono.Cecil.Cil;
 using MonoMod;
+using System;
 using System.Collections.Generic;
 
 [Modification(ModType.PostPatch, "Patching in Client UUID")]
@@ -76,13 +77,24 @@ namespace OTAPI.Callbacks
         /// </summary>
         public static void ReadClientUUID(Terraria.MessageBuffer instance, System.IO.BinaryReader reader, int start, int length, ref int messageType)
         {
-            if (Hooks.MessageBuffer.ClientUUIDReceived?.Invoke(HookEvent.Before, instance, reader, start, length, messageType) != HookResult.Cancel)
+            var args = new Hooks.MessageBuffer.ClientUUIDReceivedEventArgs()
             {
-                var clientUUID = reader.ReadString();
+                Event = HookEvent.Before,
+                instance = instance,
+                reader = reader,
+                start = start,
+                length = length,
+                messageType = messageType
+            };
 
-                ((Terraria.patch_RemoteClient)Terraria.Netplay.Clients[instance.whoAmI]).ClientUUID = clientUUID;
+            if (Hooks.MessageBuffer.InvokeClientUUIDReceived(args) != HookResult.Cancel)
+            {
+                args.clientUUID = reader.ReadString();
 
-                Hooks.MessageBuffer.ClientUUIDReceived?.Invoke(HookEvent.After, instance, reader, start, length, messageType);
+                ((Terraria.patch_RemoteClient)Terraria.Netplay.Clients[args.instance.whoAmI]).ClientUUID = args.clientUUID;
+
+                args.Event = HookEvent.After;
+                Hooks.MessageBuffer.InvokeClientUUIDReceived(args);
             }
         }
     }
@@ -94,8 +106,25 @@ namespace OTAPI
     {
         public static partial class MessageBuffer
         {
-            public delegate HookResult ClientUUIDReceivedHandler(HookEvent @event, Terraria.MessageBuffer instance, System.IO.BinaryReader reader, int start, int length, int messageType);
-            public static ClientUUIDReceivedHandler ClientUUIDReceived;
+            public class ClientUUIDReceivedEventArgs : EventArgs
+            {
+                public HookEvent Event { get; set; }
+                public HookResult? Result { get; set; }
+
+                public Terraria.MessageBuffer instance { get; set; }
+                public System.IO.BinaryReader reader { get; set; }
+                public int start { get; set; }
+                public int length { get; set; }
+                public int messageType { get; set; }
+                public string clientUUID { get; set; }
+            }
+            public static event EventHandler<ClientUUIDReceivedEventArgs> ClientUUIDReceived;
+
+            public static HookResult? InvokeClientUUIDReceived(ClientUUIDReceivedEventArgs args)
+            {
+                ClientUUIDReceived?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

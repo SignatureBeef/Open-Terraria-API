@@ -58,7 +58,14 @@ namespace OTAPI.Callbacks
     public static partial class Main
     {
         public static bool CommandProcess(string lowered, string raw)
-            => Hooks.Main.CommandProcess?.Invoke(raw, lowered) != HookResult.Cancel;
+        {
+            var args = new Hooks.Main.CommandProcessEventArgs()
+            {
+                lowered = lowered,
+                command = raw,
+            };
+            return Hooks.Main.InvokeCommandProcess(args) != HookResult.Cancel;
+        }
     }
 }
 
@@ -68,8 +75,20 @@ namespace OTAPI
     {
         public static partial class Main
         {
-            public delegate HookResult CommandProcessHandler(string command, string lowered);
-            public static CommandProcessHandler CommandProcess;
+            public class CommandProcessEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public string command { get; set; }
+                public string lowered { get; set; }
+            }
+            public static event EventHandler<CommandProcessEventArgs> CommandProcess;
+
+            public static HookResult? InvokeCommandProcess(CommandProcessEventArgs args)
+            {
+                CommandProcess?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using Microsoft.Xna.Framework;
 using ModFramework;
 using Mono.Cecil;
@@ -50,10 +51,19 @@ namespace OTAPI.Callbacks
     {
         public static void PlayerAnnounce(NetworkText text, Color color, int excludedPlayer, int plr, int toWho, int fromWho)
         {
-            var result = Hooks.NetMessage.PlayerAnnounce?.Invoke(text, color, excludedPlayer, plr, toWho, fromWho);
+            var args = new Hooks.NetMessage.PlayerAnnounceEventArgs()
+            {
+                text = text,
+                color = color,
+                excludedPlayer = excludedPlayer,
+                plr = plr,
+                toWho = toWho,
+                fromWh = fromWho,
+            };
+            var result = Hooks.NetMessage.InvokePlayerAnnounce(args);
 
             if (result != HookResult.Cancel)
-                Terraria.Chat.ChatHelper.BroadcastChatMessage(text, color, excludedPlayer);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(args.text, args.color, args.excludedPlayer);
         }
     }
 }
@@ -64,8 +74,25 @@ namespace OTAPI
     {
         public static partial class NetMessage
         {
-            public delegate HookResult PlayerAnnounceHandler(NetworkText text, Color color, int excludedPlayer, int plr, int toWho, int fromWho);
-            public static PlayerAnnounceHandler PlayerAnnounce;
+            public class PlayerAnnounceEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public int index { get; set; }
+                public NetworkText text { get; set; }
+                public Color color { get; set; }
+                public int excludedPlayer { get; set; }
+                public int plr { get; set; }
+                public int toWho { get; set; }
+                public int fromWh { get; set; }
+            }
+            public static event EventHandler<PlayerAnnounceEventArgs> PlayerAnnounce;
+
+            public static HookResult? InvokePlayerAnnounce(PlayerAnnounceEventArgs args)
+            {
+                PlayerAnnounce?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using System.Linq;
 using ModFramework;
 using Mono.Cecil;
@@ -71,8 +72,20 @@ namespace OTAPI
     {
         public static partial class WorldGen
         {
-            public delegate HookResult MeteorHandler(ref int x, ref int y);
-            public static MeteorHandler Meteor;
+            public class MeteorEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public int x { get; set; }
+                public int y { get; set; }
+            }
+            public static event EventHandler<MeteorEventArgs> Meteor;
+
+            public static HookResult? InvokeMeteor(MeteorEventArgs args)
+            {
+                Meteor?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }
@@ -83,7 +96,17 @@ namespace OTAPI.Callbacks
     {
         public static bool Meteor(ref int x, ref int y)
         {
-            return OTAPI.Hooks.WorldGen.Meteor?.Invoke(ref x, ref y) != HookResult.Cancel;
+            var args = new Hooks.WorldGen.MeteorEventArgs()
+            {
+                x = x,
+                y = y,
+            };
+            var result = OTAPI.Hooks.WorldGen.InvokeMeteor(args);
+
+            x = args.x;
+            y = args.y;
+
+            return result != HookResult.Cancel;
         }
     }
 }

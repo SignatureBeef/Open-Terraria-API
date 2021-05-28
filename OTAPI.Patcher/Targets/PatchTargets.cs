@@ -19,6 +19,7 @@ using System.Collections.Generic;
 
 namespace OTAPI.Patcher.Targets
 {
+    [MonoMod.MonoModIgnore]
     public static class PatchTargets
     {
         public static void Log(this IPatchTarget target, string message) => Common.Log(message);

@@ -107,7 +107,13 @@ namespace OTAPI.Callbacks
     {
         public static bool QuickStack(int playerId, Terraria.Item item, int chestIndex)
         {
-            return Hooks.Chest.QuickStack?.Invoke(playerId, item, chestIndex) != HookResult.Cancel;
+            var args = new Hooks.Chest.QuickStackEventArgs()
+            {
+                playerId = playerId,
+                item = item,
+                chestIndex = chestIndex,
+            };
+            return Hooks.Chest.InvokeQuickStack(args) != HookResult.Cancel;
         }
     }
 }
@@ -118,8 +124,21 @@ namespace OTAPI
     {
         public static partial class Chest
         {
-            public delegate HookResult QuickStackHandler(int playerId, Terraria.Item item, int chestIndex);
-            public static QuickStackHandler QuickStack;
+            public class QuickStackEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public int playerId { get; set; }
+                public Terraria.Item item { get; set; }
+                public int chestIndex { get; set; }
+            }
+            public static event EventHandler<QuickStackEventArgs> QuickStack;
+
+            public static HookResult? InvokeQuickStack(QuickStackEventArgs args)
+            {
+                QuickStack?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

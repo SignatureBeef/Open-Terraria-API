@@ -91,7 +91,14 @@ namespace OTAPI.Callbacks
     {
         public static bool HardmodeTileUpdate(int x, int y, ushort type)
         {
-            var result = Hooks.WorldGen.HardmodeTileUpdate?.Invoke(x, y, type);
+            var args = new Hooks.WorldGen.HardmodeTileUpdateEventArgs()
+            {
+                x = x,
+                y = y,
+                type = type,
+            };
+
+            var result = Hooks.WorldGen.InvokeHardmodeTileUpdate(args);
 
             if (result == HookResult.Cancel)
                 return false;
@@ -107,8 +114,21 @@ namespace OTAPI
     {
         public static partial class WorldGen
         {
-            public delegate HookResult HardmodeTileUpdateHandler(int x, int y, ushort type);
-            public static HardmodeTileUpdateHandler HardmodeTileUpdate;
+            public class HardmodeTileUpdateEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public int x { get; set; }
+                public int y { get; set; }
+                public int type { get; set; }
+            }
+            public static event EventHandler<HardmodeTileUpdateEventArgs> HardmodeTileUpdate;
+
+            public static HookResult? InvokeHardmodeTileUpdate(HardmodeTileUpdateEventArgs args)
+            {
+                HardmodeTileUpdate?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

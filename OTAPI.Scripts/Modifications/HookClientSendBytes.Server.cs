@@ -21,6 +21,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 using MonoMod.Cil;
+using System;
 using System.Linq;
 
 [Modification(ModType.PreMerge, "Hooking Terraria.NetMessage.SendData")]
@@ -58,9 +59,25 @@ namespace OTAPI
     {
         public static partial class NetMessage
         {
-            public delegate HookResult SendBytesHandler(
-                ref Terraria.Net.Sockets.ISocket socket, ref int remoteClient, ref byte[] data, ref int offset, ref int size, ref global::Terraria.Net.Sockets.SocketSendCallback callback, ref object state);
-            public static SendBytesHandler SendBytes;
+            public class SendBytesEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public Terraria.Net.Sockets.ISocket socket { get; set; }
+                public int remoteClient { get; set; }
+                public byte[] data { get; set; }
+                public int offset { get; set; }
+                public int size { get; set; }
+                public global::Terraria.Net.Sockets.SocketSendCallback callback { get; set; }
+                public object state { get; set; }
+            }
+            public static event EventHandler<SendBytesEventArgs> SendBytes;
+
+            public static HookResult? InvokeSendBytes(SendBytesEventArgs args)
+            {
+                SendBytes?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }
@@ -71,7 +88,16 @@ namespace OTAPI.Callbacks
     {
         public static void SendBytes(Terraria.Net.Sockets.ISocket socket, byte[] data, int offset, int size, global::Terraria.Net.Sockets.SocketSendCallback callback, object state, int remoteClient)
         {
-            if (Hooks.NetMessage.SendBytes?.Invoke(ref socket, ref remoteClient, ref data, ref offset, ref size, ref callback, ref state) != HookResult.Cancel)
+            var args = new Hooks.NetMessage.SendBytesEventArgs()
+            {
+                socket = socket,
+                data = data,
+                offset = offset,
+                size = size,
+                callback = callback,
+                state = state,
+            };
+            if (Hooks.NetMessage.InvokeSendBytes(args) != HookResult.Cancel)
             {
                 socket.AsyncSend(data, offset, size, callback, state);
             }

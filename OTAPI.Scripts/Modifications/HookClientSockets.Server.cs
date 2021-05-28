@@ -52,7 +52,12 @@ namespace OTAPI.Callbacks
     public static partial class Netplay
     {
         public static ISocket CreateTcpListener()
-            => Hooks.Netplay.CreateTcpListener?.Invoke() ?? new TcpSocket();
+        {
+            var args = new Hooks.Netplay.CreateTcpListenerEventArgs();
+            Hooks.Netplay.InvokeCreateTcpListener(args);
+
+            return args.Result ?? new TcpSocket();
+        }
     }
 }
 
@@ -62,8 +67,17 @@ namespace OTAPI
     {
         public static partial class Netplay
         {
-            public delegate ISocket CreateTcpListenerHandler();
-            public static CreateTcpListenerHandler CreateTcpListener;
+            public class CreateTcpListenerEventArgs : EventArgs
+            {
+                public ISocket Result { get; set; }
+            }
+            public static event EventHandler<CreateTcpListenerEventArgs> CreateTcpListener;
+
+            public static ISocket InvokeCreateTcpListener(CreateTcpListenerEventArgs args)
+            {
+                CreateTcpListener?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

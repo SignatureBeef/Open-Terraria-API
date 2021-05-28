@@ -20,6 +20,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using ModFramework;
 using Mono.Cecil.Cil;
 using MonoMod;
+using OTAPI;
 using System;
 
 [Modification(ModType.PreMerge, "Hooking Terraria.MessageBuffer.GetData")]
@@ -61,7 +62,28 @@ namespace OTAPI.Callbacks
     public static partial class MessageBuffer
     {
         public static bool GetData(global::Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, int maxPackets)
-            => Hooks.MessageBuffer.GetData?.Invoke(instance, ref packetId, ref readOffset, ref start, ref length, ref messageType, ref maxPackets) != HookResult.Cancel && packetId < maxPackets;
+        {
+            var args = new Hooks.MessageBuffer.GetDataEventArgs()
+            {
+                instance = instance,
+                packetId = packetId,
+                readOffset = readOffset,
+                start = start,
+                length = length,
+                messageType = messageType,
+                maxPackets = maxPackets,
+            };
+            var result = Hooks.MessageBuffer.InvokeGetData(args);
+
+            packetId = args.packetId;
+            readOffset = args.readOffset;
+            start = args.start;
+            length = args.length;
+            messageType = args.messageType;
+            maxPackets = args.maxPackets;
+
+            return result != HookResult.Cancel && packetId < maxPackets;
+        }
     }
 }
 
@@ -71,8 +93,25 @@ namespace OTAPI
     {
         public static partial class MessageBuffer
         {
-            public delegate HookResult GetDataHandler(Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, ref int maxPackets);
-            public static GetDataHandler GetData;
+            public class GetDataEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public Terraria.MessageBuffer instance { get; set; }
+                public byte packetId { get; set; }
+                public int readOffset { get; set; }
+                public int start { get; set; }
+                public int length { get; set; }
+                public int messageType { get; set; }
+                public int maxPackets { get; set; }
+            }
+            public static event EventHandler<GetDataEventArgs> GetData;
+
+            public static HookResult? InvokeGetData(GetDataEventArgs args)
+            {
+                GetData?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Server.Launcher", "OTAPI.Server.Launcher\OTAPI.Server.Launcher.csproj", "{1BD8B7AC-62D7-4E6B-B16E-012CB8869FA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuntimeExample", "examples\RuntimeExample\RuntimeExample.csproj", "{62AE846B-35AA-4558-8376-6351574AE9BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuntimeExample", "examples\RuntimeExample.Server\RuntimeExample.Server.csproj", "{62AE846B-35AA-4558-8376-6351574AE9BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework", "ModFramework\ModFramework.csproj", "{BD05DBA1-27B6-4436-8A89-26FBAC9B87B7}"
 EndProject

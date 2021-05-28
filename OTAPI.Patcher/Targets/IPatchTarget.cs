@@ -18,6 +18,7 @@
 using System;
 namespace OTAPI.Patcher.Targets
 {
+    [MonoMod.MonoModIgnore]
     public interface IPatchTarget
     {
         string DisplayText { get; }

@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace OTAPI.Patcher
 {
+    [MonoMod.MonoModIgnore]
     static class Program
     {
         static void Main(string[] args)

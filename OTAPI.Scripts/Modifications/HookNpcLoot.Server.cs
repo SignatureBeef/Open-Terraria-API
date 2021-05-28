@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #if !tModLoaderServer_V1_3
+using System;
 using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -44,13 +45,30 @@ namespace OTAPI.Callbacks
                 int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup,
                 Terraria.NPC instance)
         {
-            int itemIndex = 0;
-            if (Hooks.NPC.DropLoot?.Invoke(HookEvent.Before, instance, ref itemIndex, ref X, ref Y, ref Width, ref Height, ref Type, ref Stack, ref noBroadcast, ref pfix, ref noGrabDelay, ref reverseLookup) != HookResult.Cancel)
+            var args = new Hooks.NPC.DropLootEventArgs()
             {
-                itemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
-                Hooks.NPC.DropLoot?.Invoke(HookEvent.After, instance, ref itemIndex, ref X, ref Y, ref Width, ref Height, ref Type, ref Stack, ref noBroadcast, ref pfix, ref noGrabDelay, ref reverseLookup);
+                Event = HookEvent.Before,
+                X = X,
+                Y = Y,
+                Width = Width,
+                Height = Height,
+                Type = Type,
+                Stack = Stack,
+                noBroadcast = noBroadcast,
+                pfix = pfix,
+                noGrabDelay = noGrabDelay,
+                reverseLookup = reverseLookup,
+                npc = instance,
+
+                itemIndex = 0,
+            };
+            if (Hooks.NPC.InvokeDropLoot(args) != HookResult.Cancel)
+            {
+                args.itemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                args.Event = HookEvent.After;
+                Hooks.NPC.InvokeDropLoot(args);
             }
-            return itemIndex;
+            return args.itemIndex;
         }
     }
 }
@@ -60,11 +78,31 @@ namespace OTAPI
     {
         public static partial class NPC
         {
-            public delegate HookResult DropLootHandler(HookEvent @event, Terraria.NPC instance, ref int itemIndex,
-                ref int X, ref int Y, ref int Width, ref int Height, ref int Type,
-                ref int Stack, ref bool noBroadcast, ref int pfix, ref bool noGrabDelay, ref bool reverseLookup
-            );
-            public static DropLootHandler DropLoot;
+            public class DropLootEventArgs : EventArgs
+            {
+                public HookEvent Event { get; set; }
+                public HookResult? Result { get; set; }
+
+                public Terraria.NPC npc { get; set; }
+                public int itemIndex { get; set; }
+                public int X { get; set; }
+                public int Y { get; set; }
+                public int Width { get; set; }
+                public int Height { get; set; }
+                public int Type { get; set; }
+                public int Stack { get; set; }
+                public bool noBroadcast { get; set; }
+                public int pfix { get; set; }
+                public bool noGrabDelay { get; set; }
+                public bool reverseLookup { get; set; }
+            }
+            public static event EventHandler<DropLootEventArgs> DropLoot;
+
+            public static HookResult? InvokeDropLoot(DropLootEventArgs args)
+            {
+                DropLoot?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

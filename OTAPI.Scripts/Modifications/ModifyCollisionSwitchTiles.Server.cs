@@ -120,8 +120,21 @@ namespace OTAPI
     {
         public static partial class Collision
         {
-            public delegate HookResult PressurePlateHandler(int x, int y, Terraria.Entity entity);
-            public static PressurePlateHandler PressurePlate;
+            public class PressurePlateEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public int x { get; set; }
+                public int y { get; set; }
+                public Terraria.Entity entity { get; set; }
+            }
+            public static event EventHandler<PressurePlateEventArgs> PressurePlate;
+
+            public static HookResult? InvokePressurePlate(PressurePlateEventArgs args)
+            {
+                PressurePlate?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }
@@ -132,7 +145,13 @@ namespace OTAPI.Callbacks
     {
         public static bool PressurePlate(int x, int y, Terraria.Entity entity)
         {
-            return Hooks.Collision.PressurePlate?.Invoke(x, y, entity) != HookResult.Cancel;
+            var args = new Hooks.Collision.PressurePlateEventArgs()
+            {
+                x = x,
+                y = y,
+                entity = entity
+            };
+            return Hooks.Collision.InvokePressurePlate(args) != HookResult.Cancel;
         }
     }
 }

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -44,10 +45,12 @@ namespace OTAPI.Callbacks
     public static partial class NPC
     {
         public static void Killed(Terraria.NPC instance)
-            => Hooks.NPC.Killed?.Invoke(instance);
+            => Hooks.NPC.InvokeKilled(new Hooks.NPC.KilledEventArgs()
+            {
+                npc = instance,
+            });
     }
 }
-
 
 namespace OTAPI
 {
@@ -55,8 +58,19 @@ namespace OTAPI
     {
         public static partial class NPC
         {
-            public delegate void KilledHandler(Terraria.NPC instance);
-            public static KilledHandler Killed;
+            public class KilledEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public Terraria.NPC npc { get; set; }
+            }
+            public static event EventHandler<KilledEventArgs> Killed;
+
+            public static HookResult? InvokeKilled(KilledEventArgs args)
+            {
+                Killed?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

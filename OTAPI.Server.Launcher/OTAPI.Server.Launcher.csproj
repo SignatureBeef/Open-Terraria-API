@@ -33,7 +33,7 @@
   
 
   <ItemGroup>
-    <ProjectReference Include="..\examples\RuntimeExample\RuntimeExample.csproj" />
+    <ProjectReference Include="..\examples\RuntimeExample.Server\RuntimeExample.Server.csproj" />
     <ProjectReference Include="..\ModFramework.Modules\ModFramework.Modules.csproj" />
     <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
   </ItemGroup>
@@ -57,8 +57,8 @@
     <Copy SourceFiles="$(TargetDir)ModFramework.Modules.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(TargetDir)ModFramework.Modules.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     
-    <Copy SourceFiles="$(TargetDir)RuntimeExample.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="$(TargetDir)RuntimeExample.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)RuntimeExample.Server.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)RuntimeExample.Server.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
   </Target>
 
 </Project>

@@ -85,6 +85,7 @@ namespace OTAPI
     {
         public static partial class Tile
         {
+            // i dont think a event is a good idea for this one
             public delegate Terraria.Tile CreateHandler(Terraria.Tile existing = null);
             public static CreateHandler Create;
         }

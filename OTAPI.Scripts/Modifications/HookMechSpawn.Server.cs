@@ -86,7 +86,16 @@ namespace OTAPI.Callbacks
         {
             if (result)
             {
-                return Hooks.NPC.MechSpawn?.Invoke(x, y, type, num, num2, num3) != HookResult.Cancel;
+                var args = new Hooks.NPC.MechSpawnEventArgs()
+                {
+                    x = x,
+                    y = y,
+                    type = type,
+                    num = num,
+                    num2 = num2,
+                    num3 = num3,
+                };
+                return Hooks.NPC.InvokeMechSpawn(args) != HookResult.Cancel;
             }
             return result;
         }
@@ -98,7 +107,16 @@ namespace OTAPI.Callbacks
         {
             if (result)
             {
-                return Hooks.Item.MechSpawn?.Invoke(x, y, type, num, num2, num3) != HookResult.Cancel;
+                var args = new Hooks.Item.MechSpawnEventArgs()
+                {
+                    x = x,
+                    y = y,
+                    type = type,
+                    num = num,
+                    num2 = num2,
+                    num3 = num3,
+                };
+                return Hooks.Item.InvokeMechSpawn(args) != HookResult.Cancel;
             }
             return result;
         }
@@ -111,14 +129,46 @@ namespace OTAPI
     {
         public static partial class NPC
         {
-            public delegate HookResult MechSpawnHandler(float x, float y, int type, int num, int num2, int num3);
-            public static MechSpawnHandler MechSpawn;
+            public class MechSpawnEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public float x { get; set; }
+                public float y { get; set; }
+                public int type { get; set; }
+                public int num { get; set; }
+                public int num2 { get; set; }
+                public int num3 { get; set; }
+            }
+            public static event EventHandler<MechSpawnEventArgs> MechSpawn;
+
+            public static HookResult? InvokeMechSpawn(MechSpawnEventArgs args)
+            {
+                MechSpawn?.Invoke(null, args);
+                return args.Result;
+            }
         }
 
         public static partial class Item
         {
-            public delegate HookResult MechSpawnHandler(float x, float y, int type, int num, int num2, int num3);
-            public static MechSpawnHandler MechSpawn;
+            public class MechSpawnEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public float x { get; set; }
+                public float y { get; set; }
+                public int type { get; set; }
+                public int num { get; set; }
+                public int num2 { get; set; }
+                public int num3 { get; set; }
+            }
+            public static event EventHandler<MechSpawnEventArgs> MechSpawn;
+
+            public static HookResult? InvokeMechSpawn(MechSpawnEventArgs args)
+            {
+                MechSpawn?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

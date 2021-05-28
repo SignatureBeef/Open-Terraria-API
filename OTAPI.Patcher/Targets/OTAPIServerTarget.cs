@@ -30,18 +30,16 @@ using Mono.Cecil;
 
 namespace OTAPI.Patcher.Targets
 {
+    [MonoMod.MonoModIgnore]
     public class OTAPIServerTarget : IPatchTarget
     {
         public string DisplayText { get; } = "OTAPI Server";
 
-        HookResult CanLoadFile(string filepath)
+        bool CanLoadFile(string filepath)
         {
             // only load "server" or "both" variants
             var filename = Path.GetFileNameWithoutExtension(filepath);
-            var result = filename.EndsWith(".Client", StringComparison.CurrentCultureIgnoreCase)
-                ? HookResult.Cancel : HookResult.Continue;
-
-            return result;
+            return !filename.EndsWith(".Client", StringComparison.CurrentCultureIgnoreCase);
         }
 
         public void Patch()
@@ -115,6 +113,8 @@ namespace OTAPI.Patcher.Targets
             //}
 
             mm.MapDependencies();
+
+            mm.ReadMod(this.GetType().Assembly.Location);
 
             mm.AutoPatch();
 
@@ -212,6 +212,8 @@ namespace OTAPI.Patcher.Targets
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             mm.Read();
 
+            // for HookResult + HookEvent
+            mm.ReadMod(this.GetType().Assembly.Location);
 
             var initialModuleName = mm.Module.Name;
 

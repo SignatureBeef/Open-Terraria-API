@@ -67,10 +67,17 @@ namespace OTAPI.Callbacks
     public static partial class Wiring
     {
         public static bool AnnouncementBox(int x, int y, int signId)
-            => Hooks.Wiring.AnnouncementBox?.Invoke(x, y, signId) != HookResult.Cancel;
+        {
+            var args = new Hooks.Wiring.AnnouncementBoxEventArgs()
+            {
+                x = x,
+                y = y,
+                signId = signId,
+            };
+            return Hooks.Wiring.InvokeAnnouncementBox(args) != HookResult.Cancel;
+        }
     }
 }
-
 
 namespace OTAPI
 {
@@ -78,8 +85,21 @@ namespace OTAPI
     {
         public static partial class Wiring
         {
-            public delegate HookResult AnnouncementBoxHandler(int x, int y, int signId);
-            public static AnnouncementBoxHandler AnnouncementBox;
+            public class AnnouncementBoxEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public int x { get; set; }
+                public int y { get; set; }
+                public int signId { get; set; }
+            }
+            public static event EventHandler<AnnouncementBoxEventArgs> AnnouncementBox;
+
+            public static HookResult? InvokeAnnouncementBox(AnnouncementBoxEventArgs args)
+            {
+                AnnouncementBox?.Invoke(null, args);
+                return args.Result;
+            }
         }
     }
 }

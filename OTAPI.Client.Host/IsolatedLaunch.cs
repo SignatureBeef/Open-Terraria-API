@@ -14,36 +14,79 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 using System;
-namespace OTAPI.Client
+
+namespace OTAPI.Client.Host
 {
     public class IsolatedLaunch
     {
+        static NLua.Lua Script;
+
         public static void Launch(string[] args)
         {
-            //On.Terraria.Program.LaunchGame += Program_LaunchGame;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             Terraria.Program.OnLaunched += (_, _) =>
             {
                 Console.WriteLine("Launched");
 
-                Terraria.Main.versionNumber += " [OTAPI.Client]";
-                Terraria.Main.versionNumber2 += " [OTAPI.Client]";
+                //Terraria.Main.versionNumber += " [OTAPI.Client]";
+                //Terraria.Main.versionNumber2 += " [OTAPI.Client]";
 
-                using (var lua = new Triton.Lua())
-                {
-                    lua.ImportNamespace("Terraria");
-                    lua.DoString(@"
-                        Main.versionNumber = Main.versionNumber .. ' Hellow from LUA'
-                    ");
-                }
+                Script = new NLua.Lua();
+                Script.LoadCLRPackage();
+
+                Script.DoString(@"
+                    import ('Terraria');
+                    import ('OTAPI');
+                    import ('System');
+
+                    Main.versionNumber = Main.versionNumber .. ' Hellow from NLua';
+
+                    Console.WriteLine('Ran nlua, vers: ' .. Main.versionNumber);
+
+                    local send_callback = function(sender, args)
+                        Console.WriteLine('[LUA] Send Callback: ' .. args.bufferId)
+                    end;
+                    Hooks.NetMessage.SendData:Add(send_callback);
+
+                    local recv_callback = function(sender, args)
+                        Console.WriteLine('[LUA] Recv Callback: ' .. args.instance.whoAmI)
+                    end;
+                    Hooks.MessageBuffer.GetData:Add(recv_callback);
+                ");
+
+                var s2 = new NLua.Lua();
+                s2.LoadCLRPackage();
+
+                s2.DoString(@"
+                    import ('System');
+                    import ('FNA', 'Microsoft.Xna.Framework.Input');
+                    import ('OTAPI.Runtime', 'On.Terraria');
+
+                    Main.Initialize:Add(function (orig, self)
+                        Console.WriteLine('[LUA] Main.Initialize() called');
+                        orig(self);
+                    end);
+
+                    Main.Update:Add(function (orig, self, gameTime)
+                        local keyState = Keyboard.GetState();
+                        if keyState:IsKeyDown(Keys.Left) then
+                            Console.WriteLine('[LUA] Left key down!?');
+                        end
+
+                        orig(self, gameTime);
+                    end);
+                ");
             };
+
             Terraria.MacLaunch.Main(args);
         }
 
-        //private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
-        //{
-        //    Console.WriteLine("Launched");
-        //    orig(args, monoArgs);
-        //}
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            System.IO.File.AppendAllText("errors.txt", e.ExceptionObject.ToString());
+        }
     }
 }

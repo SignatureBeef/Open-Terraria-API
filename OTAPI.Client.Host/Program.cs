@@ -15,13 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OTAPI.Client.Host
 {
     class Program
     {
-        static System.Reflection.Assembly TerrariaAssembly;
-
         public static void Main(string[] args)
         {
             Console.WriteLine("[OTAPI.Client] Hellow!");
@@ -29,32 +29,17 @@ namespace OTAPI.Client.Host
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             AppDomain.CurrentDomain.TypeResolve += CurrentDomain_TypeResolve;
 
-            using (var lua = new Triton.Lua())
+            using (var state = new NLua.Lua())
             {
-                lua.ImportNamespace("System");
-                lua.ImportNamespace("System.Console");
-                lua.ImportType(typeof(System.Console));
-                lua.DoString("Console.WriteLine('test from lua')");
+                state.LoadCLRPackage();
+                state.DoString(@"import ('System');
+                    Console.WriteLine('NLua runtime is active');
+                ");
             }
 
             Console.WriteLine("[OTAPI.Client] Starting!");
 
-            //Terraria.Program.OnLaunched += (_, _) =>
-            //{
-            //    Console.WriteLine("Launched");
-
-            //    Terraria.Main.versionNumber += " [OTAPI.Client]";
-            //    Terraria.Main.versionNumber2 += " [OTAPI.Client]";
-
-            //    using (var lua = new Triton.Lua())
-            //    {
-            //        lua.ImportNamespace("Terraria");
-            //        lua.DoString(@"
-            //            Main.versionNumber = Main.versionNumber .. ' Hellow from LUA'
-            //        ");
-            //    }
-            //};
-            //Terraria.MacLaunch.Main(args);
+            // moved to its own class to ensure variables from terraria dont end up throwing missing field exceptions
             IsolatedLaunch.Launch(args);
         }
 
@@ -64,20 +49,62 @@ namespace OTAPI.Client.Host
             return null;
         }
 
+        static List<(System.Reflection.Assembly Assembly, string FilePath)> _assemblyCache
+            = new List<(System.Reflection.Assembly Assembly, string FilePath)>();
+        static System.Reflection.Assembly LoadAndCacheAssemlbly(string filePath)
+        {
+            System.Reflection.Assembly result = null;
+
+            var match = _assemblyCache.FirstOrDefault(f => f.FilePath == filePath);
+            if (match.Assembly != null)
+                result = match.Assembly;
+            else
+            {
+                var abs = System.IO.Path.Combine(Environment.CurrentDirectory, filePath);
+                result = System.Reflection.Assembly.LoadFile(abs);
+                _assemblyCache.Add((result, filePath));
+            }
+
+            return result;
+        }
+
         private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             Console.WriteLine("Looking for: " + args.Name);
             if (args.Name.StartsWith("Terraria") || args.Name.StartsWith("OTAPI"))
             {
-                if (TerrariaAssembly is null)
-                {
-                    TerrariaAssembly = System.Reflection.Assembly.LoadFile(
-                        System.IO.Path.Combine(Environment.CurrentDirectory, "Terraria.patched.exe")
-                    );
-                    Console.WriteLine("Loaded terraria");
-                }
-                Console.WriteLine("Returning terraria");
-                return TerrariaAssembly;
+                return LoadAndCacheAssemlbly(System.IO.Path.Combine(Environment.CurrentDirectory, "OTAPI.exe"));
+            }
+            else
+            {
+                //var matches = System.IO.Directory.GetFiles("../../../../OTAPI.Patcher/bin/Debug/net5.0/EmbeddedResources", "*.dll");
+
+                //var namedMatch = matches.FirstOrDefault(path => System.IO.Path.GetFileNameWithoutExtension(path) == args.Name);
+                //if (namedMatch != null)
+                //    return LoadAndCacheAssemlbly(namedMatch);
+
+
+                //var asd = "";
+                //foreach (var file in matches)
+                //{
+                //    var assembly = LoadAndCacheAssemlbly(file);
+                //    if (args.Name == assembly.GetName().Name)
+                //        return assembly;
+                //}
+
+                //var root = typeof(Terraria.Program).Assembly;
+                //string resourceName = new System.Reflection.AssemblyName(args.Name).Name + ".dll";
+                //Console.WriteLine("Looking in: " + String.Join(",", root.GetManifestResourceNames()));
+                //string text = Array.Find(root.GetManifestResourceNames(), (string element) => element.EndsWith(resourceName));
+                //if (text != null)
+                //{
+                //    Console.WriteLine("Loaded " + resourceName);
+                //    using var stream = root.GetManifestResourceStream(text);
+                //    byte[] array = new byte[stream.Length];
+                //    stream.Read(array, 0, array.Length);
+                //    return System.Reflection.Assembly.Load(array);
+                //}
+
             }
             return null;
         }

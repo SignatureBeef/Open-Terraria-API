@@ -31,22 +31,22 @@ namespace OTAPI.Launcher
             Terraria.Program.SavePath = "ModLoader";
 #endif
             On.Terraria.Program.LaunchGame += Program_LaunchGame;
-            Hooks.MessageBuffer.ClientUUIDReceived = (@event, instance, reader, start, length, messageType) =>
+            Hooks.MessageBuffer.ClientUUIDReceived += (_, args) =>
             {
-                if (@event == ModFramework.HookEvent.After)
-                    Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[instance.whoAmI].ClientUUID}");
+                if (args.Event == HookEvent.After)
+                    Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[args.instance.whoAmI].ClientUUID}");
 
-                return ModFramework.HookResult.Continue;
+                //return ModFramework.HookResult.Continue;
             };
-            Hooks.NPC.MechSpawn = (float x, float y, int type, int num, int num2, int num3) =>
+            Hooks.NPC.MechSpawn += (_, args) =>
             {
-                Console.WriteLine($"Hooks.NPC.MechSpawn x={x}, y={y}, type={type}, num={num}, num2={num2}, num3={num3}");
-                return ModFramework.HookResult.Continue;
+                Console.WriteLine($"Hooks.NPC.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
+                //return ModFramework.HookResult.Continue;
             };
-            Hooks.Item.MechSpawn = (float x, float y, int type, int num, int num2, int num3) =>
-            {
-                Console.WriteLine($"Hooks.Item.MechSpawn x={x}, y={y}, type={type}, num={num}, num2={num2}, num3={num3}");
-                return ModFramework.HookResult.Continue;
+            Hooks.Item.MechSpawn += (_, args) =>
+             {
+                 Console.WriteLine($"Hooks.Item.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
+                //return ModFramework.HookResult.Continue;
             };
 
             On.Terraria.WindowsLaunch.Main += WindowsLaunch_Main;

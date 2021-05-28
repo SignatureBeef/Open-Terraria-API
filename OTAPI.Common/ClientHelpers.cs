@@ -8,6 +8,7 @@ namespace OTAPI.Common
         static string[] SearchPaths { get; } = new[]
         {
             "/Users/[USER_NAME]/Library/Application Support/Steam/steamapps/common/Terraria/Terraria.app/Contents/",
+            "/Applications/Terraria.app/Contents/",
         };
 
         public static bool IsValidInstallPath(string folder)
@@ -39,8 +40,6 @@ namespace OTAPI.Common
                 if (IsValidInstallPath(formatted))
                     return formatted;
             }
-            // /Users/luke/Library/Application Support/Steam/steamapps/common/Terraria/Terraria.app/Contents/
-            //Environment.UserName
 
             int count = 5;
             do
