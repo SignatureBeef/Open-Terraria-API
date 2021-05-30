@@ -18,4 +18,7 @@
 		<PreserveCompilationReferences>true</PreserveCompilationReferences>
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 	</PropertyGroup>
+	<Target Name="CleanAll" AfterTargets="Clean">
+		<RemoveDir Directories="$(OUTDIR)" />
+	</Target>
 </Project>

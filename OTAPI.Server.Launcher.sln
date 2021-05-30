@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTAPI.Server.Launcher", "OTAPI.Server.Launcher\OTAPI.Server.Launcher.csproj", "{1BD8B7AC-62D7-4E6B-B16E-012CB8869FA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuntimeExample", "examples\RuntimeExample.Server\RuntimeExample.Server.csproj", "{62AE846B-35AA-4558-8376-6351574AE9BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuntimeExample.Server", "examples\RuntimeExample.Server\RuntimeExample.Server.csproj", "{62AE846B-35AA-4558-8376-6351574AE9BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework", "ModFramework\ModFramework.csproj", "{BD05DBA1-27B6-4436-8A89-26FBAC9B87B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules", "ModFramework.Modules\ModFramework.Modules.csproj", "{97416A55-B9D4-4732-966F-0A4F85F8C00B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules.CSharp", "ModFramework.Modules.CSharp\ModFramework.Modules.CSharp.csproj", "{97416A55-B9D4-4732-966F-0A4F85F8C00B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules.Lua", "ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj", "{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,14 @@ Global
 		{97416A55-B9D4-4732-966F-0A4F85F8C00B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97416A55-B9D4-4732-966F-0A4F85F8C00B}.Release|x86.ActiveCfg = Release|Any CPU
 		{97416A55-B9D4-4732-966F-0A4F85F8C00B}.Release|x86.Build.0 = Release|Any CPU
+		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Debug|x86.Build.0 = Debug|Any CPU
+		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Release|x86.ActiveCfg = Release|Any CPU
+		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

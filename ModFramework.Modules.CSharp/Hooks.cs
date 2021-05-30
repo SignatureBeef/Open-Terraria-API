@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace ModFramework.Modules
+namespace ModFramework.Modules.CSharp
 {
     [MonoMod.MonoModIgnore]
     public static class Hooks
     {
-        [Modification(ModType.Read, "Loading CSharpScript interface")]
+        [Modification(ModType.Read, "Loading CSharp script interface")]
         public static void OnModding(MonoMod.MonoModder modder)
         {
             new CSharpLoader().SetModder(modder).RunModules();
         }
 
-        [Modification(ModType.Runtime, "Loading CSharpScript interface")]
+        [Modification(ModType.Runtime, "Loading CSharp script interface")]
         public static void OnRunning()
         {
             new CSharpLoader().RunModules();

@@ -34,12 +34,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\examples\RuntimeExample.Server\RuntimeExample.Server.csproj" />
-    <ProjectReference Include="..\ModFramework.Modules\ModFramework.Modules.csproj" />
+    <ProjectReference Include="..\ModFramework.Modules.CSharp\ModFramework.Modules.CSharp.csproj" />
     <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
+    <ProjectReference Include="..\ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="csharp\" />
     <Folder Include="csharp\modifications\" />
+    <Folder Include="lua\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="modifications\csharp\Example.cs" />
@@ -51,11 +53,16 @@
     <None Update="csharp\modifications\Metadata.refs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="lua\test.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <MakeDir Directories="$(TargetDir)modifications\" />
-    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.CSharp.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.CSharp.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.Lua.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.Lua.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     
     <Copy SourceFiles="$(TargetDir)RuntimeExample.Server.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(TargetDir)RuntimeExample.Server.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />

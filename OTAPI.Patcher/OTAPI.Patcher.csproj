@@ -18,9 +18,10 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
-		<ProjectReference Include="..\ModFramework.Modules\ModFramework.Modules.csproj" />
 		<ProjectReference Include="..\OTAPI.Shims\OTAPI.Shims.csproj" />
 		<ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
+		<ProjectReference Include="..\ModFramework.Modules.CSharp\ModFramework.Modules.CSharp.csproj" />
+		<ProjectReference Include="..\ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,15 +34,19 @@
 		<MakeDir Directories="$(TargetDir)modifications\" />
 		<RemoveDir Directories="$(TargetDir)modifications\" />
 		<MakeDir Directories="$(TargetDir)modifications\" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules\bin\Debug\net5.0\ModFramework.Modules.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules\bin\Debug\net5.0\ModFramework.Modules.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules\bin\Debug\net5.0\ModFramework.Modules.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
 		<MakeDir Directories="$(TargetDir)csharp\" />
 		<RemoveDir Directories="$(TargetDir)csharp\modifications\" />
 		<MakeDir Directories="$(TargetDir)csharp\modifications\" />
 		<Copy SourceFiles="@(Refs)" DestinationFolder="$(TargetDir)csharp/modifications/" />
 		<Copy SourceFiles="@(Patches)" DestinationFolder="$(TargetDir)csharp/modifications/Patches" />
 		<Copy SourceFiles="@(Modifications)" DestinationFolder="$(TargetDir)csharp/modifications/Modifications" />
+	</Target>
+
+	<Target Name="CleanAll" AfterTargets="Clean">
+		<RemoveDir Directories="$(OUTDIR)" />
 	</Target>
 
 </Project>

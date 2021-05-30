@@ -5,17 +5,35 @@
 		<TargetFramework>net472</TargetFramework>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="NLua" Version="1.5.9" />
-		<PackageReference Include="MonoMod.RuntimeDetour" Version="21.4.29.1" />
-	</ItemGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="OTAPI">
 			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.exe</HintPath>
 		</Reference>
+		<Reference Include="OTAPI.Runtime">
+			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="SteelSeriesEngineWrapper">
+			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\SteelSeriesEngineWrapper.dll</HintPath>
+		</Reference>
 		<Reference Include="System.Windows.Forms" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
+	  <PackageReference Include="ImGui.NET" Version="1.78.0" />
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+	  <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
+	  <!--<PackageReference Include="sdl2" Version="2.0.5" />-->
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
+	  <ProjectReference Include="..\FNA.Core\FNA.Core.csproj" />
+	</ItemGroup>
+	<Target Name="CleanAll" AfterTargets="Clean">
+		<RemoveDir Directories="$(OUTDIR)" />
+	</Target>
 </Project>

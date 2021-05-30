@@ -26,13 +26,12 @@ namespace Terraria
 {
     partial class patch_Program
     {
-#if !Terraria
+        // no WinForms access so just write to console
         public static extern void orig_DisplayException(Exception e);
         public static void DisplayException(Exception e)
         {
             Console.WriteLine(e.ToString());
-        }
-#endif
+        } 
 
 #if !TerrariaServer
         public static event EventHandler OnLaunched;

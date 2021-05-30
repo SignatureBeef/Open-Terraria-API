@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFrameworks>net5.0;net472</TargetFrameworks>
-  </PropertyGroup>
-
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;net472</TargetFrameworks>
+	</PropertyGroup>
+	<Target Name="CleanAll" AfterTargets="Clean">
+		<RemoveDir Directories="$(OUTDIR)" />
+	</Target>
 </Project>

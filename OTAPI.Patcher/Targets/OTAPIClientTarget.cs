@@ -16,6 +16,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 // using System;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -55,13 +56,56 @@ namespace OTAPI.Patcher.Targets
             if (File.Exists(localPath)) File.Delete(localPath);
             File.Copy(input, localPath);
 
+            foreach (var lib in new[]
+            {
+                "FNA.dll",
+                "SteelSeriesEngineWrapper.dll",
+                //"../MacOS/osx/CSteamworks",
+            })
+            {
+                var name = Path.GetFileName(lib);
+                var src = Path.Combine(installPath, "Resources", lib);
+                if (File.Exists(src))
+                {
+                    if (File.Exists(name)) File.Delete(name);
+                    File.Copy(src, name);
+                }
+            }
+
             // load into the current app domain for patch refs
             var asm = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, localPath));
+            //var asmFNA = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, FNA));
+            var assemblies = new Dictionary<string, Assembly>()
+            {
+                {asm.FullName, asm },
+            };
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
-                if (args.Name.IndexOf("Terraria") > -1)
+                Console.WriteLine("[Patch Resolve] " + args.Name);
+                //if (args.Name.IndexOf("Terraria") > -1)
+                //{
+                //    return asm;
+                //}
+
+                var match = assemblies.FirstOrDefault(a => a.Key == args.Name);
+                if (match.Key != null)
+                    return match.Value;
+
+                var asn = new AssemblyName(args.Name);
+                var filename = $"{asn.Name}.dll";
+                if (File.Exists(filename))
                 {
-                    return asm;
+                    try
+                    {
+                        var abs = Path.GetFullPath(filename);
+                        var loaded = Assembly.LoadFile(abs);
+                        assemblies.Add(args.Name, loaded);
+                        return loaded;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
                 return null;
             };
@@ -120,10 +164,10 @@ namespace OTAPI.Patcher.Targets
 
             // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
             PluginLoader.AssemblyFound += CanLoadFile;
-            ModFramework.Modules.CSharpLoader.AssemblyFound += CanLoadFile;
-            ModFramework.Modules.CSharpLoader.GlobalAssemblies.Add("OTAPI.dll");
-            ModFramework.Modules.CSharpLoader.GlobalAssemblies.Add(Path.Combine(resources, "FNA.dll"));
-            ModFramework.Modules.CSharpLoader.GlobalAssemblies.Add(Path.Combine(Path.GetDirectoryName(typeof(Object).Assembly.Location), "mscorlib.dll"));
+            ModFramework.Modules.CSharp.CSharpLoader.AssemblyFound += CanLoadFile;
+            ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add("OTAPI.dll");
+            ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(Path.Combine(resources, "FNA.dll"));
+            ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(Path.Combine(Path.GetDirectoryName(typeof(Object).Assembly.Location), "mscorlib.dll"));
             PluginLoader.TryLoad();
 
             using var mm = new ModFwModder()
@@ -187,8 +231,8 @@ namespace OTAPI.Patcher.Targets
 
             mm.Write();
 
-            if (File.Exists(assembly_output)) File.Delete(assembly_output);
-            File.Copy("OTAPI.exe", assembly_output);
+            //if (File.Exists(assembly_output)) File.Delete(assembly_output);
+            //File.Copy("OTAPI.exe", assembly_output);
 
             //mm.Log("[OTAPI] Generating Terraria.Runtime.dll");
             //var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, "Terraria.Runtime.dll");

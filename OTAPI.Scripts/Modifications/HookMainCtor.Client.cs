@@ -1,0 +1,65 @@
+﻿/*
+Copyright (C) 2020 DeathCradle
+
+This file is part of Open Terraria API v3 (OTAPI)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
+using ModFramework;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
+using MonoMod;
+
+[Modification(ModType.PostPatch, "Hooking new Main calls", ModPriority.Last)]
+void HookMainCtor(MonoModder modder)
+{
+    var LaunchGame = modder.GetILCursor(() => Terraria.Program.LaunchGame(null, false));
+
+    var createGame = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Callbacks.Main.Create()));
+
+    LaunchGame.GotoNext(MonoMod.Cil.MoveType.Before,
+        // active = false;
+        i => i.OpCode == OpCodes.Newobj
+            && i.Operand is MethodReference mref
+            && mref.DeclaringType.Name == "Main"
+            && mref.Name == ".ctor"
+    );
+
+    LaunchGame.Next.OpCode = OpCodes.Call;
+    LaunchGame.Next.Operand = createGame;
+}
+namespace OTAPI.Callbacks
+{
+    public static partial class Main
+    {
+        public static Terraria.Main Create()
+        {
+            return Hooks.Main.Create?.Invoke() ?? new Terraria.Main();
+        }
+    }
+}
+
+namespace OTAPI
+{
+    public static partial class Hooks
+    {
+        public static partial class Main
+        {
+            // i dont think a event is a good idea for this one
+            public delegate Terraria.Main CreateHandler();
+            public static CreateHandler Create;
+        }
+    }
+}

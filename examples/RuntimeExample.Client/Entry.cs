@@ -12,7 +12,8 @@ namespace RuntimeExample.Client
 
         private static void Main_Initialize(On.Terraria.Main.orig_Initialize orig, global::Terraria.Main self)
         {
-            Console.WriteLine("[OTAPI] MonoMod reuntime hooks are active");
+            Console.WriteLine("[OTAPI] Client example init");
+            Console.WriteLine("[OTAPI] MonoMod runtime hooks are active");
             orig(self);
         }
     }

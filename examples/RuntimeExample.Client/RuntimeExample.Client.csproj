@@ -4,6 +4,12 @@
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ModFramework\ModFramework.csproj" />
   </ItemGroup>
@@ -14,5 +20,11 @@
     <Reference Include="OTAPI">
       <HintPath>..\..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.exe</HintPath>
     </Reference>
+    <Reference Include="FNA">
+      <HintPath>..\..\OTAPI.Patcher\bin\Debug\net5.0\FNA.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ImGui.NET" Version="1.78.0" />
   </ItemGroup>
 </Project>

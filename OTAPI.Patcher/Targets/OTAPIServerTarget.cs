@@ -77,8 +77,8 @@ namespace OTAPI.Patcher.Targets
 
             // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
             PluginLoader.AssemblyFound += CanLoadFile;
-            ModFramework.Modules.CSharpLoader.AssemblyFound += CanLoadFile;
-            ModFramework.Modules.CSharpLoader.GlobalAssemblies.Add(localPath);
+            ModFramework.Modules.CSharp.CSharpLoader.AssemblyFound += CanLoadFile;
+            ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(localPath);
             PluginLoader.TryLoad();
 
             Directory.CreateDirectory("outputs");
