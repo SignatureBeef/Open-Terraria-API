@@ -77,6 +77,8 @@ namespace OTAPI.Client.Installer
             Console.WriteLine("[OTAPI Client Install] Installing OTAPI to " + otapiInstallPath);
             Directory.CreateDirectory(otapiInstallPath);
 
+            TransferFile("OTAPI.Runtime.dll", Path.Combine(otapiInstallPath, "OTAPI.Runtime.dll"));
+
             var modificationsDir = Path.Combine(otapiInstallPath, "modifications");
             var luaDir = Path.Combine(otapiInstallPath, "lua");
             var contentDir = Path.Combine(otapiInstallPath, "Content");
@@ -142,7 +144,7 @@ namespace OTAPI.Client.Installer
             if (File.Exists(steam_appid_src))
                 TransferFile(steam_appid_src, steam_appid_dst);
 
-            Console.WriteLine("[OTAPI Client Install] Testing");
+            //Console.WriteLine("[OTAPI Client Install] Testing");
 
             //var files_from_host = new[]
             //{

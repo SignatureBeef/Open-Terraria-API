@@ -8,6 +8,7 @@ import ('System');
 import ('ImGuiNET');
 import ('System.Numerics', 'System.Numerics')
 import ('FNA', 'Microsoft.Xna.Framework');
+local Runtime = import ('OTAPI.Runtime', 'On.Terraria');
 -- ImGui.Text("Hello, world!");
 
 Main.versionNumber = 'Last script load: ' .. DateTime.Now:ToString();
@@ -77,7 +78,7 @@ local cb_imgui = nil;
 local cb_init = nil;
 
 if Main.instance == nil then
-    cb_init = Main.Initialize:Add(function (orig, instance)
+    cb_init = Runtime.Main.Initialize:Add(function (orig, instance)
         orig(instance);
     
         if cb_imgui == nil then
@@ -93,7 +94,7 @@ Dispose = function()
         Main.instance.ImGuiDraw:Remove(cb_imgui);
     end
     if cb_init then
-        Main.Initialize:Remove(cb_init);
+        Runtime.Main.Initialize:Remove(cb_init);
     end
 end;
 
