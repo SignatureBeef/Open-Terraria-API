@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace RuntimeExample.Client
+namespace OTAPI.Client.Host
 {
     public static class DrawVertDeclaration
     {

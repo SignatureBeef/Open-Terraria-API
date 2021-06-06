@@ -23,6 +23,7 @@ namespace Microsoft.Xna.Framework
         Vector4 ToVector4();
         void PackFromVector4(Vector4 vector);
     }
+
     public interface IPackedVector<TPacked> : IPackedVector
     {
         TPacked PackedValue

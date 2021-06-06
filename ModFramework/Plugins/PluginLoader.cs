@@ -54,8 +54,9 @@ namespace ModFramework.Plugins
                     Assembly.GetCallingAssembly(),
                 }.Distinct());
 
-                IEnumerable<string> files = Directory.EnumerateFiles(Environment.CurrentDirectory, "*.mm.dll", SearchOption.AllDirectories);
+                //IEnumerable<string> files = Directory.EnumerateFiles(Environment.CurrentDirectory, "*.mm.dll", SearchOption.AllDirectories);
 
+                IEnumerable<string> files = Enumerable.Empty<string>();
                 if (Directory.Exists("modifications"))
                 {
                     files = files.Concat(Directory.EnumerateFiles("modifications", "*.dll", SearchOption.AllDirectories));

@@ -9,6 +9,7 @@ namespace OTAPI.Common
         {
             "/Users/[USER_NAME]/Library/Application Support/Steam/steamapps/common/Terraria/Terraria.app/Contents/",
             "/Applications/Terraria.app/Contents/",
+            "C:\\Program Files (x86)\\Steam\\steamapps\\common"
         };
 
         public static bool IsValidInstallPath(string folder)

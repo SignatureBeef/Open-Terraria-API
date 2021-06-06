@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net472</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
@@ -14,9 +14,15 @@
 	  <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.29.1" />
 	  <PackageReference Include="MonoMod" Version="21.4.29.1" />
 	  <PackageReference Include="SharpZipLib" Version="1.3.2" />
+	  <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="lua\" />
+	  <Folder Include="Targets\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="InstallTargets\" />
+	  <None Remove="Microsoft.Win32.Registry" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Update="lua\game.lua">
@@ -32,4 +38,7 @@
 	<Target Name="CleanAll" AfterTargets="Clean">
 		<RemoveDir Directories="$(OUTDIR)" />
 	</Target>
+	<!--<Target Name="PublishHostGame" AfterTargets="Build">
+	  <Exec Command="cd ..\OTAPI.Client.Host &amp;&amp; dotnet msbuild -restore -t:PublishAllRids" />
+	</Target>-->
 </Project>

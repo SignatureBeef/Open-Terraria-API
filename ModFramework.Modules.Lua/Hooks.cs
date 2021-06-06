@@ -32,11 +32,11 @@ namespace ModFramework.Modules.Lua
             const string root = "lua";
             Directory.CreateDirectory(root);
 
+            Console.WriteLine($"[LUA] Loading Lua scripts from ./{root}");
+
             ScriptManager = new ScriptManager(root);
             ScriptManager.Initialise();
             ScriptManager.WatchForChanges();
-
-            Console.WriteLine($"[LUA] Loading Lua scripts from ./{root}");
         }
     }
 }

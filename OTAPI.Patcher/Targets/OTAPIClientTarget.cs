@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using ModFramework;
+using ModFramework.Modules.CSharp;
 using ModFramework.Plugins;
 using Mono.Cecil;
 using OTAPI.Common;
@@ -42,6 +43,9 @@ namespace OTAPI.Patcher.Targets
         public void Patch()
         {
             Console.WriteLine($"Open Terraria API v{Common.GetVersion()} [lightweight]");
+
+            PluginLoader.AssemblyFound += CanLoadFile;
+            ModFramework.Modules.CSharp.CSharpLoader.AssemblyFound += CanLoadFile;
 
             var installPath = ClientHelpers.DetermineClientInstallPath();
 
@@ -114,6 +118,12 @@ namespace OTAPI.Patcher.Targets
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(localPath);
 
+
+            // build shims
+            var ldr = new CSharpLoader().SetAutoLoadAssemblies(false);
+            var md = ldr.CreateMetaData();
+            var shims = ldr.LoadModules(md, "shims").ToArray();
+
             using (var public_mm = new ModFwModder()
             {
                 InputPath = localPath,
@@ -130,6 +140,17 @@ namespace OTAPI.Patcher.Targets
                 public_mm.Read();
                 public_mm.MapDependencies();
                 public_mm.ReadMod(this.GetType().Assembly.Location);
+                public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "ReLogic.dll"));
+
+                foreach (var path in shims)
+                {
+                    public_mm.ReadMod(path);
+                }
+
+                // relink / merge into the output
+                public_mm.RelinkModuleMap["ReLogic"] = public_mm.Module;
+                //public_mm.RelinkModuleMap["System.Windows.Forms"] = public_mm.Module;
+
                 public_mm.AutoPatch();
                 public_mm.Write();
 
@@ -163,11 +184,9 @@ namespace OTAPI.Patcher.Targets
             //var mfw_output = Path.Combine(installPath, "Resources/ModFramework.dll");
 
             // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
-            PluginLoader.AssemblyFound += CanLoadFile;
-            ModFramework.Modules.CSharp.CSharpLoader.AssemblyFound += CanLoadFile;
             ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add("OTAPI.dll");
             ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(Path.Combine(resources, "FNA.dll"));
-            ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(Path.Combine(Path.GetDirectoryName(typeof(Object).Assembly.Location), "mscorlib.dll"));
+            //ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(Path.Combine(Path.GetDirectoryName(typeof(Object).Assembly.Location), "mscorlib.dll"));
             PluginLoader.TryLoad();
 
             using var mm = new ModFwModder()
@@ -202,6 +221,8 @@ namespace OTAPI.Patcher.Targets
 
             mm.MapDependencies();
 
+            mm.RelinkModuleMap["System.Windows.Forms"] = mm.Module;
+
             mm.AutoPatch();
 
 #if tModLoaderServer_V1_3
@@ -218,7 +239,8 @@ namespace OTAPI.Patcher.Targets
 
             foreach (var asmref in mm.Module.AssemblyReferences.ToArray())
             {
-                if (asmref.Name.Contains("System.Private.CoreLib") || asmref.Name.Contains("netstandard"))
+                if (asmref.Name.Contains("System.Private.CoreLib") || asmref.Name.Contains("netstandard")
+                    || asmref.Name.Contains("System.Windows.Forms"))
                 {
                     mm.Module.AssemblyReferences.Remove(asmref);
                 }
@@ -257,7 +279,53 @@ namespace OTAPI.Patcher.Targets
             //if (File.Exists(mfw_output)) File.Delete(mfw_output);
             //File.Copy("ModFramework.dll", mfw_output);
 
+            CreateRuntimeEvents();
+
             mm.Log("[OTAPI] Done.");
+        }
+
+        static void CreateRuntimeEvents()
+        {
+            Console.WriteLine("[OTAPI] Creating runtime events");
+            var root = Environment.CurrentDirectory;
+
+            PluginLoader.Clear();
+
+            using (var mm = new ModFwModder()
+            {
+                InputPath = Path.Combine(root, "OTAPI.exe"),
+                //OutputPath = "OTAPI.dll",
+                MissingDependencyThrow = false,
+                //LogVerboseEnabled = true,
+                //PublicEverything = true,
+
+                GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+            })
+            {
+                (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(Path.Combine(root, "EmbeddedResources"));
+                //(mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(Path.GetDirectoryName(typeof(object).Assembly.Location));
+                mm.Read();
+                mm.MapDependencies();
+
+                //mm.Log("[OTAPI Client Install] Generating OTAPI.Runtime.dll");
+                var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, "OTAPI.Runtime.dll");
+                using (ModuleDefinition mOut = gen.OutputModule)
+                {
+                    gen.Generate();
+
+                    foreach (var asmref in mOut.AssemblyReferences.ToArray())
+                    {
+                        if (asmref.Name.Contains("System.Private.CoreLib") || asmref.Name.Contains("netstandard"))
+                        {
+                            //mOut.AssemblyReferences.Remove(asmref);
+                        }
+                    }
+
+                    Directory.CreateDirectory("outputs");
+                    mOut.Write("outputs/OTAPI.Runtime.dll");
+                    ModFramework.Relinker.MscorlibRelinker.PostProcessMscorLib("outputs/OTAPI.Runtime.dll");
+                }
+            }
         }
     }
 }

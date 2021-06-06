@@ -7,7 +7,7 @@
 		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="TerrariaClientOrServer">
+		<Reference Include="refs">
 			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\refs.dll</HintPath>
 		</Reference>
 		<Reference Include="Steamworks.NET">

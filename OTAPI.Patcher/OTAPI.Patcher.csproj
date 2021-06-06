@@ -3,8 +3,9 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFrameworks>net5.0</TargetFrameworks>
 		<Version>3.0.0-alpha10</Version>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -26,8 +27,9 @@
 
 	<ItemGroup>
 		<Refs Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\*.refs" />
-		<Patches Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Patches\*" />
-		<Modifications Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Modifications\*" />
+		<Patches Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Patches\**\*.*" />
+		<TopLevelScripts Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\TopLevelScripts\**\*.*" />
+		<Shims Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Shims\**\*.*" />
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
@@ -38,11 +40,12 @@
 		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
 		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
 		<MakeDir Directories="$(TargetDir)csharp\" />
-		<RemoveDir Directories="$(TargetDir)csharp\modifications\" />
-		<MakeDir Directories="$(TargetDir)csharp\modifications\" />
-		<Copy SourceFiles="@(Refs)" DestinationFolder="$(TargetDir)csharp/modifications/" />
-		<Copy SourceFiles="@(Patches)" DestinationFolder="$(TargetDir)csharp/modifications/Patches" />
-		<Copy SourceFiles="@(Modifications)" DestinationFolder="$(TargetDir)csharp/modifications/Modifications" />
+		<RemoveDir Directories="$(TargetDir)csharp\plugins\" />
+		<MakeDir Directories="$(TargetDir)csharp\plugins\" />
+		<Copy SourceFiles="@(Refs)" DestinationFolder="$(TargetDir)csharp/plugins/" />
+		<Copy SourceFiles="@(Patches)" DestinationFolder="$(TargetDir)csharp/plugins/patches/otapi/%(RecursiveDir)" />
+		<Copy SourceFiles="@(TopLevelScripts)" DestinationFolder="$(TargetDir)csharp/plugins/toplevel/otapi/%(RecursiveDir)" />
+		<Copy SourceFiles="@(Shims)" DestinationFolder="$(TargetDir)csharp/plugins/shims/%(RecursiveDir)" />
 	</Target>
 
 	<Target Name="CleanAll" AfterTargets="Clean">

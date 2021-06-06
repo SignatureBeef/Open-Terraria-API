@@ -22,6 +22,7 @@ local data_history = '';
 -- local data_history = [];
 
 local cb_imgui_callback = function()
+    -- print 'render';
     -- print 'cb_imgui';
 
     -- ImGui.Text('Test3');
@@ -52,16 +53,17 @@ local cb_imgui_callback = function()
     returnValue, tmp = ImGui.InputText("", data, 512, luanet.enum (ImGuiInputTextFlags, 'EnterReturnsTrue,AutoSelectAll'))
 
     if returnValue then
-        print ('Test' .. tmp);
+        print ('Test ' .. tmp);
         -- print ('' .. data);
         data = tmp;
         data_history = DateTime.Now:ToString('HH:mm:ss') .. '> ' .. tmp .. '\n' .. data_history;
 
         msg = ChatMessage(tmp);
         packet = NetTextModule.SerializeClientMessage(msg);
-        print ('Chat:' .. msg.Text)
-        Console.WriteLine (msg.CommandId.name)
-        NetManager.Instance:SendToServer(packet);
+        print ('Chat: ' .. msg.Text)
+        if NetManager.Instance ~= nil then
+            NetManager.Instance:SendToServer(packet);
+        end
     end
 
     ImGui.Text('History');
@@ -79,14 +81,16 @@ local cb_init = nil;
 
 if Main.instance == nil then
     cb_init = Runtime.Main.Initialize:Add(function (orig, instance)
-        orig(instance);
+        orig:Invoke(instance);
     
         if cb_imgui == nil then
             cb_imgui = Main.instance.ImGuiDraw:Add(cb_imgui_callback);
         end
     end);
 else
-    cb_imgui = Main.instance.ImGuiDraw:Add(cb_imgui_callback);
+    if cb_imgui == nil then
+        cb_imgui = Main.instance.ImGuiDraw:Add(cb_imgui_callback);
+    end
 end
 
 Dispose = function()

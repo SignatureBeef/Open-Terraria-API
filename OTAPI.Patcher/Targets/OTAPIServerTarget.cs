@@ -24,6 +24,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using ModFramework;
+using ModFramework.Modules.CSharp;
 using ModFramework.Plugins;
 using ModFramework.Relinker;
 using Mono.Cecil;
@@ -45,6 +46,9 @@ namespace OTAPI.Patcher.Targets
         public void Patch()
         {
             Console.WriteLine($"Open Terraria API v{Common.GetVersion()}");
+
+            PluginLoader.AssemblyFound += CanLoadFile;
+            ModFramework.Modules.CSharp.CSharpLoader.AssemblyFound += CanLoadFile;
 
             PreShimForCompilation();
             ApplyModifications();
@@ -76,8 +80,6 @@ namespace OTAPI.Patcher.Targets
             var embeddedResourcesDir = extractor.Extract(localPath);
 
             // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
-            PluginLoader.AssemblyFound += CanLoadFile;
-            ModFramework.Modules.CSharp.CSharpLoader.AssemblyFound += CanLoadFile;
             ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(localPath);
             PluginLoader.TryLoad();
 
@@ -222,6 +224,18 @@ namespace OTAPI.Patcher.Targets
             // in order for shims within this dll to work (relogic)
             mm.Module.Name = "TerrariaServer.dll";
             mm.Module.Assembly.Name.Name = "TerrariaServer";
+
+            // build shims
+            var ldr = new CSharpLoader().SetAutoLoadAssemblies(false);
+            var md = ldr.CreateMetaData();
+            var shims = ldr.LoadModules(md, "shims").ToArray();
+
+            //var asd = "";
+
+            foreach (var path in shims)
+            {
+                mm.ReadMod(path);
+            }
 
             foreach (var path in new[] {
                 Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),

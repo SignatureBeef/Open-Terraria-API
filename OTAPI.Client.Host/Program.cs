@@ -20,6 +20,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
+using System.Runtime.InteropServices;
 //using ICSharpCode.SharpZipLib.BZip2;
 //using ICSharpCode.SharpZipLib.Tar;
 
@@ -27,10 +29,59 @@ namespace OTAPI.Client.Host
 {
     partial class Program
     {
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetDllDirectory(string lpPathName);
+
         public static void Main(string[] args)
         {
             Console.WriteLine("[OTAPI.Client] Starting!");
             //Environment.SetEnvironmentVariable("DYLD_LIBRARY_PATH", Path.Combine(Environment.CurrentDirectory, "fnalibs", "osx"));
+
+            // https://github.com/FNA-XNA/FNA/wiki/4:-FNA-and-Windows-API#64-bit-support
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                SetDllDirectory(Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    Environment.Is64BitProcess ? "x64" : "x86"
+                ));
+            }
+
+            // https://github.com/FNA-XNA/FNA/wiki/7:-FNA-Environment-Variables#fna_graphics_enable_highdpi
+            // NOTE: from documentation: 
+            //       Lastly, when packaging for macOS, be sure this is in your app bundle's Info.plist:
+            //           <key>NSHighResolutionCapable</key>
+            //           <string>True</string>
+            Environment.SetEnvironmentVariable("FNA_GRAPHICS_ENABLE_HIGHDPI", "1");
+
+            //var osx = Path.Combine(Environment.CurrentDirectory, "osx");
+            //Environment.SetEnvironmentVariable("DYLD_LIBRARY_PATH", osx);
+
+            NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, (libraryName, assembly, searchPath) =>
+            {
+                if (_nativeCache.TryGetValue(libraryName, out IntPtr cached))
+                    return cached;
+
+                Console.WriteLine("Looking for " + libraryName);
+
+                IEnumerable<string> matches = Enumerable.Empty<string>();
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    var osx = Path.Combine(Environment.CurrentDirectory, "osx");
+                    matches = Directory.GetFiles(osx, "*" + libraryName + "*");
+                }
+
+                if (matches.Count() == 1)
+                {
+                    var match = matches.Single();
+                    var handle = NativeLibrary.Load(match);
+                    _nativeCache.Add(libraryName, handle);
+                    return handle;
+                }
+
+                return IntPtr.Zero;
+            });
 
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             AppDomain.CurrentDomain.TypeResolve += CurrentDomain_TypeResolve;
@@ -117,41 +168,60 @@ namespace OTAPI.Client.Host
         //    return newname;
         //}
 
-        private static System.Reflection.Assembly CurrentDomain_TypeResolve(object sender, ResolveEventArgs args)
+        private static Assembly CurrentDomain_TypeResolve(object sender, ResolveEventArgs args)
         {
             Console.WriteLine("Looking for type: " + args.Name);
             return null;
         }
 
-        static List<(System.Reflection.Assembly Assembly, string FilePath)> _assemblyCache
-            = new List<(System.Reflection.Assembly Assembly, string FilePath)>();
-        static System.Reflection.Assembly LoadAndCacheAssemlbly(string filePath)
-        {
-            System.Reflection.Assembly result = null;
+        static Dictionary<string, IntPtr> _nativeCache = new Dictionary<string, IntPtr>();
+        static Dictionary<string, Assembly> _assemblyCache = new Dictionary<string, Assembly>();
 
-            var match = _assemblyCache.FirstOrDefault(f => f.FilePath == filePath);
-            if (match.Assembly != null)
-                result = match.Assembly;
-            else
+        static void CacheAssembly(Assembly assembly)
+        {
+            var name = assembly.GetName().Name;
+            if (!_assemblyCache.ContainsKey(name))
             {
-                var abs = System.IO.Path.Combine(Environment.CurrentDirectory, filePath);
-                result = System.Reflection.Assembly.LoadFile(abs);
-                _assemblyCache.Add((result, filePath));
+                _assemblyCache.Add(name, assembly);
             }
+        }
+
+        static Assembly LoadAndCacheAssembly(string filePath)
+        {
+            Assembly result = null;
+
+            //var match = _assemblyCache.FirstOrDefault(f => f.FilePath == filePath);
+            //if (match.Assembly != null)
+            //    result = match.Assembly;
+            //else
+            //{
+            var abs = Path.Combine(Environment.CurrentDirectory, filePath);
+            result = Assembly.LoadFile(abs);
+            CacheAssembly(result);
+            //    _assemblyCache.Add((result, filePath));
+            //}
 
             return result;
         }
 
-        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
+            var asmName = new AssemblyName(args.Name);
+
+            if (_assemblyCache.TryGetValue(asmName.Name, out Assembly cached))
+                return cached;
+
             Console.WriteLine("Looking for: " + args.Name);
-            if (args.Name.StartsWith("Terraria") || args.Name.StartsWith("OTAPI"))
+            if (args.Name.StartsWith("Terraria") || args.Name.StartsWith("OTAPI")
+                || args.Name.StartsWith("ReLogic") // TODO remove this from the embedded resouces, then it wont get here unless bad IL.
+                )
             {
-                return LoadAndCacheAssemlbly(System.IO.Path.Combine(Environment.CurrentDirectory, "OTAPI.exe"));
+                return typeof(Terraria.Program).Assembly;
+                //return LoadAndCacheAssemlbly(System.IO.Path.Combine(Environment.CurrentDirectory, "OTAPI.exe"));
             }
             else if (args.Name.StartsWith("ImGuiNET"))
             {
-                return LoadAndCacheAssemlbly(System.IO.Path.Combine(Environment.CurrentDirectory, "ImGui.NET.dll"));
+                return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "ImGui.NET.dll"));
             }
             else
             {
@@ -171,17 +241,31 @@ namespace OTAPI.Client.Host
                 //}
 
                 var root = typeof(Terraria.Program).Assembly;
-                string resourceName = new System.Reflection.AssemblyName(args.Name).Name + ".dll";
+                string resourceName = asmName.Name + ".dll";
+
+                if (File.Exists(resourceName))
+                    return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, resourceName));
+
                 Console.WriteLine("Looking for res: " + resourceName);
                 //Console.WriteLine("Looking in: " + String.Join(",", root.GetManifestResourceNames()));
                 string text = Array.Find(root.GetManifestResourceNames(), (string element) => element.EndsWith(resourceName));
                 if (text != null)
                 {
-                    Console.WriteLine("Loaded " + resourceName);
+                    Console.WriteLine("Loading from resources " + resourceName);
                     using var stream = root.GetManifestResourceStream(text);
                     byte[] array = new byte[stream.Length];
                     stream.Read(array, 0, array.Length);
-                    return System.Reflection.Assembly.Load(array);
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    try
+                    {
+                        var asm = System.Reflection.Assembly.Load(array);
+                        return asm;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
 
             }

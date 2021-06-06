@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NLua.Exceptions;
 
 namespace ModFramework.Modules.Lua
 {
@@ -49,6 +50,13 @@ namespace ModFramework.Modules.Lua
                 Content = File.ReadAllText(FilePath);
                 LoadResult = Container.DoString(Content);
             }
+            catch (LuaScriptException ex)
+            {
+                LoadError = ex;
+                Console.WriteLine("[Lua] Load failed");
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.InnerException);
+            }
             catch (Exception ex)
             {
                 LoadError = ex;
@@ -74,13 +82,14 @@ namespace ModFramework.Modules.Lua
 
         LuaScript CreateScriptFromFile(string file)
         {
+            Console.WriteLine($"[LUA] Loading {file}");
+
             var script = new LuaScript()
             {
                 FilePath = file,
                 FileName = Path.GetFileNameWithoutExtension(file),
             };
 
-            Console.WriteLine($"[LUA] Loading {file}");
             _scripts.Add(script);
 
             script.Load();

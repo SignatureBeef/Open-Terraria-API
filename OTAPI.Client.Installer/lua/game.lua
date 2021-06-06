@@ -6,7 +6,7 @@ print 'Game script active';
 
 local cb_initialize = Main.Initialize:Add(function (orig, instance)
     print '[LUA] Main.Initialize() called';
-    orig(instance);
+    orig:Invoke(instance);
 end);
 
 local cb_update = Main.Update:Add(function (orig, instance, gameTime)
@@ -15,7 +15,7 @@ local cb_update = Main.Update:Add(function (orig, instance, gameTime)
         print '[LUA] Left key down';
     end
 
-    orig(instance, gameTime);
+    orig:Invoke(instance, gameTime);
 end);
 
 Dispose = function()

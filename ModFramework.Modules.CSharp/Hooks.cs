@@ -25,13 +25,13 @@ namespace ModFramework.Modules.CSharp
         [Modification(ModType.Read, "Loading CSharp script interface")]
         public static void OnModding(MonoMod.MonoModder modder)
         {
-            new CSharpLoader().SetModder(modder).RunModules();
+            new CSharpLoader().SetModder(modder).LoadModifications();
         }
 
         [Modification(ModType.Runtime, "Loading CSharp script interface")]
         public static void OnRunning()
         {
-            new CSharpLoader().RunModules();
+            new CSharpLoader().LoadModifications();
         }
     }
 }

@@ -2,14 +2,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net472</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<RuntimeIdentifiers>win7-x64;osx.10.11-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
+		<PlatformTarget>x64</PlatformTarget>
+		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
 	</PropertyGroup>
+	<Import Project="PublishAllRids.targets" />
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="OTAPI">
@@ -21,17 +25,21 @@
 		<Reference Include="SteelSeriesEngineWrapper">
 			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\SteelSeriesEngineWrapper.dll</HintPath>
 		</Reference>
-		<Reference Include="System.Windows.Forms" />
+		<!--<Reference Include="System.Windows.Forms" />-->
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="ImGui.NET" Version="1.78.0" />
-	  <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
-	  <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
-	  <!--<PackageReference Include="sdl2" Version="2.0.5" />-->
+		<PackageReference Include="ImGui.NET" Version="1.78.0" />
+		<PackageReference Include="NLua" Version="1.5.9" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+		<PackageReference Include="System.Security.Permissions" Version="5.0.0" />
+		<PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
-	  <ProjectReference Include="..\FNA.Core\FNA.Core.csproj" />
+		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
+		<ProjectReference Include="..\FNA.Core\FNA.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="System.Reflection.Emit" />
 	</ItemGroup>
 	<Target Name="CleanAll" AfterTargets="Clean">
 		<RemoveDir Directories="$(OUTDIR)" />

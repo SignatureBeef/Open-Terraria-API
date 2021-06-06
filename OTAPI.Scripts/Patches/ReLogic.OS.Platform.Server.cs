@@ -31,22 +31,13 @@ namespace ReLogic.OS
         static patch_Platform()
         {
             orig_ctor_Platform();
-#if !tModLoaderServer_V1_3
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 Current = new ReLogic.OS.OSX.OsxPlatform();
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 Current = new ReLogic.OS.Linux.LinuxPlatform();
             else
                 Current = new ReLogic.OS.Windows.WindowsPlatform();
-#endif
-#if tModLoaderServer_V1_3
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                Current = new ReLogic.OS.OsxPlatform();
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                Current = new ReLogic.OS.LinuxPlatform();
-            else
-                Current = new ReLogic.OS.WindowsPlatform();
-#endif
         }
     }
 }
