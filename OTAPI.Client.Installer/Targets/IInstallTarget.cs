@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using OTAPI.Common;
 
 namespace OTAPI.Client.Installer.Targets
 {
-    public interface IInstallTarget
+    public interface IInstallTarget : IInstallDiscoverer
     {
-        IEnumerable<string> FindInstalls();
-
         void Install(string installPath);
     }
 }

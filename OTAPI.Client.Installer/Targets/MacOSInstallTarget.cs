@@ -1,40 +1,14 @@
-﻿using System;
+﻿using ICSharpCode.SharpZipLib.BZip2;
+using ICSharpCode.SharpZipLib.Tar;
+using OTAPI.Common;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using ICSharpCode.SharpZipLib.BZip2;
-using ICSharpCode.SharpZipLib.Tar;
 
 namespace OTAPI.Client.Installer.Targets
 {
-    public class MacOSInstallTarget : BaseInstallTarget
+    public class MacOSInstallTarget : MacOSInstallDiscoverer, IInstallTarget
     {
-        public override string[] SearchPaths { get; } = new[]
-        {
-            "/Users/[USER_NAME]/Library/Application Support/Steam/steamapps/common/Terraria/Terraria.app/Contents/",
-            "/Applications/Terraria.app/Contents/",
-        };
-
-        public override bool IsValidInstallPath(string folder)
-        {
-            bool valid = Directory.Exists(folder);
-
-            var macOS = Path.Combine(folder, "MacOS");
-            var resources = Path.Combine(folder, "Resources");
-
-            var startScript = Path.Combine(macOS, "Terraria");
-            var startBin = Path.Combine(macOS, "Terraria.bin.osx");
-            var assembly = Path.Combine(resources, "Terraria.exe");
-
-            valid &= Directory.Exists(macOS);
-            valid &= Directory.Exists(resources);
-
-            valid &= File.Exists(startScript);
-            valid &= File.Exists(startBin);
-            valid &= File.Exists(assembly);
-
-            return valid;
-        }
-
         private static void CopyFiles(string sourcePath, string targetPath)
         {
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
@@ -44,7 +18,7 @@ namespace OTAPI.Client.Installer.Targets
                 File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
         }
 
-        public override void Install(string installPath)
+        public void Install(string installPath)
         {
             var hostDir = "../../../../OTAPI.Client.Host/";
 

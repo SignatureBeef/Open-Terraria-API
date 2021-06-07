@@ -1,62 +1,56 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace OTAPI.Common
 {
+    public class ClientInstallPath<ITarget>
+        where ITarget : IInstallDiscoverer
+    {
+        public ITarget Target { get; set; }
+        public string Path { get; set; }
+        public string GetResource(string fileName) => Target.GetResource(fileName, Path);
+        public string GetResourcePath() => Target.GetResourcePath(Path);
+    }
+
     public class ClientHelpers
     {
-        static string[] SearchPaths { get; } = new[]
+        static IInstallDiscoverer[] Discoverers = new IInstallDiscoverer[]
         {
-            "/Users/[USER_NAME]/Library/Application Support/Steam/steamapps/common/Terraria/Terraria.app/Contents/",
-            "/Applications/Terraria.app/Contents/",
-            "C:\\Program Files (x86)\\Steam\\steamapps\\common"
+            new MacOSInstallDiscoverer(),
+            new WindowsInstallDiscoverer()
         };
 
-        public static bool IsValidInstallPath(string folder)
+        public static ClientInstallPath<IInstallDiscoverer> DetermineClientInstallPath() => DetermineClientInstallPath(Discoverers);
+
+        public static ClientInstallPath<ITarget> DetermineClientInstallPath<ITarget>(ITarget[] discoverers)
+            where ITarget : IInstallDiscoverer
         {
-            bool valid = Directory.Exists(folder);
+            var installPaths = discoverers
+                .SelectMany(x => x.FindInstalls().Select(i => new ClientInstallPath<ITarget> { Path = i, Target = x }));
 
-            var macOS = Path.Combine(folder, "MacOS");
-            var resources = Path.Combine(folder, "Resources");
-
-            var startScript = Path.Combine(macOS, "Terraria");
-            var startBin = Path.Combine(macOS, "Terraria.bin.osx");
-            //var assembly = Path.Combine(resources, "Terraria.exe");
-
-            valid &= Directory.Exists(macOS);
-            valid &= Directory.Exists(resources);
-
-            valid &= File.Exists(startScript);
-            valid &= File.Exists(startBin);
-            //valid &= File.Exists(assembly);
-
-            return valid;
-        }
-
-        public static string DetermineClientInstallPath()
-        {
-            foreach (var path in SearchPaths)
+            if (installPaths.Count() == 1)
+                return installPaths.Single();
+            else if (installPaths.Count() > 1)
             {
-                var formatted = path.Replace("[USER_NAME]", Environment.UserName);
-                if (IsValidInstallPath(formatted))
-                    return formatted;
-            }
+                Console.WriteLine("More than one install path found; please specify which: ");
 
-            int count = 5;
-            do
-            {
-                Console.Write("What is the Terraria client install FOLDER?: ");
-                var path = Console.ReadLine();
-
-                if (!String.IsNullOrWhiteSpace(path))
+                for (var i = 0; i < installPaths.Count(); i++)
                 {
-                    if (IsValidInstallPath(path))
-                        return path;
+                    Console.WriteLine($"\t{i} - {installPaths.ElementAt(i).Path}");
                 }
 
-                Console.WriteLine("Invalid folder or wrong install folder.");
+                Console.Write("Choice: ");
+                var key = Console.ReadKey();
+                Console.WriteLine();
+                if (Int32.TryParse(key.KeyChar.ToString(), out int index))
+                {
+                    if (index < installPaths.Count() && index >= 0)
+                        return installPaths.ElementAt(index);
+                    else Console.Error.WriteLine("Invalid option: " + index);
+                }
+                else Console.Error.WriteLine("Invalid option, expected a number.");
             }
-            while (count-- > 0);
 
             throw new DirectoryNotFoundException();
         }

@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Runtime.InteropServices;
 
-namespace OTAPI.Client.Installer.Targets
+namespace OTAPI.Common
 {
-    public abstract class BaseInstallTarget : IInstallTarget
+    public abstract class BaseInstallDiscoverer : IInstallDiscoverer
     {
         public abstract string[] SearchPaths { get; }
 
         public abstract bool IsValidInstallPath(string folder);
+
+        public abstract OSPlatform GetClientPlatform();
+
+        public abstract string GetResource(string fileName, string installPath);
+        public abstract string GetResourcePath(string installPath);
 
         public virtual IEnumerable<string> FindInstalls()
         {
@@ -19,7 +24,5 @@ namespace OTAPI.Client.Installer.Targets
                     yield return formatted;
             }
         }
-
-        public abstract void Install(string installPath);
     }
 }

@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+using OTAPI.Common;
 using System;
-using System.Linq;
 
 namespace OTAPI.Client.Installer
 {
@@ -28,54 +28,12 @@ namespace OTAPI.Client.Installer
             new Targets.WindowsInstallTarget()
         };
 
-        class InstallPath
-        {
-            public Targets.IInstallTarget Target { get; set; }
-            public string Path { get; set; }
-        }
-
         public static void Main(string[] args)
         {
             Console.WriteLine("NOTE: THIS IS NOT A REAL LAUNCHER. You must load Terraria yourself.");
             Console.WriteLine("This program will install the required files to your client directory.");
 
-            var installPaths = Targets
-                .SelectMany(x => x.FindInstalls().Select(i => new InstallPath { Path = i, Target = x }));
-
-            InstallPath installationPath = null;
-            if (installPaths.Count() == 1)
-                installationPath = installPaths.Single();
-            else if (installPaths.Count() > 1)
-            {
-                Console.WriteLine("More than one install path found; please specify which: ");
-
-                for (var i = 0; i < installPaths.Count(); i++)
-                {
-                    Console.WriteLine($"\t{i} - {installPaths.ElementAt(i).Path}");
-                }
-
-                Console.Write("Choice: ");
-                var key = Console.ReadKey();
-                Console.WriteLine();
-                if (Int32.TryParse(key.KeyChar.ToString(), out int index))
-                {
-                    if (index < installPaths.Count() && index >= 0)
-                    {
-                        installationPath = installPaths.ElementAt(index);
-                    }
-                    else
-                    {
-                        Console.Error.WriteLine("Invalid option: " + index);
-                        return;
-                    }
-                }
-                else
-                {
-                    Console.Error.WriteLine("Invalid option, expected a number.");
-                    return;
-                }
-            }
-
+            var installationPath = ClientHelpers.DetermineClientInstallPath(Targets);
             if (installationPath != null)
             {
                 Console.WriteLine($"Installing to {installationPath.Path}");

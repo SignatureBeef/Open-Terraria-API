@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net5.0;net472</TargetFrameworks>
+		<TargetFrameworks>net5.0</TargetFrameworks>
 	</PropertyGroup>
-	<Target Name="CleanAll" AfterTargets="Clean">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+  </ItemGroup>
+
+  <Target Name="CleanAll" AfterTargets="Clean">
 		<RemoveDir Directories="$(OUTDIR)" />
 	</Target>
 </Project>

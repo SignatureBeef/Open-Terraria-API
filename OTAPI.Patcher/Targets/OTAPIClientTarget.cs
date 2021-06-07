@@ -45,12 +45,13 @@ namespace OTAPI.Patcher.Targets
             Console.WriteLine($"Open Terraria API v{Common.GetVersion()} [lightweight]");
 
             PluginLoader.AssemblyFound += CanLoadFile;
-            ModFramework.Modules.CSharp.CSharpLoader.AssemblyFound += CanLoadFile;
+            CSharpLoader.AssemblyFound += CanLoadFile;
 
-            var installPath = ClientHelpers.DetermineClientInstallPath();
+            var installDiscoverer = ClientHelpers.DetermineClientInstallPath();
+            var installPath = installDiscoverer.Path;
 
-            var input_regular = Path.Combine(installPath, "Resources/Terraria.exe");
-            var input_orig = Path.Combine(installPath, "Resources/Terraria.orig.exe");
+            var input_regular = installDiscoverer.GetResource("Terraria.exe");
+            var input_orig = installDiscoverer.GetResource("Terraria.orig.exe");
 
             var input = File.Exists(input_regular) ? input_regular : input_orig;
 
@@ -68,7 +69,7 @@ namespace OTAPI.Patcher.Targets
             })
             {
                 var name = Path.GetFileName(lib);
-                var src = Path.Combine(installPath, "Resources", lib);
+                var src = installDiscoverer.GetResource(lib);
                 if (File.Exists(src))
                 {
                     if (File.Exists(name)) File.Delete(name);
@@ -118,6 +119,7 @@ namespace OTAPI.Patcher.Targets
             var extractor = new ResourceExtractor();
             var embeddedResourcesDir = extractor.Extract(localPath);
 
+            var resourcesPath = installDiscoverer.GetResourcePath();
 
             // build shims
             var ldr = new CSharpLoader().SetAutoLoadAssemblies(false);
@@ -136,7 +138,7 @@ namespace OTAPI.Patcher.Targets
             })
             {
                 (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
-                (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(Path.Combine(installPath, "Resources"));
+                (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
                 public_mm.Read();
                 public_mm.MapDependencies();
                 public_mm.ReadMod(this.GetType().Assembly.Location);
@@ -158,7 +160,6 @@ namespace OTAPI.Patcher.Targets
                 if (File.Exists(script_refs)) File.Delete(script_refs);
                 File.Copy("OTAPI.dll", script_refs);
 
-
                 var inputName = Path.GetFileNameWithoutExtension(localPath);
                 var initialModuleName = public_mm.Module.Name;
 
@@ -178,14 +179,16 @@ namespace OTAPI.Patcher.Targets
             }
 
             //var installPath = ClientHelpers.DetermineClientInstallPath();
-            var resources = Path.Combine(installPath, "Resources");
-            var assembly_output = Path.Combine(installPath, "Resources/OTAPI.exe");
+            //var resources = Path.Combine(installPath, "Resources");
+            var assembly_output = installDiscoverer.GetResource("OTAPI.exe");
             //var runtime_output = Path.Combine(installPath, "Resources/Terraria.Runtime.dll");
             //var mfw_output = Path.Combine(installPath, "Resources/ModFramework.dll");
 
             // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
-            ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add("OTAPI.dll");
-            ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(Path.Combine(resources, "FNA.dll"));
+            CSharpLoader.GlobalAssemblies.Add("OTAPI.dll");
+
+            var fna = installDiscoverer.GetResource("FNA.dll");
+            if (File.Exists(fna)) CSharpLoader.GlobalAssemblies.Add(fna);
             //ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(Path.Combine(Path.GetDirectoryName(typeof(Object).Assembly.Location), "mscorlib.dll"));
             PluginLoader.TryLoad();
 
@@ -200,7 +203,7 @@ namespace OTAPI.Patcher.Targets
                 GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
             };
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
-            (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(Path.Combine(installPath, "Resources"));
+            (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
             mm.Read();
 
             //// prechange the assembly name to a dll
