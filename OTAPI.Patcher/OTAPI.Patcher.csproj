@@ -8,7 +8,7 @@
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
 	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 
