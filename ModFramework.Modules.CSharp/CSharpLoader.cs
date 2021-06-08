@@ -135,7 +135,7 @@ namespace ModFramework.Modules.CSharp
 
             foreach (var mref in options.Meta.MetadataReferences
                     .Concat(GlobalAssemblies.Select(globalPath => MetadataReference.CreateFromFile(globalPath)))
-                    .Concat(referenceAssemblies)
+                    //.Concat(referenceAssemblies)
             )
             {
                 if (!refs.Any(x => x.Display == mref.Display))
@@ -143,6 +143,8 @@ namespace ModFramework.Modules.CSharp
                     refs.Add(mref);
                 }
             }
+
+            //refs.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
 
             var compile_options = new CSharpCompilationOptions(options.OutputKind)
                     .WithOptimizationLevel(OptimizationLevel.Debug)
@@ -156,6 +158,14 @@ namespace ModFramework.Modules.CSharp
                 .AddReferences(refs)
 
             ;
+
+            var libs = ((String)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES"))
+                .Split(Path.PathSeparator)
+                .Where(x => !x.StartsWith(Environment.CurrentDirectory));
+            foreach (var lib in libs)
+            {
+                compilation = compilation.AddReferences(MetadataReference.CreateFromFile(lib));
+            }
 
             var emitOptions = new EmitOptions(
                 debugInformationFormat: DebugInformationFormat.PortablePdb,

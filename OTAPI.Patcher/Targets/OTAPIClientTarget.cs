@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using ModFramework;
 using ModFramework.Modules.CSharp;
 using ModFramework.Plugins;
@@ -38,6 +39,32 @@ namespace OTAPI.Patcher.Targets
             // only load "server" or "both" variants
             var filename = Path.GetFileNameWithoutExtension(filepath);
             return !filename.EndsWith(".Server", StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        IEnumerable<string> XnaPaths => new[]
+        {
+            @"C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework\v4.0_4.0.0.0__842cf8be1de50553",
+            @"C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Game\v4.0_4.0.0.0__842cf8be1de50553",
+            @"C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553",
+            @"C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Xact\v4.0_4.0.0.0__842cf8be1de50553",
+        };
+
+        bool TryLoad(string file, out Assembly assembly)
+        {
+            assembly = null;
+            if (File.Exists(file))
+            {
+                try
+                {
+                    var abs = Path.GetFullPath(file);
+                    assembly = Assembly.LoadFile(abs);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
+            return assembly != null;
         }
 
         public void Patch()
@@ -65,6 +92,12 @@ namespace OTAPI.Patcher.Targets
             {
                 "FNA.dll",
                 "SteelSeriesEngineWrapper.dll",
+                "CSteamworks.dll",
+                "CUESDK_2015.dll",
+                "steam_api.dll",
+                "ReLogic.Native",
+                "LogitechLedEnginesWrapper.dll",
+                "nfd.dll",
                 //"../MacOS/osx/CSteamworks",
             })
             {
@@ -98,18 +131,19 @@ namespace OTAPI.Patcher.Targets
 
                 var asn = new AssemblyName(args.Name);
                 var filename = $"{asn.Name}.dll";
-                if (File.Exists(filename))
+                if (TryLoad(filename, out Assembly assembly))
                 {
-                    try
+                    assemblies.Add(assembly.FullName, assembly);
+                    return assembly;
+                }
+
+                foreach (var dir in XnaPaths)
+                {
+                    var xnaDll = Path.Combine(dir, filename);
+                    if (TryLoad(xnaDll, out Assembly xnaAssembly))
                     {
-                        var abs = Path.GetFullPath(filename);
-                        var loaded = Assembly.LoadFile(abs);
-                        assemblies.Add(args.Name, loaded);
-                        return loaded;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
+                        assemblies.Add(xnaAssembly.FullName, xnaAssembly);
+                        return xnaAssembly;
                     }
                 }
                 return null;
@@ -139,6 +173,16 @@ namespace OTAPI.Patcher.Targets
             {
                 (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
                 (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
+
+                if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
+                {
+                    foreach (var dir in XnaPaths)
+                    {
+                        if (Directory.Exists(dir))
+                            (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(dir);
+                    }
+                }
+
                 public_mm.Read();
                 public_mm.MapDependencies();
                 public_mm.ReadMod(this.GetType().Assembly.Location);
@@ -204,6 +248,16 @@ namespace OTAPI.Patcher.Targets
             };
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
+
+            if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
+            {
+                foreach (var dir in XnaPaths)
+                {
+                    if (Directory.Exists(dir))
+                        (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(dir);
+                }
+            }
+
             mm.Read();
 
             //// prechange the assembly name to a dll

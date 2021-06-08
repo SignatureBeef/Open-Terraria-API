@@ -8,6 +8,10 @@
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+	  <PlatformTarget>x86</PlatformTarget>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Mono.Cecil" Version="0.11.3" />
 		<PackageReference Include="MonoMod" Version="21.4.29.1" />
