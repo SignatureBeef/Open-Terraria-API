@@ -6,40 +6,22 @@
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<RuntimeIdentifiers>win7-x64;osx.10.11-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
 		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyName>Terraria</AssemblyName>
 	</PropertyGroup>
-
-  <!--<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))"> terraria client now is net5+anycpu
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="!$([MSBuild]::IsOSPlatform('Windows'))">
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>-->
-  
 	<Import Project="PublishAllRids.targets" />
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	</PropertyGroup>
-  <ItemGroup>
-    <Reference Include="OTAPI">
-      <HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.exe</HintPath>
-    </Reference>
-    <Reference Include="OTAPI.Runtime">
-      <HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="SteelSeriesEngineWrapper">
-      <HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\SteelSeriesEngineWrapper.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <!--<ItemGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
-    <Reference Include="Microsoft.Xna.Framework" />
-    <Reference Include="Microsoft.Xna.Framework.Game" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics" />
-    <Reference Include="Microsoft.Xna.Framework.Xact" />
-  </ItemGroup>-->
+	<ItemGroup>
+		<Reference Include="OTAPI">
+			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.exe</HintPath>
+		</Reference>
+		<Reference Include="OTAPI.Runtime">
+			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="SteelSeriesEngineWrapper">
+			<HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\SteelSeriesEngineWrapper.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="ImGui.NET" Version="1.78.0" />
 		<PackageReference Include="NLua" Version="1.5.9" />
@@ -47,17 +29,12 @@
 		<PackageReference Include="System.Security.Permissions" Version="5.0.0" />
 		<PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
 	</ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
-  </ItemGroup>
-  <!--<ItemGroup Condition="!$([MSBuild]::IsOSPlatform('Windows'))">
-    <ProjectReference Include="..\FNA.Core\FNA.Core.csproj" />
-  </ItemGroup>-->
-  <ItemGroup>
-    <ProjectReference Include="..\FNA.Core\FNA.Core.csproj" />
-  </ItemGroup>
 	<ItemGroup>
-	  <None Remove="System.Reflection.Emit" />
+		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
+		<ProjectReference Include="..\FNA.Core\FNA.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="System.Reflection.Emit" />
 	</ItemGroup>
 	<Target Name="CleanAll" AfterTargets="Clean">
 		<RemoveDir Directories="$(OUTDIR)" />

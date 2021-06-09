@@ -37,7 +37,4 @@
 	<Target Name="CleanAll" AfterTargets="Clean">
 		<RemoveDir Directories="$(OUTDIR)" />
 	</Target>
-	<!--<Target Name="PublishHostGame" AfterTargets="Build">
-	  <Exec Command="cd ..\OTAPI.Client.Host &amp;&amp; dotnet msbuild -restore -t:PublishAllRids" />
-	</Target>-->
 </Project>

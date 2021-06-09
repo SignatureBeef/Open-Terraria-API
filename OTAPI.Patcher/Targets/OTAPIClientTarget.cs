@@ -364,13 +364,12 @@ namespace OTAPI.Patcher.Targets
         static void CreateRuntimeEvents()
         {
             Console.WriteLine("[OTAPI] Creating runtime events");
-            var root = Environment.CurrentDirectory;
 
             PluginLoader.Clear();
 
             using (var mm = new ModFwModder()
             {
-                InputPath = Path.Combine(root, "OTAPI.exe"),
+                InputPath = "outputs/OTAPI.exe",
                 //OutputPath = "OTAPI.dll",
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
@@ -379,7 +378,7 @@ namespace OTAPI.Patcher.Targets
                 GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
             })
             {
-                (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(Path.Combine(root, "EmbeddedResources"));
+                (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory("EmbeddedResources");
                 //(mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(Path.GetDirectoryName(typeof(object).Assembly.Location));
                 mm.Read();
                 mm.MapDependencies();
@@ -398,7 +397,7 @@ namespace OTAPI.Patcher.Targets
                         }
                     }
 
-                    Directory.CreateDirectory("outputs");
+                    //Directory.CreateDirectory("outputs");
                     mOut.Write("outputs/OTAPI.Runtime.dll");
                     //ModFramework.Relinker.MscorlibRelinker.PostProcessMscorLib("outputs/OTAPI.Runtime.dll");
                 }
