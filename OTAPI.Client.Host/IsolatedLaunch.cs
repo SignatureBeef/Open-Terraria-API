@@ -16,6 +16,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Linq;
 
 namespace OTAPI.Client.Host
 {
@@ -30,7 +31,10 @@ namespace OTAPI.Client.Host
                 return new HostGame();
             };
 
-            Terraria.MacLaunch.Main(args);
+            var asm = typeof(Terraria.Program).Assembly;
+            var launchClass = asm.GetType("Terraria.MacLaunch") ?? asm.GetType("Terraria.WindowsLaunch") ?? asm.GetType("Terraria.LinuxLaunch");
+            var main = launchClass.GetMethod("Main");
+            main.Invoke(null, new object[] { args });
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

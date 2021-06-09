@@ -24,6 +24,7 @@ using System.Runtime.InteropServices;
 using ModFramework;
 using ModFramework.Modules.CSharp;
 using ModFramework.Plugins;
+using ModFramework.Relinker;
 using Mono.Cecil;
 using OTAPI.Common;
 
@@ -224,7 +225,7 @@ namespace OTAPI.Patcher.Targets
 
             //var installPath = ClientHelpers.DetermineClientInstallPath();
             //var resources = Path.Combine(installPath, "Resources");
-            var assembly_output = installDiscoverer.GetResource("OTAPI.exe");
+            //var assembly_output = installDiscoverer.GetResource("OTAPI.exe");
             //var runtime_output = Path.Combine(installPath, "Resources/Terraria.Runtime.dll");
             //var mfw_output = Path.Combine(installPath, "Resources/ModFramework.dll");
 
@@ -236,10 +237,14 @@ namespace OTAPI.Patcher.Targets
             //ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(Path.Combine(Path.GetDirectoryName(typeof(Object).Assembly.Location), "mscorlib.dll"));
             PluginLoader.TryLoad();
 
+            Directory.CreateDirectory("outputs");
+
+            var temp_out = Path.Combine("outputs", "OTAPI.exe");
+
             using var mm = new ModFwModder()
             {
                 InputPath = "OTAPI.dll",
-                OutputPath = "OTAPI.exe",
+                OutputPath = temp_out,
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
                 //PublicEverything = true,
@@ -299,7 +304,14 @@ namespace OTAPI.Patcher.Targets
                 if (asmref.Name.Contains("System.Private.CoreLib") || asmref.Name.Contains("netstandard")
                     || asmref.Name.Contains("System.Windows.Forms"))
                 {
-                    mm.Module.AssemblyReferences.Remove(asmref);
+                    //mm.Module.AssemblyReferences.Remove(asmref);
+                }
+                else if(asmref.Name.Contains("Microsoft.Xna.Framework"))
+                {
+                    asmref.Name = "FNA";
+                    asmref.PublicKey = null;
+                    asmref.PublicKeyToken = null;
+                    asmref.Version = new Version("21.5.0.0");
                 }
             }
 
@@ -307,6 +319,9 @@ namespace OTAPI.Patcher.Targets
             {
                 mm.Module.Types.Remove(mmt);
             }
+
+            mm.Module.Architecture = Mono.Cecil.TargetArchitecture.I386;
+            mm.Module.Attributes = Mono.Cecil.ModuleAttributes.ILOnly;
 
             mm.Write();
 
@@ -336,7 +351,12 @@ namespace OTAPI.Patcher.Targets
             //if (File.Exists(mfw_output)) File.Delete(mfw_output);
             //File.Copy("ModFramework.dll", mfw_output);
 
+
+            PluginLoader.Clear();
+
             CreateRuntimeEvents();
+
+            CoreLibRelinker.PostProcessCoreLib(temp_out, "outputs/OTAPI.Runtime.dll");
 
             mm.Log("[OTAPI] Done.");
         }
@@ -380,7 +400,7 @@ namespace OTAPI.Patcher.Targets
 
                     Directory.CreateDirectory("outputs");
                     mOut.Write("outputs/OTAPI.Runtime.dll");
-                    ModFramework.Relinker.MscorlibRelinker.PostProcessMscorLib("outputs/OTAPI.Runtime.dll");
+                    //ModFramework.Relinker.MscorlibRelinker.PostProcessMscorLib("outputs/OTAPI.Runtime.dll");
                 }
             }
         }

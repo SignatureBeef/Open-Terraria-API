@@ -62,7 +62,7 @@ namespace OTAPI.Client.Host
                 if (_nativeCache.TryGetValue(libraryName, out IntPtr cached))
                     return cached;
 
-                Console.WriteLine("Looking for " + libraryName);
+                //Console.WriteLine("Looking for " + libraryName);
 
                 IEnumerable<string> matches = Enumerable.Empty<string>();
 
@@ -256,6 +256,9 @@ namespace OTAPI.Client.Host
                     byte[] array = new byte[stream.Length];
                     stream.Read(array, 0, array.Length);
                     stream.Seek(0, SeekOrigin.Begin);
+
+                    if (!File.Exists(resourceName))
+                        File.WriteAllBytes(resourceName, array);
 
                     try
                     {

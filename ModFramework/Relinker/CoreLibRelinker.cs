@@ -219,6 +219,7 @@ namespace ModFramework.Relinker
                     Types = m.Types.Where(x => x.FullName == type.FullName
                         && m.Assembly.Name.Name != "mscorlib"
                         && m.Assembly.Name.Name != "System.Private.CoreLib"
+                        && x.IsPublic
                     )
                 })
                 .Where(x => x.Types.Any())
