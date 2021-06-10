@@ -81,7 +81,7 @@ namespace OTAPI.Patcher.Targets
             var input_regular = installDiscoverer.GetResource("Terraria.exe");
             var input_orig = installDiscoverer.GetResource("Terraria.orig.exe");
 
-            var input = File.Exists(input_regular) ? input_regular : input_orig;
+            var input = File.Exists(input_orig) ? input_orig : input_regular;
 
             //var freshAssembly = "../../../../OTAPI.Setup/bin/Debug/net5.0/Terraria.exe";
             var localPath = "Terraria.exe";
