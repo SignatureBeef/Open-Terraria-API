@@ -9,6 +9,7 @@
 	  <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
 	  <ProjectReference Include="..\ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj" />
 	  <ProjectReference Include="..\OTAPI.Client.Host\OTAPI.Client.Host.csproj" />
+	  <ProjectReference Include="..\ModFramework.Modules.ClearScript\ModFramework.Modules.ClearScript.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.29.1" />
@@ -31,6 +32,9 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	  <None Update="lua\imgui.lua">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="clearscript\test.js">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

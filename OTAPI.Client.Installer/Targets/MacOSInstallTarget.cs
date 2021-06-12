@@ -67,6 +67,9 @@ namespace OTAPI.Client.Installer.Targets
                 Console.WriteLine("Installing LUA...");
                 InstallLua(otapiFolder);
 
+                Console.WriteLine("Installing ClearScript...");
+                InstallClearScript(otapiFolder);
+
                 Console.WriteLine("Copying Terraria Content files, this may take a while...");
                 CopyFiles(sourceContentPath, destContentPath);
 
@@ -79,6 +82,18 @@ namespace OTAPI.Client.Installer.Targets
             {
                 Console.Error.WriteLine("Failed to produce or find the appropriate package");
             }
+        }
+
+        void InstallClearScript(string otapiInstallPath)
+        {
+            var modificationsDir = Path.Combine(otapiInstallPath, "modifications");
+            Directory.CreateDirectory(modificationsDir);
+            TransferFile("ModFramework.Modules.ClearScript.dll", Path.Combine(modificationsDir, "ModFramework.Modules.ClearScript.dll"));
+
+            var csDir = Path.Combine(otapiInstallPath, "clearscript");
+            Directory.CreateDirectory(csDir);
+            foreach (var file in Directory.GetFiles("clearscript", "*.js"))
+                TransferFile(file, Path.Combine(csDir, Path.GetFileName(file)));
         }
 
         void InstallLua(string otapiInstallPath)
