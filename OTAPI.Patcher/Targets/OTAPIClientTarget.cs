@@ -75,6 +75,7 @@ namespace OTAPI.Patcher.Targets
             PluginLoader.AssemblyFound += CanLoadFile;
             CSharpLoader.AssemblyFound += CanLoadFile;
             ModFramework.Modules.ClearScript.ScriptManager.FileFound += CanLoadFile;
+            ModFramework.Modules.Lua.ScriptManager.FileFound += CanLoadFile;
 
             var installDiscoverer = ClientHelpers.DetermineClientInstallPath();
             var installPath = installDiscoverer.Path;

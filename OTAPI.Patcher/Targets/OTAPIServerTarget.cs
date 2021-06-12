@@ -49,6 +49,8 @@ namespace OTAPI.Patcher.Targets
 
             PluginLoader.AssemblyFound += CanLoadFile;
             ModFramework.Modules.CSharp.CSharpLoader.AssemblyFound += CanLoadFile;
+            ModFramework.Modules.ClearScript.ScriptManager.FileFound += CanLoadFile;
+            ModFramework.Modules.Lua.ScriptManager.FileFound += CanLoadFile;
 
             PreShimForCompilation();
             ApplyModifications();
