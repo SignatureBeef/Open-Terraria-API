@@ -1,4 +1,5 @@
-# Open Terraria API [![Build Status](https://travis-ci.com/DeathCradle/Open-Terraria-API.svg?branch=upcoming)](https://travis-ci.com/DeathCradle/Open-Terraria-API?branch=upcoming)
+# Open Terraria API [![Travis (.com) branch](https://img.shields.io/travis/com/DeathCradle/Open-Terraria-API/upcoming?label=build&logo=travis)](https://travis-ci.com/DeathCradle/Open-Terraria-API) [![AppVeyor branch](https://img.shields.io/appveyor/build/DeathCradle/Open-Terraria-API/upcoming?label=build&logo=appveyor)](https://ci.appveyor.com/project/DeathCradle/open-terraria-api)
+
 
 The Open Terraria API, known as OTAPI, is a low-level API for [Terraria](https://terraria.org) that rewrites and hooks into the official or modded binaries for others to use.
 
