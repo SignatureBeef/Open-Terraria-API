@@ -74,6 +74,7 @@ namespace OTAPI.Patcher.Targets
 
             PluginLoader.AssemblyFound += CanLoadFile;
             CSharpLoader.AssemblyFound += CanLoadFile;
+            ModFramework.Modules.ClearScript.ScriptManager.FileFound += CanLoadFile;
 
             var installDiscoverer = ClientHelpers.DetermineClientInstallPath();
             var installPath = installDiscoverer.Path;
@@ -111,6 +112,11 @@ namespace OTAPI.Patcher.Targets
                 }
             }
 
+            // needed for below resolutions
+            Console.WriteLine("[OTAPI] Extracting embedded binaries for assembly resolution...");
+            var extractor = new ResourceExtractor();
+            var embeddedResourcesDir = extractor.Extract(localPath);
+
             // load into the current app domain for patch refs
             var asm = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, localPath));
             //var asmFNA = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, FNA));
@@ -121,10 +127,6 @@ namespace OTAPI.Patcher.Targets
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
                 Console.WriteLine("[Patch Resolve] " + args.Name);
-                //if (args.Name.IndexOf("Terraria") > -1)
-                //{
-                //    return asm;
-                //}
 
                 var match = assemblies.FirstOrDefault(a => a.Key == args.Name);
                 if (match.Key != null)
@@ -138,6 +140,13 @@ namespace OTAPI.Patcher.Targets
                     return assembly;
                 }
 
+                filename = Path.Combine(embeddedResourcesDir, $"{asn.Name}.dll");
+                if (TryLoad(filename, out Assembly resassembly))
+                {
+                    assemblies.Add(resassembly.FullName, resassembly);
+                    return resassembly;
+                }
+
                 foreach (var dir in XnaPaths)
                 {
                     var xnaDll = Path.Combine(dir, filename);
@@ -149,10 +158,6 @@ namespace OTAPI.Patcher.Targets
                 }
                 return null;
             };
-
-            Console.WriteLine("[OTAPI] Extracting embedded binaries for assembly resolution...");
-            var extractor = new ResourceExtractor();
-            var embeddedResourcesDir = extractor.Extract(localPath);
 
             var resourcesPath = installDiscoverer.GetResourcePath();
 
@@ -306,7 +311,7 @@ namespace OTAPI.Patcher.Targets
                 {
                     //mm.Module.AssemblyReferences.Remove(asmref);
                 }
-                else if(asmref.Name.Contains("Microsoft.Xna.Framework"))
+                else if (asmref.Name.Contains("Microsoft.Xna.Framework"))
                 {
                     asmref.Name = "FNA";
                     asmref.PublicKey = null;

@@ -19,6 +19,8 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="System.Security.Permissions" Version="5.0.0" />
 		<PackageReference Include="NuGet.Packaging" Version="5.9.1" />
+		<PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.1.3" />
+		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.1.3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -28,15 +30,22 @@
 		<ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
 		<ProjectReference Include="..\ModFramework.Modules.CSharp\ModFramework.Modules.CSharp.csproj" />
 		<ProjectReference Include="..\ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj" />
+		<ProjectReference Include="..\ModFramework.Modules.ClearScript\ModFramework.Modules.ClearScript.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Refs Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\*.refs" />
-		<Patches Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Patches\**\*.*" />
-		<TopLevelScripts Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\TopLevelScripts\**\*.*" />
-		<Shims Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Shims\**\*.*" />
+		<Patches Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Patches\**\*.cs" />
+		<TopLevelScripts Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\TopLevelScripts\**\*.cs" />
+		<Shims Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Shims\**\*.cs" />
+		<JavaScript Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\JavaScript\**\*.js" />
+		<Lua Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Lua\**\*.lua" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Microsoft.ClearScript.V8.Native.osx-x64" />
+	  <None Remove="Microsoft.ClearScript.linux-x64" />
+	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<MakeDir Directories="$(TargetDir)modifications\" />
 		<RemoveDir Directories="$(TargetDir)modifications\" />
@@ -44,6 +53,12 @@
 		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
 		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
 		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.ClearScript\bin\Debug\net5.0\ModFramework.Modules.ClearScript.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.ClearScript\bin\Debug\net5.0\ModFramework.Modules.ClearScript.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.ClearScript\bin\Debug\net5.0\ModFramework.Modules.ClearScript.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.Lua\bin\Debug\net5.0\ModFramework.Modules.Lua.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.Lua\bin\Debug\net5.0\ModFramework.Modules.Lua.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.Lua\bin\Debug\net5.0\ModFramework.Modules.Lua.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
 		<MakeDir Directories="$(TargetDir)csharp\" />
 		<RemoveDir Directories="$(TargetDir)csharp\plugins\" />
 		<MakeDir Directories="$(TargetDir)csharp\plugins\" />
@@ -51,6 +66,16 @@
 		<Copy SourceFiles="@(Patches)" DestinationFolder="$(TargetDir)csharp/plugins/patches/otapi/%(RecursiveDir)" />
 		<Copy SourceFiles="@(TopLevelScripts)" DestinationFolder="$(TargetDir)csharp/plugins/toplevel/otapi/%(RecursiveDir)" />
 		<Copy SourceFiles="@(Shims)" DestinationFolder="$(TargetDir)csharp/plugins/shims/%(RecursiveDir)" />
+		
+		<MakeDir Directories="$(TargetDir)clearscript\" />
+		<RemoveDir Directories="$(TargetDir)clearscript\" />
+		<MakeDir Directories="$(TargetDir)clearscript\" />
+		<Copy SourceFiles="@(JavaScript)" DestinationFolder="$(TargetDir)clearscript/%(RecursiveDir)" />
+		
+		<MakeDir Directories="$(TargetDir)lua\" />
+		<RemoveDir Directories="$(TargetDir)lua\" />
+		<MakeDir Directories="$(TargetDir)lua\" />
+		<Copy SourceFiles="@(Lua)" DestinationFolder="$(TargetDir)lua/%(RecursiveDir)" />
 	</Target>
 
 	<Target Name="CleanAll" AfterTargets="Clean">

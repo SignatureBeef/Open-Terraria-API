@@ -1,0 +1,1 @@
+﻿print ('[LUA] Mod target: ' .. Modder.Module.Name);

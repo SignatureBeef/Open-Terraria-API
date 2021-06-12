@@ -6,6 +6,8 @@ using NLua.Exceptions;
 
 namespace ModFramework.Modules.Lua
 {
+    public delegate bool FileFoundHandler(string filepath);
+
     class LuaScript : IDisposable
     {
         public string FilePath { get; set; }
@@ -15,6 +17,13 @@ namespace ModFramework.Modules.Lua
 
         public object[] LoadResult { get; set; }
         public object LoadError { get; set; }
+
+        public ScriptManager Manager { get; set; }
+
+        public LuaScript(ScriptManager manager)
+        {
+            Manager = manager;
+        }
 
         public void UnloadLua()
         {
@@ -47,6 +56,9 @@ namespace ModFramework.Modules.Lua
                 Container = new NLua.Lua();
                 Container.LoadCLRPackage();
 
+                if (Manager.Modder != null)
+                    Container["Modder"] = Manager.Modder;
+
                 Content = File.ReadAllText(FilePath);
                 LoadResult = Container.DoString(Content);
             }
@@ -70,21 +82,27 @@ namespace ModFramework.Modules.Lua
     {
         public string ScriptFolder { get; set; }
 
+        public static event FileFoundHandler FileFound;
+
         private List<LuaScript> _scripts { get; } = new List<LuaScript>();
         private FileSystemWatcher _watcher { get; set; }
 
+        public MonoMod.MonoModder Modder { get; set; }
+
         public ScriptManager(
-              string scriptFolder
+            string scriptFolder,
+            MonoMod.MonoModder modder
         )
         {
             ScriptFolder = scriptFolder;
+            Modder = modder;
         }
 
         LuaScript CreateScriptFromFile(string file)
         {
             Console.WriteLine($"[LUA] Loading {file}");
 
-            var script = new LuaScript()
+            var script = new LuaScript(this)
             {
                 FilePath = file,
                 FileName = Path.GetFileNameWithoutExtension(file),
@@ -102,6 +120,9 @@ namespace ModFramework.Modules.Lua
             var scripts = Directory.GetFiles(ScriptFolder, "*.lua");
             foreach (var file in scripts)
             {
+                if (FileFound?.Invoke(file) == false)
+                    continue; // event was cancelled, they do not wish to use this file. skip to the next.
+
                 CreateScriptFromFile(file);
             }
         }

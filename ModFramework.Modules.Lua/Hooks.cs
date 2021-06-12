@@ -29,12 +29,23 @@ namespace ModFramework.Modules.Lua
         [Modification(ModType.Runtime, "Loading Lua script interface")]
         public static void OnRunning()
         {
+            Launch();
+        }
+
+        [Modification(ModType.Read, "Loading Lua script interface")]
+        public static void OnModding(MonoMod.MonoModder modder)
+        {
+            Launch(modder);
+        }
+
+        static void Launch(MonoMod.MonoModder modder = null)
+        {
             const string root = "lua";
             Directory.CreateDirectory(root);
 
             Console.WriteLine($"[LUA] Loading Lua scripts from ./{root}");
 
-            ScriptManager = new ScriptManager(root);
+            ScriptManager = new ScriptManager(root, modder);
             ScriptManager.Initialise();
             ScriptManager.WatchForChanges();
         }

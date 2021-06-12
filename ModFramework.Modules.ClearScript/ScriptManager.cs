@@ -7,6 +7,8 @@ using Microsoft.ClearScript.V8;
 
 namespace ModFramework.Modules.ClearScript
 {
+    public delegate bool FileFoundHandler(string filepath);
+
     public class JavascriptConsole
     {
         public static void log(string line)
@@ -25,6 +27,13 @@ namespace ModFramework.Modules.ClearScript
 
         public object LoadResult { get; set; }
         public object LoadError { get; set; }
+
+        public ScriptManager Manager { get; set; }
+
+        public JSScript(ScriptManager manager)
+        {
+            Manager = manager;
+        }
 
         public void Unload()
         {
@@ -58,8 +67,16 @@ namespace ModFramework.Modules.ClearScript
                 Container.AddHostType(typeof(Console));
                 Container.AddHostType("console", typeof(JavascriptConsole));
 
-                Container.AddHostObject("OTAPI", new HostTypeCollection("OTAPI"));
-                Container.AddHostObject("OTAPIRuntime", new HostTypeCollection("OTAPI.Runtime"));
+                if (Manager.Modder != null)
+                {
+                    //Container.AddHostObject("Terraria", new HostTypeCollection("Terraria"));
+                    Container.AddHostObject("Modder", Manager.Modder);
+                }
+                else
+                {
+                    Container.AddHostObject("OTAPI", new HostTypeCollection("OTAPI"));
+                    Container.AddHostObject("OTAPIRuntime", new HostTypeCollection("OTAPI.Runtime"));
+                }
 
                 Script = Container.Compile(Content);
                 LoadResult = Container.Evaluate(Script);
@@ -77,21 +94,27 @@ namespace ModFramework.Modules.ClearScript
     {
         public string ScriptFolder { get; set; }
 
+        public static event FileFoundHandler FileFound;
+
         private List<JSScript> _scripts { get; } = new List<JSScript>();
         private FileSystemWatcher _watcher { get; set; }
 
+        public MonoMod.MonoModder Modder { get; set; }
+
         public ScriptManager(
-              string scriptFolder
+            string scriptFolder,
+            MonoMod.MonoModder modder
         )
         {
             ScriptFolder = scriptFolder;
+            Modder = modder;
         }
 
         JSScript CreateScriptFromFile(string file)
         {
             Console.WriteLine($"[JS] Loading {file}");
 
-            var script = new JSScript()
+            var script = new JSScript(this)
             {
                 FilePath = file,
                 FileName = Path.GetFileNameWithoutExtension(file),
@@ -109,6 +132,9 @@ namespace ModFramework.Modules.ClearScript
             var scripts = Directory.GetFiles(ScriptFolder, "*.js");
             foreach (var file in scripts)
             {
+                if (FileFound?.Invoke(file) == false)
+                    continue; // event was cancelled, they do not wish to use this file. skip to the next.
+
                 CreateScriptFromFile(file);
             }
         }
