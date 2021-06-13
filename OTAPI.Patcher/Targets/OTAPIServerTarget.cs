@@ -40,7 +40,8 @@ namespace OTAPI.Patcher.Targets
         {
             // only load "server" or "both" variants
             var filename = Path.GetFileNameWithoutExtension(filepath);
-            return !filename.EndsWith(".Client", StringComparison.CurrentCultureIgnoreCase);
+            return !filename.EndsWith(".Client", StringComparison.CurrentCultureIgnoreCase)
+                && !filename.EndsWith("-Client", StringComparison.CurrentCultureIgnoreCase);
         }
 
         public void Patch()

@@ -37,9 +37,10 @@ namespace OTAPI.Patcher.Targets
 
         bool CanLoadFile(string filepath)
         {
-            // only load "server" or "both" variants
+            // only load "client" or "both" variants
             var filename = Path.GetFileNameWithoutExtension(filepath);
-            return !filename.EndsWith(".Server", StringComparison.CurrentCultureIgnoreCase);
+            return !filename.EndsWith(".Server", StringComparison.CurrentCultureIgnoreCase)
+                && !filename.EndsWith("-Server", StringComparison.CurrentCultureIgnoreCase);
         }
 
         IEnumerable<string> XnaPaths => new[]

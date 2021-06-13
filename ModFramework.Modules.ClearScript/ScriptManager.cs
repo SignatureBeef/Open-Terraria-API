@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.ClearScript;
+using Microsoft.ClearScript.JavaScript;
 using Microsoft.ClearScript.V8;
 
 namespace ModFramework.Modules.ClearScript
@@ -29,10 +30,12 @@ namespace ModFramework.Modules.ClearScript
         public object LoadError { get; set; }
 
         public ScriptManager Manager { get; set; }
+        public bool IsModule { get; set; }
 
-        public JSScript(ScriptManager manager)
+        public JSScript(ScriptManager manager, bool isModule)
         {
             Manager = manager;
+            IsModule = isModule;
         }
 
         public void Unload()
@@ -64,6 +67,9 @@ namespace ModFramework.Modules.ClearScript
                 Content = File.ReadAllText(FilePath);
                 Container = new V8ScriptEngine();
 
+                Container.DocumentSettings.AccessFlags = DocumentAccessFlags.EnableFileLoading;
+                Container.DocumentSettings.SearchPath = Path.GetFullPath(Path.GetDirectoryName(FilePath));
+
                 Container.AddHostType(typeof(Console));
                 Container.AddHostType("console", typeof(JavascriptConsole));
 
@@ -78,7 +84,7 @@ namespace ModFramework.Modules.ClearScript
                     Container.AddHostObject("OTAPIRuntime", new HostTypeCollection("OTAPI.Runtime"));
                 }
 
-                Script = Container.Compile(Content);
+                Script = Container.Compile(new DocumentInfo { Category = ModuleCategory.Standard }, Content);
                 LoadResult = Container.Evaluate(Script);
             }
             catch (Exception ex)
@@ -110,11 +116,11 @@ namespace ModFramework.Modules.ClearScript
             Modder = modder;
         }
 
-        JSScript CreateScriptFromFile(string file)
+        JSScript CreateScriptFromFile(string file, bool module)
         {
             Console.WriteLine($"[JS] Loading {file}");
 
-            var script = new JSScript(this)
+            var script = new JSScript(this, module)
             {
                 FilePath = file,
                 FileName = Path.GetFileNameWithoutExtension(file),
@@ -129,13 +135,26 @@ namespace ModFramework.Modules.ClearScript
 
         public void Initialise()
         {
-            var scripts = Directory.GetFiles(ScriptFolder, "*.js");
+            var scripts = Directory.GetFiles(ScriptFolder, "*.js", SearchOption.TopDirectoryOnly);
             foreach (var file in scripts)
             {
                 if (FileFound?.Invoke(file) == false)
                     continue; // event was cancelled, they do not wish to use this file. skip to the next.
 
-                CreateScriptFromFile(file);
+                CreateScriptFromFile(file, false);
+            }
+
+            var modules = Directory.GetDirectories(ScriptFolder);
+            foreach (var modulePath in modules)
+            {
+                if (FileFound?.Invoke(modulePath) == false)
+                    continue; // event was cancelled, they do not wish to use this file. skip to the next.
+
+                var index = Path.Combine(modulePath, "index.js");
+                if (!File.Exists(index))
+                    throw new Exception($"[JS] index.js not found in module `{modulePath}`");
+
+                CreateScriptFromFile(index, true);
             }
         }
 
@@ -227,7 +246,7 @@ namespace ModFramework.Modules.ClearScript
         {
             if (!Path.GetExtension(e.FullPath).Equals(".js", StringComparison.CurrentCultureIgnoreCase)) return;
             Console.WriteLine("[JS] Created: " + e.FullPath);
-            CreateScriptFromFile(e.FullPath);
+            CreateScriptFromFile(e.FullPath, false);
         }
 
         public void Dispose()
