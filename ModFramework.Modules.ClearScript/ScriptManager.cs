@@ -12,9 +12,10 @@ namespace ModFramework.Modules.ClearScript
 
     public class JavascriptConsole
     {
-        public static void log(string line)
+        public static void log(params object[] info)
         {
-            Console.WriteLine(line);
+            foreach (var obj in info)
+                Console.WriteLine(obj);
         }
     }
 
@@ -147,10 +148,17 @@ namespace ModFramework.Modules.ClearScript
             var modules = Directory.GetDirectories(ScriptFolder);
             foreach (var modulePath in modules)
             {
+                if (Path.GetDirectoryName(modulePath).Equals("typings", StringComparison.CurrentCultureIgnoreCase))
+                    continue;
+
                 if (FileFound?.Invoke(modulePath) == false)
                     continue; // event was cancelled, they do not wish to use this file. skip to the next.
 
                 var index = Path.Combine(modulePath, "index.js");
+
+                if (!File.Exists(index)) // pure es6 file doesnt exist, try a potential typescript outpu
+                    index = Path.Combine(modulePath, "dist", "index.js");
+
                 if (!File.Exists(index))
                     throw new Exception($"[JS] index.js not found in module `{modulePath}`");
 

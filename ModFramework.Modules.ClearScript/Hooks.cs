@@ -1,10 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
+using ModFramework.Modules.ClearScript.Typings;
 
 namespace ModFramework.Modules.ClearScript
 {
     public static class Hooks
     {
+        public const string RootFolder = "clearscript";
+
         public static ScriptManager ScriptManager { get; set; }
 
         [Modification(ModType.Runtime, "Loading ClearScript interface")]
@@ -21,12 +25,11 @@ namespace ModFramework.Modules.ClearScript
 
         static void Launch(MonoMod.MonoModder modder = null)
         {
-            const string root = "clearscript";
-            Directory.CreateDirectory(root);
+            Directory.CreateDirectory(RootFolder);
 
-            Console.WriteLine($"[JS] Loading ClearScript files from ./{root}");
+            Console.WriteLine($"[JS] Loading ClearScript files from ./{RootFolder}");
 
-            ScriptManager = new ScriptManager(root, modder);
+            ScriptManager = new ScriptManager(RootFolder, modder);
             ScriptManager.Initialise();
             ScriptManager.WatchForChanges();
         }

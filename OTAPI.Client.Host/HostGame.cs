@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
+using ModFramework.Modules.ClearScript.Typings;
 using Num = System.Numerics;
 
 namespace OTAPI.Client.Host

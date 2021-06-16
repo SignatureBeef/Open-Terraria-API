@@ -5,7 +5,7 @@ var onUpdate = OTAPIRuntime.On.Terraria.Main.Update.connect(function (orig, inst
     orig(instance, gameTime);
 });
 
-Dispose = () => {
+var Dispose = () => {
     console.log('JS Disposing');
     onUpdate.disconnect();
 };

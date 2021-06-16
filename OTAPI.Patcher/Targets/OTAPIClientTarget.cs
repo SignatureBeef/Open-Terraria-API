@@ -195,6 +195,7 @@ namespace OTAPI.Patcher.Targets
                 public_mm.MapDependencies();
                 public_mm.ReadMod(this.GetType().Assembly.Location);
                 public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "ReLogic.dll"));
+                public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "RailSDK.Net.dll"));
 
                 foreach (var path in shims)
                 {
@@ -203,6 +204,7 @@ namespace OTAPI.Patcher.Targets
 
                 // relink / merge into the output
                 public_mm.RelinkModuleMap["ReLogic"] = public_mm.Module;
+                public_mm.RelinkModuleMap["RailSDK.Net"] = public_mm.Module;
                 //public_mm.RelinkModuleMap["System.Windows.Forms"] = public_mm.Module;
 
                 public_mm.AutoPatch();

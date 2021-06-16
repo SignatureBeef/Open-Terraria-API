@@ -1,8 +1,10 @@
 ﻿using ICSharpCode.SharpZipLib.BZip2;
 using ICSharpCode.SharpZipLib.Tar;
+using ModFramework.Modules.ClearScript.Typings;
 using OTAPI.Common;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace OTAPI.Client.Installer.Targets
@@ -77,10 +79,71 @@ namespace OTAPI.Client.Installer.Targets
                 PatchOSXLaunch(installPath);
 
                 Console.WriteLine("OSX install finished");
+
+                Console.Write("Would you like to generate TypeScript typings? y/n: ");
+                var resp = Console.ReadKey().Key;
+                Console.WriteLine();
+                if (resp == ConsoleKey.Y)
+                {
+                    Console.WriteLine("Generating typings...this will take a while");
+                    GenerateTypings(otapiFolder);
+                }
+
+                Console.WriteLine("Done");
             }
             else
             {
                 Console.Error.WriteLine("Failed to produce or find the appropriate package");
+            }
+        }
+
+        void GenerateTypings(string rootFolder)
+        {
+            var patcherDir = "../../../../OTAPI.Patcher/";
+
+            using (var typeGen = new TypingsGenerator())
+            {
+                AppDomain.CurrentDomain.AssemblyResolve += (s, e) =>
+                {
+                    var asr = new AssemblyName(e.Name);
+                    var exe = Path.Combine(rootFolder, $"{asr.Name}.exe");
+                    var dll = Path.Combine(rootFolder, $"{asr.Name}.dll");
+
+
+                    if (File.Exists(exe))
+                        return Assembly.LoadFile(exe);
+
+                    if (File.Exists(dll))
+                        return Assembly.LoadFile(dll);
+
+                    exe = Path.Combine(patcherDir, "bin", "Debug", "net5.0", "EmbeddedResources", $"{asr.Name}.exe");
+                    dll = Path.Combine(patcherDir, "bin", "Debug", "net5.0", "EmbeddedResources", $"{asr.Name}.dll");
+
+
+                    if (File.Exists(exe))
+                        return Assembly.LoadFile(exe);
+
+                    if (File.Exists(dll))
+                        return Assembly.LoadFile(dll);
+
+                    return null;
+                };
+
+                typeGen.AddAssembly(typeof(Mono.Cecil.AssemblyDefinition).Assembly);
+
+                var otapi = Path.Combine(rootFolder, "OTAPI.exe");
+                var otapiRuntime = Path.Combine(rootFolder, "OTAPI.Runtime.dll");
+
+                if (File.Exists(otapi))
+                    typeGen.AddAssembly(Assembly.LoadFile(otapi));
+
+                if (File.Exists(otapiRuntime))
+                    typeGen.AddAssembly(Assembly.LoadFile(otapiRuntime));
+
+                var outDir = Path.Combine(rootFolder, "clearscript", "typings");
+                typeGen.Write(outDir);
+
+                File.WriteAllText(Path.Combine(outDir, "index.js"), "// typings only\n");
             }
         }
 
