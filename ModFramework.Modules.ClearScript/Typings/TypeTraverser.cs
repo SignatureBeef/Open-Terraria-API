@@ -33,27 +33,42 @@ namespace ModFramework.Modules.ClearScript.Typings
                 AddType(type);
         }
 
-        public void AddType(Type type)
+        static string GetCommonName(Type type)
         {
-            var typeName = type.Name;
-            if (type.IsGenericType && type.Name.LastIndexOf('`') > -1)
+            var name = type.FullName;
+            var ix = name.LastIndexOf('`');
+
+            if(ix > -1)
             {
-                typeName = type.Name.Substring(0, type.Name.LastIndexOf('`'));
+                name = name.Substring(0, ix);
+                name += type.GetGenericArguments().Length.ToString();
             }
 
-            if (type.FullName != null && type.FullName != "System.Object"
-                && !this.Types.Any(t => t.FullName == type.FullName)
-                && !(type.IsGenericType && type.GetGenericArguments().Count(a => a.FullName != null) > 0) // exclude overloaded types
+            return name;
+        }
+
+        public void AddType(Type type)
+        {
+            if (type.IsGenericType)
+            {
+                type = type.GetGenericTypeDefinition();
+            }
+
+            if (type.FullName != null
+                && !this.Types.Any(t => GetCommonName(t) == GetCommonName(type))
                 && !type.IsByRef
                 && !type.IsArray
                 && !type.IsPointer
-                && !type.IsNested
             )
             {
                 this.Types.Add(type);
 
-                foreach (var method in type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+                foreach (var method in type.GetMethods()) //BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
                 {
+                    if (method.Name.Contains("CSharpRail"))
+                    {
+
+                    }
                     if (method.ReturnType != type)
                     {
                         AddType(method.ReturnType);
@@ -68,7 +83,12 @@ namespace ModFramework.Modules.ClearScript.Typings
                     }
                 }
 
-                foreach (var evt in type.GetEvents(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+                //foreach(var mem in type.GetMembers())
+                //{
+                //    AddType(mem.ReflectedType);
+                //}
+
+                foreach (var evt in type.GetEvents()) //BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
                 {
                     if (evt.EventHandlerType != type)
                     {

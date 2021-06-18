@@ -22,6 +22,9 @@ namespace OTAPI.Client.Installer.Targets
 
         public void Install(string installPath)
         {
+            //var otapiFolderx = Path.Combine(installPath, "otapi");
+            //GenerateTypings(otapiFolderx);
+
             var hostDir = "../../../../OTAPI.Client.Host/";
 
             var package = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
@@ -80,16 +83,17 @@ namespace OTAPI.Client.Installer.Targets
 
                 Console.WriteLine("OSX install finished");
 
-                Console.Write("Would you like to generate TypeScript typings? y/n: ");
-                var resp = Console.ReadKey().Key;
-                Console.WriteLine();
-                if (resp == ConsoleKey.Y)
-                {
-                    Console.WriteLine("Generating typings...this will take a while");
-                    GenerateTypings(otapiFolder);
-                }
+                // TODO typings are not yet ready.
+                //Console.Write("Would you like to generate TypeScript typings? y/n: ");
+                //var resp = Console.ReadKey().Key;
+                //Console.WriteLine();
+                //if (resp == ConsoleKey.Y)
+                //{
+                //    Console.WriteLine("Generating typings...this will take a while");
+                //    GenerateTypings(otapiFolder);
+                //}
 
-                Console.WriteLine("Done");
+                //Console.WriteLine("Done");
             }
             else
             {
@@ -109,7 +113,6 @@ namespace OTAPI.Client.Installer.Targets
                     var exe = Path.Combine(rootFolder, $"{asr.Name}.exe");
                     var dll = Path.Combine(rootFolder, $"{asr.Name}.dll");
 
-
                     if (File.Exists(exe))
                         return Assembly.LoadFile(exe);
 
@@ -118,7 +121,6 @@ namespace OTAPI.Client.Installer.Targets
 
                     exe = Path.Combine(patcherDir, "bin", "Debug", "net5.0", "EmbeddedResources", $"{asr.Name}.exe");
                     dll = Path.Combine(patcherDir, "bin", "Debug", "net5.0", "EmbeddedResources", $"{asr.Name}.dll");
-
 
                     if (File.Exists(exe))
                         return Assembly.LoadFile(exe);
@@ -129,7 +131,7 @@ namespace OTAPI.Client.Installer.Targets
                     return null;
                 };
 
-                typeGen.AddAssembly(typeof(Mono.Cecil.AssemblyDefinition).Assembly);
+                //typeGen.AddAssembly(typeof(Mono.Cecil.AssemblyDefinition).Assembly);
 
                 var otapi = Path.Combine(rootFolder, "OTAPI.exe");
                 var otapiRuntime = Path.Combine(rootFolder, "OTAPI.Runtime.dll");
@@ -137,10 +139,11 @@ namespace OTAPI.Client.Installer.Targets
                 if (File.Exists(otapi))
                     typeGen.AddAssembly(Assembly.LoadFile(otapi));
 
-                if (File.Exists(otapiRuntime))
-                    typeGen.AddAssembly(Assembly.LoadFile(otapiRuntime));
+                //if (File.Exists(otapiRuntime))
+                //    typeGen.AddAssembly(Assembly.LoadFile(otapiRuntime));
 
-                var outDir = Path.Combine(rootFolder, "clearscript", "typings");
+                //var outDir = Path.Combine(rootFolder, "clearscript", "typings");
+                var outDir = Path.Combine(rootFolder, "clearscript", "test", "src", "typings");
                 typeGen.Write(outDir);
 
                 File.WriteAllText(Path.Combine(outDir, "index.js"), "// typings only\n");

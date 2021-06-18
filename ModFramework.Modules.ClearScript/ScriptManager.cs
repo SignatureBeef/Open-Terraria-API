@@ -14,8 +14,12 @@ namespace ModFramework.Modules.ClearScript
     {
         public static void log(params object[] info)
         {
-            foreach (var obj in info)
-                Console.WriteLine(obj);
+            for (var i = 0; i < info.Length; i++)
+            {
+                if (i > 0) Console.Write(", ");
+                Console.Write(info[i]);
+            }
+            Console.WriteLine();
         }
     }
 
@@ -26,6 +30,7 @@ namespace ModFramework.Modules.ClearScript
         public V8ScriptEngine Container { get; set; }
         public V8Script Script { get; set; }
         public string Content { get; set; }
+        public ModuleResolver ModuleResolver { get; set; }
 
         public object LoadResult { get; set; }
         public object LoadError { get; set; }
@@ -41,7 +46,9 @@ namespace ModFramework.Modules.ClearScript
 
         public void Unload()
         {
-            Container?.Execute("if(typeof Dispose != undefined) { Dispose(); }");
+            Container?.Execute(new DocumentInfo { Category = ModuleCategory.Standard }, "import * as GlobalModule from 'GlobalModule';" +
+                "if(typeof GlobalModule.Dispose == 'function') { GlobalModule.Dispose(); }");
+            ModuleResolver?.Unload("GlobalModule");
         }
 
         public void Dispose()
@@ -49,6 +56,8 @@ namespace ModFramework.Modules.ClearScript
             if (Script != null) Unload();
             Script?.Dispose();
             Container?.Dispose();
+            ModuleResolver?.Dispose();
+            ModuleResolver = null;
             Script = null;
             FilePath = null;
             FileName = null;
@@ -63,7 +72,20 @@ namespace ModFramework.Modules.ClearScript
             try
             {
                 if (Container != null) Unload();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("[JS] Unload failed");
+                Console.WriteLine(ex);
+            }
+            try
+            {
+                Script?.Dispose();
+                Script = null;
                 Container?.Dispose();
+                Container = null;
+                ModuleResolver?.Dispose();
+                ModuleResolver = null;
 
                 Content = File.ReadAllText(FilePath);
                 Container = new V8ScriptEngine();
@@ -71,6 +93,10 @@ namespace ModFramework.Modules.ClearScript
                 Container.DocumentSettings.AccessFlags = DocumentAccessFlags.EnableFileLoading;
                 Container.DocumentSettings.SearchPath = Path.GetFullPath(Path.GetDirectoryName(FilePath));
 
+                ModuleResolver = new ModuleResolver(Container, Container.DocumentSettings.Loader);
+                Container.DocumentSettings.Loader = ModuleResolver;
+
+                Container.AddHostObject("host", new HostFunctions());
                 Container.AddHostType(typeof(Console));
                 Container.AddHostType("console", typeof(JavascriptConsole));
 
@@ -79,14 +105,21 @@ namespace ModFramework.Modules.ClearScript
                     //Container.AddHostObject("Terraria", new HostTypeCollection("Terraria"));
                     Container.AddHostObject("Modder", Manager.Modder);
                 }
-                else
-                {
-                    Container.AddHostObject("OTAPI", new HostTypeCollection("OTAPI"));
-                    Container.AddHostObject("OTAPIRuntime", new HostTypeCollection("OTAPI.Runtime"));
-                }
+                //else
+                //{
+                //    Container.AddHostObject("OTAPI", new HostTypeCollection("OTAPI"));
+                //    Container.AddHostObject("OTAPIRuntime", new HostTypeCollection("OTAPI.Runtime"));
+                //}
 
-                Script = Container.Compile(new DocumentInfo { Category = ModuleCategory.Standard }, Content);
-                LoadResult = Container.Evaluate(Script);
+                //Container.DocumentSettings.Loader.
+
+                //Script = Container.Compile(new DocumentInfo { Category = ModuleCategory.Standard }, Content);
+                //LoadResult = Container.Evaluate(Script);
+
+                ModuleResolver.AddDocument("GlobalModule", Content, ModuleCategory.Standard);
+
+                //LoadResult = Container.Evaluate(new DocumentInfo { Category = ModuleCategory.Standard }, Content);
+                LoadResult = Container.Evaluate(new DocumentInfo { Category = ModuleCategory.Standard }, "import * as GlobalModule from 'GlobalModule';");
             }
             catch (Exception ex)
             {
