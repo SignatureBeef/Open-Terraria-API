@@ -18,13 +18,13 @@
 		<PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.29.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="System.Security.Permissions" Version="5.0.0" />
-		<PackageReference Include="NuGet.Packaging" Version="5.9.1" />
+		<PackageReference Include="NuGet.Packaging" Version="5.10.0" />
 		<PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.1.3" />
 		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.1.3" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\FNA.Core\FNA.Core.csproj" />
+		<ProjectReference Include="..\FNA\FNA.Core.csproj" />
 		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
 		<ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
 		<ProjectReference Include="..\ModFramework.Modules.CSharp\ModFramework.Modules.CSharp.csproj" />

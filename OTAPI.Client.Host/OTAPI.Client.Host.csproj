@@ -34,7 +34,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
-		<ProjectReference Include="..\FNA.Core\FNA.Core.csproj" />
+		<ProjectReference Include="..\FNA\FNA.Core.csproj" />
 		<ProjectReference Include="..\ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj" />
 		<ProjectReference Include="..\ModFramework.Modules.ClearScript\ModFramework.Modules.ClearScript.csproj" />
 	</ItemGroup>

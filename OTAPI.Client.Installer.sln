@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework", "ModFramewor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules.Lua", "ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj", "{EE19CC4C-8491-4029-B72B-9101DE173675}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNA.Core", "FNA.Core\FNA.Core.csproj", "{ED951E20-4E1A-422F-A1C6-3772ACDE8FD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNA.Core", "FNA\FNA.Core.csproj", "{ED951E20-4E1A-422F-A1C6-3772ACDE8FD3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules.ClearScript", "ModFramework.Modules.ClearScript\ModFramework.Modules.ClearScript.csproj", "{4879ACD4-0DC0-41DE-B3C2-398F5CBDC815}"
 EndProject

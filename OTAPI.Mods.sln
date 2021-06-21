@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OTAPI.Common", "OTAPI.Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModFramework.Modules.Lua", "ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj", "{0C1184E6-705F-41DF-8A84-51F8E79ABAE9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FNA.Core", "FNA.Core\FNA.Core.csproj", "{63B4C17F-29A6-4519-9302-9317DE8B5FDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FNA.Core", "FNA\FNA.Core.csproj", "{63B4C17F-29A6-4519-9302-9317DE8B5FDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules.ClearScript", "ModFramework.Modules.ClearScript\ModFramework.Modules.ClearScript.csproj", "{58F58072-DDE0-4BC3-A49A-3D49950475EC}"
 EndProject

@@ -32,6 +32,7 @@
     <ProjectReference Include="..\ModFramework.Modules.CSharp\ModFramework.Modules.CSharp.csproj" />
     <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
     <ProjectReference Include="..\ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj" />
+    <ProjectReference Include="..\ModFramework.Modules.ClearScript\ModFramework.Modules.ClearScript.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="csharp\" />
@@ -52,6 +53,9 @@
     <None Update="csharp\plugins\Metadata.refs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="clearscript\test.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="csharp\plugins\modules\example\Example.cs">
@@ -64,6 +68,8 @@
     <Copy SourceFiles="$(TargetDir)ModFramework.Modules.CSharp.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(TargetDir)ModFramework.Modules.Lua.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(TargetDir)ModFramework.Modules.Lua.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.ClearScript.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.ClearScript.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     
     <Copy SourceFiles="$(TargetDir)RuntimeExample.Server.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(TargetDir)RuntimeExample.Server.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />

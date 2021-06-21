@@ -17,9 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace OTAPI.Launcher
 {
@@ -27,31 +25,23 @@ namespace OTAPI.Launcher
     {
         static void Main(string[] args)
         {
-#if tModLoaderServer_V1_3
-            Terraria.Program.SavePath = "ModLoader";
-#endif
             On.Terraria.Program.LaunchGame += Program_LaunchGame;
             Hooks.MessageBuffer.ClientUUIDReceived += (_, args) =>
             {
                 if (args.Event == HookEvent.After)
                     Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[args.instance.whoAmI].ClientUUID}");
-
-                //return ModFramework.HookResult.Continue;
             };
             Hooks.NPC.MechSpawn += (_, args) =>
             {
                 Console.WriteLine($"Hooks.NPC.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
-                //return ModFramework.HookResult.Continue;
             };
             Hooks.Item.MechSpawn += (_, args) =>
              {
                  Console.WriteLine($"Hooks.Item.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
-                //return ModFramework.HookResult.Continue;
             };
 
             On.Terraria.WindowsLaunch.Main += WindowsLaunch_Main;
 
-            // if testing (
             if (args.Any(x => x.ToLower() == "-test-init"))
                 On.Terraria.Main.DedServ += Main_DedServ;
 
@@ -73,7 +63,7 @@ namespace OTAPI.Launcher
         private static void WindowsLaunch_Main(On.Terraria.WindowsLaunch.orig_Main orig, string[] args)
         {
             Console.WriteLine($"MonoMod runtime hooks active");
-            orig(args); // now call the original Terraria.WindowsLaunch.Main instance
+            orig(args);
         }
     }
 }

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules.CSharp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules.Lua", "ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj", "{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModFramework.Modules.ClearScript", "ModFramework.Modules.ClearScript\ModFramework.Modules.ClearScript.csproj", "{9619EC78-7A94-44FA-8B00-DCD9D573CCF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,14 @@ Global
 		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Release|x86.ActiveCfg = Release|Any CPU
 		{60E8245B-4EDE-4A68-A6BE-C662DBFC8D1A}.Release|x86.Build.0 = Release|Any CPU
+		{9619EC78-7A94-44FA-8B00-DCD9D573CCF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9619EC78-7A94-44FA-8B00-DCD9D573CCF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9619EC78-7A94-44FA-8B00-DCD9D573CCF4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9619EC78-7A94-44FA-8B00-DCD9D573CCF4}.Debug|x86.Build.0 = Debug|Any CPU
+		{9619EC78-7A94-44FA-8B00-DCD9D573CCF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9619EC78-7A94-44FA-8B00-DCD9D573CCF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9619EC78-7A94-44FA-8B00-DCD9D573CCF4}.Release|x86.ActiveCfg = Release|Any CPU
+		{9619EC78-7A94-44FA-8B00-DCD9D573CCF4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

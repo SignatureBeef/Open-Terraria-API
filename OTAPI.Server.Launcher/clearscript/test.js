@@ -2,33 +2,31 @@ import Runtime from 'AddHostObject-OTAPI.Runtime';
 import OTAPI from 'AddHostObject-OTAPI';
 import lib from 'AddHostObject-mscorlib';
 import tmr from 'AddHostObject-System.ComponentModel.TypeConverter';
-import FNA from 'AddHostObject-FNA';
 
-const { Keyboard, Keys } = FNA.Microsoft.Xna.Framework.Input;
-const { ChatMessage } = OTAPI.Terraria.Chat;
+const { Color } = OTAPI.Microsoft.Xna.Framework;
 const { NetTextModule } = OTAPI.Terraria.GameContent.NetModules;
 const { NetManager } = OTAPI.Terraria.Net;
+const { NetworkText } = OTAPI.Terraria.Localization;
 
-// [example] attach to runtime hooks 
+console.log('[JS] Hello server from javascript');
+
+// [example] attach to runtime hooks
 let onUpdate = Runtime.On.Terraria.Main.Update.connect((orig, instance, gameTime) => {
     orig(instance, gameTime);
 
-    // [example] use some xna 
-    let keyState = Keyboard.GetState();
-    if (keyState.IsKeyDown(Keys.Left)) {
-        console.log('LEFT DOWN');
-    }
+    // console.log('UPDATE');
 });
 
 // [example] manually call terraria functions 
 let ticker = setInterval((...args) => {
-    // console.log('interval', lib.System.DateTime.Now, ...args);
+    console.log('interval', lib.System.DateTime.Now, ...args);
 
     if (NetManager.Instance) {
-        let message = `Automated JS client message ${lib.System.DateTime.Now.ToString()}`;
-        let msg = new ChatMessage(message);
-        let packet = NetTextModule.SerializeClientMessage(msg);
-        NetManager.Instance.SendToServer(packet);
+        var message = `Automated JS server message ${lib.System.DateTime.Now.ToString()}`;
+        var colour = new Color(255, 0, 0);
+        var msg = NetworkText.FromLiteral(message);
+        var packet = NetTextModule.SerializeServerMessage(msg, colour, 255);
+        NetManager.Instance.Broadcast(packet, -1);
     }
 }, 5000, 'testing', 1, 2, 3);
 
