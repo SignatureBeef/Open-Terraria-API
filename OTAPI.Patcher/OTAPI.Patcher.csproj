@@ -26,7 +26,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\FNA.Core\FNA.Core.csproj" />
 		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
-		<ProjectReference Include="..\OTAPI.Shims\OTAPI.Shims.csproj" />
 		<ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
 		<ProjectReference Include="..\ModFramework.Modules.CSharp\ModFramework.Modules.CSharp.csproj" />
 		<ProjectReference Include="..\ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj" />
