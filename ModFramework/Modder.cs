@@ -131,5 +131,10 @@ namespace ModFramework
                         Module.AssemblyReferences.Remove(asmref);
             }
         }
+
+        public void RelinkAssembly(string fromAssemblyName, ModuleDefinition toModule = null)
+        {
+            this.RelinkModuleMap[fromAssemblyName] = toModule ?? this.Module;
+        }
     }
 }

@@ -41,14 +41,20 @@ namespace ModFramework.Plugins
             _assemblies.Add(assembly);
         }
 
+        public static void Init()
+        {
+            if (AssemblyLoader == null)
+                AssemblyLoader = new DefaultAssemblyLoader();
+
+            _assemblies = new List<Assembly>();
+        }
+
         public static bool TryLoad()
         {
             if (_assemblies == null)
             {
-                if (AssemblyLoader == null)
-                    AssemblyLoader = new DefaultAssemblyLoader();
+                Init();
 
-                _assemblies = new List<Assembly>();
                 _assemblies.AddRange(new[] {
                     Assembly.GetExecutingAssembly(),
                     Assembly.GetCallingAssembly(),
@@ -87,6 +93,7 @@ namespace ModFramework.Plugins
         public static void Clear()
         {
             _assemblies?.Clear();
+            _assemblies = null;
         }
     }
 }

@@ -229,7 +229,8 @@ namespace OTAPI.Patcher.Targets
             mm.Module.Assembly.Name.Name = "TerrariaServer";
 
             // build shims
-            var ldr = new CSharpLoader().SetAutoLoadAssemblies(false);
+            PluginLoader.Init();
+            var ldr = new CSharpLoader().SetAutoLoadAssemblies(true);
             var md = ldr.CreateMetaData();
             var shims = ldr.LoadModules(md, "shims").ToArray();
 
@@ -241,7 +242,7 @@ namespace OTAPI.Patcher.Targets
             }
 
             foreach (var path in new[] {
-                Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
+                //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
                 //Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
                 Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
                 Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("Steamworks.NET.dll", StringComparison.CurrentCultureIgnoreCase)),
@@ -250,13 +251,13 @@ namespace OTAPI.Patcher.Targets
                 mm.ReadMod(path);
             }
 
+            mm.RelinkAssembly("ReLogic");
+            mm.RelinkAssembly("Steamworks.NET");
+
             // add the SourceAssembly name attribute
             {
-                var sac = mm.Module.ImportReference(typeof(SourceAssemblyAttribute).GetConstructor(Type.EmptyTypes));
-                var sa = new CustomAttribute(sac);
-                sa.Fields.Add(new Mono.Cecil.CustomAttributeNamedArgument("ModuleName", new CustomAttributeArgument(mm.Module.TypeSystem.String, initialModuleName)));
-                sa.Fields.Add(new Mono.Cecil.CustomAttributeNamedArgument("FileName", new CustomAttributeArgument(mm.Module.TypeSystem.String, inputName)));
-                mm.Module.Assembly.CustomAttributes.Add(sa);
+                AddMetadata(mm, "OTAPI.ModuleName", initialModuleName);
+                AddMetadata(mm, "OTAPI.Input", inputName);
             }
 
             mm.MapDependencies();
@@ -298,6 +299,18 @@ namespace OTAPI.Patcher.Targets
             const string script_refs = "refs.dll";
             if (File.Exists(script_refs)) File.Delete(script_refs);
             File.Copy(output, script_refs);
+        }
+
+        void AddMetadata(MonoMod.MonoModder mm, string key, string value)
+        {
+            var sac = mm.Module.ImportReference(typeof(AssemblyMetadataAttribute).GetConstructor(new[] {
+                    typeof(string),
+                    typeof(string),
+                }));
+            var sa = new CustomAttribute(sac);
+            sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, key));
+            sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, value));
+            mm.Module.Assembly.CustomAttributes.Add(sa);
         }
 
         public string DownloadZip(string url)
@@ -388,16 +401,16 @@ namespace OTAPI.Patcher.Targets
                 {
                     Console.Write("Download the latest binary? y/[N]: ");
 
-                    var input = Console.ReadLine().ToLower();
+                    //var input = Console.ReadLine().ToLower();
+                    var input = Console.ReadKey(true).Key;
+                    Console.WriteLine(input);
 
-                    if (input.Equals("y", StringComparison.CurrentCultureIgnoreCase))
+                    if (input == ConsoleKey.Y)
                         return AquireLatestBinaryUrl();
-                    else if (input.Equals("n", StringComparison.CurrentCultureIgnoreCase))
+                    else if (input == ConsoleKey.N)
                         break;
-
-                    if (String.IsNullOrWhiteSpace(input)) // no key entered
+                    else if (input == ConsoleKey.Enter)
                         break;
-
                 } while (attempts-- > 0);
             }
 

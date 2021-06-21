@@ -164,7 +164,8 @@ namespace OTAPI.Patcher.Targets
             var resourcesPath = installDiscoverer.GetResourcePath();
 
             // build shims
-            var ldr = new CSharpLoader().SetAutoLoadAssemblies(false);
+            PluginLoader.Init();
+            var ldr = new CSharpLoader().SetAutoLoadAssemblies(true);
             var md = ldr.CreateMetaData();
             var shims = ldr.LoadModules(md, "shims").ToArray();
 
@@ -203,9 +204,8 @@ namespace OTAPI.Patcher.Targets
                 }
 
                 // relink / merge into the output
-                public_mm.RelinkModuleMap["ReLogic"] = public_mm.Module;
-                public_mm.RelinkModuleMap["RailSDK.Net"] = public_mm.Module;
-                //public_mm.RelinkModuleMap["System.Windows.Forms"] = public_mm.Module;
+                public_mm.RelinkAssembly("ReLogic");
+                public_mm.RelinkAssembly("RailSDK.Net");
 
                 public_mm.AutoPatch();
                 public_mm.Write();
@@ -231,6 +231,8 @@ namespace OTAPI.Patcher.Targets
 #define {const_fullname}
 ");
             }
+
+            PluginLoader.Clear();
 
             //var installPath = ClientHelpers.DetermineClientInstallPath();
             //var resources = Path.Combine(installPath, "Resources");
