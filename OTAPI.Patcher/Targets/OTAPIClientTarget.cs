@@ -151,7 +151,7 @@ namespace OTAPI.Patcher.Targets
 
                 foreach (var dir in XnaPaths)
                 {
-                    var xnaDll = Path.Combine(dir, filename);
+                    var xnaDll = Path.Combine(dir, $"{asn.Name}.dll");
                     if (TryLoad(xnaDll, out Assembly xnaAssembly))
                     {
                         assemblies.Add(xnaAssembly.FullName, xnaAssembly);
