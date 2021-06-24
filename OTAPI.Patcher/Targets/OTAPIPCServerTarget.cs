@@ -32,11 +32,19 @@ using Mono.Cecil;
 namespace OTAPI.Patcher.Targets
 {
     [MonoMod.MonoModIgnore]
-    public class OTAPIServerTarget : IPatchTarget
+    public class OTAPIPCServerTarget : IPatchTarget
     {
-        public string DisplayText { get; } = "OTAPI Server";
+        public const String TerrariaWebsite = "https://terraria.org";
 
-        bool CanLoadFile(string filepath)
+        public virtual string DisplayText { get; } = "OTAPI PC Server";
+
+        public virtual string CliKey { get; } = "latestVanilla";
+
+        public virtual string HtmlSearchKey { get; } = ">PC Dedicated Server";
+
+        public virtual string SupportedDownloadUrl { get; } = "https://terraria.org/system/dedicated_servers/archives/000/000/046/original/terraria-server-1423.zip";
+
+        protected virtual bool CanLoadFile(string filepath)
         {
             // only load "server" or "both" variants
             var filename = Path.GetFileNameWithoutExtension(filepath);
@@ -44,7 +52,7 @@ namespace OTAPI.Patcher.Targets
                 && !filename.EndsWith("-Client", StringComparison.CurrentCultureIgnoreCase);
         }
 
-        public void Patch()
+        public virtual void Patch()
         {
             Console.WriteLine($"Open Terraria API v{Common.GetVersion()}");
 
@@ -121,6 +129,8 @@ namespace OTAPI.Patcher.Targets
 
             mm.ReadMod(this.GetType().Assembly.Location);
 
+            mm.AddMetadata("OTAPI.Target", this.DisplayText);
+
             mm.AutoPatch();
 
 #if tModLoaderServer_V1_3
@@ -185,9 +195,7 @@ namespace OTAPI.Patcher.Targets
 
         #region Produce TerrariaServer.dll (shimmed, vanilla)
 
-        const String TerrariaWebsite = "https://terraria.org";
-
-        public void PreShimForCompilation()
+        public virtual void PreShimForCompilation()
         {
             var input = DownloadServer();
 
@@ -256,8 +264,8 @@ namespace OTAPI.Patcher.Targets
 
             // add the SourceAssembly name attribute
             {
-                AddMetadata(mm, "OTAPI.ModuleName", initialModuleName);
-                AddMetadata(mm, "OTAPI.Input", inputName);
+                mm.AddMetadata("OTAPI.ModuleName", initialModuleName);
+                mm.AddMetadata("OTAPI.Input", inputName);
             }
 
             mm.MapDependencies();
@@ -301,19 +309,8 @@ namespace OTAPI.Patcher.Targets
             File.Copy(output, script_refs);
         }
 
-        void AddMetadata(MonoMod.MonoModder mm, string key, string value)
-        {
-            var sac = mm.Module.ImportReference(typeof(AssemblyMetadataAttribute).GetConstructor(new[] {
-                    typeof(string),
-                    typeof(string),
-                }));
-            var sa = new CustomAttribute(sac);
-            sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, key));
-            sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, value));
-            mm.Module.Assembly.CustomAttributes.Add(sa);
-        }
 
-        public string DownloadZip(string url)
+        public virtual string DownloadZip(string url)
         {
             this.Log($"Downloading {url}");
             var uri = new Uri(url);
@@ -334,7 +331,7 @@ namespace OTAPI.Patcher.Targets
             else throw new NotSupportedException();
         }
 
-        public string ExtractZip(string zipPath)
+        public virtual string ExtractZip(string zipPath)
         {
             var directory = Path.GetFileNameWithoutExtension(zipPath);
             var info = new DirectoryInfo(directory);
@@ -345,12 +342,15 @@ namespace OTAPI.Patcher.Targets
             info.Refresh();
 
             if (!info.Exists || info.GetDirectories().Length == 0)
+            {
+                info.Create();
                 ZipFile.ExtractToDirectory(zipPath, directory);
+            }
 
             return directory;
         }
 
-        public string DownloadServer()
+        public virtual string DownloadServer()
         {
             var zipUrl = GetZipUrl();
             var zipPath = DownloadZip(zipUrl);
@@ -359,17 +359,9 @@ namespace OTAPI.Patcher.Targets
             return DetermineInputAssembly(extracted);
         }
 
-        public string AquireLatestBinaryUrl()
+        public virtual string GetUrlFromHttpResponse(string html)
         {
-            this.Log("Determining the latest TerrariaServer.exe...");
-            using var client = new HttpClient();
-
-            var data = client.GetByteArrayAsync(TerrariaWebsite).Result;
-            var html = System.Text.Encoding.UTF8.GetString(data);
-
-            const String Lookup = ">PC Dedicated Server";
-
-            var offset = html.IndexOf(Lookup, StringComparison.CurrentCultureIgnoreCase);
+            var offset = html.IndexOf(HtmlSearchKey, StringComparison.CurrentCultureIgnoreCase);
             if (offset == -1) throw new NotSupportedException();
 
             var attr_character = html[offset - 1];
@@ -383,16 +375,27 @@ namespace OTAPI.Patcher.Targets
             return TerrariaWebsite + url;
         }
 
-        public string DetermineInputAssembly(string extractedFolder)
+        public virtual string AquireLatestBinaryUrl()
+        {
+            this.Log("Determining the latest TerrariaServer.exe...");
+            using var client = new HttpClient();
+
+            var data = client.GetByteArrayAsync(TerrariaWebsite).Result;
+            var html = System.Text.Encoding.UTF8.GetString(data);
+
+            return GetUrlFromHttpResponse(html);
+        }
+
+        public virtual string DetermineInputAssembly(string extractedFolder)
         {
             return Directory.EnumerateFiles(extractedFolder, "TerrariaServer.exe", SearchOption.AllDirectories).Single(x =>
                 Path.GetFileName(Path.GetDirectoryName(x)).Equals("Windows", StringComparison.CurrentCultureIgnoreCase)
             );
         }
 
-        public string GetZipUrl()
+        public virtual string GetZipUrl()
         {
-            var cli = this.GetCliValue("latestVanilla");
+            var cli = this.GetCliValue(CliKey);
 
             if (cli != "n")
             {
@@ -414,7 +417,7 @@ namespace OTAPI.Patcher.Targets
                 } while (attempts-- > 0);
             }
 
-            return "https://terraria.org/system/dedicated_servers/archives/000/000/046/original/terraria-server-1423.zip";
+            return SupportedDownloadUrl;
         }
         #endregion
     }

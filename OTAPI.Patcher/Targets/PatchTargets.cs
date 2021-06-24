@@ -29,8 +29,8 @@ namespace OTAPI.Patcher.Targets
 
         static Dictionary<char, IPatchTarget> _targets = new Dictionary<char, IPatchTarget>()
         {
-            //{"m", new TMLPatchTarget() },
-            {'s', new OTAPIServerTarget() },
+            {'p', new OTAPIPCServerTarget() },
+            {'m', new OTAPIMobileServerTarget() },
             {'c', new OTAPIClientLightweightTarget() },
         };
 
@@ -62,7 +62,7 @@ namespace OTAPI.Patcher.Targets
                     break;
             } while (attempts-- > 0);
 
-            return new OTAPIServerTarget();
+            return new OTAPIPCServerTarget();
         }
     }
 }

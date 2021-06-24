@@ -84,5 +84,17 @@ namespace ModFramework
             if (removeAfterCondition)
                 cursor.Remove();
         }
+
+        public static void AddMetadata(this ModFwModder mm, string key, string value)
+        {
+            var sac = mm.Module.ImportReference(typeof(System.Reflection.AssemblyMetadataAttribute).GetConstructor(new[] {
+                    typeof(string),
+                    typeof(string),
+                }));
+            var sa = new CustomAttribute(sac);
+            sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, key));
+            sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, value));
+            mm.Module.Assembly.CustomAttributes.Add(sa);
+        }
     }
 }

@@ -88,10 +88,13 @@ namespace OTAPI.Patcher.Targets
             var input = File.Exists(input_orig) ? input_orig : input_regular;
 
             //var freshAssembly = "../../../../OTAPI.Setup/bin/Debug/net5.0/Terraria.exe";
-            var localPath = "Terraria.exe";
+            var localPath_x86 = "Terraria.x86.exe";
+            var localPath_x64 = "Terraria.x64.exe";
 
-            if (File.Exists(localPath)) File.Delete(localPath);
-            File.Copy(input, localPath);
+            if (File.Exists(localPath_x86)) File.Delete(localPath_x86);
+            if (File.Exists(localPath_x64)) File.Delete(localPath_x64);
+
+            File.Copy(input, localPath_x86);
 
             foreach (var lib in new[]
             {
@@ -118,14 +121,13 @@ namespace OTAPI.Patcher.Targets
             // needed for below resolutions
             Console.WriteLine("[OTAPI] Extracting embedded binaries for assembly resolution...");
             var extractor = new ResourceExtractor();
-            var embeddedResourcesDir = extractor.Extract(localPath);
+            var embeddedResourcesDir = extractor.Extract(localPath_x86);
 
-            // load into the current app domain for patch refs
-            var asm = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, localPath));
-            //var asmFNA = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, FNA));
+            var FNA = "FNA.dll";
+            var asmFNA = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, FNA));
             var assemblies = new Dictionary<string, Assembly>()
             {
-                {asm.FullName, asm },
+                {asmFNA.FullName, asmFNA },
             };
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
@@ -153,14 +155,54 @@ namespace OTAPI.Patcher.Targets
                 foreach (var dir in XnaPaths)
                 {
                     var xnaDll = Path.Combine(dir, $"{asn.Name}.dll");
-                    if (TryLoad(xnaDll, out Assembly xnaAssembly))
+                    if (File.Exists(xnaDll))
                     {
-                        assemblies.Add(xnaAssembly.FullName, xnaAssembly);
-                        return xnaAssembly;
+                        return asmFNA;
                     }
+                    //if (TryLoad(xnaDll, out Assembly xnaAssembly))
+                    //{
+                    //    assemblies.Add(xnaAssembly.FullName, xnaAssembly);
+                    //    return xnaAssembly;
+                    //}
                 }
                 return null;
             };
+
+            var primaryAssemblyPath = Path.Combine(Environment.CurrentDirectory, localPath_x86);
+
+            // hot patch terraria.exe straight up to x64 so we dont fail on Assembly.LoadFile next
+            {
+                var pa = AssemblyDefinition.ReadAssembly(primaryAssemblyPath);
+                pa.MainModule.Architecture = TargetArchitecture.I386;
+                pa.MainModule.Attributes = ModuleAttributes.ILOnly;
+
+                if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
+                {
+                    foreach (var dir in XnaPaths)
+                    {
+                        if (Directory.Exists(dir))
+                            (pa.MainModule.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(dir);
+                    }
+                }
+
+                foreach (var asmref in pa.MainModule.AssemblyReferences.ToArray())
+                {
+                    if (asmref.Name.Contains("Microsoft.Xna.Framework"))
+                    {
+                        asmref.Name = "FNA";
+                        asmref.PublicKey = null;
+                        asmref.PublicKeyToken = null;
+                        asmref.Version = new Version("21.5.0.0");
+                    }
+                }
+
+                primaryAssemblyPath = Path.Combine(Environment.CurrentDirectory, localPath_x64);
+                pa.Write(primaryAssemblyPath);
+            }
+
+            // load into the current app domain for patch refs
+            var asm = Assembly.LoadFile(primaryAssemblyPath);
+            assemblies.Add(asm.FullName, asm);
 
             var resourcesPath = installDiscoverer.GetResourcePath();
 
@@ -172,7 +214,7 @@ namespace OTAPI.Patcher.Targets
 
             using (var public_mm = new ModFwModder()
             {
-                InputPath = localPath,
+                InputPath = primaryAssemblyPath,
                 OutputPath = "OTAPI.dll",
                 MissingDependencyThrow = false,
                 //LogVerboseEnabled = true,
@@ -184,18 +226,19 @@ namespace OTAPI.Patcher.Targets
                 (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
                 (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
 
-                if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
-                {
-                    foreach (var dir in XnaPaths)
-                    {
-                        if (Directory.Exists(dir))
-                            (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(dir);
-                    }
-                }
+                //if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
+                //{
+                //    foreach (var dir in XnaPaths)
+                //    {
+                //        if (Directory.Exists(dir))
+                //            (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(dir);
+                //    }
+                //}
 
                 public_mm.Read();
                 public_mm.MapDependencies();
                 public_mm.ReadMod(this.GetType().Assembly.Location);
+                //public_mm.ReadMod(FNA);
                 public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "ReLogic.dll"));
                 public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "RailSDK.Net.dll"));
 
@@ -208,6 +251,12 @@ namespace OTAPI.Patcher.Targets
                 public_mm.RelinkAssembly("ReLogic");
                 public_mm.RelinkAssembly("RailSDK.Net");
 
+                //var fna_module = public_mm.Mods.Single(x => x.Name == "FNA.dll") as ModuleDefinition;
+                //public_mm.RelinkAssembly("Microsoft.Xna.Framework", fna_module);
+                //public_mm.RelinkAssembly("Microsoft.Xna.Framework.Game", fna_module);
+                //public_mm.RelinkAssembly("Microsoft.Xna.Framework.Graphics", fna_module);
+                //public_mm.RelinkAssembly("Microsoft.Xna.Framework.Xact", fna_module);
+
                 public_mm.AutoPatch();
                 public_mm.Write();
 
@@ -215,7 +264,7 @@ namespace OTAPI.Patcher.Targets
                 if (File.Exists(script_refs)) File.Delete(script_refs);
                 File.Copy("OTAPI.dll", script_refs);
 
-                var inputName = Path.GetFileNameWithoutExtension(localPath);
+                var inputName = Path.GetFileNameWithoutExtension(input_regular);
                 var initialModuleName = public_mm.Module.Name;
 
                 var const_major = $"{inputName}_V{public_mm.Module.Assembly.Name.Version.Major}_{public_mm.Module.Assembly.Name.Version.Minor}";
@@ -266,14 +315,14 @@ namespace OTAPI.Patcher.Targets
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
 
-            if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
-            {
-                foreach (var dir in XnaPaths)
-                {
-                    if (Directory.Exists(dir))
-                        (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(dir);
-                }
-            }
+            //if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
+            //{
+            //    foreach (var dir in XnaPaths)
+            //    {
+            //        if (Directory.Exists(dir))
+            //            (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(dir);
+            //    }
+            //}
 
             mm.Read();
 
@@ -295,7 +344,9 @@ namespace OTAPI.Patcher.Targets
 
             mm.MapDependencies();
 
-            mm.RelinkModuleMap["System.Windows.Forms"] = mm.Module;
+            mm.RelinkAssembly("System.Windows.Forms");
+
+            mm.AddMetadata("OTAPI.Target", this.DisplayText);
 
             mm.AutoPatch();
 
@@ -331,9 +382,6 @@ namespace OTAPI.Patcher.Targets
             {
                 mm.Module.Types.Remove(mmt);
             }
-
-            mm.Module.Architecture = Mono.Cecil.TargetArchitecture.I386;
-            mm.Module.Attributes = Mono.Cecil.ModuleAttributes.ILOnly;
 
             mm.Write();
 

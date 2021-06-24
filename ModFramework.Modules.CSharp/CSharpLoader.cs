@@ -300,7 +300,7 @@ namespace ModFramework.Modules.CSharp
             {
                 var compilationFiles = PrepareFiles(files, meta.Constants);
 
-                var ctx = CreateContext(new CreateContextOptions()
+                using var ctx = CreateContext(new CreateContextOptions()
                 {
                     Meta = meta,
                     AssemblyName = assemblyName,

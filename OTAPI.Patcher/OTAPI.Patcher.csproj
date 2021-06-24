@@ -8,9 +8,9 @@
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+	<!--<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
 	  <PlatformTarget>x86</PlatformTarget>
-	</PropertyGroup>
+	</PropertyGroup>-->
 
 	<ItemGroup>
 		<PackageReference Include="Mono.Cecil" Version="0.11.3" />
