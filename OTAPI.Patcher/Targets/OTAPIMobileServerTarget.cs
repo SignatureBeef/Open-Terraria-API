@@ -44,7 +44,6 @@ namespace OTAPI.Patcher.Targets
     public class OTAPIMobileServerTarget : OTAPIPCServerTarget
     {
         public override string DisplayText { get; } = "OTAPI Mobile Server";
-        public override string CliKey { get; } = "latestMobile";
         public override string HtmlSearchKey { get; } = ">Mobile Dedicated Server";
         public override string SupportedDownloadUrl { get; } = "https://terraria.org/server/MobileTerrariaServer.zip";
 

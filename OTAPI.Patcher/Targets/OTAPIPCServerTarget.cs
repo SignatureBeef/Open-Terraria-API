@@ -38,7 +38,7 @@ namespace OTAPI.Patcher.Targets
 
         public virtual string DisplayText { get; } = "OTAPI PC Server";
 
-        public virtual string CliKey { get; } = "latestVanilla";
+        public virtual string CliKey { get; } = "latest";
 
         public virtual string HtmlSearchKey { get; } = ">PC Dedicated Server";
 
