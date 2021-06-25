@@ -1,6 +1,5 @@
 # Open Terraria API [![Travis (.com) branch](https://img.shields.io/travis/com/DeathCradle/Open-Terraria-API/upcoming?label=build&logo=travis)](https://travis-ci.com/DeathCradle/Open-Terraria-API) [![AppVeyor branch](https://img.shields.io/appveyor/build/DeathCradle/Open-Terraria-API/upcoming?label=build&logo=appveyor)](https://ci.appveyor.com/project/DeathCradle/open-terraria-api) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-
 The Open Terraria API, known as OTAPI, is a low-level API for [Terraria](https://terraria.org) that rewrites and hooks into the official binaries for others to use.
 
 OTAPI is primarily a server modification and is available as a cross platform package via [NuGet](https://www.nuget.org/packages/OTAPI.Upcoming/3.0.0-alpha9).
@@ -16,6 +15,17 @@ Here is what is now possible:
  - A strong set of libraries with methods and extensions to help you build more mods.
  - Create 1 file MonoMod patches to rewrite or inject new meta data to the assembly.
 
+## All packages
+
+[![OTAPI.Upcoming](https://img.shields.io/nuget/vpre/OTAPI.Upcoming?label=OTAPI.Upcoming)](https://www.nuget.org/packages/OTAPI.Upcoming/)
+[![OTAPI.Upcoming.Mobile](https://img.shields.io/nuget/vpre/OTAPI.Upcoming.Mobile?label=OTAPI.Upcoming.Mobile)](https://www.nuget.org/packages/OTAPI.Upcoming.Mobile)
+<br/>
+[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework?label=ModFramework)](https://www.nuget.org/packages/ModFramework)
+<br/>
+[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework.Modules.CSharp?label=ModFramework.Modules.CSharp)](https://www.nuget.org/packages/ModFramework.Modules.CSharp)
+[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework.Modules.ClearScript?label=ModFramework.Modules.ClearScript)](https://www.nuget.org/packages/ModFramework.Modules.ClearScript)
+[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework.Modules.Lua?label=ModFramework.Modules.Lua)](https://www.nuget.org/packages/ModFramework.Modules.Lua)
+ 
 
 ## Simple overview of v3 (partially outdated, update coming soon)
 ![Diagram](Doco/simple_overview.png)
