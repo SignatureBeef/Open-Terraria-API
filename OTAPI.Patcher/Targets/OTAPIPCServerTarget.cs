@@ -41,6 +41,8 @@ namespace OTAPI.Patcher.Targets
         public virtual string CliKey { get; } = "latest";
 
         public virtual string HtmlSearchKey { get; } = ">PC Dedicated Server";
+        public virtual string NuGetPackageFileName { get; } = "OTAPI.PC.nupkg";
+        public virtual string NuSpecFilePath { get; } = "../../../../OTAPI.PC.nuspec";
 
         public virtual string SupportedDownloadUrl { get; } = "https://terraria.org/system/dedicated_servers/archives/000/000/046/original/terraria-server-1423.zip";
 
@@ -165,11 +167,9 @@ namespace OTAPI.Patcher.Targets
             mm.Log("[OTAPI] Done.");
         }
 
-        static void BuildNuGetPackage()
+        void BuildNuGetPackage()
         {
-            const string packageFile = "OTAPI.nupkg";
-
-            var nuspec_xml = File.ReadAllText("../../../../OTAPI.nuspec");
+            var nuspec_xml = File.ReadAllText(NuSpecFilePath);
             nuspec_xml = nuspec_xml.Replace("[INJECT_VERSION]", Common.GetVersion());
 
             using (var nuspec = new MemoryStream(Encoding.UTF8.GetBytes(nuspec_xml)))
@@ -184,10 +184,10 @@ namespace OTAPI.Patcher.Targets
                 packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\netstandard2.0");
                 packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\netstandard2.0");
 
-                if (File.Exists(packageFile))
-                    File.Delete(packageFile);
+                if (File.Exists(NuGetPackageFileName))
+                    File.Delete(NuGetPackageFileName);
 
-                using (var srm = File.OpenWrite(packageFile))
+                using (var srm = File.OpenWrite(NuGetPackageFileName))
                     packageBuilder.Save(srm);
             }
         }

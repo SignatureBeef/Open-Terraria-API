@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>OTAPI.Upcoming.Mobile</id>
+    <title>Open Terraria API for Terraria</title>
+    <version>[INJECT_VERSION]</version>
+    <authors>DeathCradle</authors>
+    <owners>DeathCradle</owners>
+    <license type="file">COPYING.txt</license>
+    <projectUrl>https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+        The Open Terraria API, known as OTAPI, is a low-level API for Terrariathat rewrites and hooks into the official or modded binaries for others to use.
+
+        OTAPI is primarily a server modification and is available as a cross platform package via NuGet.
+
+        Version 3.0 is now a .NET5 library thanks to ModFramework being able to retarget the .NET4 vanilla assembly up to .NET5.
+        This means that any mod you create can be written as a .NET5 module and later merged into the patched assembly thanks to MonoMod.
+
+        Here is what is now possible:
+         - Native Runtime hooks, just reference OTAPI.Runtime.dll and register to MonoMod events generated from the Terraria assembly.
+         - Full .NET5 ecosystem and its performance improvements. No need for two targets such as Windows &amp; Mono anymore either.
+         - A new optional internal module system via ModFramework to load precompiled dll's, .cs files or even top level classes.
+         - A strong set of libraries with methods and extensions to help you build more mods.
+         - Create 1 file MonoMod patches to rewrite or inject new meta data to the assembly.
+    </description>
+    <summary>Open Terraria API [INJECT_VERSION] for Terraria 1.4.0.5 (Mobile)</summary>
+    <releaseNotes>
+      Preliminary Terraria 1.4.0.5 (Mobile)
+    </releaseNotes>
+    <copyright>Copyright 2016-2021</copyright>
+    <tags>Terraria,OTAPI</tags>
+    <dependencies>
+	  <group targetFramework="net5.0">
+		<dependency id="Newtonsoft.Json" version="13.0.1" />
+		<dependency id="MonoMod" version="21.4.29.1" />
+		<dependency id="MonoMod.RuntimeDetour" version="21.4.29.1" />
+	  </group>
+	  <group targetFramework="netstandard2.0">
+		<dependency id="Newtonsoft.Json" version="13.0.1" />
+		<dependency id="MonoMod" version="21.4.29.1" />
+		<dependency id="MonoMod.RuntimeDetour" version="21.4.29.1" />
+	  </group>
+    </dependencies>
+  </metadata>
+</package>
