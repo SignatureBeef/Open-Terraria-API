@@ -204,6 +204,7 @@ namespace ModFramework.Modules.CSharp
                 var parse_options = CSharpParseOptions.Default
                     .WithKind(SourceCodeKind.Regular)
                     .WithPreprocessorSymbols(constants.Select(s => s.Replace("#define ", "")))
+                    .WithDocumentationMode(DocumentationMode.Parse)
                     .WithLanguageVersion(LanguageVersion.Preview); // allows toplevel functions
 
                 var src = File.ReadAllText(file);
@@ -239,6 +240,7 @@ namespace ModFramework.Modules.CSharp
                 return Compilation.Emit(
                       peStream: DllStream,
                       pdbStream: PdbStream,
+                      xmlDocumentationStream: XmlStream,
                       embeddedTexts: CompilationFiles.Select(x => x.EmbeddedText),
                       options: EmitOptions
                 );

@@ -96,5 +96,29 @@ namespace ModFramework
             sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, value));
             mm.Module.Assembly.CustomAttributes.Add(sa);
         }
+
+        public static IEnumerable<string> GetMetadata(this ModFwModder mm, string key)
+        {
+            var matches = mm.Module.Assembly.CustomAttributes
+                .Where(ca => ca.Constructor.FullName == nameof(System.Reflection.AssemblyMetadataAttribute)
+                    && ca.ConstructorArguments.Count == 2
+                    && ca.ConstructorArguments[0].Type == mm.Module.TypeSystem.String
+                    && ca.ConstructorArguments[1].Type == mm.Module.TypeSystem.String
+                    && ca.ConstructorArguments[0].Value.Equals(key)
+                )
+                .Select(ca => (string)ca.ConstructorArguments[1].Value)
+                .ToArray();
+
+            return matches;
+
+            //var sac = mm.Module.ImportReference(typeof(System.Reflection.AssemblyMetadataAttribute).GetConstructor(new[] {
+            //        typeof(string),
+            //        typeof(string),
+            //    }));
+            //var sa = new CustomAttribute(sac);
+            //sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, key));
+            //sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, value));
+            //mm.Module.Assembly.CustomAttributes.Add(sa);
+        }
     }
 }

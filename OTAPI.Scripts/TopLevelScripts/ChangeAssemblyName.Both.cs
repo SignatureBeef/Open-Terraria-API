@@ -19,14 +19,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using ModFramework;
 using MonoMod;
 
-#if !Terraria
-[Modification(ModType.PostPatch, "Changing TerrariaServer assembly name to OTAPI", ModPriority.Last)]
-void ChangeServerAssemblyName(MonoModder modder)
+[Modification(ModType.PostPatch, "Changing assembly name to OTAPI", ModPriority.Last)]
+void ChangeAssemblyName(MonoModder modder)
 {
     foreach (var asmref in modder.Module.AssemblyReferences)
     {
-        if (asmref.Name == "TerrariaServer")
+        if (asmref.Name == "Terraria" || asmref.Name == "TerrariaServer")
+        {
+            var from = asmref.Name;
+            modder.Log($"[OTAPI] RelinkModule: {from} -> {modder.Module.Name}");
+            modder.RelinkModuleMap[from] = modder.Module;
+            modder.RelinkModuleMap["OTAPI"] = modder.Module;
+
             asmref.Name = "OTAPI";
+        }
     }
     modder.Module.Name = modder.Module.Assembly.Name.Name = "OTAPI";
 
@@ -35,34 +41,4 @@ void ChangeServerAssemblyName(MonoModder modder)
         if (e.Name == "OTAPI") return modder.Module.Assembly;
         return null;
     };
-
-    var from = "TerrariaServer";
-    modder.Log($"[OTAPI] RelinkModule: {from} -> {modder.Module.Name}");
-    modder.RelinkModuleMap[from] = modder.Module;
-    modder.RelinkModuleMap["OTAPI"] = modder.Module;
 }
-#endif
-
-#if !TerrariaServer
-[Modification(ModType.PostPatch, "Changing Terraria assembly name to OTAPI", ModPriority.Last)]
-void ChangeClientAssemblyName(MonoModder modder)
-{
-    foreach (var asmref in modder.Module.AssemblyReferences)
-    {
-        if (asmref.Name == "Terraria")
-            asmref.Name = "OTAPI";
-    }
-    modder.Module.Name = modder.Module.Assembly.Name.Name = "OTAPI";
-
-    (modder.AssemblyResolver as Mono.Cecil.DefaultAssemblyResolver).ResolveFailure += (s, e) =>
-    {
-        if (e.Name == "OTAPI") return modder.Module.Assembly;
-        return null;
-    };
-
-    var from = "Terraria";
-    modder.Log($"[OTAPI] RelinkModule: {from} -> {modder.Module.Name}");
-    modder.RelinkModuleMap[from] = modder.Module;
-    modder.RelinkModuleMap["OTAPI"] = modder.Module;
-}
-#endif

@@ -3,6 +3,16 @@
 	<PropertyGroup>
 		<TargetFrameworks>net5.0;net472</TargetFrameworks>
 		<!--<OutputType>Exe</OutputType>-->
+		<PackageVersion>1.0.0-alpha1</PackageVersion>
+		<Authors>DeathCradle</Authors>
+		<Copyright>DeathCradle</Copyright>
+		<PackageId>ModFramework.Modules.ClearScript</PackageId>
+		<PackageLicenseUrl>https://github.com/DeathCradle/Open-Terraria-API/blob/upcoming/COPYING.txt</PackageLicenseUrl>
+		<Owners>DeathCradle</Owners>
+		<PackageProjectUrl>https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming</PackageProjectUrl>
+		<Summary>Enables ES6 javascript plugins</Summary>
+		<Title>ModFramework ClearScript</Title>
+		<Description>ModFramework module to enable javascript plugins via Microsoft's ClearScript.</Description>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 	  <WarningLevel>4</WarningLevel>

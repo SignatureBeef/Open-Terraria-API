@@ -31,6 +31,7 @@ namespace OTAPI.Client.Host
                 return new HostGame();
             };
 
+#if Platform_Windows
             // FNA + lack of System.Windows.Forms fixes
             On.ReLogic.OS.Windows.WindowService.SetUnicodeTitle += WindowService_SetUnicodeTitle;
             On.System.Windows.Forms.Control.FromHandle += Control_FromHandle;
@@ -38,6 +39,7 @@ namespace OTAPI.Client.Host
             On.Terraria.Graphics.WindowStateController.TryMovingToScreen += WindowStateController_TryMovingToScreen;
             On.Terraria.Main.ApplyBorderlessResolution += Main_ApplyBorderlessResolution;
             On.Terraria.Main.SetDisplayModeAsBorderless += Main_SetDisplayModeAsBorderless;
+#endif
 
             var asm = typeof(Terraria.Program).Assembly;
             var launchClass = asm.GetType("Terraria.MacLaunch") ?? asm.GetType("Terraria.WindowsLaunch") ?? asm.GetType("Terraria.LinuxLaunch");
@@ -46,6 +48,7 @@ namespace OTAPI.Client.Host
         }
 
 
+#if Platform_Windows
         private static void Main_ApplyBorderlessResolution(On.Terraria.Main.orig_ApplyBorderlessResolution orig, Form form) { /*nop*/ }
 
         private static void WindowStateController_TryMovingToScreen(On.Terraria.Graphics.WindowStateController.orig_TryMovingToScreen orig, Terraria.Graphics.WindowStateController self, string screenDeviceName) { /*nop*/ }
@@ -70,6 +73,7 @@ namespace OTAPI.Client.Host
         {
             window.Title = title;
         }
+#endif
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
