@@ -20,6 +20,9 @@ using ModFramework;
 using ModFramework.Relinker;
 using MonoMod;
 
+/// <summary>
+/// @doc Transforms Terraria.Tile[] types to ModFramework.DefaultCollection
+/// </summary>
 [Modification(ModType.PreMerge, "Implementing Tile collections")]
 void ITileCollection(MonoModder modder, IRelinkProvider relinkProvider)
 {

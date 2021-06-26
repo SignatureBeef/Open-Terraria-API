@@ -19,6 +19,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using ModFramework;
 using MonoMod;
 
+/// <summary>
+/// @doc A mod to change the Terraria or TerrariaServer name to OTAPI so cross platform plugins only need to reference one assembly name
+/// </summary>
 [Modification(ModType.PostPatch, "Changing assembly name to OTAPI", ModPriority.Last)]
 void ChangeAssemblyName(MonoModder modder)
 {

@@ -23,6 +23,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
+/// <summary>
+/// @doc Fixes "Index out of range" exceptions wihin Terraria.Collision.GetEntityEdgeTiles
+/// </summary>
 namespace Terraria
 {
     partial class patch_Collision : Terraria.Collision

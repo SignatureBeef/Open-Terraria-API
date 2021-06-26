@@ -19,6 +19,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
 
+/// <summary>
+/// @doc Adds a Terraria.RemoteClient.Data variable for data storage.
+/// </summary>
 namespace Terraria
 {
     partial class patch_RemoteClient : Terraria.RemoteClient

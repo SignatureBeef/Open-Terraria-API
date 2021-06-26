@@ -21,6 +21,9 @@ using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
+/// <summary>
+/// @doc Implements Terraria.Tile.Initialise in place of Terraria.Tile.ctor. This allows the port to an interface work much easier.
+/// </summary>
 [Modification(ModType.PreMerge, "Creating Tile.Initialise")]
 static void ModifyVanillaTile(ModFramework.ModFwModder modder)
 {

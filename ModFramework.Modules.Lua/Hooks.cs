@@ -33,12 +33,12 @@ namespace ModFramework.Modules.Lua
         }
 
         [Modification(ModType.Read, "Loading Lua script interface")]
-        public static void OnModding(MonoMod.MonoModder modder)
+        public static void OnModding(ModFwModder modder)
         {
             Launch(modder);
         }
 
-        static void Launch(MonoMod.MonoModder modder = null)
+        static void Launch(ModFwModder modder = null)
         {
             const string root = "lua";
             Directory.CreateDirectory(root);

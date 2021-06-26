@@ -24,6 +24,9 @@ using MonoMod.Cil;
 using System;
 using System.Linq;
 
+/// <summary>
+/// @doc Creates Hooks.WorldGen.HardmodeTilePlace. Allows plugins to intercept hard mode tile placements.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking hardmode tile placements")]
 void HardModeTilePlacement(MonoModder modder)
 {

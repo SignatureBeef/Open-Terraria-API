@@ -20,6 +20,9 @@ using ModFramework;
 using MonoMod;
 using System.Linq;
 
+/// <summary>
+/// @doc A mod to update Newtonsoft.Json assembly references.
+/// </summary>
 [Modification(ModType.PostPatch, "Upgrading Newtonsoft.Json")]
 void PatchNewtonsoftJson(MonoModder modder)
 {

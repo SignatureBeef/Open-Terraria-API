@@ -36,6 +36,8 @@ namespace OTAPI.Patcher.Targets
     {
         public string DisplayText { get; } = "OTAPI Client (lightweight)";
 
+        private MarkdownDocumentor markdownDocumentor = new ModificationMdDocumentor();
+
         bool CanLoadFile(string filepath)
         {
             // only load "client" or "both" variants
@@ -159,11 +161,6 @@ namespace OTAPI.Patcher.Targets
                     {
                         return asmFNA;
                     }
-                    //if (TryLoad(xnaDll, out Assembly xnaAssembly))
-                    //{
-                    //    assemblies.Add(xnaAssembly.FullName, xnaAssembly);
-                    //    return xnaAssembly;
-                    //}
                 }
                 return null;
             };
@@ -208,7 +205,9 @@ namespace OTAPI.Patcher.Targets
 
             // build shims
             PluginLoader.Init();
-            var ldr = new CSharpLoader().SetAutoLoadAssemblies(true);
+            var ldr = new CSharpLoader()
+                .SetAutoLoadAssemblies(true)
+                .SetMarkdownDocumentor(markdownDocumentor);
             var md = ldr.CreateMetaData();
             var shims = ldr.LoadModules(md, "shims").ToArray();
 
@@ -220,25 +219,17 @@ namespace OTAPI.Patcher.Targets
                 //LogVerboseEnabled = true,
                 PublicEverything = true,
 
-                GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+                GACPaths = new string[] { }, // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+
+                MarkdownDocumentor = markdownDocumentor,
             })
             {
                 (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
                 (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
 
-                //if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
-                //{
-                //    foreach (var dir in XnaPaths)
-                //    {
-                //        if (Directory.Exists(dir))
-                //            (public_mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(dir);
-                //    }
-                //}
-
                 public_mm.Read();
                 public_mm.MapDependencies();
                 public_mm.ReadMod(this.GetType().Assembly.Location);
-                //public_mm.ReadMod(FNA);
                 public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "ReLogic.dll"));
                 public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "RailSDK.Net.dll"));
 
@@ -250,12 +241,6 @@ namespace OTAPI.Patcher.Targets
                 // relink / merge into the output
                 public_mm.RelinkAssembly("ReLogic");
                 public_mm.RelinkAssembly("RailSDK.Net");
-
-                //var fna_module = public_mm.Mods.Single(x => x.Name == "FNA.dll") as ModuleDefinition;
-                //public_mm.RelinkAssembly("Microsoft.Xna.Framework", fna_module);
-                //public_mm.RelinkAssembly("Microsoft.Xna.Framework.Game", fna_module);
-                //public_mm.RelinkAssembly("Microsoft.Xna.Framework.Graphics", fna_module);
-                //public_mm.RelinkAssembly("Microsoft.Xna.Framework.Xact", fna_module);
 
                 public_mm.AutoPatch();
                 public_mm.Write();
@@ -286,18 +271,11 @@ namespace OTAPI.Patcher.Targets
 
             PluginLoader.Clear();
 
-            //var installPath = ClientHelpers.DetermineClientInstallPath();
-            //var resources = Path.Combine(installPath, "Resources");
-            //var assembly_output = installDiscoverer.GetResource("OTAPI.exe");
-            //var runtime_output = Path.Combine(installPath, "Resources/Terraria.Runtime.dll");
-            //var mfw_output = Path.Combine(installPath, "Resources/ModFramework.dll");
-
             // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
             CSharpLoader.GlobalAssemblies.Add("OTAPI.dll");
 
             var fna = installDiscoverer.GetResource("FNA.dll");
             if (File.Exists(fna)) CSharpLoader.GlobalAssemblies.Add(fna);
-            //ModFramework.Modules.CSharp.CSharpLoader.GlobalAssemblies.Add(Path.Combine(Path.GetDirectoryName(typeof(Object).Assembly.Location), "mscorlib.dll"));
             PluginLoader.TryLoad();
 
             Directory.CreateDirectory("outputs");
@@ -312,37 +290,14 @@ namespace OTAPI.Patcher.Targets
                 //LogVerboseEnabled = true,
                 //PublicEverything = true,
 
-                GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+                GACPaths = new string[] { }, // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+
+                MarkdownDocumentor = markdownDocumentor,
             };
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
 
-            //if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
-            //{
-            //    foreach (var dir in XnaPaths)
-            //    {
-            //        if (Directory.Exists(dir))
-            //            (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(dir);
-            //    }
-            //}
-
             mm.Read();
-
-            //// prechange the assembly name to a dll
-            //// monomod will also reference this when relinking so it must be correct
-            //// in order for shims within this dll to work (relogic)
-            //mm.Module.Name = "TerrariaServer.dll";
-            //mm.Module.Assembly.Name.Name = "TerrariaServer";
-
-            //// merge in ModFramework
-            //{
-            //    mm.OnReadMod += (m, module) =>
-            //    {
-            //        if (module.Assembly.Name.Name.StartsWith("ModFramework"))
-            //            mm.RelinkAssembly(module);
-            //    };
-            //    mm.ReadMod(Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"));
-            //}
 
             mm.MapDependencies();
 
@@ -356,13 +311,6 @@ namespace OTAPI.Patcher.Targets
                 mm.WriterParameters.SymbolWriterProvider = null;
                 mm.WriterParameters.WriteSymbols = false;
 #endif
-
-            //{
-            //    var sac = mm.Module.ImportReference(typeof(AssemblyInformationalVersionAttribute).GetConstructors()[0]);
-            //    var sa = new CustomAttribute(sac);
-            //    sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, GetVersion()));
-            //    mm.Module.Assembly.CustomAttributes.Add(sa);
-            //}
 
             foreach (var asmref in mm.Module.AssemblyReferences.ToArray())
             {
@@ -387,38 +335,16 @@ namespace OTAPI.Patcher.Targets
 
             mm.Write();
 
-            //if (File.Exists(assembly_output)) File.Delete(assembly_output);
-            //File.Copy("OTAPI.exe", assembly_output);
-
-            //mm.Log("[OTAPI] Generating Terraria.Runtime.dll");
-            //var gen = new MonoMod.RuntimeDetour.HookGen.HookGenerator(mm, "Terraria.Runtime.dll");
-            //using (ModuleDefinition mOut = gen.OutputModule)
-            //{
-            //    gen.Generate();
-
-
-            //    foreach (var asmref in mOut.AssemblyReferences.ToArray())
-            //    {
-            //        if (asmref.Name.Contains("System.Private.CoreLib") || asmref.Name.Contains("netstandard"))
-            //        {
-            //            mOut.AssemblyReferences.Remove(asmref);
-            //        }
-            //    }
-
-            //    mOut.Write("Terraria.Runtime.dll");
-            //    if (File.Exists(runtime_output)) File.Delete(runtime_output);
-            //    File.Copy("Terraria.Runtime.dll", runtime_output);
-            //}
-
-            //if (File.Exists(mfw_output)) File.Delete(mfw_output);
-            //File.Copy("ModFramework.dll", mfw_output);
-
-
             PluginLoader.Clear();
 
             CreateRuntimeEvents();
 
             CoreLibRelinker.PostProcessCoreLib(temp_out, "outputs/OTAPI.Runtime.dll");
+
+            var doco_md = $"OTAPI.PC.Client.${installDiscoverer.Target.GetClientPlatform()}.mfw.md";
+            if (File.Exists(doco_md)) File.Delete(doco_md);
+            markdownDocumentor.Write(doco_md);
+            markdownDocumentor.Dispose();
 
             mm.Log("[OTAPI] Done.");
         }

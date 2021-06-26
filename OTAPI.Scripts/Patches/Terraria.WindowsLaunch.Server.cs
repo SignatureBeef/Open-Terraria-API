@@ -24,6 +24,12 @@ using ModFramework.Plugins;
 using System;
 using System.Reflection;
 
+/// <summary>
+/// @doc Improves cross platform launch checks
+/// </summary>
+/// <summary>
+/// @doc Initiates the server module system
+/// </summary>
 namespace Terraria
 {
     class patch_WindowsLaunch

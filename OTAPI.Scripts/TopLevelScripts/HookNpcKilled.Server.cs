@@ -22,6 +22,9 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 
+/// <summary>
+/// @doc Creates Hooks.NPC.Killed. Allows plugins to cancel NPC killed events.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.NPC.checkDead")]
 void HookNpcKilled(MonoModder modder)
 {

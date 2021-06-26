@@ -21,19 +21,22 @@ using System.Linq;
 using ModFramework;
 using Mono.Cecil.Cil;
 
+/// <summary>
+/// @doc A mod to insert Hooks.NetMessage.CheckBytesException and will default to printing to the console
+/// </summary>
 [Modification(ModType.PreMerge, "Allowing GetData exceptions debugging")]
 void ClientGetDataExceptions(ModFramework.ModFwModder modder)
 {
-    var vanilla = modder.GetMethodDefinition(() => Terraria.NetMessage.CheckBytes(0));
+    var csr = modder.GetILCursor(() => Terraria.NetMessage.CheckBytes(0));
 
-    var handler = vanilla.Body.ExceptionHandlers.Single(x => x.HandlerType == ExceptionHandlerType.Catch);
+    var handler = csr.Body.ExceptionHandlers.Single(x => x.HandlerType == ExceptionHandlerType.Catch);
 
     var exType = modder.Module.ImportReference(
         typeof(Exception)
     );
     var exVariable = new VariableDefinition(exType);
 
-    vanilla.Body.Variables.Add(exVariable);
+    csr.Body.Variables.Add(exVariable);
 
     handler.CatchType = modder.Module.ImportReference(
         typeof(Exception)
@@ -41,20 +44,56 @@ void ClientGetDataExceptions(ModFramework.ModFwModder modder)
 
     handler.HandlerStart.OpCode = OpCodes.Stloc;
     handler.HandlerStart.Operand = exVariable;
-    //Console.WriteLine(handler.CatchType);
 
-    var processor = vanilla.Body.GetILProcessor();
-    processor.InsertBefore(handler.HandlerEnd.Previous(x => x.OpCode == OpCodes.Leave_S),
-        new { OpCodes.Ldloc, exVariable },
-        new
+    csr.Goto(handler.HandlerEnd.Previous(x => x.OpCode == OpCodes.Leave_S), MonoMod.Cil.MoveType.Before);
+
+    csr.Emit(OpCodes.Ldloc, exVariable);
+    csr.EmitDelegate< CheckBytesExceptionCallback>(OTAPI.Callbacks.NetMessage.CheckBytesException);
+}
+
+
+[MonoMod.MonoModIgnore]
+public delegate void CheckBytesExceptionCallback(Exception exception);
+
+namespace OTAPI
+{
+    public static partial class Hooks
+    {
+        public static partial class NetMessage
         {
-            OpCodes.Call,
-            Operand = modder.Module.ImportReference(
-            typeof(System.Console).GetMethods().Single(x => x.Name == "WriteLine"
-                && x.GetParameters().Count() == 1
-                && x.GetParameters()[0].ParameterType.Name == "Object"
-            )
-        )
+            public class CheckBytesExceptionEventArgs : EventArgs
+            {
+                public HookResult? Result { get; set; }
+
+                public Exception Exception { get; set; }
+            }
+            public static event EventHandler<CheckBytesExceptionEventArgs> CheckBytesException;
+
+            public static HookResult? InvokeCheckBytesException(CheckBytesExceptionEventArgs args)
+            {
+                CheckBytesException?.Invoke(null, args);
+                return args.Result;
+            }
         }
-    );
+    }
+}
+
+namespace OTAPI.Callbacks
+{
+    public static partial class NetMessage
+    {
+        public static void CheckBytesException(Exception exception)
+        {
+            var args = new Hooks.NetMessage.CheckBytesExceptionEventArgs()
+            {
+                Exception = exception,
+            };
+            var result = Hooks.NetMessage.InvokeCheckBytesException(args);
+
+            if (result != HookResult.Cancel)
+            {
+                Console.WriteLine(exception);
+            }
+        }
+    }
 }

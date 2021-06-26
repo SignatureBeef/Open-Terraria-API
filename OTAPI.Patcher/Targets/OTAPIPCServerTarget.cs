@@ -43,8 +43,11 @@ namespace OTAPI.Patcher.Targets
         public virtual string HtmlSearchKey { get; } = ">PC Dedicated Server";
         public virtual string NuGetPackageFileName { get; } = "OTAPI.PC.nupkg";
         public virtual string NuSpecFilePath { get; } = "../../../../OTAPI.PC.nuspec";
+        public virtual string MdFileName { get; } = "OTAPI.PC.Server.mfw.md";
 
         public virtual string SupportedDownloadUrl { get; } = "https://terraria.org/system/dedicated_servers/archives/000/000/046/original/terraria-server-1423.zip";
+
+        private MarkdownDocumentor markdownDocumentor = new ModificationMdDocumentor();
 
         protected virtual bool CanLoadFile(string filepath)
         {
@@ -63,19 +66,26 @@ namespace OTAPI.Patcher.Targets
             ModFramework.Modules.ClearScript.ScriptManager.FileFound += CanLoadFile;
             ModFramework.Modules.Lua.ScriptManager.FileFound += CanLoadFile;
 
+            //markdownDocumentor.WriteLine += (ref string line, ref bool handled) =>
+            //{
+            //    if (line.Contains("@doc"))
+            //    {
+            //        line = line.Replace("@doc", "").Trim();
+            //    }
+            //};
+
             PreShimForCompilation();
             ApplyModifications();
+
+            if (File.Exists(MdFileName)) File.Delete(MdFileName);
+            markdownDocumentor.Write(MdFileName);
+            markdownDocumentor.Dispose();
         }
 
         #region Produce OTAPI
         public void ApplyModifications()
         {
-
-            //var freshAssembly = "../../../../OTAPI.Setup/bin/Debug/net5.0/TerrariaServer.dll";
             var localPath = "TerrariaServer.dll";
-
-            //if (File.Exists(localPath)) File.Delete(localPath);
-            //File.Copy(freshAssembly, localPath);
 
             // load into the current app domain for patch refs
             var asm = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, localPath));
@@ -112,20 +122,12 @@ namespace OTAPI.Patcher.Targets
                 //LogVerboseEnabled = true,
                 // PublicEverything = true, // this is done in setup
 
-                GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+                GACPaths = new string[] { }, // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+
+                MarkdownDocumentor = markdownDocumentor,
             };
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             mm.Read();
-
-            //// merge in ModFramework
-            //{
-            //    mm.OnReadMod += (m, module) =>
-            //    {
-            //        if (module.Assembly.Name.Name.StartsWith("ModFramework"))
-            //            mm.RelinkAssembly(module);
-            //    };
-            //    mm.ReadMod(Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"));
-            //}
 
             mm.MapDependencies();
 
@@ -220,7 +222,9 @@ namespace OTAPI.Patcher.Targets
 
                 LogVerboseEnabled = false,
 
-                GACPaths = new string[] { } // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+                GACPaths = new string[] { }, // avoid MonoMod looking up the GAC, which causes an exception on .netcore
+
+                MarkdownDocumentor = markdownDocumentor,
             };
             (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
             mm.Read();
@@ -238,7 +242,9 @@ namespace OTAPI.Patcher.Targets
 
             // build shims
             PluginLoader.Init();
-            var ldr = new CSharpLoader().SetAutoLoadAssemblies(true);
+            var ldr = new CSharpLoader()
+                .SetAutoLoadAssemblies(true)
+                .SetMarkdownDocumentor(markdownDocumentor);
             var md = ldr.CreateMetaData();
             var shims = ldr.LoadModules(md, "shims").ToArray();
 
@@ -308,7 +314,6 @@ namespace OTAPI.Patcher.Targets
             if (File.Exists(script_refs)) File.Delete(script_refs);
             File.Copy(output, script_refs);
         }
-
 
         public virtual string DownloadZip(string url)
         {

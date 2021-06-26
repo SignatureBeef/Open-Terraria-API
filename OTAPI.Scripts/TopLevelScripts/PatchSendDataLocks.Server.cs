@@ -26,6 +26,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil.Rocks;
 
+/// <summary>
+/// @doc Removes sync lock functionality in Terraria.NetMessage.SendData, used in conjunction with the SendDataWriter patch.
+/// </summary>
 [Modification(ModType.PreMerge, "Removing NetMessage.SendData locks")]
 void PatchSendDataLocks(MonoModder modder)
 {

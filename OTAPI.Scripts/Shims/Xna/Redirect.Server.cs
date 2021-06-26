@@ -18,6 +18,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using ModFramework;
 
+/// <summary>
+/// @doc Shims and relinks Microsoft.Xna.Framework 
+/// </summary>
 namespace Microsoft.Xna.Framework
 {
     [MonoMod.MonoModIgnore]

@@ -21,6 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using System.IO;
 
+/// <summary>
+/// @doc Fixes cross platform file removal
+/// </summary>
 namespace Terraria.Utilities
 {
     public static class patch_FileOperationAPIWrapper

@@ -24,6 +24,9 @@ using MonoMod.Cil;
 using System;
 using System.Linq;
 
+/// <summary>
+/// @doc Creates Hooks.NetMessage.SendBytes. Allows plugins to intercept the sending of data.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.NetMessage.SendData")]
 void HookClientSendBytes(MonoModder modder)
 {

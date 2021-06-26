@@ -64,6 +64,34 @@ namespace ModFramework.Modules.Lua
             LoadError = null;
         }
 
+        public IEnumerable<string> GetComments()
+        {
+            return Content.Split('\n')
+                .Where(line => (line.Trim().StartsWith("-- @doc", StringComparison.CurrentCultureIgnoreCase)))
+                .Select(line => line.Replace("-- ", "").Trim());
+        }
+
+        void RegisterComments()
+        {
+            var doc = Manager.GetMarkdownDocumentor();
+            if (doc is not null)
+            {
+                var comments = this.GetComments();
+                if (comments.Any())
+                {
+                    foreach (var comment in comments)
+                    {
+                        doc.Add(new BasicComment()
+                        {
+                            Comments = comment,
+                            Type = "script",
+                            FilePath = this.FilePath,
+                        });
+                    }
+                }
+            }
+        }
+
         public void Load()
         {
             try
@@ -79,6 +107,8 @@ namespace ModFramework.Modules.Lua
 
                 Content = File.ReadAllText(FilePath);
                 LoadResult = Container.DoString(Content);
+
+                RegisterComments();
             }
             catch (LuaScriptException ex)
             {
@@ -105,15 +135,31 @@ namespace ModFramework.Modules.Lua
         private List<LuaScript> _scripts { get; } = new List<LuaScript>();
         private FileSystemWatcher _watcher { get; set; }
 
-        public MonoMod.MonoModder Modder { get; set; }
+        public ModFwModder Modder { get; set; }
+
+        public MarkdownDocumentor MarkdownDocumentor { get; set; }
 
         public ScriptManager(
             string scriptFolder,
-            MonoMod.MonoModder modder
+            ModFwModder modder
         )
         {
             ScriptFolder = scriptFolder;
             Modder = modder;
+        }
+
+        public ScriptManager SetMarkdownDocumentor(MarkdownDocumentor documentor)
+        {
+            MarkdownDocumentor = documentor;
+            return this;
+        }
+
+        public MarkdownDocumentor GetMarkdownDocumentor()
+        {
+            if (MarkdownDocumentor is not null)
+                return MarkdownDocumentor;
+
+            return Modder?.MarkdownDocumentor;
         }
 
         LuaScript CreateScriptFromFile(string file)

@@ -24,6 +24,9 @@ using Mono.Cecil.Cil;
 using MonoMod;
 using Terraria.Localization;
 
+/// <summary>
+/// @doc Creates Hooks.NetMessage.PlayerAnnounce. Allows plugins to intercept the vanilla join message.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking player announements (has join, has left)")]
 void HookPlayerAnnouncements(ModFwModder modder)
 {

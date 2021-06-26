@@ -23,6 +23,9 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 
+/// <summary>
+/// @doc Transforms Terraria.Tile into Terraria.ITile
+/// </summary>
 [Modification(ModType.PreMerge, "Implementing ITile", Dependencies = new[]{
         "ITileCollection", // this mod uses Terraria.Tile directly so it will emit references to it that this needs to clean up
         "ITileProperties", // properties required first, interfaces do not like instance fields

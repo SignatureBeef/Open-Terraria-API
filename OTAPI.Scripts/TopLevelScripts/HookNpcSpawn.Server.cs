@@ -23,6 +23,9 @@ using MonoMod;
 using System;
 using System.Linq;
 
+/// <summary>
+/// @doc Creates Hooks.NPC.Spawn. Allows plugins to cancel NPC spawns.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.NPC.NewNPC(Spawn)")]
 void HookNpcSpawn(MonoModder modder)
 {

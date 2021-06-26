@@ -23,7 +23,7 @@ namespace ModFramework.Modules.CSharp
     public static class Hooks
     {
         [Modification(ModType.Read, "Loading CSharp script interface")]
-        public static void OnModding(MonoMod.MonoModder modder)
+        public static void OnModding(ModFwModder modder)
         {
             new CSharpLoader().SetModder(modder).LoadModifications();
         }

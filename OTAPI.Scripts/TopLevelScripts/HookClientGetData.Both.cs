@@ -23,6 +23,9 @@ using MonoMod;
 using OTAPI;
 using System;
 
+/// <summary>
+/// @doc A mod to create Hooks.MessageBuffer.GetData. Allows plugins to process received packet data.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.MessageBuffer.GetData")]
 void HookClientGetData(MonoModder modder)
 {

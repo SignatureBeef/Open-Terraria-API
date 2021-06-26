@@ -26,6 +26,9 @@ using Mono.Cecil.Rocks;
 using System.IO;
 using System.IO.Compression;
 
+/// <summary>
+/// @doc Replaces a global write buffer to a local variable buffer, used in conjunction of the SendDataLocks patch
+/// </summary>
 [Modification(ModType.PreMerge, "Removing NetMessage.SendData write buffer")]
 void PatchSendDataWriter(MonoModder modder)
 {

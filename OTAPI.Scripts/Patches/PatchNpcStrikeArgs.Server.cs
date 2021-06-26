@@ -24,6 +24,9 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 
+/// <summary>
+/// @doc Adds a Terraria.Entity entity parameter to Terraria.NPC.StrikeNPC.
+/// </summary>
 [MonoModIgnore]
 partial class NpcStrikeArgs
 {

@@ -20,6 +20,9 @@ using ModFramework;
 using ModFramework.Relinker;
 using MonoMod;
 
+/// <summary>
+/// @doc Transforms the fields of Terraria.Tile into properties
+/// </summary>
 [Modification(ModType.PreMerge, "Implementing Tile properties")]
 void ITileProperties(ModFwModder modder, IRelinkProvider relinkProvider)
 {

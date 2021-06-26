@@ -24,6 +24,9 @@ using MonoMod;
 using System;
 using Terraria.Net.Sockets;
 
+/// <summary>
+/// @doc Creates Hooks.Netplay.CreateTcpListener. Allows custom TCP implementations to be used.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking tcp interfaces")]
 void HookClientSockets(ModFwModder modder)
 {

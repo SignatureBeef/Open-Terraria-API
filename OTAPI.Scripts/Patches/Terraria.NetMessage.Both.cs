@@ -24,6 +24,9 @@ using System;
 using OTAPI;
 using Terraria.Localization;
 
+/// <summary>
+/// @doc Creates Hooks.NetMessage.SendData. Allows plugins to listen on packet requests.
+/// </summary>
 namespace Terraria
 {
     partial class patch_NetMessage : Terraria.NetMessage

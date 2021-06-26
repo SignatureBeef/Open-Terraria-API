@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Emit;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.DependencyModel;
@@ -27,9 +28,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml;
 
 namespace ModFramework.Modules.CSharp
 {
+    [MonoMod.MonoModIgnore]
     public delegate bool AssemblyFoundHandler(string filepath);
 
     [MonoMod.MonoModIgnore]
@@ -38,12 +41,13 @@ namespace ModFramework.Modules.CSharp
         const string ConsolePrefix = "CSharp";
         const string ModulePrefix = "CSharpScript_";
 
-        public MonoMod.MonoModder Modder { get; set; }
+        public ModFwModder Modder { get; set; }
 
         public static event AssemblyFoundHandler AssemblyFound;
         public static List<string> GlobalAssemblies { get; } = new List<string>();
 
         public bool AutoLoadAssemblies { get; set; } = true;
+        public MarkdownDocumentor MarkdownDocumentor { get; set; }
 
         public CSharpLoader SetAutoLoadAssemblies(bool autoLoad)
         {
@@ -51,7 +55,7 @@ namespace ModFramework.Modules.CSharp
             return this;
         }
 
-        public CSharpLoader SetModder(MonoMod.MonoModder modder)
+        public CSharpLoader SetModder(ModFwModder modder)
         {
             Modder = modder;
 
@@ -135,7 +139,7 @@ namespace ModFramework.Modules.CSharp
 
             foreach (var mref in options.Meta.MetadataReferences
                     .Concat(GlobalAssemblies.Select(globalPath => MetadataReference.CreateFromFile(globalPath)))
-                    //.Concat(referenceAssemblies)
+            //.Concat(referenceAssemblies)
             )
             {
                 if (!refs.Any(x => x.Display == mref.Display))
@@ -156,7 +160,6 @@ namespace ModFramework.Modules.CSharp
             var compilation = CSharpCompilation
                 .Create(assemblyName, syntaxTrees, options: compile_options)
                 .AddReferences(refs)
-
             ;
 
             var libs = ((String)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES"))
@@ -194,7 +197,122 @@ namespace ModFramework.Modules.CSharp
             public EmbeddedText EmbeddedText { get; set; }
         }
 
-        IEnumerable<CompilationFile> PrepareFiles(IEnumerable<string> files, IEnumerable<string> constants)
+        void ProcessXmlSyntax(string filePath, string type, SyntaxTree encoded)
+        {
+            var root = encoded?.GetRoot();
+            var syntax = root as CompilationUnitSyntax;
+            if (syntax is not null)
+            {
+                foreach (var member in syntax.Members)
+                {
+                    ProcessXmlMember(filePath, type, member);
+                }
+            }
+        }
+
+        public CSharpLoader SetMarkdownDocumentor(MarkdownDocumentor documentor)
+        {
+            MarkdownDocumentor = documentor;
+            return this;
+        }
+
+        MarkdownDocumentor GetMarkdownDocumentor()
+        {
+            if (MarkdownDocumentor is not null)
+                return MarkdownDocumentor;
+
+            return Modder?.MarkdownDocumentor;
+        }
+
+        void ProcessXmlComment(string filePath, string type, SyntaxTrivia trivia)
+        {
+            var xml_node = trivia.GetStructure();
+
+            if (xml_node is DocumentationCommentTriviaSyntax dcts)
+            {
+                var xml = dcts.Content;
+
+                foreach (var node in dcts.Content)
+                {
+                    if (node is XmlElementSyntax xes)
+                    {
+                        foreach (var item in xes.Content)
+                        {
+                            if (item is XmlTextSyntax xts)
+                            {
+                                var comments = String.Join(string.Empty, xts.TextTokens.Select(x => x.Text));
+                                var cleaned = String.Join(" ", comments.Trim().Split(Environment.NewLine));
+                                var doc = GetMarkdownDocumentor();
+
+                                if (!doc.Find<BasicComment>(r => r.FilePath == filePath && r.Comments == cleaned).Any())
+                                    GetMarkdownDocumentor().Add(new BasicComment()
+                                    {
+                                        Comments = String.Join(" ", comments.Trim().Split(Environment.NewLine)),
+                                        Type = type,
+                                        FilePath = filePath,
+                                    });
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        void ProcessXmlMember(string filePath, string type, MemberDeclarationSyntax member)
+        {
+            var trivias = member.GetLeadingTrivia();
+
+            foreach (var trv in trivias)
+            {
+                //var content = trv.ToFullString();
+                //if (trv.IsKind(SyntaxKind.MultiLineCommentTrivia))
+                //{
+                //    var is_gpl = content.Contains("GNU General Public License");
+                //    if(!is_gpl)
+                //    {
+                //        ProcessXmlComment(category, content);
+                //    }
+                //}
+                if (trv.IsKind(SyntaxKind.MultiLineDocumentationCommentTrivia))
+                {
+                    ProcessXmlComment(filePath, type, trv);
+                }
+                else if (trv.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia))
+                {
+                    ProcessXmlComment(filePath, type, trv);
+                }
+                else
+                {
+
+                }
+            }
+
+            if (member is NamespaceDeclarationSyntax nds)
+            {
+                foreach (var child in nds.Members)
+                {
+                    ProcessXmlMember(filePath, type, child);
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        IEnumerable<CompilationFile> PrepareFiles(IEnumerable<string> files, IEnumerable<string> constants, string type)
         {
             foreach (var file in files)
             {
@@ -208,10 +326,14 @@ namespace ModFramework.Modules.CSharp
                     .WithLanguageVersion(LanguageVersion.Preview); // allows toplevel functions
 
                 var src = File.ReadAllText(file);
-                //source = SourceText.From($"{constants}\n{src}", encoding);
                 var source = SourceText.From(src, encoding);
                 var encoded = CSharpSyntaxTree.ParseText(source, parse_options, file);
                 var embedded = EmbeddedText.FromSource(file, source);
+
+                if (GetMarkdownDocumentor() is not null)
+                {
+                    ProcessXmlSyntax(file, type, encoded);
+                }
 
                 yield return new CompilationFile()
                 {
@@ -296,11 +418,11 @@ namespace ModFramework.Modules.CSharp
             }
         }
 
-        string LoadScripts(MetaData meta, IEnumerable<string> files, OutputKind outputKind, string assemblyName)
+        string LoadScripts(MetaData meta, IEnumerable<string> files, OutputKind outputKind, string assemblyName, string type)
         {
             try
             {
-                var compilationFiles = PrepareFiles(files, meta.Constants);
+                var compilationFiles = PrepareFiles(files, meta.Constants, type);
 
                 using var ctx = CreateContext(new CreateContextOptions()
                 {
@@ -327,7 +449,7 @@ namespace ModFramework.Modules.CSharp
             return null;
         }
 
-        void LoadSingleScripts(MetaData meta, string folder, OutputKind outputKind)
+        void LoadSingleScripts(MetaData meta, string folder, OutputKind outputKind, string type)
         {
             var files = Directory.EnumerateFiles(folder, "*.cs", SearchOption.AllDirectories);
 
@@ -340,7 +462,7 @@ namespace ModFramework.Modules.CSharp
 
                 var assemblyName = Path.GetFileNameWithoutExtension(file);
 
-                LoadScripts(meta, new[] { file }, outputKind, assemblyName);
+                LoadScripts(meta, new[] { file }, outputKind, assemblyName, type);
             }
         }
 
@@ -348,14 +470,14 @@ namespace ModFramework.Modules.CSharp
         {
             var toplevel = Path.Combine(RootDirectory, "toplevel");
             if (Directory.Exists(toplevel))
-                LoadSingleScripts(meta, toplevel, OutputKind.ConsoleApplication);
+                LoadSingleScripts(meta, toplevel, OutputKind.ConsoleApplication, "toplevel");
         }
 
         void LoadPatches(MetaData meta)
         {
             var patches = Path.Combine(RootDirectory, "patches");
             if (Directory.Exists(patches))
-                LoadSingleScripts(meta, patches, OutputKind.DynamicallyLinkedLibrary);
+                LoadSingleScripts(meta, patches, OutputKind.DynamicallyLinkedLibrary, "patch");
         }
 
         public List<string> LoadModules(MetaData meta, string folder)
@@ -377,7 +499,7 @@ namespace ModFramework.Modules.CSharp
                     {
                         var moduleName = Path.GetFileName(dir);
                         Console.WriteLine($"[{ConsolePrefix}] Loading module: {moduleName}");
-                        var path = LoadScripts(meta, files, OutputKind.DynamicallyLinkedLibrary, moduleName);
+                        var path = LoadScripts(meta, files, OutputKind.DynamicallyLinkedLibrary, moduleName, "module");
                         if (File.Exists(path))
                             paths.Add(path);
                     }

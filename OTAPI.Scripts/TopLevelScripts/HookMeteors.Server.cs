@@ -22,6 +22,9 @@ using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
+/// <summary>
+/// @doc Creates Hooks.WorldGen.Meteor. Allows plugins to cancel meteors.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking meteors")]
 void HookMeteors(ModFramework.ModFwModder modder)
 {
@@ -29,12 +32,6 @@ void HookMeteors(ModFramework.ModFwModder modder)
 
     // look for stopDrops = true in the vanilla methods instructions to find the
     // continuation instruction that follows it.
-    //csr.GotoNext(MonoMod.Cil.MoveType.After, instruction =>
-    //     instruction.OpCode == OpCodes.Stsfld
-    //    && instruction.Operand is FieldReference
-    //    && (instruction.Operand as FieldReference).Name == "stopDrops"
-
-    //    && instruction.Previous.OpCode == OpCodes.Ldc_I4_1);
     csr.GotoNext(MonoMod.Cil.MoveType.Before, instruction =>
         instruction.OpCode == OpCodes.Ldc_I4_1
 

@@ -47,6 +47,7 @@ namespace OTAPI.Patcher.Targets
         public override string HtmlSearchKey { get; } = ">Mobile Dedicated Server";
         public override string NuGetPackageFileName { get; } = "OTAPI.Mobile.nupkg";
         public override string NuSpecFilePath { get; } = "../../../../OTAPI.Mobile.nuspec";
+        public override string MdFileName { get; } = "OTAPI.Mobile.Server.mfw.md";
         public override string SupportedDownloadUrl { get; } = "https://terraria.org/server/MobileTerrariaServer.zip";
 
         public override string DetermineInputAssembly(string extractedFolder)

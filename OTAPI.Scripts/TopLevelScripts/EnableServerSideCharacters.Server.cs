@@ -22,6 +22,9 @@ using Mono.Cecil.Cil;
 using MonoMod;
 using MonoMod.Cil;
 
+/// <summary>
+/// @doc Attaches newtwork packets to the Terraria.Main.ServerSideCharacter variable. This allows sub projects like TShock to activate SSC. 
+/// </summary>
 [Modification(ModType.PreMerge, "Enabling server side characters")]
 void EnableServerSideCharacters(MonoModder modder)
 {

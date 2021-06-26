@@ -22,6 +22,9 @@ using MonoMod;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// @doc Patch in a custom Terraria.RemoteClient.ClientUUID property, and hooks it up into the network protocol.
+/// </summary>
 [Modification(ModType.PostPatch, "Patching in Client UUID")]
 void PatchClientUUID(MonoModder modder)
 {
@@ -135,10 +138,6 @@ namespace Terraria
     {
         public Dictionary<string, object> Data { get; set; }
 
-        public string ClientUUID
-        {
-            get => Data[nameof(ClientUUID)] as string;
-            set => Data[nameof(ClientUUID)] = value;
-        }
+        public string ClientUUID { get; set; }
     }
 }

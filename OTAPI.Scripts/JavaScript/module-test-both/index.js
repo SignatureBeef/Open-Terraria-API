@@ -16,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+
+// @doc Example javascript module. Does nothing apart from call the Modder CLR instance.
+
 import { run } from './test';
 
 run();

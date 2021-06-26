@@ -24,6 +24,9 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 
+/// <summary>
+/// @doc Creates Hooks.Collision.PressurePlate. 
+/// </summary>
 [MonoModIgnore]
 partial class CollisionSwitchTiles
 {
@@ -124,9 +127,9 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public int x { get; set; }
-                public int y { get; set; }
-                public Terraria.Entity entity { get; set; }
+                public int X { get; set; }
+                public int Y { get; set; }
+                public Terraria.Entity Entity { get; set; }
             }
             public static event EventHandler<PressurePlateEventArgs> PressurePlate;
 
@@ -147,9 +150,9 @@ namespace OTAPI.Callbacks
         {
             var args = new Hooks.Collision.PressurePlateEventArgs()
             {
-                x = x,
-                y = y,
-                entity = entity
+                X = x,
+                Y = y,
+                Entity = entity
             };
             return Hooks.Collision.InvokePressurePlate(args) != HookResult.Cancel;
         }

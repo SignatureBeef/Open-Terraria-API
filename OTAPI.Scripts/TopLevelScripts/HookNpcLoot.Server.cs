@@ -23,6 +23,9 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 
+/// <summary>
+/// @doc Creates Hooks.NPC.DropLoot. Allows plugins to alter or cancel NPC loot drops.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.GameContent.ItemDropRules.CommonCode.DropItemFromNPC")]
 void HookNpcLoot(MonoModder modder)
 {

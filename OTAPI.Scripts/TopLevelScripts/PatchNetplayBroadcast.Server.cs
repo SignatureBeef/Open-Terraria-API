@@ -29,6 +29,9 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
+/// <summary>
+/// @doc Fix Terraria.Netplay.BroadcastThread infinite loop.
+/// </summary>
 [Modification(ModType.PostPatch, "Patching Netplay Broadcast")]
 void PatchNetplayBroadcast(MonoModder modder)
 {

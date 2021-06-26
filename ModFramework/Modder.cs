@@ -37,6 +37,8 @@ namespace ModFramework
         public event MonoMod.MethodRewriter OnRewritingMethod;
         public event MonoMod.MethodBodyRewriter OnRewritingMethodBody;
 
+        public MarkdownDocumentor MarkdownDocumentor { get; set; }
+
         public virtual void AddTask(RelinkTask task)
         {
             task.Modder = this;

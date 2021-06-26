@@ -24,6 +24,9 @@ using Mono.Cecil.Cil;
 using MonoMod;
 using MonoMod.Cil;
 
+/// <summary>
+/// @doc Creates Hooks.NPC.MechSpawn & Hooks.Item.MechSpawn. Allows plugins to react to Mech spawn events.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking statue spawning")]
 void HookMechSpawn(MonoModder modder)
 {

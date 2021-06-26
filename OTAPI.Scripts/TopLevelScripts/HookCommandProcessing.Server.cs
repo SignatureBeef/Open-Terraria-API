@@ -24,6 +24,9 @@ using MonoMod.Cil;
 using System;
 using System.Linq;
 
+/// <summary>
+/// @doc Creates Hooks.Main.CommandProcess. Allows plugins to intercept issued commands.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking command processing")]
 void HookCommandProcessing(MonoModder modder)
 {

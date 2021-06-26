@@ -23,6 +23,9 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 
+/// <summary>
+/// @doc Creates Hooks.Wiring.AnnouncementBox. Allows plu
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking wiring announce box")]
 void HookWiringAnnounceBox(MonoModder modder)
 {

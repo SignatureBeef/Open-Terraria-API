@@ -69,6 +69,34 @@ namespace ModFramework.Modules.ClearScript
             ModuleResolver?.Unload("GlobalModule");
         }
 
+        public IEnumerable<string> GetComments()
+        {
+            return Content.Split('\n')
+                .Where(line => (line.Trim().StartsWith("// @doc", StringComparison.CurrentCultureIgnoreCase)))
+                .Select(v => v.Replace("// ", "").Trim());
+        }
+
+        void RegisterComments()
+        {
+            var doc = Manager.GetMarkdownDocumentor();
+            if (doc is not null)
+            {
+                var comments = this.GetComments();
+                if (comments.Any())
+                {
+                    foreach (var comment in comments)
+                    {
+                        doc.Add(new BasicComment()
+                        {
+                            Comments = comment,
+                            Type = "script",
+                            FilePath = this.FilePath,
+                        });
+                    }
+                }
+            }
+        }
+
         public void Dispose()
         {
             if (Script != null) Unload();
@@ -138,6 +166,8 @@ namespace ModFramework.Modules.ClearScript
 
                 //LoadResult = Container.Evaluate(new DocumentInfo { Category = ModuleCategory.Standard }, Content);
                 LoadResult = Container.Evaluate(new DocumentInfo { Category = ModuleCategory.Standard }, "import * as GlobalModule from 'GlobalModule';");
+
+                RegisterComments();
             }
             catch (Exception ex)
             {
@@ -157,15 +187,30 @@ namespace ModFramework.Modules.ClearScript
         private List<JSScript> _scripts { get; } = new List<JSScript>();
         private FileSystemWatcher _watcher { get; set; }
 
-        public MonoMod.MonoModder Modder { get; set; }
+        public ModFwModder Modder { get; set; }
+        public MarkdownDocumentor MarkdownDocumentor { get; set; }
 
         public ScriptManager(
             string scriptFolder,
-            MonoMod.MonoModder modder
+            ModFwModder modder
         )
         {
             ScriptFolder = scriptFolder;
             Modder = modder;
+        }
+
+        public ScriptManager SetMarkdownDocumentor(MarkdownDocumentor documentor)
+        {
+            MarkdownDocumentor = documentor;
+            return this;
+        }
+
+        public MarkdownDocumentor GetMarkdownDocumentor()
+        {
+            if (MarkdownDocumentor is not null)
+                return MarkdownDocumentor;
+
+            return Modder?.MarkdownDocumentor;
         }
 
         JSScript CreateScriptFromFile(string file, bool module)

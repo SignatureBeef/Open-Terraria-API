@@ -22,6 +22,9 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 
+/// <summary>
+/// @doc Creates Hooks.Main.Create. Allows plugins to extend and return a custom Terraria.Main instance.
+/// </summary>
 [Modification(ModType.PostPatch, "Hooking new Main calls", ModPriority.Last)]
 void HookMainCtor(MonoModder modder)
 {

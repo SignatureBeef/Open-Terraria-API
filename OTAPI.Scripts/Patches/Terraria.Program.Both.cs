@@ -22,6 +22,12 @@ using System;
 using ModFramework;
 using ModFramework.Plugins;
 
+/// <summary>
+/// @doc Fixes platform issues in Terraria.Program.DisplayException
+/// </summary>
+/// <summary>
+/// @doc Initiates the client module system
+/// </summary>
 namespace Terraria
 {
     partial class patch_Program

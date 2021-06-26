@@ -20,6 +20,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// @doc Fixes ReLogic.OS.Platform.Current using RuntimeInformation
+/// </summary>
 namespace ReLogic.OS
 {
     public abstract class patch_Platform

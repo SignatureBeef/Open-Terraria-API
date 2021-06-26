@@ -22,6 +22,9 @@ using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
+/// <summary>
+/// @doc Creates Hooks.NPC.BossBag. Allows plugins to cancel boss bag items.
+/// </summary>
 [Modification(ModType.PreMerge, "Hooking npc boss bags")]
 void HookNpcBossBag(ModFramework.ModFwModder modder)
 {

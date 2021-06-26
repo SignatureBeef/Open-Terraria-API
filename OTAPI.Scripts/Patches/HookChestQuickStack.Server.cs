@@ -25,6 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+/// <summary>
+/// @doc Creates Hooks.Chest.QuickStack.
+/// </summary>
 [MonoModIgnore]
 partial class ChestHooks
 {
@@ -109,9 +112,9 @@ namespace OTAPI.Callbacks
         {
             var args = new Hooks.Chest.QuickStackEventArgs()
             {
-                playerId = playerId,
-                item = item,
-                chestIndex = chestIndex,
+                PlayerId = playerId,
+                Item = item,
+                ChestIndex = chestIndex,
             };
             return Hooks.Chest.InvokeQuickStack(args) != HookResult.Cancel;
         }
@@ -128,9 +131,9 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public int playerId { get; set; }
-                public Terraria.Item item { get; set; }
-                public int chestIndex { get; set; }
+                public int PlayerId { get; set; }
+                public Terraria.Item Item { get; set; }
+                public int ChestIndex { get; set; }
             }
             public static event EventHandler<QuickStackEventArgs> QuickStack;
 

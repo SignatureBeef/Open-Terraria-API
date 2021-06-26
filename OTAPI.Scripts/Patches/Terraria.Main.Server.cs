@@ -20,6 +20,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
+/// <summary>
+/// @doc Enable Terraria.Main.NeverSleep calls based off updated ReLogic.OS.Platform.IsWindows
+/// </summary>
+/// <summary>
+/// @doc Fixes auto save when Terraria.Main.autoSave is false
+/// </summary>
 namespace Terraria
 {
     class patch_Main : Terraria.Main
