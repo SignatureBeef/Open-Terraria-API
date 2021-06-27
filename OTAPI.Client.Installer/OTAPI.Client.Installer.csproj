@@ -23,7 +23,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="lua\" />
-	  <Folder Include="Targets\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="InstallTargets\" />
