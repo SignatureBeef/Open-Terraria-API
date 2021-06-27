@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 5.0.201
+dotnet: 5.0.301
 script:
  - dotnet restore OTAPI.Mods.sln
  - dotnet restore OTAPI.Server.Launcher.sln
