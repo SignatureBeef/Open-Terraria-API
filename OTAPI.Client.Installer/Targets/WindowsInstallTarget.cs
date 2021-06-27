@@ -39,6 +39,9 @@ namespace OTAPI.Client.Installer.Targets
                 Console.WriteLine("Copying Terraria Content files, this may take a while...");
                 this.CopyFiles(sourceContentPath, destContentPath);
 
+                Console.WriteLine("Patching launch scripts...");
+                this.PatchWindowsLaunch(installPath);
+
                 Console.WriteLine("Windows install finished");
                 Console.WriteLine("Open the following directory and make a shortcut");
                 Console.WriteLine(Path.Combine(otapiFolder, "Terraria.exe"));
