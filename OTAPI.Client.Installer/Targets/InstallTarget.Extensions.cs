@@ -234,18 +234,62 @@ namespace OTAPI.Client.Installer.Targets
         {
             var launch_script = Path.Combine(installPath, "MacOS/Terraria");
             var backup_launch_script = Path.Combine(installPath, "MacOS/Terraria.bak.otapi");
+            var otapi_launcher = Path.Combine(installPath, "otapi_launcher");
 
             if (!File.Exists(backup_launch_script))
             {
                 File.Copy(launch_script, backup_launch_script);
+            }
+            File.WriteAllText(launch_script, @"
+#!/bin/bash
+# MonoKickstart Shell Script
+# Written by Ethan ""flibitijibibo"" Lee
 
-                var contents = File.ReadAllText(launch_script);
-                var patched = contents.Replace("./Terraria.bin.osx $@", "./OTAPI.Client.Host $@");
-                patched = patched.Replace("export DYLD_LIBRARY_PATH", "cd ../otapi\n\texport DYLD_LIBRARY_PATH");
-                if (contents != patched)
-                {
-                    File.WriteAllText(launch_script, patched);
-                }
+cd ""`dirname ""$0""`""
+
+UNAME=`uname`
+ARCH=`uname -m`
+
+if [ ""$UNAME"" == ""Darwin"" ]; then
+	./fixDylibs.sh
+	export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:./osx/
+	if [ ""$STEAM_DYLD_INSERT_LIBRARIES"" != """" ] && [ ""$DYLD_INSERT_LIBRARIES"" == """" ]; then
+		export DYLD_INSERT_LIBRARIES=""$STEAM_DYLD_INSERT_LIBRARIES""
+	fi
+
+	echo ""Starting launcher""
+	cd ../otapi_launcher
+	
+	./Terraria
+	
+	status=$?
+
+	if [ $status -eq 210 ]; then
+		echo ""Launch vanilla""
+
+		cd ../MacOS
+		./Terraria.bin.osx $@
+	elif [ $status -eq 200 ]; then
+		echo ""Launching OTAPI""
+		cd ../otapi
+		./Terraria $@
+	else
+		echo ""Exiting""
+	fi
+fi
+");
+
+            // publish and copy OTAPI.Client.Launcher
+            {
+                var output = target.PublishHostLauncher();
+                var launcher = Path.Combine(output, "Terraria");
+                //var otapi = Path.Combine(installPath, "OTAPI.Client.Launcher");
+
+                if (!File.Exists(launcher))
+                    throw new Exception($"Failed to produce launcher to: {launcher}");
+
+                Directory.CreateDirectory(otapi_launcher);
+                target.CopyFiles(output, otapi_launcher);
             }
         }
 
@@ -268,7 +312,7 @@ namespace OTAPI.Client.Installer.Targets
                 var output = target.PublishHostLauncher();
                 var launcher = Path.Combine(output, "Terraria.exe");
 
-                if (!File.Exists(launch_file)) 
+                if (!File.Exists(launcher))
                     throw new Exception($"Failed to produce launcher to: {launcher}");
 
                 if (File.Exists(launch_file))

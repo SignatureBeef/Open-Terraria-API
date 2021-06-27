@@ -8,6 +8,64 @@ using System.Runtime.InteropServices;
 
 namespace OTAPI.Client.Launcher
 {
+    interface ILaunchTarget
+    {
+        void Load(MainWindowViewModel vm);
+        void Launch(bool vanilla);
+    }
+
+    class OsxLaunch : ILaunchTarget
+    {
+        public void Load(MainWindowViewModel vm)
+        {
+            vm.OtapiExe = Path.Combine(Environment.CurrentDirectory, "..", "otapi", "Terraria"); // game host
+            vm.VanillaExe = Path.Combine(Environment.CurrentDirectory, "..", "Resources", "Terraria.exe");
+        }
+
+        public void Launch(bool vanilla)
+        {
+            // returns code that correspond to osx ./Terraria launch script
+            if (vanilla)
+            {
+                Environment.Exit(210);
+            }
+            else
+            {
+                Environment.Exit(200);
+            }
+        }
+    }
+
+    class WindowsLaunch : ILaunchTarget
+    {
+        public void Load(MainWindowViewModel vm)
+        {
+            vm.OtapiExe = Path.Combine(Environment.CurrentDirectory, "otapi", "Terraria.exe"); // game host
+            vm.VanillaExe = Path.Combine(Environment.CurrentDirectory, "Terraria.exe");
+        }
+
+        public void Launch(bool vanilla)
+        {
+            if (vanilla)
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                {
+                    WorkingDirectory = Environment.CurrentDirectory,
+                    FileName = "Terraria.orig.exe"
+                });
+            }
+            else
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                {
+                    WorkingDirectory = Path.Combine(Environment.CurrentDirectory, "otapi"),
+                    FileName = "dotnet",
+                    Arguments = "Terraria.dll"
+                });
+            }
+        }
+    }
+
     class MainWindowViewModel : ReactiveObject
     {
         private string? _vanillaExe;
@@ -38,23 +96,16 @@ namespace OTAPI.Client.Launcher
         private bool _isOTAPIReady;
         public bool IsOTAPIReady { get => _isOTAPIReady; set => this.RaiseAndSetIfChanged(ref _isOTAPIReady, value); }
 
+        public ILaunchTarget LaunchTarget { get; set; }
+
         public void OnStartVanilla()
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
-            {
-                WorkingDirectory = Environment.CurrentDirectory,
-                FileName = "Terraria.orig.exe"
-            });
+            LaunchTarget?.Launch(true);
         }
 
         public void OnStartOTAPI()
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
-            {
-                WorkingDirectory = Path.Combine(Environment.CurrentDirectory, "otapi"),
-                FileName = "dotnet",
-                Arguments = "Terraria.dll"
-            });
+            LaunchTarget?.Launch(false);
         }
     }
 
@@ -66,12 +117,20 @@ namespace OTAPI.Client.Launcher
 #if DEBUG
             this.AttachDevTools();
 #endif
-            var vm = new MainWindowViewModel();
 
-            vm.OtapiExe = Path.Combine(Environment.CurrentDirectory, "otapi", "Terraria.exe"); // game host
+            var vm = new MainWindowViewModel();
+            ILaunchTarget? target = null;
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                vm.VanillaExe = Path.Combine(Environment.CurrentDirectory, "Terraria.exe");
+                target = new WindowsLaunch();
+
+            else //if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                target = new OsxLaunch();
+
+            //else throw new NotSupportedException();
+
+            vm.LaunchTarget = target;
+            target.Load(vm);
 
             DataContext = vm;
         }
@@ -79,6 +138,7 @@ namespace OTAPI.Client.Launcher
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+
         }
     }
 }
