@@ -93,7 +93,11 @@ partial class ChestHooks
                     case "QuickStackAllChests":
                         body.GetILProcessor().InsertBefore(instr,
                             new { OpCodes.Ldarg_0, },
+#if !tModLoaderServer_V1_3 
                             new { OpCodes.Ldfld, Operand = (FieldReference)modder.GetFieldDefinition(() => (new Terraria.Player()).whoAmI) }
+#else
+                            new { OpCodes.Ldfld, Operand = (FieldReference)modder.GetFieldDefinition(() => (new Terraria.Player(true)).whoAmI) }
+#endif
                         );
                         break;
                     default:

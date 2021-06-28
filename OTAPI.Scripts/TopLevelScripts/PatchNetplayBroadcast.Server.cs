@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-#if !tModLoaderServer_V1_3
 
 using ModFramework;
 using Mono.Cecil;
@@ -29,6 +28,9 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
+#if tModLoaderServer_V1_3
+System.Console.WriteLine("BroadcastThread not available in TML1.3");
+#else
 /// <summary>
 /// @doc Fix Terraria.Netplay.BroadcastThread infinite loop.
 /// </summary>

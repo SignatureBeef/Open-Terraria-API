@@ -35,6 +35,7 @@ namespace OTAPI.Patcher.Targets
             {'p', new OTAPIPCServerTarget() },
             {'m', new OTAPIMobileServerTarget() },
             {'c', new OTAPIClientLightweightTarget() },
+            {'t', new TMLPCServerTarget() },
         };
 
         public static IPatchTarget DeterminePatchTarget()
