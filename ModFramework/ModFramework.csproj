@@ -16,8 +16,8 @@
 		<PackageReleaseNotes>Initial alpha version of the ModFramework.</PackageReleaseNotes>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="MonoMod" Version="21.4.29.1" />
-		<PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.4.29.1" />
+		<PackageReference Include="MonoMod" Version="21.6.21.1" />
+		<PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.6.21.1" />
 		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
 	</ItemGroup>
 	<Target Name="CleanAll" AfterTargets="Clean">

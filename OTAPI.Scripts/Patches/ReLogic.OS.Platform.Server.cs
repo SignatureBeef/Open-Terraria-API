@@ -18,7 +18,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
-#if !tModLoaderServer_V1_3 
 using System.Runtime.InteropServices;
 
 /// <summary>
@@ -36,13 +35,21 @@ namespace ReLogic.OS
         {
             orig_ctor_Platform();
 
+#if !tModLoaderServer_V1_3
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 Current = new ReLogic.OS.OSX.OsxPlatform();
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 Current = new ReLogic.OS.Linux.LinuxPlatform();
             else
                 Current = new ReLogic.OS.Windows.WindowsPlatform();
+#else
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                Current = new ReLogic.OS.OsxPlatform();
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                Current = new ReLogic.OS.LinuxPlatform();
+            else
+                Current = new ReLogic.OS.WindowsPlatform();
+#endif
         }
     }
 }
-#endif

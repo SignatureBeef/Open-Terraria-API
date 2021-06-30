@@ -18,14 +18,50 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace OTAPI.Launcher
 {
     static class Program
     {
+        static string GetMetaData(string key)
+        {
+            var match = typeof(Terraria.Main).Assembly.CustomAttributes
+                .Where(a => a.AttributeType.Name == nameof(AssemblyMetadataAttribute)
+                    && a.ConstructorArguments.Count == 2
+                    && a.ConstructorArguments[0].Value.Equals(key)
+                )
+                .SingleOrDefault();
+            if (match != null)
+                return (string)match.ConstructorArguments[1].Value;
+            return null;
+        }
+
+        static bool IsTML = GetMetaData("OTAPI.Input") == "tModLoaderServer";
+
+        static MonoMod.RuntimeDetour.Hook? LazyHook(string type, string method, Delegate callback)
+        {
+            var match = typeof(Terraria.Main).Assembly.GetType(type);
+            var func = match?.GetMethod(method);
+
+            if (func != null)
+            {
+                return new MonoMod.RuntimeDetour.Hook(func, callback);
+            }
+            return null;
+        }
+
+        static void Nop() { }
+
         static void Main(string[] args)
         {
-            On.Terraria.Program.LaunchGame += Program_LaunchGame;
+            if (IsTML)
+            {
+                LazyHook("Terraria.ModLoader.Engine.HiDefGraphicsIssues", "Init", new Action(Nop));
+            }
+
+            On.Terraria.Main.ctor += Main_ctor;
+
             Hooks.MessageBuffer.ClientUUIDReceived += (_, args) =>
             {
                 if (args.Event == HookEvent.After)
@@ -38,7 +74,7 @@ namespace OTAPI.Launcher
             Hooks.Item.MechSpawn += (_, args) =>
              {
                  Console.WriteLine($"Hooks.Item.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
-            };
+             };
 
             On.Terraria.WindowsLaunch.Main += WindowsLaunch_Main;
 
@@ -48,11 +84,11 @@ namespace OTAPI.Launcher
             Terraria.WindowsLaunch.Main(args);
         }
 
-        private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
+        private static void Main_ctor(On.Terraria.Main.orig_ctor orig, Terraria.Main self)
         {
+            orig(self);
             Terraria.Main.SkipAssemblyLoad = true;
-            //Terraria.Program.ForceLoadThread(null);
-            orig(args, monoArgs);
+            //    //Terraria.Program.ForceLoadThread(null);
         }
 
         private static void Main_DedServ(On.Terraria.Main.orig_DedServ orig, Terraria.Main self)

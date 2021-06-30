@@ -38,11 +38,12 @@ namespace OTAPI.Patcher.Targets
 
         public virtual string CliKey { get; } = "latest";
 
-        public virtual string NuGetPackageFileName { get; } = "OTAPI.TML.PC.nupkg";
-        public virtual string NuSpecFilePath { get; } = "../../../../OTAPI.TML.PC.nuspec";
+        public virtual string NuGetPackageFileName { get; } = "OTAPI.TML.nupkg";
+        public virtual string NuSpecFilePath { get; } = "../../../../OTAPI.TML.nuspec";
         public virtual string MdFileName { get; } = "OTAPI.TML.PC.Server.mfw.md";
 
         public virtual string SupportedDownloadUrl { get; } = "https://github.com/tModLoader/tModLoader/releases/download/v0.11.8.4/tModLoader.Windows.v0.11.8.4.zip";
+        //public virtual string SupportedDownloadUrl { get; } = "https://github.com/tModLoader/tModLoader/releases/download/v0.11.8.4/tModLoader.Linux.v0.11.8.4.zip";
 
         private MarkdownDocumentor markdownDocumentor = new ModificationMdDocumentor();
 
@@ -213,7 +214,7 @@ namespace OTAPI.Patcher.Targets
             {
                 InputPath = input,
                 OutputPath = output,
-                ReadingMode = ReadingMode.Deferred,
+                //ReadingMode = ReadingMode.Deferred,
                 MissingDependencyThrow = false,
                 PublicEverything = true, // we want all of terraria exposed
 

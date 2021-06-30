@@ -44,34 +44,34 @@ namespace Terraria
             return false;
         }
 
-        public static extern void orig_Main(string[] args);
-        public static void Main(string[] args)
-        {
-            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
+        //public static extern void orig_Main(string[] args);
+        //public static void Main(string[] args)
+        //{
+        //    System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
 
-            PluginLoader.TryLoad();
-            Console.WriteLine($"[OTAPI] Starting up.");
-            Modifier.Apply(ModType.Runtime);
+        //    PluginLoader.TryLoad();
+        //    Console.WriteLine($"[OTAPI] Starting up.");
+        //    Modifier.Apply(ModType.Runtime);
 
-            orig_Main(args);
-        }
+        //    orig_Main(args);
+        //}
 
-        // replaces the AppDomain resolution already in Terraria.
-        private static Assembly ResolveDependency(System.Runtime.Loader.AssemblyLoadContext ctx, AssemblyName assemblyName)
-        {
-            Console.WriteLine($"Looking for assembly: {assemblyName.Name}");
-            var resourceName = assemblyName.Name + ".dll";
-            var src = typeof(Program).Assembly;
-            resourceName = Array.Find(src.GetManifestResourceNames(), element => element.EndsWith(resourceName));
+        //// replaces the AppDomain resolution already in Terraria.
+        //private static Assembly ResolveDependency(System.Runtime.Loader.AssemblyLoadContext ctx, AssemblyName assemblyName)
+        //{
+        //    Console.WriteLine($"Looking for assembly: {assemblyName.Name}");
+        //    var resourceName = assemblyName.Name + ".dll";
+        //    var src = typeof(Program).Assembly;
+        //    resourceName = Array.Find(src.GetManifestResourceNames(), element => element.EndsWith(resourceName));
 
-            if (!string.IsNullOrWhiteSpace(resourceName))
-            {
-                Console.WriteLine($"[OTAPI] Resolved ${resourceName}");
-                using (var stream = src.GetManifestResourceStream(resourceName))
-                    return System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
-            }
+        //    if (!string.IsNullOrWhiteSpace(resourceName))
+        //    {
+        //        Console.WriteLine($"[OTAPI] Resolved ${resourceName}");
+        //        using (var stream = src.GetManifestResourceStream(resourceName))
+        //            return System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
     }
 }

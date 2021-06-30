@@ -104,7 +104,7 @@ namespace OTAPI.Patcher.Targets
 
                 Console.WriteLine(input.Key);
 
-                if (_targets.TryGetValue(input.KeyChar, out IPatchTarget inputMatch))
+                if (_targets.TryGetValue(input.KeyChar.ToString().ToLower()[0], out IPatchTarget inputMatch))
                     return inputMatch;
 
                 if (input.Key == ConsoleKey.Enter) // no key entered

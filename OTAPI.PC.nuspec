@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-        The Open Terraria API, known as OTAPI, is a low-level API for Terrariathat rewrites and hooks into the official or modded binaries for others to use.
+        The Open Terraria API, known as OTAPI, is a low-level API for Terraria that rewrites and hooks into the official or modded binaries for others to use.
 
         OTAPI is primarily a server modification and is available as a cross platform package via NuGet.
 

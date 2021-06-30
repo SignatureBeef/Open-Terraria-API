@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>OTAPI.Upcoming.Mobile</id>
+    <id>OTAPI.Upcoming.tModLoader</id>
     <title>Open Terraria API for Terraria</title>
     <version>[INJECT_VERSION]</version>
     <authors>DeathCradle</authors>
@@ -24,9 +24,9 @@
          - A strong set of libraries with methods and extensions to help you build more mods.
          - Create 1 file MonoMod patches to rewrite or inject new meta data to the assembly.
     </description>
-    <summary>Open Terraria API [INJECT_VERSION] for Terraria 1.4.0.5 (Mobile)</summary>
+    <summary>Open Terraria API [INJECT_VERSION] for Terraria 1.4.0.5 (tModLoader)</summary>
     <releaseNotes>
-      Preliminary Terraria 1.4.0.5 (Mobile)
+      Preliminary Terraria 1.4.0.5 (tModLoader)
     </releaseNotes>
     <copyright>Copyright 2016-2021</copyright>
     <tags>Terraria,OTAPI</tags>
