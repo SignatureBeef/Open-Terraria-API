@@ -1,36 +1,47 @@
 # Open Terraria API [![Travis (.com) branch](https://img.shields.io/travis/com/DeathCradle/Open-Terraria-API/upcoming?label=build&logo=travis)](https://travis-ci.com/DeathCradle/Open-Terraria-API) [![AppVeyor branch](https://img.shields.io/appveyor/build/DeathCradle/Open-Terraria-API/upcoming?label=build&logo=appveyor)](https://ci.appveyor.com/project/DeathCradle/open-terraria-api) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Wiki](https://img.shields.io/static/v1?label=docs&message=wiki&color=blueviolet)](https://github.com/DeathCradle/Open-Terraria-API/wiki/%5Bupcoming%5D-1.-About)
 
-The Open Terraria API, known as OTAPI, is a low-level API for [Terraria](https://terraria.org) that rewrites and hooks into the official binaries for others to use.
+The Open Terraria API, known as OTAPI, is a low-level API for Terraria that rewrites and hooks into the official binaries for others to use.
 
-OTAPI is primarily a server modification and is available as a cross platform package via [NuGet](https://www.nuget.org/packages/OTAPI.Upcoming/3.0.0-alpha9).
-Client versions of OTAPI is also now possible, and work has begun on this however due to the lack of demand hooks are made upon request. 
+It is primarily a server modification for the PC edition of Terraria, however v3 has seen additional support for the PC client assemblies, and the mobile windows server assembly too.
 
-Version 3.0 is built and ran on .NET5 thanks to ModFramework being able to retarget the .NET4 vanilla assembly up to .NET5.
-This means that any mod you create can be written as a .NET5 module and later merged into the patched assembly thanks to MonoMod.
+The [upcoming branch](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming) is a ground up redesign and will take the place of the [master branch](https://github.com/DeathCradle/Open-Terraria-API/tree/master) when fully complete over in [projects](https://github.com/DeathCradle/Open-Terraria-API/projects).
 
-Here is what is now possible:
- - Runtime hooks, just reference OTAPI.Runtime.dll and register to MonoMod events generated from the Terraria assembly. No need to make a 'patch' unless you really want to.
- - Full .NET5 ecosystem and its performance improvements. No need for two targets such as Windows & Mono anymore either.
- - A new optional internal module system via ModFramework to load precompiled dll's, .cs files, top level classes, lua or even javascript (patch-time and runtime!)
- - A strong set of libraries with methods and extensions to help you build more mods.
- - Create 1 file MonoMod patches to rewrite or inject new meta data to the assembly.
+Significant changes this redesign brings are...
+* Modular script system, allowing single file patches using csharp([net5](https://www.nuget.org/packages/ModFramework.Modules.CSharp/)), javascript([clearscript](https://www.nuget.org/packages/ModFramework.Modules.ClearScript/)) and lua([nlua](https://www.nuget.org/packages/ModFramework.Modules.Lua/))
+* A strong set of libraries with methods and extensions for use in extending or contributing back
+* .NET5 projects for all without Terraria's dependency to net4.
 
-## All packages
+The stack consists upon:
+* [OTAPI Scripts](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Scripts), a directory containing all the scripts used to patch the pc, mobile & client assemblies.
+* [OTAPI Patcher](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Patcher), a program to process all OTAPI Scripts and produce the final OTAPI assemblies for all variants and also supports creating the NuGet packages.
+* [ModFramework](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/ModFramework), a library that extends MonoMod and provides higher level patching methods and extensions, such as remapping fields to properties and arrays to collections
+* ModFramework Modules, additional plugins to add [c#](https://www.nuget.org/packages/ModFramework.Modules.CSharp/), [javascript](https://www.nuget.org/packages/ModFramework.Modules.ClearScript/) and [lua](https://www.nuget.org/packages/ModFramework.Modules.Lua/) scripts, for both patching and runtime.
+* [FNA](https://github.com/FNA-XNA/FNA/) for use on the client variants, for a consistent codebase on all platforms. Servers use the [Xna shims](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Scripts/Shims/Xna) instead.
+* [MonoMod](https://github.com/MonoMod/MonoMod) for applying patches and generating runtime events/hooks.
 
-[![OTAPI.Upcoming](https://img.shields.io/nuget/vpre/OTAPI.Upcoming?label=OTAPI.Upcoming)](https://www.nuget.org/packages/OTAPI.Upcoming/)
-[![OTAPI.Upcoming.Mobile](https://img.shields.io/nuget/vpre/OTAPI.Upcoming.Mobile?label=OTAPI.Upcoming.Mobile)](https://www.nuget.org/packages/OTAPI.Upcoming.Mobile)
+## Terraria support
+Server assemblies used in the patching process are freely available at [Terraria's website](http://terraria.org).
 <br/>
-[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework?label=ModFramework)](https://www.nuget.org/packages/ModFramework)
+If you intend to patch a client version, you must own an existing copy of Terraria and have it installed in the default path of your machine. The [OTAPI Project](https://github.com/DeathCradle/Open-Terraria-API/) does not host or contain the original source file so it will side load itself into the existing installation.
 <br/>
-[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework.Modules.CSharp?label=ModFramework.Modules.CSharp)](https://www.nuget.org/packages/ModFramework.Modules.CSharp)
-[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework.Modules.ClearScript?label=ModFramework.Modules.ClearScript)](https://www.nuget.org/packages/ModFramework.Modules.ClearScript)
-[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework.Modules.Lua?label=ModFramework.Modules.Lua)](https://www.nuget.org/packages/ModFramework.Modules.Lua)
- 
+On MacOS OTAPI will install itself to a new directory within the existing Terraria.app directory, and it will then backup and patch your existing launch scripts; giving us the future use to be able to switch between a vanilla environment or the default OTAPI modded environment.
 
-## Simple overview of v3 (partially outdated, update coming soon)
-![Diagram](Doco/simple_overview.png)
+All OTAPI builds support C#/lua/js scripts with reload-on-save features, however you may need to install the additional ModFramework module plugins if you use this in another project.
 
-<br/>
+| Variant | Status | Version | |
+| ---- | ---- | ---- | ---- |
+| Windows Server for PC | Cross platform NuGet package produced. [![OTAPI.Upcoming](https://img.shields.io/nuget/vpre/OTAPI.Upcoming?label=OTAPI.Upcoming)](https://www.nuget.org/packages/OTAPI.Upcoming/) | 1.4.2.3 | &#x2611; |
+| Linux Server for PC | not required or supported | | &#x2611; |
+| MacOS Server for PC | not required or supported | | &#x2611; |
+| Windows Server for Mobile | Cross platform NuGet package produced. [![OTAPI.Upcoming.Mobile](https://img.shields.io/nuget/vpre/OTAPI.Upcoming.Mobile?label=OTAPI.Upcoming.Mobile)](https://www.nuget.org/packages/OTAPI.Upcoming.Mobile) | 1.4.0.5 | &#x2611; |
+| Linux Server for Mobile | not required or supported | | &#x2611; |
+| MacOS Server for Mobile | not required or supported | | &#x2611; |
+| Windows Client for PC | Full support to install a patched OTAPI into an existing Windows install (steam confirmed), Xna is replaced with FNA and x64 enabled. | 1.4.2.3 | &#x2611; |
+| MacOS Client for PC | Full support to install a patched OTAPI into an existing MacOS install (Steam/Gog confirmed) | 1.4.2.3 | &#x2611; |
+| Linux Client for PC | not yet supported but planned. should be similar to MacOS |  | &#x2612; |
+| iOS Client | not supported or planned |  | &#x2612; |
+| Android Client | not supported or planned |  | &#x2612; |
+| tModLoader Server | work has conducted in testing support for TML on Terraria 1.3, but no clear outcome until 1.4 support is released. | 1.3.5.3 | &#x2612; |
 
 ---
 
