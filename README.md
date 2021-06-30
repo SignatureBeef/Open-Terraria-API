@@ -6,6 +6,9 @@ You can use this modification as a [NuGet package](https://www.nuget.org/package
 
 <br/>
 
+# Upcoming changes
+This branch of OTAPI will be deprecated sometime in the future, and all work that depends on it should start considering the shift to [the new branch](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming) that will supersede it. This master branch will remain up until OTAPI3 is fully completed - you can [track the progress in projects](https://github.com/DeathCradle/Open-Terraria-API/projects). In the mean time the master branch may still receive Terraria updates, however it may not receive any further development or improvements. When OTAPI3 is completed the master branch will remain, but the upcoming branch will be renamed to default and it will then take the place of the default branch (instead of master).
+
 ---
 
 Bitcoin donations are welcomed via address [3PRfyMh1brjCqzkw9az2aT7yNjbfkwFZqo](bitcoin:3PRfyMh1brjCqzkw9az2aT7yNjbfkwFZqo)
