@@ -43,6 +43,18 @@ All OTAPI builds support C#/lua/js scripts with reload-on-save features, however
 | Android Client | not supported or planned |  | &#x2612; |
 | tModLoader Server | work has conducted in testing support for TML on Terraria 1.3, but no clear outcome until 1.4 support is released. | 1.3.5.3 | &#x2612; |
 
+
+## All packages
+
+[![OTAPI.Upcoming](https://img.shields.io/nuget/vpre/OTAPI.Upcoming?label=OTAPI.Upcoming)](https://www.nuget.org/packages/OTAPI.Upcoming/)
+[![OTAPI.Upcoming.Mobile](https://img.shields.io/nuget/vpre/OTAPI.Upcoming.Mobile?label=OTAPI.Upcoming.Mobile)](https://www.nuget.org/packages/OTAPI.Upcoming.Mobile)
+<br/>
+[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework?label=ModFramework)](https://www.nuget.org/packages/ModFramework)
+<br/>
+[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework.Modules.CSharp?label=ModFramework.Modules.CSharp)](https://www.nuget.org/packages/ModFramework.Modules.CSharp)
+[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework.Modules.ClearScript?label=ModFramework.Modules.ClearScript)](https://www.nuget.org/packages/ModFramework.Modules.ClearScript)
+[![ModFramework](https://img.shields.io/nuget/vpre/ModFramework.Modules.Lua?label=ModFramework.Modules.Lua)](https://www.nuget.org/packages/ModFramework.Modules.Lua)
+ 
 ---
 
 Bitcoin donations are welcomed via address [3PRfyMh1brjCqzkw9az2aT7yNjbfkwFZqo](bitcoin:3PRfyMh1brjCqzkw9az2aT7yNjbfkwFZqo)
