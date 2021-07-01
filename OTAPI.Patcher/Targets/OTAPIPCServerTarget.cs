@@ -142,12 +142,7 @@ namespace OTAPI.Patcher.Targets
                 mm.WriterParameters.WriteSymbols = false;
 #endif
 
-            {
-                var sac = mm.Module.ImportReference(typeof(AssemblyInformationalVersionAttribute).GetConstructors()[0]);
-                var sa = new CustomAttribute(sac);
-                sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, Common.GetVersion()));
-                mm.Module.Assembly.CustomAttributes.Add(sa);
-            }
+            mm.AddVersion(Common.GetVersion());
 
             mm.Write();
 

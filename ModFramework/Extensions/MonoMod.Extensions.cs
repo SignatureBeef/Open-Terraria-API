@@ -100,20 +100,14 @@ namespace ModFramework
         public static void AddMetadata(this ModFwModder mm, string key, string value, bool replace = true)
         {
             var existing = mm.GetMetadata(key);
-            if (existing.Any())
+
+            foreach (var match in existing.ToArray())
             {
-                foreach (var match in existing.ToArray())
-                {
-                    mm.Module.Assembly.CustomAttributes.Remove(match);
-                }
-                var sa = mm.CreateAddMetadataAttribute(key, value);
-                mm.Module.Assembly.CustomAttributes.Add(sa);
+                mm.Module.Assembly.CustomAttributes.Remove(match);
             }
-            else
-            {
-                var sa = mm.CreateAddMetadataAttribute(key, value);
-                mm.Module.Assembly.CustomAttributes.Add(sa);
-            }
+
+            var sa = mm.CreateAddMetadataAttribute(key, value);
+            mm.Module.Assembly.CustomAttributes.Add(sa);
         }
 
         public static IEnumerable<CustomAttribute> GetMetadata(this ModFwModder mm, string key)
@@ -132,5 +126,37 @@ namespace ModFramework
 
         public static IEnumerable<string> GetMetadataValues(this ModFwModder mm, string key)
             => mm.GetMetadata(key).Select(ca => (string)ca.ConstructorArguments[1].Value);
+
+
+        public static CustomAttribute CreateAddVersionAttribute(this ModFwModder mm, string version)
+        {
+            var sac = mm.Module.ImportReference(typeof(System.Reflection.AssemblyInformationalVersionAttribute).GetConstructors()[0]);
+            var sa = new CustomAttribute(sac);
+            sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, version));
+            mm.Module.Assembly.CustomAttributes.Add(sa);
+            return sa;
+        }
+
+        public static IEnumerable<CustomAttribute> GetVersionAttributes(this ModFwModder mm)
+        {
+            var matches = mm.Module.Assembly.CustomAttributes
+                .Where(ca => ca.Constructor.DeclaringType.Name == nameof(System.Reflection.AssemblyInformationalVersionAttribute))
+                .ToArray();
+
+            return matches;
+        }
+
+        public static void AddVersion(this ModFwModder mm, string version)
+        {
+            foreach (var match in mm.Module.Assembly.CustomAttributes
+                .Where(ca => ca.Constructor.DeclaringType.Name == nameof(System.Reflection.AssemblyInformationalVersionAttribute)))
+            {
+                match.ConstructorArguments[0] = new CustomAttributeArgument(match.ConstructorArguments[0].Type, version);
+                return;
+            }
+
+            var sa = mm.CreateAddVersionAttribute(version);
+            mm.Module.Assembly.CustomAttributes.Add(sa);
+        }
     }
 }
