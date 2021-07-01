@@ -32,6 +32,9 @@ namespace ModFramework
         public static ILCursor GetILCursor(this MonoMod.MonoModder modder, Expression<Action> reference, bool followRedirect = true)
             => new ILCursor(new ILContext(modder.Module.GetDefinition<MethodDefinition>(reference, followRedirect)) { ReferenceBag = RuntimeILReferenceBag.Instance });
 
+        public static ILCursor GetILCursor(this MonoMod.MonoModder modder, MethodDefinition method, bool followRedirect = true)
+            => new ILCursor(new ILContext(method) { ReferenceBag = RuntimeILReferenceBag.Instance });
+
         public static MethodDefinition GetMethodDefinition(this MonoMod.MonoModder modder, Expression<Action> reference, bool followRedirect = true)
             => modder.Module.GetDefinition<MethodDefinition>(reference, followRedirect: followRedirect);
         public static FieldDefinition GetFieldDefinition<TResult>(this MonoMod.MonoModder modder, Expression<Func<TResult>> reference)

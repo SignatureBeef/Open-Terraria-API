@@ -28,12 +28,32 @@ namespace ModFramework.Relinker
         FieldDefinition Field { get; }
         PropertyDefinition Property { get; }
 
+        MethodReference getReference;
+        MethodReference setReference;
+        TypeReference returnTypeReference;
+
         public FieldToPropertyRelinker(FieldDefinition field, PropertyDefinition property)
         {
             this.Field = field;
             this.Property = property;
 
+            if (this.Property.GetMethod is not null)
+            {
+                this.getReference = field.Module.ImportReference(this.Property.GetMethod);
+                this.returnTypeReference = field.Module.ImportReference(this.Property.GetMethod.ReturnType);
+            }
+
+            if (this.Property.SetMethod is not null)
+                this.setReference = field.Module.ImportReference(this.Property.SetMethod);
+
             Console.WriteLine($"[ModFw] Relinking to property {field.FullName}=>{property.FullName}");
+        }
+
+        TRef ResolveReference<TRef>(TRef reference)
+            where TRef : MemberReference
+        {
+
+            return reference;
         }
 
         public override void Relink(MethodBody body, Instruction instr)
@@ -52,22 +72,22 @@ namespace ModFramework.Relinker
                                 if (body.Method == this.Property.GetMethod || body.Method == this.Property.SetMethod)
                                     return;
 
-                                if (instr.OpCode == OpCodes.Ldfld)
+                                if (instr.OpCode == OpCodes.Ldfld || instr.OpCode == OpCodes.Ldsfld)
                                 {
                                     instr.OpCode = OpCodes.Call;
-                                    instr.Operand = this.Property.GetMethod;
+                                    instr.Operand = ResolveReference(this.getReference);
                                 }
-                                else if (instr.OpCode == OpCodes.Stfld)
+                                else if (instr.OpCode == OpCodes.Stfld || instr.OpCode == OpCodes.Stsfld)
                                 {
                                     instr.OpCode = OpCodes.Call;
-                                    instr.Operand = this.Property.SetMethod;
+                                    instr.Operand = ResolveReference(this.setReference);
                                 }
                                 else if (instr.OpCode == OpCodes.Ldflda)
                                 {
                                     instr.OpCode = OpCodes.Call;
-                                    instr.Operand = this.Property.GetMethod;
+                                    instr.Operand = ResolveReference(this.getReference);
 
-                                    var vrb = new VariableDefinition(this.Property.GetMethod.ReturnType);
+                                    var vrb = new VariableDefinition(ResolveReference(this.returnTypeReference));
                                     body.Variables.Add(vrb);
 
                                     var ilp = body.GetILProcessor();

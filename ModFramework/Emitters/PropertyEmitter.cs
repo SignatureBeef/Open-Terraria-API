@@ -38,10 +38,7 @@ namespace ModFramework
             };
 
             //Add the CompilerGeneratedAttribute or if you decompile the getter body will be shown
-            field.CustomAttributes.Add(new CustomAttribute(
-                field.DeclaringType.Module
-                    .GetCoreLibMethod("System.Runtime.CompilerServices", "CompilerGeneratedAttribute", ".ctor")
-            ));
+            field.CustomAttributes.Add(CreateCompilerGeneratedAttribute(field.DeclaringType.Module));
 
             field.DeclaringType.Properties.Add(property);
 
@@ -49,7 +46,8 @@ namespace ModFramework
             relinkProvider.AddTask(new FieldToPropertyRelinker(field, property));
 
             field.Name = $"<{field.Name}>k__BackingField";
-            field.Attributes = FieldAttributes.Private;
+            //field.Attributes = FieldAttributes.Private;
+            field.IsPrivate = true;
 
             return property;
         }
@@ -65,7 +63,12 @@ namespace ModFramework
         public static MethodDefinition GenerateGetter(this FieldDefinition field)
         {
             //Create the method definition
-            var method = new MethodDefinition("get_" + field.Name, DefaultMethodAttributes, field.FieldType);
+            var method = new MethodDefinition("get_" + field.Name, DefaultMethodAttributes, field.FieldType)
+            {
+                HasThis = !field.IsStatic,
+            };
+
+            method.IsStatic = field.IsStatic;
 
             //Create the il processor so we can alter il
             var il = method.Body.GetILProcessor();
@@ -75,7 +78,7 @@ namespace ModFramework
                 il.Append(il.Create(OpCodes.Ldarg_0));
 
             //Load the backing field
-            il.Append(il.Create(OpCodes.Ldfld, field));
+            il.Append(il.Create(field.IsStatic ? OpCodes.Ldsfld : OpCodes.Ldfld, field));
             //Return the backing fields value
             il.Append(il.Create(OpCodes.Ret));
 
@@ -85,20 +88,29 @@ namespace ModFramework
             method.IsGetter = true;
 
             //Add the CompilerGeneratedAttribute or if you decompile the getter body will be shown
-            method.CustomAttributes.Add(new CustomAttribute(
-                field.DeclaringType.Module
-                    .GetCoreLibMethod("System.Runtime.CompilerServices", "CompilerGeneratedAttribute", ".ctor")
-            ));
+            method.CustomAttributes.Add(CreateCompilerGeneratedAttribute(field.DeclaringType.Module));
 
             field.DeclaringType.Methods.Add(method);
 
             return method;
         }
 
+        static CustomAttribute CreateCompilerGeneratedAttribute(ModuleDefinition module)
+        {
+            var cga = module.GetCoreLibMethod("System.Runtime.CompilerServices", "CompilerGeneratedAttribute", ".ctor");
+            cga.HasThis = true;
+            return new CustomAttribute(cga);
+        }
+
         public static MethodDefinition GenerateSetter(this FieldDefinition field)
         {
             //Create the method definition
-            var method = new MethodDefinition("set_" + field.Name, DefaultMethodAttributes, field.DeclaringType.Module.TypeSystem.Void);
+            var method = new MethodDefinition("set_" + field.Name, DefaultMethodAttributes, field.DeclaringType.Module.TypeSystem.Void)
+            {
+                HasThis = !field.IsStatic,
+            };
+
+            method.IsStatic = field.IsStatic;
 
             //Setters always have a 'value' variable, but it's really just a parameter. We need to add this.
             method.Parameters.Add(new ParameterDefinition("value", ParameterAttributes.None, field.FieldType));
@@ -110,9 +122,9 @@ namespace ModFramework
             if (!field.IsStatic)
                 il.Append(il.Create(OpCodes.Ldarg_0));
             //Load the 'value' parameter we added (alternatively, we could do il.Create(OpCodes.Ldarg, <field definition>)
-            il.Append(il.Create(OpCodes.Ldarg_1));
+            il.Append(il.Create(field.IsStatic ? OpCodes.Ldarg_0 : OpCodes.Ldarg_1));
             //Store the parameters value into the backing field
-            il.Append(il.Create(OpCodes.Stfld, field));
+            il.Append(il.Create(field.IsStatic ? OpCodes.Stsfld : OpCodes.Stfld, field));
             //Return from the method as we are done.
             il.Append(il.Create(OpCodes.Ret));
 
@@ -122,10 +134,7 @@ namespace ModFramework
             method.IsSetter = true;
 
             //Add the CompilerGeneratedAttribute or if you decompile the getter body will be shown
-            method.CustomAttributes.Add(new CustomAttribute(
-                field.DeclaringType.Module
-                    .GetCoreLibMethod("System.Runtime.CompilerServices", "CompilerGeneratedAttribute", ".ctor")
-            ));
+            method.CustomAttributes.Add(CreateCompilerGeneratedAttribute(field.DeclaringType.Module));
 
             field.DeclaringType.Methods.Add(method);
 

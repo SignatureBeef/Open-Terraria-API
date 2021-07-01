@@ -82,6 +82,19 @@ namespace ModFramework
         {
             base.Read();
 
+            // bit of a hack, but saves having to roll our own and having to try/catch the shit out of it (which actually drags out
+            // patching by 5-10 minutes!)
+            // this just reuses the Mono.Cecil cache to resolve our main assembly instead of reimporting a new module
+            // which lets some patches fail to relink due to an unimported module...which should be valid since
+            // its the same assembly, but it's lost during ImportReference calls
+            {
+                var cache =
+                        (this.AssemblyResolver as DefaultAssemblyResolver).GetType()
+                        .GetField("cache", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                        .GetValue(this.AssemblyResolver) as Dictionary<string, AssemblyDefinition>;
+                cache.Add(this.Module.Assembly.FullName, this.Module.Assembly);
+            }
+
             Modifier.Apply(ModType.Read, this);
         }
 
@@ -139,4 +152,61 @@ namespace ModFramework
             this.RelinkModuleMap[fromAssemblyName] = toModule ?? this.Module;
         }
     }
+
+    //public class MfwDefaultAssemblyResolver : DefaultAssemblyResolver
+    //{
+    //    IAssemblyResolver root;
+    //    ModFwModder modder;
+
+    //    public MfwDefaultAssemblyResolver(ModFwModder modder)
+    //    {
+    //        this.root = modder.AssemblyResolver;
+    //        this.modder = modder;
+    //    }
+
+    //    public override AssemblyDefinition Resolve(AssemblyNameReference name)
+    //    {
+    //        if (this.modder.Module.Assembly.FullName == name.FullName)
+    //        {
+    //            return this.modder.Module.Assembly;
+    //        }
+    //        return this.root.Resolve(name);
+    //    }
+
+    //    public override AssemblyDefinition Resolve(AssemblyNameReference name, ReaderParameters parameters)
+    //    {
+    //        return this.root.Resolve(name, parameters);
+    //    }
+    //}
+
+    //public class MfwMetadataResolver : MetadataResolver
+    //{
+
+    //    public MfwMetadataResolver(IAssemblyResolver assemblyResolver)
+    //        : base(assemblyResolver)
+    //    {
+    //    }
+
+    //    public override FieldDefinition Resolve(FieldReference field)
+    //    {
+    //        return base.Resolve(field);
+    //    }
+
+    //    public override MethodDefinition Resolve(MethodReference method)
+    //    {
+    //        return base.Resolve(method);
+    //    }
+
+    //    public override TypeDefinition Resolve(TypeReference type)
+    //    {
+    //        try
+    //        {
+    //            return base.Resolve(type);
+    //        }
+    //        catch(Exception ex)
+    //        {
+    //            return null;
+    //        }
+    //    }
+    //}
 }

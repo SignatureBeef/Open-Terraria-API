@@ -85,7 +85,7 @@ namespace OTAPI.Patcher.Targets
         #region Produce OTAPI
         public void ApplyModifications()
         {
-            var localPath = "TerrariaServer.dll";
+            var localPath = "./TerrariaServer.dll";
 
             // load into the current app domain for patch refs
             var asm = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, localPath));

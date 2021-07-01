@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Linq;
 using System.Reflection;
+using MonoMod.RuntimeDetour;
 
 namespace OTAPI.Launcher
 {
@@ -77,11 +78,17 @@ namespace OTAPI.Launcher
              };
 
             On.Terraria.WindowsLaunch.Main += WindowsLaunch_Main;
+            Hooks.Main.StatusTextChange += Main_StatusTextChange;
 
             if (args.Any(x => x.ToLower() == "-test-init"))
                 On.Terraria.Main.DedServ += Main_DedServ;
 
             Terraria.WindowsLaunch.Main(args);
+        }
+
+        private static void Main_StatusTextChange(object sender, Hooks.Main.StatusTextChangeArgs e)
+        {
+            e.Value = "[OTAPI] " + e.Value;
         }
 
         private static void Main_ctor(On.Terraria.Main.orig_ctor orig, Terraria.Main self)
