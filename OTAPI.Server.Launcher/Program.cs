@@ -63,7 +63,7 @@ namespace OTAPI.Launcher
              };
 
             On.Terraria.WindowsLaunch.Main += WindowsLaunch_Main;
-            Hooks.Main.StatusTextChange += Main_StatusTextChange;
+            //Hooks.Main.StatusTextChange += Main_StatusTextChange;
 
             if (args.Any(x => x.ToLower() == "-test-init"))
                 On.Terraria.Main.DedServ += Main_DedServ;
@@ -71,10 +71,10 @@ namespace OTAPI.Launcher
             Terraria.WindowsLaunch.Main(args);
         }
 
-        private static void Main_StatusTextChange(object sender, Hooks.Main.StatusTextChangeArgs e)
-        {
-            e.Value = "[OTAPI] " + e.Value;
-        }
+        //private static void Main_StatusTextChange(object sender, Hooks.Main.StatusTextChangeArgs e)
+        //{
+        //    e.Value = "[OTAPI] " + e.Value;
+        //}
 
         private static void Main_ctor(On.Terraria.Main.orig_ctor orig, Terraria.Main self)
         {
