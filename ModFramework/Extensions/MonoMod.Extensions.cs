@@ -133,7 +133,6 @@ namespace ModFramework
             var sac = mm.Module.ImportReference(typeof(System.Reflection.AssemblyInformationalVersionAttribute).GetConstructors()[0]);
             var sa = new CustomAttribute(sac);
             sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, version));
-            mm.Module.Assembly.CustomAttributes.Add(sa);
             return sa;
         }
 
