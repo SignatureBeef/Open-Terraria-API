@@ -281,6 +281,7 @@ fi
 
             // publish and copy OTAPI.Client.Launcher
             {
+                Console.WriteLine("Publishing and creating launcher...this will take a while.");
                 var output = target.PublishHostLauncher();
                 var launcher = Path.Combine(output, "Terraria");
                 //var otapi = Path.Combine(installPath, "OTAPI.Client.Launcher");

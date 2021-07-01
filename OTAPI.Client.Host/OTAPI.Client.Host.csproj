@@ -29,9 +29,9 @@
 		<PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
 		<PackageReference Include="System.Security.Permissions" Version="5.0.0" />
 		<PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
-		<PackageReference Include="Microsoft.ClearScript" Version="7.1.3" />
-		<PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.1.3" />
-		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.1.3" />
+		<PackageReference Include="Microsoft.ClearScript" Version="7.1.4" />
+		<PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.1.4" />
+		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.1.4" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />

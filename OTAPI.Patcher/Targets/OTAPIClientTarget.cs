@@ -304,6 +304,7 @@ namespace OTAPI.Patcher.Targets
             mm.RelinkAssembly("System.Windows.Forms");
 
             this.AddPatchMetadata(mm);
+            mm.AddVersion(Common.GetVersion());
 
             mm.AutoPatch();
 
