@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+using ModFramework;
+
 namespace OTAPI.Patcher.Targets
 {
     [MonoMod.MonoModIgnore]
@@ -24,5 +26,17 @@ namespace OTAPI.Patcher.Targets
     {
         string DisplayText { get; }
         void Patch();
+    }
+
+    public static partial class Common
+    {
+        public static void AddPatchMetadata(this IPatchTarget target, ModFwModder modder,
+            string initialModuleName = null,
+            string inputName = null)
+        {
+            modder.AddMetadata("OTAPI.Target", target.DisplayText);
+            if (initialModuleName != null) modder.AddMetadata("OTAPI.ModuleName", initialModuleName);
+            if (inputName != null) modder.AddMetadata("OTAPI.Input", inputName);
+        }
     }
 }

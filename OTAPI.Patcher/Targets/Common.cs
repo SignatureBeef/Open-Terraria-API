@@ -22,7 +22,7 @@ using System.Reflection;
 namespace OTAPI.Patcher.Targets
 {
     [MonoMod.MonoModIgnore]
-    public static class Common
+    public static partial class Common
     {
         public static string GetVersion()
         {
@@ -39,6 +39,6 @@ namespace OTAPI.Patcher.Targets
             string find = $"-{key}=";
             var match = Array.Find(Environment.GetCommandLineArgs(), x => x.StartsWith(find, StringComparison.CurrentCultureIgnoreCase));
             return match?.Substring(find.Length)?.ToLower();
-        }
+        } 
     }
 }

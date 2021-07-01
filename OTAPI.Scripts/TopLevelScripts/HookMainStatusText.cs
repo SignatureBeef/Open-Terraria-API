@@ -16,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+#if tModLoaderServer_V1_3
+System.Console.WriteLine("Main.statusText not available in TML1.3");
+#else
 using System;
 using ModFramework;
 using ModFramework.Relinker;
@@ -78,3 +81,4 @@ namespace OTAPI
         }
     }
 }
+#endif

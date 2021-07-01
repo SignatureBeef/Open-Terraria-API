@@ -131,7 +131,7 @@ namespace OTAPI.Patcher.Targets
 
             mm.ReadMod(this.GetType().Assembly.Location);
 
-            mm.AddMetadata("OTAPI.Target", this.DisplayText);
+            this.AddPatchMetadata(mm, this.DisplayText);
 
             mm.AutoPatch();
 
@@ -267,10 +267,7 @@ namespace OTAPI.Patcher.Targets
             mm.RelinkAssembly("Steamworks.NET");
 
             // add the SourceAssembly name attribute
-            {
-                mm.AddMetadata("OTAPI.ModuleName", initialModuleName);
-                mm.AddMetadata("OTAPI.Input", inputName);
-            }
+            this.AddPatchMetadata(mm, initialModuleName, inputName);
 
             mm.MapDependencies();
             mm.AddTask(new CoreLibRelinker());

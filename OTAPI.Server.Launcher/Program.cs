@@ -25,21 +25,6 @@ namespace OTAPI.Launcher
 {
     static class Program
     {
-        static string GetMetaData(string key)
-        {
-            var match = typeof(Terraria.Main).Assembly.CustomAttributes
-                .Where(a => a.AttributeType.Name == nameof(AssemblyMetadataAttribute)
-                    && a.ConstructorArguments.Count == 2
-                    && a.ConstructorArguments[0].Value.Equals(key)
-                )
-                .SingleOrDefault();
-            if (match != null)
-                return (string)match.ConstructorArguments[1].Value;
-            return null;
-        }
-
-        static bool IsTML = GetMetaData("OTAPI.Input") == "tModLoaderServer";
-
         static MonoMod.RuntimeDetour.Hook? LazyHook(string type, string method, Delegate callback)
         {
             var match = typeof(Terraria.Main).Assembly.GetType(type);
@@ -56,7 +41,7 @@ namespace OTAPI.Launcher
 
         static void Main(string[] args)
         {
-            if (IsTML)
+            if (OTAPI.Common.IsTMLServer)
             {
                 LazyHook("Terraria.ModLoader.Engine.HiDefGraphicsIssues", "Init", new Action(Nop));
             }

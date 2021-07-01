@@ -85,40 +85,52 @@ namespace ModFramework
                 cursor.Remove();
         }
 
-        public static void AddMetadata(this ModFwModder mm, string key, string value)
+        public static CustomAttribute CreateAddMetadataAttribute(this ModFwModder mm, string key, string value)
         {
             var sac = mm.Module.ImportReference(typeof(System.Reflection.AssemblyMetadataAttribute).GetConstructor(new[] {
-                    typeof(string),
-                    typeof(string),
-                }));
+                typeof(string),
+                typeof(string),
+            }));
             var sa = new CustomAttribute(sac);
             sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, key));
             sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, value));
-            mm.Module.Assembly.CustomAttributes.Add(sa);
+            return sa;
         }
 
-        public static IEnumerable<string> GetMetadata(this ModFwModder mm, string key)
+        public static void AddMetadata(this ModFwModder mm, string key, string value, bool replace = true)
+        {
+            var existing = mm.GetMetadata(key);
+            if (existing.Any())
+            {
+                foreach (var match in existing.ToArray())
+                {
+                    mm.Module.Assembly.CustomAttributes.Remove(match);
+                }
+                var sa = mm.CreateAddMetadataAttribute(key, value);
+                mm.Module.Assembly.CustomAttributes.Add(sa);
+            }
+            else
+            {
+                var sa = mm.CreateAddMetadataAttribute(key, value);
+                mm.Module.Assembly.CustomAttributes.Add(sa);
+            }
+        }
+
+        public static IEnumerable<CustomAttribute> GetMetadata(this ModFwModder mm, string key)
         {
             var matches = mm.Module.Assembly.CustomAttributes
-                .Where(ca => ca.Constructor.FullName == nameof(System.Reflection.AssemblyMetadataAttribute)
+                .Where(ca => ca.Constructor.DeclaringType.Name == nameof(System.Reflection.AssemblyMetadataAttribute)
                     && ca.ConstructorArguments.Count == 2
                     && ca.ConstructorArguments[0].Type == mm.Module.TypeSystem.String
                     && ca.ConstructorArguments[1].Type == mm.Module.TypeSystem.String
                     && ca.ConstructorArguments[0].Value.Equals(key)
                 )
-                .Select(ca => (string)ca.ConstructorArguments[1].Value)
                 .ToArray();
 
             return matches;
-
-            //var sac = mm.Module.ImportReference(typeof(System.Reflection.AssemblyMetadataAttribute).GetConstructor(new[] {
-            //        typeof(string),
-            //        typeof(string),
-            //    }));
-            //var sa = new CustomAttribute(sac);
-            //sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, key));
-            //sa.ConstructorArguments.Add(new CustomAttributeArgument(mm.Module.TypeSystem.String, value));
-            //mm.Module.Assembly.CustomAttributes.Add(sa);
         }
+
+        public static IEnumerable<string> GetMetadataValues(this ModFwModder mm, string key)
+            => mm.GetMetadata(key).Select(ca => (string)ca.ConstructorArguments[1].Value);
     }
 }

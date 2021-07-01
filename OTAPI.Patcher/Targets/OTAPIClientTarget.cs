@@ -303,7 +303,7 @@ namespace OTAPI.Patcher.Targets
 
             mm.RelinkAssembly("System.Windows.Forms");
 
-            mm.AddMetadata("OTAPI.Target", this.DisplayText);
+            this.AddPatchMetadata(mm);
 
             mm.AutoPatch();
 

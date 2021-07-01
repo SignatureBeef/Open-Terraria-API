@@ -38,7 +38,7 @@ namespace Terraria
         public static void DisplayException(Exception e)
         {
             Console.WriteLine(e.ToString());
-        } 
+        }
 
 #if Terraria // client
         public static event EventHandler OnLaunched;
@@ -46,7 +46,7 @@ namespace Terraria
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            Console.WriteLine($"[OTAPI] Starting up.");
+            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}).");
             ModFramework.Plugins.PluginLoader.AssemblyLoader = new ModFramework.Plugins.LegacyAssemblyResolver();
             ModFramework.Plugins.PluginLoader.TryLoad();
             ModFramework.Modifier.Apply(ModFramework.ModType.Runtime);
@@ -65,7 +65,7 @@ namespace Terraria
             System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
 
             PluginLoader.TryLoad();
-            Console.WriteLine($"[OTAPI] Starting up.");
+            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}).");
             Modifier.Apply(ModType.Runtime);
 
             orig_LaunchGame_();
@@ -95,7 +95,7 @@ namespace Terraria
             System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
 
             PluginLoader.TryLoad();
-            Console.WriteLine($"[OTAPI] Starting up.");
+            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}).");
             Modifier.Apply(ModType.Runtime);
 
             orig_LaunchGame(args, monoArgs);
@@ -119,5 +119,15 @@ namespace Terraria
             return null;
         }
 #endif
+    }
+}
+
+// just a stub for rosyln - this is defined in another patch
+namespace OTAPI
+{
+    [MonoMod.MonoModIgnore]
+    public static partial class Common
+    {
+        public static readonly string Target;
     }
 }
