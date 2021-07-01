@@ -25,14 +25,14 @@ namespace OTAPI.Launcher
 {
     static class Program
     {
-        static MonoMod.RuntimeDetour.Hook? LazyHook(string type, string method, Delegate callback)
+        static Hook? LazyHook(string type, string method, Delegate callback)
         {
             var match = typeof(Terraria.Main).Assembly.GetType(type);
             var func = match?.GetMethod(method);
 
             if (func != null)
             {
-                return new MonoMod.RuntimeDetour.Hook(func, callback);
+                return new Hook(func, callback);
             }
             return null;
         }
@@ -40,6 +40,13 @@ namespace OTAPI.Launcher
         static void Nop() { }
 
         static void Main(string[] args)
+        {
+            On.Terraria.WindowsLaunch.Main += WindowsLaunch_Main;
+            Terraria.Program.OnLaunched += Program_OnLaunched;
+            Terraria.WindowsLaunch.Main(args);
+        }
+
+        private static void Program_OnLaunched(object sender, EventArgs e)
         {
             if (OTAPI.Common.IsTMLServer)
             {
@@ -58,17 +65,14 @@ namespace OTAPI.Launcher
                 Console.WriteLine($"Hooks.NPC.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
             };
             Hooks.Item.MechSpawn += (_, args) =>
-             {
-                 Console.WriteLine($"Hooks.Item.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
-             };
+            {
+                Console.WriteLine($"Hooks.Item.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
+            };
 
-            On.Terraria.WindowsLaunch.Main += WindowsLaunch_Main;
             //Hooks.Main.StatusTextChange += Main_StatusTextChange;
 
-            if (args.Any(x => x.ToLower() == "-test-init"))
+            if (Environment.GetCommandLineArgs().Any(x => x.ToLower() == "-test-init"))
                 On.Terraria.Main.DedServ += Main_DedServ;
-
-            Terraria.WindowsLaunch.Main(args);
         }
 
         //private static void Main_StatusTextChange(object sender, Hooks.Main.StatusTextChangeArgs e)

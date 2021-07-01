@@ -40,8 +40,12 @@ namespace Terraria
             Console.WriteLine(e.ToString());
         }
 
-#if Terraria // client
+        /// <summary>
+        /// Triggers when mods should start attaching events. At this point assembly resolution should be ready on all platforms.
+        /// </summary>
         public static event EventHandler OnLaunched;
+
+#if Terraria // client
 
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
@@ -67,6 +71,8 @@ namespace Terraria
             PluginLoader.TryLoad();
             Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}).");
             Modifier.Apply(ModType.Runtime);
+
+            OnLaunched?.Invoke(null, EventArgs.Empty);
 
             orig_LaunchGame_();
         }
@@ -97,6 +103,8 @@ namespace Terraria
             PluginLoader.TryLoad();
             Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}).");
             Modifier.Apply(ModType.Runtime);
+
+            OnLaunched?.Invoke(null, EventArgs.Empty);
 
             orig_LaunchGame(args, monoArgs);
         }
