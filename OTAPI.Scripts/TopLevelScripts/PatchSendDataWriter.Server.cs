@@ -32,7 +32,7 @@ using System.IO.Compression;
 [Modification(ModType.PreMerge, "Removing NetMessage.SendData write buffer")]
 void PatchSendDataWriter(MonoModder modder)
 {
-    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default));
+    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0));
 
     // make it easier to track down variables
     SendData.Body.SimplifyMacros();
@@ -73,9 +73,13 @@ void PatchSendDataWriter(MonoModder modder)
         SendData.Emit(OpCodes.Newobj, SendData.Module.ImportReference(ms_ctor));
         SendData.Emit(OpCodes.Stloc, memoryStream);
 
-        var bw_ctor = modder.GetReference(() => new System.IO.BinaryWriter(null));
+        var pkt = modder.GetDefinition<OTAPI.PacketWriter>();
+        //SendData.Emit(OpCodes.Ldloc, memoryStream);
+        //SendData.Emit(OpCodes.Newobj, SendData.Module.ImportReference(bw_ctor));
         SendData.Emit(OpCodes.Ldloc, memoryStream);
-        SendData.Emit(OpCodes.Newobj, SendData.Module.ImportReference(bw_ctor));
+        SendData.EmitDelegate<CreatePacketWriterCallback>(OTAPI.Hooks.NetMessage.InvokeCreatePacketWriter);
+        (SendData.Previous.Operand as MethodReference).DeclaringType.Name = "NetMessage";
+        binaryWriter.VariableType = SendData.Module.ImportReference(pkt);
     }
 
     // patch in a new custom compress tile block method that writes directly to the binary writer
@@ -85,7 +89,7 @@ void PatchSendDataWriter(MonoModder modder)
             && mref.Name == nameof(Terraria.NetMessage.CompressTileBlock)
         ).ToArray();
 
-        var replacement = modder.GetReference(() => Terraria.patch_NetMessage.CompressTileBlock(0, 0, 0, 0, (BinaryWriter)null, 0));
+        var replacement = modder.GetReference(() => Terraria.patch_NetMessage.CompressTileBlock(0, 0, 0, 0, null, 0));
         replacement.DeclaringType = modder.GetDefinition<Terraria.NetMessage>();
 
         foreach (var compressCall in compressCalls)
@@ -143,6 +147,9 @@ void PatchSendDataWriter(MonoModder modder)
     SendData.Body.OptimizeMacros();
 }
 
+[MonoMod.MonoModIgnore]
+public delegate OTAPI.PacketWriter CreatePacketWriterCallback(MemoryStream output);
+
 namespace Terraria
 {
     public partial class patch_NetMessage : Terraria.NetMessage
@@ -184,6 +191,36 @@ namespace Terraria
             }
 
             return 0;
+        }
+    }
+}
+
+namespace OTAPI
+{
+    public class PacketWriter : BinaryWriter
+    {
+        public PacketWriter(Stream output) : base(output)
+        {
+
+        }
+    }
+
+    public static partial class Hooks
+    {
+        public static partial class NetMessage
+        {
+            public class CreatePacketWriterEventArgs : EventArgs
+            {
+                public PacketWriter PacketWriter { get; set; }
+            }
+            public static event EventHandler<CreatePacketWriterEventArgs> CreatePacketWriter;
+
+            public static PacketWriter InvokeCreatePacketWriter(MemoryStream output)
+            {
+                var args = new CreatePacketWriterEventArgs();
+                CreatePacketWriter?.Invoke(null, args);
+                return args.PacketWriter ?? new PacketWriter(output);
+            }
         }
     }
 }
