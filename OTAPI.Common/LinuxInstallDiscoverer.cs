@@ -28,7 +28,7 @@ namespace OTAPI.Common
             "/home/[USER_NAME]/.steam/debian-installation/steamapps/common/Terraria",
         };
 
-        public override OSPlatform GetClientPlatform() => OSPlatform.OSX;
+        public override OSPlatform GetClientPlatform() => OSPlatform.Linux;
 
         public override string GetResource(string fileName, string installPath) => Path.Combine(installPath, fileName);
         public override string GetResourcePath(string installPath) => installPath;
