@@ -25,7 +25,8 @@ namespace OTAPI.Client.Installer
         static Targets.IInstallTarget[] Targets = new Targets.IInstallTarget[]
         {
             new Targets.MacOSInstallTarget(),
-            new Targets.WindowsInstallTarget()
+            new Targets.WindowsInstallTarget(),
+            new Targets.LinuxInstallTarget(),
         };
 
         public static void Main(string[] args)

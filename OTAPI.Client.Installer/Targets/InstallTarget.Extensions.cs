@@ -322,5 +322,73 @@ fi
                 File.Copy(Path.Combine(output, "Terraria.exe"), launch_file);
             }
         }
+
+        public static void PatchLinuxLaunch(this IInstallTarget target, string installPath)
+        {
+            var otapi_launcher = Path.Combine(installPath, "otapi_launcher");
+            var launch_script = Path.Combine(installPath, "Terraria");
+            var backup_launch_script = Path.Combine(installPath, "Terraria.bak.otapi");
+
+            if (!File.Exists(backup_launch_script))
+            {
+                File.Copy(launch_script, backup_launch_script);
+            }
+            File.WriteAllText(launch_script, @"
+#!/bin/bash
+# MonoKickstart Shell Script
+# Written by Ethan ""flibitijibibo"" Lee
+
+# Move to script's directory
+cd ""`dirname ""$0""`""
+
+# Get the system architecture
+UNAME=`uname`
+ARCH=`uname -m`
+BASENAME=`basename ""$0""`
+
+# MonoKickstart picks the right libfolder, so just execute the right binary.
+if [ ""$UNAME"" == ""Darwin"" ]; then
+	ext=osx
+else
+	ext=x86_64
+fi
+
+export MONO_IOMAP=all
+
+echo ""Starting launcher""
+cd otapi_launcher
+
+./Terraria
+
+status=$?
+
+if [ $status -eq 210 ]; then
+    echo ""Launch vanilla""
+
+    cd ../
+    ./${BASENAME}.bin.${ext} $@
+elif [ $status -eq 200 ]; then
+    echo ""Launching OTAPI""
+    cd ../otapi
+    ./Terraria $@
+else
+    echo ""Exiting""
+fi
+");
+
+            // publish and copy OTAPI.Client.Launcher
+            {
+                Console.WriteLine("Publishing and creating launcher...this will take a while.");
+                var output = target.PublishHostLauncher();
+                var launcher = Path.Combine(output, "Terraria");
+                //var otapi = Path.Combine(installPath, "OTAPI.Client.Launcher");
+
+                if (!File.Exists(launcher))
+                    throw new Exception($"Failed to produce launcher to: {launcher}");
+
+                Directory.CreateDirectory(otapi_launcher);
+                target.CopyFiles(output, otapi_launcher);
+            }
+        }
     }
 }

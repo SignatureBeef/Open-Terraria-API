@@ -71,6 +71,11 @@ namespace OTAPI.Client.Host
                     var osx = Path.Combine(Environment.CurrentDirectory, "osx");
                     matches = Directory.GetFiles(osx, "*" + libraryName + "*");
                 }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    var lib64 = Path.Combine(Environment.CurrentDirectory, "lib64");
+                    matches = Directory.GetFiles(lib64, "*" + libraryName + "*");
+                }
 
                 if (matches.Count() == 1)
                 {

@@ -14,6 +14,28 @@ namespace OTAPI.Client.Launcher
         void Launch(bool vanilla);
     }
 
+    class LinuxLaunch : ILaunchTarget
+    {
+        public void Load(MainWindowViewModel vm)
+        {
+            vm.OtapiExe = Path.Combine(Environment.CurrentDirectory, "..", "otapi", "Terraria"); // game host
+            vm.VanillaExe = Path.Combine(Environment.CurrentDirectory, "..", "Terraria.exe");
+        }
+
+        public void Launch(bool vanilla)
+        {
+            // returns code that correspond to osx ./Terraria launch script
+            if (vanilla)
+            {
+                Environment.Exit(210);
+            }
+            else
+            {
+                Environment.Exit(200);
+            }
+        }
+    }
+
     class OsxLaunch : ILaunchTarget
     {
         public void Load(MainWindowViewModel vm)
@@ -123,7 +145,10 @@ namespace OTAPI.Client.Launcher
             
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 target = new WindowsLaunch();
-            
+
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                target = new LinuxLaunch();
+
             else //if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 target = new OsxLaunch();
             

@@ -36,7 +36,8 @@ namespace OTAPI.Common
         static IInstallDiscoverer[] Discoverers = new IInstallDiscoverer[]
         {
             new MacOSInstallDiscoverer(),
-            new WindowsInstallDiscoverer()
+            new WindowsInstallDiscoverer(),
+            new LinuxInstallDiscoverer(),
         };
 
         public static ClientInstallPath<IInstallDiscoverer> DetermineClientInstallPath() => DetermineClientInstallPath(Discoverers);
