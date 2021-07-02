@@ -120,15 +120,15 @@ namespace OTAPI.Client.Launcher
 
             var vm = new MainWindowViewModel();
             ILaunchTarget? target = null;
-
+            
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 target = new WindowsLaunch();
-
+            
             else //if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 target = new OsxLaunch();
-
+            
             //else throw new NotSupportedException();
-
+            
             vm.LaunchTarget = target;
             target.Load(vm);
 

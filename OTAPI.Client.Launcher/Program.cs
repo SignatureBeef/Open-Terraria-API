@@ -2,6 +2,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using System;
+using Projektanker.Icons.Avalonia;
+using Projektanker.Icons.Avalonia.FontAwesome;
 
 namespace OTAPI.Client.Launcher
 {
@@ -16,7 +18,15 @@ namespace OTAPI.Client.Launcher
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
+                .AfterSetup(AfterSetupCallback)
                 .UsePlatformDetect()
                 .LogToTrace();
+    
+        // Called after setup
+        private static void AfterSetupCallback(AppBuilder appBuilder)
+        {
+            // Register icon provider(s)
+            IconProvider.Register<FontAwesomeIconProvider>();
+        }
     }
 }

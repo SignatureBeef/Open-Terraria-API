@@ -2,20 +2,51 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="150" Width="400" Height="150"
         x:Class="OTAPI.Client.Launcher.MainWindow"
+        Background="#333" Foreground="#fff"
         Title="OTAPI Client Launcher">
+    <Window.Styles>
+        <Style Selector="TextBlock.h1">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <Style Selector="TextBlock.warning">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="Red" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0 2 0 0" />
+        </Style>
+        <Style Selector="Button.warning">
+            <Setter Property="Margin" Value="0,10,0,0" />
+        </Style>
+    </Window.Styles>
 
-  <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
-    <Button IsEnabled="{Binding IsVanillaReady}" Margin="0,10,0,0" Command="{Binding OnStartVanilla}">Launch vanilla Terraria</Button>
-    <TextBlock IsVisible="{Binding !IsVanillaReady}" Foreground="Red" FontSize="12">OTAPI executable not found</TextBlock>
-    <!--<TextBlock Text="{Binding IsVanillaReady}"/>-->
+        <Button Classes="warning STYLE_NAME"
+                IsEnabled="{Binding IsOTAPIReady}"
+                Command="{Binding OnStartOTAPI}">
+            Launch modded Terraria (otapi)
+        </Button>
+        <TextBlock Classes="warning"
+                   IsVisible="{Binding !IsOTAPIReady}">
+            OTAPI executable not found
+        </TextBlock>
+        <!--<TextBlock Text="{Binding IsOTAPIReady}"/>-->
 
-    <Button IsEnabled="{Binding IsOTAPIReady}" Margin="0,10,0,0" Command="{Binding OnStartOTAPI}">Launch OTAPI Terraria</Button>
-    <TextBlock IsVisible="{Binding !IsOTAPIReady}" Foreground="Red" FontSize="12">OTAPI executable not found</TextBlock>
-    <!--<TextBlock Text="{Binding IsOTAPIReady}"/>-->
+        <Button Classes="warning STYLE_NAME"
+                IsEnabled="{Binding IsVanillaReady}"
+                Command="{Binding OnStartVanilla}">
+            Launch normal Terraria (vanilla)
+        </Button>
+        <TextBlock Classes="warning"
+                   IsVisible="{Binding !IsVanillaReady}">
+            Terraria executable not found
+        </TextBlock>
+        <!--<TextBlock Text="{Binding IsVanillaReady}"/>-->
 
-  </StackPanel>
+    </StackPanel>
 
 </Window>

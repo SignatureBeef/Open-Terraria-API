@@ -22,7 +22,7 @@ using MonoMod;
 using MonoMod.Cil;
 
 /// <summary>
-/// Prevent infinite server loop. refer to https://github.com/Pryaxis/TShock/issues/1673
+/// @doc Prevent infinite server loop. refer to https://github.com/Pryaxis/TShock/issues/1673
 /// </summary>
 [Modification(ModType.PreMerge, "Patching zero-length packet exploits")]
 void PatchZeroLengthPackets(MonoModder modder)

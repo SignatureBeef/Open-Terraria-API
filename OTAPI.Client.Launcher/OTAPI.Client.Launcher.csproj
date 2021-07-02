@@ -10,6 +10,8 @@
     <PackageReference Include="Avalonia" Version="0.10.6" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
+    <PackageReference Include="Material.Avalonia" Version="2.2.0" />
+    <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="3.1.0" />
     <PackageReference Include="ReactiveUI" Version="14.1.1" />
    </ItemGroup>
   <ItemGroup>
