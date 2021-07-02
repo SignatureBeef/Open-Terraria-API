@@ -326,5 +326,45 @@ namespace ModFramework
         {
             return stackBehaviours.Any(sb => sb == stackBehaviour);
         }
+
+        /// <summary>
+        /// Empties the method
+        /// </summary>
+        /// <param name="method"></param>
+        public static void ClearBody(this MethodDefinition method)
+        {
+            method.Body.Instructions.Clear();
+            method.Body.ExceptionHandlers.Clear();
+            method.Body.Variables.Clear();
+            method.EmitDefault();
+        }
+
+        /// <summary>
+        /// Emits a default return value
+        /// </summary>
+        public static Instruction EmitDefault(this MethodDefinition method)
+        {
+            Instruction firstInstruction = null;
+
+            var il = method.Body.GetILProcessor();
+
+            if (method.ReturnType.Name != method.Module.TypeSystem.Void.Name)
+            {
+                VariableDefinition vr1;
+                method.Body.Variables.Add(vr1 = new VariableDefinition(method.ReturnType));
+
+                //Initialise the variable
+                il.Append(firstInstruction = il.Create(OpCodes.Ldloca_S, vr1));
+                il.Emit(OpCodes.Initobj, method.ReturnType);
+                il.Emit(OpCodes.Ldloc, vr1);
+            }
+
+            //The method is now complete.
+            if (firstInstruction == null)
+                il.Append(firstInstruction = il.Create(OpCodes.Ret));
+            else il.Emit(OpCodes.Ret);
+
+            return firstInstruction;
+        }
     }
 }
