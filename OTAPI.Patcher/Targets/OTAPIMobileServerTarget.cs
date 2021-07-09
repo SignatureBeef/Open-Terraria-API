@@ -44,11 +44,10 @@ namespace OTAPI.Patcher.Targets
     public class OTAPIMobileServerTarget : OTAPIPCServerTarget
     {
         public override string DisplayText { get; } = "OTAPI Mobile Server";
-        public override string HtmlSearchKey { get; } = ">Mobile Dedicated Server";
         public override string NuGetPackageFileName { get; } = "OTAPI.Mobile.nupkg";
         public override string NuSpecFilePath { get; } = "../../../../OTAPI.Mobile.nuspec";
         public override string MdFileName { get; } = "OTAPI.Mobile.Server.mfw.md";
-        public override string SupportedDownloadUrl { get; } = "https://terraria.org/server/MobileTerrariaServer.zip";
+        public override string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/mobile-dedicated-server/MobileTerrariaServer.zip";
 
         public override string DetermineInputAssembly(string extractedFolder)
         {
@@ -58,6 +57,13 @@ namespace OTAPI.Patcher.Targets
             return Directory.EnumerateFiles(extractedFolder, "TerrariaServer.exe", SearchOption.AllDirectories).Single(x =>
                 Path.GetFileName(Path.GetDirectoryName(x)).Equals("WindowsServer", StringComparison.CurrentCultureIgnoreCase)
             );
+        }
+
+        public override string GetUrlFromHttpResponse(string content)
+        {
+            var items = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(content);
+            var server = items.Single(i => i.Contains("MobileTerrariaServer", StringComparison.OrdinalIgnoreCase));
+            return $"{TerrariaWebsite}/api/download/mobile-dedicated-server/{server}";
         }
     }
 }

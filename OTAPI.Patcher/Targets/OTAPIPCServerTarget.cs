@@ -40,12 +40,11 @@ namespace OTAPI.Patcher.Targets
 
         public virtual string CliKey { get; } = "latest";
 
-        public virtual string HtmlSearchKey { get; } = ">PC Dedicated Server";
         public virtual string NuGetPackageFileName { get; } = "OTAPI.PC.nupkg";
         public virtual string NuSpecFilePath { get; } = "../../../../OTAPI.PC.nuspec";
         public virtual string MdFileName { get; } = "OTAPI.PC.Server.mfw.md";
 
-        public virtual string SupportedDownloadUrl { get; } = "https://terraria.org/system/dedicated_servers/archives/000/000/046/original/terraria-server-1423.zip";
+        public virtual string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/pc-dedicated-server/terraria-server-1423.zip";
 
         private MarkdownDocumentor markdownDocumentor = new ModificationMdDocumentor();
 
@@ -355,20 +354,11 @@ namespace OTAPI.Patcher.Targets
             return DetermineInputAssembly(extracted);
         }
 
-        public virtual string GetUrlFromHttpResponse(string html)
+        public virtual string GetUrlFromHttpResponse(string content)
         {
-            var offset = html.IndexOf(HtmlSearchKey, StringComparison.CurrentCultureIgnoreCase);
-            if (offset == -1) throw new NotSupportedException();
-
-            var attr_character = html[offset - 1];
-
-            var url = html.Substring(0, offset - 1);
-            var url_begin_offset = url.LastIndexOf(attr_character);
-            if (url_begin_offset == -1) throw new NotSupportedException();
-
-            url = url.Remove(0, url_begin_offset + 1);
-
-            return TerrariaWebsite + url;
+            var items = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(content);
+            var server = items.Single(i => i.Contains("terraria-server-", StringComparison.OrdinalIgnoreCase));
+            return $"{TerrariaWebsite}/api/download/pc-dedicated-server/{server}";
         }
 
         public virtual string AquireLatestBinaryUrl()
@@ -376,10 +366,10 @@ namespace OTAPI.Patcher.Targets
             this.Log("Determining the latest TerrariaServer.exe...");
             using var client = new HttpClient();
 
-            var data = client.GetByteArrayAsync(TerrariaWebsite).Result;
-            var html = System.Text.Encoding.UTF8.GetString(data);
+            var data = client.GetByteArrayAsync($"{TerrariaWebsite}/api/get/dedicated-servers-names").Result;
+            var json = System.Text.Encoding.UTF8.GetString(data);
 
-            return GetUrlFromHttpResponse(html);
+            return GetUrlFromHttpResponse(json);
         }
 
         public virtual string DetermineInputAssembly(string extractedFolder)
