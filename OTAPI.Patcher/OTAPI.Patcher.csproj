@@ -14,6 +14,7 @@
 	</PropertyGroup>-->
 
 	<ItemGroup>
+		<PackageReference Include="ModFramework" Version="1.0.0-alpha4" />
 		<PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.0-alpha4" />
 		<PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.0-alpha4" />
 		<PackageReference Include="ModFramework.Modules.Lua" Version="1.0.0-alpha4" />
