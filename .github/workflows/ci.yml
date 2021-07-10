@@ -29,12 +29,11 @@ jobs:
         with:
           dotnet-version: '5.0.301' # SDK Version to use; x will use the latest version of the 3.1 channel
 
-      # Runs a single command using the runners shell
-      - name: Build the project
-        run: Get-Content .\build.sh | Invoke-Expression
-
       - name: Prepare environment variables
         run: $Env:OTAPI_COMMIT_SHA = git rev-parse --short HEAD | Out-String
+
+      - name: Build the project
+        run: Get-Content .\build.sh | Invoke-Expression
 
       - uses: actions/upload-artifact@v2
         with:
