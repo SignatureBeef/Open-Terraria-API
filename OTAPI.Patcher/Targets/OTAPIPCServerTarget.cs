@@ -217,7 +217,7 @@ namespace OTAPI.Patcher.Targets
             {
                 InputPath = input,
                 OutputPath = output,
-                ReadingMode = ReadingMode.Deferred,
+                //ReadingMode = ReadingMode.Deferred,
                 MissingDependencyThrow = false,
                 PublicEverything = true, // we want all of terraria exposed
 
