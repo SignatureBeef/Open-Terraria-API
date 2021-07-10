@@ -43,7 +43,7 @@ namespace ModFramework
     {
         private Dictionary<Type, List<object>> data = new Dictionary<Type, List<object>>();
 
-        public delegate string TypeFormatter<TRecord>(bool header, TRecord? record);
+        public delegate string TypeFormatter<TRecord>(bool header, TRecord record);
 
         private static Dictionary<Type, TypeFormatter<object>> _typeFormatters = new Dictionary<Type, TypeFormatter<object>>();
 
@@ -58,7 +58,7 @@ namespace ModFramework
         {
             _typeFormatters[typeof(TType)] = (header, row) =>
             {
-                return handler(header, (TType?)row);
+                return handler(header, (TType)row);
             };
         }
 

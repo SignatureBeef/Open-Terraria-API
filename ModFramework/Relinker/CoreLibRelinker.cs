@@ -55,7 +55,7 @@ namespace ModFramework.Relinker
                             path = x,
                         };
                     }
-                    catch (Exception ex)
+                    catch //(Exception ex)
                     {
                         // discard assemblies that cecil cannot parse. e.g. api-ms**.dll on windows
                         return null;
