@@ -83,5 +83,15 @@ namespace OTAPI
         /// Returns true if the current assembly is a vanilla patched client
         /// </summary>
         public static readonly bool IsClient = Target.Contains("OTAPI Client");
+
+        /// <summary>
+        /// The short git hash of the commit used to produce this assembly.
+        /// </summary>
+        public static readonly string GitHubCommit = GetMetaData("GitHub.Commit");
+
+        /// <summary>
+        /// GitHub action RunNumber that produced this assembly.
+        /// </summary>
+        public static readonly string GitHubActionRunNo = GetMetaData("GitHub.Action.RunNo");
     }
 }

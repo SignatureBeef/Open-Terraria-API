@@ -46,11 +46,10 @@ namespace Terraria
         public static event EventHandler OnLaunched;
 
 #if Terraria // client
-
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}).");
+            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}, {OTAPI.Common.Version}, {OTAPI.Common.GitHubCommit}).");
             ModFramework.Plugins.PluginLoader.AssemblyLoader = new ModFramework.Plugins.LegacyAssemblyResolver();
             ModFramework.Plugins.PluginLoader.TryLoad();
             ModFramework.Modifier.Apply(ModFramework.ModType.Runtime);
@@ -68,8 +67,8 @@ namespace Terraria
         {
             System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
 
+            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}, {OTAPI.Common.Version}, {OTAPI.Common.GitHubCommit}).");
             PluginLoader.TryLoad();
-            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}).");
             Modifier.Apply(ModType.Runtime);
 
             OnLaunched?.Invoke(null, EventArgs.Empty);
@@ -99,9 +98,9 @@ namespace Terraria
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
             System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
-
+            
+            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}, {OTAPI.Common.Version}, {OTAPI.Common.GitHubCommit}).");
             PluginLoader.TryLoad();
-            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}).");
             Modifier.Apply(ModType.Runtime);
 
             OnLaunched?.Invoke(null, EventArgs.Empty);
@@ -137,5 +136,7 @@ namespace OTAPI
     public static partial class Common
     {
         public static readonly string Target;
+        public static readonly string Version;
+        public static readonly string GitHubCommit;
     }
 }

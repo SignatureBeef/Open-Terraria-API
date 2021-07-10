@@ -53,14 +53,14 @@ namespace OTAPI.Patcher.Targets
 
         public static void AddEnvMetadata(this IPatchTarget target, ModFwModder modder)
         {
+            var commitSha = Common.GetGitCommitSha();
             var run = Environment.GetEnvironmentVariable("GITHUB_RUN_NUMBER")?.Trim();
-            var commitSha = Environment.GetEnvironmentVariable("OTAPI_COMMIT_SHA")?.Trim();
-
-            if (!String.IsNullOrWhiteSpace(run))
-                modder.AddMetadata("GitHub.Action.RunNo", run);
 
             if (!String.IsNullOrWhiteSpace(commitSha))
                 modder.AddMetadata("GitHub.Commit", commitSha);
+
+            if (!String.IsNullOrWhiteSpace(run))
+                modder.AddMetadata("GitHub.Action.RunNo", run);
         }
     }
 }

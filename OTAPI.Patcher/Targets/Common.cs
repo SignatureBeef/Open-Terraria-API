@@ -42,5 +42,15 @@ namespace OTAPI.Patcher.Targets
             var match = Array.Find(Environment.GetCommandLineArgs(), x => x.StartsWith(find, StringComparison.CurrentCultureIgnoreCase));
             return match?.Substring(find.Length)?.ToLower();
         }
+
+        public static string GetGitCommitSha()
+        {
+            var commitSha = Environment.GetEnvironmentVariable("GITHUB_SHA")?.Trim();
+            if (commitSha != null && commitSha.Length >= 8)
+            {
+                return commitSha.Substring(0, 8);
+            }
+            return null;
+        }
     }
 }

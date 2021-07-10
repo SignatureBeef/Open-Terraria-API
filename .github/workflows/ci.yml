@@ -29,9 +29,6 @@ jobs:
         with:
           dotnet-version: '5.0.301' # SDK Version to use; x will use the latest version of the 3.1 channel
 
-      - name: Prepare environment variables
-        run: $Env:OTAPI_COMMIT_SHA = git rev-parse --short HEAD | Out-String
-
       - name: Build the project
         run: Get-Content .\build.sh | Invoke-Expression
 
