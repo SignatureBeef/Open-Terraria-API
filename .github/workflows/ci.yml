@@ -51,7 +51,7 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: Mopbile Binaries
+          name: Mobile Binaries
           path: |
             OTAPI.Patcher/bin/Debug/net5.0/artifact-mobile/COPYING.txt
             OTAPI.Patcher/bin/Debug/net5.0/artifact-mobile/OTAPI.dll
