@@ -48,6 +48,7 @@ namespace OTAPI.Patcher.Targets
         public override string NuSpecFilePath { get; } = "../../../../OTAPI.Mobile.nuspec";
         public override string MdFileName { get; } = "OTAPI.Mobile.Server.mfw.md";
         public override string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/mobile-dedicated-server/MobileTerrariaServer.zip";
+        public override string ArtifactName { get; } = "artifact-mobile";
 
         public override string DetermineInputAssembly(string extractedFolder)
         {

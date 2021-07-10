@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 using ModFramework;
+using System.IO;
 
 namespace OTAPI.Patcher.Targets
 {
@@ -37,6 +38,16 @@ namespace OTAPI.Patcher.Targets
             modder.AddMetadata("OTAPI.Target", target.DisplayText);
             if (initialModuleName != null) modder.AddMetadata("OTAPI.ModuleName", initialModuleName);
             if (inputName != null) modder.AddMetadata("OTAPI.Input", inputName);
+        }
+
+        public static void WriteCIArtifacts(this IPatchTarget target, string outputFolder)
+        {
+            if (Directory.Exists(outputFolder)) Directory.Delete(outputFolder, true);
+            Directory.CreateDirectory(outputFolder);
+
+            File.Copy("../../../../COPYING.txt", Path.Combine(outputFolder, "COPYING.txt"));
+            File.Copy("OTAPI.dll", Path.Combine(outputFolder, "OTAPI.dll"));
+            File.Copy("OTAPI.Runtime.dll", Path.Combine(outputFolder, "OTAPI.Runtime.dll"));
         }
     }
 }

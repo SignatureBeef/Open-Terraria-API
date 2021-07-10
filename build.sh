@@ -21,3 +21,4 @@ cd ../../../../
 dotnet build OTAPI.Server.Launcher.sln
 cd OTAPI.Server.Launcher/bin/Debug/net5.0
 dotnet OTAPI.Server.Launcher.dll -test-init
+cd ../../../../

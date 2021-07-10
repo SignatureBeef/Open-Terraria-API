@@ -78,6 +78,8 @@ namespace OTAPI.Patcher.Targets
             if (File.Exists(MdFileName)) File.Delete(MdFileName);
             markdownDocumentor.Write(MdFileName);
             markdownDocumentor.Dispose();
+
+            this.WriteCIArtifacts("artifact-tml");
         }
 
         #region Produce OTAPI
