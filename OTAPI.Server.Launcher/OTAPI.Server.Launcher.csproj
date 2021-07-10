@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ModFramework" Version="1.0.0-alpha4" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.0-alpha4" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.0-alpha4" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.0-alpha4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     <PackageReference Include="System.IO.Packaging" Version="5.0.0" />
@@ -29,10 +33,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\examples\RuntimeExample.Server\RuntimeExample.Server.csproj" />
-    <ProjectReference Include="..\ModFramework.Modules.CSharp\ModFramework.Modules.CSharp.csproj" />
-    <ProjectReference Include="..\ModFramework\ModFramework.csproj" />
-    <ProjectReference Include="..\ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj" />
-    <ProjectReference Include="..\ModFramework.Modules.ClearScript\ModFramework.Modules.ClearScript.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="csharp\" />
@@ -65,11 +65,8 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <MakeDir Directories="$(TargetDir)modifications\" />
     <Copy SourceFiles="$(TargetDir)ModFramework.Modules.CSharp.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.CSharp.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(TargetDir)ModFramework.Modules.Lua.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.Lua.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(TargetDir)ModFramework.Modules.ClearScript.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="$(TargetDir)ModFramework.Modules.ClearScript.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     
     <Copy SourceFiles="$(TargetDir)RuntimeExample.Server.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(TargetDir)RuntimeExample.Server.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />

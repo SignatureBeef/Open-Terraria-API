@@ -6,6 +6,7 @@
 		<TargetFramework>net5.0</TargetFramework>
 		<Version>3.0.0-alpha10</Version>
 		<PreserveCompilationContext>true</PreserveCompilationContext>
+    <PlatformTarget>x64</PlatformTarget>
 	</PropertyGroup>
 
 	<!--<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
@@ -13,6 +14,9 @@
 	</PropertyGroup>-->
 
 	<ItemGroup>
+		<PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.0-alpha4" />
+		<PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.0-alpha4" />
+		<PackageReference Include="ModFramework.Modules.Lua" Version="1.0.0-alpha4" />
 		<PackageReference Include="Mono.Cecil" Version="0.11.3" />
 		<PackageReference Include="MonoMod" Version="21.6.21.1" />
 		<PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.6.21.1" />
@@ -25,11 +29,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\FNA\FNA.Core.csproj" />
-		<ProjectReference Include="..\ModFramework\ModFramework.csproj" />
 		<ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
-		<ProjectReference Include="..\ModFramework.Modules.CSharp\ModFramework.Modules.CSharp.csproj" />
-		<ProjectReference Include="..\ModFramework.Modules.Lua\ModFramework.Modules.Lua.csproj" />
-		<ProjectReference Include="..\ModFramework.Modules.ClearScript\ModFramework.Modules.ClearScript.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -49,15 +49,9 @@
 		<MakeDir Directories="$(TargetDir)modifications\" />
 		<RemoveDir Directories="$(TargetDir)modifications\" />
 		<MakeDir Directories="$(TargetDir)modifications\" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.CSharp\bin\Debug\net5.0\ModFramework.Modules.CSharp.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.ClearScript\bin\Debug\net5.0\ModFramework.Modules.ClearScript.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.ClearScript\bin\Debug\net5.0\ModFramework.Modules.ClearScript.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.ClearScript\bin\Debug\net5.0\ModFramework.Modules.ClearScript.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.Lua\bin\Debug\net5.0\ModFramework.Modules.Lua.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.Lua\bin\Debug\net5.0\ModFramework.Modules.Lua.pdb" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
-		<Copy SourceFiles="$(TargetDir)..\..\..\..\ModFramework.Modules.Lua\bin\Debug\net5.0\ModFramework.Modules.Lua.deps.json" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)ModFramework.Modules.CSharp.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)ModFramework.Modules.ClearScript.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(TargetDir)ModFramework.Modules.Lua.dll" DestinationFolder="$(TargetDir)modifications" SkipUnchangedFiles="false" />
 		<MakeDir Directories="$(TargetDir)csharp\" />
 		<RemoveDir Directories="$(TargetDir)csharp\plugins\" />
 		<MakeDir Directories="$(TargetDir)csharp\plugins\" />
