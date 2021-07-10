@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 using ModFramework;
+using System;
 using System.IO;
 
 namespace OTAPI.Patcher.Targets
@@ -48,6 +49,18 @@ namespace OTAPI.Patcher.Targets
             File.Copy("../../../../COPYING.txt", Path.Combine(outputFolder, "COPYING.txt"));
             File.Copy("OTAPI.dll", Path.Combine(outputFolder, "OTAPI.dll"));
             File.Copy("OTAPI.Runtime.dll", Path.Combine(outputFolder, "OTAPI.Runtime.dll"));
+        }
+
+        public static void AddEnvMetadata(this IPatchTarget target, ModFwModder modder)
+        {
+            var run = Environment.GetEnvironmentVariable("GITHUB_RUN_NUMBER")?.Trim();
+            var commitSha = Environment.GetEnvironmentVariable("OTAPI_COMMIT_SHA")?.Trim();
+
+            if (!String.IsNullOrWhiteSpace(run))
+                modder.AddMetadata("GitHub.Action.RunNo", run);
+
+            if (!String.IsNullOrWhiteSpace(commitSha))
+                modder.AddMetadata("GitHub.Commit", commitSha);
         }
     }
 }

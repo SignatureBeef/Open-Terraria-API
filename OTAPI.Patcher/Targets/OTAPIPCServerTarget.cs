@@ -136,6 +136,7 @@ namespace OTAPI.Patcher.Targets
             mm.ReadMod(this.GetType().Assembly.Location);
 
             this.AddPatchMetadata(mm);
+            this.AddEnvMetadata(mm);
 
             mm.AutoPatch();
 
@@ -170,6 +171,9 @@ namespace OTAPI.Patcher.Targets
         {
             var nuspec_xml = File.ReadAllText(NuSpecFilePath);
             nuspec_xml = nuspec_xml.Replace("[INJECT_VERSION]", Common.GetVersion());
+
+            var commitSha = Environment.GetEnvironmentVariable("OTAPI_COMMIT_SHA")?.Trim();
+            nuspec_xml = nuspec_xml.Replace("[INJECT_GIT_HASH]", String.IsNullOrWhiteSpace(commitSha) ? "" : $" git#{commitSha}");
 
             using (var nuspec = new MemoryStream(Encoding.UTF8.GetBytes(nuspec_xml)))
             {
