@@ -46,7 +46,7 @@ namespace OTAPI.Patcher.Targets
         public static string GetGitCommitSha()
         {
             var commitSha = Environment.GetEnvironmentVariable("GITHUB_SHA")?.Trim();
-            if (commitSha != null && commitSha.Length >= 8)
+            if (commitSha != null && commitSha.Length >= 7)
             {
                 return commitSha.Substring(0, 7);
             }

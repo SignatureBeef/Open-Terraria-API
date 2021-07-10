@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
 using System;
+using System.Linq;
 using System.Reflection;
 using ModFramework;
 using ModFramework.Plugins;
@@ -45,11 +46,13 @@ namespace Terraria
         /// </summary>
         public static event EventHandler OnLaunched;
 
+        static string CSV(params string[] args) => String.Join(",", args.Where(x => !String.IsNullOrWhiteSpace(x)));
+
 #if Terraria // client
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}, {OTAPI.Common.Version}, {OTAPI.Common.GitHubCommit}).");
+            Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit)}).");
             ModFramework.Plugins.PluginLoader.AssemblyLoader = new ModFramework.Plugins.LegacyAssemblyResolver();
             ModFramework.Plugins.PluginLoader.TryLoad();
             ModFramework.Modifier.Apply(ModFramework.ModType.Runtime);
@@ -67,7 +70,7 @@ namespace Terraria
         {
             System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
 
-            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}, {OTAPI.Common.Version}, {OTAPI.Common.GitHubCommit}).");
+            Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit)}).");
             PluginLoader.TryLoad();
             Modifier.Apply(ModType.Runtime);
 
@@ -99,7 +102,7 @@ namespace Terraria
         {
             System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
             
-            Console.WriteLine($"[OTAPI] Starting up ({OTAPI.Common.Target}, {OTAPI.Common.Version}, {OTAPI.Common.GitHubCommit}).");
+            Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit)}).");
             PluginLoader.TryLoad();
             Modifier.Apply(ModType.Runtime);
 
