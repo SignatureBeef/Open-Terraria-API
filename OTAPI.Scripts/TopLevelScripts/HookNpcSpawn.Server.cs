@@ -37,7 +37,7 @@ void HookNpcSpawn(MonoModder modder)
     NewNPC.Index++;
 
     NewNPC.Emit(OpCodes.Ldloca, NewNPC.Body.Variables.First());
-    NewNPC.EmitDelegate<NpcSpawnCallback>(OTAPI.Callbacks.NPC.Spawn);
+    NewNPC.EmitDelegate<NpcSpawnCallback>(OTAPI.Hooks.NPC.InvokeSpawn);
     NewNPC.Emit(OpCodes.Brtrue_S, NewNPC.Instrs[NewNPC.Index]);
     NewNPC.Emit(OpCodes.Ldloc, NewNPC.Body.Variables.First());
     NewNPC.Emit(OpCodes.Ret);
@@ -45,25 +45,6 @@ void HookNpcSpawn(MonoModder modder)
 
 [MonoMod.MonoModIgnore]
 public delegate bool NpcSpawnCallback(ref int index);
-
-namespace OTAPI.Callbacks
-{
-    public static partial class NPC
-    {
-        public static bool Spawn(ref int index)
-        {
-            var args = new Hooks.NPC.SpawnEventArgs()
-            {
-                index = index,
-            };
-            var result = Hooks.NPC.InvokeSpawn(args);
-
-            index = args.index;
-
-            return result != HookResult.Cancel;
-        }
-    }
-}
 
 namespace OTAPI
 {
@@ -79,10 +60,17 @@ namespace OTAPI
             }
             public static event EventHandler<SpawnEventArgs> Spawn;
 
-            public static HookResult? InvokeSpawn(SpawnEventArgs args)
+            public static bool InvokeSpawn(ref int index)
             {
+                var args = new SpawnEventArgs()
+                {
+                    index = index,
+                };
                 Spawn?.Invoke(null, args);
-                return args.Result;
+
+                index = args.index;
+
+                return args.Result != HookResult.Cancel;
             }
         }
     }

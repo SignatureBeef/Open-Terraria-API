@@ -40,8 +40,8 @@ void ITile(ModFwModder modder, IRelinkProvider relinkProvider)
 
     // replace ctor/new instances and route to a hook
     {
-        var createTile = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Callbacks.Tile.Create()));
-        var createTileRef = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Callbacks.Tile.Create(null)));
+        var createTile = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Hooks.Tile.InvokeCreate()));
+        var createTileRef = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Hooks.Tile.InvokeCreate(null)));
 
         modder.OnRewritingMethodBody += (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
         {
@@ -66,22 +66,6 @@ void ITile(ModFwModder modder, IRelinkProvider relinkProvider)
     }
 }
 
-namespace OTAPI.Callbacks
-{
-    public static partial class Tile
-    {
-        public static Terraria.Tile Create()
-        {
-            return Hooks.Tile.Create?.Invoke() ?? new Terraria.Tile();
-        }
-
-        public static Terraria.Tile Create(Terraria.Tile existing)
-        {
-            return Hooks.Tile.Create?.Invoke(existing) ?? new Terraria.Tile(existing);
-        }
-    }
-}
-
 namespace OTAPI
 {
     public static partial class Hooks
@@ -91,6 +75,16 @@ namespace OTAPI
             // i dont think a event is a good idea for this one
             public delegate Terraria.Tile CreateHandler(Terraria.Tile existing = null);
             public static CreateHandler Create;
+
+            public static Terraria.Tile InvokeCreate()
+            {
+                return Create?.Invoke() ?? new Terraria.Tile();
+            }
+
+            public static Terraria.Tile InvokeCreate(Terraria.Tile existing)
+            {
+                return Create?.Invoke(existing) ?? new Terraria.Tile(existing);
+            }
         }
     }
 }

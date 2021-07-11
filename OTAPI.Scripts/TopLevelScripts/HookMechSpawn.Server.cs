@@ -35,12 +35,12 @@ void HookMechSpawn(MonoModder modder)
             new Task()
             {
                 Method = () => Terraria.NPC.MechSpawn(0,0,0),
-                Callback =   OTAPI.Callbacks.NPC.MechSpawn,
+                Callback =   OTAPI.Hooks.NPC.InvokeMechSpawn,
             },
             new Task()
             {
                 Method = () => Terraria.Item.MechSpawn(0, 0, 0),
-                Callback = OTAPI.Callbacks.Item.MechSpawn,
+                Callback = OTAPI.Hooks.Item.InvokeMechSpawn,
             },
         })
     {
@@ -81,51 +81,6 @@ class Task
 [MonoMod.MonoModIgnore]
 public delegate bool MechSpawnCallback(bool result, float x, float y, int type, int num, int num2, int num3);
 
-namespace OTAPI.Callbacks
-{
-    public static partial class NPC
-    {
-        public static bool MechSpawn(bool result, float x, float y, int type, int num, int num2, int num3)
-        {
-            if (result)
-            {
-                var args = new Hooks.NPC.MechSpawnEventArgs()
-                {
-                    x = x,
-                    y = y,
-                    type = type,
-                    num = num,
-                    num2 = num2,
-                    num3 = num3,
-                };
-                return Hooks.NPC.InvokeMechSpawn(args) != HookResult.Cancel;
-            }
-            return result;
-        }
-    }
-
-    public static partial class Item
-    {
-        public static bool MechSpawn(bool result, float x, float y, int type, int num, int num2, int num3)
-        {
-            if (result)
-            {
-                var args = new Hooks.Item.MechSpawnEventArgs()
-                {
-                    x = x,
-                    y = y,
-                    type = type,
-                    num = num,
-                    num2 = num2,
-                    num3 = num3,
-                };
-                return Hooks.Item.InvokeMechSpawn(args) != HookResult.Cancel;
-            }
-            return result;
-        }
-    }
-}
-
 namespace OTAPI
 {
     public static partial class Hooks
@@ -145,10 +100,23 @@ namespace OTAPI
             }
             public static event EventHandler<MechSpawnEventArgs> MechSpawn;
 
-            public static HookResult? InvokeMechSpawn(MechSpawnEventArgs args)
+            public static bool InvokeMechSpawn(bool result, float x, float y, int type, int num, int num2, int num3)
             {
-                MechSpawn?.Invoke(null, args);
-                return args.Result;
+                if (result)
+                {
+                    var args = new MechSpawnEventArgs()
+                    {
+                        x = x,
+                        y = y,
+                        type = type,
+                        num = num,
+                        num2 = num2,
+                        num3 = num3,
+                    };
+                    MechSpawn?.Invoke(null, args);
+                    return args.Result != HookResult.Cancel;
+                }
+                return result;
             }
         }
 
@@ -167,10 +135,23 @@ namespace OTAPI
             }
             public static event EventHandler<MechSpawnEventArgs> MechSpawn;
 
-            public static HookResult? InvokeMechSpawn(MechSpawnEventArgs args)
+            public static bool InvokeMechSpawn(bool result, float x, float y, int type, int num, int num2, int num3)
             {
-                MechSpawn?.Invoke(null, args);
-                return args.Result;
+                if (result)
+                {
+                    var args = new MechSpawnEventArgs()
+                    {
+                        x = x,
+                        y = y,
+                        type = type,
+                        num = num,
+                        num2 = num2,
+                        num3 = num3,
+                    };
+                    MechSpawn?.Invoke(null, args);
+                    return args.Result != HookResult.Cancel;
+                }
+                return result;
             }
         }
     }

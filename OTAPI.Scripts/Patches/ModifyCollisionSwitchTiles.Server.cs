@@ -69,7 +69,7 @@ partial class CollisionSwitchTiles
                 //var continuation = hitswitch.Next(ins => ins.Operand is MethodReference mref && mref.Name == "SendData");
 
                 csr.Emit(OpCodes.Ldarg, Entity);
-                csr.EmitDelegate<PressurePlateCallback>(OTAPI.Callbacks.Collision.PressurePlate);
+                csr.EmitDelegate<PressurePlateCallback>(OTAPI.Hooks.Collision.InvokePressurePlate);
                 var cancellation = csr.EmitAll(
                     new { OpCodes.Nop },
                     new { OpCodes.Ldc_I4_0 },
@@ -134,28 +134,17 @@ namespace OTAPI
             }
             public static event EventHandler<PressurePlateEventArgs> PressurePlate;
 
-            public static HookResult? InvokePressurePlate(PressurePlateEventArgs args)
+            public static bool InvokePressurePlate(int x, int y, Terraria.Entity entity)
             {
+                var args = new PressurePlateEventArgs()
+                {
+                    X = x,
+                    Y = y,
+                    Entity = entity
+                };
                 PressurePlate?.Invoke(null, args);
-                return args.Result;
+                return args.Result != HookResult.Cancel;
             }
-        }
-    }
-}
-
-namespace OTAPI.Callbacks
-{
-    public static partial class Collision
-    {
-        public static bool PressurePlate(int x, int y, Terraria.Entity entity)
-        {
-            var args = new Hooks.Collision.PressurePlateEventArgs()
-            {
-                X = x,
-                Y = y,
-                Entity = entity
-            };
-            return Hooks.Collision.InvokePressurePlate(args) != HookResult.Cancel;
         }
     }
 }

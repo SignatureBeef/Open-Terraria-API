@@ -31,7 +31,7 @@ void PatchClientUUID(MonoModder modder)
     const int PacketID = 68;
     int messageType = 0;
     var GetData = modder.GetILCursor(() => new Terraria.MessageBuffer().GetData(0, 0, out messageType));
-    var Callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.MessageBuffer.ReadClientUUID(default, default, default, default, ref messageType));
+    var Callback = modder.GetMethodDefinition(() => OTAPI.Hooks.MessageBuffer.InvokeClientUUIDReceived(default, default, default, default, ref messageType));
 
     GetData.GotoNext(i => i.OpCode == OpCodes.Switch);
 
@@ -71,38 +71,6 @@ void PatchClientUUID(MonoModder modder)
     GetData.Next.OpCode = OpCodes.Nop;
 }
 
-namespace OTAPI.Callbacks
-{
-    public static partial class MessageBuffer
-    {
-        /// <summary>
-        /// Called when Terraria receives a ClientUUID(#68) packet from a connection
-        /// </summary>
-        public static void ReadClientUUID(Terraria.MessageBuffer instance, System.IO.BinaryReader reader, int start, int length, ref int messageType)
-        {
-            var args = new Hooks.MessageBuffer.ClientUUIDReceivedEventArgs()
-            {
-                Event = HookEvent.Before,
-                instance = instance,
-                reader = reader,
-                start = start,
-                length = length,
-                messageType = messageType
-            };
-
-            if (Hooks.MessageBuffer.InvokeClientUUIDReceived(args) != HookResult.Cancel)
-            {
-                args.clientUUID = reader.ReadString();
-
-                ((Terraria.patch_RemoteClient)Terraria.Netplay.Clients[args.instance.whoAmI]).ClientUUID = args.clientUUID;
-
-                args.Event = HookEvent.After;
-                Hooks.MessageBuffer.InvokeClientUUIDReceived(args);
-            }
-        }
-    }
-}
-
 namespace OTAPI
 {
     public static partial class Hooks
@@ -123,10 +91,31 @@ namespace OTAPI
             }
             public static event EventHandler<ClientUUIDReceivedEventArgs> ClientUUIDReceived;
 
-            public static HookResult? InvokeClientUUIDReceived(ClientUUIDReceivedEventArgs args)
+            /// <summary>
+            /// Called when Terraria receives a ClientUUID(#68) packet from a connection
+            /// </summary>
+            public static void InvokeClientUUIDReceived(Terraria.MessageBuffer instance, System.IO.BinaryReader reader, int start, int length, ref int messageType)
             {
+                var args = new ClientUUIDReceivedEventArgs()
+                {
+                    Event = HookEvent.Before,
+                    instance = instance,
+                    reader = reader,
+                    start = start,
+                    length = length,
+                    messageType = messageType
+                };
+
                 ClientUUIDReceived?.Invoke(null, args);
-                return args.Result;
+                if (args.Result != HookResult.Cancel)
+                {
+                    args.clientUUID = reader.ReadString();
+
+                    ((Terraria.patch_RemoteClient)Terraria.Netplay.Clients[args.instance.whoAmI]).ClientUUID = args.clientUUID;
+
+                    args.Event = HookEvent.After;
+                    ClientUUIDReceived?.Invoke(null, args);
+                }
             }
         }
     }

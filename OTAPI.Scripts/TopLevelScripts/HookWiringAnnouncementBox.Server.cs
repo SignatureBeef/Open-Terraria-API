@@ -52,7 +52,7 @@ void HookWiringAnnounceBox(MonoModder modder)
         new { OpCodes.Ldloc_S, Operand = signVariable as VariableDefinition }
     );
 
-    csr.EmitDelegate<AnnouncementBoxCallback>(OTAPI.Callbacks.Wiring.AnnouncementBox);
+    csr.EmitDelegate<AnnouncementBoxCallback>(OTAPI.Hooks.Wiring.InvokeAnnouncementBox);
 
     insertionPoint.ReplaceTransfer(injectedInstructions.First(), csr.Method);
 
@@ -64,23 +64,6 @@ void HookWiringAnnounceBox(MonoModder modder)
 
 [MonoMod.MonoModIgnore]
 public delegate bool AnnouncementBoxCallback(int x, int y, int signId);
-
-namespace OTAPI.Callbacks
-{
-    public static partial class Wiring
-    {
-        public static bool AnnouncementBox(int x, int y, int signId)
-        {
-            var args = new Hooks.Wiring.AnnouncementBoxEventArgs()
-            {
-                x = x,
-                y = y,
-                signId = signId,
-            };
-            return Hooks.Wiring.InvokeAnnouncementBox(args) != HookResult.Cancel;
-        }
-    }
-}
 
 namespace OTAPI
 {
@@ -98,10 +81,16 @@ namespace OTAPI
             }
             public static event EventHandler<AnnouncementBoxEventArgs> AnnouncementBox;
 
-            public static HookResult? InvokeAnnouncementBox(AnnouncementBoxEventArgs args)
+            public static bool InvokeAnnouncementBox(int x, int y, int signId)
             {
+                var args = new Hooks.Wiring.AnnouncementBoxEventArgs()
+                {
+                    x = x,
+                    y = y,
+                    signId = signId,
+                };
                 AnnouncementBox?.Invoke(null, args);
-                return args.Result;
+                return args.Result != HookResult.Cancel;
             }
         }
     }

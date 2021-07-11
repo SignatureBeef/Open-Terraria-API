@@ -51,7 +51,7 @@ void HookMeteors(ModFramework.ModFwModder modder)
         new { OpCodes.Ldarga, Operand = csr.Method.Parameters[1] } //reference to int y
     );
 
-    csr.EmitDelegate<MeteorCallback>(OTAPI.Callbacks.WorldGen.Meteor);
+    csr.EmitDelegate<MeteorCallback>(OTAPI.Hooks.WorldGen.InvokeMeteor);
 
     csr.EmitAll(
         //If the callback is not canceled, continue on with vanilla code
@@ -81,32 +81,20 @@ namespace OTAPI
             }
             public static event EventHandler<MeteorEventArgs> Meteor;
 
-            public static HookResult? InvokeMeteor(MeteorEventArgs args)
+            public static bool InvokeMeteor(ref int x, ref int y)
             {
+                var args = new Hooks.WorldGen.MeteorEventArgs()
+                {
+                    x = x,
+                    y = y,
+                };
                 Meteor?.Invoke(null, args);
-                return args.Result;
+
+                x = args.x;
+                y = args.y;
+
+                return args.Result != HookResult.Cancel;
             }
-        }
-    }
-}
-
-namespace OTAPI.Callbacks
-{
-    public static partial class WorldGen
-    {
-        public static bool Meteor(ref int x, ref int y)
-        {
-            var args = new Hooks.WorldGen.MeteorEventArgs()
-            {
-                x = x,
-                y = y,
-            };
-            var result = OTAPI.Hooks.WorldGen.InvokeMeteor(args);
-
-            x = args.x;
-            y = args.y;
-
-            return result != HookResult.Cancel;
         }
     }
 }

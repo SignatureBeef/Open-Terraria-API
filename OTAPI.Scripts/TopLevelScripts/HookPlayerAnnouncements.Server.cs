@@ -35,7 +35,7 @@ void HookPlayerAnnouncements(ModFwModder modder)
 {
     var syncOne = modder.GetReference(() => Terraria.NetMessage.SyncOnePlayer(0, 0, 0));
     var broadcast = modder.GetReference(() => Terraria.Chat.ChatHelper.BroadcastChatMessage(null, default, 0));
-    var callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.NetMessage.PlayerAnnounce(null, default, 0, 0, 0, 0));
+    var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NetMessage.InvokePlayerAnnounce(null, default, 0, 0, 0, 0));
 
     modder.OnRewritingMethodBody += (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
     {
@@ -49,29 +49,6 @@ void HookPlayerAnnouncements(ModFwModder modder)
             instr.Operand = callback;
         }
     };
-}
-
-namespace OTAPI.Callbacks
-{
-    public static partial class NetMessage
-    {
-        public static void PlayerAnnounce(NetworkText text, Color color, int excludedPlayer, int plr, int toWho, int fromWho)
-        {
-            var args = new Hooks.NetMessage.PlayerAnnounceEventArgs()
-            {
-                text = text,
-                color = color,
-                excludedPlayer = excludedPlayer,
-                plr = plr,
-                toWho = toWho,
-                fromWh = fromWho,
-            };
-            var result = Hooks.NetMessage.InvokePlayerAnnounce(args);
-
-            if (result != HookResult.Cancel)
-                Terraria.Chat.ChatHelper.BroadcastChatMessage(args.text, args.color, args.excludedPlayer);
-        }
-    }
 }
 
 namespace OTAPI
@@ -94,10 +71,21 @@ namespace OTAPI
             }
             public static event EventHandler<PlayerAnnounceEventArgs> PlayerAnnounce;
 
-            public static HookResult? InvokePlayerAnnounce(PlayerAnnounceEventArgs args)
+            public static void InvokePlayerAnnounce(NetworkText text, Color color, int excludedPlayer, int plr, int toWho, int fromWho)
             {
+                var args = new PlayerAnnounceEventArgs()
+                {
+                    text = text,
+                    color = color,
+                    excludedPlayer = excludedPlayer,
+                    plr = plr,
+                    toWho = toWho,
+                    fromWh = fromWho,
+                };
                 PlayerAnnounce?.Invoke(null, args);
-                return args.Result;
+
+                if (args.Result != HookResult.Cancel)
+                    Terraria.Chat.ChatHelper.BroadcastChatMessage(args.text, args.color, args.excludedPlayer);
             }
         }
     }

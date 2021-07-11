@@ -79,36 +79,13 @@ void HardModeTileUpdates(MonoModder modder)
 
         csr.Emit(csrTypes[0].Next.OpCode, csrTypes[0].Next.Operand);
 
-        csr.EmitDelegate<HardmodeTilePlaceCallback>(OTAPI.Callbacks.WorldGen.HardmodeTileUpdate);
+        csr.EmitDelegate<HardmodeTilePlaceCallback>(OTAPI.Hooks.WorldGen.InvokeHardmodeTileUpdate);
         csr.Emit(OpCodes.Brfalse_S, continueBranch);
     }
 }
 
 [MonoMod.MonoModIgnore]
 public delegate bool HardmodeTilePlaceCallback(int x, int y, ushort type);
-
-namespace OTAPI.Callbacks
-{
-    public static partial class WorldGen
-    {
-        public static bool HardmodeTileUpdate(int x, int y, ushort type)
-        {
-            var args = new Hooks.WorldGen.HardmodeTileUpdateEventArgs()
-            {
-                x = x,
-                y = y,
-                type = type,
-            };
-
-            var result = Hooks.WorldGen.InvokeHardmodeTileUpdate(args);
-
-            if (result == HookResult.Cancel)
-                return false;
-
-            return true;
-        }
-    }
-}
 
 namespace OTAPI
 {
@@ -126,10 +103,21 @@ namespace OTAPI
             }
             public static event EventHandler<HardmodeTileUpdateEventArgs> HardmodeTileUpdate;
 
-            public static HookResult? InvokeHardmodeTileUpdate(HardmodeTileUpdateEventArgs args)
+            public static bool InvokeHardmodeTileUpdate(int x, int y, ushort type)
             {
+                var args = new HardmodeTileUpdateEventArgs()
+                {
+                    x = x,
+                    y = y,
+                    type = type,
+                };
+
                 HardmodeTileUpdate?.Invoke(null, args);
-                return args.Result;
+
+                if (args.Result == HookResult.Cancel)
+                    return false;
+
+                return true;
             }
         }
     }

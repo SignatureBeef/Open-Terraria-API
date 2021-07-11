@@ -31,7 +31,7 @@ using System.Linq;
 void HardModeTilePlacement(MonoModder modder)
 {
     var csr = modder.GetILCursor(() => Terraria.WorldGen.hardUpdateWorld(0, 0));
-    var callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.WorldGen.HardmodeTilePlace(0, 0, 0, false, false, 0, 0));
+    var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.WorldGen.InvokeHardmodeTilePlace(0, 0, 0, false, false, 0, 0));
 
     var targets = csr.Body.Instructions.Where(instruction =>
         instruction.OpCode == OpCodes.Call
@@ -60,35 +60,6 @@ void HardModeTilePlacement(MonoModder modder)
         // change the POP instruction to SKIP the SendTileSquare if false was returned
         ins_pop.OpCode = OpCodes.Brfalse_S;
         ins_pop.Operand = continueOn;
-    }
-}
-
-namespace OTAPI.Callbacks
-{
-    public static partial class WorldGen
-    {
-        public static bool HardmodeTilePlace(int x, int y, int type, bool mute, bool forced, int plr, int style)
-        {
-            var args = new Hooks.WorldGen.HardmodeTilePlaceEventArgs()
-            {
-                x = x,
-                y = y,
-                type = type,
-                mute = mute,
-                forced = forced,
-                plr = plr,
-                style = style,
-            };
-            var result = Hooks.WorldGen.InvokeHardmodeTilePlace(args);
-
-            if (result == HardmodeTileUpdateResult.Cancel)
-                return false;
-
-            else if (result == HardmodeTileUpdateResult.Continue)
-                Terraria.WorldGen.PlaceTile(args.x, args.y, args.type, args.mute, args.forced, args.plr, args.style);
-
-            return true;
-        }
     }
 }
 
@@ -130,10 +101,28 @@ namespace OTAPI
             }
             public static event EventHandler<HardmodeTilePlaceEventArgs> HardmodeTilePlace;
 
-            public static HardmodeTileUpdateResult? InvokeHardmodeTilePlace(HardmodeTilePlaceEventArgs args)
+            public static bool InvokeHardmodeTilePlace(int x, int y, int type, bool mute, bool forced, int plr, int style)
             {
+                var args = new Hooks.WorldGen.HardmodeTilePlaceEventArgs()
+                {
+                    x = x,
+                    y = y,
+                    type = type,
+                    mute = mute,
+                    forced = forced,
+                    plr = plr,
+                    style = style,
+                };
+
                 HardmodeTilePlace?.Invoke(null, args);
-                return args.Result;
+
+                if (args.Result == HardmodeTileUpdateResult.Cancel)
+                    return false;
+
+                else if (args.Result == HardmodeTileUpdateResult.Continue)
+                    Terraria.WorldGen.PlaceTile(args.x, args.y, args.type, args.mute, args.forced, args.plr, args.style);
+
+                return true;
             }
         }
     }

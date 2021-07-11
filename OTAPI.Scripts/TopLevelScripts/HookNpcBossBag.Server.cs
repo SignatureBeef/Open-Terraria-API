@@ -32,7 +32,7 @@ void HookNpcBossBag(ModFramework.ModFwModder modder)
 
     var csr = modder.GetILCursor(() => (new Terraria.NPC()).DropItemInstanced(default, default, 0, 0, false));
     var callback = csr.Module.ImportReference(
-        modder.GetMethodDefinition(() => OTAPI.Callbacks.NPC.BossBag(0, 0, 0, 0, 0, 0, false, 0, false, false, null))
+        modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(0, 0, 0, 0, 0, 0, false, 0, false, false, null))
     );
 
     var instructions = csr.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
@@ -85,50 +85,40 @@ namespace OTAPI
             }
             public static event EventHandler<BossBagEventArgs> BossBag;
 
-            public static HookResult? InvokeBossBag(BossBagEventArgs args)
+            public static int InvokeBossBag(
+                int X,
+                int Y,
+                int Width,
+                int Height,
+                int Type,
+                int Stack,
+                bool noBroadcast,
+                int pfix,
+                bool noGrabDelay,
+                bool reverseLookup,
+                Terraria.NPC npc
+            )
             {
+                var args = new BossBagEventArgs()
+                {
+                    X = X,
+                    Y = Y,
+                    Width = Width,
+                    Height = Height,
+                    Type = Type,
+                    Stack = Stack,
+                    noBroadcast = noBroadcast,
+                    pfix = pfix,
+                    noGrabDelay = noGrabDelay,
+                    reverseLookup = reverseLookup,
+                    npc = npc,
+                };
                 BossBag?.Invoke(null, args);
-                return args.Result;
+                if (args.Result == HookResult.Cancel)
+                    return -1;
+
+                return Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.noBroadcast, args.pfix, args.noGrabDelay, args.reverseLookup);
             }
-        }
-    }
-}
-
-namespace OTAPI.Callbacks
-{
-    public static partial class NPC
-    {
-        public static int BossBag(
-            int X,
-            int Y,
-            int Width,
-            int Height,
-            int Type,
-            int Stack,
-            bool noBroadcast,
-            int pfix,
-            bool noGrabDelay,
-            bool reverseLookup,
-            Terraria.NPC npc)
-        {
-            var args = new Hooks.NPC.BossBagEventArgs()
-            {
-                X = X,
-                Y = Y,
-                Width = Width,
-                Height = Height,
-                Type = Type,
-                Stack = Stack,
-                noBroadcast = noBroadcast,
-                pfix = pfix,
-                noGrabDelay = noGrabDelay,
-                reverseLookup = reverseLookup,
-                npc = npc,
-            };
-            if (Hooks.NPC.InvokeBossBag(args) == HookResult.Cancel)
-                return -1;
-
-            return Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.noBroadcast, args.pfix, args.noGrabDelay, args.reverseLookup);
         }
     }
 }

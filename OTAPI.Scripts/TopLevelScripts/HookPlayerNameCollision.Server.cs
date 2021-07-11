@@ -40,7 +40,7 @@ void HookPlayerNameCollision(MonoModder modder)
     csr.Goto(flag, MonoMod.Cil.MoveType.After);
 
     csr.Emit(OpCodes.Ldloc_S, player.Operand as VariableDefinition);
-    csr.EmitDelegate<PlayerNameCollisionCallback>(OTAPI.Callbacks.MessageBuffer.NameCollision);
+    csr.EmitDelegate<PlayerNameCollisionCallback>(OTAPI.Hooks.MessageBuffer.InvokeNameCollision);
     csr.Emit(OpCodes.Brfalse_S, flag.Operand as Instruction);
 }
 
@@ -62,26 +62,15 @@ namespace OTAPI
             }
             public static event EventHandler<NameCollisionEventArgs> NameCollision;
 
-            public static HookResult? InvokeNameCollision(NameCollisionEventArgs args)
+            public static bool InvokeNameCollision(Terraria.Player player)
             {
+                var args = new NameCollisionEventArgs()
+                {
+                    player = player
+                };
                 NameCollision?.Invoke(null, args);
-                return args.Result;
+                return args.Result != HookResult.Cancel;
             }
-        }
-    }
-}
-
-namespace OTAPI.Callbacks
-{
-    public static partial class MessageBuffer
-    {
-        public static bool NameCollision(Terraria.Player player)
-        {
-            var args = new Hooks.MessageBuffer.NameCollisionEventArgs()
-            {
-                player = player
-            };
-            return Hooks.MessageBuffer.InvokeNameCollision(args) != HookResult.Cancel;
         }
     }
 }

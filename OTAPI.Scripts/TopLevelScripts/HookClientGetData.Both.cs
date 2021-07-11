@@ -53,7 +53,7 @@ void HookClientGetData(MonoModder modder)
         GetData.Emit(prm.IsOut ? OpCodes.Ldarg : OpCodes.Ldarga, prm);
 
     GetData.Emit(OpCodes.Ldc_I4, maxPackets);
-    GetData.EmitDelegate<GetDataCallback>(OTAPI.Callbacks.MessageBuffer.GetData);
+    GetData.EmitDelegate<GetDataCallback>(OTAPI.Hooks.MessageBuffer.InvokeGetData);
     GetData.Emit(OpCodes.Brtrue, GetData.Instrs[GetData.Index]);
     GetData.Emit(OpCodes.Ret);
 }
@@ -61,36 +61,6 @@ void HookClientGetData(MonoModder modder)
 // this is merely the callback signature 
 [MonoMod.MonoModIgnore]
 public delegate bool GetDataCallback(global::Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, int maxPackets);
-
-namespace OTAPI.Callbacks
-{
-    public static partial class MessageBuffer
-    {
-        public static bool GetData(global::Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, int maxPackets)
-        {
-            var args = new Hooks.MessageBuffer.GetDataEventArgs()
-            {
-                instance = instance,
-                packetId = packetId,
-                readOffset = readOffset,
-                start = start,
-                length = length,
-                messageType = messageType,
-                maxPackets = maxPackets,
-            };
-            var result = Hooks.MessageBuffer.InvokeGetData(args);
-
-            packetId = args.packetId;
-            readOffset = args.readOffset;
-            start = args.start;
-            length = args.length;
-            messageType = args.messageType;
-            maxPackets = args.maxPackets;
-
-            return result != HookResult.Cancel && packetId < maxPackets;
-        }
-    }
-}
 
 namespace OTAPI
 {
@@ -112,10 +82,29 @@ namespace OTAPI
             }
             public static event EventHandler<GetDataEventArgs> GetData;
 
-            public static HookResult? InvokeGetData(GetDataEventArgs args)
+            public static bool InvokeGetData(global::Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, int maxPackets)
             {
+                var args = new GetDataEventArgs()
+                {
+                    instance = instance,
+                    packetId = packetId,
+                    readOffset = readOffset,
+                    start = start,
+                    length = length,
+                    messageType = messageType,
+                    maxPackets = maxPackets,
+                };
+
                 GetData?.Invoke(null, args);
-                return args.Result;
+
+                packetId = args.packetId;
+                readOffset = args.readOffset;
+                start = args.start;
+                length = args.length;
+                messageType = args.messageType;
+                maxPackets = args.maxPackets;
+
+                return args.Result != HookResult.Cancel && packetId < maxPackets;
             }
         }
     }

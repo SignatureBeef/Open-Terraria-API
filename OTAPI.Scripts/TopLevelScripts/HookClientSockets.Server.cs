@@ -32,7 +32,7 @@ using Terraria.Net.Sockets;
 [Modification(ModType.PreMerge, "Hooking tcp interfaces")]
 void HookClientSockets(ModFwModder modder)
 {
-    var callback = modder.GetMethodDefinition(() => OTAPI.Callbacks.Netplay.CreateTcpListener());
+    var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.Netplay.InvokeCreateTcpListener());
     var tcpSocket = modder.GetDefinition<TcpSocket>();
     modder.OnRewritingMethodBody += (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
     {
@@ -52,20 +52,6 @@ void HookClientSockets(ModFwModder modder)
     };
 }
 
-namespace OTAPI.Callbacks
-{
-    public static partial class Netplay
-    {
-        public static ISocket CreateTcpListener()
-        {
-            var args = new Hooks.Netplay.CreateTcpListenerEventArgs();
-            Hooks.Netplay.InvokeCreateTcpListener(args);
-
-            return args.Result ?? new TcpSocket();
-        }
-    }
-}
-
 namespace OTAPI
 {
     public static partial class Hooks
@@ -78,10 +64,11 @@ namespace OTAPI
             }
             public static event EventHandler<CreateTcpListenerEventArgs> CreateTcpListener;
 
-            public static ISocket InvokeCreateTcpListener(CreateTcpListenerEventArgs args)
+            public static ISocket InvokeCreateTcpListener()
             {
+                var args = new CreateTcpListenerEventArgs();
                 CreateTcpListener?.Invoke(null, args);
-                return args.Result;
+                return args.Result ?? new TcpSocket();
             }
         }
     }

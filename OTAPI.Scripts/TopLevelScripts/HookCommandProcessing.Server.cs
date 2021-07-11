@@ -54,24 +54,8 @@ void HookCommandProcessing(MonoModder modder)
     exceptionHandler.TryStart.ReplaceTransfer(newStart, startDedInputCallBack.Method);
 
     startDedInputCallBack.Emit(OpCodes.Ldloc, vTextLowered)
-        .EmitDelegate<Func<string, string, bool>>(OTAPI.Callbacks.Main.CommandProcess);
+        .EmitDelegate<Func<string, string, bool>>(OTAPI.Hooks.Main.InvokeCommandProcess);
     startDedInputCallBack.Emit(OpCodes.Brfalse, exceptionHandler.TryEnd.Previous);
-}
-
-namespace OTAPI.Callbacks
-{
-    public static partial class Main
-    {
-        public static bool CommandProcess(string lowered, string raw)
-        {
-            var args = new Hooks.Main.CommandProcessEventArgs()
-            {
-                lowered = lowered,
-                command = raw,
-            };
-            return Hooks.Main.InvokeCommandProcess(args) != HookResult.Cancel;
-        }
-    }
 }
 
 namespace OTAPI
@@ -89,10 +73,15 @@ namespace OTAPI
             }
             public static event EventHandler<CommandProcessEventArgs> CommandProcess;
 
-            public static HookResult? InvokeCommandProcess(CommandProcessEventArgs args)
+            public static bool InvokeCommandProcess(string lowered, string raw)
             {
+                var args = new CommandProcessEventArgs()
+                {
+                    lowered = lowered,
+                    command = raw,
+                };
                 CommandProcess?.Invoke(null, args);
-                return args.Result;
+                return args.Result != HookResult.Cancel;
             }
         }
     }

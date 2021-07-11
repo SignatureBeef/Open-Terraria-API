@@ -36,24 +36,13 @@ void HookNpcKilled(MonoModder modder)
         , i => i.OpCode == OpCodes.Stfld && i.Operand is FieldReference fieldReference && fieldReference.Name == "active" && fieldReference.DeclaringType.FullName == "Terraria.Entity"
     );
 
-    checkDead.EmitDelegate<NpcKilledCallback>(OTAPI.Callbacks.NPC.Killed);
+    checkDead.EmitDelegate<NpcKilledCallback>(OTAPI.Hooks.NPC.InvokeKilled);
     checkDead.Emit(OpCodes.Ldarg_0);
 }
 
 [MonoMod.MonoModIgnore]
 public delegate void NpcKilledCallback(global::Terraria.NPC instance);
 
-namespace OTAPI.Callbacks
-{
-    public static partial class NPC
-    {
-        public static void Killed(Terraria.NPC instance)
-            => Hooks.NPC.InvokeKilled(new Hooks.NPC.KilledEventArgs()
-            {
-                npc = instance,
-            });
-    }
-}
 
 namespace OTAPI
 {
@@ -63,16 +52,17 @@ namespace OTAPI
         {
             public class KilledEventArgs : EventArgs
             {
-                public HookResult? Result { get; set; }
-
                 public Terraria.NPC npc { get; set; }
             }
             public static event EventHandler<KilledEventArgs> Killed;
 
-            public static HookResult? InvokeKilled(KilledEventArgs args)
+            public static void InvokeKilled(Terraria.NPC instance)
             {
+                var args = new Hooks.NPC.KilledEventArgs()
+                {
+                    npc = instance,
+                };
                 Killed?.Invoke(null, args);
-                return args.Result;
             }
         }
     }

@@ -60,7 +60,7 @@ partial class ChestHooks
                 new { OpCodes.Ldarg, Operand = csr.Method.Parameters.Skip(2).SingleOrDefault() },
                 new { OpCodes.Ldarg, Operand = csr.Method.Parameters.First() },
                 new { OpCodes.Ldloc_0 },
-                new { OpCodes.Call, Operand = modder.GetMethodDefinition(() => OTAPI.Callbacks.Chest.QuickStack(0, null, 0)) },
+                new { OpCodes.Call, Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.Chest.InvokeQuickStack(0, null, 0)) },
                 new { OpCodes.Brtrue, endInstruction },
                 new { OpCodes.Br, Operand = (Instruction)beginInstruction.Operand }
             );
@@ -108,23 +108,6 @@ partial class ChestHooks
     }
 }
 
-namespace OTAPI.Callbacks
-{
-    public static partial class Chest
-    {
-        public static bool QuickStack(int playerId, Terraria.Item item, int chestIndex)
-        {
-            var args = new Hooks.Chest.QuickStackEventArgs()
-            {
-                PlayerId = playerId,
-                Item = item,
-                ChestIndex = chestIndex,
-            };
-            return Hooks.Chest.InvokeQuickStack(args) != HookResult.Cancel;
-        }
-    }
-}
-
 namespace OTAPI
 {
     public static partial class Hooks
@@ -141,10 +124,16 @@ namespace OTAPI
             }
             public static event EventHandler<QuickStackEventArgs> QuickStack;
 
-            public static HookResult? InvokeQuickStack(QuickStackEventArgs args)
+            public static bool InvokeQuickStack(int playerId, Terraria.Item item, int chestIndex)
             {
+                var args = new QuickStackEventArgs()
+                {
+                    PlayerId = playerId,
+                    Item = item,
+                    ChestIndex = chestIndex,
+                };
                 QuickStack?.Invoke(null, args);
-                return args.Result;
+                return args.Result != HookResult.Cancel;
             }
         }
     }

@@ -30,7 +30,7 @@ void HookMainCtor(MonoModder modder)
 {
     var LaunchGame = modder.GetILCursor(() => Terraria.Program.LaunchGame(null, false));
 
-    var createGame = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Callbacks.Main.Create()));
+    var createGame = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Hooks.Main.InvokeCreate()));
 
     LaunchGame.GotoNext(MonoMod.Cil.MoveType.Before,
         // active = false;
@@ -43,16 +43,6 @@ void HookMainCtor(MonoModder modder)
     LaunchGame.Next.OpCode = OpCodes.Call;
     LaunchGame.Next.Operand = createGame;
 }
-namespace OTAPI.Callbacks
-{
-    public static partial class Main
-    {
-        public static Terraria.Main Create()
-        {
-            return Hooks.Main.Create?.Invoke() ?? new Terraria.Main();
-        }
-    }
-}
 
 namespace OTAPI
 {
@@ -63,6 +53,11 @@ namespace OTAPI
             // i dont think a event is a good idea for this one
             public delegate Terraria.Main CreateHandler();
             public static CreateHandler Create;
+
+            public static Terraria.Main InvokeCreate()
+            {
+                return Hooks.Main.Create?.Invoke() ?? new Terraria.Main();
+            }
         }
     }
 }

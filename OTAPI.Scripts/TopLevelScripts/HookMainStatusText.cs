@@ -39,27 +39,12 @@ void HookMainStatusText(MonoModder modder, IRelinkProvider relinkProvider)
     var csr = modder.GetILCursor(property.SetMethod);
     csr.GotoNext(MonoMod.Cil.MoveType.Before, i => i.Operand is FieldReference fr && fr.Name.Contains("__BackingField"));
 
-    csr.EmitDelegate<OnStatusTextChangeCallback>(OTAPI.Callbacks.Main.OnStatusTextChange);
+    csr.EmitDelegate<OnStatusTextChangeCallback>(OTAPI.Hooks.Main.InvokeStatusTextChange);
 }
 
 
 [MonoMod.MonoModIgnore]
 public delegate string OnStatusTextChangeCallback(string value);
-
-namespace OTAPI.Callbacks
-{
-    public static partial class Main
-    {
-        public static string OnStatusTextChange(string value)
-        {
-            var args = new Hooks.Main.StatusTextChangeArgs()
-            {
-               Value = value
-            };
-            return Hooks.Main.InvokeStatusTextChange(args);
-        }
-    }
-}
 
 namespace OTAPI
 {
@@ -73,8 +58,12 @@ namespace OTAPI
             }
             public static event EventHandler<StatusTextChangeArgs> StatusTextChange;
 
-            public static string InvokeStatusTextChange(StatusTextChangeArgs args)
+            public static string InvokeStatusTextChange(string value)
             {
+                var args = new Hooks.Main.StatusTextChangeArgs()
+                {
+                    Value = value
+                };
                 StatusTextChange?.Invoke(null, args);
                 return args.Value;
             }

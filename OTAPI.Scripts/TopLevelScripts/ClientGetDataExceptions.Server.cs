@@ -48,7 +48,7 @@ void ClientGetDataExceptions(ModFramework.ModFwModder modder)
     csr.Goto(handler.HandlerEnd.Previous(x => x.OpCode == OpCodes.Leave_S), MonoMod.Cil.MoveType.Before);
 
     csr.Emit(OpCodes.Ldloc, exVariable);
-    csr.EmitDelegate< CheckBytesExceptionCallback>(OTAPI.Callbacks.NetMessage.CheckBytesException);
+    csr.EmitDelegate<CheckBytesExceptionCallback>(OTAPI.Hooks.NetMessage.InvokeCheckBytesException);
 }
 
 
@@ -69,30 +69,18 @@ namespace OTAPI
             }
             public static event EventHandler<CheckBytesExceptionEventArgs> CheckBytesException;
 
-            public static HookResult? InvokeCheckBytesException(CheckBytesExceptionEventArgs args)
+            public static void InvokeCheckBytesException(Exception exception)
             {
+                var args = new CheckBytesExceptionEventArgs()
+                {
+                    Exception = exception,
+                };
                 CheckBytesException?.Invoke(null, args);
-                return args.Result;
-            }
-        }
-    }
-}
 
-namespace OTAPI.Callbacks
-{
-    public static partial class NetMessage
-    {
-        public static void CheckBytesException(Exception exception)
-        {
-            var args = new Hooks.NetMessage.CheckBytesExceptionEventArgs()
-            {
-                Exception = exception,
-            };
-            var result = Hooks.NetMessage.InvokeCheckBytesException(args);
-
-            if (result != HookResult.Cancel)
-            {
-                Console.WriteLine(exception);
+                if (args.Result != HookResult.Cancel)
+                {
+                    Console.WriteLine(exception);
+                }
             }
         }
     }

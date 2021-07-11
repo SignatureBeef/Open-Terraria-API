@@ -39,45 +39,9 @@ void HookNpcLoot(MonoModder modder)
     );
 
     NewNPC.Emit(OpCodes.Ldarg_0); // NPC instance
-    NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Callbacks.NPC.DropLoot(default, default, default, default, default, default, default, default, default, default, default));
+    NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default, default));
 }
 
-namespace OTAPI.Callbacks
-{
-    public static partial class NPC
-    {
-        public static int DropLoot(
-                int X, int Y, int Width, int Height, int Type,
-                int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup,
-                Terraria.NPC instance)
-        {
-            var args = new Hooks.NPC.DropLootEventArgs()
-            {
-                Event = HookEvent.Before,
-                X = X,
-                Y = Y,
-                Width = Width,
-                Height = Height,
-                Type = Type,
-                Stack = Stack,
-                noBroadcast = noBroadcast,
-                pfix = pfix,
-                noGrabDelay = noGrabDelay,
-                reverseLookup = reverseLookup,
-                npc = instance,
-
-                itemIndex = 0,
-            };
-            if (Hooks.NPC.InvokeDropLoot(args) != HookResult.Cancel)
-            {
-                args.itemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
-                args.Event = HookEvent.After;
-                Hooks.NPC.InvokeDropLoot(args);
-            }
-            return args.itemIndex;
-        }
-    }
-}
 namespace OTAPI
 {
     public static partial class Hooks
@@ -104,10 +68,35 @@ namespace OTAPI
             }
             public static event EventHandler<DropLootEventArgs> DropLoot;
 
-            public static HookResult? InvokeDropLoot(DropLootEventArgs args)
+            public static int InvokeDropLoot(int X, int Y, int Width, int Height, int Type,
+                int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup,
+                Terraria.NPC instance)
             {
+                var args = new Hooks.NPC.DropLootEventArgs()
+                {
+                    Event = HookEvent.Before,
+                    X = X,
+                    Y = Y,
+                    Width = Width,
+                    Height = Height,
+                    Type = Type,
+                    Stack = Stack,
+                    noBroadcast = noBroadcast,
+                    pfix = pfix,
+                    noGrabDelay = noGrabDelay,
+                    reverseLookup = reverseLookup,
+                    npc = instance,
+
+                    itemIndex = 0,
+                };
                 DropLoot?.Invoke(null, args);
-                return args.Result;
+                if (args.Result != HookResult.Cancel)
+                {
+                    args.itemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                    args.Event = HookEvent.After;
+                    DropLoot?.Invoke(null, args);
+                }
+                return args.itemIndex;
             }
         }
     }
