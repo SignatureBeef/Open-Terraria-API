@@ -1,0 +1,91 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+environment: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the upcoming branch
+  push:
+    branches: [ upcoming-nuget-release ]
+  pull_request:
+    branches: [ upcoming-nuget-release ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.301' # SDK Version to use; x will use the latest version of the 3.1 channel
+
+      - name: Build the project
+        run: Get-Content .\build.sh | Invoke-Expression
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: NuGet Packages
+          path: |
+            OTAPI.Patcher/bin/Debug/net5.0/OTAPI.PC.nupkg
+            OTAPI.Patcher/bin/Debug/net5.0/OTAPI.Mobile.nupkg
+            OTAPI.Patcher/bin/Debug/net5.0/OTAPI.TML.nupkg
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: PC Binaries
+          path: |
+            OTAPI.Patcher/bin/Debug/net5.0/artifact-pc/COPYING.txt
+            OTAPI.Patcher/bin/Debug/net5.0/artifact-pc/OTAPI.dll
+            OTAPI.Patcher/bin/Debug/net5.0/artifact-pc/OTAPI.Runtime.dll
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Mobile Binaries
+          path: |
+            OTAPI.Patcher/bin/Debug/net5.0/artifact-mobile/COPYING.txt
+            OTAPI.Patcher/bin/Debug/net5.0/artifact-mobile/OTAPI.dll
+            OTAPI.Patcher/bin/Debug/net5.0/artifact-mobile/OTAPI.Runtime.dll
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: tModLoader Binaries
+          path: |
+            OTAPI.Patcher/bin/Debug/net5.0/artifact-tml/COPYING.txt
+            OTAPI.Patcher/bin/Debug/net5.0/artifact-tml/OTAPI.dll
+            OTAPI.Patcher/bin/Debug/net5.0/artifact-tml/OTAPI.Runtime.dll
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Wiki MD files
+          path: |
+            OTAPI.Patcher/bin/Debug/net5.0/OTAPI.PC.Server.mfw.md
+            OTAPI.Patcher/bin/Debug/net5.0/OTAPI.Mobile.Server.mfw.md
+            OTAPI.Patcher/bin/Debug/net5.0/OTAPI.TML.PC.Server.mfw.md
+
+      - name: "Releasing to NuGet: OTAPI.Upcoming"
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push .\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.PC.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
+
+      - name: "Releasing to NuGet: OTAPI.Upcoming.Mobile"
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push .\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.Mobile.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
+
+      - name: "Releasing to NuGet: OTAPI.Upcoming.tModLoader"
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push .\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.TML.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
