@@ -72,13 +72,13 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public Terraria.MessageBuffer instance { get; set; }
-                public byte packetId { get; set; }
-                public int readOffset { get; set; }
-                public int start { get; set; }
-                public int length { get; set; }
-                public int messageType { get; set; }
-                public int maxPackets { get; set; }
+                public Terraria.MessageBuffer Instance { get; set; }
+                public byte PacketId { get; set; }
+                public int ReadOffset { get; set; }
+                public int Start { get; set; }
+                public int Length { get; set; }
+                public int MessageType { get; set; }
+                public int MaxPackets { get; set; }
             }
             public static event EventHandler<GetDataEventArgs> GetData;
 
@@ -86,23 +86,23 @@ namespace OTAPI
             {
                 var args = new GetDataEventArgs()
                 {
-                    instance = instance,
-                    packetId = packetId,
-                    readOffset = readOffset,
-                    start = start,
-                    length = length,
-                    messageType = messageType,
-                    maxPackets = maxPackets,
+                    Instance = instance,
+                    PacketId = packetId,
+                    ReadOffset = readOffset,
+                    Start = start,
+                    Length = length,
+                    MessageType = messageType,
+                    MaxPackets = maxPackets,
                 };
 
                 GetData?.Invoke(null, args);
 
-                packetId = args.packetId;
-                readOffset = args.readOffset;
-                start = args.start;
-                length = args.length;
-                messageType = args.messageType;
-                maxPackets = args.maxPackets;
+                packetId = args.PacketId;
+                readOffset = args.ReadOffset;
+                start = args.Start;
+                length = args.Length;
+                messageType = args.MessageType;
+                maxPackets = args.MaxPackets;
 
                 return args.Result != HookResult.Cancel && packetId < maxPackets;
             }

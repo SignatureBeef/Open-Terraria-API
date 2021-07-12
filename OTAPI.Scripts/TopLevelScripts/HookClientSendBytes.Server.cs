@@ -66,13 +66,13 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public Terraria.Net.Sockets.ISocket socket { get; set; }
-                public int remoteClient { get; set; }
-                public byte[] data { get; set; }
-                public int offset { get; set; }
-                public int size { get; set; }
-                public global::Terraria.Net.Sockets.SocketSendCallback callback { get; set; }
-                public object state { get; set; }
+                public Terraria.Net.Sockets.ISocket Socket { get; set; }
+                public int RemoteClient { get; set; }
+                public byte[] Data { get; set; }
+                public int Offset { get; set; }
+                public int Size { get; set; }
+                public global::Terraria.Net.Sockets.SocketSendCallback Callback { get; set; }
+                public object State { get; set; }
             }
             public static event EventHandler<SendBytesEventArgs> SendBytes;
 
@@ -80,12 +80,12 @@ namespace OTAPI
             {
                 var args = new SendBytesEventArgs()
                 {
-                    socket = socket,
-                    data = data,
-                    offset = offset,
-                    size = size,
-                    callback = callback,
-                    state = state,
+                    Socket = socket,
+                    Data = data,
+                    Offset = offset,
+                    Size = size,
+                    Callback = callback,
+                    State = state,
                 };
                 SendBytes?.Invoke(null, args);
                 if (args.Result != HookResult.Cancel)

@@ -82,11 +82,11 @@ namespace OTAPI
                 public HookEvent Event { get; set; }
                 public HookResult? Result { get; set; }
 
-                public Terraria.MessageBuffer instance { get; set; }
-                public System.IO.BinaryReader reader { get; set; }
-                public int start { get; set; }
-                public int length { get; set; }
-                public int messageType { get; set; }
+                public Terraria.MessageBuffer Instance { get; set; }
+                public System.IO.BinaryReader Reader { get; set; }
+                public int Start { get; set; }
+                public int Length { get; set; }
+                public int MessageType { get; set; }
                 public string clientUUID { get; set; }
             }
             public static event EventHandler<ClientUUIDReceivedEventArgs> ClientUUIDReceived;
@@ -99,11 +99,11 @@ namespace OTAPI
                 var args = new ClientUUIDReceivedEventArgs()
                 {
                     Event = HookEvent.Before,
-                    instance = instance,
-                    reader = reader,
-                    start = start,
-                    length = length,
-                    messageType = messageType
+                    Instance = instance,
+                    Reader = reader,
+                    Start = start,
+                    Length = length,
+                    MessageType = messageType
                 };
 
                 ClientUUIDReceived?.Invoke(null, args);
@@ -111,7 +111,7 @@ namespace OTAPI
                 {
                     args.clientUUID = reader.ReadString();
 
-                    ((Terraria.patch_RemoteClient)Terraria.Netplay.Clients[args.instance.whoAmI]).ClientUUID = args.clientUUID;
+                    ((Terraria.patch_RemoteClient)Terraria.Netplay.Clients[args.Instance.whoAmI]).ClientUUID = args.clientUUID;
 
                     args.Event = HookEvent.After;
                     ClientUUIDReceived?.Invoke(null, args);

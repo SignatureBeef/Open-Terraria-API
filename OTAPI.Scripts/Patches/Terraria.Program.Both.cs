@@ -46,87 +46,75 @@ namespace Terraria
         /// </summary>
         public static event EventHandler OnLaunched;
 
+        /// <summary>
+        /// Allows a host application to determine if ModFramework is invoked.
+        /// </summary>
+        public static bool EnableModFramework { get; set; } = true;
+
         static string CSV(params string[] args) => String.Join(",", args.Where(x => !String.IsNullOrWhiteSpace(x)));
+
+        /// <summary>
+        /// Root entry point for OTAPI. Host games can use OTAPI.Runtime.dll to override the 
+        /// </summary>
+        public static void OTAPI()
+        {
+            // we are now on net5 and terraria never knows to do this, so using the new frameworks we need to load
+            // assemblies from the EmbeddedResources of the Terraria exe upon request.
+            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
+
+            Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit)}).");
+
+            if (EnableModFramework)
+            {
+                PluginLoader.TryLoad();
+                Modifier.Apply(ModType.Runtime);
+            }
+
+#if Terraria // client
+            Main.versionNumber += " OTAPI";
+            Main.versionNumber2 += " OTAPI";
+#endif
+
+            OnLaunched?.Invoke(null, EventArgs.Empty);
+        }
+
+        public static Assembly ResolveDependency(System.Runtime.Loader.AssemblyLoadContext ctx, AssemblyName assemblyName)
+        {
+            Console.WriteLine($"Looking for assembly: {assemblyName.Name}");
+            var resourceName = assemblyName.Name + ".dll";
+            var src = typeof(Program).Assembly;
+            resourceName = Array.Find(src.GetManifestResourceNames(), element => element.EndsWith(resourceName));
+
+            if (!string.IsNullOrWhiteSpace(resourceName))
+            {
+                Console.WriteLine($"[OTAPI] Resolved ${resourceName}");
+                using (var stream = src.GetManifestResourceStream(resourceName))
+                    return System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
+            }
+
+            return null;
+        }
 
 #if Terraria // client
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit)}).");
-            ModFramework.Plugins.PluginLoader.AssemblyLoader = new ModFramework.Plugins.LegacyAssemblyResolver();
-            ModFramework.Plugins.PluginLoader.TryLoad();
-            ModFramework.Modifier.Apply(ModFramework.ModType.Runtime);
-
-            Main.versionNumber += " OTAPI";
-            Main.versionNumber2 += " OTAPI";
-
-            OnLaunched?.Invoke(null, EventArgs.Empty);
-
+            OTAPI();
             orig_LaunchGame(args, monoArgs);
         }
 #elif tModLoaderServer // tml
         public static extern void orig_LaunchGame_();
         public static void LaunchGame_()
         {
-            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
-
-            Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit)}).");
-            PluginLoader.TryLoad();
-            Modifier.Apply(ModType.Runtime);
-
-            OnLaunched?.Invoke(null, EventArgs.Empty);
-
+            OTAPI();
             orig_LaunchGame_();
-        }
-
-        // replaces the AppDomain resolution already in Terraria.
-        private static Assembly ResolveDependency(System.Runtime.Loader.AssemblyLoadContext ctx, AssemblyName assemblyName)
-        {
-            Console.WriteLine($"Looking for assembly: {assemblyName.Name}");
-            var resourceName = assemblyName.Name + ".dll";
-            var src = typeof(Program).Assembly;
-            resourceName = Array.Find(src.GetManifestResourceNames(), element => element.EndsWith(resourceName));
-
-            if (!string.IsNullOrWhiteSpace(resourceName))
-            {
-                Console.WriteLine($"[OTAPI] Resolved ${resourceName}");
-                using (var stream = src.GetManifestResourceStream(resourceName))
-                    return System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
-            }
-
-            return null;
         }
 #else // server
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
-            
-            Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit)}).");
-            PluginLoader.TryLoad();
-            Modifier.Apply(ModType.Runtime);
-
-            OnLaunched?.Invoke(null, EventArgs.Empty);
-
+            OTAPI();
             orig_LaunchGame(args, monoArgs);
-        }
-
-        // replaces the AppDomain resolution already in Terraria.
-        private static Assembly ResolveDependency(System.Runtime.Loader.AssemblyLoadContext ctx, AssemblyName assemblyName)
-        {
-            Console.WriteLine($"Looking for assembly: {assemblyName.Name}");
-            var resourceName = assemblyName.Name + ".dll";
-            var src = typeof(Program).Assembly;
-            resourceName = Array.Find(src.GetManifestResourceNames(), element => element.EndsWith(resourceName));
-
-            if (!string.IsNullOrWhiteSpace(resourceName))
-            {
-                Console.WriteLine($"[OTAPI] Resolved ${resourceName}");
-                using (var stream = src.GetManifestResourceStream(resourceName))
-                    return System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
-            }
-
-            return null;
         }
 #endif
     }

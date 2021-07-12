@@ -75,9 +75,9 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public int x { get; set; }
-                public int y { get; set; }
-                public int signId { get; set; }
+                public int X { get; set; }
+                public int Y { get; set; }
+                public int SignId { get; set; }
             }
             public static event EventHandler<AnnouncementBoxEventArgs> AnnouncementBox;
 
@@ -85,9 +85,9 @@ namespace OTAPI
             {
                 var args = new Hooks.Wiring.AnnouncementBoxEventArgs()
                 {
-                    x = x,
-                    y = y,
-                    signId = signId,
+                    X = x,
+                    Y = y,
+                    SignId = signId,
                 };
                 AnnouncementBox?.Invoke(null, args);
                 return args.Result != HookResult.Cancel;

@@ -53,18 +53,18 @@ namespace OTAPI
                 public HookEvent Event { get; set; }
                 public HookResult? Result { get; set; }
 
-                public Terraria.NPC npc { get; set; }
-                public int itemIndex { get; set; }
+                public Terraria.NPC Npc { get; set; }
+                public int ItemIndex { get; set; }
                 public int X { get; set; }
                 public int Y { get; set; }
                 public int Width { get; set; }
                 public int Height { get; set; }
                 public int Type { get; set; }
                 public int Stack { get; set; }
-                public bool noBroadcast { get; set; }
-                public int pfix { get; set; }
-                public bool noGrabDelay { get; set; }
-                public bool reverseLookup { get; set; }
+                public bool NoBroadcast { get; set; }
+                public int Pfix { get; set; }
+                public bool NoGrabDelay { get; set; }
+                public bool ReverseLookup { get; set; }
             }
             public static event EventHandler<DropLootEventArgs> DropLoot;
 
@@ -72,7 +72,7 @@ namespace OTAPI
                 int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup,
                 Terraria.NPC instance)
             {
-                var args = new Hooks.NPC.DropLootEventArgs()
+                var args = new DropLootEventArgs()
                 {
                     Event = HookEvent.Before,
                     X = X,
@@ -81,22 +81,22 @@ namespace OTAPI
                     Height = Height,
                     Type = Type,
                     Stack = Stack,
-                    noBroadcast = noBroadcast,
-                    pfix = pfix,
-                    noGrabDelay = noGrabDelay,
-                    reverseLookup = reverseLookup,
-                    npc = instance,
+                    NoBroadcast = noBroadcast,
+                    Pfix = pfix,
+                    NoGrabDelay = noGrabDelay,
+                    ReverseLookup = reverseLookup,
+                    Npc = instance,
 
-                    itemIndex = 0,
+                    ItemIndex = 0,
                 };
                 DropLoot?.Invoke(null, args);
                 if (args.Result != HookResult.Cancel)
                 {
-                    args.itemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                    args.ItemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
                     args.Event = HookEvent.After;
                     DropLoot?.Invoke(null, args);
                 }
-                return args.itemIndex;
+                return args.ItemIndex;
             }
         }
     }

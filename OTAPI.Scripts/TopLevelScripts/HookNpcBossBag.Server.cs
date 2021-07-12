@@ -71,17 +71,17 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public Terraria.NPC npc { get; set; }
+                public Terraria.NPC Npc { get; set; }
                 public int X { get; set; }
                 public int Y { get; set; }
                 public int Width { get; set; }
                 public int Height { get; set; }
                 public int Type { get; set; }
                 public int Stack { get; set; }
-                public bool noBroadcast { get; set; }
-                public int pfix { get; set; }
-                public bool noGrabDelay { get; set; }
-                public bool reverseLookup { get; set; }
+                public bool NoBroadcast { get; set; }
+                public int Pfix { get; set; }
+                public bool NoGrabDelay { get; set; }
+                public bool ReverseLookup { get; set; }
             }
             public static event EventHandler<BossBagEventArgs> BossBag;
 
@@ -107,17 +107,17 @@ namespace OTAPI
                     Height = Height,
                     Type = Type,
                     Stack = Stack,
-                    noBroadcast = noBroadcast,
-                    pfix = pfix,
-                    noGrabDelay = noGrabDelay,
-                    reverseLookup = reverseLookup,
-                    npc = npc,
+                    NoBroadcast = noBroadcast,
+                    Pfix = pfix,
+                    NoGrabDelay = noGrabDelay,
+                    ReverseLookup = reverseLookup,
+                    Npc = npc,
                 };
                 BossBag?.Invoke(null, args);
                 if (args.Result == HookResult.Cancel)
                     return -1;
 
-                return Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.noBroadcast, args.pfix, args.noGrabDelay, args.reverseLookup);
+                return Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);
             }
         }
     }

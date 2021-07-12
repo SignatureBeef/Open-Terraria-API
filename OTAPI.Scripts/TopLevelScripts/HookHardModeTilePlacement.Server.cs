@@ -91,13 +91,13 @@ namespace OTAPI
             {
                 public HardmodeTileUpdateResult? Result { get; set; }
 
-                public int x { get; set; }
-                public int y { get; set; }
-                public int type { get; set; }
-                public bool mute { get; set; }
-                public bool forced { get; set; }
-                public int plr { get; set; }
-                public int style { get; set; }
+                public int X { get; set; }
+                public int Y { get; set; }
+                public int Type { get; set; }
+                public bool Mute { get; set; }
+                public bool Forced { get; set; }
+                public int Plr { get; set; }
+                public int Style { get; set; }
             }
             public static event EventHandler<HardmodeTilePlaceEventArgs> HardmodeTilePlace;
 
@@ -105,13 +105,13 @@ namespace OTAPI
             {
                 var args = new Hooks.WorldGen.HardmodeTilePlaceEventArgs()
                 {
-                    x = x,
-                    y = y,
-                    type = type,
-                    mute = mute,
-                    forced = forced,
-                    plr = plr,
-                    style = style,
+                    X = x,
+                    Y = y,
+                    Type = type,
+                    Mute = mute,
+                    Forced = forced,
+                    Plr = plr,
+                    Style = style,
                 };
 
                 HardmodeTilePlace?.Invoke(null, args);
@@ -120,7 +120,7 @@ namespace OTAPI
                     return false;
 
                 else if (args.Result == HardmodeTileUpdateResult.Continue)
-                    Terraria.WorldGen.PlaceTile(args.x, args.y, args.type, args.mute, args.forced, args.plr, args.style);
+                    Terraria.WorldGen.PlaceTile(args.X, args.Y, args.Type, args.Mute, args.Forced, args.Plr, args.Style);
 
                 return true;
             }

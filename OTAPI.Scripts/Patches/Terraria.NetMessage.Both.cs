@@ -38,22 +38,22 @@ namespace Terraria
             var args = new Hooks.NetMessage.SendDataEventArgs()
             {
                 Event = HookEvent.Before,
-                msgType = msgType,
-                remoteClient = remoteClient,
-                ignoreClient = ignoreClient,
-                text = text,
-                number = number,
-                number2 = number2,
-                number3 = number3,
-                number4 = number4,
-                number5 = number5,
-                number6 = number6,
-                number7 = number7,
+                MsgType = msgType,
+                RemoteClient = remoteClient,
+                IgnoreClient = ignoreClient,
+                Text = text,
+                Number = number,
+                Number2 = number2,
+                Number3 = number3,
+                Number4 = number4,
+                Number5 = number5,
+                Number6 = number6,
+                Number7 = number7,
             };
 
             if (Hooks.NetMessage.InvokeSendData(args) != HookResult.Cancel)
             {
-                orig_SendData(args.msgType, args.remoteClient, args.ignoreClient, args.text, args.number, args.number2, args.number3, args.number4, args.number5, args.number6, args.number7);
+                orig_SendData(args.MsgType, args.RemoteClient, args.IgnoreClient, args.Text, args.Number, args.Number2, args.Number3, args.Number4, args.Number5, args.Number6, args.Number7);
                 args.Event = HookEvent.After;
                 Hooks.NetMessage.InvokeSendData(args);
             }
@@ -78,18 +78,18 @@ namespace OTAPI
             {
                 public HookEvent Event { get; set; }
                 public HookResult? Result { get; set; }
-                public int bufferId { get; set; }
-                public int msgType { get; set; }
-                public int remoteClient { get; set; }
-                public int ignoreClient { get; set; }
-                public NetworkText text { get; set; }
-                public int number { get; set; }
-                public float number2 { get; set; }
-                public float number3 { get; set; }
-                public float number4 { get; set; }
-                public int number5 { get; set; }
-                public int number6 { get; set; }
-                public int number7 { get; set; }
+                public int BufferId { get; set; }
+                public int MsgType { get; set; }
+                public int RemoteClient { get; set; }
+                public int IgnoreClient { get; set; }
+                public NetworkText Text { get; set; }
+                public int Number { get; set; }
+                public float Number2 { get; set; }
+                public float Number3 { get; set; }
+                public float Number4 { get; set; }
+                public int Number5 { get; set; }
+                public int Number6 { get; set; }
+                public int Number7 { get; set; }
             }
             public static event EventHandler<SendDataEventArgs> SendData;
 

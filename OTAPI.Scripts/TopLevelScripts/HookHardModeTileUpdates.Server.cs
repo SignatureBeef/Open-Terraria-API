@@ -97,9 +97,9 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public int x { get; set; }
-                public int y { get; set; }
-                public int type { get; set; }
+                public int X { get; set; }
+                public int Y { get; set; }
+                public int Type { get; set; }
             }
             public static event EventHandler<HardmodeTileUpdateEventArgs> HardmodeTileUpdate;
 
@@ -107,9 +107,9 @@ namespace OTAPI
             {
                 var args = new HardmodeTileUpdateEventArgs()
                 {
-                    x = x,
-                    y = y,
-                    type = type,
+                    X = x,
+                    Y = y,
+                    Type = type,
                 };
 
                 HardmodeTileUpdate?.Invoke(null, args);

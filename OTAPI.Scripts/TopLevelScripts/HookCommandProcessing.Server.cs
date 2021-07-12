@@ -68,8 +68,8 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public string command { get; set; }
-                public string lowered { get; set; }
+                public string Command { get; set; }
+                public string Lowered { get; set; }
             }
             public static event EventHandler<CommandProcessEventArgs> CommandProcess;
 
@@ -77,8 +77,8 @@ namespace OTAPI
             {
                 var args = new CommandProcessEventArgs()
                 {
-                    lowered = lowered,
-                    command = raw,
+                    Lowered = lowered,
+                    Command = raw,
                 };
                 CommandProcess?.Invoke(null, args);
                 return args.Result != HookResult.Cancel;

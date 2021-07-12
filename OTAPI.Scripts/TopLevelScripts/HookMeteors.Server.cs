@@ -76,8 +76,8 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public int x { get; set; }
-                public int y { get; set; }
+                public int X { get; set; }
+                public int Y { get; set; }
             }
             public static event EventHandler<MeteorEventArgs> Meteor;
 
@@ -85,13 +85,13 @@ namespace OTAPI
             {
                 var args = new Hooks.WorldGen.MeteorEventArgs()
                 {
-                    x = x,
-                    y = y,
+                    X = x,
+                    Y = y,
                 };
                 Meteor?.Invoke(null, args);
 
-                x = args.x;
-                y = args.y;
+                x = args.X;
+                y = args.Y;
 
                 return args.Result != HookResult.Cancel;
             }

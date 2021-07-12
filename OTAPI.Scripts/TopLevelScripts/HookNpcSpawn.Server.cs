@@ -56,7 +56,7 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public int index { get; set; }
+                public int Index { get; set; }
             }
             public static event EventHandler<SpawnEventArgs> Spawn;
 
@@ -64,11 +64,11 @@ namespace OTAPI
             {
                 var args = new SpawnEventArgs()
                 {
-                    index = index,
+                    Index = index,
                 };
                 Spawn?.Invoke(null, args);
 
-                index = args.index;
+                index = args.Index;
 
                 return args.Result != HookResult.Cancel;
             }

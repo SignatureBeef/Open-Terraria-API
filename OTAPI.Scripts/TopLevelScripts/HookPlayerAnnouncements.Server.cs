@@ -61,13 +61,13 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public int index { get; set; }
-                public NetworkText text { get; set; }
-                public Color color { get; set; }
-                public int excludedPlayer { get; set; }
-                public int plr { get; set; }
-                public int toWho { get; set; }
-                public int fromWh { get; set; }
+                public int Index { get; set; }
+                public NetworkText Text { get; set; }
+                public Color Color { get; set; }
+                public int ExcludedPlayer { get; set; }
+                public int Plr { get; set; }
+                public int ToWho { get; set; }
+                public int FromWh { get; set; }
             }
             public static event EventHandler<PlayerAnnounceEventArgs> PlayerAnnounce;
 
@@ -75,17 +75,17 @@ namespace OTAPI
             {
                 var args = new PlayerAnnounceEventArgs()
                 {
-                    text = text,
-                    color = color,
-                    excludedPlayer = excludedPlayer,
-                    plr = plr,
-                    toWho = toWho,
-                    fromWh = fromWho,
+                    Text = text,
+                    Color = color,
+                    ExcludedPlayer = excludedPlayer,
+                    Plr = plr,
+                    ToWho = toWho,
+                    FromWh = fromWho,
                 };
                 PlayerAnnounce?.Invoke(null, args);
 
                 if (args.Result != HookResult.Cancel)
-                    Terraria.Chat.ChatHelper.BroadcastChatMessage(args.text, args.color, args.excludedPlayer);
+                    Terraria.Chat.ChatHelper.BroadcastChatMessage(args.Text, args.Color, args.ExcludedPlayer);
             }
         }
     }

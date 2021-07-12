@@ -58,7 +58,7 @@ namespace OTAPI
                 public HookEvent Event { get; set; }
                 public HookResult? Result { get; set; }
 
-                public Terraria.Player player { get; set; }
+                public Terraria.Player Player { get; set; }
             }
             public static event EventHandler<NameCollisionEventArgs> NameCollision;
 
@@ -66,7 +66,7 @@ namespace OTAPI
             {
                 var args = new NameCollisionEventArgs()
                 {
-                    player = player
+                    Player = player
                 };
                 NameCollision?.Invoke(null, args);
                 return args.Result != HookResult.Cancel;

@@ -52,15 +52,15 @@ namespace OTAPI
         {
             public class KilledEventArgs : EventArgs
             {
-                public Terraria.NPC npc { get; set; }
+                public Terraria.NPC Npc { get; set; }
             }
             public static event EventHandler<KilledEventArgs> Killed;
 
             public static void InvokeKilled(Terraria.NPC instance)
             {
-                var args = new Hooks.NPC.KilledEventArgs()
+                var args = new KilledEventArgs()
                 {
-                    npc = instance,
+                    Npc = instance,
                 };
                 Killed?.Invoke(null, args);
             }

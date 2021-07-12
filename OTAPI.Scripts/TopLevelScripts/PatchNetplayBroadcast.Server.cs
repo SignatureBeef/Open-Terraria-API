@@ -23,11 +23,6 @@ using Mono.Cecil.Cil;
 using MonoMod;
 using System.Linq;
 
-using OTAPI;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-
 #if tModLoaderServer_V1_3
 System.Console.WriteLine("BroadcastThread not available in TML1.3");
 #else

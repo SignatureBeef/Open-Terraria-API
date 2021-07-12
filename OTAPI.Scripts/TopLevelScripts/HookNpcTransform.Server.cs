@@ -52,8 +52,8 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public Terraria.NPC npc { get; set; }
-                public int newType { get; set; }
+                public Terraria.NPC Npc { get; set; }
+                public int NewType { get; set; }
             }
             public static event EventHandler<TransformingEventArgs> Transforming;
 
@@ -61,11 +61,11 @@ namespace OTAPI
             {
                 var args = new TransformingEventArgs()
                 {
-                    npc = instance,
-                    newType = newType,
+                    Npc = instance,
+                    NewType = newType,
                 };
                 Transforming?.Invoke(null, args);
-                newType = args.newType;
+                newType = args.NewType;
                 return args.Result != HookResult.Cancel;
             }
         }
