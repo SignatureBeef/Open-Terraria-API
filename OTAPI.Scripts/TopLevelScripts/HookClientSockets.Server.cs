@@ -40,7 +40,7 @@ void HookClientSockets(ModFwModder modder)
             && instr.Operand is MethodReference mref
             && mref.DeclaringType.FullName == tcpSocket.FullName
             && body.Method.DeclaringType.FullName != tcpSocket.FullName
-            && !body.Method.DeclaringType.Namespace.StartsWith("OTAPI")
+            && body.Method.Name != nameof(OTAPI.Hooks.Netplay.InvokeCreateTcpListener)
         )
         {
             if (mref.Parameters.Count != 0)

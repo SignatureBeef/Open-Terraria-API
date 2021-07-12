@@ -126,12 +126,12 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-                public float x { get; set; }
-                public float y { get; set; }
-                public int type { get; set; }
-                public int num { get; set; }
-                public int num2 { get; set; }
-                public int num3 { get; set; }
+                public float X { get; set; }
+                public float Y { get; set; }
+                public int Type { get; set; }
+                public int Num { get; set; }
+                public int Num2 { get; set; }
+                public int Num3 { get; set; }
             }
             public static event EventHandler<MechSpawnEventArgs> MechSpawn;
 
@@ -141,12 +141,12 @@ namespace OTAPI
                 {
                     var args = new MechSpawnEventArgs()
                     {
-                        x = x,
-                        y = y,
-                        type = type,
-                        num = num,
-                        num2 = num2,
-                        num3 = num3,
+                        X = x,
+                        Y = y,
+                        Type = type,
+                        Num = num,
+                        Num2 = num2,
+                        Num3 = num3,
                     };
                     MechSpawn?.Invoke(null, args);
                     return args.Result != HookResult.Cancel;

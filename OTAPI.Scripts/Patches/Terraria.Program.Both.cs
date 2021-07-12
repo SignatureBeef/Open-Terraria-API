@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using ModFramework;
@@ -90,6 +91,12 @@ namespace Terraria
                 Console.WriteLine($"[OTAPI] Resolved ${resourceName}");
                 using (var stream = src.GetManifestResourceStream(resourceName))
                     return System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
+            }
+
+            if (File.Exists(resourceName))
+            {
+                var content = File.ReadAllBytes(resourceName);
+                return System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(new MemoryStream(content));
             }
 
             return null;

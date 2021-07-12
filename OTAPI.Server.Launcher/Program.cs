@@ -57,15 +57,15 @@ namespace OTAPI.Launcher
             Hooks.MessageBuffer.ClientUUIDReceived += (_, args) =>
             {
                 if (args.Event == HookEvent.After)
-                    Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[args.instance.whoAmI].ClientUUID}");
+                    Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[args.Instance.whoAmI].ClientUUID}");
             };
             Hooks.NPC.MechSpawn += (_, args) =>
             {
-                Console.WriteLine($"Hooks.NPC.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
+                Console.WriteLine($"Hooks.NPC.MechSpawn x={args.X}, y={args.Y}, type={args.Type}, num={args.Num}, num2={args.Num2}, num3={args.Num3}");
             };
             Hooks.Item.MechSpawn += (_, args) =>
             {
-                Console.WriteLine($"Hooks.Item.MechSpawn x={args.x}, y={args.y}, type={args.type}, num={args.num}, num2={args.num2}, num3={args.num3}");
+                Console.WriteLine($"Hooks.Item.MechSpawn x={args.X}, y={args.Y}, type={args.Type}, num={args.Num}, num2={args.Num2}, num3={args.Num3}");
             };
 
             //Hooks.Main.StatusTextChange += Main_StatusTextChange;

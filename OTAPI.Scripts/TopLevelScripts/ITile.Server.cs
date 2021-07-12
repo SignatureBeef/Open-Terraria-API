@@ -47,7 +47,7 @@ void ITile(ModFwModder modder, IRelinkProvider relinkProvider)
         {
             if (instr.OpCode == OpCodes.Newobj && instr.Operand is MethodReference mref
                 && mref.DeclaringType.FullName == "Terraria.Tile"
-                && !body.Method.DeclaringType.Namespace.StartsWith("OTAPI")
+                && body.Method.Name != nameof(OTAPI.Hooks.Tile.InvokeCreate)
             )
             {
                 if (mref.Parameters.Count == 0)

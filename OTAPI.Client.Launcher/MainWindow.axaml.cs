@@ -118,7 +118,7 @@ namespace OTAPI.Client.Launcher
         private bool _isOTAPIReady;
         public bool IsOTAPIReady { get => _isOTAPIReady; set => this.RaiseAndSetIfChanged(ref _isOTAPIReady, value); }
 
-        public ILaunchTarget LaunchTarget { get; set; }
+        public ILaunchTarget? LaunchTarget { get; set; }
 
         public void OnStartVanilla()
         {
