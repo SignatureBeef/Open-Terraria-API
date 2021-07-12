@@ -56,7 +56,7 @@ namespace Terraria
         /// <summary>
         /// Root entry point for OTAPI. Host games can use OTAPI.Runtime.dll to override the 
         /// </summary>
-        public static void OTAPI()
+        public static void LaunchOTAPI()
         {
             // we are now on net5 and terraria never knows to do this, so using the new frameworks we need to load
             // assemblies from the EmbeddedResources of the Terraria exe upon request.
@@ -99,21 +99,21 @@ namespace Terraria
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            OTAPI();
+            LaunchOTAPI();
             orig_LaunchGame(args, monoArgs);
         }
 #elif tModLoaderServer // tml
         public static extern void orig_LaunchGame_();
         public static void LaunchGame_()
         {
-            OTAPI();
+            LaunchOTAPI();
             orig_LaunchGame_();
         }
 #else // server
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
-            OTAPI();
+            LaunchOTAPI();
             orig_LaunchGame(args, monoArgs);
         }
 #endif
