@@ -33,6 +33,8 @@ namespace Microsoft.Win32
         public object GetValue(string _) => null;
         public static RegistryKey OpenBaseKey(RegistryHive hive, RegistryView view) => new RegistryKey();
 
+        public void SetValue(string name, string value) { } // only seen this in tml (Method not found)
+
         public void Dispose() { }
     }
 
