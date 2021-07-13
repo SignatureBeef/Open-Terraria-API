@@ -41,7 +41,7 @@ namespace OTAPI.Patcher.Targets
         public static IPatchTarget DeterminePatchTarget()
         {
             const string RepoBase = "https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Scripts";
-            const string HeaderFormat = $"| Type | Mod | Platforms | Comment |\n| ---- | ---- | ---- | ---- |";
+            const string HeaderFormat = "| Type | Mod | Platforms | Comment |\n| ---- | ---- | ---- | ---- |";
             MarkdownDocumentor.RegisterTypeFormatter<BasicComment>((header, data) =>
             {
                 if (header) return HeaderFormat;
