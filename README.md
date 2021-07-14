@@ -14,7 +14,7 @@ Significant changes this redesign brings are...
 The stack consists upon:
 * [OTAPI Scripts](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Scripts), a directory containing all the scripts used to patch the pc, mobile & client assemblies.
 * [OTAPI Patcher](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Patcher), a program to process all OTAPI Scripts and produce the final OTAPI assemblies for all variants and also supports creating the NuGet packages.
-* [ModFramework](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/ModFramework), a library that extends MonoMod and provides higher level patching methods and extensions, such as remapping fields to properties and arrays to collections
+* [ModFramework](https://github.com/DeathCradle/ModFramework.NET), a library that extends MonoMod and provides higher level patching methods and extensions, such as remapping fields to properties and arrays to collections
 * ModFramework Modules, additional plugins to add [c#](https://www.nuget.org/packages/ModFramework.Modules.CSharp/), [javascript](https://www.nuget.org/packages/ModFramework.Modules.ClearScript/) and [lua](https://www.nuget.org/packages/ModFramework.Modules.Lua/) scripts, for both patching and runtime.
 * [FNA](https://github.com/FNA-XNA/FNA/), for use on the client variants, for a consistent codebase on all platforms. Servers use the [Xna shims](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Scripts/Shims/Xna) instead.
 * [MonoMod](https://github.com/MonoMod/MonoMod), for applying patches and generating runtime events/hooks.
