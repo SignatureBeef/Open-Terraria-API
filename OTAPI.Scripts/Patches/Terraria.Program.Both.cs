@@ -47,11 +47,6 @@ namespace Terraria
         /// </summary>
         public static event EventHandler OnLaunched;
 
-        /// <summary>
-        /// Allows a host application to determine if ModFramework is invoked.
-        /// </summary>
-        public static bool EnableModFramework { get; set; } = true;
-
         static string CSV(params string[] args) => String.Join(",", args.Where(x => !String.IsNullOrWhiteSpace(x)));
 
         /// <summary>
@@ -65,11 +60,9 @@ namespace Terraria
 
             Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit)}).");
 
-            if (EnableModFramework)
-            {
-                PluginLoader.TryLoad();
-                Modifier.Apply(ModType.Runtime);
-            }
+            // load modfw plugins
+            PluginLoader.TryLoad();
+            Modifier.Apply(ModType.Runtime);
 
 #if Terraria // client
             Main.versionNumber += " OTAPI";
