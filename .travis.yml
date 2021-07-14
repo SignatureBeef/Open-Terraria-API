@@ -7,7 +7,7 @@ install:
   - sudo apt-get install unzip
   - nuget restore OTAPI.Server.sln
 script:
-  - wget -O server.zip https://terraria.org/system/dedicated_servers/archives/000/000/036/original/terraria-server-1402.zip?1589675482
+  - wget -O server.zip https://terraria.org/system/dedicated_servers/archives/000/000/036/original/terraria-server-1402.zip
   - unzip server.zip -d tmp_server_zip
-  - cp "tmp_server_zip/1402/Windows/TerrariaServer.exe" wrap/TerrariaServer/TerrariaServer.exe
+  - cp "tmp_server_zip/1423/Windows/TerrariaServer.exe" wrap/TerrariaServer/TerrariaServer.exe
   - xbuild /p:Configuration=Debug OTAPI.Server.sln
