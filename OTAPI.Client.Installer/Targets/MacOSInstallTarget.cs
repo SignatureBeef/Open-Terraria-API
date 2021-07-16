@@ -15,6 +15,7 @@ namespace OTAPI.Client.Installer.Targets
                 var otapiFolder = Path.Combine(installPath, "otapi");
                 var sourceContentPath = Path.Combine(installPath, "Resources", "Content");
                 var destContentPath = Path.Combine(otapiFolder, "Content");
+                var macOS = Path.Combine(installPath, "MacOS");
 
                 if (!Directory.Exists(otapiFolder))
                     Directory.CreateDirectory(otapiFolder);
@@ -33,6 +34,9 @@ namespace OTAPI.Client.Installer.Targets
 
                 Console.WriteLine(Status = "Installing extra files...");
                 this.CopyInstallFiles(otapiFolder);
+
+                Console.WriteLine(Status = "Installing Steamworks...");
+                this.InstallSteamworks64(otapiFolder, macOS);
 
                 Console.WriteLine(Status = "Copying Terraria Content files, this may take a while...");
                 this.CopyFiles(sourceContentPath, destContentPath);

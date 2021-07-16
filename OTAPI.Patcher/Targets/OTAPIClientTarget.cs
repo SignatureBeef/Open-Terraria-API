@@ -360,8 +360,10 @@ namespace OTAPI.Patcher.Targets
 
             CreateRuntimeEvents();
 
+            StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Relinking to .NET5..." });
             CoreLibRelinker.PostProcessCoreLib(temp_out, "outputs/OTAPI.Runtime.dll");
 
+            StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Writing MD..." });
             var doco_md = $"OTAPI.PC.Client.${installDiscoverer.Target.GetClientPlatform()}.mfw.md";
             if (File.Exists(doco_md)) File.Delete(doco_md);
             markdownDocumentor.Write(doco_md);

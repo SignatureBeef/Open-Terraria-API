@@ -4,6 +4,7 @@ using ModFramework.Modules.ClearScript.Typings;
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -211,20 +212,29 @@ namespace OTAPI.Client.Installer.Targets
             target.ExtractBZip2(zipPath, installPath);
         }
 
-        public static void InstallSteamworks64(this IInstallTarget target, string installPath, string vanillaInstall)
+        public static void InstallSteamworks64(this IInstallTarget target, string installPath, string steam_appid_folder)
         {
             var zipPath = target.DownloadZip("https://github.com/rlabrecque/Steamworks.NET/releases/download/15.0.1/Steamworks.NET-Standalone_15.0.1.zip");
             var folderName = Path.GetFileNameWithoutExtension(zipPath);
             if (Directory.Exists(folderName)) Directory.Delete(folderName, true);
             ZipFile.ExtractToDirectory(zipPath, folderName);
 
+            var osx_lin = Path.Combine(folderName, "OSX-Linux-x64");
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 target.CopyFiles(Path.Combine(folderName, "Windows-x64"), installPath);
             else
-                target.CopyFiles(Path.Combine(folderName, "OSX-Linux-x64"), installPath);
+                target.CopyFiles(osx_lin, installPath);
 
             // ensure to use terrarias steam appid
-            target.TransferFile(Path.Combine(vanillaInstall, "steam_appid.txt"), Path.Combine(installPath, "steam_appid.txt"));
+            target.TransferFile(Path.Combine(steam_appid_folder, "steam_appid.txt"), Path.Combine(installPath, "steam_appid.txt"));
+
+            target.TransferFile(Path.Combine(osx_lin, "libsteam_api.so"), Path.Combine(installPath, "lib64", "libsteam_api.so"));
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                target.TransferFile(Path.Combine(installPath, "steam_api.bundle", "Contents", "MacOS", "libsteam_api.dylib"), Path.Combine(installPath, "osx", "libsteam_api.dylib"));
+            }
         }
 
         public static void PatchOSXLaunch(this IInstallTarget target, string installPath)
