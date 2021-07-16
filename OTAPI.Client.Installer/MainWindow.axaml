@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
+        xmlns:showMeTheXaml="clr-namespace:ShowMeTheXaml;assembly=ShowMeTheXaml.Avalonia"
+        xmlns:wpf="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="200" Width="600" Height="200"
+        x:Class="OTAPI.Client.Installer.MainWindow"
+        Background="#333" Foreground="#fff"
+        Title="OTAPI Client Installer">
+    <Window.Styles>
+      <Style Selector="TextBox.install-path">
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="FontWeight" Value="300" />
+      </Style>
+      <Style Selector="TextBlock.h1">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontWeight" Value="Bold" />
+      </Style>
+      <Style Selector="TextBlock.warning">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="Red" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0 2 0 0" />
+      </Style>
+      <Style Selector="TextBlock.installStatus">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Foreground" Value="ForestGreen" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="20" />
+      </Style>
+      <Style Selector="Button.warning">
+        <Setter Property="Margin" Value="0,10,0,0" />
+      </Style>
+    </Window.Styles>
+
+    <StackPanel Margin="10" VerticalAlignment="Center">
+
+      <TextBox Classes="install-path"
+               Text="{Binding InstallPath.Path}" />
+      
+      <TextBlock Classes="warning"
+                 IsVisible="{Binding !InstallPathValid}">
+        Terraria executable not found
+      </TextBlock>
+      
+      <Button Classes="warning STYLE_NAME"
+          Click="OnFindExe">
+        Change Install Path
+      </Button>
+      
+      <Button Classes="warning STYLE_NAME"
+              IsEnabled="{Binding InstallPathValid}"
+              Click="Install">
+        Install
+      </Button>
+
+      <TextBlock Classes="installStatus"
+                 Text="{Binding InstallStatus}" />
+
+    </StackPanel>
+
+</Window>

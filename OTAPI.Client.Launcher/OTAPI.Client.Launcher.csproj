@@ -7,6 +7,12 @@
     <AssemblyName>Terraria</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <AvaloniaXaml Remove="Properties\**" />
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.6" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
@@ -14,9 +20,6 @@
     <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="3.1.0" />
     <PackageReference Include="ReactiveUI" Version="14.1.1" />
    </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
   <Target Name="CleanAll" AfterTargets="Clean">
     <RemoveDir Directories="$(OUTDIR)" />
   </Target>

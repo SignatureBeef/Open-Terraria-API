@@ -1,11 +1,6 @@
-﻿using ICSharpCode.SharpZipLib.BZip2;
-using ICSharpCode.SharpZipLib.Tar;
-using ModFramework.Modules.ClearScript.Typings;
-using OTAPI.Common;
+﻿using OTAPI.Common;
 using System;
 using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace OTAPI.Client.Installer.Targets
 {
@@ -24,25 +19,28 @@ namespace OTAPI.Client.Installer.Targets
                 if (!Directory.Exists(otapiFolder))
                     Directory.CreateDirectory(otapiFolder);
 
-                Console.WriteLine("Copying OTAPI...");
+                Console.WriteLine(Status = "Copying OTAPI...");
                 this.CopyFiles(packagePath, otapiFolder);
 
-                Console.WriteLine("Installing FNA libs...");
+                Console.WriteLine(Status = "Installing FNA libs...");
                 this.InstallLibs(otapiFolder);
 
-                Console.WriteLine("Installing LUA...");
+                Console.WriteLine(Status = "Installing LUA...");
                 this.InstallLua(otapiFolder);
 
-                Console.WriteLine("Installing ClearScript...");
+                Console.WriteLine(Status = "Installing ClearScript...");
                 this.InstallClearScript(otapiFolder);
 
-                Console.WriteLine("Copying Terraria Content files, this may take a while...");
+                Console.WriteLine(Status = "Installing extra files...");
+                this.CopyInstallFiles(otapiFolder);
+
+                Console.WriteLine(Status = "Copying Terraria Content files, this may take a while...");
                 this.CopyFiles(sourceContentPath, destContentPath);
 
-                Console.WriteLine("Patching launch scripts...");
+                Console.WriteLine(Status = "Patching launch scripts...");
                 this.PatchOSXLaunch(installPath);
 
-                Console.WriteLine("OSX install finished");
+                Console.WriteLine(Status = "OSX install finished");
 
                 // TODO typings are not yet ready.
                 //Console.Write("Would you like to generate TypeScript typings? y/n: ");

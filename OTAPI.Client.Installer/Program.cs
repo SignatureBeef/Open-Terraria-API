@@ -15,21 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+using Avalonia;
 using OTAPI.Common;
+using Projektanker.Icons.Avalonia;
+using Projektanker.Icons.Avalonia.FontAwesome;
 using System;
 
 namespace OTAPI.Client.Installer
 {
     class Program
     {
-        static Targets.IInstallTarget[] Targets = new Targets.IInstallTarget[]
+        public static Targets.IInstallTarget[] Targets = new Targets.IInstallTarget[]
         {
             new Targets.MacOSInstallTarget(),
             new Targets.WindowsInstallTarget(),
             new Targets.LinuxInstallTarget(),
         };
 
-        public static void Main(string[] args)
+        public static void Cli()
         {
             Console.WriteLine("NOTE: THIS IS NOT A REAL LAUNCHER. You must load Terraria yourself.");
             Console.WriteLine("This program will install the required files to your client directory.");
@@ -49,6 +52,35 @@ namespace OTAPI.Client.Installer
             //Environment.CurrentDirectory = otapiInstallPath;
             //var asm = System.Reflection.Assembly.LoadFile(Path.Combine(otapiInstallPath, "OTAPI.Client.Host.exe"));
             //asm.EntryPoint.Invoke(null, new object[] { new string[] { } });
+        }
+
+        // Initialization code. Don't use any Avalonia, third-party APIs or any
+        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+        // yet and stuff might break.
+        public static void Main(string[] args)
+        {
+            //if (args.Any(x => x == "--gui"))
+            //{
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+            //}
+            //else
+            //{
+            //    Cli();
+            //}
+        }
+
+        // Avalonia configuration, don't remove; also used by visual designer.
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .AfterSetup(AfterSetupCallback)
+                .UsePlatformDetect()
+                .LogToTrace();
+
+        // Called after setup
+        private static void AfterSetupCallback(AppBuilder appBuilder)
+        {
+            // Register icon provider(s)
+            IconProvider.Register<FontAwesomeIconProvider>();
         }
     }
 }

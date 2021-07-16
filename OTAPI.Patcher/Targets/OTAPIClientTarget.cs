@@ -31,12 +31,20 @@ using OTAPI.Common;
 
 namespace OTAPI.Patcher.Targets
 {
+
     [MonoMod.MonoModIgnore]
     public class OTAPIClientLightweightTarget : IPatchTarget
     {
+        public class StatusUpdateArgs : EventArgs
+        {
+            public string Text { get; set; }
+        }
+
         public string DisplayText { get; } = "OTAPI Client (lightweight)";
 
         private MarkdownDocumentor markdownDocumentor = new ModificationMdDocumentor();
+
+        public event EventHandler<StatusUpdateArgs> StatusUpdate;
 
         bool CanLoadFile(string filepath)
         {
@@ -75,6 +83,8 @@ namespace OTAPI.Patcher.Targets
         public void Patch()
         {
             Console.WriteLine($"Open Terraria API v{Common.GetVersion()} [lightweight]");
+
+            StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Starting..." });
 
             PluginLoader.AssemblyFound += CanLoadFile;
             CSharpLoader.AssemblyFound += CanLoadFile;
@@ -168,6 +178,8 @@ namespace OTAPI.Patcher.Targets
             var primaryAssemblyPath = Path.Combine(Environment.CurrentDirectory, localPath_x86);
 
             // hot patch terraria.exe straight up to x64 so we dont fail on Assembly.LoadFile next
+
+            StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Converting to x64" });
             {
                 var pa = AssemblyDefinition.ReadAssembly(primaryAssemblyPath);
                 pa.MainModule.Architecture = TargetArchitecture.I386;
@@ -202,6 +214,8 @@ namespace OTAPI.Patcher.Targets
             assemblies.Add(asm.FullName, asm);
 
             var resourcesPath = installDiscoverer.GetResourcePath();
+
+            StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Loading plugins..." });
 
             // build shims
             PluginLoader.Init();
@@ -241,6 +255,8 @@ namespace OTAPI.Patcher.Targets
                 // relink / merge into the output
                 public_mm.RelinkAssembly("ReLogic");
                 public_mm.RelinkAssembly("RailSDK.Net");
+
+                StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Merging and pregenerating files, this will be brief..." });
 
                 public_mm.AutoPatch();
                 public_mm.Write();
@@ -282,6 +298,8 @@ namespace OTAPI.Patcher.Targets
 
             var temp_out = Path.Combine("outputs", "OTAPI.exe");
 
+
+            StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Modifying installation, this will take a moment..." });
             using var mm = new ModFwModder()
             {
                 InputPath = "OTAPI.dll",
@@ -352,12 +370,13 @@ namespace OTAPI.Patcher.Targets
             mm.Log("[OTAPI] Done.");
         }
 
-        static void CreateRuntimeEvents()
+        void CreateRuntimeEvents()
         {
             Console.WriteLine("[OTAPI] Creating runtime events");
 
             PluginLoader.Clear();
 
+            StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Creating runtime hooks..." });
             using (var mm = new ModFwModder()
             {
                 InputPath = "outputs/OTAPI.exe",

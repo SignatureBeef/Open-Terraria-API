@@ -13,6 +13,7 @@ namespace OTAPI.Client.Installer.Targets
     {
         public static string PublishHostGame(this IInstallTarget target)
         {
+            Console.WriteLine(target.Status = "Building host game...");
             var hostDir = "../../../../OTAPI.Client.Host/";
 
             var package = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
@@ -40,6 +41,7 @@ namespace OTAPI.Client.Installer.Targets
 
         public static string PublishHostLauncher(this IInstallTarget target)
         {
+            Console.WriteLine(target.Status = "Building launcher, this may take a long time...");
             var hostDir = "../../../../OTAPI.Client.Launcher/";
 
             var package = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
@@ -189,11 +191,6 @@ namespace OTAPI.Client.Installer.Targets
             var modificationsDir = Path.Combine(otapiInstallPath, "modifications");
             Directory.CreateDirectory(modificationsDir);
             target.TransferFile("ModFramework.Modules.ClearScript.dll", Path.Combine(modificationsDir, "ModFramework.Modules.ClearScript.dll"));
-
-            var csDir = Path.Combine(otapiInstallPath, "clearscript");
-            Directory.CreateDirectory(csDir);
-            foreach (var file in Directory.GetFiles("clearscript", "*.js"))
-                target.TransferFile(file, Path.Combine(csDir, Path.GetFileName(file)));
         }
 
         public static void InstallLua(this IInstallTarget target, string otapiInstallPath)
@@ -201,11 +198,11 @@ namespace OTAPI.Client.Installer.Targets
             var modificationsDir = Path.Combine(otapiInstallPath, "modifications");
             Directory.CreateDirectory(modificationsDir);
             target.TransferFile("ModFramework.Modules.Lua.dll", Path.Combine(modificationsDir, "ModFramework.Modules.Lua.dll"));
+        }
 
-            var luaDir = Path.Combine(otapiInstallPath, "lua");
-            Directory.CreateDirectory(luaDir);
-            foreach (var lua in Directory.GetFiles("lua", "*.lua"))
-                target.TransferFile(lua, Path.Combine(luaDir, Path.GetFileName(lua)));
+        public static void CopyInstallFiles(this IInstallTarget target, string otapiInstallPath)
+        {
+            target.CopyFiles("install",  otapiInstallPath);
         }
 
         public static void InstallLibs(this IInstallTarget target, string installPath)

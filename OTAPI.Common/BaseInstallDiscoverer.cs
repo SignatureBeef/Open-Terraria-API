@@ -22,8 +22,15 @@ using System.Runtime.InteropServices;
 
 namespace OTAPI.Common
 {
+    public class InstallStatusUpdate : EventArgs
+    {
+        public string Text { get; set; }
+    }
+
     public abstract class BaseInstallDiscoverer : IInstallDiscoverer
     {
+        public event EventHandler<InstallStatusUpdate> StatusUpdate;
+
         public abstract string[] SearchPaths { get; }
 
         public abstract bool IsValidInstallPath(string folder);
@@ -41,6 +48,11 @@ namespace OTAPI.Common
                 if (IsValidInstallPath(formatted))
                     yield return formatted;
             }
+        }
+
+        public string Status
+        {
+            set => StatusUpdate?.Invoke(this, new InstallStatusUpdate() { Text = value });
         }
     }
 }

@@ -28,24 +28,25 @@
 		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.1.4" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\FNA\FNA.Core.csproj" />
-		<ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <None Remove="Microsoft.ClearScript.V8.Native.osx-x64" />
+    <None Remove="Microsoft.ClearScript.linux-x64" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Refs Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\*.refs" />
-		<Patches Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Patches\**\*.cs" />
-		<TopLevelScripts Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\TopLevelScripts\**\*.cs" />
-		<Shims Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Shims\**\*.cs" />
-		<JavaScript Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\JavaScript\**\*.js" />
-		<Lua Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Lua\**\*.lua" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FNA\FNA.Core.csproj" />
+    <ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="Microsoft.ClearScript.V8.Native.osx-x64" />
-	  <None Remove="Microsoft.ClearScript.linux-x64" />
-	</ItemGroup>
+  <ItemGroup>
+    <Refs Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\*.refs" />
+    <Patches Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Patches\**\*.cs" />
+    <TopLevelScripts Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\TopLevelScripts\**\*.cs" />
+    <Shims Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Shims\**\*.cs" />
+    <JavaScript Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\JavaScript\**\*.js" />
+    <Lua Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Lua\**\*.lua" />
+  </ItemGroup>
+  
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<MakeDir Directories="$(TargetDir)modifications\" />
 		<RemoveDir Directories="$(TargetDir)modifications\" />
