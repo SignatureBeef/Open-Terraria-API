@@ -41,10 +41,7 @@ namespace OTAPI.Client.Host
             On.Terraria.Main.SetDisplayModeAsBorderless += Main_SetDisplayModeAsBorderless;
 #endif
 
-            var asm = typeof(Terraria.Program).Assembly;
-            var launchClass = asm.GetType("Terraria.MacLaunch") ?? asm.GetType("Terraria.WindowsLaunch") ?? asm.GetType("Terraria.LinuxLaunch");
-            var main = launchClass.GetMethod("Main");
-            main.Invoke(null, new object[] { args });
+            typeof(Terraria.Program).Assembly.EntryPoint.Invoke(null, new object[] { args });
         }
 
 

@@ -36,6 +36,7 @@ namespace OTAPI.Client.Host
         public static void Main(string[] args)
         {
             Console.WriteLine("[OTAPI.Client] Starting!");
+
             //Environment.SetEnvironmentVariable("DYLD_LIBRARY_PATH", Path.Combine(Environment.CurrentDirectory, "fnalibs", "osx"));
 
             // https://github.com/FNA-XNA/FNA/wiki/4:-FNA-and-Windows-API#64-bit-support
@@ -62,7 +63,7 @@ namespace OTAPI.Client.Host
                 if (_nativeCache.TryGetValue(libraryName, out IntPtr cached))
                     return cached;
 
-                //Console.WriteLine("Looking for " + libraryName);
+                Console.WriteLine("Looking for " + libraryName);
 
                 IEnumerable<string> matches = Enumerable.Empty<string>();
 
@@ -76,6 +77,41 @@ namespace OTAPI.Client.Host
                     var lib64 = Path.Combine(Environment.CurrentDirectory, "lib64");
                     matches = Directory.GetFiles(lib64, "*" + libraryName + "*");
                 }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    var x64 = Path.Combine(Environment.CurrentDirectory, "x64");
+                    matches = Directory.GetFiles(x64, "*" + libraryName + "*");
+                }
+
+                //if (!matches.Any())
+                //{
+                //    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                //    {
+                //        var runtimes = Path.Combine(Environment.CurrentDirectory, "runtimes");
+                //        var osx = Path.Combine(runtimes, "osx", "native");
+                //        var osx64 = Path.Combine(runtimes, "osx-x64", "native");
+
+                //        matches = Enumerable.Empty<string>();
+
+                //        if (Directory.Exists(osx))
+                //            matches = matches.Concat(Directory.GetFiles(osx, "*" + libraryName + "*", SearchOption.AllDirectories));
+
+                //        if (Directory.Exists(osx64))
+                //            matches = matches.Concat(Directory.GetFiles(osx64, "*" + libraryName + "*", SearchOption.AllDirectories));
+                //    }
+                //    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                //    {
+                //        var linux64 = Path.Combine(Environment.CurrentDirectory, "runtimes", "linux-x64", "native");
+                //        matches = Directory.GetFiles(linux64, "*" + libraryName + "*", SearchOption.AllDirectories);
+                //    }
+                //    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                //    {
+                //        var win64 = Path.Combine(Environment.CurrentDirectory, "runtimes", "win-x64", "native");
+                //        matches = Directory.GetFiles(win64, "*" + libraryName + "*", SearchOption.AllDirectories);
+
+                //        Console.WriteLine($"Found {matches.Count()} matches for {libraryName}");
+                //    }
+                //}
 
                 if (matches.Count() == 1)
                 {

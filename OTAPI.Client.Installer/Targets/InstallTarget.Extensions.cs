@@ -1,71 +1,317 @@
 ﻿using ICSharpCode.SharpZipLib.BZip2;
 using ICSharpCode.SharpZipLib.Tar;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
+using Microsoft.CodeAnalysis.Text;
 using ModFramework.Modules.ClearScript.Typings;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using static ModFramework.Modules.CSharp.CSharpLoader;
 
 namespace OTAPI.Client.Installer.Targets
 {
     public static class InstallTargetExtensions
     {
-        public static string PublishHostGame(this IInstallTarget target)
+        // @todo use modfw's - needs nuget update
+        static IEnumerable<CompilationFile> ParseFiles(IEnumerable<string> files, IEnumerable<string> constants, string type)
+        {
+            foreach (var file in files)
+            {
+                var folder = Path.GetFileName(Path.GetDirectoryName(file));
+
+                var encoding = System.Text.Encoding.UTF8;
+                var parse_options = CSharpParseOptions.Default
+                    .WithKind(SourceCodeKind.Regular)
+                    .WithPreprocessorSymbols(constants.Select(s => s.Replace("#define ", "")))
+                    .WithDocumentationMode(DocumentationMode.Parse)
+                    .WithLanguageVersion(LanguageVersion.Preview); // allows toplevel functions
+
+                var src = File.ReadAllText(file);
+                var source = SourceText.From(src, encoding);
+                var encoded = CSharpSyntaxTree.ParseText(source, parse_options, file);
+                var embedded = EmbeddedText.FromSource(file, source);
+
+                yield return new CompilationFile()
+                {
+                    File = file,
+                    SyntaxTree = encoded,
+                    EmbeddedText = embedded,
+                };
+            }
+        }
+
+        public static void CopyOTAPI(this IInstallTarget target, string otapiFolder, IEnumerable<string> packagePaths)
+        {
+            Console.WriteLine(target.Status = "Copying OTAPI...");
+            foreach (var packagePath in packagePaths)
+                target.CopyFiles(packagePath, otapiFolder);
+
+            // copy installer
+
+            File.WriteAllText(Path.Combine(otapiFolder, "Terraria.runtimeconfig.json"), @"{
+  ""runtimeOptions"": {
+    ""tfm"": ""net5.0"",
+    ""framework"": {
+      ""name"": ""Microsoft.NETCore.App"",
+      ""version"": ""5.0.0""
+    }
+  }
+}");
+
+            target.TransferFile("FNA.dll", Path.Combine(otapiFolder, "FNA.dll"));
+            target.TransferFile("FNA.dll.config", Path.Combine(otapiFolder, "FNA.dll.config"));
+            target.TransferFile("FNA.pdb", Path.Combine(otapiFolder, "FNA.pdb"));
+
+            target.TransferFile("ModFramework.dll", Path.Combine(otapiFolder, "ModFramework.dll"));
+
+            target.TransferFile("NLua.dll", Path.Combine(otapiFolder, "NLua.dll"));
+            target.TransferFile("KeraLua.dll", Path.Combine(otapiFolder, "KeraLua.dll"));
+
+            target.TransferFile("ImGui.NET.dll", Path.Combine(otapiFolder, "ImGui.NET.dll"));
+
+            if (File.Exists("lua54.dll")) target.TransferFile("lua54.dll", Path.Combine(otapiFolder, "lua54.dll"));
+            if (File.Exists("cimgui.dll")) target.TransferFile("cimgui.dll", Path.Combine(otapiFolder, "cimgui.dll"));
+
+            target.TransferFile("SteelSeriesEngineWrapper.dll", Path.Combine(otapiFolder, "SteelSeriesEngineWrapper.dll"));
+
+            target.TransferFile("OTAPI.Client.Installer.exe", Path.Combine(otapiFolder, "OTAPI.Client.Installer.exe"));
+            target.TransferFile("OTAPI.Client.Installer.runtimeconfig.json", Path.Combine(otapiFolder, "OTAPI.Client.Installer.runtimeconfig.json"));
+            target.TransferFile(Path.Combine(otapiFolder, "Terraria.exe"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.dll"));
+            target.TransferFile(Path.Combine(otapiFolder, "Terraria.pdb"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.pdb"));
+
+            target.TransferFile("OTAPI.exe", Path.Combine(otapiFolder, "OTAPI.exe"));
+            target.TransferFile("OTAPI.Runtime.dll", Path.Combine(otapiFolder, "OTAPI.Runtime.dll"));
+            target.TransferFile("OTAPI.Common.dll", Path.Combine(otapiFolder, "OTAPI.Common.dll"));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "OTAPI.Patcher*"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Mono*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "ClearScript*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "System.*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "ms*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Microsoft*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "api-ms-*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Avalonia*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            target.TransferFile("netstandard.dll", Path.Combine(otapiFolder, "netstandard.dll"));
+
+            if (Directory.Exists("runtimes"))
+            {
+                target.CopyFiles("runtimes", Path.Combine(otapiFolder, "runtimes"));
+
+                target.CopyFiles(Path.Combine("runtimes", "osx", "native"), Path.Combine(otapiFolder, "osx"));
+                target.CopyFiles(Path.Combine("runtimes", "osx-x64", "native"), Path.Combine(otapiFolder, "osx"));
+                target.CopyFiles(Path.Combine("runtimes", "win-x64", "native"), Path.Combine(otapiFolder, "x64"));
+                target.CopyFiles(Path.Combine("runtimes", "linux-x64", "native"), Path.Combine(otapiFolder, "lib64"));
+            }
+        }
+
+        public static IEnumerable<string> PublishHostGame(this IInstallTarget target)
         {
             Console.WriteLine(target.Status = "Building host game...");
-            var hostDir = "../../../../OTAPI.Client.Host/";
+            var hostDir = "hostgame";
+            //var hostDir = "../../../../OTAPI.Client.Host/";
 
-            var package = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? "win-x64" : (
-                RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "osx.10.11-x64" : "ubuntu.16.04-x64"
+            //var package = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            //    ? "win-x64" : (
+            //    RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "osx.10.11-x64" : "ubuntu.16.04-x64"
+            //);
+
+            //using var process = new System.Diagnostics.Process()
+            //{
+            //    StartInfo = new System.Diagnostics.ProcessStartInfo()
+            //    {
+            //        FileName = Path.Combine(Environment.CurrentDirectory, "MSBuild.dll"),
+            //        Arguments = $"publish {hostDir}/OTAPI.Client.Host.csproj -r " + package,
+            //        //Arguments = "msbuild -restore -t:PublishAllRids",
+            //        WorkingDirectory = Environment.CurrentDirectory
+            //    },
+            //};
+            //process.Start();
+            //process.WaitForExit();
+
+            //var output = Path.Combine(hostDir, "bin", "Debug", "net5.0", package, "publish");
+            //if (Directory.Exists(output)) return new[] { output };
+            //else return Enumerable.Empty<string>();
+
+            const string constants_path = "AutoGenerated.cs";
+            var constants = File.Exists(constants_path)
+                ? File.ReadAllLines(constants_path) : Enumerable.Empty<string>(); // bring across the generated constants
+
+            var compile_options = new CSharpCompilationOptions(OutputKind.WindowsApplication)
+                .WithOptimizationLevel(OptimizationLevel.Debug)
+                .WithPlatform(Platform.X64)
+                .WithAllowUnsafe(true);
+
+            var files = Directory.EnumerateFiles(hostDir, "*.cs");
+            var parsed = ParseFiles(files, constants, null);
+
+            var syntaxTrees = parsed.Select(x => x.SyntaxTree);
+
+            var compilation = CSharpCompilation
+                .Create("Terraria", syntaxTrees, options: compile_options)
+            ;
+
+            var libs = ((String)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES"))
+                .Split(Path.PathSeparator)
+                .Where(x => !x.StartsWith(Environment.CurrentDirectory));
+            foreach (var lib in libs)
+            {
+                compilation = compilation.AddReferences(MetadataReference.CreateFromFile(lib));
+            }
+
+#if RELEASE
+            foreach (var lib in System.IO.Directory.GetFiles(Environment.CurrentDirectory, "System.*.dll"))
+            {
+                compilation = compilation.AddReferences(MetadataReference.CreateFromFile(lib));
+            }
+            compilation = compilation.AddReferences(MetadataReference.CreateFromFile("mscorlib.dll"));
+            compilation = compilation.AddReferences(MetadataReference.CreateFromFile("netstandard.dll"));
+#endif
+
+            compilation = compilation.AddReferences(MetadataReference.CreateFromFile("FNA.dll"));
+            compilation = compilation.AddReferences(MetadataReference.CreateFromFile("ImGui.NET.dll"));
+            compilation = compilation.AddReferences(MetadataReference.CreateFromFile("OTAPI.exe"));
+            compilation = compilation.AddReferences(MetadataReference.CreateFromFile("OTAPI.Runtime.dll"));
+            //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net5.0\OTAPI.exe")));
+            //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net5.0\OTAPI.Runtime.dll")));
+
+            var emitOptions = new EmitOptions(
+            //debugInformationFormat: DebugInformationFormat.PortablePdb,
+            //pdbFilePath: outPdbPath
             );
 
-            using var process = new System.Diagnostics.Process()
+
+            var dllStream = new MemoryStream();
+            var pdbStream = new MemoryStream();
+            var xmlStream = new MemoryStream();
+            var result = compilation.Emit(
+                       peStream: dllStream,
+                       pdbStream: pdbStream,
+                       xmlDocumentationStream: xmlStream,
+                       embeddedTexts: parsed.Select(x => x.EmbeddedText),
+                       options: emitOptions
+                 );
+
+            if (!result.Success)
             {
-                StartInfo = new System.Diagnostics.ProcessStartInfo()
-                {
-                    FileName = "dotnet",
-                    Arguments = "publish -r " + package,
-                    //Arguments = "msbuild -restore -t:PublishAllRids",
-                    WorkingDirectory = hostDir
-                },
-            };
-            process.Start();
-            process.WaitForExit();
+                throw new Exception($"Compilation failed: " + String.Join("\n", result.Diagnostics.Select(x => x.ToString())));
+            }
+
+            var output = "host_game";
+            if (Directory.Exists(output)) Directory.Delete(output, true);
+            Directory.CreateDirectory(output);
+
+            File.WriteAllBytes(Path.Combine(output, "Terraria.exe"), dllStream.ToArray());
+            File.WriteAllBytes(Path.Combine(output, "Terraria.pdb"), pdbStream.ToArray());
+            File.WriteAllBytes(Path.Combine(output, "Terraria.xml"), xmlStream.ToArray());
 
             Console.WriteLine("Published");
 
-            return Path.Combine(hostDir, "bin", "Debug", "net5.0", package, "publish");
+            return new[] { output };
+        }
+
+        class GHArtifactResponse
+        {
+            [JsonProperty("artifacts")]
+            public IEnumerable<GHArtifact> Artifacts { get; set; }
+        }
+        class GHArtifact
+        {
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("archive_download_url")]
+            public string ArchiveDownloadUrl { get; set; }
         }
 
         public static string PublishHostLauncher(this IInstallTarget target)
         {
-            Console.WriteLine(target.Status = "Building launcher, this may take a long time...");
-            var hostDir = "../../../../OTAPI.Client.Launcher/";
+            var url = "https://api.github.com/repos/DeathCradle/Open-Terraria-API/actions/artifacts?per_page=20";
 
-            var package = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? "win-x64" : (
-                RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "osx.10.11-x64" : "ubuntu.16.04-x64"
-            );
-
-            using var process = new System.Diagnostics.Process()
+            if (!Directory.Exists("launcher_files"))
             {
-                StartInfo = new System.Diagnostics.ProcessStartInfo()
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("OTAPI3-Installer");
+                var data = client.GetStringAsync(url).Result;
+                var resp = Newtonsoft.Json.JsonConvert.DeserializeObject<GHArtifactResponse>(data);
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    url = resp.Artifacts.First(a => a.Name == "Windows Launcher").ArchiveDownloadUrl;
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                    url = resp.Artifacts.First(a => a.Name == "MacOS Launcher").ArchiveDownloadUrl;
+                else // linux
+                    url = resp.Artifacts.First(a => a.Name == "Linux Launcher").ArchiveDownloadUrl;
+
+                Console.WriteLine(target.Status = "Downloading launcher, this may take a long time...");
+                using var launcher = client.GetStreamAsync(url).Result;
+
+                if (File.Exists("launcher.zip")) File.Delete("launcher.zip");
+                using var fs = File.OpenWrite("launcher.zip");
+
+                var buffer = new byte[512];
+                int read;
+                while (launcher.CanRead)
                 {
-                    FileName = "dotnet",
-                    Arguments = $"publish -r {package} --framework net5.0 -p:PublishTrimmed=true -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true -c Release",
-                    //Arguments = "msbuild -restore -t:PublishAllRids",
-                    WorkingDirectory = hostDir
-                },
-            };
-            process.Start();
-            process.WaitForExit();
+                    if ((read = launcher.Read(buffer, 0, buffer.Length)) == 0)
+                        break;
 
-            Console.WriteLine("Published");
+                    fs.Write(buffer, 0, read);
+                }
+                fs.Flush();
 
-            return Path.Combine(hostDir, "bin", "Release", "net5.0", package, "publish");
+                Directory.CreateDirectory("launcher_files");
+                ZipFile.ExtractToDirectory("launcher.zip", "launcher_files");
+            }
+
+            return "launcher_files";
+
+            //Console.WriteLine(target.Status = "Building launcher, this may take a long time...");
+            //var hostDir = "../../../../OTAPI.Client.Launcher/";
+
+            //var package = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            //    ? "win-x64" : (
+            //    RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "osx.10.11-x64" : "ubuntu.16.04-x64"
+            //);
+
+            //using var process = new System.Diagnostics.Process()
+            //{
+            //    StartInfo = new System.Diagnostics.ProcessStartInfo()
+            //    {
+            //        FileName = "dotnet",
+            //        Arguments = $"publish -r {package} --framework net5.0 -p:PublishTrimmed=true -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true -c Release",
+            //        //Arguments = "msbuild -restore -t:PublishAllRids",
+            //        WorkingDirectory = hostDir
+            //    },
+            //};
+            //process.Start();
+            //process.WaitForExit();
+
+            //Console.WriteLine("Published");
+
+            //return Path.Combine(hostDir, "bin", "Release", "net5.0", package, "publish");
         }
 
         public static void CopyFiles(this IInstallTarget target, string sourcePath, string targetPath)
@@ -203,7 +449,7 @@ namespace OTAPI.Client.Installer.Targets
 
         public static void CopyInstallFiles(this IInstallTarget target, string otapiInstallPath)
         {
-            target.CopyFiles("install",  otapiInstallPath);
+            target.CopyFiles("install", otapiInstallPath);
         }
 
         public static void InstallLibs(this IInstallTarget target, string installPath)

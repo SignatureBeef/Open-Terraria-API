@@ -201,7 +201,7 @@ namespace OTAPI.Patcher.Targets
                         asmref.Name = "FNA";
                         asmref.PublicKey = null;
                         asmref.PublicKeyToken = null;
-                        asmref.Version = new Version("21.5.0.0");
+                        asmref.Version = typeof(Microsoft.Xna.Framework.Game).Assembly.GetName().Version;
                     }
                 }
 

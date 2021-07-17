@@ -2,10 +2,12 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Microsoft.CodeAnalysis;
 using OTAPI.Client.Installer.Targets;
 using OTAPI.Common;
 using OTAPI.Patcher.Targets;
 using ReactiveUI;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OTAPI.Client.Installer
@@ -23,6 +25,8 @@ namespace OTAPI.Client.Installer
 
         private bool _installing;
         public bool IsInstalling { get => _installing; set => this.RaiseAndSetIfChanged(ref _installing, value); }
+
+        public bool CanInstall => InstallPathValid && !IsInstalling;
     }
 
     public partial class MainWindow : Window
@@ -86,17 +90,52 @@ namespace OTAPI.Client.Installer
 
             Task.Run(() =>
             {
-                var target = new OTAPIClientLightweightTarget();
-                target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
-                target.Patch();
-                Context.InstallStatus = "Patching completed, installing to existing installation...";
+                try
+                {
+                    ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext += (instance, args) =>
+                    {
+                        var asms = System.AppDomain.CurrentDomain.GetAssemblies();
+                        if (args.CoreLibAssemblies is not null && args.CoreLibAssemblies.Count() == 0)
+                        {
+                            var cref = typeof(object).Assembly.Location;
+                            Context.InstallStatus = "Binding to " + cref + " and " + asms.Length + " other assemblies";
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(cref));
 
-                Context.InstallPath.Target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
-                Context.InstallPath.Target.Install(Context.InstallPath.Path);
+                            foreach (var asm in asms)
+                            {
+                                if (!string.IsNullOrWhiteSpace(asm.Location) && System.IO.File.Exists(asm.Location))
+                                    args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(asm.Location));
+                            }
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(typeof(System.Attribute).Assembly.Location));
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Collections.dll"));
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Collections.Specialized.dll"));
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Drawing.dll"));
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Drawing.Primitives.dll"));
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Runtime.dll"));
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("netstandard.dll"));
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Linq.dll"));
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Linq.Expressions.dll"));
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("mscorlib.dll"));
+                        }
+                    };
 
-                Context.InstallStatus = "Install completed";
+                    var target = new OTAPIClientLightweightTarget();
 
-                Context.IsInstalling = false;
+                    //target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
+                    //target.Patch();
+                    //Context.InstallStatus = "Patching completed, installing to existing installation...";
+
+                    Context.InstallPath.Target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
+                    Context.InstallPath.Target.Install(Context.InstallPath.Path);
+
+                    Context.InstallStatus = "Install completed";
+
+                    Context.IsInstalling = false;
+                }
+                catch (System.Exception ex)
+                {
+                    Context.InstallStatus = "Err: " + ex.ToString();
+                }
             });
         }
     }

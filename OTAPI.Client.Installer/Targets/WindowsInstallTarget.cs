@@ -1,6 +1,7 @@
 ﻿using OTAPI.Common;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace OTAPI.Client.Installer.Targets
 {
@@ -8,9 +9,9 @@ namespace OTAPI.Client.Installer.Targets
     {
         public void Install(string installPath)
         {
-            var packagePath = this.PublishHostGame();
+            var packagePaths = this.PublishHostGame();
 
-            if (Directory.Exists(packagePath))
+            if (packagePaths.Any())
             {
                 var otapiFolder = Path.Combine(installPath, "otapi");
                 var sourceContentPath = Path.Combine(installPath, "Content");
@@ -19,8 +20,7 @@ namespace OTAPI.Client.Installer.Targets
                 if (!Directory.Exists(otapiFolder))
                     Directory.CreateDirectory(otapiFolder);
 
-                Console.WriteLine(Status = "Copying OTAPI...");
-                this.CopyFiles(packagePath, otapiFolder);
+                this.CopyOTAPI(otapiFolder, packagePaths);
 
                 Console.WriteLine(Status = "Installing FNA libs...");
                 this.InstallLibs(otapiFolder);
