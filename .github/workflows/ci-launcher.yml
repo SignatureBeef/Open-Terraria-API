@@ -41,6 +41,14 @@ jobs:
           name: Windows Launcher
           path: OTAPI.Client.Launcher/bin/Release/net5.0/win-x64/publish
 
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "launcher"
+          prerelease: true
+          title: "Windows Launcher"
+          files: OTAPI.Client.Launcher/bin/Release/net5.0/win-x64/publish
+
   build_osx:
     # The type of runner that the job will run on
     runs-on: macos-latest
@@ -65,6 +73,14 @@ jobs:
         with:
           name: MacOS Launcher
           path: OTAPI.Client.Launcher/bin/Release/net5.0/osx.10.11-x64/publish
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "launcher"
+          prerelease: true
+          title: "MacOS Launcher"
+          files: OTAPI.Client.Launcher/bin/Release/net5.0/osx.10.11-x64/publish
 
   # This workflow contains a single job called "build"
   build_lin:
@@ -91,3 +107,11 @@ jobs:
         with:
           name: Linux Launcher
           path: OTAPI.Client.Launcher/bin/Release/net5.0/ubuntu.16.04-x64/publish
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "launcher"
+          prerelease: true
+          title: "Linux Launcher"
+          files: OTAPI.Client.Launcher/bin/Release/net5.0/ubuntu.16.04-x64/publish

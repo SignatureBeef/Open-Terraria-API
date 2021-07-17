@@ -121,9 +121,9 @@ namespace OTAPI.Client.Installer
 
                     var target = new OTAPIClientLightweightTarget();
 
-                    //target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
-                    //target.Patch();
-                    //Context.InstallStatus = "Patching completed, installing to existing installation...";
+                    target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
+                    target.Patch();
+                    Context.InstallStatus = "Patching completed, installing to existing installation...";
 
                     Context.InstallPath.Target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
                     Context.InstallPath.Target.Install(Context.InstallPath.Path);

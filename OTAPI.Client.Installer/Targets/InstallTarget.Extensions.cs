@@ -82,7 +82,8 @@ namespace OTAPI.Client.Installer.Targets
 
             target.TransferFile("SteelSeriesEngineWrapper.dll", Path.Combine(otapiFolder, "SteelSeriesEngineWrapper.dll"));
 
-            target.TransferFile("OTAPI.Client.Installer.exe", Path.Combine(otapiFolder, "OTAPI.Client.Installer.exe"));
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) target.TransferFile("OTAPI.Client.Installer.exe", Path.Combine(otapiFolder, "OTAPI.Client.Installer.exe"));
+            else target.TransferFile("OTAPI.Client.Installer", Path.Combine(otapiFolder, "OTAPI.Client.Installer"));
             target.TransferFile("OTAPI.Client.Installer.runtimeconfig.json", Path.Combine(otapiFolder, "OTAPI.Client.Installer.runtimeconfig.json"));
             target.TransferFile(Path.Combine(otapiFolder, "Terraria.exe"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.dll"));
             target.TransferFile(Path.Combine(otapiFolder, "Terraria.pdb"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.pdb"));
@@ -132,6 +133,11 @@ namespace OTAPI.Client.Installer.Targets
         {
             Console.WriteLine(target.Status = "Building host game...");
             var hostDir = "hostgame";
+
+            var output = "host_game";
+            if (Directory.Exists(output)) Directory.Delete(output, true);
+            Directory.CreateDirectory(output);
+
             //var hostDir = "../../../../OTAPI.Client.Host/";
 
             //var package = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
@@ -161,7 +167,7 @@ namespace OTAPI.Client.Installer.Targets
                 ? File.ReadAllLines(constants_path) : Enumerable.Empty<string>(); // bring across the generated constants
 
             var compile_options = new CSharpCompilationOptions(OutputKind.WindowsApplication)
-                .WithOptimizationLevel(OptimizationLevel.Debug)
+                .WithOptimizationLevel(OptimizationLevel.Release)
                 .WithPlatform(Platform.X64)
                 .WithAllowUnsafe(true);
 
@@ -198,9 +204,10 @@ namespace OTAPI.Client.Installer.Targets
             //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net5.0\OTAPI.exe")));
             //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net5.0\OTAPI.Runtime.dll")));
 
+            var outPdbPath = Path.Combine(output, "Terraria.pdb");
             var emitOptions = new EmitOptions(
-            //debugInformationFormat: DebugInformationFormat.PortablePdb,
-            //pdbFilePath: outPdbPath
+                debugInformationFormat: DebugInformationFormat.PortablePdb,
+                pdbFilePath: outPdbPath
             );
 
 
@@ -208,24 +215,20 @@ namespace OTAPI.Client.Installer.Targets
             var pdbStream = new MemoryStream();
             var xmlStream = new MemoryStream();
             var result = compilation.Emit(
-                       peStream: dllStream,
-                       pdbStream: pdbStream,
-                       xmlDocumentationStream: xmlStream,
-                       embeddedTexts: parsed.Select(x => x.EmbeddedText),
-                       options: emitOptions
-                 );
+                peStream: dllStream,
+                pdbStream: pdbStream,
+                xmlDocumentationStream: xmlStream,
+                embeddedTexts: parsed.Select(x => x.EmbeddedText),
+                options: emitOptions
+            );
 
             if (!result.Success)
             {
                 throw new Exception($"Compilation failed: " + String.Join("\n", result.Diagnostics.Select(x => x.ToString())));
             }
 
-            var output = "host_game";
-            if (Directory.Exists(output)) Directory.Delete(output, true);
-            Directory.CreateDirectory(output);
-
             File.WriteAllBytes(Path.Combine(output, "Terraria.exe"), dllStream.ToArray());
-            File.WriteAllBytes(Path.Combine(output, "Terraria.pdb"), pdbStream.ToArray());
+            File.WriteAllBytes(outPdbPath, pdbStream.ToArray());
             File.WriteAllBytes(Path.Combine(output, "Terraria.xml"), xmlStream.ToArray());
 
             Console.WriteLine("Published");
