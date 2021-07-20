@@ -44,45 +44,7 @@ If(Test-Path $zipSavePath)
 	Remove-Item $zipSavePath
 }
 
-#Fetch the download url from the terraria.org website
-$terrariaHtml = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($serverSaveFile), "terraria_org.html");
-#If(Test-Path $terrariaHtml)
-#{
-#	Remove-Item $terrariaHtml
-#}
-Write-Host "Saving terraria.org html to $terrariaHtml";
-Try
-{
-    Invoke-WebRequest -Uri "https://terraria.org" -OutFile $terrariaHtml
-}
-Catch
-{
-    #Write-Host "Pashed"
-    (New-Object System.Net.WebClient).DownloadFile("https://terraria.org", $terrariaHtml)
-}
-
-#Find the zip url in the html content
-$html = [System.IO.File]::ReadAllText($terrariaHtml);
-$indexor = $html.LastIndexOf('>PC Dedicated Server</a>');
-
-If($indexor -eq -1)
-{
-	Write-Host "Script needs an update";
-	Return;
-}
-
-$attr_char = $html[$indexor - 1];
-$html = $html.Substring(0, $indexor - 1);
-$indexor = $html.LastIndexOf($attr_char);
-$html = $html.Remove(0, $indexor + 1);
-#Found it, now prepare the variable so the download method can use it
-$downloadUrl = "https://terraria.org/" + $html;
-
-If($indexor -eq -1)
-{
-	Write-Host "Script needs an update: $attr_char";
-	Return;
-}
+$downloadUrl = "https://terraria.org/api/download/pc-dedicated-server/terraria-server-1423.zip";
 
 #Download the latest zip
 Write-Host "Downloading $downloadUrl";
@@ -116,7 +78,6 @@ $output.Dispose();
 #Cleanup zips
 Write-Host "Cleaning up"
 $zip.Dispose();
-Remove-Item $terrariaHtml;
 Remove-Item $zipSavePath;
 
 #Process the client. No fancy web update here as people must have paid for it anyway.
