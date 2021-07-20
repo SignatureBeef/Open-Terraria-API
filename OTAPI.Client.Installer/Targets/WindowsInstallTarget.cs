@@ -20,8 +20,6 @@ namespace OTAPI.Client.Installer.Targets
                 if (!Directory.Exists(otapiFolder))
                     Directory.CreateDirectory(otapiFolder);
 
-                this.CopyOTAPI(otapiFolder, packagePaths);
-
                 Console.WriteLine(Status = "Installing FNA libs...");
                 this.InstallLibs(otapiFolder);
 
@@ -42,6 +40,8 @@ namespace OTAPI.Client.Installer.Targets
 
                 Console.WriteLine(Status = "Patching launch scripts...");
                 this.PatchWindowsLaunch(installPath);
+
+                this.CopyOTAPI(otapiFolder, packagePaths);
 
                 Console.WriteLine(Status = "Windows install finished");
                 Console.WriteLine("Open the following directory and make a shortcut");

@@ -13,8 +13,8 @@
 		</Reference>
 	</ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.0-alpha4" />
-    <PackageReference Include="MonoMod" Version="21.6.21.1" />
+    <PackageReference Include="ModFramework" Version="1.0.4-alpha" />
+    <PackageReference Include="MonoMod" Version="21.7.8.3" />
   </ItemGroup>
 	<PropertyGroup>
 		<PreserveCompilationReferences>true</PreserveCompilationReferences>

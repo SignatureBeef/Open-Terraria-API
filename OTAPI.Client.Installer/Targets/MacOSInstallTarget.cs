@@ -21,8 +21,6 @@ namespace OTAPI.Client.Installer.Targets
                 if (!Directory.Exists(otapiFolder))
                     Directory.CreateDirectory(otapiFolder);
 
-                this.CopyOTAPI(otapiFolder, packagePaths);
-
                 Console.WriteLine(Status = "Installing FNA libs...");
                 this.InstallLibs(otapiFolder);
 
@@ -43,6 +41,8 @@ namespace OTAPI.Client.Installer.Targets
 
                 Console.WriteLine(Status = "Patching launch scripts...");
                 this.PatchOSXLaunch(installPath);
+
+                this.CopyOTAPI(otapiFolder, packagePaths);
 
                 Console.WriteLine(Status = "OSX install finished");
 

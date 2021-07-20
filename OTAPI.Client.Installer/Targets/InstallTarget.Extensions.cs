@@ -20,34 +20,6 @@ namespace OTAPI.Client.Installer.Targets
 {
     public static class InstallTargetExtensions
     {
-        // @todo use modfw's - needs nuget update
-        static IEnumerable<CompilationFile> ParseFiles(IEnumerable<string> files, IEnumerable<string> constants, string type)
-        {
-            foreach (var file in files)
-            {
-                var folder = Path.GetFileName(Path.GetDirectoryName(file));
-
-                var encoding = System.Text.Encoding.UTF8;
-                var parse_options = CSharpParseOptions.Default
-                    .WithKind(SourceCodeKind.Regular)
-                    .WithPreprocessorSymbols(constants.Select(s => s.Replace("#define ", "")))
-                    .WithDocumentationMode(DocumentationMode.Parse)
-                    .WithLanguageVersion(LanguageVersion.Preview); // allows toplevel functions
-
-                var src = File.ReadAllText(file);
-                var source = SourceText.From(src, encoding);
-                var encoded = CSharpSyntaxTree.ParseText(source, parse_options, file);
-                var embedded = EmbeddedText.FromSource(file, source);
-
-                yield return new CompilationFile()
-                {
-                    File = file,
-                    SyntaxTree = encoded,
-                    EmbeddedText = embedded,
-                };
-            }
-        }
-
         public static void CopyOTAPI(this IInstallTarget target, string otapiFolder, IEnumerable<string> packagePaths)
         {
             Console.WriteLine(target.Status = "Copying OTAPI...");
@@ -172,7 +144,7 @@ namespace OTAPI.Client.Installer.Targets
                 .WithAllowUnsafe(true);
 
             var files = Directory.EnumerateFiles(hostDir, "*.cs");
-            var parsed = ParseFiles(files, constants, null);
+            var parsed = ModFramework.Modules.CSharp.CSharpLoader.ParseFiles(files, constants, null);
 
             var syntaxTrees = parsed.Select(x => x.SyntaxTree);
 
@@ -236,44 +208,48 @@ namespace OTAPI.Client.Installer.Targets
             return new[] { output };
         }
 
-        class GHArtifactResponse
+        class GHRelease
         {
-            [JsonProperty("artifacts")]
-            public IEnumerable<GHArtifact> Artifacts { get; set; }
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("assets")]
+            public IEnumerable<GHArtifact> Assets { get; set; }
         }
         class GHArtifact
         {
             [JsonProperty("name")]
             public string Name { get; set; }
 
-            [JsonProperty("archive_download_url")]
-            public string ArchiveDownloadUrl { get; set; }
+            [JsonProperty("browser_download_url")]
+            public string BrowserDownloadUrl { get; set; }
         }
 
         public static string PublishHostLauncher(this IInstallTarget target)
         {
-            var url = "https://api.github.com/repos/DeathCradle/Open-Terraria-API/actions/artifacts?per_page=20";
+            var url = "https://api.github.com/repos/DeathCradle/Open-Terraria-API/releases";
 
-            if (!Directory.Exists("launcher_files"))
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("OTAPI3-Installer");
+            var data = client.GetStringAsync(url).Result;
+            var releases = Newtonsoft.Json.JsonConvert.DeserializeObject<GHRelease[]>(data);
+
+            GHRelease release;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                release = releases.First(a => a.Name == "Windows Launcher");
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                release = releases.First(a => a.Name == "MacOS Launcher");
+            else // linux
+                release = releases.First(a => a.Name == "Linux Launcher");
+
+            url = release.Assets.First(a => a.Name.EndsWith(".zip", StringComparison.CurrentCultureIgnoreCase)).BrowserDownloadUrl;
+
+            Console.WriteLine(target.Status = "Downloading launcher, this may take a long time...");
+            using var launcher = client.GetStreamAsync(url).Result;
+
+            if (File.Exists("launcher.zip")) File.Delete("launcher.zip");
+            using (var fs = File.OpenWrite("launcher.zip"))
             {
-                using var client = new HttpClient();
-                client.DefaultRequestHeaders.UserAgent.ParseAdd("OTAPI3-Installer");
-                var data = client.GetStringAsync(url).Result;
-                var resp = Newtonsoft.Json.JsonConvert.DeserializeObject<GHArtifactResponse>(data);
-
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    url = resp.Artifacts.First(a => a.Name == "Windows Launcher").ArchiveDownloadUrl;
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                    url = resp.Artifacts.First(a => a.Name == "MacOS Launcher").ArchiveDownloadUrl;
-                else // linux
-                    url = resp.Artifacts.First(a => a.Name == "Linux Launcher").ArchiveDownloadUrl;
-
-                Console.WriteLine(target.Status = "Downloading launcher, this may take a long time...");
-                using var launcher = client.GetStreamAsync(url).Result;
-
-                if (File.Exists("launcher.zip")) File.Delete("launcher.zip");
-                using var fs = File.OpenWrite("launcher.zip");
-
                 var buffer = new byte[512];
                 int read;
                 while (launcher.CanRead)
@@ -284,12 +260,19 @@ namespace OTAPI.Client.Installer.Targets
                     fs.Write(buffer, 0, read);
                 }
                 fs.Flush();
-
-                Directory.CreateDirectory("launcher_files");
-                ZipFile.ExtractToDirectory("launcher.zip", "launcher_files");
+                fs.Close();
             }
 
-            return "launcher_files";
+            if (Directory.Exists("launcher_files")) Directory.Delete("launcher_files", true);
+            Directory.CreateDirectory("launcher_files");
+            ZipFile.ExtractToDirectory("launcher.zip", "launcher_files");
+
+            var files = Directory.GetFiles("launcher_files", "*", SearchOption.AllDirectories);
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return Path.GetDirectoryName(files.Single(x => Path.GetFileName(x).Equals("Terraria.exe", StringComparison.CurrentCultureIgnoreCase)));
+            else // linux+osx
+                return Path.GetDirectoryName(files.Single(x => Path.GetFileName(x).Equals("Terraria", StringComparison.CurrentCultureIgnoreCase)));
 
             //Console.WriteLine(target.Status = "Building launcher, this may take a long time...");
             //var hostDir = "../../../../OTAPI.Client.Launcher/";

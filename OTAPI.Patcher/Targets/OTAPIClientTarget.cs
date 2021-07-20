@@ -108,9 +108,10 @@ namespace OTAPI.Patcher.Targets
 
             File.Copy(input, localPath_x86);
 
+            // bring across some file from the installation so mono.cecil/mod can find them
             foreach (var lib in new[]
             {
-                "FNA.dll",
+                //"FNA.dll", use our custom FNA, otherwise in publish/release the assemblies will mismatch
                 "SteelSeriesEngineWrapper.dll",
                 "CSteamworks.dll",
                 "CUESDK_2015.dll",
@@ -215,6 +216,15 @@ namespace OTAPI.Patcher.Targets
 
             var resourcesPath = installDiscoverer.GetResourcePath();
 
+            // if FNA.dll exists in the installation, remove it.
+            // this is so that ours locally is found using Mono.Cecil
+            // and ours will also install over the top again
+            var fna_res = installDiscoverer.GetResource("FNA.dll");
+            if (File.Exists(fna_res))
+            {
+                File.Delete(fna_res);
+            }
+
             StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Loading plugins..." });
 
             // build shims
@@ -290,14 +300,14 @@ namespace OTAPI.Patcher.Targets
             // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
             CSharpLoader.GlobalAssemblies.Add("OTAPI.dll");
 
-            var fna = installDiscoverer.GetResource("FNA.dll");
+            var fna = "FNA.dll";
+            //var fna = installDiscoverer.GetResource("FNA.dll");
             if (File.Exists(fna)) CSharpLoader.GlobalAssemblies.Add(fna);
             PluginLoader.TryLoad();
 
             Directory.CreateDirectory("outputs");
 
             var temp_out = Path.Combine("outputs", "OTAPI.exe");
-
 
             StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Modifying installation, this will take a moment..." });
             using var mm = new ModFwModder()
@@ -345,7 +355,7 @@ namespace OTAPI.Patcher.Targets
                     asmref.Name = "FNA";
                     asmref.PublicKey = null;
                     asmref.PublicKeyToken = null;
-                    asmref.Version = new Version("21.5.0.0");
+                    asmref.Version = asmFNA.GetName().Version;
                 }
             }
 

@@ -13,10 +13,10 @@
 	</PropertyGroup>-->
 	<ItemGroup>
 		<PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.1.4" />
-		<PackageReference Include="ModFramework" Version="1.0.2-alpha" />
-		<PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.2-alpha" />
-		<PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.2-alpha" />
-		<PackageReference Include="ModFramework.Modules.Lua" Version="1.0.2-alpha" />
+		<PackageReference Include="ModFramework" Version="1.0.4-alpha" />
+		<PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.4-alpha" />
+		<PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.4-alpha" />
+		<PackageReference Include="ModFramework.Modules.Lua" Version="1.0.4-alpha" />
 		<PackageReference Include="Mono.Cecil" Version="0.11.4" />
 		<PackageReference Include="MonoMod" Version="21.7.8.3" />
 		<PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.7.8.3" />
