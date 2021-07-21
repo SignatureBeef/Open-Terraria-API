@@ -43,6 +43,7 @@ namespace OTAPI.Client.Installer.Targets
             target.TransferFile("FNA.pdb", Path.Combine(otapiFolder, "FNA.pdb"));
 
             target.TransferFile("ModFramework.dll", Path.Combine(otapiFolder, "ModFramework.dll"));
+            target.CopyFiles("modifications", Path.Combine(otapiFolder, "modifications"));
 
             target.TransferFile("NLua.dll", Path.Combine(otapiFolder, "NLua.dll"));
             target.TransferFile("KeraLua.dll", Path.Combine(otapiFolder, "KeraLua.dll"));

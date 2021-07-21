@@ -76,6 +76,33 @@
 		<MakeDir Directories="$(TargetDir)hostgame\" />
 		<Copy SourceFiles="@(HostGame)" DestinationFolder="$(TargetDir)hostgame/%(RecursiveDir)" />
 	</Target>
+  <Target Name="AfterPrepareForPublish" AfterTargets="Publish">
+    <MakeDir Directories="$(PublishDir)modifications\" />
+    <RemoveDir Directories="$(PublishDir)modifications\" />
+    <MakeDir Directories="$(PublishDir)modifications\" />
+    <Copy SourceFiles="$(PublishDir)ModFramework.Modules.CSharp.dll" DestinationFolder="$(PublishDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(PublishDir)ModFramework.Modules.ClearScript.dll" DestinationFolder="$(PublishDir)modifications" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(PublishDir)ModFramework.Modules.Lua.dll" DestinationFolder="$(PublishDir)modifications" SkipUnchangedFiles="false" />
+    <MakeDir Directories="$(PublishDir)csharp\" />
+    <RemoveDir Directories="$(PublishDir)csharp\plugins\" />
+    <MakeDir Directories="$(PublishDir)csharp\plugins\" />
+    <Copy SourceFiles="@(Refs)" DestinationFolder="$(PublishDir)csharp/plugins/" />
+    <Copy SourceFiles="@(Patches)" DestinationFolder="$(PublishDir)csharp/plugins/patches/otapi/%(RecursiveDir)" />
+    <Copy SourceFiles="@(TopLevelScripts)" DestinationFolder="$(PublishDir)csharp/plugins/toplevel/otapi/%(RecursiveDir)" />
+    <Copy SourceFiles="@(Shims)" DestinationFolder="$(PublishDir)csharp/plugins/shims/%(RecursiveDir)" />
+    <MakeDir Directories="$(PublishDir)clearscript\" />
+    <RemoveDir Directories="$(PublishDir)clearscript\" />
+    <MakeDir Directories="$(PublishDir)clearscript\" />
+    <Copy SourceFiles="@(JavaScript)" DestinationFolder="$(PublishDir)clearscript/%(RecursiveDir)" />
+    <MakeDir Directories="$(PublishDir)lua\" />
+    <RemoveDir Directories="$(PublishDir)lua\" />
+    <MakeDir Directories="$(PublishDir)lua\" />
+    <Copy SourceFiles="@(Lua)" DestinationFolder="$(PublishDir)lua/%(RecursiveDir)" />
+    <MakeDir Directories="$(PublishDir)hostgame\" />
+    <RemoveDir Directories="$(PublishDir)hostgame\" />
+    <MakeDir Directories="$(PublishDir)hostgame\" />
+    <Copy SourceFiles="@(HostGame)" DestinationFolder="$(PublishDir)hostgame/%(RecursiveDir)" />
+  </Target>
 	<ItemGroup>
 		<Folder Include="install\lua\" />
 	</ItemGroup>
