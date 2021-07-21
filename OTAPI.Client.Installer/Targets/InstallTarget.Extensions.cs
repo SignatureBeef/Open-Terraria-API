@@ -89,7 +89,29 @@ namespace OTAPI.Client.Installer.Targets
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Avalonia*.dll"))
                 target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "host*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "core*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "clr*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "harf*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "lib*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Material*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
             target.TransferFile("netstandard.dll", Path.Combine(otapiFolder, "netstandard.dll"));
+            target.TransferFile("nfd.dll", Path.Combine(otapiFolder, "nfd.dll"));
+            target.TransferFile("Tmds.DBus.dll", Path.Combine(otapiFolder, "Tmds.DBus.dll"));
+            target.TransferFile("ucrtbase.dll", Path.Combine(otapiFolder, "ucrtbase.dll"));
+            target.TransferFile("WindowsBase.dll", Path.Combine(otapiFolder, "WindowsBase.dll"));
 
             if (Directory.Exists("runtimes"))
             {
