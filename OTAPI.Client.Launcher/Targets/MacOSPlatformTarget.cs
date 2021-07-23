@@ -39,7 +39,7 @@ namespace OTAPI.Client.Launcher.Targets
             //    var otapiFolder = Path.Combine(installPath, "otapi");
             var sourceContentPath = Path.Combine(installPath, "Resources", "Content");
             var destContentPath = Path.Combine(Environment.CurrentDirectory, "Content");
-            //    var macOS = Path.Combine(installPath, "MacOS");
+            var macOS = Path.Combine(installPath, "MacOS");
 
             //    if (!Directory.Exists(otapiFolder))
             //        Directory.CreateDirectory(otapiFolder);
