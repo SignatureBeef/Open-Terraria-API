@@ -70,49 +70,58 @@ namespace OTAPI.Client.Launcher.Actions
 
             var asm_path = Path.Combine(Environment.CurrentDirectory, "OTAPI.exe");
             Terraria = LoadAndCacheAssembly(asm_path);
+            var steam = LoadAndCacheAssembly("Steamworks.NET.dll");
 
-            NativeLibrary.SetDllImportResolver(Terraria, (libraryName, assembly, searchPath) =>
-            {
-                if (_nativeCache.TryGetValue(libraryName, out IntPtr cached))
-                    return cached;
-
-                Console.WriteLine("Looking for " + libraryName);
-
-                IEnumerable<string> matches = Enumerable.Empty<string>();
-
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    var osx = Path.Combine(Environment.CurrentDirectory, "osx");
-                    matches = Directory.GetFiles(osx, "*" + libraryName + "*");
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    var lib64 = Path.Combine(Environment.CurrentDirectory, "lib64");
-                    matches = Directory.GetFiles(lib64, "*" + libraryName + "*");
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    var x64 = Path.Combine(Environment.CurrentDirectory, "x64");
-                    matches = Directory.GetFiles(x64, "*" + libraryName + "*");
-                }
-
-                var handle = IntPtr.Zero;
-
-                if (matches.Count() == 1)
-                {
-                    var match = matches.Single();
-                    handle = NativeLibrary.Load(match);
-                }
-
-                // cache either way. if zero, no point calling IO if we've checked this assembly before.
-                _nativeCache.Add(libraryName, handle);
-
-                return handle;
-            });
+            NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep);
+            NativeLibrary.SetDllImportResolver(steam, ResolveNativeDep);
 
             ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext += ResolveSystemRefs;
 
             Terraria.EntryPoint!.Invoke(null, new object[] { args });
+        }
+
+        static IntPtr ResolveNativeDep(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        {
+            if (_nativeCache.TryGetValue(libraryName, out IntPtr cached))
+                return cached;
+
+            Console.WriteLine("Looking for " + libraryName);
+
+            IEnumerable<string> matches = Enumerable.Empty<string>();
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                var osx = Path.Combine(Environment.CurrentDirectory, "osx");
+                matches = Directory.GetFiles(osx, "*" + libraryName + "*");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                var lib64 = Path.Combine(Environment.CurrentDirectory, "lib64");
+                matches = Directory.GetFiles(lib64, "*" + libraryName + "*");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var x64 = Path.Combine(Environment.CurrentDirectory, "x64");
+                matches = Directory.GetFiles(x64, "*" + libraryName + "*");
+            }
+
+            if (matches.Count() == 0)
+            {
+                matches = Directory.GetFiles(Environment.CurrentDirectory, "*" + libraryName + "*");
+            }
+
+            var handle = IntPtr.Zero;
+
+            if (matches.Count() == 1)
+            {
+                var match = matches.Single();
+                handle = NativeLibrary.Load(match);
+            }
+
+            // cache either way. if zero, no point calling IO if we've checked this assembly before.
+            _nativeCache.Add(libraryName, handle);
+
+            return handle;
         }
 
         static void ResolveSystemRefs(object instance, ModFramework.Modules.CSharp.CSharpLoader.CompilationContextArgs args)
