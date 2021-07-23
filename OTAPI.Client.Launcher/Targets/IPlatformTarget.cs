@@ -16,9 +16,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using OTAPI.Common;
+using System;
 
-// @doc Example javascript modification. Does nothing apart from call the Modder CLR instance.
+namespace OTAPI.Client.Launcher.Targets
+{
+    public interface IPlatformTarget : IInstallDiscoverer
+    {
+        void Install(string installPath);
+        bool IsValidInstallPath(string installPath);
+        event EventHandler<InstallStatusUpdate> StatusUpdate;
+        string Status { set; }
 
-if (typeof Modder != 'undefined') {
-    console.log(`[JS] Mod target: ${Modder.Module.Name}`);
+        /// <summary>
+        /// Triggers when the UI is loading, allowing the data to be filled.
+        /// </summary>
+        /// <param name="vm"></param>
+        void OnUILoad(MainWindowViewModel vm);
+    }
 }

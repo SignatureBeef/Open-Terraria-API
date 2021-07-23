@@ -1,4 +1,22 @@
-﻿using ICSharpCode.SharpZipLib.BZip2;
+﻿/*
+Copyright (C) 2020 DeathCradle
+
+This file is part of Open Terraria API v3 (OTAPI)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+using ICSharpCode.SharpZipLib.BZip2;
 using ICSharpCode.SharpZipLib.Tar;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -16,11 +34,11 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace OTAPI.Client.Installer.Targets
+namespace OTAPI.Client.Launcher.Targets
 {
     public static class InstallTargetExtensions
     {
-        public static void CopyOTAPI(this IInstallTarget target, string otapiFolder, IEnumerable<string> packagePaths)
+        public static void CopyOTAPI(this IPlatformTarget target, string otapiFolder, IEnumerable<string> packagePaths)
         {
             Console.WriteLine(target.Status = "Copying OTAPI...");
             foreach (var packagePath in packagePaths)
@@ -42,13 +60,24 @@ namespace OTAPI.Client.Installer.Targets
             target.TransferFile("FNA.dll.config", Path.Combine(otapiFolder, "FNA.dll.config"));
             target.TransferFile("FNA.pdb", Path.Combine(otapiFolder, "FNA.pdb"));
 
-            target.TransferFile("ModFramework.dll", Path.Combine(otapiFolder, "ModFramework.dll"));
+            //target.TransferFile("ModFramework.dll", Path.Combine(otapiFolder, "ModFramework.dll"));
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "ModFramework*"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
             target.CopyFiles("modifications", Path.Combine(otapiFolder, "modifications"));
 
             target.TransferFile("NLua.dll", Path.Combine(otapiFolder, "NLua.dll"));
             target.TransferFile("KeraLua.dll", Path.Combine(otapiFolder, "KeraLua.dll"));
 
             target.TransferFile("ImGui.NET.dll", Path.Combine(otapiFolder, "ImGui.NET.dll"));
+            //target.TransferFile("CSteamworks.dll", Path.Combine(otapiFolder, "CSteamworks.dll"));
+            target.TransferFile("CUESDK_2015.dll", Path.Combine(otapiFolder, "CUESDK_2015.dll"));
+            target.TransferFile("dbgshim.dll", Path.Combine(otapiFolder, "dbgshim.dll"));
+            target.TransferFile("DynamicData.dll", Path.Combine(otapiFolder, "DynamicData.dll"));
+            target.TransferFile("JetBrains.Annotations.dll", Path.Combine(otapiFolder, "JetBrains.Annotations.dll"));
+            target.TransferFile("Newtonsoft.Json.dll", Path.Combine(otapiFolder, "Newtonsoft.Json.dll"));
+            target.TransferFile("ICSharpCode.SharpZipLib.dll", Path.Combine(otapiFolder, "ICSharpCode.SharpZipLib.dll"));
+            target.TransferFile("createdump.exe", Path.Combine(otapiFolder, "createdump.exe"));
 
             if (File.Exists("lua54.dll")) target.TransferFile("lua54.dll", Path.Combine(otapiFolder, "lua54.dll"));
             if (File.Exists("cimgui.dll")) target.TransferFile("cimgui.dll", Path.Combine(otapiFolder, "cimgui.dll"));
@@ -58,6 +87,7 @@ namespace OTAPI.Client.Installer.Targets
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) target.TransferFile("OTAPI.Client.Installer.exe", Path.Combine(otapiFolder, "OTAPI.Client.Installer.exe"));
             else target.TransferFile("OTAPI.Client.Installer", Path.Combine(otapiFolder, "OTAPI.Client.Installer"));
             target.TransferFile("OTAPI.Client.Installer.runtimeconfig.json", Path.Combine(otapiFolder, "OTAPI.Client.Installer.runtimeconfig.json"));
+            target.TransferFile("OTAPI.Client.Installer.deps.json", Path.Combine(otapiFolder, "OTAPI.Client.Installer.deps.json"));
             target.TransferFile(Path.Combine(otapiFolder, "Terraria.exe"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.dll"));
             target.TransferFile(Path.Combine(otapiFolder, "Terraria.pdb"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.pdb"));
 
@@ -107,6 +137,9 @@ namespace OTAPI.Client.Installer.Targets
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Material*.dll"))
                 target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "NuGet*.dll"))
+                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+
             target.TransferFile("netstandard.dll", Path.Combine(otapiFolder, "netstandard.dll"));
             target.TransferFile("nfd.dll", Path.Combine(otapiFolder, "nfd.dll"));
             target.TransferFile("Tmds.DBus.dll", Path.Combine(otapiFolder, "Tmds.DBus.dll"));
@@ -124,7 +157,7 @@ namespace OTAPI.Client.Installer.Targets
             }
         }
 
-        public static IEnumerable<string> PublishHostGame(this IInstallTarget target)
+        public static IEnumerable<string> PublishHostGame(this IPlatformTarget target)
         {
             Console.WriteLine(target.Status = "Building host game...");
 
@@ -186,11 +219,11 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 
 [assembly: TargetFramework("".NETCoreApp,Version=v5.0"", FrameworkDisplayName = """")]
-[assembly: AssemblyCompany(""OTAPI"")]
+[assembly: AssemblyCompany(""OTAPI.Client.Installer"")]
 [assembly: AssemblyFileVersion(""1.0.0.0"")]
 [assembly: AssemblyInformationalVersion(""1.0.0"")]
-[assembly: AssemblyProduct(""OTAPI Client"")]
-[assembly: AssemblyTitle(""OTAPI Client"")]
+[assembly: AssemblyProduct(""OTAPI.Client.Installer"")]
+[assembly: AssemblyTitle(""OTAPI.Client.Installer"")]
 [assembly: AssemblyVersion(""1.0.0.0"")]
 ";
                 var source = SourceText.From(src, encoding);
@@ -207,7 +240,7 @@ using System.Runtime.Versioning;
             var syntaxTrees = parsed.Select(x => x.SyntaxTree);
 
             var compilation = CSharpCompilation
-                .Create("Terraria", syntaxTrees, options: compile_options)
+                .Create("OTAPI.Client.Installer", syntaxTrees, options: compile_options)
             ;
 
             var libs = ((String)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES"))
@@ -234,7 +267,7 @@ using System.Runtime.Versioning;
             //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net5.0\OTAPI.exe")));
             //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net5.0\OTAPI.Runtime.dll")));
 
-            var outPdbPath = Path.Combine(output, "Terraria.pdb");
+            var outPdbPath = Path.Combine(output, "OTAPI.Client.Installer.pdb");
             var emitOptions = new EmitOptions(
                 debugInformationFormat: DebugInformationFormat.PortablePdb,
                 pdbFilePath: outPdbPath
@@ -257,9 +290,9 @@ using System.Runtime.Versioning;
                 throw new Exception($"Compilation failed: " + String.Join("\n", result.Diagnostics.Select(x => x.ToString())));
             }
 
-            File.WriteAllBytes(Path.Combine(output, "Terraria.exe"), dllStream.ToArray());
+            File.WriteAllBytes(Path.Combine(output, "OTAPI.Client.Installer.dll"), dllStream.ToArray());
             File.WriteAllBytes(outPdbPath, pdbStream.ToArray());
-            File.WriteAllBytes(Path.Combine(output, "Terraria.xml"), xmlStream.ToArray());
+            File.WriteAllBytes(Path.Combine(output, "OTAPI.Client.Installer.xml"), xmlStream.ToArray());
 
             Console.WriteLine("Published");
 
@@ -283,7 +316,7 @@ using System.Runtime.Versioning;
             public string BrowserDownloadUrl { get; set; }
         }
 
-        public static string PublishHostLauncher(this IInstallTarget target)
+        public static string PublishHostLauncher(this IPlatformTarget target)
         {
             var url = "https://api.github.com/repos/DeathCradle/Open-Terraria-API/releases";
 
@@ -358,7 +391,7 @@ using System.Runtime.Versioning;
             //return Path.Combine(hostDir, "bin", "Release", "net5.0", package, "publish");
         }
 
-        public static void CopyFiles(this IInstallTarget target, string sourcePath, string targetPath)
+        public static void CopyFiles(this IPlatformTarget target, string sourcePath, string targetPath)
         {
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
@@ -367,7 +400,7 @@ using System.Runtime.Versioning;
                 File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
         }
 
-        public static void TransferFile(this IInstallTarget target, string src, string dst)
+        public static void TransferFile(this IPlatformTarget target, string src, string dst)
         {
             if (!File.Exists(src))
                 throw new FileNotFoundException("Source binary not found, was it rebuilt before running the installer?\n" + src);
@@ -378,7 +411,7 @@ using System.Runtime.Versioning;
             File.Copy(src, dst);
         }
 
-        public static string DownloadZip(this IInstallTarget target, string url)
+        public static string DownloadZip(this IPlatformTarget target, string url, string name)
         {
             Console.WriteLine($"Downloading {url}");
             var uri = new Uri(url);
@@ -400,7 +433,7 @@ using System.Runtime.Versioning;
                             if (lastPercentage != e.ProgressPercentage)
                             {
                                 lastPercentage = e.ProgressPercentage;
-                                Console.WriteLine($"Downloading fnalibs...{e.ProgressPercentage}%");
+                                Console.WriteLine($"Downloading {name}...{e.ProgressPercentage}%");
                             }
                         };
                         wc.DownloadFileTaskAsync(new Uri(url), savePath).Wait();
@@ -412,7 +445,7 @@ using System.Runtime.Versioning;
             else throw new NotSupportedException();
         }
 
-        public static string ExtractBZip2(this IInstallTarget target, string zipPath, string dest = null)
+        public static string ExtractBZip2(this IPlatformTarget target, string zipPath, string dest = null)
         {
             using var raw = File.OpenRead(zipPath);
             using var ms = new MemoryStream();
@@ -428,7 +461,7 @@ using System.Runtime.Versioning;
             return dest;
         }
 
-        public static void GenerateTypings(this IInstallTarget target, string rootFolder)
+        public static void GenerateTypings(this IPlatformTarget target, string rootFolder)
         {
             var patcherDir = "../../../../OTAPI.Patcher/";
 
@@ -477,34 +510,34 @@ using System.Runtime.Versioning;
             }
         }
 
-        public static void InstallClearScript(this IInstallTarget target, string otapiInstallPath)
+        public static void InstallClearScript(this IPlatformTarget target, string otapiInstallPath)
         {
             var modificationsDir = Path.Combine(otapiInstallPath, "modifications");
             Directory.CreateDirectory(modificationsDir);
             target.TransferFile("ModFramework.Modules.ClearScript.dll", Path.Combine(modificationsDir, "ModFramework.Modules.ClearScript.dll"));
         }
 
-        public static void InstallLua(this IInstallTarget target, string otapiInstallPath)
+        public static void InstallLua(this IPlatformTarget target, string otapiInstallPath)
         {
             var modificationsDir = Path.Combine(otapiInstallPath, "modifications");
             Directory.CreateDirectory(modificationsDir);
             target.TransferFile("ModFramework.Modules.Lua.dll", Path.Combine(modificationsDir, "ModFramework.Modules.Lua.dll"));
         }
 
-        public static void CopyInstallFiles(this IInstallTarget target, string otapiInstallPath)
+        public static void CopyInstallFiles(this IPlatformTarget target, string otapiInstallPath)
         {
             target.CopyFiles("install", otapiInstallPath);
         }
 
-        public static void InstallLibs(this IInstallTarget target, string installPath)
+        public static void InstallLibs(this IPlatformTarget target, string installPath)
         {
-            var zipPath = target.DownloadZip("http://fna.flibitijibibo.com/archive/fnalibs.tar.bz2");
+            var zipPath = target.DownloadZip("http://fna.flibitijibibo.com/archive/fnalibs.tar.bz2", "fnalibs");
             target.ExtractBZip2(zipPath, installPath);
         }
 
-        public static void InstallSteamworks64(this IInstallTarget target, string installPath, string steam_appid_folder)
+        public static void InstallSteamworks64(this IPlatformTarget target, string installPath, string steam_appid_folder)
         {
-            var zipPath = target.DownloadZip("https://github.com/rlabrecque/Steamworks.NET/releases/download/15.0.1/Steamworks.NET-Standalone_15.0.1.zip");
+            var zipPath = target.DownloadZip("https://github.com/rlabrecque/Steamworks.NET/releases/download/15.0.1/Steamworks.NET-Standalone_15.0.1.zip", "steamworks64");
             var folderName = Path.GetFileNameWithoutExtension(zipPath);
             if (Directory.Exists(folderName)) Directory.Delete(folderName, true);
             ZipFile.ExtractToDirectory(zipPath, folderName);
@@ -527,7 +560,7 @@ using System.Runtime.Versioning;
             }
         }
 
-        public static void PatchOSXLaunch(this IInstallTarget target, string installPath)
+        public static void PatchOSXLaunch(this IPlatformTarget target, string installPath)
         {
             var launch_script = Path.Combine(installPath, "MacOS/Terraria");
             var backup_launch_script = Path.Combine(installPath, "MacOS/Terraria.bak.otapi");
@@ -591,7 +624,7 @@ fi
             }
         }
 
-        public static void PatchWindowsLaunch(this IInstallTarget target, string installPath)
+        public static void PatchWindowsLaunch(this IPlatformTarget target, string installPath)
         {
             var launch_file = Path.Combine(installPath, "Terraria.exe");
 
@@ -620,7 +653,7 @@ fi
             }
         }
 
-        public static void PatchLinuxLaunch(this IInstallTarget target, string installPath)
+        public static void PatchLinuxLaunch(this IPlatformTarget target, string installPath)
         {
             var otapi_launcher = Path.Combine(installPath, "otapi_launcher");
             var launch_script = Path.Combine(installPath, "Terraria");

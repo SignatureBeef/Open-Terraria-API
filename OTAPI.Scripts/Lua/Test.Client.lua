@@ -19,4 +19,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 -- @doc Example lua modification. Does nothing apart from call the Modder CLR instance.
 
-print ('[LUA] Mod target: ' .. Modder.Module.Name);
+if Modder ~= nil then
+	print ('[LUA] Mod target: ' .. Modder.Module.Name);
+end

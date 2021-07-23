@@ -17,5 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 export function run() {
-    console.log(`[JS] Mod target: ${Modder.Module.Name}`);
+    if (typeof Modder != 'undefined')
+        console.log(`[JS] Mod target: ${Modder.Module.Name}`);
 }

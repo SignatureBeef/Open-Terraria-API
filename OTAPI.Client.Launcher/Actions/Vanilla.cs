@@ -16,9 +16,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System.Diagnostics;
+using System.IO;
 
-// @doc Example javascript modification. Does nothing apart from call the Modder CLR instance.
-
-if (typeof Modder != 'undefined') {
-    console.log(`[JS] Mod target: ${Modder.Module.Name}`);
+namespace OTAPI.Client.Launcher.Actions
+{
+    static class Vanilla
+    {
+        public static void Launch(string installPath, string[] args)
+        {
+            Process.Start(new ProcessStartInfo()
+            {
+                WorkingDirectory = installPath,
+                FileName = Path.Combine(installPath, "Terraria.exe")
+            });
+        }
+    }
 }

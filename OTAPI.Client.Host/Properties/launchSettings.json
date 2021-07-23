@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "OTAPI.Client.Host": {
-      "commandName": "Executable",
-      "executablePath": "F:\\SteamLibrary\\steamapps\\common\\Terraria\\Terraria.exe",
-      "workingDirectory": "F:\\SteamLibrary\\steamapps\\common\\Terraria\\"
-    }
-  }
-}

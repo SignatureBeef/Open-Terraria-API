@@ -62,7 +62,7 @@ namespace Terraria
 
             // load modfw plugins
             PluginLoader.TryLoad();
-            Modifier.Apply(ModType.Runtime);
+            Modifier.Apply(ModType.Runtime, optionalParams: new[] { Assembly.GetExecutingAssembly() }); // set Assembly type to Terraria/OTAPI for runtime plugins to resolve easier when they dont have a direct ref
 
 #if Terraria // client
             Main.versionNumber += " OTAPI";
@@ -95,21 +95,14 @@ namespace Terraria
             return null;
         }
 
-#if Terraria // client
-        public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
-        public static void LaunchGame(string[] args, bool monoArgs = false)
-        {
-            LaunchOTAPI();
-            orig_LaunchGame(args, monoArgs);
-        }
-#elif tModLoaderServer // tml
+#if tModLoaderServer
         public static extern void orig_LaunchGame_();
         public static void LaunchGame_()
         {
             LaunchOTAPI();
             orig_LaunchGame_();
         }
-#else // server
+#else // server + client
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
