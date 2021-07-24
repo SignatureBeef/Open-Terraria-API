@@ -13,7 +13,7 @@
 		</Reference>
 	</ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.8-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.9-alpha" />
     <PackageReference Include="MonoMod" Version="21.7.22.3" />
   </ItemGroup>
 	<PropertyGroup>
