@@ -8,7 +8,7 @@ on:
   push:
     branches: [ upcoming-nuget-release ]
   pull_request:
-    branches: [ upcoming-nuget-release ]
+    branches: [ ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
