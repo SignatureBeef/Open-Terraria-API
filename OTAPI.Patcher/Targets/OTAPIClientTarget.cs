@@ -71,7 +71,8 @@ namespace OTAPI.Patcher.Targets
                 try
                 {
                     var abs = Path.GetFullPath(file);
-                    assembly = Assembly.LoadFile(abs);
+                    var content = File.ReadAllBytes(abs);
+                    assembly = Assembly.Load(content);
                 }
                 catch (Exception ex)
                 {
@@ -140,7 +141,9 @@ namespace OTAPI.Patcher.Targets
                 var embeddedResourcesDir = extractor.Extract(localPath_x86);
 
                 var FNA = "FNA.dll";
-                var asmFNA = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, FNA));
+                //var asmFNA = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, FNA));
+                var fnaPath = Path.Combine(Environment.CurrentDirectory, FNA);
+                if (!TryLoad(fnaPath, out Assembly asmFNA)) throw new Exception($"Failed to load: {fnaPath}");
                 var assemblies = new Dictionary<string, Assembly>()
                 {
                     {asmFNA.FullName, asmFNA },
@@ -186,7 +189,7 @@ namespace OTAPI.Patcher.Targets
 
                 StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Converting to x64" });
                 {
-                    var pa = AssemblyDefinition.ReadAssembly(primaryAssemblyPath);
+                    using var pa = AssemblyDefinition.ReadAssembly(primaryAssemblyPath);
                     pa.MainModule.Architecture = TargetArchitecture.I386;
                     pa.MainModule.Attributes = ModuleAttributes.ILOnly;
 
@@ -215,7 +218,8 @@ namespace OTAPI.Patcher.Targets
                 }
 
                 // load into the current app domain for patch refs
-                var asm = Assembly.LoadFile(primaryAssemblyPath);
+                //var asm = Assembly.LoadFile(primaryAssemblyPath);
+                if (!TryLoad(primaryAssemblyPath, out Assembly asm)) throw new Exception($"Failed to load: {primaryAssemblyPath}");
                 assemblies.Add(asm.FullName, asm);
 
                 var resourcesPath = installDiscoverer.GetResourcePath();
@@ -322,7 +326,7 @@ namespace OTAPI.Patcher.Targets
                 var temp_out = Path.Combine("outputs", "OTAPI.exe");
 
                 StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Modifying installation, this will take a moment..." });
-                using var mm = new ModFwModder()
+                using (var mm = new ModFwModder()
                 {
                     InputPath = "OTAPI.dll",
                     OutputPath = temp_out,
@@ -333,72 +337,74 @@ namespace OTAPI.Patcher.Targets
                     GACPaths = new string[] { }, // avoid MonoMod looking up the GAC, which causes an exception on .netcore
 
                     MarkdownDocumentor = markdownDocumentor,
-                };
-                (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
-                (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
+                })
+                {
+                    (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
+                    (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(resourcesPath);
 
-                mm.Read();
+                    mm.Read();
 
-                mm.MapDependencies();
+                    mm.MapDependencies();
 
-                mm.RelinkAssembly("System.Windows.Forms");
-                mm.RelinkAssembly("ReLogic");
+                    mm.RelinkAssembly("System.Windows.Forms");
+                    mm.RelinkAssembly("ReLogic");
 
-                this.AddPatchMetadata(mm);
-                this.AddEnvMetadata(mm);
+                    this.AddPatchMetadata(mm);
+                    this.AddEnvMetadata(mm);
 
-                mm.AddVersion(Common.GetVersion());
+                    mm.AddVersion(Common.GetVersion());
 
-                mm.AutoPatch();
+                    mm.AutoPatch();
 
 #if tModLoaderServer_V1_3
                 mm.WriterParameters.SymbolWriterProvider = null;
                 mm.WriterParameters.WriteSymbols = false;
 #endif
 
-                foreach (var asmref in mm.Module.AssemblyReferences.ToArray())
-                {
-                    if (asmref.Name.Contains("System.Private.CoreLib") || asmref.Name.Contains("netstandard")
-                        || asmref.Name.Contains("System.Windows.Forms"))
+                    foreach (var asmref in mm.Module.AssemblyReferences.ToArray())
                     {
-                        //mm.Module.AssemblyReferences.Remove(asmref);
+                        if (asmref.Name.Contains("System.Private.CoreLib") || asmref.Name.Contains("netstandard")
+                            || asmref.Name.Contains("System.Windows.Forms"))
+                        {
+                            //mm.Module.AssemblyReferences.Remove(asmref);
+                        }
+                        else if (asmref.Name.Contains("Microsoft.Xna.Framework"))
+                        {
+                            asmref.Name = "FNA";
+                            asmref.PublicKey = null;
+                            asmref.PublicKeyToken = null;
+                            asmref.Version = asmFNA.GetName().Version;
+                        }
                     }
-                    else if (asmref.Name.Contains("Microsoft.Xna.Framework"))
+
+                    foreach (var mmt in mm.Module.Types.Where(x => x.Namespace == "MonoMod").ToArray())
                     {
-                        asmref.Name = "FNA";
-                        asmref.PublicKey = null;
-                        asmref.PublicKeyToken = null;
-                        asmref.Version = asmFNA.GetName().Version;
+                        mm.Module.Types.Remove(mmt);
                     }
+
+                    mm.Write();
+
+                    PluginLoader.Clear();
+
+                    CreateRuntimeEvents();
+
+                    StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Relinking to .NET5..." });
+                    CoreLibRelinker.PostProcessCoreLib(temp_out, "outputs/OTAPI.Runtime.dll");
+
+                    StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Writing MD..." });
+                    var doco_md = $"OTAPI.PC.Client.${installDiscoverer.Target.GetClientPlatform()}.mfw.md";
+                    if (File.Exists(doco_md)) File.Delete(doco_md);
+                    markdownDocumentor.Write(doco_md);
+                    markdownDocumentor.Dispose();
+
+                    AppDomain.CurrentDomain.AssemblyResolve -= PatchResolve;
+
+                    mm.Log("[OTAPI] Done.");
                 }
-
-                foreach (var mmt in mm.Module.Types.Where(x => x.Namespace == "MonoMod").ToArray())
-                {
-                    mm.Module.Types.Remove(mmt);
-                }
-
-                mm.Write();
-
-                PluginLoader.Clear();
-
-                CreateRuntimeEvents();
-
-                StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Relinking to .NET5..." });
-                CoreLibRelinker.PostProcessCoreLib(temp_out, "outputs/OTAPI.Runtime.dll");
-
-                StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Writing MD..." });
-                var doco_md = $"OTAPI.PC.Client.${installDiscoverer.Target.GetClientPlatform()}.mfw.md";
-                if (File.Exists(doco_md)) File.Delete(doco_md);
-                markdownDocumentor.Write(doco_md);
-                markdownDocumentor.Dispose();
-
-                AppDomain.CurrentDomain.AssemblyResolve -= PatchResolve;
 
                 if (File.Exists(localPath_x86)) File.Delete(localPath_x86);
                 if (File.Exists(localPath_x64)) File.Delete(localPath_x64);
                 if (File.Exists("OTAPI.dll")) File.Delete("OTAPI.dll");
-
-                mm.Log("[OTAPI] Done.");
             }
             finally
             {
