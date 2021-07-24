@@ -43,11 +43,6 @@ namespace OTAPI.Client.Launcher.Actions
             ModFramework.Plugins.PluginLoader.Clear();
             CSharpLoader.GlobalRootDirectory = Path.Combine("csharp", "plugins");
             CSharpLoader.GlobalAssemblies.Clear();
-            //CSharpLoader.GlobalAssemblies.Add("OTAPI.exe");
-            //CSharpLoader.GlobalAssemblies.Add("OTAPI.Runtime.dll");
-            //CSharpLoader.GlobalAssemblies.Add("ModFramework.dll");
-            //CSharpLoader.GlobalAssemblies.Add("ImGui.NET.dll");
-            //CSharpLoader.GlobalAssemblies.Add("FNA.dll");
 
             // https://github.com/FNA-XNA/FNA/wiki/4:-FNA-and-Windows-API#64-bit-support
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
@@ -198,7 +193,7 @@ namespace OTAPI.Client.Launcher.Actions
                 if (File.Exists(resourceName))
                     return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, resourceName));
 
-                string text = Array.Find(root.GetManifestResourceNames(), (string element) => element.EndsWith(resourceName));
+                string text = Array.Find(root.GetManifestResourceNames(), (element) => element.EndsWith(resourceName));
                 if (text != null)
                 {
                     Console.WriteLine("Loading from resources " + resourceName);
