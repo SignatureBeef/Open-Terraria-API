@@ -151,24 +151,24 @@ namespace OTAPI.Client.Launcher
                     var asms = System.AppDomain.CurrentDomain.GetAssemblies();
                     if (args.CoreLibAssemblies is not null && args.CoreLibAssemblies.Count() == 0)
                     {
-                        var cref = typeof(object).Assembly.Location;
-                        Context.InstallStatus = $"Binding to {Path.GetFileName(cref)} and {asms.Length} other assemblies";
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(cref));
+                        Context.InstallStatus = $"Binding {asms.Length} assemblies";
+                        //Console.WriteLine(Context.InstallStatus = $"Binding {asms.Length} assemblies");
 
-                        foreach (var asm in asms)
+                        foreach (var asm in asms.Where(x => !x.IsDynamic
+                            && !Path.GetFileName(x.Location).Equals("OTAPI.Patcher.dll"))
+                        )
                         {
-                            if (!string.IsNullOrWhiteSpace(asm.Location) && System.IO.File.Exists(asm.Location))
+                            if (!string.IsNullOrWhiteSpace(asm.Location) && File.Exists(asm.Location))
+                            {
+                                //Console.WriteLine($"Linking {asm.Location}");
                                 args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(asm.Location));
+                            }
                         }
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(typeof(System.Attribute).Assembly.Location));
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Collections.dll"));
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Collections.Specialized.dll"));
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Drawing.dll"));
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Drawing.Primitives.dll"));
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Runtime.dll"));
+
+                        foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Syste*.dll"))
+                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(file));
+
                         args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("netstandard.dll"));
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Linq.dll"));
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("System.Linq.Expressions.dll"));
                         args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("mscorlib.dll"));
                     }
                 };
