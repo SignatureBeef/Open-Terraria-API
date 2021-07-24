@@ -394,6 +394,10 @@ namespace OTAPI.Patcher.Targets
 
                 AppDomain.CurrentDomain.AssemblyResolve -= PatchResolve;
 
+                if (File.Exists(localPath_x86)) File.Delete(localPath_x86);
+                if (File.Exists(localPath_x64)) File.Delete(localPath_x64);
+                if (File.Exists("OTAPI.dll")) File.Delete("OTAPI.dll");
+
                 mm.Log("[OTAPI] Done.");
             }
             finally
