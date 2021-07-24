@@ -12,23 +12,19 @@
 	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>-->
 	<ItemGroup>
-		<PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.1.5" />
-		<PackageReference Include="ModFramework" Version="1.0.9-alpha" />
-		<PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.9-alpha" />
-		<PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.9-alpha" />
-		<PackageReference Include="ModFramework.Modules.Lua" Version="1.0.9-alpha" />
-		<PackageReference Include="Mono.Cecil" Version="0.11.4" />
-		<PackageReference Include="MonoMod" Version="21.7.22.3" />
-		<PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.7.22.3" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="System.Security.Permissions" Version="5.0.0" />
-		<PackageReference Include="NuGet.Packaging" Version="5.10.0" />
-		<PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.1.5" />
-		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.1.5" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Remove="Microsoft.ClearScript.V8.Native.osx-x64" />
-		<None Remove="Microsoft.ClearScript.linux-x64" />
+    <PackageReference Include="ModFramework" Version="1.0.9-alpha" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.9-alpha" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.9-alpha" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.9-alpha" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.4" />
+    <PackageReference Include="MonoMod" Version="21.7.22.3" />
+    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.7.22.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
+    <PackageReference Include="NuGet.Packaging" Version="5.10.0" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.1.5" />
+    <PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.1.5" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.1.5" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\FNA\FNA.Core.csproj" />
