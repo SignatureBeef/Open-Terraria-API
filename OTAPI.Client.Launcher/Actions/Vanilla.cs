@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace OTAPI.Client.Launcher.Actions
 {
@@ -25,11 +26,32 @@ namespace OTAPI.Client.Launcher.Actions
     {
         public static void Launch(string installPath, string[] args)
         {
-            Process.Start(new ProcessStartInfo()
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                WorkingDirectory = installPath,
-                FileName = Path.Combine(installPath, "Terraria.exe")
-            });
+                var script = Path.Combine(installPath, "MacOS", "Terraria");
+                System.Console.WriteLine($"Launching: {script}");
+                using var process = new Process();
+                process.StartInfo.FileName = script;
+                process.Start();
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                var script = Path.Combine(installPath, "Terraria");
+                System.Console.WriteLine($"Launching: {script}");
+                using var process = new Process();
+                process.StartInfo.FileName = script;
+                process.Start();
+            }
+            else
+            {
+                var script = Path.Combine(installPath, "Terraria.exe");
+                System.Console.WriteLine($"Launching: {script}");
+                Process.Start(new ProcessStartInfo()
+                {
+                    WorkingDirectory = installPath,
+                    FileName = script
+                });
+            }
         }
     }
 }
