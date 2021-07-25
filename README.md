@@ -22,9 +22,7 @@ The stack consists upon:
 ## Terraria support
 Server assemblies used in the patching process are freely available at [Terraria's website](http://terraria.org).
 
-If you intend to patch a client version, you must own an existing copy of Terraria and have it installed in the default path of your machine. The [OTAPI Project](https://github.com/DeathCradle/Open-Terraria-API/) does not host or contain the original source file so it will side load itself into the existing installation.
-
-Client installers will install OTAPI to a new directory within the existing Terraria directory, and it will then backup and patch your existing launch scripts; giving us the ability to switch between a vanilla environment or the default OTAPI modded environment.
+If you intend to patch a client version, you must own an existing copy of Terraria and have it installed in the default path of your machine. The [OTAPI Project](https://github.com/DeathCradle/Open-Terraria-API/) does not host or contain the original source file so it will extract files from and patch your existing installation.
 
 All OTAPI builds support C#/lua/js scripts via plugins, however you may need to install the additional ModFramework module plugins if you use this in another project.
 
