@@ -69,12 +69,12 @@ jobs:
         run: |
             cd OTAPI.Client.Launcher
             dotnet publish -r osx.10.11-x64 --framework net5.0 -p:PublishReadyToRun=true --self-contained true -c Release
-            zip -r ../otapi_launcher.zip bin/Release/net5.0/osx.10.11-x64/publish
-            mkdir ../OTAPI.app
-            mkdir ../OTAPI.app/Contents
-            mkdir ../OTAPI.app/Contents/Resources
-            mv bin/Release/net5.0/osx.10.11-x64/publish ../OTAPI.app/Contents/MacOS
-            cp ../docs/MacOS.Info.plist ../OTAPI.app/Contents/Info.plist
+            mkdir OTAPI.app
+            mkdir OTAPI.app/Contents
+            mkdir OTAPI.app/Contents/Resources
+            mv bin/Release/net5.0/osx.10.11-x64/publish OTAPI.app/Contents/MacOS
+            cp ../docs/MacOS.Info.plist OTAPI.app/Contents/Info.plist
+            zip -r ../OTAPI_MacOS.zip OTAPI.app
 
       # - uses: actions/upload-artifact@v2
       #   with:
@@ -87,9 +87,7 @@ jobs:
           automatic_release_tag: "launcher-macos"
           prerelease: true
           title: "MacOS Launcher"
-          files: |
-            OTAPI.app
-            otapi_launcher.zip
+          files: OTAPI_MacOS.zip
 
   # This workflow contains a single job called "build"
   build_lin:
