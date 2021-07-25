@@ -549,8 +549,10 @@ using System.Runtime.Versioning;
             else
                 target.CopyFiles(osx_lin, installPath);
 
-            // ensure to use terrarias steam appid
-            target.TransferFile(Path.Combine(steam_appid_folder, "steam_appid.txt"), Path.Combine(installPath, "steam_appid.txt"));
+            // ensure to use terrarias steam appid. NOTE GOG wont have this
+            var appid = Path.Combine(steam_appid_folder, "steam_appid.txt");
+            if (File.Exists(appid))
+                target.TransferFile(appid, Path.Combine(installPath, "steam_appid.txt"));
 
             target.TransferFile(Path.Combine(osx_lin, "libsteam_api.so"), Path.Combine(installPath, "lib64", "libsteam_api.so"));
 

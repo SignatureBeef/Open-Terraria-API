@@ -41,7 +41,7 @@ namespace OTAPI.Patcher.Targets
         public virtual string CliKey { get; } = "latest";
 
         public virtual string NuGetPackageFileName { get; } = "OTAPI.PC.nupkg";
-        public virtual string NuSpecFilePath { get; } = "../../../../OTAPI.PC.nuspec";
+        public virtual string NuSpecFilePath { get; } = "../../../../docs/OTAPI.PC.nuspec";
         public virtual string MdFileName { get; } = "OTAPI.PC.Server.mfw.md";
 
         public virtual string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/pc-dedicated-server/terraria-server-1423.zip";

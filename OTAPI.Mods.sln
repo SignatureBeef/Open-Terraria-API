@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 		COPYING.txt = COPYING.txt
 		.vscode\launch.json = .vscode\launch.json
-		OTAPI.Mobile.nuspec = OTAPI.Mobile.nuspec
-		OTAPI.PC.nuspec = OTAPI.PC.nuspec
-		OTAPI.TML.nuspec = OTAPI.TML.nuspec
+		OTAPI.Mobile.nuspec = docs\OTAPI.Mobile.nuspec
+		OTAPI.PC.nuspec = docs\OTAPI.PC.nuspec
+		OTAPI.TML.nuspec = docs\OTAPI.TML.nuspec
 		README.md = README.md
 		.vscode\tasks.json = .vscode\tasks.json
 	EndProjectSection

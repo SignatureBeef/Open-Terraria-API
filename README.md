@@ -56,4 +56,4 @@ All OTAPI builds support C#/lua/js scripts via plugins, however you may need to 
 
 Bitcoin donations are welcomed via address [3PRfyMh1brjCqzkw9az2aT7yNjbfkwFZqo](bitcoin:3PRfyMh1brjCqzkw9az2aT7yNjbfkwFZqo)
 
-![QR](btc_donations.png)
+![QR](./docs/btc_donations.png)

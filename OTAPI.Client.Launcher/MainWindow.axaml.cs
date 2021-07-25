@@ -110,6 +110,37 @@ namespace OTAPI.Client.Launcher
             Context.InstallPathValid = target?.Target?.IsValidInstallPath(target.Path) == true;
 
             target?.Target?.OnUILoad(Context);
+
+            // try copy the icons from the vanilla installation
+            try
+            {
+                if (Context.InstallPathValid)
+                {
+                    // Terraria.icns
+
+                    var is_bundle = Path.GetFileName(Environment.CurrentDirectory).Equals("MacOS", StringComparison.CurrentCultureIgnoreCase);
+                    Console.WriteLine($"is_bundle: {is_bundle}");
+                    Console.WriteLine($"GetDirectoryName: {Path.GetFileName(Environment.CurrentDirectory)}");
+                    Console.WriteLine($"Environment.CurrentDirectory: {Environment.CurrentDirectory}");
+                    if (is_bundle)
+                    {
+                        var icon_src = Path.Combine(Context.InstallPath.Path, "Resources", "Terraria.icns");
+                        var icon_dst = Path.Combine(Environment.CurrentDirectory, "..", "Resources", "OTAPI.icns");
+
+                        if (File.Exists(icon_dst)) File.Delete(icon_dst);
+
+                        if (File.Exists(icon_src) && !File.Exists(icon_dst))
+                        {
+                            File.Copy(icon_src, icon_dst);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to copy icons");
+                Console.WriteLine(ex);
+            }
         }
 
         public async void OnFindExe(object sender, RoutedEventArgs e)

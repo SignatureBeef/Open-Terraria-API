@@ -26,7 +26,7 @@ namespace OTAPI.Patcher.Targets
     {
         public override string DisplayText { get; } = "TML PC Server";
         public override string NuGetPackageFileName { get; } = "OTAPI.TML.nupkg";
-        public override string NuSpecFilePath { get; } = "../../../../OTAPI.TML.nuspec";
+        public override string NuSpecFilePath { get; } = "../../../../docs/OTAPI.TML.nuspec";
         public override string MdFileName { get; } = "OTAPI.TML.PC.Server.mfw.md";
         public override string SupportedDownloadUrl { get; } = "https://github.com/tModLoader/tModLoader/releases/download/v0.11.8.4/tModLoader.Windows.v0.11.8.4.zip";
         public override string ArtifactName { get; } = "artifact-tml";

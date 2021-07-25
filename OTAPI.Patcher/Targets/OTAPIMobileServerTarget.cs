@@ -27,7 +27,7 @@ namespace OTAPI.Patcher.Targets
     {
         public override string DisplayText { get; } = "OTAPI Mobile Server";
         public override string NuGetPackageFileName { get; } = "OTAPI.Mobile.nupkg";
-        public override string NuSpecFilePath { get; } = "../../../../OTAPI.Mobile.nuspec";
+        public override string NuSpecFilePath { get; } = "../../../../docs/OTAPI.Mobile.nuspec";
         public override string MdFileName { get; } = "OTAPI.Mobile.Server.mfw.md";
         public override string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/mobile-dedicated-server/MobileTerrariaServer.zip";
         public override string ArtifactName { get; } = "artifact-mobile";
