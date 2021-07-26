@@ -116,12 +116,7 @@ namespace OTAPI.Client.Launcher
             {
                 if (Context.InstallPathValid)
                 {
-                    // Terraria.icns
-
                     var is_bundle = Path.GetFileName(Environment.CurrentDirectory).Equals("MacOS", StringComparison.CurrentCultureIgnoreCase);
-                    Console.WriteLine($"is_bundle: {is_bundle}");
-                    Console.WriteLine($"GetDirectoryName: {Path.GetFileName(Environment.CurrentDirectory)}");
-                    Console.WriteLine($"Environment.CurrentDirectory: {Environment.CurrentDirectory}");
                     if (is_bundle)
                     {
                         var icon_src = Path.Combine(Context.InstallPath.Path, "Resources", "Terraria.icns");
@@ -130,9 +125,7 @@ namespace OTAPI.Client.Launcher
                         if (File.Exists(icon_dst)) File.Delete(icon_dst);
 
                         if (File.Exists(icon_src) && !File.Exists(icon_dst))
-                        {
                             File.Copy(icon_src, icon_dst);
-                        }
                     }
                 }
             }
