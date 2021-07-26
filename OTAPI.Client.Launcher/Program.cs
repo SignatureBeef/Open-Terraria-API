@@ -20,6 +20,8 @@ using Avalonia;
 using Projektanker.Icons.Avalonia;
 using Projektanker.Icons.Avalonia.FontAwesome;
 using System;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace OTAPI.Client.Launcher
 {
@@ -39,6 +41,20 @@ namespace OTAPI.Client.Launcher
         // yet and stuff might break.
         public static void Main(string[] args)
         {
+            // if launching from osx bundle it launches at /
+            // we need it to be in MacOS
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                var invokedArgs = Environment.GetCommandLineArgs();
+                if (invokedArgs != null && invokedArgs.Length > 0)
+                {
+                    if(File.Exists(invokedArgs[0]))
+                    {
+                        Environment.CurrentDirectory = Path.GetDirectoryName(invokedArgs[0]);
+                    }
+                }
+            }
+
             // start the launcher, then OTAPI if requested
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
