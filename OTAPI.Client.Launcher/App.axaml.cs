@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using System;
 
 namespace OTAPI.Client.Launcher
 {
@@ -11,15 +12,12 @@ namespace OTAPI.Client.Launcher
             AvaloniaXamlLoader.Load(this);
         }
 
+        public Func<Avalonia.Controls.Window> CreateWindow = () => new MainWindow();
+
         public override void OnFrameworkInitializationCompleted()
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                desktop.MainWindow = new MainWindow()
-                {
-                    //DataContext = new MainWindowViewModel(),
-                };
-            }
+                desktop.MainWindow = CreateWindow();
 
             base.OnFrameworkInitializationCompleted();
         }

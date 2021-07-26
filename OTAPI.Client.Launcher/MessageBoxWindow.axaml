@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200" Width="500" Height="200"
+        x:Class="OTAPI.Client.Launcher.MessageBoxWindow"
+        Background="#333" Foreground="#fff"
+        Title="{Binding Title}">
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="Margin" Value="0" />
+      <Setter Property="Padding" Value="10" />
+      <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="TextBlock.content">
+      <Setter Property="Margin" Value="3" />
+      <Setter Property="Padding" Value="10" />
+      <Setter Property="FontSize" Value="12" />
+    </Style>
+  </Window.Styles>
+
+  <DockPanel Margin="30" Width="500" Height="200">
+
+    <StackPanel DockPanel.Dock="Top" Height="150">
+
+      <ScrollViewer Height="105">
+        <TextBlock Classes="content" Text="{Binding Text}" />
+      </ScrollViewer>
+
+    </StackPanel>
+
+    <StackPanel Margin="0,0,10,0" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+
+      <Button Classes="STYLE_NAME"
+              Click="OK"
+              Width="100">
+        Ok
+      </Button>
+
+
+    </StackPanel>
+  </DockPanel>
+
+</Window>

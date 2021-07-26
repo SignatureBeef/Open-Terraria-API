@@ -21,6 +21,7 @@ using Projektanker.Icons.Avalonia;
 using Projektanker.Icons.Avalonia.FontAwesome;
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace OTAPI.Client.Launcher
@@ -28,7 +29,7 @@ namespace OTAPI.Client.Launcher
     class Program
     {
         public static string LaunchFolder { get; set; } = Environment.CurrentDirectory;
-        public static string LaunchID { get; set; }
+        public static string? LaunchID { get; set; }
         public static Targets.IPlatformTarget[] Targets = new Targets.IPlatformTarget[]
         {
             new Targets.MacOSPlatformTarget(),
@@ -45,14 +46,9 @@ namespace OTAPI.Client.Launcher
             // we need it to be in MacOS
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                var invokedArgs = Environment.GetCommandLineArgs();
-                if (invokedArgs != null && invokedArgs.Length > 0)
-                {
-                    if(File.Exists(invokedArgs[0]))
-                    {
-                        Environment.CurrentDirectory = Path.GetDirectoryName(invokedArgs[0]);
-                    }
-                }
+                var first = Path.GetDirectoryName(Environment.GetCommandLineArgs().FirstOrDefault());
+                if (first is not null && Directory.Exists(first))
+                    Environment.CurrentDirectory = first;
             }
 
             // start the launcher, then OTAPI if requested

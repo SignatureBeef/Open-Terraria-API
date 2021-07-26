@@ -31,8 +31,24 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
+using MonoMod.RuntimeDetour;
+
 class HostGamePlugin
 {
+    static Hook LazyHook<TType>(string method, Delegate callback, Type[] types = null)
+    {
+        var func = typeof(TType).GetMethod(method, types);
+        if (func != null) return new Hook(func, callback);
+        return null;
+    }
+
+    static DialogResult MessageBox_Show(string text, string caption)
+    {
+        Console.WriteLine($"[MSG {caption}] {text}");
+        OTAPI.Client.Launcher.MessageBox.Show(text, caption);
+        return DialogResult.Ignore;
+    }
+
     [ModFramework.Modification(ModFramework.ModType.Runtime, "Patching windows code to run FNA")]
     static void PatchClient()
     {
@@ -51,6 +67,8 @@ class HostGamePlugin
             process.StartInfo.FileName = folder;
             process.Start();
         };
+
+        LazyHook<MessageBox>("Show", new Func<string, string, DialogResult>(MessageBox_Show), new[] { typeof(string), typeof(string) });
 
 #if Platform_WINDOWS
         Console.WriteLine("Applying windows hooks");

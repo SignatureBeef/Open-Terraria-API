@@ -67,6 +67,11 @@
     <ClientJavascript Include="$(MSBuildProjectDirectory)\clearscript\**\*.js" />
     <ClientLua Include="$(MSBuildProjectDirectory)\lua\**\*.lua" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="MessageBoxWindow.axaml.cs">
+      <DependentUpon>MessageBoxWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <MakeDir Directories="$(TargetDir)modifications\" />
     <RemoveDir Directories="$(TargetDir)modifications\" />
