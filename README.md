@@ -1,5 +1,4 @@
 # Open Terraria API [![GitHub Workflow](https://img.shields.io/github/workflow/status/DeathCradle/Open-Terraria-API/CI?logo=GitHub)](https://github.com/DeathCradle/Open-Terraria-API/actions) [![Travis (.com) branch](https://img.shields.io/travis/com/DeathCradle/Open-Terraria-API/upcoming?label=build&logo=travis)](https://travis-ci.com/DeathCradle/Open-Terraria-API) [![AppVeyor branch](https://img.shields.io/appveyor/build/DeathCradle/Open-Terraria-API/upcoming?label=build&logo=appveyor)](https://ci.appveyor.com/project/DeathCradle/open-terraria-api) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Wiki](https://img.shields.io/static/v1?label=docs&message=wiki&color=blueviolet)](https://github.com/DeathCradle/Open-Terraria-API/wiki/%5Bupcoming%5D-1.-About)
-
 The Open Terraria API, known as OTAPI, is a low-level API for Terraria that rewrites and hooks into the official binaries for others to use.
 
 It is primarily a server modification for the PC edition of Terraria, however v3 has seen additional support for the PC client assemblies, and the mobile windows server assembly too.
@@ -19,7 +18,12 @@ The stack consists upon:
 * [FNA](https://github.com/FNA-XNA/FNA/), for use on the client variants, for a consistent codebase on all platforms. Servers use the [Xna shims](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Scripts/Shims/Xna) instead.
 * [MonoMod](https://github.com/MonoMod/MonoMod), for applying patches and generating runtime events/hooks.
 
-## Terraria support
+# Installation
+For servers all you need to do is add a NuGet reference to OTAPI. See more in the [wiki topic about server usage](https://github.com/DeathCradle/Open-Terraria-API/wiki/%5Bupcoming%5D-5.1-Using-OTAPI-Server).
+
+For client installations, you can download the launcher from the [releases section](https://github.com/DeathCradle/Open-Terraria-API/releases), and follow the [wiki topic](https://github.com/DeathCradle/Open-Terraria-API/wiki/%5Bupcoming%5D-5.2-Using-OTAPI-Client---Installation).
+
+# Terraria support
 Server assemblies used in the patching process are freely available at [Terraria's website](http://terraria.org).
 
 If you intend to patch a client version, you must own an existing copy of Terraria and have it installed in the default path of your machine. The [OTAPI Project](https://github.com/DeathCradle/Open-Terraria-API/) does not host or contain the original source file so it will extract files from and patch your existing installation.
@@ -41,7 +45,7 @@ All OTAPI builds support C#/lua/js scripts via plugins, however you may need to 
 | Android Client | not supported or planned |  | &#x2612; |
 | tModLoader Server | work has conducted in testing support for TML on Terraria 1.3, but no clear outcome until 1.4 support is released. | 1.3.5.3 | &#x2612; |
 
-## All packages
+# All packages
 
 [![OTAPI.Upcoming](https://img.shields.io/nuget/vpre/OTAPI.Upcoming?label=OTAPI.Upcoming)](https://www.nuget.org/packages/OTAPI.Upcoming/)
 [![OTAPI.Upcoming.Mobile](https://img.shields.io/nuget/vpre/OTAPI.Upcoming.Mobile?label=OTAPI.Upcoming.Mobile)](https://www.nuget.org/packages/OTAPI.Upcoming.Mobile)
