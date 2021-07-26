@@ -29,6 +29,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 class HostGamePlugin
 {
@@ -40,6 +41,15 @@ class HostGamePlugin
         OTAPI.Hooks.Main.Create = () =>
         {
             return new HostGame();
+        };
+
+        // .net5 needs UseShellExecute
+        On.Terraria.Utils.OpenFolder += (orig, folder) =>
+        {
+            using var process = new Process();
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.FileName = folder;
+            process.Start();
         };
 
 #if Platform_WINDOWS

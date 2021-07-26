@@ -170,6 +170,14 @@ namespace OTAPI.Client.Launcher
             Context.InstallStatus = "Install path is not supported";
         }
 
+        public void OnOpenInstallFolder(object sender, RoutedEventArgs e)
+        {
+            using var process = new System.Diagnostics.Process();
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.FileName = Environment.CurrentDirectory;
+            process.Start();
+        }
+
         public void OnInstall(object sender, RoutedEventArgs e)
         {
             if (Context.IsInstalling) return;

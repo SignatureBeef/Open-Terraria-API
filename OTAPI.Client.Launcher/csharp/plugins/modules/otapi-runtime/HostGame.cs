@@ -36,7 +36,6 @@ public class HostGame : Terraria.Main
 
     public HostGame()
     {
-        Console.WriteLine("Host game ctor...DEBUG");
         bool isHighDPI = Environment.GetEnvironmentVariable("FNA_GRAPHICS_ENABLE_HIGHDPI") == "1";
         if (isHighDPI)
             Console.WriteLine("HiDPI Enabled");
@@ -44,7 +43,6 @@ public class HostGame : Terraria.Main
 
     public override void Initialize()
     {
-        Console.WriteLine("Host game initing...DEBUG");
         base.Initialize();
 
         Terraria.Main.SkipAssemblyLoad = true;

@@ -111,7 +111,7 @@
     <!--<TextBlock Text="{Binding IsVanillaReady}"/>-->
 
     <Button Classes="STYLE_NAME"
-            IsEnabled="false">
+            Click="OnOpenInstallFolder">
       Open Install Folder
     </Button>
 
