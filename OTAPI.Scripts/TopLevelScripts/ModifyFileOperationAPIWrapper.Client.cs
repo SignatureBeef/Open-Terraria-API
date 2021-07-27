@@ -25,5 +25,7 @@ using MonoMod;
 [Modification(ModType.PreMerge, "Patching FileOperationAPIWrapper.SHFILEOPSTRUCT to work for x64")]
 void ModifyFileOperationAPIWrapper(ModFwModder modder)
 {
-    modder.Module.GetType("Terraria.Utilities.FileOperationAPIWrapper/SHFILEOPSTRUCT").PackingSize = 0;
+    // windows only mod, but tls needs a Main()
+    var type = modder.Module.GetType("Terraria.Utilities.FileOperationAPIWrapper/SHFILEOPSTRUCT");
+    if (type is not null) type.PackingSize = 0;
 }
