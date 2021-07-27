@@ -31,6 +31,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
+using ReLogic.Localization.IME;
+
 using MonoMod.RuntimeDetour;
 
 class HostGamePlugin
@@ -74,6 +76,7 @@ class HostGamePlugin
         LazyHook<MessageBox>("Show", new Func<string, string, DialogResult>(MessageBox_Show), new[] { typeof(string), typeof(string) });
         LazyHook<MessageBox>("Show", new Func<string, string, MessageBoxButtons, MessageBoxIcon, DialogResult>(MessageBox_Show), new[] { typeof(string), typeof(string), typeof(MessageBoxButtons), typeof(MessageBoxIcon) });
 
+
 #if Platform_WINDOWS
         Console.WriteLine("Applying windows hooks");
         // FNA + lack of System.Windows.Forms fixes
@@ -92,7 +95,13 @@ class HostGamePlugin
 
     static void WindowStateController_TryMovingToScreen(On.Terraria.Graphics.WindowStateController.orig_TryMovingToScreen orig, Terraria.Graphics.WindowStateController self, string screenDeviceName) { /*nop*/ }
 
-    static void WindowsPlatform_InitializeClientServices(On.ReLogic.OS.Windows.WindowsPlatform.orig_InitializeClientServices orig, ReLogic.OS.Windows.WindowsPlatform self, IntPtr windowHandle) { /*nop*/ }
+    static void WindowsPlatform_InitializeClientServices(On.ReLogic.OS.Windows.WindowsPlatform.orig_InitializeClientServices orig, ReLogic.OS.Windows.WindowsPlatform self, IntPtr windowHandle)
+    {
+        // Windows does not do this in it's binary
+        var ime = new FnaIme();
+        TextInputEXT.TextInput += ime.OnCharCallback;
+        self.RegisterService<IImeService>(ime);
+    }
 
     static void Main_SetDisplayModeAsBorderless(On.Terraria.Main.orig_SetDisplayModeAsBorderless orig, ref int width, ref int height, Form form) { /*nop*/ }
 
