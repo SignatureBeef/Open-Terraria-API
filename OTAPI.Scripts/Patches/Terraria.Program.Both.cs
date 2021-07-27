@@ -35,12 +35,14 @@ namespace Terraria
 {
     partial class patch_Program
     {
+#if !Terraria // the client has a customer MessageBox.Show implementation on avalonia
         // no WinForms access so just write to console
         public static extern void orig_DisplayException(Exception e);
         public static void DisplayException(Exception e)
         {
             Console.WriteLine(e.ToString());
         }
+#endif
 
         /// <summary>
         /// Triggers when mods should start attaching events. At this point assembly resolution should be ready on all platforms.

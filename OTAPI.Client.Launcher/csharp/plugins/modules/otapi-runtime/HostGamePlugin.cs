@@ -49,6 +49,9 @@ class HostGamePlugin
         return DialogResult.Ignore;
     }
 
+    static DialogResult MessageBox_Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
+        => MessageBox_Show(text, caption);
+
     [ModFramework.Modification(ModFramework.ModType.Runtime, "Patching windows code to run FNA")]
     static void PatchClient()
     {
@@ -69,6 +72,7 @@ class HostGamePlugin
         };
 
         LazyHook<MessageBox>("Show", new Func<string, string, DialogResult>(MessageBox_Show), new[] { typeof(string), typeof(string) });
+        LazyHook<MessageBox>("Show", new Func<string, string, MessageBoxButtons, MessageBoxIcon, DialogResult>(MessageBox_Show), new[] { typeof(string), typeof(string), typeof(MessageBoxButtons), typeof(MessageBoxIcon) });
 
 #if Platform_WINDOWS
         Console.WriteLine("Applying windows hooks");
