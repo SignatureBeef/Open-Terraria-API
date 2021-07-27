@@ -21,6 +21,7 @@ using OTAPI.Common;
 using ReactiveUI;
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace OTAPI.Client.Launcher
 {
@@ -32,8 +33,9 @@ namespace OTAPI.Client.Launcher
             get => _vanillaExe;
             set
             {
-                IsVanillaReady = File.Exists(value);
                 this.RaiseAndSetIfChanged(ref _vanillaExe, value);
+                this.RaisePropertyChanged(nameof(IsVanillaFound));
+                this.RaisePropertyChanged(nameof(IsVanillaReady));
             }
         }
 
@@ -43,39 +45,23 @@ namespace OTAPI.Client.Launcher
             get => _otapiExe;
             set
             {
-                IsOTAPIFound = File.Exists(value);
-                IsOTAPIReady = IsOTAPIFound && !IsInstalling;
                 this.RaiseAndSetIfChanged(ref _otapiExe, value);
+                this.RaisePropertyChanged(nameof(IsOTAPIFound));
+                this.RaisePropertyChanged(nameof(IsOTAPIReady));
             }
         }
 
-        private bool _isVanillaReady;
-        public bool IsVanillaReady { get => _isVanillaReady; set => this.RaiseAndSetIfChanged(ref _isVanillaReady, value); }
 
-        private bool _isOTAPIReady;
-        public bool IsOTAPIReady
-        {
-            get => _isOTAPIReady;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _isOTAPIReady, value);
-            }
-        }
+        public bool IsVanillaFound => File.Exists(VanillaExe);
+        public bool IsVanillaReady => IsVanillaFound && !IsInstalling;
 
-        private bool _isOTAPIFound;
-        public bool IsOTAPIFound
-        {
-            get => _isOTAPIFound;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _isOTAPIFound, value);
-            }
-        }
+        public bool IsOTAPIFound => File.Exists(OtapiExe);
+        public bool IsOTAPIReady => IsOTAPIFound && !IsInstalling;
 
         public IPlatformTarget? LaunchTarget { get; set; }
 
-        private ClientInstallPath<IPlatformTarget> _installPath;
-        public ClientInstallPath<IPlatformTarget> InstallPath { get => _installPath; set => this.RaiseAndSetIfChanged(ref _installPath, value); }
+        private ClientInstallPath<IPlatformTarget>? _installPath;
+        public ClientInstallPath<IPlatformTarget>? InstallPath { get => _installPath; set => this.RaiseAndSetIfChanged(ref _installPath, value); }
 
         private bool _installPathValid;
         public bool InstallPathValid
@@ -84,7 +70,7 @@ namespace OTAPI.Client.Launcher
             set
             {
                 this.RaiseAndSetIfChanged(ref _installPathValid, value);
-                CanInstall = InstallPathValid && !IsInstalling;
+                this.RaisePropertyChanged(nameof(CanInstall));
             }
         }
 
@@ -98,12 +84,12 @@ namespace OTAPI.Client.Launcher
             set
             {
                 this.RaiseAndSetIfChanged(ref _installing, value);
-                CanInstall = InstallPathValid && !IsInstalling;
-                IsOTAPIReady = File.Exists(OtapiExe) && !IsInstalling;
+                this.RaisePropertyChanged(nameof(CanInstall));
+                this.RaisePropertyChanged(nameof(IsOTAPIReady));
+                this.RaisePropertyChanged(nameof(IsVanillaReady));
             }
         }
 
-        private bool _canInstall;
-        public bool CanInstall { get => _canInstall; set => this.RaiseAndSetIfChanged(ref _canInstall, value); }
+        public bool CanInstall => InstallPathValid && !IsInstalling;
     }
 }

@@ -163,11 +163,16 @@ namespace OTAPI.Client.Launcher
             Context.InstallStatus = "Install path is not supported";
         }
 
-        public void OnOpenInstallFolder(object sender, RoutedEventArgs e)
+        public void OnOpenWorkspace(object sender, RoutedEventArgs e) => OpenFolder(Environment.CurrentDirectory);
+        public void OnOpenCSharp(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "csharp", "plugins", "modules"));
+        public void OnOpenJavascript(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "clearscript"));
+        public void OnOpenLua(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "lua"));
+
+        public void OpenFolder(string folder)
         {
             using var process = new System.Diagnostics.Process();
             process.StartInfo.UseShellExecute = true;
-            process.StartInfo.FileName = Environment.CurrentDirectory;
+            process.StartInfo.FileName = folder;
             process.Start();
         }
 

@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
-        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500" Width="600" Height="500"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500" Width="700" Height="500"
         x:Class="OTAPI.Client.Launcher.MainWindow"
         Background="#333" Foreground="#fff"
         Title="OTAPI Client Launcher">
@@ -21,7 +21,7 @@
     <Style Selector="Button.warning">
       <Setter Property="Margin" Value="0,10,0,0" />
     </Style>
-    
+
     <Style Selector="TextBox.install-path">
       <Setter Property="FontSize" Value="8" />
       <Setter Property="FontWeight" Value="300" />
@@ -69,6 +69,7 @@
     </TextBlock>
 
     <TextBox Classes="install-path"
+             Width="600"
              Text="{Binding InstallPath.Path}" />
 
     <TextBlock Classes="warning"
@@ -79,10 +80,11 @@
     <Button Classes="warning STYLE_NAME"
             IsEnabled="{Binding !IsInstalling}"
             Click="OnFindExe">
-      Change Install Path
+      Change Base Game Path
     </Button>
-    
+
     <Button Classes="warning STYLE_NAME"
+            ToolTip.Tip="Uses the base game and creates a patched OTAPI game and then downloads extra dependencies for your machine and configuration."
             IsEnabled="{Binding CanInstall}"
             Click="OnInstall">
       Install OTAPI
@@ -97,7 +99,6 @@
                IsVisible="{Binding !IsOTAPIFound}">
       OTAPI executable not found
     </TextBlock>
-    <!--<TextBlock Text="{Binding IsOTAPIReady}"/>-->
 
     <Button Classes="warning STYLE_NAME"
             IsEnabled="{Binding IsVanillaReady}"
@@ -105,15 +106,56 @@
       Launch normal Terraria (vanilla)
     </Button>
     <TextBlock Classes="warning"
-               IsVisible="{Binding !IsVanillaReady}">
+               IsVisible="{Binding !IsVanillaFound}">
       Terraria executable not found
     </TextBlock>
-    <!--<TextBlock Text="{Binding IsVanillaReady}"/>-->
 
-    <Button Classes="STYLE_NAME"
-            Click="OnOpenInstallFolder">
-      Open Install Folder
-    </Button>
+    <Grid ColumnDefinitions="100*,100*,100*,100*" RowDefinitions="Auto,Auto,Auto">
+
+      <Button Classes="STYLE_NAME"
+              Background="Transparent"
+              BorderBrush="#009688"
+              BorderThickness="1"
+              Foreground="#009688"
+              ToolTip.Tip="Open the OTAPI install folder"
+              Click="OnOpenWorkspace"
+              Margin="0,10,0,0"
+              Grid.Row="0" Grid.Column="0"
+              Content="Workspace"/>
+
+      <Button Classes="STYLE_NAME"
+              Background="Transparent"
+              BorderBrush="#009688"
+              BorderThickness="1"
+              Foreground="#009688"
+              ToolTip.Tip="Open csharp plugins folder"
+              Click="OnOpenCSharp"
+              Margin="5,10,0,0"
+              Grid.Row="0" Grid.Column="1"
+              Content="CSharp mods" />
+
+      <Button Classes="STYLE_NAME"
+              Background="Transparent"
+              BorderBrush="#009688"
+              BorderThickness="1"
+              Foreground="#009688"
+              ToolTip.Tip="Open the javascript plugins folder"
+              Click="OnOpenJavascript"
+              Margin="5,10,0,0"
+              Grid.Row="0" Grid.Column="2"
+              Content="Javascript mods" />
+
+      <Button Classes="STYLE_NAME"
+              Background="Transparent"
+              BorderBrush="#009688"
+              BorderThickness="1"
+              Foreground="#009688"
+              ToolTip.Tip="Open the lua plugins folder"
+              Click="OnOpenLua"
+              Margin="5,10,0,0"
+              Grid.Row="0" Grid.Column="3"
+              Content="Lua mods" />
+    </Grid>
 
     <ScrollViewer Height="300">
       <TextBlock Classes="installStatus"
