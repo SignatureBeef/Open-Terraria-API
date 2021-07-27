@@ -58,11 +58,17 @@ local cb_imgui_callback = function()
         data = tmp;
         data_history = DateTime.Now:ToString('HH:mm:ss') .. '> ' .. tmp .. '\n' .. data_history;
 
-        msg = ChatMessage(tmp);
-        packet = NetTextModule.SerializeClientMessage(msg);
-        print ('Chat: ' .. msg.Text)
-        if NetManager.Instance ~= nil then
-            NetManager.Instance:SendToServer(packet);
+        -- msg = ChatMessage(tmp);
+        -- packet = NetTextModule.SerializeClientMessage(msg);
+        -- print ('Chat: ' .. msg.Text)
+        -- if NetManager.Instance ~= nil then
+        --     NetManager.Instance:SendToServer(packet);
+        -- end
+		local message = ChatManager.Commands:CreateOutgoingMessage(tmp);
+        if Main.netMode == 1 then
+			ChatHelper.SendChatMessageFromClient(message);
+		elseif Main.netMode == 0 then
+			ChatManager.Commands:ProcessIncomingMessage(message, Main.myPlayer);
         end
     end
 

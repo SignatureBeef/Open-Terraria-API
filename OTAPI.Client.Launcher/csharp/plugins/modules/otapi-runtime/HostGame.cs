@@ -62,7 +62,14 @@ public class HostGame : Terraria.Main
         base.Draw(gameTime);
 
         _imGuiRenderer.BeforeLayout(gameTime);
-        ImGuiDraw?.Invoke(this, EventArgs.Empty);
+        try
+        {
+            ImGuiDraw?.Invoke(this, EventArgs.Empty);
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+        }
         _imGuiRenderer.AfterLayout();
     }
 }
