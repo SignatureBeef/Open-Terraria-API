@@ -112,7 +112,7 @@ class HostGamePlugin
         if (form == null)
         {
             form = new Form();
-            form.ClientSize = new System.Drawing.Size(Terraria.Main.minScreenW, Terraria.Main.minScreenH);
+            form.ClientSize = new System.Drawing.Size(Terraria.Main.screenWidth, Terraria.Main.screenHeight);
         }
         return form;
     }

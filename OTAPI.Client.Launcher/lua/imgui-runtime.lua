@@ -16,6 +16,7 @@ Main.versionNumber = 'Last script load: ' .. DateTime.Now:ToString();
 print ('[LUA] ImGUI script active: ' .. Main.versionNumber);
 local show_test_window = false;
 local my_tool_active = true;
+local last_my_tool_active = true;
 
 local data = '';
 local data_history = '';
@@ -45,41 +46,42 @@ local cb_imgui_callback = function()
     --     -- show_test_window = false;
     -- end
 
-    ImGui.Begin('Lua Chat', my_tool_active);
-    
-    ImGui.Text("Message");
+	if my_tool_active then
+		beginResult, my_tool_active = ImGui.Begin('Lua Chat', my_tool_active);
+		
+		ImGui.Text("Message");
 
-    -- local tmp = data;
-    returnValue, tmp = ImGui.InputText("", data, 512, luanet.enum (ImGuiInputTextFlags, 'EnterReturnsTrue,AutoSelectAll'))
+		-- local tmp = data;
+		returnValue, tmp = ImGui.InputText("", data, 512, luanet.enum (ImGuiInputTextFlags, 'EnterReturnsTrue,AutoSelectAll'))
 
-    if returnValue then
-        print ('Test ' .. tmp);
-        -- print ('' .. data);
-        data = tmp;
-        data_history = DateTime.Now:ToString('HH:mm:ss') .. '> ' .. tmp .. '\n' .. data_history;
+		if returnValue then
+			print ('Test ' .. tmp);
+			-- print ('' .. data);
+			data = tmp;
+			data_history = DateTime.Now:ToString('HH:mm:ss') .. '> ' .. tmp .. '\n' .. data_history;
 
-        -- msg = ChatMessage(tmp);
-        -- packet = NetTextModule.SerializeClientMessage(msg);
-        -- print ('Chat: ' .. msg.Text)
-        -- if NetManager.Instance ~= nil then
-        --     NetManager.Instance:SendToServer(packet);
-        -- end
-		local message = ChatManager.Commands:CreateOutgoingMessage(tmp);
-        if Main.netMode == 1 then
-			ChatHelper.SendChatMessageFromClient(message);
-		elseif Main.netMode == 0 then
-			ChatManager.Commands:ProcessIncomingMessage(message, Main.myPlayer);
-        end
-    end
+			-- msg = ChatMessage(tmp);
+			-- packet = NetTextModule.SerializeClientMessage(msg);
+			-- print ('Chat: ' .. msg.Text)
+			-- if NetManager.Instance ~= nil then
+			--     NetManager.Instance:SendToServer(packet);
+			-- end
+			local message = ChatManager.Commands:CreateOutgoingMessage(tmp);
+			if Main.netMode == 1 then
+				ChatHelper.SendChatMessageFromClient(message);
+			elseif Main.netMode == 0 then
+				ChatManager.Commands:ProcessIncomingMessage(message, Main.myPlayer);
+			end
+		end
 
-    ImGui.Text('History');
-    ImGui.BeginChild("Scrolling");
-  
-    ImGui.Text(data_history);
+		ImGui.Text('History');
+		ImGui.BeginChild("Scrolling");
+	  
+		ImGui.Text(data_history);
 
-    ImGui.EndChild();
-    ImGui.End();
-
+		ImGui.EndChild();
+		ImGui.End();
+	end
 end;
 
 local cb_imgui = nil;
