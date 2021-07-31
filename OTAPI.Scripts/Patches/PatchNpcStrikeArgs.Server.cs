@@ -17,13 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #if !tModLoaderServer_V1_3
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
+using System;
+using System.Linq;
 
 /// <summary>
 /// @doc Adds a Terraria.Entity entity parameter to Terraria.NPC.StrikeNPC.
@@ -35,7 +34,7 @@ partial class NpcStrikeArgs
     static MethodDefinition StrikeNPC { get; set; }
 
     [Modification(ModType.PreMerge, "Patching in entity source for NPC strike")]
-    static void PatchNpcStrikeArgs(ModFramework.ModFwModder modder)
+    static void PatchNpcStrikeArgs(ModFwModder modder)
     {
         var csr = modder.GetILCursor(() => (new Terraria.NPC()).StrikeNPC(0, 0, 0, false, false, false));
         StrikeNPC = csr.Method;

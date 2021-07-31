@@ -16,13 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+#pragma warning disable CS0436 // Type conflicts with imported type
+
 using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 using MonoMod.Cil;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 /// <summary>

@@ -287,9 +287,9 @@ namespace OTAPI.Patcher.Targets
                     public_mm.AutoPatch();
                     public_mm.Write();
 
-                    const string script_refs = "refs.dll";
-                    if (File.Exists(script_refs)) File.Delete(script_refs);
-                    File.Copy("OTAPI.dll", script_refs);
+                    //const string script_refs = "refs.dll";
+                    //if (File.Exists(script_refs)) File.Delete(script_refs);
+                    //File.Copy("OTAPI.dll", script_refs);
 
                     var inputName = Path.GetFileNameWithoutExtension(input_regular);
                     var initialModuleName = public_mm.Module.Name;

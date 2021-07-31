@@ -16,17 +16,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-#pragma warning disable CS8321 // Local function is declared but never used
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 
-using ModFramework;
-
+using System.Collections.Generic;
 /// <summary>
-/// @doc Patches FileOperationAPIWrapper.SHFILEOPSTRUCT to work for x64
+/// @doc Patches the entity class to allow instance mods.
 /// </summary>
-[Modification(ModType.PreMerge, "Patching FileOperationAPIWrapper.SHFILEOPSTRUCT to work for x64")]
-void ModifyFileOperationAPIWrapper(ModFwModder modder)
+namespace Terraria
 {
-    // windows only mod, but tls needs a Main()
-    var type = modder.Module.GetType("Terraria.Utilities.FileOperationAPIWrapper/SHFILEOPSTRUCT");
-    if (type is not null) type.PackingSize = 0;
+    public abstract class patch_Entity : Terraria.Entity
+    {
+        public object EntityMod { get; set; }
+
+        public Dictionary<string, object> EntityData { get; }
+
+        [MonoMod.MonoModConstructor]
+        patch_Entity()
+        {
+            EntityData = new Dictionary<string, object>();
+        }
+    }
 }

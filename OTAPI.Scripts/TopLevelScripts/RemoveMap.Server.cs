@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+#pragma warning disable CS8321 // Local function is declared but never used
+
 #if tModLoaderServer_V1_3
 System.Console.WriteLine("RemoveMap not available in TML1.3. Might be future support, depends if mods need to extend this for client related mods.");
 #else

@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+#pragma warning disable CS0436 // Type conflicts with imported type
+
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -49,7 +51,6 @@ namespace Microsoft.Xna.Framework
         public event EventHandler<EventArgs> Disposed;
 
         protected virtual bool CanResetDevice(GraphicsDeviceInformation newDeviceInfo) => false;
-
     }
 
     public class GraphicsDeviceInformation

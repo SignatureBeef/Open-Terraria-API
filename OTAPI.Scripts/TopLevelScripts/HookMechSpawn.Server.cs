@@ -16,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+#pragma warning disable CS8321 // Local function is declared but never used
+#pragma warning disable CS0436 // Type conflicts with imported type
+
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -35,7 +38,7 @@ void HookMechSpawn(MonoModder modder)
             new Task()
             {
                 Method = () => Terraria.NPC.MechSpawn(0,0,0),
-                Callback =   OTAPI.Hooks.NPC.InvokeMechSpawn,
+                Callback = OTAPI.Hooks.NPC.InvokeMechSpawn,
             },
             new Task()
             {
