@@ -15,6 +15,9 @@
     <Reference Include="OTAPI" Condition="Exists('..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.exe')">
       <HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.exe</HintPath>
     </Reference>
+    <Reference Include="OTAPI" Condition="Exists('..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.Runtime.dll')">
+      <HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\OTAPI.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Steamworks.NET" Condition="Exists('..\OTAPI.Patcher\bin\Debug\net5.0\EmbeddedResources\Steamworks.NET.dll')">
       <HintPath>..\OTAPI.Patcher\bin\Debug\net5.0\EmbeddedResources\Steamworks.NET.dll</HintPath>
     </Reference>
@@ -24,13 +27,16 @@
     <Reference Include="OTAPI" Condition="Exists('..\OTAPI.Client.Launcher\bin\Debug\net5.0\OTAPI.exe')">
       <HintPath>..\OTAPI.Client.Launcher\bin\Debug\net5.0\OTAPI.exe</HintPath>
     </Reference>
+    <Reference Include="OTAPI" Condition="Exists('..\OTAPI.Client.Launcher\bin\Debug\net5.0\OTAPI.Runtime.dll')">
+      <HintPath>..\OTAPI.Client.Launcher\bin\Debug\net5.0\OTAPI.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Steamworks.NET" Condition="Exists('..\OTAPI.Client.Launcher\bin\Debug\net5.0\EmbeddedResources\Steamworks.NET.dll')">
       <HintPath>..\OTAPI.Client.Launcher\bin\Debug\net5.0\EmbeddedResources\Steamworks.NET.dll</HintPath>
     </Reference>
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FNA\FNA.Core.csproj" />
-    <PackageReference Include="ModFramework" Version="1.0.9-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.10-alpha" />
     <PackageReference Include="MonoMod" Version="21.7.22.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>

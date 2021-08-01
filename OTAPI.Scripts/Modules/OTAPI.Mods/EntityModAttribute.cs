@@ -16,27 +16,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-/// <summary>
-/// @doc Patches the entity class to allow instance mods.
-/// </summary>
-namespace Terraria
+
+namespace OTAPI.Mods
 {
-    public abstract class patch_Entity : Terraria.Entity
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+    public class EntityModAttribute : Attribute
     {
-        public object EntityMod { get; set; }
+        public string Name { get; set; }
 
-        public Dictionary<string, object> EntityData { get; }
-
-        [MonoMod.MonoModConstructor]
-        patch_Entity()
+        public EntityModAttribute(string entityName)
         {
-            EntityData = new Dictionary<string, object>();
+            Name = entityName;
         }
     }
 }

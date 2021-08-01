@@ -46,13 +46,25 @@ namespace OTAPI.Patcher.Targets
 
         public event EventHandler<StatusUpdateArgs> StatusUpdate;
 
-        bool CanLoadFile(string filepath)
+        bool CanLoadPatchFile(string filepath)
         {
             // only load "client" or "both" variants
             var filename = Path.GetFileNameWithoutExtension(filepath);
             return !filename.EndsWith(".Server", StringComparison.CurrentCultureIgnoreCase)
                 && !filename.EndsWith("-Server", StringComparison.CurrentCultureIgnoreCase)
                 && !filename.EndsWith("-Runtime", StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        bool CanLoadCompilationFile(string filepath)
+        {
+            // only load "client" or "both" variants
+            var filename = Path.GetFileNameWithoutExtension(filepath);
+            return !filename.EndsWith(".Server", StringComparison.CurrentCultureIgnoreCase)
+                && !filename.EndsWith("-Server", StringComparison.CurrentCultureIgnoreCase)
+                && !filename.EndsWith("-Runtime", StringComparison.CurrentCultureIgnoreCase)
+                && !filename.EndsWith(".Runtime", StringComparison.CurrentCultureIgnoreCase)
+                && !filename.EndsWith("-Client", StringComparison.CurrentCultureIgnoreCase)
+                && !filename.EndsWith(".Client", StringComparison.CurrentCultureIgnoreCase);
         }
 
         IEnumerable<string> XnaPaths => new[]
@@ -88,10 +100,10 @@ namespace OTAPI.Patcher.Targets
 
             StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Starting..." });
 
-            PluginLoader.AssemblyFound += CanLoadFile;
-            CSharpLoader.AssemblyFound += CanLoadFile;
-            ModFramework.Modules.ClearScript.ScriptManager.FileFound += CanLoadFile;
-            ModFramework.Modules.Lua.ScriptManager.FileFound += CanLoadFile;
+            PluginLoader.AssemblyFound += CanLoadPatchFile;
+            CSharpLoader.AssemblyFound += CanLoadPatchFile;
+            ModFramework.Modules.ClearScript.ScriptManager.FileFound += CanLoadPatchFile;
+            ModFramework.Modules.Lua.ScriptManager.FileFound += CanLoadPatchFile;
             try
             {
 
@@ -237,7 +249,7 @@ namespace OTAPI.Patcher.Targets
                 StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Loading plugins..." });
 
                 // set the /patchtime path for client installs
-                ModFramework.Plugins.PluginLoader.Clear();
+                PluginLoader.Clear();
                 CSharpLoader.GlobalRootDirectory = Path.Combine("patchtime", "csharp", "plugins");
                 CSharpLoader.GlobalAssemblies.Clear();
 
@@ -399,7 +411,7 @@ namespace OTAPI.Patcher.Targets
 
                     AppDomain.CurrentDomain.AssemblyResolve -= PatchResolve;
 
-                    mm.Log("[OTAPI] Done.");
+                    mm.Log("[OTAPI] Patching completed.");
                 }
 
                 if (File.Exists(localPath_x86)) File.Delete(localPath_x86);
@@ -408,10 +420,51 @@ namespace OTAPI.Patcher.Targets
             }
             finally
             {
-                PluginLoader.AssemblyFound -= CanLoadFile;
-                CSharpLoader.AssemblyFound -= CanLoadFile;
-                ModFramework.Modules.ClearScript.ScriptManager.FileFound -= CanLoadFile;
-                ModFramework.Modules.Lua.ScriptManager.FileFound -= CanLoadFile;
+                PluginLoader.AssemblyFound -= CanLoadPatchFile;
+                CSharpLoader.AssemblyFound -= CanLoadPatchFile;
+                ModFramework.Modules.ClearScript.ScriptManager.FileFound -= CanLoadPatchFile;
+                ModFramework.Modules.Lua.ScriptManager.FileFound -= CanLoadPatchFile;
+            }
+
+            StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Compiling modules..." });
+            Console.WriteLine("[OTAPI] Compiling modules.");
+            PluginLoader.AssemblyFound += CanLoadCompilationFile;
+            CSharpLoader.AssemblyFound += CanLoadCompilationFile;
+            ModFramework.Modules.ClearScript.ScriptManager.FileFound += CanLoadCompilationFile;
+            ModFramework.Modules.Lua.ScriptManager.FileFound += CanLoadCompilationFile;
+            try
+            {
+                PluginLoader.Clear();
+                CSharpLoader.GlobalRootDirectory = Path.Combine("patchtime", "csharp", "plugins");
+                CSharpLoader.GlobalAssemblies.Clear();
+                CSharpLoader.GlobalAssemblies.Add("OTAPI.exe");
+                PluginLoader.TryLoad();
+                Modifier.Apply(ModType.Write);
+
+                // copy mods
+                var mods_dll = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.dll");
+                var mods_pdb = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.pdb");
+                var mods_xml = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.xml");
+
+                var dst_dll = Path.Combine("modifications", "OTAPI.Mods.dll");
+                var dst_pdb = Path.Combine("modifications", "OTAPI.Mods.pdb");
+                var dst_xml = Path.Combine("modifications", "OTAPI.Mods.xml");
+
+                if (File.Exists(dst_dll)) File.Delete(dst_dll);
+                File.Copy(mods_dll, dst_dll);
+
+                if (File.Exists(dst_pdb)) File.Delete(dst_pdb);
+                File.Copy(mods_pdb, dst_pdb);
+
+                if (File.Exists(dst_xml)) File.Delete(dst_xml);
+                File.Copy(mods_xml, dst_xml);
+            }
+            finally
+            {
+                PluginLoader.AssemblyFound -= CanLoadCompilationFile;
+                CSharpLoader.AssemblyFound -= CanLoadCompilationFile;
+                ModFramework.Modules.ClearScript.ScriptManager.FileFound -= CanLoadCompilationFile;
+                ModFramework.Modules.Lua.ScriptManager.FileFound -= CanLoadCompilationFile;
             }
         }
 
