@@ -18,31 +18,35 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0436 // Type conflicts with imported type
 
+using ModFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace OTAPI.Mods
 {
-    public class EntityMod
-    {
-        public Type Type { get; set; }
-        public EntityModAttribute Attribute { get; set; }
-    }
-
-    public static class Registry
-    {
-
-    }
+    //public class EntityMod
+    //{
+    //    public Type Type { get; set; }
+    //    public EntityModAttribute Attribute { get; set; }
+    //}
 
     public static class EntityDiscovery
     {
-        private static Dictionary<Type, List<EntityMod>> _mods = Discover();
+        private static Dictionary<Type, List<IMod>> _mods = Discover();
 
-        public static Dictionary<Type, List<EntityMod>> Discover()
+        [Modification(ModType.Runtime, "Loading entity mod interface")]
+        public static void OnBoot(Assembly runtimeAssembly)
         {
-            var mods = new Dictionary<Type, List<EntityMod>>();
+            var line = String.Join(", ", _mods.Keys.Select(x => $"{x}: {_mods[x].Count}"));
+            Console.WriteLine($"Loaded mods: {line}");
+        }
+
+        public static Dictionary<Type, List<IMod>> Discover()
+        {
+            var mods = new Dictionary<Type, List<IMod>>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where(a => !a.IsDynamic)
@@ -54,34 +58,27 @@ namespace OTAPI.Mods
 
             foreach (var assembly in assemblies)
             {
-                var attrs = assembly.Types.Select(t => new
-                {
-                    Type = t,
-                    Attribute = t.CustomAttributes?.FirstOrDefault(att => att.AttributeType == typeof(EntityModAttribute))
-                }).Where(v => v.Attribute is not null);
+                var mod_types = assembly.Types.Where(t => typeof(IMod).IsAssignableFrom(t) && t.BaseType is not null);
 
-                foreach (var attr in attrs)
+                foreach (var mod_type in mod_types)
                 {
-                    var baseType = attr.Type.BaseType;
+                    var baseType = mod_type.BaseType!;
 
-                    if (!mods.TryGetValue(baseType, out List<EntityMod> entityMods))
+                    if (!mods.TryGetValue(baseType, out List<IMod>? entityMods))
                     {
-                        entityMods = new List<EntityMod>();
+                        entityMods = new List<IMod>();
                         mods.Add(baseType, entityMods);
                     }
 
-                    var instance = (EntityModAttribute)attr.Attribute.Constructor.Invoke(attr.Attribute.ConstructorArguments.Select(x => x.Value).ToArray());
-
-                    foreach (var na in attr.Attribute.NamedArguments)
+                    var instance =  Activator.CreateInstance(mod_type);
+                    if(instance is IMod mod)
                     {
-                        typeof(EntityModAttribute).GetProperty(na.MemberName).SetValue(instance, na.TypedValue);
+                        entityMods.Add(mod);
                     }
-
-                    entityMods.Add(new EntityMod()
+                    else
                     {
-                        Attribute = instance,
-                        Type = attr.Type
-                    });
+                        Console.WriteLine($"[OTAPI] Failed to load mod type: {mod_type.FullName}");
+                    }
                 }
             }
 
@@ -102,10 +99,25 @@ namespace OTAPI.Mods
             }
         }
 
-        public static IEnumerable<EntityMod> GetTypeMods<TMod>() where TMod : IMod
+        public static IEnumerable<IMod> GetTypeMods<TMod>() where TMod : IMod
         {
-            if (_mods.TryGetValue(typeof(TMod), out List<EntityMod> mods)) return mods;
-            return Enumerable.Empty<EntityMod>();
+            if (_mods.TryGetValue(typeof(TMod), out List<IMod>? mods)) return mods;
+            return Enumerable.Empty<IMod>();
+        }
+
+        public static void AddEntityMod<TMod>(IMod mod) where TMod : IMod
+        {
+            if (_mods.TryGetValue(typeof(TMod), out List<IMod>? mods))
+            {
+                mods.Add(mod);
+            }
+            else
+            {
+                _mods.Add(typeof(TMod), new List<IMod>()
+                {
+                    mod
+                });
+            }
         }
     }
 }

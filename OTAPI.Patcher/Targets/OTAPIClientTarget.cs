@@ -438,6 +438,7 @@ namespace OTAPI.Patcher.Targets
                 CSharpLoader.GlobalRootDirectory = Path.Combine("patchtime", "csharp", "plugins");
                 CSharpLoader.GlobalAssemblies.Clear();
                 CSharpLoader.GlobalAssemblies.Add("OTAPI.exe");
+                CSharpLoader.GlobalAssemblies.Add("OTAPI.Runtime.dll");
                 PluginLoader.TryLoad();
                 Modifier.Apply(ModType.Write);
 

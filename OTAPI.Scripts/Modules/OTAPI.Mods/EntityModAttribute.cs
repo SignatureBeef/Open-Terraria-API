@@ -20,14 +20,14 @@ using System;
 
 namespace OTAPI.Mods
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class EntityModAttribute : Attribute
-    {
-        public string Name { get; set; }
+    //[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+    //public class EntityModAttribute : Attribute
+    //{
+    //    public string Name { get; set; }
 
-        public EntityModAttribute(string entityName)
-        {
-            Name = entityName;
-        }
-    }
+    //    public EntityModAttribute(string entityName)
+    //    {
+    //        Name = entityName;
+    //    }
+    //}
 }

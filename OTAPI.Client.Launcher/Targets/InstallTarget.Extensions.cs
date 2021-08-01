@@ -200,7 +200,7 @@ namespace OTAPI.Client.Launcher.Targets
                 .WithAllowUnsafe(true);
 
             var files = Directory.EnumerateFiles(hostDir, "*.cs");
-            var parsed = CSharpLoader.ParseFiles(files, constants, null);
+            var parsed = CSharpLoader.ParseFiles(files, constants, null!);
 
             {
                 //var folder = Path.GetFileName(Path.GetDirectoryName(file));
@@ -281,7 +281,7 @@ using System.Runtime.Versioning;
                 peStream: dllStream,
                 pdbStream: pdbStream,
                 xmlDocumentationStream: xmlStream,
-                embeddedTexts: parsed.Select(x => x.EmbeddedText).Where(x => x != null),
+                embeddedTexts: parsed.Select(x => x.EmbeddedText).Where(x => x != null)!,
                 options: emitOptions
             );
 
@@ -445,7 +445,7 @@ using System.Runtime.Versioning;
             else throw new NotSupportedException();
         }
 
-        public static string ExtractBZip2(this IPlatformTarget target, string zipPath, string dest = null)
+        public static string ExtractBZip2(this IPlatformTarget target, string zipPath, string dest)
         {
             using var raw = File.OpenRead(zipPath);
             using var ms = new MemoryStream();

@@ -20,6 +20,6 @@ namespace OTAPI.Mods
 {
     public interface IMod
     {
-
+        string? Name { get; }
     }
 }

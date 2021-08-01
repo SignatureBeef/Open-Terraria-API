@@ -27,7 +27,7 @@ namespace OTAPI.Client.Launcher.Targets
         public void OnUILoad(MainWindowViewModel vm)
         {
             vm.OtapiExe = Path.Combine(Environment.CurrentDirectory, "OTAPI.exe");
-            vm.VanillaExe = Directory.Exists(vm.InstallPath.Path) ? Path.Combine(vm.InstallPath.Path, "Terraria.exe") : null;
+            vm.VanillaExe = (vm.InstallPath?.Path is not null && Directory.Exists(vm.InstallPath.Path)) ? Path.Combine(vm.InstallPath.Path, "Terraria.exe") : null;
         }
 
         public void Install(string installPath)

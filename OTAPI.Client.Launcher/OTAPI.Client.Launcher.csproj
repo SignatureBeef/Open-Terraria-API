@@ -3,6 +3,7 @@
     <OutputType>Exe</OutputType>
     <!--<OutputType>WinExe</OutputType>-->
     <TargetFramework>net5.0</TargetFramework>
+    <Platforms>x64</Platforms>
     <Nullable>enable</Nullable>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <!--<AssemblyName>Terraria</AssemblyName>-->

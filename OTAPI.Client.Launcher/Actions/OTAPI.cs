@@ -29,7 +29,7 @@ namespace OTAPI.Client.Launcher.Actions
 {
     static class OTAPI
     {
-        static Assembly Terraria;
+        static Assembly? Terraria;
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -70,7 +70,7 @@ namespace OTAPI.Client.Launcher.Actions
             NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep);
             NativeLibrary.SetDllImportResolver(steam, ResolveNativeDep);
 
-            ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext += ResolveSystemRefs;
+            CSharpLoader.OnCompilationContext += ResolveSystemRefs;
 
             Terraria.EntryPoint!.Invoke(null, new object[] { args });
         }
@@ -119,8 +119,11 @@ namespace OTAPI.Client.Launcher.Actions
             return handle;
         }
 
-        static void ResolveSystemRefs(object instance, ModFramework.Modules.CSharp.CSharpLoader.CompilationContextArgs args)
+        static void ResolveSystemRefs(object? instance, ModFramework.Modules.CSharp.CSharpLoader.CompilationContextArgs args)
         {
+            if (args.Context is null) return;
+            if (args.Context.Compilation is null) return;
+
             var asms = System.AppDomain.CurrentDomain.GetAssemblies();
             if (args.CoreLibAssemblies is not null && args.CoreLibAssemblies.Count() == 0)
             {
@@ -138,7 +141,7 @@ namespace OTAPI.Client.Launcher.Actions
             }
         }
 
-        private static Assembly CurrentDomain_TypeResolve(object sender, ResolveEventArgs args)
+        private static Assembly? CurrentDomain_TypeResolve(object? sender, ResolveEventArgs args)
         {
             Console.WriteLine("Looking for type: " + args.Name);
             return null;
@@ -150,7 +153,7 @@ namespace OTAPI.Client.Launcher.Actions
         static void CacheAssembly(Assembly assembly)
         {
             var name = assembly.GetName().Name;
-            if (!_assemblyCache.ContainsKey(name))
+            if (name is not null && !_assemblyCache.ContainsKey(name))
             {
                 _assemblyCache.Add(name, assembly);
             }
@@ -165,11 +168,13 @@ namespace OTAPI.Client.Launcher.Actions
             return result;
         }
 
-        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        private static Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)
         {
             var asmName = new AssemblyName(args.Name);
 
-            if (_assemblyCache.TryGetValue(asmName.Name, out Assembly cached))
+            if (asmName.Name is null) return null;
+
+            if (_assemblyCache.TryGetValue(asmName.Name, out Assembly? cached))
                 return cached;
 
             Console.WriteLine("[OTAPI] Resolving assembly: " + args.Name);
@@ -177,6 +182,7 @@ namespace OTAPI.Client.Launcher.Actions
                 || args.Name.StartsWith("ReLogic") // shouldnt really get here unless bad IL
             )
             {
+                if (Terraria is null) throw new Exception("Failed to resolve terraria assembly");
                 if (!_assemblyCache.ContainsKey(asmName.Name))
                     _assemblyCache.Add(asmName.Name, Terraria);
                 return Terraria;
@@ -187,17 +193,19 @@ namespace OTAPI.Client.Launcher.Actions
             }
             else
             {
+                if (Terraria is null) throw new Exception("Failed to resolve terraria assembly");
                 var root = Terraria;
                 string resourceName = asmName.Name + ".dll";
 
                 if (File.Exists(resourceName))
                     return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, resourceName));
 
-                string text = Array.Find(root.GetManifestResourceNames(), (element) => element.EndsWith(resourceName));
+                var text = Array.Find(root.GetManifestResourceNames(), (element) => element.EndsWith(resourceName));
                 if (text != null)
                 {
                     Console.WriteLine("Loading from resources " + resourceName);
                     using var stream = root.GetManifestResourceStream(text);
+                    if (stream is null) return null;
                     byte[] array = new byte[stream.Length];
                     stream.Read(array, 0, array.Length);
                     stream.Seek(0, SeekOrigin.Begin);
