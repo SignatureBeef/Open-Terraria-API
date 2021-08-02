@@ -40,51 +40,6 @@ namespace OTAPI.Patcher.Targets
 
         public static IPatchTarget DeterminePatchTarget()
         {
-            const string RepoBase = "https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Scripts";
-            const string HeaderFormat = "| Type | Mod | Platforms | Comment |\n| ---- | ---- | ---- | ---- |";
-            MarkdownDocumentor.RegisterTypeFormatter<BasicComment>((header, data) =>
-            {
-                if (header) return HeaderFormat;
-
-                var filename = Path.GetFileName(data.FilePath);
-
-                var basePath = "";
-                if (data.Type == "toplevel")
-                    basePath = RepoBase + "/TopLevelScripts";
-                else if (data.Type == "patch")
-                    basePath = RepoBase + "/Patches";
-                else if (data.Type == "module")
-                {
-                    basePath = RepoBase + "/Shims";
-                    filename = Path.GetFileName(Path.GetDirectoryName(data.FilePath));
-                }
-                else if (data.Type == "script"
-                    && Path.GetExtension(data.FilePath).Equals(".lua", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    basePath = RepoBase + "/Lua";
-                    filename = data.FilePath.Replace("lua/", "");
-                }
-                else if (data.Type == "script"
-                    && Path.GetExtension(data.FilePath).Equals(".js", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    basePath = RepoBase + "/JavaScript";
-                    filename = data.FilePath.Replace("clearscript/", "");
-                }
-
-                var platforms = "";
-                if (data.FilePath.Contains(".Both", StringComparison.CurrentCultureIgnoreCase)
-                    || data.FilePath.Contains("-Both", StringComparison.CurrentCultureIgnoreCase))
-                    platforms = "Client & Server";
-                else if (data.FilePath.Contains(".Server", StringComparison.CurrentCultureIgnoreCase)
-                    || data.FilePath.Contains("-Server", StringComparison.CurrentCultureIgnoreCase))
-                    platforms = "Server";
-                else if (data.FilePath.Contains(".Client", StringComparison.CurrentCultureIgnoreCase)
-                    || data.FilePath.Contains("-Client", StringComparison.CurrentCultureIgnoreCase))
-                    platforms = "Client";
-
-                return $"| {data.Type} | [{filename}]({basePath}/{filename}) | {platforms} | {data.Comments} |";
-            });
-
             var cli = Common.GetCliValue("patchTarget");
 
             if (!String.IsNullOrWhiteSpace(cli) && _targets.TryGetValue(cli[0], out IPatchTarget match))

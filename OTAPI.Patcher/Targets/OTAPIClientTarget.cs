@@ -106,6 +106,7 @@ namespace OTAPI.Patcher.Targets
             ModFramework.Modules.Lua.ScriptManager.FileFound += CanLoadPatchFile;
             try
             {
+                this.AddMarkdownFormatter();
 
                 var installDiscoverer = ClientHelpers.DetermineClientInstallPath();
                 var installPath = installDiscoverer.Path;

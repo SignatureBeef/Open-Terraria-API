@@ -20,6 +20,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using ModFramework;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace OTAPI.Patcher.Targets
 {
@@ -61,6 +62,65 @@ namespace OTAPI.Patcher.Targets
 
             if (!String.IsNullOrWhiteSpace(run))
                 modder.AddMetadata("GitHub.Action.RunNo", run);
+        }
+
+        public static void AddMarkdownFormatter(this IPatchTarget target)
+        {
+            const string RepoBase = "https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming";
+            const string Scripts = "/OTAPI.Scripts";
+            const string HeaderFormat = "| Type | Mod | Platforms | Comment |\n| ---- | ---- | ---- | ---- |";
+            MarkdownDocumentor.RegisterTypeFormatter<BasicComment>((header, data) =>
+            {
+                if (header) return HeaderFormat;
+
+                var filename = Path.GetFileName(data.FilePath);
+                var client = data.FilePath.Contains("patchtime", StringComparison.CurrentCultureIgnoreCase);
+
+                var basePath = "";
+                if (data.Type == "toplevel")
+                    basePath = RepoBase + Scripts + "/TopLevelScripts";
+                else if (data.Type == "patch")
+                    basePath = RepoBase + Scripts + "/Patches";
+                else if (data.Type == "module")
+                {
+                    basePath = RepoBase + Scripts + "/Shims";
+                    filename = Path.GetFileName(Path.GetDirectoryName(data.FilePath));
+                }
+                else if (data.Type == "script"
+                    && Path.GetExtension(data.FilePath).Equals(".lua", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    basePath = RepoBase + Scripts + "/Lua";
+                    filename = String.Join("/",
+                        data.FilePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                        .Where(dir => !dir.Equals("lua", StringComparison.CurrentCultureIgnoreCase))
+                        .ToArray()
+                    );
+                }
+                else if (data.Type == "script"
+                    && Path.GetExtension(data.FilePath).Equals(".js", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    basePath = RepoBase + Scripts + "/JavaScript";
+                    filename = String.Join("/",
+                        data.FilePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                        .Where(dir => !dir.Equals("clearscript", StringComparison.CurrentCultureIgnoreCase))
+                        .ToArray()
+                    );
+                }
+
+                var platforms = "";
+                if (data.FilePath.Contains(".Both", StringComparison.CurrentCultureIgnoreCase)
+                    || data.FilePath.Contains("-Both", StringComparison.CurrentCultureIgnoreCase))
+                    platforms = "Client & Server";
+                else if (data.FilePath.Contains(".Server", StringComparison.CurrentCultureIgnoreCase)
+                    || data.FilePath.Contains("-Server", StringComparison.CurrentCultureIgnoreCase))
+                    platforms = "Server";
+                else if (data.FilePath.Contains(".Client", StringComparison.CurrentCultureIgnoreCase)
+                    || data.FilePath.Contains("-Client", StringComparison.CurrentCultureIgnoreCase))
+                    platforms = "Client";
+
+                return $"| {data.Type} | [{filename}]({basePath}/{filename}) | {platforms} | {data.Comments} |";
+            });
+
         }
     }
 }

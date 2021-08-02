@@ -66,6 +66,8 @@ namespace OTAPI.Patcher.Targets
             ModFramework.Modules.ClearScript.ScriptManager.FileFound += CanLoadFile;
             ModFramework.Modules.Lua.ScriptManager.FileFound += CanLoadFile;
 
+            this.AddMarkdownFormatter();
+
             //markdownDocumentor.WriteLine += (ref string line, ref bool handled) =>
             //{
             //    if (line.Contains("@doc"))
