@@ -16,23 +16,31 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+
 namespace OTAPI.Mods
 {
-    public interface IMod
+    internal static class IModRegistry
     {
-        /// <summary>
-        /// Name of the mod
-        /// </summary>
-        string? Name { get; }
+        private static Dictionary<Type, int> _types = new Dictionary<Type, int>();
 
         /// <summary>
-        /// Type ID used for Terraria, e.g. NPC.NewNPC
+        /// Allocates a type value for a ModType, usually extending from an existing vanilla offset
         /// </summary>
-        int TypeID { get; }
+        /// <typeparam name="TMod">The mod that needs to be assigned a Type</typeparam>
+        /// <param name="vanillaOffset">The offset for if vanilla already has a base collection</param>
+        /// <returns>The value to be used</returns>
+        public static int AllocateType<TMod>(int vanillaOffset)
+        {
+            if (!_types.TryGetValue(typeof(TMod), out var mod))
+                mod = vanillaOffset;
 
-        /// <summary>
-        /// Fired when the entity is registered with OTAPI, not when instanced.
-        /// </summary>
-        void Registered();
+            mod++;
+
+            _types[typeof(TMod)] = mod;
+
+            return mod;
+        }
     }
 }

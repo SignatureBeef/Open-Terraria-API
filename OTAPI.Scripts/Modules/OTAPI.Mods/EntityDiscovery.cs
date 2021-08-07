@@ -64,16 +64,21 @@ namespace OTAPI.Mods
                 {
                     var baseType = mod_type.BaseType!;
 
+                    // skip the Mod type base
+                    if (baseType == typeof(object))
+                        continue;
+
                     if (!mods.TryGetValue(baseType, out List<IMod>? entityMods))
                     {
                         entityMods = new List<IMod>();
                         mods.Add(baseType, entityMods);
                     }
 
-                    var instance =  Activator.CreateInstance(mod_type);
-                    if(instance is IMod mod)
+                    var instance = Activator.CreateInstance(mod_type);
+                    if (instance is IMod mod)
                     {
                         entityMods.Add(mod);
+                        mod.Registered();
                     }
                     else
                     {
@@ -99,13 +104,13 @@ namespace OTAPI.Mods
             }
         }
 
-        public static IEnumerable<IMod> GetTypeMods<TMod>() where TMod : IMod
+        public static IEnumerable<TMod> GetTypeMods<TMod>() where TMod : IMod
         {
-            if (_mods.TryGetValue(typeof(TMod), out List<IMod>? mods)) return mods;
-            return Enumerable.Empty<IMod>();
+            if (_mods.TryGetValue(typeof(TMod), out List<IMod>? mods)) return mods.Cast<TMod>();
+            return Enumerable.Empty<TMod>();
         }
 
-        public static void AddEntityMod<TMod>(IMod mod) where TMod : IMod
+        public static void AddEntityMod<TMod>(TMod mod) where TMod : IMod
         {
             if (_mods.TryGetValue(typeof(TMod), out List<IMod>? mods))
             {

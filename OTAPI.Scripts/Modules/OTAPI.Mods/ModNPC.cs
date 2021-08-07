@@ -18,6 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0436 // Type conflicts with imported type
 
+using System;
+using System.Linq;
 using Terraria;
 
 namespace OTAPI.Mods
@@ -27,37 +29,105 @@ namespace OTAPI.Mods
     /// </summary>
     public class ModNPC : IMod
     {
+        /// <summary>
+        /// The vanilla NPC instance used by the game engine
+        /// </summary>
         public NPC? NPC { get; set; }
 
+        /// <summary>
+        /// The name of your NPC mod
+        /// </summary>
         public virtual string? Name { get; set; }
+
+        /// <summary>
+        /// The texture for your NPC
+        /// </summary>
         public virtual string? Texture { get; set; }
 
-        public virtual bool OnSetDefaults(ref int type, ref NPCSpawnParams spawnparams) => false;
+        /// <summary>
+        /// The type used by the vanilla game engine. This is managed by OTAPI but usually needed for mods if NPC.NewNPC is called manually.
+        /// </summary>
+        public int TypeID { get; private set; }
+
+        /// <summary>
+        /// Fired when your mod is registered with OTAPI. Not when it is being instanced.
+        /// </summary>
+        public event EventHandler? OnRegistered;
+
+        /// <summary>
+        /// Fired when your NPC is being created.
+        /// </summary>
+        public event EventHandler? OnCreated;
+
+        public class SetDefaultsArgs : EventArgs
+        {
+            public HookResult Result { get; set; }
+            public int Type { get; set; }
+            public NPCSpawnParams SpawnParams { get; set; }
+        }
+
+        /// <summary>
+        /// Fired when your NPC is being configured, after being created.
+        /// </summary>
+        public event EventHandler<SetDefaultsArgs>? OnSetDefaults;
 
         static ModNPC()
         {
+            OTAPI.Hooks.NPC.Create += NPC_Create;
             On.Terraria.NPC.SetDefaults += NPC_SetDefaults;
-            On.Terraria.NPC.NewNPC += NPC_NewNPC;
-            //new Hook(typeof(NPC).GetMethod("NewNPC"), new Func<Func<int, int, int, int, float, float, float, float, int, int>, int, int, int, int, float, float, float, float, int, int>(NPC_NewNPC));
-            //new Hook(typeof(NPC).GetMethod("SetDefaults"), new Action<Action<NPC, int, NPCSpawnParams>, NPC, int, NPCSpawnParams>(NPC_SetDefaults));
         }
 
-        //private static int NPC_NewNPC(Func<int, int, int, int, float, float, float, float, int, int> orig, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
-        private static int NPC_NewNPC(On.Terraria.NPC.orig_NewNPC orig, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
+        private static void NPC_Create(object? sender, Hooks.NPC.CreateEventArgs e)
         {
             var mods = EntityDiscovery.GetTypeMods<ModNPC>();
-            //var match = mods.Where(m => m.Attribute.Name == );
+            var mod = mods.SingleOrDefault(m => m.TypeID == e.Type);
 
-            return orig(X, Y, Type, Start, ai0, ai1, ai2, ai3, Target);
+            if (mod is not null)
+            {
+                var instance = (ModNPC)Activator.CreateInstance(mod.GetType())!;
+                e.Npc = new NPC();
+                e.Npc.EntityMod = instance;
+
+                // copy rego to instance
+                instance.TypeID = mod.TypeID;
+
+                Console.WriteLine($"[OTAPI] Creating NPC instance: {e.Type}");
+
+                mod.OnCreated?.Invoke(mod, EventArgs.Empty);
+            }
         }
 
-        //private static void NPC_SetDefaults(Action<NPC, int, NPCSpawnParams> orig, NPC self, int Type, NPCSpawnParams spawnparams)
         private static void NPC_SetDefaults(On.Terraria.NPC.orig_SetDefaults orig, NPC self, int Type, NPCSpawnParams spawnparams)
         {
-            if (self.EntityMod is ModNPC mod && !mod.OnSetDefaults(ref Type, ref spawnparams))
-                return;
+            if (self.EntityMod is ModNPC mod)
+            {
+                var args = new SetDefaultsArgs()
+                {
+                    Result = HookResult.Cancel, // assume the mod sets their own defaults, otherwise they can change the type and return continue. by default vanilla won't know what to do with the custom NPC type
+                    Type = Type,
+                    SpawnParams = spawnparams,
+                };
+
+                mod.OnSetDefaults?.Invoke(mod, args);
+
+                if (args.Result == HookResult.Cancel)
+                    return;
+
+                Type = args.Type;
+                spawnparams = args.SpawnParams;
+            }
 
             orig(self, Type, spawnparams);
+        }
+
+        public void Registered()
+        {
+            // setup this type for instancing later on when the NPC needs to be spawned.
+            TypeID = IModRegistry.AllocateType<ModNPC>(Terraria.Main.maxNPCTypes);
+
+            Console.WriteLine($"[OTAPI] Assigned TypeID {TypeID} to {this.GetType().FullName}");
+
+            OnRegistered?.Invoke(this, EventArgs.Empty);
         }
     }
 }
