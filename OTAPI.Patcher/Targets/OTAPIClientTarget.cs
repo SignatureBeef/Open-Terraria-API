@@ -427,6 +427,12 @@ namespace OTAPI.Patcher.Targets
                 ModFramework.Modules.Lua.ScriptManager.FileFound -= CanLoadPatchFile;
             }
 
+            CompileModules();
+            InsallModules();
+        }
+
+        void CompileModules()
+        {
             StatusUpdate?.Invoke(this, new StatusUpdateArgs() { Text = "Compiling modules..." });
             Console.WriteLine("[OTAPI] Compiling modules.");
             PluginLoader.AssemblyFound += CanLoadCompilationFile;
@@ -440,26 +446,27 @@ namespace OTAPI.Patcher.Targets
                 CSharpLoader.GlobalAssemblies.Clear();
                 CSharpLoader.GlobalAssemblies.Add("OTAPI.exe");
                 CSharpLoader.GlobalAssemblies.Add("OTAPI.Runtime.dll");
+                CSharpLoader.GlobalAssemblies.Add("FNA.dll");
                 PluginLoader.TryLoad();
                 Modifier.Apply(ModType.Write);
 
-                // copy mods
-                var mods_dll = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.dll");
-                var mods_pdb = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.pdb");
-                var mods_xml = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.xml");
+                //// copy mods
+                //var mods_dll = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.dll");
+                //var mods_pdb = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.pdb");
+                //var mods_xml = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.xml");
 
-                var dst_dll = Path.Combine("modifications", "OTAPI.Mods.dll");
-                var dst_pdb = Path.Combine("modifications", "OTAPI.Mods.pdb");
-                var dst_xml = Path.Combine("modifications", "OTAPI.Mods.xml");
+                //var dst_dll = Path.Combine("modifications", "OTAPI.Mods.dll");
+                //var dst_pdb = Path.Combine("modifications", "OTAPI.Mods.pdb");
+                //var dst_xml = Path.Combine("modifications", "OTAPI.Mods.xml");
 
-                if (File.Exists(dst_dll)) File.Delete(dst_dll);
-                File.Copy(mods_dll, dst_dll);
+                //if (File.Exists(dst_dll)) File.Delete(dst_dll);
+                //File.Copy(mods_dll, dst_dll);
 
-                if (File.Exists(dst_pdb)) File.Delete(dst_pdb);
-                File.Copy(mods_pdb, dst_pdb);
+                //if (File.Exists(dst_pdb)) File.Delete(dst_pdb);
+                //File.Copy(mods_pdb, dst_pdb);
 
-                if (File.Exists(dst_xml)) File.Delete(dst_xml);
-                File.Copy(mods_xml, dst_xml);
+                //if (File.Exists(dst_xml)) File.Delete(dst_xml);
+                //File.Copy(mods_xml, dst_xml);
             }
             finally
             {
@@ -467,6 +474,40 @@ namespace OTAPI.Patcher.Targets
                 CSharpLoader.AssemblyFound -= CanLoadCompilationFile;
                 ModFramework.Modules.ClearScript.ScriptManager.FileFound -= CanLoadCompilationFile;
                 ModFramework.Modules.Lua.ScriptManager.FileFound -= CanLoadCompilationFile;
+            }
+        }
+
+        void InsallModules()
+        {
+            var sources = Path.Combine(CSharpLoader.GlobalRootDirectory, "modules-patched");
+            var generated = Path.Combine("csharp", "generated");
+
+            foreach (var dir in Directory.GetDirectories(sources, "*", SearchOption.TopDirectoryOnly))
+            {
+                var mod_name = Path.GetFileName(dir);
+                var generated_dll = Path.Combine(generated, $"CSharpScript_{mod_name}.dll");
+                var generated_pdb = Path.Combine(generated, $"CSharpScript_{mod_name}.pdb");
+                var generated_xml = Path.Combine(generated, $"CSharpScript_{mod_name}.xml");
+                var resources = Path.Combine(sources, mod_name, $"Resources");
+
+                var destination = Path.Combine("modifications", mod_name);
+                var destination_dll = Path.Combine("modifications", mod_name, $"{mod_name}.dll");
+                var destination_pdb = Path.Combine("modifications", mod_name, $"{mod_name}.pdb");
+                var destination_xml = Path.Combine("modifications", mod_name, $"{mod_name}.xml");
+                var destination_resources = Path.Combine("modifications", mod_name, "Resources");
+
+                if (Directory.Exists(destination))
+                    Directory.Delete(destination, true);
+
+                Directory.CreateDirectory(destination);
+                Directory.CreateDirectory(destination_resources);
+
+                Utils.TransferFile(generated_dll, destination_dll);
+                Utils.TransferFile(generated_pdb, destination_pdb);
+                Utils.TransferFile(generated_xml, destination_xml);
+
+                if (Directory.Exists(resources))
+                    Utils.CopyFiles(resources, destination_resources);
             }
         }
 

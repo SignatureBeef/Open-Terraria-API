@@ -23,7 +23,7 @@ namespace OTAPI.Mods
         /// <summary>
         /// Name of the mod
         /// </summary>
-        string? Name { get; }
+        Terraria.Localization.LocalizedText? Name { get; }
 
         /// <summary>
         /// Type ID used for Terraria, e.g. NPC.NewNPC

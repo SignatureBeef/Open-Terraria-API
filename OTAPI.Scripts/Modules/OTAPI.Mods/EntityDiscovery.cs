@@ -19,41 +19,50 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0436 // Type conflicts with imported type
 
 using ModFramework;
+using ReLogic.Content.Sources;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace OTAPI.Mods
 {
-    //public class EntityMod
-    //{
-    //    public Type Type { get; set; }
-    //    public EntityModAttribute Attribute { get; set; }
-    //}
-
-    public static class EntityDiscovery
+    public class EntityDiscovery
     {
-        private static Dictionary<Type, List<IMod>> _mods = Discover();
+        private Dictionary<Type, List<IMod>> _mods;
+
+        public static EntityDiscovery Instance = new EntityDiscovery();
 
         [Modification(ModType.Runtime, "Loading entity mod interface")]
         public static void OnBoot(Assembly runtimeAssembly)
         {
-            var line = String.Join(", ", _mods.Keys.Select(x => $"{x}: {_mods[x].Count}"));
+            On.Terraria.Main.LoadContent += Main_LoadContent;
+        }
+
+        private static void Main_LoadContent(On.Terraria.Main.orig_LoadContent orig, Terraria.Main self)
+        {
+            orig(self);
+
+            Instance.Discover();
+
+            var line = String.Join(", ", Instance._mods.Keys.Select(x => $"{x}: {Instance._mods[x].Count}"));
             Console.WriteLine($"Loaded mods: {line}");
         }
 
-        public static Dictionary<Type, List<IMod>> Discover()
+        public EntityDiscovery()
         {
-            var mods = new Dictionary<Type, List<IMod>>();
+            _mods = new Dictionary<Type, List<IMod>>();
+        }
 
+        void Discover()
+        {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where(a => !a.IsDynamic)
                 .Select(a => new
                 {
                     Assembly = a,
-                    Types = a.GetAssemblyTypes(),
+                    Types = GetAssemblyTypes(a),
                 });
 
             foreach (var assembly in assemblies)
@@ -68,17 +77,10 @@ namespace OTAPI.Mods
                     if (baseType == typeof(object))
                         continue;
 
-                    if (!mods.TryGetValue(baseType, out List<IMod>? entityMods))
-                    {
-                        entityMods = new List<IMod>();
-                        mods.Add(baseType, entityMods);
-                    }
-
                     var instance = Activator.CreateInstance(mod_type);
                     if (instance is IMod mod)
                     {
-                        entityMods.Add(mod);
-                        mod.Registered();
+                        Register(baseType, mod);
                     }
                     else
                     {
@@ -86,11 +88,9 @@ namespace OTAPI.Mods
                     }
                 }
             }
-
-            return mods;
         }
 
-        internal static IEnumerable<Type> GetAssemblyTypes(this Assembly assembly)
+        static IEnumerable<Type> GetAssemblyTypes(Assembly assembly)
         {
             try
             {
@@ -104,25 +104,53 @@ namespace OTAPI.Mods
             }
         }
 
-        public static IEnumerable<TMod> GetTypeMods<TMod>() where TMod : IMod
+        public IEnumerable<TMod> GetTypeModRegistrations<TMod>() where TMod : IMod
         {
             if (_mods.TryGetValue(typeof(TMod), out List<IMod>? mods)) return mods.Cast<TMod>();
             return Enumerable.Empty<TMod>();
         }
 
-        public static void AddEntityMod<TMod>(TMod mod) where TMod : IMod
+        public void AddEntityMod<TMod>(TMod mod) where TMod : IMod
         {
-            if (_mods.TryGetValue(typeof(TMod), out List<IMod>? mods))
+            Type regoType;
+            var modType = typeof(TMod);
+            if (typeof(IMod).IsAssignableFrom(modType.BaseType))
+                regoType = modType.BaseType;
+            else if (typeof(IMod).IsAssignableFrom(modType))
+                regoType = modType;
+            else throw new Exception($"The base type of ${modType.FullName} does not extend from {typeof(IMod).FullName}");
+
+            Register(regoType, mod);
+        }
+
+        Dictionary<string, IContentSource> ModSources = new Dictionary<string, IContentSource>();
+
+        private void Register(Type entityType, IMod regoInstance)
+        {
+            if (!_mods.TryGetValue(entityType, out List<IMod>? entityMods))
             {
-                mods.Add(mod);
+                entityMods = new List<IMod>();
+                _mods.Add(entityType, entityMods);
             }
-            else
+
+            entityMods.Add(regoInstance);
+
+            var modName = regoInstance.GetType().Assembly.GetName().Name.Replace("CSharpScript_", "");
+            if (!String.IsNullOrWhiteSpace(modName) && !ModSources.TryGetValue(modName, out var source))
             {
-                _mods.Add(typeof(TMod), new List<IMod>()
+                var resources = Path.Combine("modifications", modName, "Resources");
+                if (Directory.Exists(resources))
                 {
-                    mod
-                });
+                    Console.WriteLine($"[{regoInstance.Name.Key}] Using resources {resources}");
+                    source = new FileSystemContentSource(resources);
+                    Terraria.Main.AssetSourceController._staticSources.Add(source);
+                    ModSources[modName] = source;
+                }
+                else Console.WriteLine($"[{regoInstance.Name.Key}] No resources found at {resources ?? "<null>"}");
             }
+            else Console.WriteLine($"[{regoInstance.Name.Key}] No resources found for assembly {modName}");
+
+            regoInstance.Registered();
         }
     }
 }

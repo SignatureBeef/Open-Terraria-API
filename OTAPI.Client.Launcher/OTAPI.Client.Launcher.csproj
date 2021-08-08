@@ -61,7 +61,7 @@
     <Patches Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Patches\**\*.cs" />
     <TopLevelScripts Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\TopLevelScripts\**\*.cs" />
     <Shims Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Shims\**\*.cs" />
-    <Modules Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Modules\**\*.cs" />
+    <Modules Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Modules\**\*" />
     <JavaScript Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\JavaScript\**\*.js" />
     <Lua Include="$(MSBuildProjectDirectory)\..\OTAPI.Scripts\Lua\**\*.lua" />
     <ClientRefs Include="$(MSBuildProjectDirectory)\csharp\plugins\*.refs" />

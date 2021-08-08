@@ -25,6 +25,7 @@ using Microsoft.CodeAnalysis.Text;
 using ModFramework.Modules.ClearScript.Typings;
 using ModFramework.Modules.CSharp;
 using Newtonsoft.Json;
+using OTAPI.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -42,7 +43,7 @@ namespace OTAPI.Client.Launcher.Targets
         {
             Console.WriteLine(target.Status = "Copying OTAPI...");
             foreach (var packagePath in packagePaths)
-                target.CopyFiles(packagePath, otapiFolder);
+                Utils.CopyFiles(packagePath, otapiFolder);
 
             // copy installer
 
@@ -56,104 +57,104 @@ namespace OTAPI.Client.Launcher.Targets
   }
 }");
 
-            target.TransferFile("FNA.dll", Path.Combine(otapiFolder, "FNA.dll"));
-            target.TransferFile("FNA.dll.config", Path.Combine(otapiFolder, "FNA.dll.config"));
-            target.TransferFile("FNA.pdb", Path.Combine(otapiFolder, "FNA.pdb"));
+            Utils.TransferFile("FNA.dll", Path.Combine(otapiFolder, "FNA.dll"));
+            Utils.TransferFile("FNA.dll.config", Path.Combine(otapiFolder, "FNA.dll.config"));
+            Utils.TransferFile("FNA.pdb", Path.Combine(otapiFolder, "FNA.pdb"));
 
-            //target.TransferFile("ModFramework.dll", Path.Combine(otapiFolder, "ModFramework.dll"));
+            //Utils.TransferFile("ModFramework.dll", Path.Combine(otapiFolder, "ModFramework.dll"));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "ModFramework*"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
-            target.CopyFiles("modifications", Path.Combine(otapiFolder, "modifications"));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+            Utils.CopyFiles("modifications", Path.Combine(otapiFolder, "modifications"));
 
-            target.TransferFile("NLua.dll", Path.Combine(otapiFolder, "NLua.dll"));
-            target.TransferFile("KeraLua.dll", Path.Combine(otapiFolder, "KeraLua.dll"));
+            Utils.TransferFile("NLua.dll", Path.Combine(otapiFolder, "NLua.dll"));
+            Utils.TransferFile("KeraLua.dll", Path.Combine(otapiFolder, "KeraLua.dll"));
 
-            target.TransferFile("ImGui.NET.dll", Path.Combine(otapiFolder, "ImGui.NET.dll"));
-            //target.TransferFile("CSteamworks.dll", Path.Combine(otapiFolder, "CSteamworks.dll"));
-            target.TransferFile("CUESDK_2015.dll", Path.Combine(otapiFolder, "CUESDK_2015.dll"));
-            target.TransferFile("dbgshim.dll", Path.Combine(otapiFolder, "dbgshim.dll"));
-            target.TransferFile("DynamicData.dll", Path.Combine(otapiFolder, "DynamicData.dll"));
-            target.TransferFile("JetBrains.Annotations.dll", Path.Combine(otapiFolder, "JetBrains.Annotations.dll"));
-            target.TransferFile("Newtonsoft.Json.dll", Path.Combine(otapiFolder, "Newtonsoft.Json.dll"));
-            target.TransferFile("ICSharpCode.SharpZipLib.dll", Path.Combine(otapiFolder, "ICSharpCode.SharpZipLib.dll"));
-            target.TransferFile("createdump.exe", Path.Combine(otapiFolder, "createdump.exe"));
+            Utils.TransferFile("ImGui.NET.dll", Path.Combine(otapiFolder, "ImGui.NET.dll"));
+            //Utils.TransferFile("CSteamworks.dll", Path.Combine(otapiFolder, "CSteamworks.dll"));
+            Utils.TransferFile("CUESDK_2015.dll", Path.Combine(otapiFolder, "CUESDK_2015.dll"));
+            Utils.TransferFile("dbgshim.dll", Path.Combine(otapiFolder, "dbgshim.dll"));
+            Utils.TransferFile("DynamicData.dll", Path.Combine(otapiFolder, "DynamicData.dll"));
+            Utils.TransferFile("JetBrains.Annotations.dll", Path.Combine(otapiFolder, "JetBrains.Annotations.dll"));
+            Utils.TransferFile("Newtonsoft.Json.dll", Path.Combine(otapiFolder, "Newtonsoft.Json.dll"));
+            Utils.TransferFile("ICSharpCode.SharpZipLib.dll", Path.Combine(otapiFolder, "ICSharpCode.SharpZipLib.dll"));
+            Utils.TransferFile("createdump.exe", Path.Combine(otapiFolder, "createdump.exe"));
 
-            if (File.Exists("lua54.dll")) target.TransferFile("lua54.dll", Path.Combine(otapiFolder, "lua54.dll"));
-            if (File.Exists("cimgui.dll")) target.TransferFile("cimgui.dll", Path.Combine(otapiFolder, "cimgui.dll"));
+            if (File.Exists("lua54.dll")) Utils.TransferFile("lua54.dll", Path.Combine(otapiFolder, "lua54.dll"));
+            if (File.Exists("cimgui.dll")) Utils.TransferFile("cimgui.dll", Path.Combine(otapiFolder, "cimgui.dll"));
 
-            target.TransferFile("SteelSeriesEngineWrapper.dll", Path.Combine(otapiFolder, "SteelSeriesEngineWrapper.dll"));
+            Utils.TransferFile("SteelSeriesEngineWrapper.dll", Path.Combine(otapiFolder, "SteelSeriesEngineWrapper.dll"));
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) target.TransferFile("OTAPI.Client.Installer.exe", Path.Combine(otapiFolder, "OTAPI.Client.Installer.exe"));
-            else target.TransferFile("OTAPI.Client.Installer", Path.Combine(otapiFolder, "OTAPI.Client.Installer"));
-            target.TransferFile("OTAPI.Client.Installer.runtimeconfig.json", Path.Combine(otapiFolder, "OTAPI.Client.Installer.runtimeconfig.json"));
-            target.TransferFile("OTAPI.Client.Installer.deps.json", Path.Combine(otapiFolder, "OTAPI.Client.Installer.deps.json"));
-            target.TransferFile(Path.Combine(otapiFolder, "Terraria.exe"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.dll"));
-            target.TransferFile(Path.Combine(otapiFolder, "Terraria.pdb"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.pdb"));
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) Utils.TransferFile("OTAPI.Client.Installer.exe", Path.Combine(otapiFolder, "OTAPI.Client.Installer.exe"));
+            else Utils.TransferFile("OTAPI.Client.Installer", Path.Combine(otapiFolder, "OTAPI.Client.Installer"));
+            Utils.TransferFile("OTAPI.Client.Installer.runtimeconfig.json", Path.Combine(otapiFolder, "OTAPI.Client.Installer.runtimeconfig.json"));
+            Utils.TransferFile("OTAPI.Client.Installer.deps.json", Path.Combine(otapiFolder, "OTAPI.Client.Installer.deps.json"));
+            Utils.TransferFile(Path.Combine(otapiFolder, "Terraria.exe"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.dll"));
+            Utils.TransferFile(Path.Combine(otapiFolder, "Terraria.pdb"), Path.Combine(otapiFolder, "OTAPI.Client.Installer.pdb"));
 
-            target.TransferFile("OTAPI.exe", Path.Combine(otapiFolder, "OTAPI.exe"));
-            target.TransferFile("OTAPI.Runtime.dll", Path.Combine(otapiFolder, "OTAPI.Runtime.dll"));
-            target.TransferFile("OTAPI.Common.dll", Path.Combine(otapiFolder, "OTAPI.Common.dll"));
+            Utils.TransferFile("OTAPI.exe", Path.Combine(otapiFolder, "OTAPI.exe"));
+            Utils.TransferFile("OTAPI.Runtime.dll", Path.Combine(otapiFolder, "OTAPI.Runtime.dll"));
+            Utils.TransferFile("OTAPI.Common.dll", Path.Combine(otapiFolder, "OTAPI.Common.dll"));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "OTAPI.Patcher*"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Mono*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "ClearScript*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Syste*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "ms*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Microsoft*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "api-ms-*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Avalonia*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "host*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "core*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "clr*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "harf*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "lib*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Material*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "NuGet*.dll"))
-                target.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
+                Utils.TransferFile(file, Path.Combine(otapiFolder, Path.GetFileName(file)));
 
-            target.TransferFile("netstandard.dll", Path.Combine(otapiFolder, "netstandard.dll"));
-            target.TransferFile("nfd.dll", Path.Combine(otapiFolder, "nfd.dll"));
-            target.TransferFile("Tmds.DBus.dll", Path.Combine(otapiFolder, "Tmds.DBus.dll"));
-            target.TransferFile("ucrtbase.dll", Path.Combine(otapiFolder, "ucrtbase.dll"));
-            target.TransferFile("WindowsBase.dll", Path.Combine(otapiFolder, "WindowsBase.dll"));
+            Utils.TransferFile("netstandard.dll", Path.Combine(otapiFolder, "netstandard.dll"));
+            Utils.TransferFile("nfd.dll", Path.Combine(otapiFolder, "nfd.dll"));
+            Utils.TransferFile("Tmds.DBus.dll", Path.Combine(otapiFolder, "Tmds.DBus.dll"));
+            Utils.TransferFile("ucrtbase.dll", Path.Combine(otapiFolder, "ucrtbase.dll"));
+            Utils.TransferFile("WindowsBase.dll", Path.Combine(otapiFolder, "WindowsBase.dll"));
 
             if (Directory.Exists("runtimes"))
             {
-                target.CopyFiles("runtimes", Path.Combine(otapiFolder, "runtimes"));
+                Utils.CopyFiles("runtimes", Path.Combine(otapiFolder, "runtimes"));
 
-                target.CopyFiles(Path.Combine("runtimes", "osx", "native"), Path.Combine(otapiFolder, "osx"));
-                target.CopyFiles(Path.Combine("runtimes", "osx-x64", "native"), Path.Combine(otapiFolder, "osx"));
-                target.CopyFiles(Path.Combine("runtimes", "win-x64", "native"), Path.Combine(otapiFolder, "x64"));
-                target.CopyFiles(Path.Combine("runtimes", "linux-x64", "native"), Path.Combine(otapiFolder, "lib64"));
+                Utils.CopyFiles(Path.Combine("runtimes", "osx", "native"), Path.Combine(otapiFolder, "osx"));
+                Utils.CopyFiles(Path.Combine("runtimes", "osx-x64", "native"), Path.Combine(otapiFolder, "osx"));
+                Utils.CopyFiles(Path.Combine("runtimes", "win-x64", "native"), Path.Combine(otapiFolder, "x64"));
+                Utils.CopyFiles(Path.Combine("runtimes", "linux-x64", "native"), Path.Combine(otapiFolder, "lib64"));
             }
         }
 
@@ -391,26 +392,6 @@ using System.Runtime.Versioning;
             //return Path.Combine(hostDir, "bin", "Release", "net5.0", package, "publish");
         }
 
-        public static void CopyFiles(this IPlatformTarget target, string sourcePath, string targetPath)
-        {
-            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
-                Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
-
-            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
-                File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
-        }
-
-        public static void TransferFile(this IPlatformTarget target, string src, string dst)
-        {
-            if (!File.Exists(src))
-                throw new FileNotFoundException("Source binary not found, was it rebuilt before running the installer?\n" + src);
-
-            if (File.Exists(dst))
-                File.Delete(dst);
-
-            File.Copy(src, dst);
-        }
-
         public static string DownloadZip(this IPlatformTarget target, string url, string name)
         {
             Console.WriteLine($"Downloading {url}");
@@ -514,19 +495,19 @@ using System.Runtime.Versioning;
         {
             var modificationsDir = Path.Combine(otapiInstallPath, "modifications");
             Directory.CreateDirectory(modificationsDir);
-            target.TransferFile("ModFramework.Modules.ClearScript.dll", Path.Combine(modificationsDir, "ModFramework.Modules.ClearScript.dll"));
+            Utils.TransferFile("ModFramework.Modules.ClearScript.dll", Path.Combine(modificationsDir, "ModFramework.Modules.ClearScript.dll"));
         }
 
         public static void InstallLua(this IPlatformTarget target, string otapiInstallPath)
         {
             var modificationsDir = Path.Combine(otapiInstallPath, "modifications");
             Directory.CreateDirectory(modificationsDir);
-            target.TransferFile("ModFramework.Modules.Lua.dll", Path.Combine(modificationsDir, "ModFramework.Modules.Lua.dll"));
+            Utils.TransferFile("ModFramework.Modules.Lua.dll", Path.Combine(modificationsDir, "ModFramework.Modules.Lua.dll"));
         }
 
         public static void CopyInstallFiles(this IPlatformTarget target, string otapiInstallPath)
         {
-            target.CopyFiles("install", otapiInstallPath);
+            Utils.CopyFiles("install", otapiInstallPath);
         }
 
         public static void InstallLibs(this IPlatformTarget target, string installPath)
@@ -545,20 +526,20 @@ using System.Runtime.Versioning;
             var osx_lin = Path.Combine(folderName, "OSX-Linux-x64");
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                target.CopyFiles(Path.Combine(folderName, "Windows-x64"), installPath);
+                Utils.CopyFiles(Path.Combine(folderName, "Windows-x64"), installPath);
             else
-                target.CopyFiles(osx_lin, installPath);
+                Utils.CopyFiles(osx_lin, installPath);
 
             // ensure to use terrarias steam appid. NOTE GOG wont have this
             var appid = Path.Combine(steam_appid_folder, "steam_appid.txt");
             if (File.Exists(appid))
-                target.TransferFile(appid, Path.Combine(installPath, "steam_appid.txt"));
+                Utils.TransferFile(appid, Path.Combine(installPath, "steam_appid.txt"));
 
-            target.TransferFile(Path.Combine(osx_lin, "libsteam_api.so"), Path.Combine(installPath, "lib64", "libsteam_api.so"));
+            Utils.TransferFile(Path.Combine(osx_lin, "libsteam_api.so"), Path.Combine(installPath, "lib64", "libsteam_api.so"));
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                target.TransferFile(Path.Combine(installPath, "steam_api.bundle", "Contents", "MacOS", "libsteam_api.dylib"), Path.Combine(installPath, "osx", "libsteam_api.dylib"));
+                Utils.TransferFile(Path.Combine(installPath, "steam_api.bundle", "Contents", "MacOS", "libsteam_api.dylib"), Path.Combine(installPath, "osx", "libsteam_api.dylib"));
             }
         }
 
@@ -622,7 +603,7 @@ fi
                     throw new Exception($"Failed to produce launcher to: {launcher}");
 
                 Directory.CreateDirectory(otapi_launcher);
-                target.CopyFiles(output, otapi_launcher);
+                Utils.CopyFiles(output, otapi_launcher);
             }
         }
 
@@ -719,7 +700,7 @@ fi
                     throw new Exception($"Failed to produce launcher to: {launcher}");
 
                 Directory.CreateDirectory(otapi_launcher);
-                target.CopyFiles(output, otapi_launcher);
+                Utils.CopyFiles(output, otapi_launcher);
             }
         }
     }

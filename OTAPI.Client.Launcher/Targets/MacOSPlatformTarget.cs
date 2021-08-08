@@ -60,7 +60,7 @@ namespace OTAPI.Client.Launcher.Targets
             this.InstallSteamworks64(Environment.CurrentDirectory, macOS);
 
             Console.WriteLine(Status = "Copying Terraria Content files, this may take a while...");
-            this.CopyFiles(sourceContentPath, destContentPath);
+            Utils.CopyFiles(sourceContentPath, destContentPath);
 
             //    Console.WriteLine(Status = "Patching launch scripts...");
             //    this.PatchOSXLaunch(installPath);
