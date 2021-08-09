@@ -46,6 +46,8 @@ namespace OTAPI.Patcher.Targets
 
         public event EventHandler<StatusUpdateArgs> StatusUpdate;
 
+        public string? InstallPath { get; set; }
+
         bool CanLoadPatchFile(string filepath)
         {
             // only load "client" or "both" variants
@@ -108,7 +110,14 @@ namespace OTAPI.Patcher.Targets
             {
                 this.AddMarkdownFormatter();
 
-                var installDiscoverer = ClientHelpers.DetermineClientInstallPath();
+                ClientInstallPath<IInstallDiscoverer> installDiscoverer;
+
+                if (InstallPath is not null)
+                    installDiscoverer = ClientHelpers.FromPath(InstallPath);
+                else
+                    installDiscoverer = ClientHelpers.DetermineClientInstallPath();
+
+                //var installDiscoverer = ClientHelpers.DetermineClientInstallPath();
                 var installPath = installDiscoverer.Path;
 
                 var input_regular = installDiscoverer.GetResource("Terraria.exe");

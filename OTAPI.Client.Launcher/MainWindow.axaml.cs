@@ -100,8 +100,12 @@ namespace OTAPI.Client.Launcher
         {
             AvaloniaXamlLoader.Load(this);
 
-            var target = ClientHelpers.DetermineClientInstallPath(Program.Targets);
-            OnInstallPathChange(target);
+            try
+            {
+                var target = ClientHelpers.DetermineClientInstallPath(Program.Targets);
+                OnInstallPathChange(target);
+            }
+            catch (DirectoryNotFoundException) { }
         }
 
         void OnInstallPathChange(ClientInstallPath<IPlatformTarget> target)
@@ -144,19 +148,22 @@ namespace OTAPI.Client.Launcher
             {
                 Directory = Context.InstallPath?.Path
             };
-            await fd.ShowAsync(this);
+            var directory = await fd.ShowAsync(this);
 
-            foreach (var target in Program.Targets)
+            if (directory is not null && Directory.Exists(directory))
             {
-                if (target.IsValidInstallPath(fd.Directory))
+                foreach (var target in Program.Targets)
                 {
-                    Context.InstallPath = new ClientInstallPath<IPlatformTarget>()
+                    if (target.IsValidInstallPath(directory))
                     {
-                        Path = fd.Directory,
-                        Target = target,
-                    };
-                    OnInstallPathChange(Context.InstallPath);
-                    return;
+                        Context.InstallPath = new ClientInstallPath<IPlatformTarget>()
+                        {
+                            Path = directory,
+                            Target = target,
+                        };
+                        OnInstallPathChange(Context.InstallPath);
+                        return;
+                    }
                 }
             }
 
@@ -214,6 +221,7 @@ namespace OTAPI.Client.Launcher
                 {
 
                     var target = new OTAPIClientLightweightTarget();
+                    target.InstallPath = Context.InstallPath.Path;
 
                     target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
                     target.Patch();

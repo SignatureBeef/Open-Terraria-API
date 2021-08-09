@@ -73,5 +73,18 @@ namespace OTAPI.Common
 
             throw new DirectoryNotFoundException();
         }
+
+        public static ClientInstallPath<IInstallDiscoverer>? FromPath(string directory)
+        {
+            foreach (var discover in Discoverers)
+            {
+                if (discover.IsValidInstallPath(directory))
+                {
+                    return new ClientInstallPath<IInstallDiscoverer> { Path = directory, Target = discover };
+                }
+            }
+
+            throw new Exception($"Unable to determine the discoverer for path: {directory}");
+        }
     }
 }
