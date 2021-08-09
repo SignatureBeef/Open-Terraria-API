@@ -32,7 +32,7 @@ namespace OTAPI.Common
     {
         public override string[] SearchPaths { get; } = new[]
         {
-            "C:\\Program Files (x86)\\Steam\\steamapps\\common"
+            "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Terraria"
         };
 
         public override OSPlatform GetClientPlatform() => OSPlatform.Windows;
