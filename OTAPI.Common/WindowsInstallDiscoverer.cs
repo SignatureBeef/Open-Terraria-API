@@ -99,5 +99,11 @@ namespace OTAPI.Common
 
             return Enumerable.Empty<string>();
         }
+
+        public override bool VerifyIntegrity(string path)
+        {
+            var hash = IntegrityHashes.ComputeHash(path);
+            return IntegrityHashes.WindowsClient.Any(h => h.Equals(hash, StringComparison.CurrentCultureIgnoreCase));
+        }
     }
 }

@@ -13,6 +13,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OTAPI.Patcher", "OTAPI.Patc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OTAPI.Scripts", "OTAPI.Scripts\OTAPI.Scripts.csproj", "{3D7A2630-BD72-4E4A-8D72-D00E4978D5C6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{D98A6133-B1E0-407F-A94E-C581C2656738}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
+		.travis.yml = .travis.yml
+		build.sh = build.sh
+		.github\workflows\ci-launcher.yml = .github\workflows\ci-launcher.yml
+		.github\workflows\ci-nuget.yml = .github\workflows\ci-nuget.yml
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+		COPYING.txt = COPYING.txt
+		Directory.Build.props = Directory.Build.props
+		.github\FUNDING.yml = .github\FUNDING.yml
+		.vscode\launch.json = .vscode\launch.json
+		LICENSE.txt = LICENSE.txt
+		docs\MacOS.Info.plist = docs\MacOS.Info.plist
+		docs\OTAPI.Mobile.nuspec = docs\OTAPI.Mobile.nuspec
+		docs\OTAPI.PC.nuspec = docs\OTAPI.PC.nuspec
+		docs\OTAPI.TML.nuspec = docs\OTAPI.TML.nuspec
+		README.md = README.md
+		.vscode\tasks.json = .vscode\tasks.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

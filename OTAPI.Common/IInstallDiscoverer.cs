@@ -31,5 +31,7 @@ namespace OTAPI.Common
         string GetResourcePath(string installPath);
 
         bool IsValidInstallPath(string folder);
+
+        bool VerifyIntegrity(string path);
     }
 }

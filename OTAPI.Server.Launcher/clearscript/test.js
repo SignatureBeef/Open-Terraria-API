@@ -17,24 +17,24 @@ let onUpdate = Runtime.On.Terraria.Main.Update.connect((orig, instance, gameTime
     // console.log('UPDATE');
 });
 
-// [example] manually call terraria functions 
-let ticker = setInterval((...args) => {
-    console.log('interval', lib.System.DateTime.Now, ...args);
+//// [example] manually call terraria functions 
+//let ticker = setInterval((...args) => {
+//    console.log('interval', lib.System.DateTime.Now, ...args);
 
-    if (NetManager.Instance) {
-        var message = `Automated JS server message ${lib.System.DateTime.Now.ToString()}`;
-        var colour = new Color(255, 0, 0);
-        var msg = NetworkText.FromLiteral(message);
-        var packet = NetTextModule.SerializeServerMessage(msg, colour, 255);
-        NetManager.Instance.Broadcast(packet, -1);
-    }
-}, 5000, 'testing', 1, 2, 3);
+//    if (NetManager.Instance) {
+//        var message = `Automated JS server message ${lib.System.DateTime.Now.ToString()}`;
+//        var colour = new Color(255, 0, 0);
+//        var msg = NetworkText.FromLiteral(message);
+//        var packet = NetTextModule.SerializeServerMessage(msg, colour, 255);
+//        NetManager.Instance.Broadcast(packet, -1);
+//    }
+//}, 5000, 'testing', 1, 2, 3);
 
 export function Dispose() {
     console.log('JS Disposing');
     onUpdate.disconnect();
 
-    clearInterval(ticker);
+    //clearInterval(ticker);
 };
 
 function setInterval(callback, time, ...args) {

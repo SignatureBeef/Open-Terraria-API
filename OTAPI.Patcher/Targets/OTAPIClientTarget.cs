@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 using ModFramework;
 using ModFramework.Modules.CSharp;
 using ModFramework.Plugins;
@@ -31,7 +32,6 @@ using OTAPI.Common;
 
 namespace OTAPI.Patcher.Targets
 {
-
     [MonoMod.MonoModIgnore]
     public class OTAPIClientLightweightTarget : IPatchTarget
     {
@@ -86,7 +86,7 @@ namespace OTAPI.Patcher.Targets
                 {
                     var abs = Path.GetFullPath(file);
                     var content = File.ReadAllBytes(abs);
-                    assembly = Assembly.Load(content);
+                    assembly = AssemblyLoadContext.Default.LoadFromStream(new MemoryStream(content));
                 }
                 catch (Exception ex)
                 {
@@ -124,6 +124,19 @@ namespace OTAPI.Patcher.Targets
                 var input_orig = installDiscoverer.GetResource("Terraria.orig.exe");
 
                 var input = File.Exists(input_orig) ? input_orig : input_regular;
+
+                var is_input_pristine = installDiscoverer.Target.VerifyIntegrity(input);
+                if (!is_input_pristine)
+                {
+                    var fg = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Error.WriteLine("Your vanilla install is not pristine and may likely cause patching issues.");
+                    Console.Error.WriteLine("Please verify integrity of your Terraria installation or reinstall it.");
+                    Console.Error.WriteLine("Support will not be given unless you are running a clean environment and can replicate the problem consistently.");
+                    Console.Error.WriteLine("Continuing in 5 seconds.");
+                    Console.ForegroundColor = fg;
+                    System.Threading.Thread.Sleep(1000 * 5);
+                }
 
                 //var freshAssembly = "../../../../OTAPI.Setup/bin/Debug/net5.0/Terraria.exe";
                 var localPath_x86 = "Terraria.x86.exe";
@@ -260,7 +273,7 @@ namespace OTAPI.Patcher.Targets
 
                 // set the /patchtime path for client installs
                 PluginLoader.Clear();
-                CSharpLoader.GlobalRootDirectory = Path.Combine("patchtime", "csharp", "plugins");
+                CSharpLoader.GlobalRootDirectory = Path.Combine("patchtime", "csharp");
                 CSharpLoader.GlobalAssemblies.Clear();
 
                 // build shims
@@ -451,31 +464,13 @@ namespace OTAPI.Patcher.Targets
             try
             {
                 PluginLoader.Clear();
-                CSharpLoader.GlobalRootDirectory = Path.Combine("patchtime", "csharp", "plugins");
+                CSharpLoader.GlobalRootDirectory = Path.Combine("patchtime", "csharp");
                 CSharpLoader.GlobalAssemblies.Clear();
                 CSharpLoader.GlobalAssemblies.Add("OTAPI.exe");
                 CSharpLoader.GlobalAssemblies.Add("OTAPI.Runtime.dll");
                 CSharpLoader.GlobalAssemblies.Add("FNA.dll");
                 PluginLoader.TryLoad();
                 Modifier.Apply(ModType.Write);
-
-                //// copy mods
-                //var mods_dll = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.dll");
-                //var mods_pdb = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.pdb");
-                //var mods_xml = Path.Combine("csharp", "generated", "CSharpScript_OTAPI.Mods.xml");
-
-                //var dst_dll = Path.Combine("modifications", "OTAPI.Mods.dll");
-                //var dst_pdb = Path.Combine("modifications", "OTAPI.Mods.pdb");
-                //var dst_xml = Path.Combine("modifications", "OTAPI.Mods.xml");
-
-                //if (File.Exists(dst_dll)) File.Delete(dst_dll);
-                //File.Copy(mods_dll, dst_dll);
-
-                //if (File.Exists(dst_pdb)) File.Delete(dst_pdb);
-                //File.Copy(mods_pdb, dst_pdb);
-
-                //if (File.Exists(dst_xml)) File.Delete(dst_xml);
-                //File.Copy(mods_xml, dst_xml);
             }
             finally
             {
@@ -488,8 +483,8 @@ namespace OTAPI.Patcher.Targets
 
         void InsallModules()
         {
-            var sources = Path.Combine(CSharpLoader.GlobalRootDirectory, "modules-patched");
-            var generated = Path.Combine("csharp", "generated");
+            var sources = Path.Combine(CSharpLoader.GlobalRootDirectory, "plugins", "modules-patched");
+            var generated = Path.Combine(CSharpLoader.GlobalRootDirectory, "generated");
 
             foreach (var dir in Directory.GetDirectories(sources, "*", SearchOption.TopDirectoryOnly))
             {

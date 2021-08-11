@@ -39,22 +39,22 @@ let onUpdate = Runtime.On.Terraria.Main.Update.connect((orig, instance, gameTime
 });
 
 // [example] manually call terraria functions 
-let ticker = setInterval((...args) => {
-    // console.log('interval', lib.System.DateTime.Now, ...args);
+//let ticker = setInterval((...args) => {
+//    // console.log('interval', lib.System.DateTime.Now, ...args);
 
-    if (NetManager.Instance) {
-        let message = `Automated JS client message ${lib.System.DateTime.Now.ToString()}`;
-        let msg = new ChatMessage(message);
-        let packet = NetTextModule.SerializeClientMessage(msg);
-        NetManager.Instance.SendToServer(packet);
-    }
-}, 5000, 'testing', 1, 2, 3);
+//    if (NetManager.Instance) {
+//        let message = `Automated JS client message ${lib.System.DateTime.Now.ToString()}`;
+//        let msg = new ChatMessage(message);
+//        let packet = NetTextModule.SerializeClientMessage(msg);
+//        NetManager.Instance.SendToServer(packet);
+//    }
+//}, 5000, 'testing', 1, 2, 3);
 
 export function Dispose() {
     console.log('JS Disposing');
     onUpdate.disconnect();
 
-    clearInterval(ticker);
+    //clearInterval(ticker);
 };
 
 function setInterval(callback, time, ...args) {

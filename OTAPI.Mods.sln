@@ -7,15 +7,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OTAPI.Patcher", "OTAPI.Patc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2E966B91-7856-4982-B293-1000AA015EF5}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		.gitmodules = .gitmodules
 		.travis.yml = .travis.yml
 		build.sh = build.sh
+		.github\workflows\ci-launcher.yml = .github\workflows\ci-launcher.yml
+		.github\workflows\ci-nuget.yml = .github\workflows\ci-nuget.yml
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 		COPYING.txt = COPYING.txt
+		Directory.Build.props = Directory.Build.props
+		.github\FUNDING.yml = .github\FUNDING.yml
 		.vscode\launch.json = .vscode\launch.json
-		OTAPI.Mobile.nuspec = docs\OTAPI.Mobile.nuspec
-		OTAPI.PC.nuspec = docs\OTAPI.PC.nuspec
-		OTAPI.TML.nuspec = docs\OTAPI.TML.nuspec
+		LICENSE.txt = LICENSE.txt
+		docs\MacOS.Info.plist = docs\MacOS.Info.plist
+		docs\OTAPI.Mobile.nuspec = docs\OTAPI.Mobile.nuspec
+		docs\OTAPI.PC.nuspec = docs\OTAPI.PC.nuspec
+		docs\OTAPI.TML.nuspec = docs\OTAPI.TML.nuspec
 		README.md = README.md
 		.vscode\tasks.json = .vscode\tasks.json
 	EndProjectSection
@@ -84,7 +92,7 @@ Global
 		{41E26DEB-BE20-4C90-ACA1-EC9821277A36}.ReleaseTrace|x64.Build.0 = Release|Any CPU
 		{41E26DEB-BE20-4C90-ACA1-EC9821277A36}.ReleaseTrace|x86.ActiveCfg = Release|Any CPU
 		{41E26DEB-BE20-4C90-ACA1-EC9821277A36}.ReleaseTrace|x86.Build.0 = Release|Any CPU
-		{7E98E868-6CA5-41F0-BE98-47F9B37992B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E98E868-6CA5-41F0-BE98-47F9B37992B1}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{7E98E868-6CA5-41F0-BE98-47F9B37992B1}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{7E98E868-6CA5-41F0-BE98-47F9B37992B1}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{7E98E868-6CA5-41F0-BE98-47F9B37992B1}.DebugLegacy|Any CPU.ActiveCfg = Debug|Any CPU

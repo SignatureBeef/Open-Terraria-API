@@ -50,6 +50,8 @@ namespace OTAPI.Common
             }
         }
 
+        public virtual bool VerifyIntegrity(string path) => true;
+
         public string Status
         {
             set => StatusUpdate?.Invoke(this, new InstallStatusUpdate() { Text = value });

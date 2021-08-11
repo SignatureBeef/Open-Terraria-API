@@ -201,7 +201,7 @@ namespace OTAPI.Client.Launcher.Targets
                 .WithAllowUnsafe(true);
 
             var files = Directory.EnumerateFiles(hostDir, "*.cs");
-            var parsed = CSharpLoader.ParseFiles(files, constants, null!);
+            var parsed = CSharpLoader.ParseFiles(files, constants);
 
             {
                 //var folder = Path.GetFileName(Path.GetDirectoryName(file));

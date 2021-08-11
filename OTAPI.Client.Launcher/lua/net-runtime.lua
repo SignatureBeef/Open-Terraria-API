@@ -9,7 +9,7 @@ import ('System');
 print 'Net script active'
 
 local send_callback = Hooks.NetMessage.SendData:Add(function(sender, args)
-    Console.WriteLine('[LUA] Send Callback: ' .. args.bufferId)
+    Console.WriteLine('[LUA] Send Callback: ' .. args.BufferId)
 end);
 
 local recv_callback = Hooks.MessageBuffer.GetData:Add(function(sender, args)
