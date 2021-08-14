@@ -30,7 +30,7 @@ timer.AutoReset = true;
 timer.Interval = 2000;
 timer.Elapsed += (s, e) =>
 {
-    npcs = Main.npc.Where(n => n.active).Count();
+    npcs = Main.npc.Where(n => n?.active == true).Count();
 };
 timer.Enabled = true;
 

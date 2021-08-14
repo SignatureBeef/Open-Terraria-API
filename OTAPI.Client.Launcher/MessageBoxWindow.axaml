@@ -20,26 +20,18 @@
     </Style>
   </Window.Styles>
 
-  <DockPanel Margin="30" Width="500" Height="200">
-
-    <StackPanel DockPanel.Dock="Top" Height="150">
-
-      <ScrollViewer Height="105">
-        <TextBlock Classes="content" Text="{Binding Text}" />
-      </ScrollViewer>
-
-    </StackPanel>
-
-    <StackPanel Margin="0,0,10,0" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
-
+  <Grid ColumnDefinitions="*" RowDefinitions="*,Auto">
+    <ScrollViewer>
+      <TextBlock Classes="content" Text="{Binding Text}"  Grid.Row="0" Grid.Column="0" />
+    </ScrollViewer>
+    <StackPanel Margin="0,0,10,0" DockPanel.Dock="Bottom" HorizontalAlignment="Right"
+            Grid.Row="1" Grid.Column="0" >
       <Button Classes="STYLE_NAME"
-              Click="OK"
+              Click="OK" Margin="10"
               Width="100">
         Ok
       </Button>
-
-
     </StackPanel>
-  </DockPanel>
+  </Grid>
 
 </Window>

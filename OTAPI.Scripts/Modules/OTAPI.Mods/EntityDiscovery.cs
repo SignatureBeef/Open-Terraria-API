@@ -102,6 +102,11 @@ namespace OTAPI.Mods
                     .Where(x => x is not null)
                     ?? Enumerable.Empty<Type>());
             }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                return Enumerable.Empty<Type>();
+            }
         }
 
         public IEnumerable<TMod> GetTypeModRegistrations<TMod>() where TMod : IMod

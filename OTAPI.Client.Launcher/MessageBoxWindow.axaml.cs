@@ -31,6 +31,7 @@ namespace OTAPI.Client.Launcher
             InitializeComponent();
 #if DEBUG
             this.AttachDevTools();
+            //DataContext = new MessageBoxWindowViewModel();
 #endif
         }
 

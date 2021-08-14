@@ -38,7 +38,7 @@
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FNA\FNA.Core.csproj" />
-    <PackageReference Include="ModFramework" Version="1.0.14-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.15-alpha" />
     <PackageReference Include="MonoMod" Version="21.8.5.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
