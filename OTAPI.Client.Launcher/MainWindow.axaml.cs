@@ -171,7 +171,7 @@ namespace OTAPI.Client.Launcher
         }
 
         public void OnOpenWorkspace(object sender, RoutedEventArgs e) => OpenFolder(Environment.CurrentDirectory);
-        public void OnOpenCSharp(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "csharp", "plugins", "modules"));
+        public void OnOpenCSharp(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "csharp", "plugins"));
         public void OnOpenJavascript(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "clearscript"));
         public void OnOpenLua(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "lua"));
 
@@ -190,33 +190,33 @@ namespace OTAPI.Client.Launcher
 
             new System.Threading.Thread(() =>
             {
-                void CompileCtx(object instance, ModFramework.Modules.CSharp.CSharpLoader.CompilationContextArgs args)
-                {
-                    var asms = System.AppDomain.CurrentDomain.GetAssemblies();
-                    if (args.CoreLibAssemblies is not null && args.CoreLibAssemblies.Count() == 0)
-                    {
-                        Context.InstallStatus = $"Binding {asms.Length} assemblies";
-                        //Console.WriteLine(Context.InstallStatus = $"Binding {asms.Length} assemblies");
+                //void CompileCtx(object instance, ModFramework.Modules.CSharp.CSharpLoader.CompilationContextArgs args)
+                //{
+                //    var asms = System.AppDomain.CurrentDomain.GetAssemblies();
+                //    if (args.CoreLibAssemblies is not null && args.CoreLibAssemblies.Count() == 0)
+                //    {
+                //        Context.InstallStatus = $"Binding {asms.Length} assemblies";
+                //        //Console.WriteLine(Context.InstallStatus = $"Binding {asms.Length} assemblies");
 
-                        foreach (var asm in asms.Where(x => !x.IsDynamic
-                            && !Path.GetFileName(x.Location).Equals("OTAPI.Patcher.dll"))
-                        )
-                        {
-                            if (!string.IsNullOrWhiteSpace(asm.Location) && File.Exists(asm.Location))
-                            {
-                                //Console.WriteLine($"Linking {asm.Location}");
-                                args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(asm.Location));
-                            }
-                        }
+                //        foreach (var asm in asms.Where(x => !x.IsDynamic
+                //            && !Path.GetFileName(x.Location).Equals("OTAPI.Patcher.dll"))
+                //        )
+                //        {
+                //            if (!string.IsNullOrWhiteSpace(asm.Location) && File.Exists(asm.Location))
+                //            {
+                //                //Console.WriteLine($"Linking {asm.Location}");
+                //                args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(asm.Location));
+                //            }
+                //        }
 
-                        foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Syste*.dll"))
-                            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(file));
+                //        foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Syste*.dll"))
+                //            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(file));
 
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("netstandard.dll"));
-                        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("mscorlib.dll"));
-                    }
-                };
-                ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext += CompileCtx;
+                //        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("netstandard.dll"));
+                //        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("mscorlib.dll"));
+                //    }
+                //};
+                //ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext += CompileCtx;
                 try
                 {
                     var target = new OTAPIClientLightweightTarget();
@@ -238,10 +238,10 @@ namespace OTAPI.Client.Launcher
                 {
                     Context.InstallStatus = "Err: " + ex.ToString();
                 }
-                finally
-                {
-                    ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext -= CompileCtx;
-                }
+                //finally
+                //{
+                //    ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext -= CompileCtx;
+                //}
             }).Start();
         }
     }
