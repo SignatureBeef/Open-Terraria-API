@@ -30,6 +30,8 @@ namespace OTAPI.Client.Launcher.Actions
         {
             Console.WriteLine("[OTAPI.Client] Starting!");
 
+            GC.Collect();
+
             // reset the runtime paths
             ModFramework.Plugins.PluginLoader.Clear();
             CSharpLoader.GlobalRootDirectory = Path.Combine("csharp");
