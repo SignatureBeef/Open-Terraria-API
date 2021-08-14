@@ -20,10 +20,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using ReLogic.Content.Sources;
 
 namespace OTAPI.Mods
 {
@@ -62,23 +65,65 @@ namespace OTAPI.Mods
         /// </summary>
         public event EventHandler? OnCreated;
 
-        public class SetDefaultsArgs : EventArgs
-        {
-            public HookResult Result { get; set; }
-            public int Type { get; set; }
-            public NPCSpawnParams SpawnParams { get; set; }
-        }
+        ///// <summary>
+        ///// Fired when your NPC is being created by the rego instance.
+        ///// </summary>
+        //public event EventHandler? OnInstanceCreated;
 
         /// <summary>
-        /// Fired when your NPC is being configured, after being created.
+        /// Fired when your NPC values need to be configured.
         /// </summary>
-        public event EventHandler<SetDefaultsArgs>? OnSetDefaults;
+        public event EventHandler? OnSetDefaults;
+
+        public ModNPC? Registration { get; set; }
+
+        //public class SetDefaultsArgs : EventArgs
+        //{
+        //    public HookResult Result { get; set; }
+        //    public int Type { get; set; }
+        //    public NPCSpawnParams SpawnParams { get; set; }
+        //}
+
+        ///// <summary>
+        ///// Fired when your NPC is being configured, after being created.
+        ///// </summary>
+        //public event EventHandler<SetDefaultsArgs>? OnSetDefaults;
 
         static ModNPC()
         {
-            OTAPI.Hooks.NPC.Create += NPC_Create;
+            //OTAPI.Hooks.NPC.Create += NPC_Create;
+            OTAPI.Hooks.NPC.Spawn += NPC_Spawn;
             On.Terraria.NPC.SetDefaults += NPC_SetDefaults;
+            On.Terraria.NPC.OnSetDefaultType += NPC_OnSetDefaultType;
             On.Terraria.Lang.GetNPCName += Lang_GetNPCName;
+        }
+
+        private static void NPC_OnSetDefaultType(On.Terraria.NPC.orig_OnSetDefaultType orig, NPC self)
+        {
+            if (self.EntityMod is ModNPC mod)
+            {
+                if (mod.Registration is not null)
+                {
+                    self.type = mod.Registration.TypeID;
+                    self.netID = mod.Registration.TypeID;
+
+                    mod.TypeID = mod.Registration.TypeID;
+                    mod.Name = mod.Registration.Name;
+                }
+
+                ConfigureTextureAssets();
+
+                mod.OnSetDefaults?.Invoke(self, EventArgs.Empty);
+            }
+        }
+
+        private static void NPC_Spawn(object? sender, Hooks.NPC.SpawnEventArgs e)
+        {
+            var npc = Main.npc[e.Index];
+
+            if (npc.EntityMod is ModNPC mod)
+            {
+            }
         }
 
         private static Terraria.Localization.LocalizedText Lang_GetNPCName(On.Terraria.Lang.orig_GetNPCName orig, int netID)
@@ -94,47 +139,74 @@ namespace OTAPI.Mods
             return orig(netID);
         }
 
-        private static void NPC_Create(object? sender, Hooks.NPC.CreateEventArgs e)
-        {
-            var rego = EntityDiscovery.Instance
-                .GetTypeModRegistrations<ModNPC>()
-                .SingleOrDefault(m => m.TypeID == e.Type);
-            if (rego is not null)
-            {
-                var instance = (ModNPC)Activator.CreateInstance(rego.GetType())!;
-                e.Npc = new NPC();
-                e.Npc.EntityMod = instance;
+        //private static void NPC_Create(object? sender, Hooks.NPC.CreateEventArgs e)
+        //{
+        //    var rego = EntityDiscovery.Instance
+        //        .GetTypeModRegistrations<ModNPC>()
+        //        .SingleOrDefault(m => m.TypeID == e.Type);
+        //    if (rego is not null)
+        //    {
+        //        var instance = (ModNPC)Activator.CreateInstance(rego.GetType())!;
+        //        e.Npc = new NPC();
+        //        e.Npc.EntityMod = instance;
+        //        instance.Registration = rego;
+        //        instance.NPC = e.Npc;
 
-                // copy rego info to instance
-                instance.NPC = e.Npc;
-                instance.TypeID = rego.TypeID;
-                instance.Name = rego.Name;
+        //        e.Npc.type = rego.TypeID;
+        //        e.Npc.netID = rego.TypeID;
 
-                Console.WriteLine($"[OTAPI] Creating NPC instance: {e.Type} {instance.Name!.Key}");
+        //        instance.TypeID = rego.TypeID;
+        //        instance.Name = rego.Name;
 
-                instance.OnCreated?.Invoke(rego, EventArgs.Empty);
-            }
-        }
+        //        Console.WriteLine($"[OTAPI] Creating NPC instance: {e.Type} {instance.Name!.Key}");
+
+        //        instance.OnCreated?.Invoke(rego, EventArgs.Empty);
+        //    }
+        //}
 
         private static void NPC_SetDefaults(On.Terraria.NPC.orig_SetDefaults orig, NPC self, int Type, NPCSpawnParams spawnparams)
         {
-            if (self.EntityMod is ModNPC mod)
+            var rego = EntityDiscovery.Instance
+                .GetTypeModRegistrations<ModNPC>()
+                .SingleOrDefault(m => m.TypeID == Type);
+            if (rego is not null)
             {
-                var args = new SetDefaultsArgs()
-                {
-                    Result = HookResult.Cancel, // assume the mod sets their own defaults, otherwise they can change the type and return continue. by default vanilla won't know what to do with the custom NPC type
-                    Type = Type,
-                    SpawnParams = spawnparams,
-                };
+                var instance = (ModNPC)Activator.CreateInstance(rego.GetType())!;
+                //e.Npc = new NPC();
+                self.EntityMod = instance;
+                instance.Registration = rego;
+                instance.NPC = self;
 
-                mod.OnSetDefaults?.Invoke(mod, args);
+                //self.type = rego.TypeID;
+                //self.netID = rego.TypeID;
 
-                if (args.Result == HookResult.Cancel)
-                    return;
+                instance.TypeID = rego.TypeID;
+                instance.Name = rego.Name;
+                instance.Texture = rego.Texture;
 
-                Type = args.Type;
-                spawnparams = args.SpawnParams;
+                Console.WriteLine($"[OTAPI] Creating NPC instance: {Type} {instance.Name!.Key}");
+
+                instance.OnCreated?.Invoke(rego, EventArgs.Empty);
+                //rego.OnInstanceCreated?.Invoke(instance, EventArgs.Empty);
             }
+
+            //if (self.EntityMod is ModNPC mod)
+            //{
+            //        var args = new SetDefaultsArgs()
+            //        {
+            //            Result = HookResult.Cancel, // assume the mod sets their own defaults, otherwise they can change the type and return continue. by default vanilla won't know what to do with the custom NPC type
+            //            Type = Type,
+            //            SpawnParams = spawnparams,
+            //        };
+
+            //        mod.OnSetDefaults?.Invoke(mod, args);
+
+            //        if (args.Result == HookResult.Cancel)
+            //            return;
+
+            //        Type = args.Type;
+            //        spawnparams = args.SpawnParams;
+            //}
 
             orig(self, Type, spawnparams);
         }
@@ -143,8 +215,12 @@ namespace OTAPI.Mods
         {
             if (!String.IsNullOrWhiteSpace(Texture))
             {
-                Console.WriteLine($"[{GetType().FullName}] Loading texture {Texture}");
-                TextureAssets.Npc[TypeID] = Main.Assets.Request<Texture2D>(Texture);
+                if (TextureAssets.Npc[TypeID]?.IsLoaded != true && Main.Assets != null)
+                {
+                    Console.WriteLine($"[{GetType().FullName}] Loading texture {Texture}");
+                    //var path = System.IO.Path.Combine(Environment.CurrentDirectory, "modifications", "OTAPI.Mods", "Resources", Texture);
+                    TextureAssets.Npc[TypeID] = Main.Assets.Request<Texture2D>(Texture);
+                }
             }
         }
 
@@ -172,35 +248,107 @@ namespace OTAPI.Mods
             ResizeArrays();
 
             On.Terraria.Main.LoadContent += Main_LoadContent;
+            On.Terraria.Initializers.AssetInitializer.LoadTextures += AssetInitializer_LoadTextures;
+            On.Terraria.ID.ContentSamples.Initialize += ContentSamples_Initialize;
+            On.Terraria.ID.ContentSamples.CreateBestiarySortingIds += ContentSamples_CreateBestiarySortingIds;
 
             Console.WriteLine($"[OTAPI] Assigned TypeID {TypeID} to {name}");
 
             OnRegistered?.Invoke(this, EventArgs.Empty);
         }
 
-        private void Main_LoadContent(On.Terraria.Main.orig_LoadContent orig, Main self)
+        private void ContentSamples_CreateBestiarySortingIds(On.Terraria.ID.ContentSamples.orig_CreateBestiarySortingIds orig, Terraria.GameContent.Bestiary.BestiaryDatabase database)
         {
-            orig(self);
+            orig(database);
+        }
+
+        private void ContentSamples_Initialize(On.Terraria.ID.ContentSamples.orig_Initialize orig)
+        {
+            orig();
+
+            ConfigureTextureAssets();
+
+            //string name = NPCID.Search.GetName(nPC.netID);
+            var name = this.Name?.Key;
+
+            var nPC = new NPC();
+            nPC.SetDefaults(TypeID);
+            ContentSamples.NpcsByNetId[TypeID] = nPC;
+            ContentSamples.NpcPersistentIdsByNetIds[TypeID] = name;
+            ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[TypeID] = name;
+            ContentSamples.NpcNetIdsByPersistentIds[name] = TypeID;
+            ContentSamples.NpcBestiaryRarityStars[TypeID] = ContentSamples.GetNPCBestiaryRarityStarsCount(nPC);
+            //ContentSamples.NpcBestiarySortingId[TypeID] = ContentSamples.NpcBestiarySortingId.Values.OrderByDescending(x => x).First() + 1;
+
+            //ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[TypeID] = name;
+            //ContentSamples.NpcsByNetId[TypeID] = ContentSamples.NpcsByNetId[mod.Registration.EmulateNpcID.Value];
+            //ContentSamples.NpcPersistentIdsByNetIds[TypeID] = ContentSamples.NpcPersistentIdsByNetIds[mod.Registration.EmulateNpcID.Value];
+            //ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[TypeID] = NpcBestiaryCreditIdsByNpcNetIds[mod.Registration.EmulateNpcID.Value];
+        }
+
+        private void AssetInitializer_LoadTextures(On.Terraria.Initializers.AssetInitializer.orig_LoadTextures orig, ReLogic.Content.AssetRequestMode mode)
+        {
+            orig(mode);
+
+            //ConfigureTextureAssets();
             LoadTexture();
         }
+
+        static int GetMaxNpcID() => EntityDiscovery.Instance
+                    .GetTypeModRegistrations<ModNPC>()
+                    .OrderByDescending(x => x.TypeID)
+                    .First()
+                    .TypeID;
+
+        static void ConfigureTextureAssets()
+        {
+            var length = GetMaxNpcID() + 1; // +1 because of 0 based index, and terraria doesnt offset
+            if (TextureAssets.Npc.Length < length)
+                Array.Resize(ref TextureAssets.Npc, length);
+        }
+
+        private void Main_LoadContent(On.Terraria.Main.orig_LoadContent orig, Main self)
+        {
+            // wait and allow Terraria.Main.Assets to be assigned
+            orig(self);
+
+            // assign a new content source to the plugins resources folder
+            var modName = this.GetType().Assembly.GetName().Name.Replace("CSharpScript_", "");
+            if (!String.IsNullOrWhiteSpace(modName) && !ModSources.TryGetValue(modName, out var source))
+            {
+                var resources = Path.Combine("modifications", modName, "Resources");
+                if (Directory.Exists(resources))
+                {
+                    Console.WriteLine($"[{this.Name.Key}] Using resources {resources}");
+                    source = new FileSystemContentSource(resources);
+
+                    var assets = (ReLogic.Content.AssetRepository)Terraria.Main.Assets;
+
+                    assets._sources = assets._sources.Union(new[] { source });
+                    //Terraria.Main.AssetSourceController._staticSources.Add(source);
+                    ModSources[modName] = source;
+                }
+                else Console.WriteLine($"[{this.Name.Key}] No resources found at {resources ?? "<null>"}");
+            }
+            else Console.WriteLine($"[{this.Name.Key}] No resources found for assembly {modName}");
+        }
+
+        Dictionary<string, IContentSource> ModSources = new Dictionary<string, IContentSource>();
 
         internal static int MaxNpcId { get; set; }
 
         internal static void ResizeArrays()
         {
-            const Int32 BlockIssueSize = 15;
-
-            if (MaxNpcId >= Terraria.GameContent.TextureAssets.Npc.Length)
+            var length = GetMaxNpcID() + 1; // +1 because of 0 based index, and terraria doesnt offset
+            if (Terraria.GameContent.UI.EmoteBubble.CountNPCs.Length < length)
             {
-                var length = MaxNpcId + BlockIssueSize;
-
                 Array.Resize(ref Main.npcCatchable, length);
                 Array.Resize(ref Main.npcFrameCount, length);
                 Array.Resize(ref NPC.killCount, length);
                 Array.Resize(ref Main.townNPCCanSpawn, length);
                 Array.Resize(ref Main.slimeRainNPC, length);
                 Array.Resize(ref Terraria.GameContent.UI.EmoteBubble.CountNPCs, length);
-                Array.Resize(ref Terraria.GameContent.TextureAssets.Npc, length);
+                //Array.Resize(ref Terraria.GameContent.TextureAssets.Npc, length);
 
                 foreach (var field in typeof(NPCID.Sets).GetFields())
                 {

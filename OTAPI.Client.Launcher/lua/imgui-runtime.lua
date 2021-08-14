@@ -22,7 +22,8 @@ local data = '';
 local data_history = '';
 -- local data_history = [];
 
-local cb_imgui_callback = function()
+local cb_imgui_callback = function(orig)
+    orig:Invoke();
     -- print 'render';
     -- print 'cb_imgui';
 
@@ -84,29 +85,12 @@ local cb_imgui_callback = function()
 	end
 end;
 
-local cb_imgui = nil;
-local cb_init = nil;
 
-if Main.instance == nil then
-    cb_init = Runtime.Main.Initialize:Add(function (orig, instance)
-        orig:Invoke(instance);
-    
-        if cb_imgui == nil then
-            cb_imgui = Main.instance.ImGuiDraw:Add(cb_imgui_callback);
-        end
-    end);
-else
-    if cb_imgui == nil then
-        cb_imgui = Main.instance.ImGuiDraw:Add(cb_imgui_callback);
-    end
-end
+local cb_imgui = Runtime.Main.OnExtGUI:Add(cb_imgui_callback);
 
 Dispose = function()
     if cb_imgui then
-        Main.instance.ImGuiDraw:Remove(cb_imgui);
-    end
-    if cb_init then
-        Runtime.Main.Initialize:Remove(cb_init);
+        Runtime.Main.OnExtGUI:Remove(cb_imgui);
     end
 end;
 

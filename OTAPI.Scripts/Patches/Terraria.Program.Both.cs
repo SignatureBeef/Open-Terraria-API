@@ -60,7 +60,7 @@ namespace Terraria
             // assemblies from the EmbeddedResources of the Terraria exe upon request.
             System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
 
-            NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep);
+            //NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep); FNA 21.08 does this
 
             var steam = Path.Combine(Environment.CurrentDirectory, "Steamworks.NET.dll");
             if (File.Exists(steam))

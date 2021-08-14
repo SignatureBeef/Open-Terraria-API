@@ -65,7 +65,7 @@
       You must own Terraria and have a preexisting installation from Steam or Gog.
     </TextBlock>
     <TextBlock Classes="subheading" TextAlignment="Center">
-      OTAPI will be side loaded, enabling .net, c#+js+lua scripts
+      OTAPI uses your base game, copies and patches it locally to enable .net plugins, c#+js+lua scripts
     </TextBlock>
 
     <TextBox Classes="install-path"
@@ -87,7 +87,7 @@
             ToolTip.Tip="Uses the base game and creates a patched OTAPI game and then downloads extra dependencies for your machine and configuration."
             IsEnabled="{Binding CanInstall}"
             Click="OnInstall">
-      Install OTAPI
+      Build OTAPI
     </Button>
 
     <Button Classes="warning STYLE_NAME"

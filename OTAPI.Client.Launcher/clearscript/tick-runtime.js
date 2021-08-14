@@ -27,16 +27,16 @@ const { ChatMessage } = OTAPI.Terraria.Chat;
 const { NetTextModule } = OTAPI.Terraria.GameContent.NetModules;
 const { NetManager } = OTAPI.Terraria.Net;
 
-// [example] attach to runtime hooks 
-let onUpdate = Runtime.On.Terraria.Main.Update.connect((orig, instance, gameTime) => {
-    orig(instance, gameTime);
+//// [example] attach to runtime hooks 
+//let onUpdate = Runtime.On.Terraria.Main.Update.connect((orig, instance, gameTime) => {
+//    orig(instance, gameTime);
 
-    // [example] use some xna 
-    let keyState = Keyboard.GetState();
-    if (keyState.IsKeyDown(Keys.Left)) {
-        console.log('LEFT DOWN');
-    }
-});
+//    // [example] use some xna 
+//    let keyState = Keyboard.GetState();
+//    if (keyState.IsKeyDown(Keys.Left)) {
+//        console.log('LEFT DOWN');
+//    }
+//});
 
 // [example] manually call terraria functions 
 //let ticker = setInterval((...args) => {
@@ -52,8 +52,7 @@ let onUpdate = Runtime.On.Terraria.Main.Update.connect((orig, instance, gameTime
 
 export function Dispose() {
     console.log('JS Disposing');
-    onUpdate.disconnect();
-
+    //onUpdate.disconnect();
     //clearInterval(ticker);
 };
 

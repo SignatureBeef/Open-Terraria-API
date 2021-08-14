@@ -19,10 +19,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0436 // Type conflicts with imported type
 
 using ModFramework;
-using ReLogic.Content.Sources;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -37,14 +35,16 @@ namespace OTAPI.Mods
         [Modification(ModType.Runtime, "Loading entity mod interface")]
         public static void OnBoot(Assembly runtimeAssembly)
         {
-            On.Terraria.Main.LoadContent += Main_LoadContent;
+            On.Terraria.Main.Initialize += Main_Initialize;
+            //On.Terraria.Main.LoadContent += Main_LoadContent;
         }
 
-        private static void Main_LoadContent(On.Terraria.Main.orig_LoadContent orig, Terraria.Main self)
+        private static void Main_Initialize(On.Terraria.Main.orig_Initialize orig, Terraria.Main self)
+        //private static void Main_LoadContent(On.Terraria.Main.orig_LoadContent orig, Terraria.Main self)
         {
-            orig(self);
-
             Instance.Discover();
+
+            orig(self);
 
             var line = String.Join(", ", Instance._mods.Keys.Select(x => $"{x}: {Instance._mods[x].Count}"));
             Console.WriteLine($"Loaded mods: {line}");
@@ -123,8 +123,6 @@ namespace OTAPI.Mods
             Register(regoType, mod);
         }
 
-        Dictionary<string, IContentSource> ModSources = new Dictionary<string, IContentSource>();
-
         private void Register(Type entityType, IMod regoInstance)
         {
             if (!_mods.TryGetValue(entityType, out List<IMod>? entityMods))
@@ -134,21 +132,6 @@ namespace OTAPI.Mods
             }
 
             entityMods.Add(regoInstance);
-
-            var modName = regoInstance.GetType().Assembly.GetName().Name.Replace("CSharpScript_", "");
-            if (!String.IsNullOrWhiteSpace(modName) && !ModSources.TryGetValue(modName, out var source))
-            {
-                var resources = Path.Combine("modifications", modName, "Resources");
-                if (Directory.Exists(resources))
-                {
-                    Console.WriteLine($"[{regoInstance.Name.Key}] Using resources {resources}");
-                    source = new FileSystemContentSource(resources);
-                    Terraria.Main.AssetSourceController._staticSources.Add(source);
-                    ModSources[modName] = source;
-                }
-                else Console.WriteLine($"[{regoInstance.Name.Key}] No resources found at {resources ?? "<null>"}");
-            }
-            else Console.WriteLine($"[{regoInstance.Name.Key}] No resources found for assembly {modName}");
 
             regoInstance.Registered();
         }

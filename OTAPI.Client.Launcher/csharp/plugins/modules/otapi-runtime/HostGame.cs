@@ -56,7 +56,8 @@ public class HostGame : Terraria.Main
             _imGuiRenderer.BeforeLayout(_gameTime);
             try
             {
-                ImGuiDraw?.Invoke(this, EventArgs.Empty);
+                //ImGuiDraw?.Invoke(this, EventArgs.Empty);
+                OnExtGUI();
                 orig(bonus, smart);
             }
             catch (Exception ex)
@@ -69,7 +70,7 @@ public class HostGame : Terraria.Main
 
     static Num.Vector3 clear_color = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
 
-    public event EventHandler ImGuiDraw;
+    //public event EventHandler ImGuiDraw;
 
     GameTime _gameTime;
     public override void Draw(GameTime gameTime)
