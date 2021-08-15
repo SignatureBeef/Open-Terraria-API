@@ -42,32 +42,24 @@ namespace OTAPI.Client.Launcher
         // yet and stuff might break.
         public static void Main(string[] args)
         {
-            CefSharp.Startup.Init();
-
-            try
+            // if launching from osx bundle it launches at /
+            // we need it to be in MacOS
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                // if launching from osx bundle it launches at /
-                // we need it to be in MacOS
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    var first = Path.GetDirectoryName(Environment.GetCommandLineArgs().FirstOrDefault());
-                    if (first is not null && Directory.Exists(first))
-                        Environment.CurrentDirectory = first;
-                }
-
-                // start the launcher, then OTAPI if requested
-                BuildAvaloniaApp()
-                    .StartWithClassicDesktopLifetime(args);
-
-                if (LaunchID == "OTAPI")
-                    Actions.OTAPI.Launch(args);
-
-                else if (LaunchID == "VANILLA")
-                    Actions.Vanilla.Launch(LaunchFolder, args);
+                var first = Path.GetDirectoryName(Environment.GetCommandLineArgs().FirstOrDefault());
+                if (first is not null && Directory.Exists(first))
+                    Environment.CurrentDirectory = first;
             }
-            finally { }
 
-            CefSharp.Startup.Close();
+            // start the launcher, then OTAPI if requested
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args);
+
+            if (LaunchID == "OTAPI")
+                Actions.OTAPI.Launch(args);
+
+            else if (LaunchID == "VANILLA")
+                Actions.Vanilla.Launch(LaunchFolder, args);
         }
 
         // Avalonia configuration, don't remove; also used by visual designer.

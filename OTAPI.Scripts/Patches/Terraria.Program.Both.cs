@@ -107,6 +107,12 @@ namespace Terraria
             OnLaunched?.Invoke(null, EventArgs.Empty);
         }
 
+        public static void ShutdownOTAPI()
+        {
+            // give modfw mods the chance to safely shutdown. e.g. currently the csharp module can run scripts, and some of those scripts (currently) use native Cef.
+            Modifier.Apply(ModType.Shutdown, optionalParams: new[] { Assembly.GetExecutingAssembly() });
+        }
+
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool SetDllDirectory(string lpPathName);
@@ -237,6 +243,7 @@ namespace Terraria
         {
             LaunchOTAPI();
             orig_LaunchGame_();
+            ShutdownOTAPI();
         }
 #else // server + client
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
@@ -244,6 +251,7 @@ namespace Terraria
         {
             LaunchOTAPI();
             orig_LaunchGame(args, monoArgs);
+            ShutdownOTAPI();
         }
 #endif
     }

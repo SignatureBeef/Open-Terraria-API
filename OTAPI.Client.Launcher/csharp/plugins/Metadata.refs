@@ -8,4 +8,5 @@ ImGui.NET.dll
 FNA.dll
 OTAPI.Client.Launcher.dll
 CefSharp.OffScreen.dll
+CefSharp.Core.dll
 System.Drawing.Common.dll
