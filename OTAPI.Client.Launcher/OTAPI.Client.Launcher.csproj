@@ -5,8 +5,10 @@
     <TargetFramework>net5.0</TargetFramework>
     <Platforms>x64</Platforms>
     <Nullable>enable</Nullable>
-    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <!--<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+    <PrivateAssets>all</PrivateAssets>-->
     <!--<AssemblyName>Terraria</AssemblyName>-->
   </PropertyGroup>
   <ItemGroup>
@@ -19,25 +21,29 @@
     <Compile Remove="csharp\plugins\modules\otapi-runtime\HostGame.cs" />
     <Compile Remove="csharp\plugins\modules\otapi-runtime\HostGamePlugin.cs" />
     <Compile Remove="csharp\plugins\modules\otapi-runtime\ImGuiRenderer.cs" />
-    <Compile Remove="csharp\plugins\scripts\CefSharp-runtime.cs" />
+    <Compile Remove="csharp\plugins\scripts\cef-runtime.cs" />
     <Compile Remove="csharp\plugins\scripts\test-runtime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="csharp\plugins\modules\otapi-runtime\ImGuiRenderer.cs" />
     <None Include="csharp\plugins\modules\otapi-runtime\HostGamePlugin.cs" />
     <None Include="csharp\plugins\modules\otapi-runtime\HostGame.cs" />
-    <None Include="csharp\plugins\scripts\CefSharp-runtime.cs" />
+    <None Include="csharp\plugins\scripts\cef-runtime.cs" />
     <None Include="csharp\plugins\scripts\test-runtime.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.6" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
-    <PackageReference Include="CefSharp.OffScreen" Version="91.1.230" />
+    <PackageReference Include="cef.redist.osx64" Version="91.1.6" />
+    <PackageReference Include="cef.redist.x64" Version="91.1.6" />
+    <PackageReference Include="CefGlue.Avalonia" Version="91.4472.9" />
+    <PackageReference Include="CefGlue.Common" Version="91.4472.9" />
     <PackageReference Include="Material.Avalonia" Version="2.3.0" />
     <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="3.1.2" />
     <PackageReference Include="ReactiveUI" Version="14.3.1" />
-   </ItemGroup>
+    <PackageReference Include="System.Reactive.Linq" Version="5.0.0" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FNA\FNA.Core.csproj" />
     <ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
@@ -92,11 +98,11 @@
     <MakeDir Directories="$(TargetDir)patchtime\" />
     <RemoveDir Directories="$(TargetDir)patchtime\" />
     <MakeDir Directories="$(TargetDir)patchtime\" />
-    
+
     <MakeDir Directories="$(TargetDir)csharp\" />
     <RemoveDir Directories="$(TargetDir)csharp\" />
     <MakeDir Directories="$(TargetDir)csharp\" />
-    
+
     <MakeDir Directories="$(TargetDir)patchtime\csharp\" />
     <Copy SourceFiles="@(Refs)" DestinationFolder="$(TargetDir)patchtime\csharp/plugins/" />
     <Copy SourceFiles="@(Patches)" DestinationFolder="$(TargetDir)patchtime\csharp/plugins/patches/otapi/%(RecursiveDir)" />
@@ -108,13 +114,13 @@
     <Copy SourceFiles="@(ClientModules)" DestinationFolder="$(TargetDir)csharp/plugins/modules/%(RecursiveDir)" />
     <Copy SourceFiles="@(ClientRefs)" DestinationFolder="$(TargetDir)csharp/plugins/" />
     <Copy SourceFiles="@(ClientCSScripts)" DestinationFolder="$(TargetDir)csharp/plugins/scripts/%(RecursiveDir)" />
-    
+
     <MakeDir Directories="$(TargetDir)clearscript\" />
     <RemoveDir Directories="$(TargetDir)clearscript\" />
     <MakeDir Directories="$(TargetDir)clearscript\" />
     <Copy SourceFiles="@(JavaScript)" DestinationFolder="$(TargetDir)clearscript/%(RecursiveDir)" />
     <Copy SourceFiles="@(ClientJavascript)" DestinationFolder="$(TargetDir)clearscript/%(RecursiveDir)" />
-    
+
     <MakeDir Directories="$(TargetDir)lua\" />
     <RemoveDir Directories="$(TargetDir)lua\" />
     <MakeDir Directories="$(TargetDir)lua\" />

@@ -23,6 +23,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Xilium.CefGlue;
 
 namespace OTAPI.Client.Launcher
 {
@@ -42,6 +43,12 @@ namespace OTAPI.Client.Launcher
         // yet and stuff might break.
         public static void Main(string[] args)
         {
+            // FNA added their own native resolver...which doesn't work (or their libs are not correct either)
+            // this hack here forces their resolver to not be set, allowing us to configure our own
+            // which scans the right folders.
+            if (File.Exists("FNA.dll.config"))
+                File.Delete("FNA.dll.config");
+
             // if launching from osx bundle it launches at /
             // we need it to be in MacOS
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))

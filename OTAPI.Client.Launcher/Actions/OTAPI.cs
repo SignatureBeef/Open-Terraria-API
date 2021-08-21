@@ -37,11 +37,18 @@ namespace OTAPI.Client.Launcher.Actions
             CSharpLoader.GlobalRootDirectory = Path.Combine("csharp");
             CSharpLoader.GlobalAssemblies.Clear();
 
+            CSharpLoader.OnCompilationContext += CSharpLoader_OnCompilationContext;
+
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
             var Terraria = LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "OTAPI.exe"));
 
             Terraria.EntryPoint!.Invoke(null, new object[] { args });
+        }
+
+        private static void CSharpLoader_OnCompilationContext(object? sender, CSharpLoader.CompilationContextArgs e)
+        {
+
         }
 
         static Dictionary<string, Assembly> _assemblyCache = new Dictionary<string, Assembly>();
