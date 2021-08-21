@@ -56,16 +56,6 @@ namespace Terraria
 
         private static void Configure()
         {
-            // we are now on net5 and terraria never knows to do this, so using the new frameworks we need to load
-            // assemblies from the EmbeddedResources of the Terraria exe upon request.
-            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += ResolveDependency;
-
-            //NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep); FNA 21.08 does this
-
-            var steam = Path.Combine(Environment.CurrentDirectory, "Steamworks.NET.dll");
-            if (File.Exists(steam))
-                NativeLibrary.SetDllImportResolver(System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyPath(steam), ResolveNativeDep);
-
             // https://github.com/FNA-XNA/FNA/wiki/4:-FNA-and-Windows-API#64-bit-support
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
@@ -74,7 +64,17 @@ namespace Terraria
                     Environment.Is64BitProcess ? "x64" : "x86"
                 );
                 Directory.CreateDirectory(path);
-                SetDllDirectory(path);
+
+                try
+                {
+                    SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
+                    AddDllDirectory(path);
+                }
+                catch
+                {
+                    // Pre-Windows 7, KB2533623 
+                    SetDllDirectory(path);
+                }
             }
 
             // https://github.com/FNA-XNA/FNA/wiki/7:-FNA-Environment-Variables#fna_graphics_enable_highdpi
@@ -84,7 +84,6 @@ namespace Terraria
             //           <string>True</string>
             Environment.SetEnvironmentVariable("FNA_GRAPHICS_ENABLE_HIGHDPI", "1");
         }
-
 
         /// <summary>
         /// Root entry point for OTAPI. Host games can use OTAPI.Runtime.dll to override the 
@@ -115,127 +114,16 @@ namespace Terraria
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetDefaultDllDirectories(int directoryFlags);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        static extern void AddDllDirectory(string lpPathName);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool SetDllDirectory(string lpPathName);
 
-        static IntPtr ResolveNativeDep(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
-        {
-            if (_nativeCache.TryGetValue(libraryName, out IntPtr cached))
-                return cached;
-
-            Console.WriteLine("Looking for " + libraryName);
-
-            IEnumerable<string> matches = Enumerable.Empty<string>();
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                var osx = Path.Combine(Environment.CurrentDirectory, "osx");
-                matches = Directory.GetFiles(osx, "*" + libraryName + "*");
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                var lib64 = Path.Combine(Environment.CurrentDirectory, "lib64");
-                matches = Directory.GetFiles(lib64, "*" + libraryName + "*");
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                var x64 = Path.Combine(Environment.CurrentDirectory, "x64");
-                matches = Directory.GetFiles(x64, "*" + libraryName + "*");
-            }
-
-            if (matches.Count() == 0)
-            {
-                matches = Directory.GetFiles(Environment.CurrentDirectory, "*" + libraryName + "*");
-            }
-
-            var handle = IntPtr.Zero;
-
-            if (matches.Count() == 1)
-            {
-                var match = matches.Single();
-                handle = NativeLibrary.Load(match);
-            }
-
-            // cache either way. if zero, no point calling IO if we've checked this assembly before.
-            _nativeCache.Add(libraryName, handle);
-
-            return handle;
-        }
-
-        static Dictionary<string, IntPtr> _nativeCache = new Dictionary<string, IntPtr>();
-        static Dictionary<string, Assembly> _assemblyCache = new Dictionary<string, Assembly>();
-
-        static void CacheAssembly(Assembly assembly)
-        {
-            var name = assembly.GetName().Name;
-            if (name is not null && !_assemblyCache.ContainsKey(name))
-            {
-                _assemblyCache.Add(name, assembly);
-            }
-        }
-
-        static Assembly LoadAndCacheAssembly(string filePath)
-        {
-            var abs = Path.Combine(Environment.CurrentDirectory, filePath);
-            //var result = Assembly.LoadFile(abs);
-            var result = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyPath(filePath);
-            CacheAssembly(result);
-
-            return result;
-        }
-
-        private static Assembly ResolveDependency(System.Runtime.Loader.AssemblyLoadContext ctx, AssemblyName asmName)
-        {
-            if (asmName.Name is null) return null;
-
-            if (_assemblyCache.TryGetValue(asmName.Name, out Assembly? cached))
-                return cached;
-
-            Console.WriteLine("[OTAPI] Resolving assembly: " + asmName.Name);
-            if (asmName.Name.StartsWith("Terraria") || (asmName.Name.StartsWith("OTAPI") && !asmName.Name.StartsWith("OTAPI.Runtime")))
-            {
-                if (!_assemblyCache.ContainsKey(asmName.Name))
-                    _assemblyCache.Add(asmName.Name, typeof(Program).Assembly);
-                return typeof(Program).Assembly;
-            }
-            //else if (asmName.Name.StartsWith("ImGuiNET")) todo: investigate why this doesnt work here - only works in the host/launcher
-            //{
-            //    return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "ImGui.NET.dll"));
-            //}
-            else
-            {
-                var root = typeof(Program).Assembly;
-                string resourceName = asmName.Name + ".dll";
-
-                if (File.Exists(resourceName))
-                    return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, resourceName));
-
-                var text = Array.Find(root.GetManifestResourceNames(), (element) => element.EndsWith(resourceName));
-                if (text != null)
-                {
-                    Console.WriteLine("Loading from resources " + resourceName);
-                    using var stream = root.GetManifestResourceStream(text);
-                    if (stream is null) return null;
-                    byte[] array = new byte[stream.Length];
-                    stream.Read(array, 0, array.Length);
-                    stream.Seek(0, SeekOrigin.Begin);
-
-                    if (!File.Exists(resourceName))
-                        File.WriteAllBytes(resourceName, array);
-
-                    try
-                    {
-                        var asm = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(new MemoryStream(array));
-                        return asm;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                }
-
-            }
-            return null;
-        }
+        const int LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000;
 
 #if tModLoaderServer
         public static extern void orig_LaunchGame_();

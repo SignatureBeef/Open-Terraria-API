@@ -20,15 +20,25 @@ using ModFramework.Modules.CSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace OTAPI.Client.Launcher.Actions
 {
     static class OTAPI
     {
+        static Assembly Terraria;
+
         public static void Launch(string[] args)
         {
             Console.WriteLine("[OTAPI.Client] Starting!");
+
+            NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep);
+
+            var steam = Path.Combine(Environment.CurrentDirectory, "Steamworks.NET.dll");
+            if (File.Exists(steam))
+                NativeLibrary.SetDllImportResolver(System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyPath(steam), ResolveNativeDep);
 
             GC.Collect();
 
@@ -41,7 +51,7 @@ namespace OTAPI.Client.Launcher.Actions
 
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
-            var Terraria = LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "OTAPI.exe"));
+            Terraria = LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "OTAPI.exe"));
 
             Terraria.EntryPoint!.Invoke(null, new object[] { args });
         }
@@ -51,7 +61,8 @@ namespace OTAPI.Client.Launcher.Actions
 
         }
 
-        static Dictionary<string, Assembly> _assemblyCache = new Dictionary<string, Assembly>();
+        static Dictionary<string, Assembly?> _assemblyCache = new Dictionary<string, Assembly?>();
+        static Dictionary<string, IntPtr> _nativeCache = new Dictionary<string, IntPtr>();
 
         static void CacheAssembly(Assembly assembly)
         {
@@ -78,14 +89,107 @@ namespace OTAPI.Client.Launcher.Actions
 
             if (asmName.Name is null) return null;
 
+            if (_assemblyCache.TryGetValue(asmName.Name, out Assembly? cached))
+                return cached;
+
             Console.WriteLine("[OTAPI Host] Resolving assembly: " + args.Name);
-            if (args.Name.StartsWith("ReLogic")) // this occurs as the assembly name is encoded in the xna content files
-                return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "OTAPI.exe"));
+            if (args.Name.StartsWith("ReLogic") // this occurs as the assembly name is encoded in the xna content files
+                || asmName.Name.StartsWith("Terraria")
+                || (asmName.Name.StartsWith("OTAPI") && !asmName.Name.StartsWith("OTAPI.Runtime"))
+            )
+                return Terraria;
+
+            else if (args.Name.StartsWith("OTAPI.Runtime"))
+                return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "OTAPI.Runtime.dll"));
 
             else if (args.Name.StartsWith("ImGuiNET"))
                 return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "ImGui.NET.dll"));
 
+            else if (args.Name.StartsWith("Steamworks.NET"))
+                return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "Steamworks.NET.dll"));
+
+            else
+            {
+                var root = typeof(Program).Assembly;
+                string resourceName = asmName.Name + ".dll";
+
+                if (File.Exists(resourceName))
+                    return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, resourceName));
+
+                var text = Array.Find(root.GetManifestResourceNames(), (element) => element.EndsWith(resourceName));
+                if (text != null)
+                {
+                    Console.WriteLine("Loading from resources " + resourceName);
+                    using var stream = root.GetManifestResourceStream(text);
+                    if (stream is null) return null;
+                    byte[] array = new byte[stream.Length];
+                    stream.Read(array, 0, array.Length);
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    if (!File.Exists(resourceName))
+                        File.WriteAllBytes(resourceName, array);
+
+                    try
+                    {
+                        var asm = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(new MemoryStream(array));
+                        CacheAssembly(asm);
+                        return asm;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                }
+            }
+
+            // nothing found, cache to save further lookups
+            _assemblyCache.Add(asmName.Name, null);
+
             return null;
+        }
+
+        static IntPtr ResolveNativeDep(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        {
+            if (_nativeCache.TryGetValue(libraryName, out IntPtr cached))
+                return cached;
+
+            Console.WriteLine("Looking for " + libraryName);
+
+            IEnumerable<string> matches = Enumerable.Empty<string>();
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                var osx = Path.Combine(Environment.CurrentDirectory, "osx");
+                matches = Directory.GetFiles(osx, "*" + libraryName + "*");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                var lib64 = Path.Combine(Environment.CurrentDirectory, "lib64");
+                matches = Directory.GetFiles(lib64, "*" + libraryName + "*");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var x64 = Path.Combine(Environment.CurrentDirectory, "x64");
+                matches = Directory.GetFiles(x64, "*" + libraryName + "*");
+            }
+
+            if (matches.Count() == 0)
+            {
+                matches = Directory.GetFiles(Environment.CurrentDirectory, "*" + libraryName + "*");
+            }
+
+            var handle = IntPtr.Zero;
+
+            if (matches.Count() == 1)
+            {
+                var match = matches.Single();
+                handle = NativeLibrary.Load(match);
+            }
+
+            // cache either way. if zero, no point calling IO if we've checked this assembly before.
+            _nativeCache.Add(libraryName, handle);
+
+            return handle;
         }
     }
 }
