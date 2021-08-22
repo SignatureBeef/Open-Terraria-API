@@ -40,6 +40,9 @@ namespace OTAPI.Common
 
         public override bool IsValidInstallPath(string folder)
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return false;
+
             bool valid = Directory.Exists(folder);
 
             var content = Path.Combine(folder, "Content");
