@@ -14,7 +14,8 @@
             ref float number4,
             ref int number5,
             ref int number6,
-            ref int number7
+            ref int number7,
+            ref float number8
         )
         {
             //Since we currently wrap the method we need to run these checks
@@ -39,7 +40,8 @@
                 ref number4,
                 ref number5,
                 ref number6,
-                ref number7
+                ref number7,
+                ref number8
             );
             if (res.HasValue) return res.Value == HookResult.Continue;
             return true;
