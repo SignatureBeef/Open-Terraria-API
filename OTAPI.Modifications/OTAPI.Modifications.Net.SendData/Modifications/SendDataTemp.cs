@@ -34,8 +34,8 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
                 //Load the parameter value onto the stack.
                 il.Emit(OpCodes.Ldarg, var);
             }
-            // Load a 0 onto the stack as the last variable.
-            il.Emit(OpCodes.Ldc_I4, 0);
+            // Load a 0f onto the stack as the last variable.
+            il.Emit(OpCodes.Ldc_R4, 0f);
 
             // Create the method call of the OG SendData.
             var sendDataMethodCall = il.Create(OpCodes.Call, vanilla);
