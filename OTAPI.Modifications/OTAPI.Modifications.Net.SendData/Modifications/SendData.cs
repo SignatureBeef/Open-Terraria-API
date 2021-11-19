@@ -19,7 +19,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 
             var vanilla = this.Method(() => Terraria.NetMessage.SendData(0, -1, -1, Terraria.Localization.NetworkText.Empty, 0, 0, 0, 0, 0, 0, 0, 0));
             var callback = this.Method(() => OTAPI.Callbacks.Terraria.NetMessage.SendData(
-                ref tmpI, ref tmpI, ref tmpI, ref tmpS, ref tmpI, ref tmpF, ref tmpF, ref tmpF, ref tmpI, ref tmpI, ref tmpI, ref tmpI
+                ref tmpI, ref tmpI, ref tmpI, ref tmpS, ref tmpI, ref tmpF, ref tmpF, ref tmpF, ref tmpI, ref tmpI, ref tmpI, ref tmpF
             ));
 
             //Few stack issues arose trying to inject a callback before for lock, so i'll resort to 
