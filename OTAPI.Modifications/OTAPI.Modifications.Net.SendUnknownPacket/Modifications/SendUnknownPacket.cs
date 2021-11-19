@@ -27,7 +27,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 			//Get the vanilla callback, as well as the imported OTAPI callback method
 			var vanilla = this.Method(() => Terraria.NetMessage.SendData(0, -1, -1, Terraria.Localization.NetworkText.Empty, 0, 0, 0, 0, 0, 0, 0, 0));
 			var callback = vanilla.Module.Import(this.Method(() =>
-				OTAPI.Callbacks.Terraria.NetMessage.SendUnknownPacket(0, null, 0, 0, 0, Terraria.Localization.NetworkText.Empty, 0, 0, 0, 0, 0, 0, 0)
+				OTAPI.Callbacks.Terraria.NetMessage.SendUnknownPacket(0, null, 0, 0, 0, Terraria.Localization.NetworkText.Empty, 0, 0, 0, 0, 0, 0, 0, 0)
 			));
 
 			//Get the IL processor instance so we can alter IL
