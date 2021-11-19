@@ -3,7 +3,7 @@
   <metadata>
     <id>OTAPI</id>
     <title>Open Terraria API for Terraria</title>
-    <version>2.0.0.44</version>
+    <version>2.0.0.45</version>
     <authors>DeathCradle</authors>
     <owners>DeathCradle</owners>
     <license type="file">LICENSE.txt</license>
@@ -12,7 +12,8 @@
     <description>The Open Terraria API (OTAPI) is the core for the new generation of Terraria Server mods.</description>
     <summary>Open Terraria API 2.0.0.45 for Terraria 1.4.3.0</summary>
     <releaseNotes>
-      Moneylover3246 added Hooks.Net.ReceiveBytes
+      Support for terraria 1.4.3 by Patrikkk, with a temporary patch to fix SendData on legacy plugins.
+      Thanks to Patrikkk and Moneylover3246 for both of their PRs.
     </releaseNotes>
     <copyright>Copyright 2016-2021</copyright>
     <tags>Terraria,OTAPI</tags>
