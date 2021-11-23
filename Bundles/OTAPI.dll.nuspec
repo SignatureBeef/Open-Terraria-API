@@ -3,17 +3,16 @@
   <metadata>
     <id>OTAPI</id>
     <title>Open Terraria API for Terraria</title>
-    <version>2.0.0.45</version>
+    <version>2.0.0.46</version>
     <authors>DeathCradle</authors>
     <owners>DeathCradle</owners>
     <license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/DeathCradle/Open-Terraria-API</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The Open Terraria API (OTAPI) is the core for the new generation of Terraria Server mods.</description>
-    <summary>Open Terraria API 2.0.0.45 for Terraria 1.4.3.0</summary>
+    <summary>Open Terraria API 2.0.0.46 for Terraria 1.4.3.1</summary>
     <releaseNotes>
-      Support for terraria 1.4.3 by Patrikkk, with a temporary patch to fix SendData on legacy plugins.
-      Thanks to Patrikkk and Moneylover3246 for both of their PRs.
+      Support for terraria 1.4.3.1 by Patrikkk.
     </releaseNotes>
     <copyright>Copyright 2016-2021</copyright>
     <tags>Terraria,OTAPI</tags>

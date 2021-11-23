@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Callbacks\SendData.cs" />
     <Compile Include="Hooks\SendData.cs" />
-    <Compile Include="Modifications\SendDataTemp.cs" />
     <Compile Include="Modifications\SendData.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -14,8 +14,7 @@
             ref float number4,
             ref int number5,
             ref int number6,
-            ref int number7,
-			ref float number8
+            ref int number7
         )
         {
             //Since we currently wrap the method we need to run these checks
