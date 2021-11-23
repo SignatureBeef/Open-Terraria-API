@@ -12,13 +12,13 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Net
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.3.0, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.3.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking NetMessage.SendData\\AsyncSend...";
 
 		public override void Run()
 		{
-			var vanilla = this.Method(() => Terraria.NetMessage.SendData(0, -1, -1, Terraria.Localization.NetworkText.Empty, 0, 0, 0, 0, 0, 0, 0, 0));
+			var vanilla = this.Method(() => Terraria.NetMessage.SendData(0, -1, -1, Terraria.Localization.NetworkText.Empty, 0, 0, 0, 0, 0, 0, 0));
 			var callback = vanilla.Module.Import(
 				this.Method(() => OTAPI.Callbacks.Terraria.NetMessage.SendBytes(0, null, 0, 0, null, null))
 			);

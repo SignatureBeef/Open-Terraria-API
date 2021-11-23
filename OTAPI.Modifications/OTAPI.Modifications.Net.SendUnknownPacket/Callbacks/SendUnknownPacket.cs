@@ -16,8 +16,7 @@
 			float number4,
 			int number5,
 			int number6,
-			int number7,
-            float number8
+			int number7
 		)
 		{
 			Hooks.Net.SendUnknownPacket?.Invoke
