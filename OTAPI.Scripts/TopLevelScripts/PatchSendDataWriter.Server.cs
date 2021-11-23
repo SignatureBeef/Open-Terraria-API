@@ -35,7 +35,11 @@ using System.IO.Compression;
 [Modification(ModType.PreMerge, "Removing NetMessage.SendData write buffer")]
 void PatchSendDataWriter(MonoModder modder)
 {
-    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0));
+#if TerrariaServer_SendDataNumber8
+    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default, default));
+#else
+    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default));
+#endif
 
     // make it easier to track down variables
     SendData.Body.SimplifyMacros();

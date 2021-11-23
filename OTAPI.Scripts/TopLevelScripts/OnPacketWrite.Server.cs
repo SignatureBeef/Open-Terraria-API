@@ -38,7 +38,11 @@ void OnPacketWrite(MonoModder modder)
      * Find ISocket.IsConnected and look back for Main.netMode. Before that instruction a hook can be used to modify the packet.
      */
 
-    var sendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0));
+#if TerrariaServer_SendDataNumber8
+    var sendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default, default));
+#else
+    var sendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default));
+#endif
 
     var bufferID = sendData.Body.Variables.First(v => v.VariableType.FullName == "System.Int32");
     var ms = sendData.Body.Variables.Single(v => v.VariableType.FullName == "System.IO.MemoryStream");

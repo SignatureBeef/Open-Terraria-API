@@ -30,7 +30,11 @@ using MonoMod;
 [Modification(ModType.PreMerge, "Adding Terraria.NPC.OnSetDefaultType()")]
 void CreateOnSetDefaultType(MonoModder modder)
 {
+#if tModLoaderServer_V1_3
+    var SetDefaults = modder.GetILCursor(() => new Terraria.NPC().SetDefaults(0, 0f));
+#else
     var SetDefaults = modder.GetILCursor(() => new Terraria.NPC().SetDefaults(0, default(Terraria.NPCSpawnParams)));
+#endif
 
     SetDefaults.GotoNext(
         i => i.Operand is FieldReference fieldReference && fieldReference.Name == "dedServ" && fieldReference.DeclaringType.FullName == "Terraria.Main"

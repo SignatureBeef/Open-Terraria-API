@@ -36,6 +36,9 @@ namespace OTAPI.Common
 
         public override bool IsValidInstallPath(string folder)
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                return false;
+
             bool valid = Directory.Exists(folder);
 
             var macOS = Path.Combine(folder, "MacOS");

@@ -34,7 +34,11 @@ using Mono.Cecil.Rocks;
 [Modification(ModType.PreMerge, "Removing NetMessage.SendData locks")]
 void PatchSendDataLocks(MonoModder modder)
 {
-    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0));
+#if TerrariaServer_SendDataNumber8
+    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default, default));
+#else
+    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default));
+#endif
 
     var locks = FindLocks(SendData);
 

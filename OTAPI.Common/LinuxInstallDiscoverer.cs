@@ -36,6 +36,9 @@ namespace OTAPI.Common
 
         public override bool IsValidInstallPath(string folder)
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                return false;
+
             bool valid = Directory.Exists(folder);
 
             var startScript = Path.Combine(folder, "Terraria");

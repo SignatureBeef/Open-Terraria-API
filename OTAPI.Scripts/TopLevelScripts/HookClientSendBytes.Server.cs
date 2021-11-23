@@ -33,7 +33,11 @@ using System.Linq;
 [Modification(ModType.PreMerge, "Hooking Terraria.NetMessage.SendData")]
 void HookClientSendBytes(MonoModder modder)
 {
+#if TerrariaServer_SendDataNumber8
+    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default, default));
+#else
     var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default));
+#endif
 
     while (SendData.TryGotoNext(
         i => i.OpCode == OpCodes.Callvirt
