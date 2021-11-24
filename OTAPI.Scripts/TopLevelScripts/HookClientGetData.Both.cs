@@ -109,5 +109,3 @@ namespace OTAPI
         }
     }
 }
-
-#endif
