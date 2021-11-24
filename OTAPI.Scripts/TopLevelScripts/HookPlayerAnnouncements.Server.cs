@@ -50,6 +50,9 @@ void HookPlayerAnnouncements(ModFwModder modder)
             foreach (var prm in body.Method.Parameters)
                 body.GetILProcessor().InsertBefore(instr, Instruction.Create(OpCodes.Ldarg, prm));
             instr.Operand = callback;
+            var cursor = modder.GetILCursor(() => Terraria.NetMessage.SyncOnePlayer(0, 0, 0));
+            cursor.Goto(instr.Next);
+            cursor.RemoveRange(11);
         }
     };
 }
@@ -88,7 +91,20 @@ namespace OTAPI
                 PlayerAnnounce?.Invoke(null, args);
 
                 if (args.Result != HookResult.Cancel)
+                {
                     Terraria.Chat.ChatHelper.BroadcastChatMessage(args.Text, args.Color, args.ExcludedPlayer);
+                    if (Terraria.Main.dedServ)
+                    {
+                        if (Terraria.Netplay.Clients[plr].State == 10)
+                        {
+                            Console.WriteLine(Terraria.Lang.mp[19].Format(Terraria.Netplay.Clients[plr].Name));
+                        }
+                        else
+                        {
+                            Console.WriteLine(Terraria.Lang.mp[20].Format(Terraria.Netplay.Clients[plr].Name));
+                        }
+                    }
+                }
             }
         }
     }
