@@ -2,29 +2,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<Version>3.0.23-alpha</Version>
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 		<PlatformTarget>x64</PlatformTarget>
 		<RuntimeIdentifiers>win7-x64;osx.10.11-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
+		<Nullable>disable</Nullable>
 	</PropertyGroup>
 	<!--<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
 	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>-->
 	<ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.16-alpha" />
-    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.16-alpha" />
-    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.16-alpha" />
-    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.16-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.18-alpha" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.18-alpha" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.18-alpha" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.18-alpha" />
     <PackageReference Include="Mono.Cecil" Version="0.11.4" />
-    <PackageReference Include="MonoMod" Version="21.8.5.1" />
-    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.8.5.1" />
+    <PackageReference Include="MonoMod" Version="21.11.1.1" />
+    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.11.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
-    <PackageReference Include="NuGet.Packaging" Version="5.10.0" />
-    <PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.1.5" />
-    <PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.1.5" />
-    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.1.5" />
+    <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
+    <PackageReference Include="NuGet.Packaging" Version="6.0.0" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.2.0" />
+    <PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.2.0" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.2.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\FNA\FNA.Core.csproj" />

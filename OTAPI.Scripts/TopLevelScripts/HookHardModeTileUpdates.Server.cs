@@ -31,6 +31,7 @@ using System.Linq;
 /// @doc Creates Hooks.WorldGen.HardmodeTileUpdate. Allows plugins to intercept hard mode tile updates.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking hardmode tile updates")]
+[MonoMod.MonoModIgnore]
 void HardModeTileUpdates(MonoModder modder)
 {
     var tile = modder.GetFieldDefinition(() => Terraria.Main.tile);

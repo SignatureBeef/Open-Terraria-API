@@ -184,8 +184,8 @@ namespace OTAPI.Patcher.Targets
                 packageBuilder.Populate(manifest.Metadata);
 
                 packageBuilder.AddFiles("../../../../", "COPYING.txt", "COPYING.txt");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\net5.0");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\net5.0");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\net6.0");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\net6.0");
                 packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\netstandard2.0");
                 packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\netstandard2.0");
 

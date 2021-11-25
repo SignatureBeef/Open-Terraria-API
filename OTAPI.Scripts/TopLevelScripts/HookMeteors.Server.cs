@@ -32,6 +32,7 @@ using Mono.Cecil.Cil;
 /// @doc Creates Hooks.WorldGen.Meteor. Allows plugins to cancel meteors.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking meteors")]
+[MonoMod.MonoModIgnore]
 void HookMeteors(ModFramework.ModFwModder modder)
 {
     var csr = modder.GetILCursor(() => Terraria.WorldGen.meteor(0, 0, false));

@@ -29,6 +29,7 @@ using MonoMod;
 /// @doc Creates Hooks.NPC.Killed. Allows plugins to cancel NPC killed events.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.NPC.checkDead")]
+[MonoMod.MonoModIgnore]
 void HookNpcKilled(MonoModder modder)
 {
     var checkDead = modder.GetILCursor(() => (new Terraria.NPC()).checkDead());

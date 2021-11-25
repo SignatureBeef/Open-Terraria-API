@@ -29,6 +29,7 @@ using MonoMod;
 /// @doc Creates Hooks.MessageBuffer.NameCollision. Allows plugins to control and cancel name collisions when 2 players join with the same name.
 /// </summary>
 [Modification(ModType.PostPatch, "Hooking player name collisions")]
+[MonoMod.MonoModIgnore]
 void HookPlayerNameCollision(MonoModder modder)
 {
     int tmp;

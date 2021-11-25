@@ -1,5 +1,6 @@
-﻿/*
-Copyright (C) 2020 DeathCradle
+﻿#nullable disable
+/*
+Copyright(C) 2020 DeathCradle
 
 This file is part of Open Terraria API v3 (OTAPI)
 
@@ -32,6 +33,7 @@ using Mono.Cecil.Rocks;
 /// @doc Removes sync lock functionality in Terraria.NetMessage.SendData, used in conjunction with the SendDataWriter patch.
 /// </summary>
 [Modification(ModType.PreMerge, "Removing NetMessage.SendData locks")]
+[MonoMod.MonoModIgnore]
 void PatchSendDataLocks(MonoModder modder)
 {
 #if TerrariaServer_SendDataNumber8
@@ -75,6 +77,7 @@ void PatchSendDataLocks(MonoModder modder)
     SendData.Body.OptimizeMacros();
 }
 
+[MonoMod.MonoModIgnore]
 ILCount FindStartOfLock(ILCursor cursor, ExceptionHandler exlock)
 {
     cursor.Goto(exlock.TryStart);
@@ -92,6 +95,7 @@ ILCount FindStartOfLock(ILCursor cursor, ExceptionHandler exlock)
     return offset.FindRoot();
 }
 
+[MonoMod.MonoModIgnore]
 IEnumerable<ExceptionHandler> FindLocks(ILCursor cursor)
 {
     // look for all endfinally instructions, and if the previous instruction is a Monitor.Exit we can assume it's a lock

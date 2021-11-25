@@ -31,7 +31,7 @@
     <copyright>Copyright 2016-2021</copyright>
     <tags>Terraria,OTAPI</tags>
     <dependencies>
-	  <group targetFramework="net5.0">
+	  <group targetFramework="net6.0">
 		  <dependency id="Newtonsoft.Json" version="13.0.1" />
       <dependency id="MonoMod" version="21.8.5.1" />
       <dependency id="MonoMod.RuntimeDetour" version="21.8.5.1" />

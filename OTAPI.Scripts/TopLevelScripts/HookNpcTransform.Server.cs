@@ -30,6 +30,7 @@ using System.Linq;
 /// @doc Creates Hooks.NPC.Transform. Allows plugins to cancel NPC killed events.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking Npc.Transform")]
+[MonoMod.MonoModIgnore]
 void HookNpcTransform(MonoModder modder)
 {
     var transform = modder.GetILCursor(() => (new Terraria.NPC()).Transform(0));

@@ -31,6 +31,7 @@ using System.Linq;
 /// @doc Creates Hooks.NetMessage.SendBytes. Allows plugins to intercept the sending of data.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.NetMessage.SendData")]
+[MonoMod.MonoModIgnore]
 void HookClientSendBytes(MonoModder modder)
 {
 #if TerrariaServer_SendDataNumber8

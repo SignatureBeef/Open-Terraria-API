@@ -49,7 +49,7 @@ namespace OTAPI.Client.Launcher.Targets
 
             File.WriteAllText(Path.Combine(otapiFolder, "Terraria.runtimeconfig.json"), @"{
   ""runtimeOptions"": {
-    ""tfm"": ""net5.0"",
+    ""tfm"": ""net6.0"",
     ""framework"": {
       ""name"": ""Microsoft.NETCore.App"",
       ""version"": ""5.0.0""
@@ -182,7 +182,7 @@ namespace OTAPI.Client.Launcher.Targets
             //process.Start();
             //process.WaitForExit();
 
-            //var output = Path.Combine(hostDir, "bin", "Debug", "net5.0", package, "publish");
+            //var output = Path.Combine(hostDir, "bin", "Debug", "net6.0", package, "publish");
             //if (Directory.Exists(output)) return new[] { output };
             //else return Enumerable.Empty<string>();
 
@@ -265,8 +265,8 @@ using System.Runtime.Versioning;
             compilation = compilation.AddReferences(MetadataReference.CreateFromFile("ImGui.NET.dll"));
             compilation = compilation.AddReferences(MetadataReference.CreateFromFile("OTAPI.exe"));
             compilation = compilation.AddReferences(MetadataReference.CreateFromFile("OTAPI.Runtime.dll"));
-            //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net5.0\OTAPI.exe")));
-            //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net5.0\OTAPI.Runtime.dll")));
+            //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net6.0\OTAPI.exe")));
+            //compilation = compilation.AddReferences(MetadataReference.CreateFromFile(Path.Combine(hostDir, @"..\OTAPI.Client.Installer\bin\Debug\net6.0\OTAPI.Runtime.dll")));
 
             var outPdbPath = Path.Combine(output, "OTAPI.Client.Installer.pdb");
             var emitOptions = new EmitOptions(
@@ -379,7 +379,7 @@ using System.Runtime.Versioning;
             //    StartInfo = new System.Diagnostics.ProcessStartInfo()
             //    {
             //        FileName = "dotnet",
-            //        Arguments = $"publish -r {package} --framework net5.0 -p:PublishTrimmed=true -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true -c Release",
+            //        Arguments = $"publish -r {package} --framework net6.0 -p:PublishTrimmed=true -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true -c Release",
             //        //Arguments = "msbuild -restore -t:PublishAllRids",
             //        WorkingDirectory = hostDir
             //    },
@@ -389,7 +389,7 @@ using System.Runtime.Versioning;
 
             //Console.WriteLine("Published");
 
-            //return Path.Combine(hostDir, "bin", "Release", "net5.0", package, "publish");
+            //return Path.Combine(hostDir, "bin", "Release", "net6.0", package, "publish");
         }
 
         public static string DownloadZip(this IPlatformTarget target, string url, string name)
@@ -460,8 +460,8 @@ using System.Runtime.Versioning;
                     if (File.Exists(dll))
                         return Assembly.LoadFile(dll);
 
-                    exe = Path.Combine(patcherDir, "bin", "Debug", "net5.0", "EmbeddedResources", $"{asr.Name}.exe");
-                    dll = Path.Combine(patcherDir, "bin", "Debug", "net5.0", "EmbeddedResources", $"{asr.Name}.dll");
+                    exe = Path.Combine(patcherDir, "bin", "Debug", "net6.0", "EmbeddedResources", $"{asr.Name}.exe");
+                    dll = Path.Combine(patcherDir, "bin", "Debug", "net6.0", "EmbeddedResources", $"{asr.Name}.dll");
 
                     if (File.Exists(exe))
                         return Assembly.LoadFile(exe);
