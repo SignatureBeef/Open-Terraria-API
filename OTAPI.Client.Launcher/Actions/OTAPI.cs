@@ -58,7 +58,12 @@ namespace OTAPI.Client.Launcher.Actions
 
         private static void CSharpLoader_OnCompilationContext(object? sender, CSharpLoader.CompilationContextArgs e)
         {
-
+            e.Context.Compilation = e.Context.Compilation.WithReferences(
+                e.Context.Compilation.References.Where(r =>
+                    r.Display.IndexOf("OTAPI.Patcher") == -1
+                    && r.Display.IndexOf("System.IO.Compression.Native") == -1
+                )
+            );
         }
 
         static Dictionary<string, Assembly?> _assemblyCache = new Dictionary<string, Assembly?>();
