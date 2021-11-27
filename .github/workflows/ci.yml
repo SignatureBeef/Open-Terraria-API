@@ -31,6 +31,9 @@ jobs:
         with:
           dotnet-version: '6.0.100' # SDK Version to use; x will use the latest version of the 3.1 channel
 
+      - name: MonoMod dev build
+        run: dotnet nuget add source https://pkgs.dev.azure.com/MonoMod/MonoMod/_packaging/DevBuilds%40Local/nuget/v3/index.json -n DevBuilds@Local
+
       - name: Build the project
         run: Get-Content .\build.sh | Invoke-Expression
 
