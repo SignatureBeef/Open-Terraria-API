@@ -30,6 +30,7 @@ using MonoMod;
 /// @doc Creates Hooks.Wiring.AnnouncementBox. Allows plu
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking wiring announce box")]
+[MonoMod.MonoModIgnore]
 void HookWiringAnnounceBox(MonoModder modder)
 {
     var csr = modder.GetILCursor(() => Terraria.Wiring.HitWireSingle(0, 0));

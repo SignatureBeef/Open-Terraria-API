@@ -151,7 +151,7 @@ namespace OTAPI.Patcher.Targets
                     System.Threading.Thread.Sleep(1000 * 5);
                 }
 
-                //var freshAssembly = "../../../../OTAPI.Setup/bin/Debug/net5.0/Terraria.exe";
+                //var freshAssembly = "../../../../OTAPI.Setup/bin/Debug/net6.0/Terraria.exe";
                 var localPath_x86 = "Terraria.x86.exe";
                 var localPath_x64 = "Terraria.x64.exe";
 
@@ -239,7 +239,7 @@ namespace OTAPI.Patcher.Targets
                 SetStatus("Converting to x64");
                 {
                     using var pa = AssemblyDefinition.ReadAssembly(primaryAssemblyPath);
-                    pa.MainModule.Architecture = TargetArchitecture.I386;
+                    pa.MainModule.Architecture = TargetArchitecture.AMD64;
                     pa.MainModule.Attributes = ModuleAttributes.ILOnly;
 
                     if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
@@ -289,6 +289,9 @@ namespace OTAPI.Patcher.Targets
                 PluginLoader.Clear();
                 CSharpLoader.GlobalRootDirectory = Path.Combine("patchtime", "csharp");
                 CSharpLoader.GlobalAssemblies.Clear();
+
+                Directory.CreateDirectory(CSharpLoader.GlobalRootDirectory);
+                Directory.CreateDirectory(Path.Combine(CSharpLoader.GlobalRootDirectory, "plugins"));
 
                 // build shims
                 PluginLoader.Init();
@@ -506,33 +509,34 @@ namespace OTAPI.Patcher.Targets
             var sources = Path.Combine(CSharpLoader.GlobalRootDirectory, "plugins", "modules-patched");
             var generated = Path.Combine(CSharpLoader.GlobalRootDirectory, "generated");
 
-            foreach (var dir in Directory.GetDirectories(sources, "*", SearchOption.TopDirectoryOnly))
-            {
-                var mod_name = Path.GetFileName(dir);
-                var generated_dll = Path.Combine(generated, $"CSharpScript_{mod_name}.dll");
-                var generated_pdb = Path.Combine(generated, $"CSharpScript_{mod_name}.pdb");
-                var generated_xml = Path.Combine(generated, $"CSharpScript_{mod_name}.xml");
-                var resources = Path.Combine(sources, mod_name, $"Resources");
+            if (Directory.Exists(sources))
+                foreach (var dir in Directory.GetDirectories(sources, "*", SearchOption.TopDirectoryOnly))
+                {
+                    var mod_name = Path.GetFileName(dir);
+                    var generated_dll = Path.Combine(generated, $"CSharpScript_{mod_name}.dll");
+                    var generated_pdb = Path.Combine(generated, $"CSharpScript_{mod_name}.pdb");
+                    var generated_xml = Path.Combine(generated, $"CSharpScript_{mod_name}.xml");
+                    var resources = Path.Combine(sources, mod_name, $"Resources");
 
-                var destination = Path.Combine("modifications", mod_name);
-                var destination_dll = Path.Combine("modifications", mod_name, $"{mod_name}.dll");
-                var destination_pdb = Path.Combine("modifications", mod_name, $"{mod_name}.pdb");
-                var destination_xml = Path.Combine("modifications", mod_name, $"{mod_name}.xml");
-                var destination_resources = Path.Combine("modifications", mod_name, "Resources");
+                    var destination = Path.Combine("modifications", mod_name);
+                    var destination_dll = Path.Combine("modifications", mod_name, $"{mod_name}.dll");
+                    var destination_pdb = Path.Combine("modifications", mod_name, $"{mod_name}.pdb");
+                    var destination_xml = Path.Combine("modifications", mod_name, $"{mod_name}.xml");
+                    var destination_resources = Path.Combine("modifications", mod_name, "Resources");
 
-                if (Directory.Exists(destination))
-                    Directory.Delete(destination, true);
+                    if (Directory.Exists(destination))
+                        Directory.Delete(destination, true);
 
-                Directory.CreateDirectory(destination);
-                Directory.CreateDirectory(destination_resources);
+                    Directory.CreateDirectory(destination);
+                    Directory.CreateDirectory(destination_resources);
 
-                Utils.TransferFile(generated_dll, destination_dll);
-                Utils.TransferFile(generated_pdb, destination_pdb);
-                Utils.TransferFile(generated_xml, destination_xml);
+                    Utils.TransferFile(generated_dll, destination_dll);
+                    Utils.TransferFile(generated_pdb, destination_pdb);
+                    Utils.TransferFile(generated_xml, destination_xml);
 
-                if (Directory.Exists(resources))
-                    Utils.CopyFiles(resources, destination_resources);
-            }
+                    if (Directory.Exists(resources))
+                        Utils.CopyFiles(resources, destination_resources);
+                }
         }
 
         void CreateRuntimeEvents()

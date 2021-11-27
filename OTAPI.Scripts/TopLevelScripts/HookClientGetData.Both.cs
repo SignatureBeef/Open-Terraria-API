@@ -32,6 +32,7 @@ using System;
 /// @doc A mod to create Hooks.MessageBuffer.GetData. Allows plugins to process received packet data.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.MessageBuffer.GetData")]
+[MonoMod.MonoModIgnore]
 void HookClientGetData(MonoModder modder)
 {
     int temp = 0;

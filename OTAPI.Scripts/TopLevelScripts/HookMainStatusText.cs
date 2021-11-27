@@ -32,6 +32,7 @@ using MonoMod;
 /// @doc A mod to create Hooks.Main.StatusTextUpdate. Allows plugins to receive writes to Main.statusText.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking Main.statusText")]
+[MonoMod.MonoModIgnore]
 void HookMainStatusText(MonoModder modder, IRelinkProvider relinkProvider)
 {
     var field = modder.GetFieldDefinition(() => Terraria.Main.statusText);

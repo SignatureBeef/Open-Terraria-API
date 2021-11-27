@@ -30,6 +30,7 @@ using System.Linq;
 /// @doc Creates Hooks.NPC.Spawn. Allows plugins to cancel NPC spawns.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.NPC.NewNPC(Spawn)")]
+[MonoModIgnore]
 void HookNpcSpawn(MonoModder modder)
 {
     var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default));

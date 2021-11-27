@@ -184,8 +184,8 @@ namespace OTAPI.Patcher.Targets
                 packageBuilder.Populate(manifest.Metadata);
 
                 packageBuilder.AddFiles("../../../../", "COPYING.txt", "COPYING.txt");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\net5.0");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\net5.0");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\net6.0");
+                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\net6.0");
                 packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\netstandard2.0");
                 packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\netstandard2.0");
 
@@ -281,7 +281,7 @@ namespace OTAPI.Patcher.Targets
 
             // switch to any cpu so that we can compile and use types in mods
             // this is usually in a modification otherwise
-            mm.Module.Architecture = TargetArchitecture.I386;
+            mm.Module.Architecture = TargetArchitecture.AMD64;
             mm.Module.Attributes = ModuleAttributes.ILOnly;
 
             Console.WriteLine($"[OTAPI] Saving {mm.OutputPath}");

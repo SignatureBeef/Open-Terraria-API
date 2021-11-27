@@ -27,6 +27,7 @@ using Mono.Cecil.Cil;
 /// @doc A mod to insert Hooks.NetMessage.CheckBytesException and will default to printing to the console
 /// </summary>
 [Modification(ModType.PreMerge, "Allowing GetData exceptions debugging")]
+[MonoMod.MonoModIgnore]
 void ClientGetDataExceptions(ModFramework.ModFwModder modder)
 {
     var csr = modder.GetILCursor(() => Terraria.NetMessage.CheckBytes(0));

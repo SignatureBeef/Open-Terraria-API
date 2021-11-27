@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build-setup",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/OTAPI.Setup/bin/Debug/net5.0/OTAPI.Setup.dll",
+            "program": "${workspaceFolder}/OTAPI.Setup/bin/Debug/net6.0/OTAPI.Setup.dll",
             "args": ["-patchTarget=v", "-latestVanilla=n"],
-            "cwd": "${workspaceFolder}/OTAPI.Setup/bin/Debug/net5.0/",
+            "cwd": "${workspaceFolder}/OTAPI.Setup/bin/Debug/net6.0/",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
@@ -23,9 +23,9 @@
             "request": "launch",
             "preLaunchTask": "build-mods",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/net5.0/OTAPI.Patcher.dll",
+            "program": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/net6.0/OTAPI.Patcher.dll",
             "args": ["-patchTarget=v", "-latestVanilla=n"],
-            "cwd": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/net5.0/",
+            "cwd": "${workspaceFolder}/OTAPI.Patcher/bin/Debug/net6.0/",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
@@ -36,9 +36,9 @@
             "request": "launch",
             "preLaunchTask": "build-launcher",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net5.0/OTAPI.Launcher.dll",
+            "program": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net6.0/OTAPI.Launcher.dll",
             "args": ["-patchTarget=v", "-latestVanilla=n"],
-            "cwd": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net5.0/", // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "cwd": "${workspaceFolder}/OTAPI.Launcher/bin/Debug/net6.0/", // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "externalTerminal",
             "stopAtEntry": false
         },

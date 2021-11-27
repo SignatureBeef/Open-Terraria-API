@@ -33,6 +33,7 @@ using System.IO.Compression;
 /// @doc Replaces a global write buffer to a local variable buffer, used in conjunction of the SendDataLocks patch
 /// </summary>
 [Modification(ModType.PreMerge, "Removing NetMessage.SendData write buffer")]
+[MonoMod.MonoModIgnore]
 void PatchSendDataWriter(MonoModder modder)
 {
 #if TerrariaServer_SendDataNumber8
