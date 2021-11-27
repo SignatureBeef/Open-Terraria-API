@@ -1,15 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <!--<OutputType>WinExe</OutputType>-->
     <TargetFramework>net6.0</TargetFramework>
     <Platforms>x64</Platforms>
     <Nullable>enable</Nullable>
-    <!--<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
-    <PrivateAssets>all</PrivateAssets>-->
-    <!--<AssemblyName>Terraria</AssemblyName>-->
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaXaml Remove="Properties\**" />

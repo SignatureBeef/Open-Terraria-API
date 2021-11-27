@@ -104,7 +104,12 @@ namespace OTAPI.Patcher.Targets
 
         void RemovePatcherFromCompilation(object instance, CSharpLoader.CompilationContextArgs args)
         {
-            args.Context.Compilation = args.Context.Compilation.WithReferences(args.Context.Compilation.References.Where(r => r.Display.IndexOf("OTAPI.Patcher") == -1));
+            args.Context.Compilation = args.Context.Compilation.WithReferences(
+                args.Context.Compilation.References.Where(r =>
+                    r.Display.IndexOf("OTAPI.Patcher") == -1
+                    && r.Display.IndexOf("System.IO.Compression.Native") == -1
+                )
+            );
         }
 
         public void Patch()
