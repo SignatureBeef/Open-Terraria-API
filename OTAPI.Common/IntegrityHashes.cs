@@ -21,7 +21,7 @@ namespace OTAPI.Common
         {
             using var fs = File.Open(path, FileMode.Open);
             using var bs = new BufferedStream(fs);
-            using var sha1 = new SHA1Managed();
+            using var sha1 = SHA1.Create();
 
             var hash = sha1.ComputeHash(bs);
             var formatted = new StringBuilder(2 * hash.Length);

@@ -281,7 +281,7 @@ namespace OTAPI.Patcher.Targets
 
             // switch to any cpu so that we can compile and use types in mods
             // this is usually in a modification otherwise
-            mm.Module.Architecture = TargetArchitecture.I386;
+            mm.Module.Architecture = TargetArchitecture.AMD64;
             mm.Module.Attributes = ModuleAttributes.ILOnly;
 
             Console.WriteLine($"[OTAPI] Saving {mm.OutputPath}");
