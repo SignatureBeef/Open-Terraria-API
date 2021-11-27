@@ -306,8 +306,6 @@ namespace OTAPI.Patcher.Targets
 
             PluginLoader.Clear();
 
-            //// convert the libary to net5
-            //CoreLibRelinker.PostProcessCoreLib(mm.OutputPath);
             var dest = Path.GetFileName(output);
             if (File.Exists(dest)) File.Delete(dest);
             File.Copy(output, dest);

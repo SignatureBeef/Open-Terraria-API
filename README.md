@@ -6,9 +6,9 @@ It is primarily a server modification for the PC edition of Terraria, however v3
 The [upcoming branch](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming) is a ground up redesign and will take the place of the [master branch](https://github.com/DeathCradle/Open-Terraria-API/tree/master) when fully complete over in [projects](https://github.com/DeathCradle/Open-Terraria-API/projects).
 
 Significant changes this redesign brings are...
-* Modular script system, allowing single file patches using csharp([net5](https://www.nuget.org/packages/ModFramework.Modules.CSharp/)), javascript([clearscript](https://www.nuget.org/packages/ModFramework.Modules.ClearScript/)) and lua([nlua](https://www.nuget.org/packages/ModFramework.Modules.Lua/))
+* Modular script system, allowing single file patches using [csharp](https://www.nuget.org/packages/ModFramework.Modules.CSharp/), [javascript](https://www.nuget.org/packages/ModFramework.Modules.ClearScript/) and [lua](https://www.nuget.org/packages/ModFramework.Modules.Lua/)
 * A strong set of libraries with methods and extensions for use in extending or contributing back
-* .NET5 projects for all without Terraria's dependency to net4.
+* .NET6 projects for all without Terraria's dependency to net4.
 
 The stack consists upon:
 * [OTAPI Scripts](https://github.com/DeathCradle/Open-Terraria-API/tree/upcoming/OTAPI.Scripts), a directory containing all the scripts used to patch the pc, mobile & client assemblies.

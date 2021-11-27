@@ -443,7 +443,7 @@ namespace OTAPI.Patcher.Targets
 
                     CreateRuntimeEvents();
 
-                    SetStatus("Relinking to .NET5...");
+                    SetStatus("Relinking to .NET6...");
                     CoreLibRelinker.PostProcessCoreLib(temp_out, "outputs/OTAPI.Runtime.dll");
 
                     SetStatus("Writing MD...");

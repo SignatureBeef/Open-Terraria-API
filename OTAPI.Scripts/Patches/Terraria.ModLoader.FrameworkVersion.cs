@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #if tModLoaderServer
 
 /// <summary>
-/// @doc Fixes TML loading on net5
+/// @doc Fixes TML loading on net6+
 /// </summary>
 namespace Terraria.ModLoader
 {

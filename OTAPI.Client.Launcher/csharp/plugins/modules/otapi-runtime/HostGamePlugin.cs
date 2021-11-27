@@ -64,7 +64,7 @@ class HostGamePlugin
             return new HostGame();
         };
 
-        // .net5 needs UseShellExecute
+        // .net5+ needs UseShellExecute
         On.Terraria.Utils.OpenFolder += (orig, folder) =>
         {
             using var process = new Process();
