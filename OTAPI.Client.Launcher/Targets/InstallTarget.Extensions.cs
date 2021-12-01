@@ -512,7 +512,8 @@ using System.Runtime.Versioning;
 
         public static void InstallLibs(this IPlatformTarget target, string installPath)
         {
-            var zipPath = target.DownloadZip("http://fna.flibitijibibo.com/archive/fnalibs.tar.bz2", "fnalibs");
+            //var zipPath = target.DownloadZip("http://fna.flibitijibibo.com/archive/fnalibs.tar.bz2", "fnalibs");
+            var zipPath = target.DownloadZip("https://github.com/DeathCradle/fnalibs/raw/main/fnalibs.20211125.tar.bz2", "fnalibs");
             target.ExtractBZip2(zipPath, installPath);
         }
 
