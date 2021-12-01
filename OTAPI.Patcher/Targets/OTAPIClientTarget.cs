@@ -244,7 +244,7 @@ namespace OTAPI.Patcher.Targets
                 SetStatus("Converting to x64");
                 {
                     using var pa = AssemblyDefinition.ReadAssembly(primaryAssemblyPath);
-                    pa.MainModule.Architecture = TargetArchitecture.AMD64;
+                    pa.MainModule.Architecture = TargetArchitecture.I386;
                     pa.MainModule.Attributes = ModuleAttributes.ILOnly;
 
                     if (installDiscoverer.Target.GetClientPlatform() == OSPlatform.Windows)
