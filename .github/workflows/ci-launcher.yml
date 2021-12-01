@@ -6,9 +6,9 @@ name: "CI-Launcher"
 on:
   # Triggers the workflow on push/pull events but only for the upcoming-nuget-release branch
   push:
-    branches: [ upcoming-nuget-release ]
+    branches: [ upcoming-client-release ]
   pull_request:
-    branches: [ upcoming-nuget-release ]
+    branches: [ upcoming-client-release ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
