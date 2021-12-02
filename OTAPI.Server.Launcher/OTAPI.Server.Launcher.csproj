@@ -8,10 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.18-alpha" />
-    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.18-alpha" />
-    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.18-alpha" />
-    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.18-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.20-alpha" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.20-alpha" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.20-alpha" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.20-alpha" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="System.IO.Packaging" Version="6.0.0" />
