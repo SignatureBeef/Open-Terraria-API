@@ -5,3 +5,5 @@ MonoMod.RuntimeDetour.dll
 Mono.Cecil.dll
 Mono.Cecil.Rocks.dll
 Newtonsoft.Json.dll
+System.Drawing.Primitives.dll
+System.Collections.Specialized.dll

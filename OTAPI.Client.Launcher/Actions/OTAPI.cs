@@ -88,6 +88,20 @@ namespace OTAPI.Client.Launcher.Actions
             return result;
         }
 
+        static string ResolveFile(string path)
+        {
+            var filename = Path.GetFileName(path);
+            path = Path.Combine(Environment.CurrentDirectory, filename);
+
+            if (!File.Exists(path))
+                path = Path.Combine(Environment.CurrentDirectory, "bin", filename);
+                
+            if (!File.Exists(path))
+                path = Path.Combine(AppContext.BaseDirectory, filename);
+                
+            return path;
+        }
+
         private static Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)
         {
             var asmName = new AssemblyName(args.Name);
@@ -105,13 +119,13 @@ namespace OTAPI.Client.Launcher.Actions
                 return Terraria;
 
             else if (args.Name.StartsWith("OTAPI.Runtime"))
-                return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "OTAPI.Runtime.dll"));
+                return LoadAndCacheAssembly(ResolveFile("OTAPI.Runtime.dll"));
 
             else if (args.Name.StartsWith("ImGuiNET"))
-                return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "ImGui.NET.dll"));
+                return LoadAndCacheAssembly(ResolveFile("ImGui.NET.dll"));
 
             else if (args.Name.StartsWith("Steamworks.NET"))
-                return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "Steamworks.NET.dll"));
+                return LoadAndCacheAssembly(ResolveFile("Steamworks.NET.dll"));
 
             else
             {
@@ -119,7 +133,7 @@ namespace OTAPI.Client.Launcher.Actions
                 string resourceName = asmName.Name + ".dll";
 
                 if (File.Exists(resourceName))
-                    return LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, resourceName));
+                    return LoadAndCacheAssembly(ResolveFile(resourceName));
 
                 var text = Array.Find(root.GetManifestResourceNames(), (element) => element.EndsWith(resourceName));
                 if (text != null)
@@ -131,8 +145,8 @@ namespace OTAPI.Client.Launcher.Actions
                     stream.Read(array, 0, array.Length);
                     stream.Seek(0, SeekOrigin.Begin);
 
-                    if (!File.Exists(resourceName))
-                        File.WriteAllBytes(resourceName, array);
+                    // if (!File.Exists(resourceName))
+                    //     File.WriteAllBytes(resourceName, array);
 
                     try
                     {
@@ -162,25 +176,29 @@ namespace OTAPI.Client.Launcher.Actions
 
             IEnumerable<string> matches = Enumerable.Empty<string>();
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            foreach (var basePath in new[] { Environment.CurrentDirectory, AppContext.BaseDirectory })
             {
-                var osx = Path.Combine(Environment.CurrentDirectory, "osx");
-                matches = Directory.GetFiles(osx, "*" + libraryName + "*");
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                var lib64 = Path.Combine(Environment.CurrentDirectory, "lib64");
-                matches = Directory.GetFiles(lib64, "*" + libraryName + "*");
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                var x64 = Path.Combine(Environment.CurrentDirectory, "x64");
-                matches = Directory.GetFiles(x64, "*" + libraryName + "*");
-            }
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    var osx = Path.Combine(basePath, "osx");
+                    if(Directory.Exists(osx))
+                        matches = matches.Union(Directory.GetFiles(osx, "*" + libraryName + "*"));
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    var lib64 = Path.Combine(basePath, "lib64");
+                    if(Directory.Exists(lib64))
+                        matches = matches.Union(Directory.GetFiles(lib64, "*" + libraryName + "*"));
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    var x64 = Path.Combine(basePath, "x64");
+                    if(Directory.Exists(x64))
+                        matches = matches.Union(Directory.GetFiles(x64, "*" + libraryName + "*"));
+                }
 
-            if (matches.Count() == 0)
-            {
-                matches = Directory.GetFiles(Environment.CurrentDirectory, "*" + libraryName + "*");
+                if (matches.Count() == 0)
+                    matches = Directory.GetFiles(basePath, "*" + libraryName + "*");
             }
 
             var handle = IntPtr.Zero;

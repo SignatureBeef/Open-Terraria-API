@@ -60,7 +60,7 @@ namespace Terraria
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
                 var path = Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory,
+                    Environment.CurrentDirectory,
                     Environment.Is64BitProcess ? "x64" : "x86"
                 );
                 Directory.CreateDirectory(path);
