@@ -50,6 +50,11 @@ void HookPlayerAnnouncements(ModFwModder modder)
             foreach (var prm in body.Method.Parameters)
                 body.GetILProcessor().InsertBefore(instr, Instruction.Create(OpCodes.Ldarg, prm));
             instr.Operand = callback;
+
+            if (!(instr.Next.Operand is FieldReference fieldref && fieldref.Name == "dedServ"))
+                throw new Exception("Expected to replace dedServ calls with the player announce hook.");
+
+            body.GetILProcessor().Remove(instr.Next); // no need for this dedServ check
         }
     };
 }
@@ -60,9 +65,17 @@ namespace OTAPI
     {
         public static partial class NetMessage
         {
+            [Flags]
+            public enum PlayerAnnounceResult : byte
+            {
+                SendToPlayer = 1,
+                WriteToConsole = 2,
+
+                Default = SendToPlayer | WriteToConsole,
+            }
             public class PlayerAnnounceEventArgs : EventArgs
             {
-                public HookResult? Result { get; set; }
+                public PlayerAnnounceResult Result { get; set; } = PlayerAnnounceResult.Default;
 
                 public int Index { get; set; }
                 public NetworkText Text { get; set; }
@@ -71,14 +84,15 @@ namespace OTAPI
                 public int Plr { get; set; }
                 public int ToWho { get; set; }
                 public int FromWh { get; set; }
-            }
-            public static event EventHandler<PlayerAnnounceEventArgs> PlayerAnnounce;
 
-            public static void InvokePlayerAnnounce(NetworkText text, Color color, int excludedPlayer, int plr, int toWho, int fromWho)
+                public PlayerAnnounceEventArgs(NetworkText text) => Text = text;
+            }
+            public static event EventHandler<PlayerAnnounceEventArgs>? PlayerAnnounce;
+
+            public static bool InvokePlayerAnnounce(NetworkText text, Color color, int excludedPlayer, int plr, int toWho, int fromWho)
             {
-                var args = new PlayerAnnounceEventArgs()
+                var args = new PlayerAnnounceEventArgs(text)
                 {
-                    Text = text,
                     Color = color,
                     ExcludedPlayer = excludedPlayer,
                     Plr = plr,
@@ -87,8 +101,10 @@ namespace OTAPI
                 };
                 PlayerAnnounce?.Invoke(null, args);
 
-                if (args.Result != HookResult.Cancel)
+                if ((args.Result & PlayerAnnounceResult.SendToPlayer) != 0)
                     Terraria.Chat.ChatHelper.BroadcastChatMessage(args.Text, args.Color, args.ExcludedPlayer);
+
+                return (args.Result & PlayerAnnounceResult.WriteToConsole) != 0;
             }
         }
     }
