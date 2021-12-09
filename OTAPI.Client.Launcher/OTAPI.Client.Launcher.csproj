@@ -42,6 +42,7 @@
     <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="3.1.2" />
     <PackageReference Include="ReactiveUI" Version="14.3.1" />
     <PackageReference Include="System.Reactive.Linq" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" GeneratePathProperty="true" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FNA\FNA.Core.csproj">
@@ -136,6 +137,8 @@
     <MakeDir Directories="$(TargetDir)client/lua/" />
     <Copy SourceFiles="@(Lua)" DestinationFolder="$(TargetDir)client/lua/%(RecursiveDir)" />
     <Copy SourceFiles="@(ClientLua)" DestinationFolder="$(TargetDir)client/lua/%(RecursiveDir)" />
+    
+    <Copy SourceFiles="$(PkgMicrosoft_Win32_Registry)/lib/netstandard2.0/Microsoft.Win32.Registry.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="false" />
   </Target>
   <Target Name="AfterPrepareForPublish" AfterTargets="Publish">
     <Message Text="Copying release OTAPI patch files" Importance="high" />
@@ -151,6 +154,7 @@
     <!-- <Copy SourceFiles="$(PkgModFramework_Modules_CSharp)/lib/net6.0/ModFramework.Modules.CSharp.dll" DestinationFolder="$(PublishDir)client/modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(PkgModFramework_Modules_ClearScript)/lib/net6.0/ModFramework.Modules.ClearScript.dll" DestinationFolder="$(PublishDir)client/modifications" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(PkgModFramework_Modules_Lua)/lib/net6.0/ModFramework.Modules.Lua.dll" DestinationFolder="$(PublishDir)client/modifications" SkipUnchangedFiles="false" /> -->
+
 
     <MakeDir Directories="$(PublishDir)patchtime/" />
     <RemoveDir Directories="$(PublishDir)patchtime/" />

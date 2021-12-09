@@ -50,6 +50,8 @@ namespace OTAPI.Patcher.Targets
 
         public string? InstallPath { get; set; }
 
+        public string BinFolder { get; set; } = Path.Combine(Environment.CurrentDirectory, "bin");
+
         bool CanLoadPatchFile(string filepath)
         {
             // only load "client" or "both" variants
@@ -125,7 +127,7 @@ namespace OTAPI.Patcher.Targets
                 path = Path.Combine(Environment.CurrentDirectory, info.Name);
 
             if (!File.Exists(path))
-                path = Path.Combine(Environment.CurrentDirectory, "bin", info.Name);
+                path = Path.Combine(BinFolder, info.Name);
 
             if (!File.Exists(path))
                 path = Path.Combine(AppContext.BaseDirectory, info.Name);
@@ -434,6 +436,7 @@ namespace OTAPI.Patcher.Targets
 
                     mm.RelinkAssembly("System.Windows.Forms");
                     mm.RelinkAssembly("ReLogic");
+                    mm.RelinkAssembly("Microsoft.Win32.Registry");
 
                     this.AddPatchMetadata(mm);
                     this.AddEnvMetadata(mm);
@@ -475,7 +478,9 @@ namespace OTAPI.Patcher.Targets
                     CreateRuntimeEvents();
 
                     SetStatus("Relinking to .NET6...");
-                    CoreLibRelinker.PostProcessCoreLib(InstallDestination, embeddedResourcesDir, new[] { embeddedResourcesDir, resourcesPath }, temp_out, "outputs/OTAPI.Runtime.dll");
+                    CoreLibRelinker.PostProcessCoreLib(InstallDestination, embeddedResourcesDir, new[] {
+                        resourcesPath, BinFolder, Environment.CurrentDirectory
+                    }, temp_out, "outputs/OTAPI.Runtime.dll");
 
                     SetStatus("Writing MD...");
                     var doco_md = $"OTAPI.PC.Client.${installDiscoverer.Target.GetClientPlatform()}.mfw.md";
