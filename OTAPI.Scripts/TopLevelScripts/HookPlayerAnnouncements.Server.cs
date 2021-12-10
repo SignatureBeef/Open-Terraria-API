@@ -68,6 +68,8 @@ namespace OTAPI
             [Flags]
             public enum PlayerAnnounceResult : byte
             {
+                None = 0,
+
                 SendToPlayer = 1,
                 WriteToConsole = 2,
 
