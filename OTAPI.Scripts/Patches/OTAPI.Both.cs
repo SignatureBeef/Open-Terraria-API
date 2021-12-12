@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0436 // Type conflicts with imported type
 
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -32,15 +33,25 @@ namespace OTAPI
         /// Returns metadata stored in the current assembly's attributes.
         /// e.g. OTAPI.Target(what patch occurred), OTAPI.Input(source assembly)
         /// </summary>
-        public static string GetMetaData(string key) => typeof(Common).Assembly
+        public static string GetMetaData(string key)
+        {
+            var meta = typeof(Common).Assembly
                 .GetCustomAttributes<AssemblyMetadataAttribute>()
                 .SingleOrDefault(x => x.Key == key)
                 ?.Value;
+            return meta ?? String.Empty;
+        }
 
-        static string GetVersion() => typeof(Common).Assembly
+        static string GetVersion(Assembly assembly)
+        {
+            var version = assembly
                 .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
                 .SingleOrDefault()
                 ?.InformationalVersion;
+            return version ?? String.Empty;
+        }
+
+        static string GetVersion() => GetVersion(typeof(Common).Assembly);
 
         /// <summary>
         /// Returns the current version string of OTAPI
@@ -94,5 +105,13 @@ namespace OTAPI
         /// GitHub action RunNumber that produced this assembly.
         /// </summary>
         public static readonly string GitHubActionRunNo = GetMetaData("GitHub.Action.RunNo");
+
+        public static partial class ModFramework
+        {
+            /// <summary>
+            /// Returns the current version string of ModFramework
+            /// </summary>
+            public static readonly string Version = GetVersion(typeof(global::ModFramework.ModFwModder).Assembly);
+        }
     }
 }

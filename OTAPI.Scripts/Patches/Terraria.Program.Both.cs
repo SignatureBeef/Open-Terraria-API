@@ -20,7 +20,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0436 // Type conflicts with imported type
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -32,7 +31,7 @@ using ModFramework.Plugins;
 /// @doc Fixes platform issues in Terraria.Program.DisplayException
 /// </summary>
 /// <summary>
-/// @doc Initiates the client module system
+/// @doc Initiates the module system
 /// </summary>
 namespace Terraria
 {
@@ -50,7 +49,7 @@ namespace Terraria
         /// <summary>
         /// Triggers when mods should start attaching events. At this point assembly resolution should be ready on all platforms.
         /// </summary>
-        public static event EventHandler OnLaunched;
+        public static event EventHandler? OnLaunched;
 
         static string CSV(params string[] args) => String.Join(",", args.Where(x => !String.IsNullOrWhiteSpace(x)));
 
@@ -92,7 +91,7 @@ namespace Terraria
         {
             Configure();
 
-            Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit)}).");
+            Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit, $"ModFw:{OTAPI.Common.ModFramework.Version}")}).");
 
             // load modfw plugins
             PluginLoader.TryLoad();
@@ -151,8 +150,31 @@ namespace OTAPI
     [MonoMod.MonoModIgnore]
     public static partial class Common
     {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        /// <summary>
+        /// The type of patch used to create this assembly.
+        /// e.g. OTAPI PC Server
+        /// </summary>
         public static readonly string Target;
+
+        /// <summary>
+        /// Returns the current version string of OTAPI
+        /// </summary>
         public static readonly string Version;
+
+        /// <summary>
+        /// The short git hash of the commit used to produce this assembly.
+        /// </summary>
         public static readonly string GitHubCommit;
+
+
+        public static partial class ModFramework
+        {
+            /// <summary>
+            /// Returns the current version string of ModFramework
+            /// </summary>
+            public static readonly string Version;
+        }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     }
 }
