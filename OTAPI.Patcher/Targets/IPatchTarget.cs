@@ -28,6 +28,7 @@ namespace OTAPI.Patcher.Targets
     public interface IPatchTarget
     {
         string DisplayText { get; }
+        string InstallDestination { get; }
         void Patch();
     }
 

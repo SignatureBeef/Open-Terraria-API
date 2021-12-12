@@ -43,6 +43,9 @@ public class HostGame : Terraria.Main
 
     public override void Initialize()
     {
+        //Console.WriteLine($"Redirecting from {AppContext.BaseDirectory}/{Content.RootDirectory}");
+        //Content.RootDirectory = Path.Combine(Environment.CurrentDirectory, "Content");
+
         base.Initialize();
 
         Terraria.Main.SkipAssemblyLoad = true;

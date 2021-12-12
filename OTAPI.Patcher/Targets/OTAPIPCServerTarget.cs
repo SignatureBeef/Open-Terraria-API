@@ -37,6 +37,7 @@ namespace OTAPI.Patcher.Targets
         public const String TerrariaWebsite = "https://terraria.org";
 
         public virtual string DisplayText { get; } = "OTAPI PC Server";
+        public string InstallDestination { get; } = Environment.CurrentDirectory;
 
         public virtual string CliKey { get; } = "latest";
 
@@ -161,7 +162,7 @@ namespace OTAPI.Patcher.Targets
             }
 
             PluginLoader.Clear();
-            CoreLibRelinker.PostProcessCoreLib(assembly_output, runtime_output);
+            CoreLibRelinker.PostProcessCoreLib(null, null, new[] { embeddedResourcesDir }, assembly_output, runtime_output);
 
             mm.Log("[OTAPI] Building NuGet package...");
             BuildNuGetPackage();

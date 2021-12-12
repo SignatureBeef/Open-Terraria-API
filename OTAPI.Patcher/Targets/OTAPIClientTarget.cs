@@ -41,12 +41,16 @@ namespace OTAPI.Patcher.Targets
         }
 
         public string DisplayText { get; } = "OTAPI Client (lightweight)";
+        public string InstallDestination { get; } = "client";
+        public string TemporaryFiles { get; } = "temp";
 
         private MarkdownDocumentor markdownDocumentor = new ModificationMdDocumentor();
 
         public event EventHandler<StatusUpdateArgs> StatusUpdate;
 
         public string? InstallPath { get; set; }
+
+        public string BinFolder { get; set; } = Path.Combine(Environment.CurrentDirectory, "bin");
 
         bool CanLoadPatchFile(string filepath)
         {
@@ -79,6 +83,8 @@ namespace OTAPI.Patcher.Targets
 
         bool TryLoad(string file, out Assembly assembly)
         {
+            file = ResolveFile(file);
+
             assembly = null;
             if (File.Exists(file))
             {
@@ -112,9 +118,27 @@ namespace OTAPI.Patcher.Targets
             );
         }
 
+        string ResolveFile(string path)
+        {
+            var info = new FileInfo(path);
+            path = info.FullName;
+
+            if (!File.Exists(path))
+                path = Path.Combine(Environment.CurrentDirectory, info.Name);
+
+            if (!File.Exists(path))
+                path = Path.Combine(BinFolder, info.Name);
+
+            if (!File.Exists(path))
+                path = Path.Combine(AppContext.BaseDirectory, info.Name);
+
+            return path;
+        }
+
         public void Patch()
         {
             Console.WriteLine($"Open Terraria API v{Common.GetVersion()} [lightweight]");
+            Console.WriteLine($"AppContext.BaseDirectory: {AppContext.BaseDirectory}");
 
             SetStatus("Starting...");
 
@@ -126,6 +150,8 @@ namespace OTAPI.Patcher.Targets
             CSharpLoader.OnCompilationContext += RemovePatcherFromCompilation;
             try
             {
+                Directory.CreateDirectory(TemporaryFiles);
+
                 this.AddMarkdownFormatter();
 
                 ClientInstallPath<IInstallDiscoverer> installDiscoverer;
@@ -157,14 +183,16 @@ namespace OTAPI.Patcher.Targets
                 }
 
                 //var freshAssembly = "../../../../OTAPI.Setup/bin/Debug/net6.0/Terraria.exe";
-                var localPath_x86 = "Terraria.x86.exe";
-                var localPath_x64 = "Terraria.x64.exe";
+                var localPath_x86 = Path.Combine(TemporaryFiles, "Terraria.x86.exe");
+                var localPath_x64 = Path.Combine(TemporaryFiles, "Terraria.x64.exe");
 
                 if (File.Exists(localPath_x86)) File.Delete(localPath_x86);
                 if (File.Exists(localPath_x64)) File.Delete(localPath_x64);
                 if (File.Exists("OTAPI.exe")) File.Delete("OTAPI.exe");
 
                 File.Copy(input, localPath_x86);
+
+                Directory.CreateDirectory(InstallDestination);
 
                 // bring across some file from the installation so mono.cecil/mod can find them
                 foreach (var lib in new[]
@@ -181,22 +209,21 @@ namespace OTAPI.Patcher.Targets
                 })
                 {
                     var name = Path.GetFileName(lib);
+                    var dest = Path.Combine(TemporaryFiles, name);
                     var src = installDiscoverer.GetResource(lib);
                     if (File.Exists(src))
                     {
-                        if (File.Exists(name)) File.Delete(name);
-                        File.Copy(src, name);
+                        if (File.Exists(dest)) File.Delete(dest);
+                        File.Copy(src, dest);
                     }
                 }
 
                 // needed for below resolutions
                 Console.WriteLine("[OTAPI] Extracting embedded binaries for assembly resolution...");
                 var extractor = new ResourceExtractor();
-                var embeddedResourcesDir = extractor.Extract(localPath_x86);
+                var embeddedResourcesDir = extractor.Extract(localPath_x86, TemporaryFiles);
 
-                var FNA = "FNA.dll";
-                //var asmFNA = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, FNA));
-                var fnaPath = Path.Combine(Environment.CurrentDirectory, FNA);
+                var fnaPath = "FNA.dll";
                 if (!TryLoad(fnaPath, out Assembly asmFNA)) throw new Exception($"Failed to load: {fnaPath}");
                 var assemblies = new Dictionary<string, Assembly>()
                 {
@@ -323,6 +350,7 @@ namespace OTAPI.Patcher.Targets
                     var dar = (DefaultAssemblyResolver)public_mm.AssemblyResolver;
                     dar.AddSearchDirectory(embeddedResourcesDir);
                     dar.AddSearchDirectory(resourcesPath);
+                    dar.AddSearchDirectory(TemporaryFiles);
 
                     public_mm.Read();
                     public_mm.MapDependencies();
@@ -376,9 +404,9 @@ namespace OTAPI.Patcher.Targets
                 // load modfw plugins. this will load ModFramework.Modules and in turn top level c# scripts
                 CSharpLoader.GlobalAssemblies.Add("OTAPI.dll");
 
-                var fna = "FNA.dll";
+                var fna = ResolveFile("FNA.dll");
                 //var fna = installDiscoverer.GetResource("FNA.dll");
-                if (File.Exists(fna)) CSharpLoader.GlobalAssemblies.Add(fna);
+                if (File.Exists(fna)) CSharpLoader.GlobalAssemblies.Add(ResolveFile(fna));
                 PluginLoader.TryLoad();
 
                 Directory.CreateDirectory("outputs");
@@ -408,6 +436,7 @@ namespace OTAPI.Patcher.Targets
 
                     mm.RelinkAssembly("System.Windows.Forms");
                     mm.RelinkAssembly("ReLogic");
+                    mm.RelinkAssembly("Microsoft.Win32.Registry");
 
                     this.AddPatchMetadata(mm);
                     this.AddEnvMetadata(mm);
@@ -449,7 +478,9 @@ namespace OTAPI.Patcher.Targets
                     CreateRuntimeEvents();
 
                     SetStatus("Relinking to .NET6...");
-                    CoreLibRelinker.PostProcessCoreLib(temp_out, "outputs/OTAPI.Runtime.dll");
+                    CoreLibRelinker.PostProcessCoreLib(InstallDestination, embeddedResourcesDir, new[] {
+                        resourcesPath, BinFolder, Environment.CurrentDirectory
+                    }, temp_out, "outputs/OTAPI.Runtime.dll");
 
                     SetStatus("Writing MD...");
                     var doco_md = $"OTAPI.PC.Client.${installDiscoverer.Target.GetClientPlatform()}.mfw.md";
@@ -493,9 +524,9 @@ namespace OTAPI.Patcher.Targets
                 PluginLoader.Clear();
                 CSharpLoader.GlobalRootDirectory = Path.Combine("patchtime", "csharp");
                 CSharpLoader.GlobalAssemblies.Clear();
-                CSharpLoader.GlobalAssemblies.Add("OTAPI.exe");
-                CSharpLoader.GlobalAssemblies.Add("OTAPI.Runtime.dll");
-                CSharpLoader.GlobalAssemblies.Add("FNA.dll");
+                CSharpLoader.GlobalAssemblies.Add(Path.Combine(InstallDestination, "OTAPI.exe"));
+                CSharpLoader.GlobalAssemblies.Add(Path.Combine(InstallDestination, "OTAPI.Runtime.dll"));
+                CSharpLoader.GlobalAssemblies.Add(ResolveFile("FNA.dll"));
                 PluginLoader.TryLoad();
                 Modifier.Apply(ModType.Write);
             }

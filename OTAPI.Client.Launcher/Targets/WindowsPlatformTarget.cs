@@ -38,13 +38,18 @@ namespace OTAPI.Client.Launcher.Targets
             //{
             //    var otapiFolder = Path.Combine(installPath, "otapi");
             var sourceContentPath = Path.Combine(installPath, "Content");
-            var destContentPath = Path.Combine(Environment.CurrentDirectory, "Content");
+            var clientPath = Path.Combine(Environment.CurrentDirectory, "client");
+#if USE_BIN_FOLDER
+            var destContentPath = Path.Combine(Environment.CurrentDirectory, "bin", "Content");
+#else
+            var destContentPath = Path.Combine(clientPath, "Content");
+            #endif
 
             //    if (!Directory.Exists(otapiFolder))
             //        Directory.CreateDirectory(otapiFolder);
 
             Console.WriteLine(Status = "Installing FNA libs...");
-            this.InstallLibs(Environment.CurrentDirectory);
+            this.InstallLibs(clientPath);
 
             //    Console.WriteLine(Status = "Installing LUA...");
             //    this.InstallLua(otapiFolder);
@@ -56,7 +61,7 @@ namespace OTAPI.Client.Launcher.Targets
             //    this.CopyInstallFiles(otapiFolder);
 
             Console.WriteLine(Status = "Installing Steamworks...");
-            this.InstallSteamworks64(Environment.CurrentDirectory, installPath);
+            this.InstallSteamworks64(clientPath, installPath);
 
             Console.WriteLine(Status = "Copying Terraria Content files, this may take a while...");
             Utils.CopyFiles(sourceContentPath, destContentPath);

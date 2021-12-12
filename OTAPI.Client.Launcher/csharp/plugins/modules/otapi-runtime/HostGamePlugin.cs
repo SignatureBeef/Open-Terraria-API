@@ -34,6 +34,8 @@ using System.Diagnostics;
 using ReLogic.Localization.IME;
 
 using MonoMod.RuntimeDetour;
+using System.Linq;
+using System.Reflection;
 
 class HostGamePlugin
 {
@@ -54,10 +56,31 @@ class HostGamePlugin
     static DialogResult MessageBox_Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
         => MessageBox_Show(text, caption);
 
+    static string ProgramInit(Func<Microsoft.Xna.Framework.LaunchParameters, string> orig, Microsoft.Xna.Framework.LaunchParameters args)
+    {
+        var baseDir = orig(args);
+        Console.WriteLine($"Forcing FNA content redirection from: {baseDir}");
+        System.Diagnostics.Debugger.Break();
+        return Environment.CurrentDirectory;
+    }
+
     [ModFramework.Modification(ModFramework.ModType.Runtime, "Patching windows code to run FNA")]
     static void PatchClient()
     {
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+        var asm = typeof(Microsoft.Xna.Framework.LaunchParameters).Assembly;
+        var FNAPlatform = asm.DefinedTypes.Single(x => x.Name == "SDL2_FNAPlatform");
+        var ProgramInit = FNAPlatform.GetMethod("ProgramInit", BindingFlags.Static | BindingFlags.Public);
+        var dest = typeof(HostGamePlugin).GetMethod("ProgramInit", BindingFlags.Static | BindingFlags.NonPublic);
+
+        if(ProgramInit is null) throw new Exception("Failed to hook FNA platform loading");
+        if(dest is null) throw new Exception("Failed to hook FNA platform receiver");
+
+        new Hook(
+            ProgramInit,
+            dest
+        );
 
         OTAPI.Hooks.Main.Create = () =>
         {

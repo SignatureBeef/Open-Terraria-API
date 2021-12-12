@@ -20,8 +20,10 @@ using Avalonia;
 using Projektanker.Icons.Avalonia;
 using Projektanker.Icons.Avalonia.FontAwesome;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Xilium.CefGlue;
 
@@ -38,16 +40,51 @@ namespace OTAPI.Client.Launcher
             new Targets.LinuxPlatformTarget(),
         };
 
+        static void TryDelete(string file)
+        {
+            if (File.Exists(file))
+                File.Delete(file);
+        }
+        
+        static Dictionary<string, Assembly> _cache = new Dictionary<string, Assembly>();
+
+        static Assembly? Default_Resolving(System.Runtime.Loader.AssemblyLoadContext arg1, AssemblyName arg2)
+        {
+            Console.WriteLine($"Default_Resolving: {arg2?.Name}");
+            if (arg2?.Name is null) return null;
+            if (_cache.TryGetValue(arg2.Name, out Assembly? asm) && asm is not null) return asm;
+
+            var loc = Path.Combine(Environment.CurrentDirectory, "bin", arg2.Name + ".dll");
+            if (File.Exists(loc))
+                asm = arg1.LoadFromAssemblyPath(loc);
+
+            loc = Path.ChangeExtension(loc, ".exe");
+            if (File.Exists(loc))
+                asm = arg1.LoadFromAssemblyPath(loc);
+
+            if (asm is not null)
+                _cache[arg2.Name] = asm;
+
+            return asm;
+        }
+
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
         public static void Main(string[] args)
         {
+            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += Default_Resolving;
+            Start(args);
+        }
+
+        static void Start(string[] args)
+        {
             // FNA added their own native resolver...which doesn't work (or their libs are not correct either)
             // this hack here forces their resolver to not be set, allowing us to configure our own
             // which scans the right folders.
-            if (File.Exists("FNA.dll.config"))
-                File.Delete("FNA.dll.config");
+            TryDelete(Path.Combine(AppContext.BaseDirectory, "FNA.dll.config"));
+            TryDelete(Path.Combine(Environment.CurrentDirectory, "FNA.dll.config"));
+            TryDelete(Path.Combine("bin", "FNA.dll.config"));
 
             // if launching from osx bundle it launches at /
             // we need it to be in MacOS
