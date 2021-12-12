@@ -2,8 +2,8 @@
 MonoMod.dll
 MonoMod.RuntimeDetour.dll
 Newtonsoft.Json.dll
-OTAPI.exe
-OTAPI.Runtime.dll
+client/OTAPI.exe
+client/OTAPI.Runtime.dll
 ImGui.NET.dll
 FNA.dll
 OTAPI.Client.Launcher.dll

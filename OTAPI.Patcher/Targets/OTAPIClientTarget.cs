@@ -151,6 +151,7 @@ namespace OTAPI.Patcher.Targets
             try
             {
                 Directory.CreateDirectory(TemporaryFiles);
+                Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "bin"));
 
                 this.AddMarkdownFormatter();
 
@@ -209,7 +210,7 @@ namespace OTAPI.Patcher.Targets
                 })
                 {
                     var name = Path.GetFileName(lib);
-                    var dest = Path.Combine(TemporaryFiles, name);
+                    var dest = Path.Combine(Environment.CurrentDirectory, "bin", name);
                     var src = installDiscoverer.GetResource(lib);
                     if (File.Exists(src))
                     {

@@ -534,7 +534,7 @@ using System.Runtime.Versioning;
             // ensure to use terrarias steam appid. NOTE GOG wont have this
             var appid = Path.Combine(steam_appid_folder, "steam_appid.txt");
             if (File.Exists(appid))
-                Utils.TransferFile(appid, Path.Combine(installPath, "steam_appid.txt"));
+                Utils.TransferFile(appid, Path.Combine(Environment.CurrentDirectory, "steam_appid.txt"));
 
             Utils.TransferFile(Path.Combine(osx_lin, "libsteam_api.so"), Path.Combine(installPath, "lib64", "libsteam_api.so"));
 

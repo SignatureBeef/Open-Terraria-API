@@ -50,7 +50,6 @@ namespace OTAPI.Client.Launcher
 
         static Assembly? Default_Resolving(System.Runtime.Loader.AssemblyLoadContext arg1, AssemblyName arg2)
         {
-            Console.WriteLine($"Default_Resolving: {arg2?.Name}");
             if (arg2?.Name is null) return null;
             if (_cache.TryGetValue(arg2.Name, out Assembly? asm) && asm is not null) return asm;
 

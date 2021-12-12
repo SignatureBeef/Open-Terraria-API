@@ -60,8 +60,7 @@ class HostGamePlugin
     {
         var baseDir = orig(args);
         Console.WriteLine($"Forcing FNA content redirection from: {baseDir}");
-        System.Diagnostics.Debugger.Break();
-        return Environment.CurrentDirectory;
+        return Path.Combine(Environment.CurrentDirectory, "client");
     }
 
     [ModFramework.Modification(ModFramework.ModType.Runtime, "Patching windows code to run FNA")]

@@ -36,7 +36,7 @@ namespace OTAPI.Client.Launcher.Actions
 
             NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep);
 
-            var steam = Path.Combine(Environment.CurrentDirectory, "Steamworks.NET.dll");
+            var steam = Path.Combine(Environment.CurrentDirectory, "client", "Steamworks.NET.dll");
             if (File.Exists(steam))
                 NativeLibrary.SetDllImportResolver(System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyPath(steam), ResolveNativeDep);
 
@@ -51,7 +51,7 @@ namespace OTAPI.Client.Launcher.Actions
 
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
-            Terraria = LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "OTAPI.exe"));
+            Terraria = LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "client", "OTAPI.exe"));
 
             Terraria.EntryPoint!.Invoke(null, new object[] { args });
         }
@@ -95,10 +95,13 @@ namespace OTAPI.Client.Launcher.Actions
 
             if (!File.Exists(path))
                 path = Path.Combine(Environment.CurrentDirectory, "bin", filename);
-                
+
             if (!File.Exists(path))
                 path = Path.Combine(AppContext.BaseDirectory, filename);
-                
+
+            if (!File.Exists(path))
+                path = Path.Combine(Environment.CurrentDirectory, "client", filename);
+
             return path;
         }
 
@@ -176,7 +179,11 @@ namespace OTAPI.Client.Launcher.Actions
 
             IEnumerable<string> matches = Enumerable.Empty<string>();
 
-            foreach (var basePath in new[] { Environment.CurrentDirectory, AppContext.BaseDirectory })
+            foreach (var basePath in new[] {
+                Environment.CurrentDirectory,
+                AppContext.BaseDirectory,
+                Path.Combine(Environment.CurrentDirectory, "client")
+            })
             {
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
