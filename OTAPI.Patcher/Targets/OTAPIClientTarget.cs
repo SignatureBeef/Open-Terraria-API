@@ -41,8 +41,8 @@ namespace OTAPI.Patcher.Targets
         }
 
         public string DisplayText { get; } = "OTAPI Client (lightweight)";
-        public string InstallDestination { get; } = "client";
-        public string TemporaryFiles { get; } = "temp";
+        public string InstallDestination { get; } = Path.Combine(Environment.CurrentDirectory, "client");
+        public string TemporaryFiles { get; } = Path.Combine(Environment.CurrentDirectory, "temp");
 
         private MarkdownDocumentor markdownDocumentor = new ModificationMdDocumentor();
 
@@ -355,7 +355,7 @@ namespace OTAPI.Patcher.Targets
 
                     public_mm.Read();
                     public_mm.MapDependencies();
-                    public_mm.ReadMod(this.GetType().Assembly.Location);
+                    public_mm.ReadMod(ResolveFile("OTAPI.Patcher.dll"));
                     public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "ReLogic.dll"));
                     public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "RailSDK.Net.dll"));
 

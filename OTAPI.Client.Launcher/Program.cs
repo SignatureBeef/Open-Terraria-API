@@ -45,7 +45,7 @@ namespace OTAPI.Client.Launcher
             if (File.Exists(file))
                 File.Delete(file);
         }
-        
+
         static Dictionary<string, Assembly> _cache = new Dictionary<string, Assembly>();
 
         static Assembly? Default_Resolving(System.Runtime.Loader.AssemblyLoadContext arg1, AssemblyName arg2)
@@ -84,15 +84,6 @@ namespace OTAPI.Client.Launcher
             TryDelete(Path.Combine(AppContext.BaseDirectory, "FNA.dll.config"));
             TryDelete(Path.Combine(Environment.CurrentDirectory, "FNA.dll.config"));
             TryDelete(Path.Combine("bin", "FNA.dll.config"));
-
-            // if launching from osx bundle it launches at /
-            // we need it to be in MacOS
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                var first = Path.GetDirectoryName(Environment.GetCommandLineArgs().FirstOrDefault());
-                if (first is not null && Directory.Exists(first))
-                    Environment.CurrentDirectory = first;
-            }
 
             // start the launcher, then OTAPI if requested
             BuildAvaloniaApp()

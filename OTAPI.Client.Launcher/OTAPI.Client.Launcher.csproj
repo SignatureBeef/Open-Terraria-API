@@ -5,7 +5,8 @@
 		<Platforms>x64</Platforms>
 		<Nullable>enable</Nullable>
 		<DebugType>embedded</DebugType>
-		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<!-- <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract> -->
+		<!-- <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract> -->
 		<RunPostBuildEvent>Always</RunPostBuildEvent>
 	</PropertyGroup>
 	<!-- <PropertyGroup Condition="'$(PublishSingleFile)' == 'true' Or '$(PublishReadyToRun)' == 'true'">
@@ -50,7 +51,9 @@
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 		</ProjectReference>
 		<ProjectReference Include="..\OTAPI.Common\OTAPI.Common.csproj" />
-		<ProjectReference Include="..\OTAPI.Patcher\OTAPI.Patcher.csproj" />
+		<ProjectReference Include="..\OTAPI.Patcher\OTAPI.Patcher.csproj">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</ProjectReference>
 	</ItemGroup>
 	<!-- <ItemGroup>
 		<Reference Include="OTAPI.Runtime" Condition="Exists('.\bin\x64\Debug\net6.0\OTAPI.Runtime.dll')">
@@ -230,5 +233,10 @@
 	<Target Name="PatchAppHostAfterPublish" AfterTargets="Publish" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
 		<PatchAppHost HostExe="$(PublishDir)OTAPI.Client.Launcher.exe" />
 		<Message Text="Patched OTAPI.Client.Launcher.exe host for ./bin redirect" Importance="High" />
+	</Target>
+	<Target Name="CreateScriptAfterPublish" AfterTargets="Publish" Condition="'$(RuntimeIdentifier)' != 'win-x64'">
+		<Copy SourceFiles="$(ProjectDir)OTAPI.sh" DestinationFolder="$(PublishDir)" />
+        <Exec Command="chmod +x $(PublishDir)OTAPI.sh"/>
+        <Message Text="Run the launcher with: cd bin/$(Configuration)/$(TargetFramework)/$(RuntimeIdentifier)/publish &amp;&amp; ./OTAPI.sh" Importance="High" />
 	</Target>
 </Project>

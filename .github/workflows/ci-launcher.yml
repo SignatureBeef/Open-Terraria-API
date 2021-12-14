@@ -71,11 +71,11 @@ jobs:
       - name: Build and publish macos
         run: |
             cd OTAPI.Client.Launcher
-            dotnet publish -r osx.10.11-x64 --framework net6.0 -p:PublishReadyToRun=true --self-contained true -c Release
+            dotnet publish -r osx-x64 --framework net6.0 -p:PublishReadyToRun=true --self-contained true -c Release
             mkdir OTAPI.app
             mkdir OTAPI.app/Contents
             mkdir OTAPI.app/Contents/Resources
-            mv bin/Release/net6.0/osx.10.11-x64/publish OTAPI.app/Contents/MacOS
+            mv bin/Release/net6.0/osx-x64/publish OTAPI.app/Contents/MacOS
             cp ../docs/MacOS.Info.plist OTAPI.app/Contents/Info.plist
             zip -r ../OTAPI_MacOS.zip OTAPI.app
 

@@ -38,10 +38,11 @@ namespace OTAPI.Client.Launcher.Targets
             //{
             //    var otapiFolder = Path.Combine(installPath, "otapi");
             var sourceContentPath = Path.Combine(installPath, "Resources", "Content");
+            var clientPath = Path.Combine(Environment.CurrentDirectory, "client");
             #if USE_BIN_FOLDER
             var destContentPath = Path.Combine(Environment.CurrentDirectory, "bin", "Content");
             #else
-            var destContentPath = Path.Combine(Environment.CurrentDirectory, "Content");
+            var destContentPath = Path.Combine(clientPath, "Content");
             #endif
             var macOS = Path.Combine(installPath, "MacOS");
 
