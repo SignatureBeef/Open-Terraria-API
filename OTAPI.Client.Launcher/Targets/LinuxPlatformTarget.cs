@@ -49,7 +49,7 @@ namespace OTAPI.Client.Launcher.Targets
             //        Directory.CreateDirectory(otapiFolder);
 
             Console.WriteLine(Status = "Installing FNA libs...");
-            this.InstallLibs(Environment.CurrentDirectory);
+            this.InstallLibs(clientPath);
 
             //    Console.WriteLine(Status = "Installing LUA...");
             //    this.InstallLua(otapiFolder);
@@ -61,7 +61,7 @@ namespace OTAPI.Client.Launcher.Targets
             //    this.CopyInstallFiles(otapiFolder);
 
             Console.WriteLine(Status = "Installing Steamworks...");
-            this.InstallSteamworks64(Environment.CurrentDirectory, installPath);
+            this.InstallSteamworks64(clientPath, installPath);
 
             Console.WriteLine(Status = "Copying Terraria Content files, this may take a while...");
             Utils.CopyFiles(sourceContentPath, destContentPath);

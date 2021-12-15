@@ -36,9 +36,9 @@ namespace OTAPI.Client.Launcher.Actions
 
             NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep);
 
-            var steam = Path.Combine(Environment.CurrentDirectory, "client", "Steamworks.NET.dll");
-            if (File.Exists(steam))
-                NativeLibrary.SetDllImportResolver(System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyPath(steam), ResolveNativeDep);
+            var steam = ResolveFile("Steamworks.NET.dll");
+            if (!File.Exists(steam)) throw new Exception("Failed to find Steamworks.NET.dll");
+            NativeLibrary.SetDllImportResolver(System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyPath(steam), ResolveNativeDep);
 
             GC.Collect();
 
