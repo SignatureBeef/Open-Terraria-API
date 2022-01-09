@@ -94,6 +94,7 @@ namespace OTAPI
                     Size = size,
                     Callback = callback,
                     State = state,
+                    RemoteClient = remoteClient
                 };
                 SendBytes?.Invoke(null, args);
                 if (args.Result != HookResult.Cancel)
