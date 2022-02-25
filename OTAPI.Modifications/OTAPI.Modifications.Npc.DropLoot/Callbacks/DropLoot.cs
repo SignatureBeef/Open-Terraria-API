@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
 
 namespace OTAPI.Callbacks.Terraria
 {
@@ -7,6 +8,7 @@ namespace OTAPI.Callbacks.Terraria
 		public static bool DropLootBegin
 		(
 			ref int itemId,
+			ref IEntitySource source,
 			ref Vector2 pos,
 			ref Vector2 randomBox,
 			ref int Type,
@@ -26,6 +28,7 @@ namespace OTAPI.Callbacks.Terraria
 			var result = DropLootBegin
 			(
 				ref itemId,
+				ref source,
 				ref x,
 				ref y,
 				ref width,
@@ -49,6 +52,7 @@ namespace OTAPI.Callbacks.Terraria
 		public static bool DropLootBegin
 		(
 			ref int itemId,
+			ref IEntitySource source,
 			ref Vector2 pos,
 			ref int width,
 			ref int height,
@@ -67,6 +71,7 @@ namespace OTAPI.Callbacks.Terraria
 			var result = DropLootBegin
 			(
 				ref itemId,
+				ref source,
 				ref x,
 				ref y,
 				ref width,
@@ -89,6 +94,7 @@ namespace OTAPI.Callbacks.Terraria
 		internal static bool DropLootBegin
 		(
 			ref int itemId,
+			ref IEntitySource source,
 			ref int x,
 			ref int y,
 			ref int width,
@@ -105,6 +111,7 @@ namespace OTAPI.Callbacks.Terraria
 			var res = Hooks.Npc.PreDropLoot?.Invoke
 			(
 				npc,
+				ref source,
 				ref itemId,
 				ref x,
 				ref y,
@@ -123,6 +130,7 @@ namespace OTAPI.Callbacks.Terraria
 
 		internal static void DropLootEnd
 		(
+			IEntitySource source,
 			Vector2 pos,
 			Vector2 randomBox,
 			int type,
@@ -135,6 +143,7 @@ namespace OTAPI.Callbacks.Terraria
 		) => Hooks.Npc.PostDropLoot?.Invoke
 		(
 			npc,
+			source,
 			(int)pos.X,
 			(int)pos.Y,
 			(int)randomBox.X,
@@ -149,6 +158,7 @@ namespace OTAPI.Callbacks.Terraria
 
 		internal static void DropLootEnd
 		(
+			IEntitySource source,
 			Vector2 pos,
 			int width,
 			int height,
@@ -162,6 +172,7 @@ namespace OTAPI.Callbacks.Terraria
 		) => Hooks.Npc.PostDropLoot?.Invoke
 		(
 			npc,
+			source,
 			(int)pos.X,
 			(int)pos.Y,
 			width,
@@ -176,6 +187,7 @@ namespace OTAPI.Callbacks.Terraria
 
 		internal static void DropLootEnd
 		(
+			IEntitySource source,
 			int x,
 			int y,
 			int width,
@@ -190,6 +202,7 @@ namespace OTAPI.Callbacks.Terraria
 		) => Hooks.Npc.PostDropLoot?.Invoke
 		(
 			npc,
+			source,
 			x,
 			y,
 			width,

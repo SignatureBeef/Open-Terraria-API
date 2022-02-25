@@ -1,4 +1,6 @@
-﻿namespace OTAPI
+﻿using Terraria.DataStructures;
+
+namespace OTAPI
 {
     public static partial class Hooks
     {
@@ -8,6 +10,7 @@
             public delegate HookResult PreDropLootHandler
 			(
 				global::Terraria.NPC npc,
+				ref IEntitySource source,
 				ref int itemId,
                 ref int x,
                 ref int y,
@@ -23,6 +26,7 @@
             public delegate void PostDropLootHandler
 			(
 				global::Terraria.NPC npc,
+				IEntitySource source,
 				int x,
                 int y,
                 int width,

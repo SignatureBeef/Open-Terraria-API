@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.3.2, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.3.4, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking Npc.DropBossBag\\Item...";
 
@@ -25,7 +25,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 		{
 			var vanilla = SourceDefinition.Type("Terraria.NPC").Method("DropItemInstanced");
 			var callback = this.Method(
-				() => OTAPI.Callbacks.Terraria.Npc.BossBagItem(0, 0, 0, 0, 0, 0, false, 0, false, false, null)
+				() => OTAPI.Callbacks.Terraria.Npc.BossBagItem(null, 0, 0, 0, 0, 0, 0, false, 0, false, false, null)
 			);
 
 			var il = vanilla.Body.GetILProcessor();

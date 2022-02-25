@@ -10,13 +10,16 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.3.2, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.3.4, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking Npc.NPCLoot\\SendData...";
 
 		public override void Run()
 		{
-			var npcLoot = this.Method(() => (new Terraria.NPC()).NPCLootOld());
+			// Stopping code from executing, as it is outdated. There has been changes to NPCLoot, NPCLootOld was dropped, and the target point for injection has changed. 
+			// Death said he considers to drop the DropLoot hoooks alltogether. They have been inactive since 1.4.
+			return;
+			var npcLoot = this.Method(() => (new Terraria.NPC()).NPCLoot());
 
 			//In the NPCLoot method there is a call to send packet 88 (after item drop).
 			//We will also want to hook this in the case the returned value from DropLoot

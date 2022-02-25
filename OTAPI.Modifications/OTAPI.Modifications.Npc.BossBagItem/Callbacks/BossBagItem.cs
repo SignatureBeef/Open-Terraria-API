@@ -1,4 +1,6 @@
-﻿namespace OTAPI.Callbacks.Terraria
+﻿using Terraria.DataStructures;
+
+namespace OTAPI.Callbacks.Terraria
 {
     internal static partial class Npc
     {
@@ -8,6 +10,7 @@
         /// </summary>
         internal static int BossBagItem
         (
+            IEntitySource source,
             int X,
             int Y,
             int Width,
@@ -27,6 +30,7 @@
             if (Hooks.Npc.BossBagItem?.Invoke
             (
                 npc,
+                ref source,
                 ref X,
                 ref Y,
                 ref Width,
@@ -39,7 +43,7 @@
                 ref reverseLookup
             ) == HookResult.Cancel) return -1; //This will be checked for in the patcher using a custom if block.
 
-            return global::Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+            return global::Terraria.Item.NewItem(source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
         }
     }
 }
