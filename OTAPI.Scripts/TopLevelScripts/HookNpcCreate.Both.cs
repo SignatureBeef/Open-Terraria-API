@@ -24,6 +24,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
 using System;
+using Terraria.DataStructures;
 
 /// <summary>
 /// @doc Creates Hooks.NPC.Create. Allows plugins to create NPC instances.
@@ -31,10 +32,11 @@ using System;
 [Modification(ModType.PreMerge, "Hooking Terraria.NPC.NewNPC(Create)")]
 void HookNpcCreate(MonoModder modder)
 {
-    var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeCreate(default, default, default, default, default, default, default, default, default));
 #if TerrariaServer_EntitySourcesActive
+    var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeCreate(default, default, default, default, default, default, default, default, default, default));
     var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default, default));
 #else
+    var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeCreate(default, default, default, default, default, default, default, default, default));
     var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default));
 #endif
 
@@ -61,6 +63,9 @@ namespace OTAPI
             public class CreateEventArgs : EventArgs
             {
                 public Terraria.NPC Npc { get; set; }
+#if TerrariaServer_EntitySourcesActive
+                public IEntitySource Source { get; set; }
+#endif
 
                 public int X { get; set; }
                 public int Y { get; set; }
@@ -74,10 +79,17 @@ namespace OTAPI
             }
             public static event EventHandler<CreateEventArgs> Create;
 
+#if TerrariaServer_EntitySourcesActive
+            public static Terraria.NPC InvokeCreate(IEntitySource source, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
+#else
             public static Terraria.NPC InvokeCreate(int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
+#endif
             {
                 var args = new CreateEventArgs()
                 {
+#if TerrariaServer_EntitySourcesActive
+                    Source = source,
+#endif
                     X = X,
                     Y = Y,
                     Type = Type,
