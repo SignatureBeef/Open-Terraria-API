@@ -12,14 +12,14 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.3.2, Culture=neutral, PublicKeyToken=null",
+			"TerrariaServer, Version=1.4.3.4, Culture=neutral, PublicKeyToken=null",
 			"Terraria, Version=1.3.4.4, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking npc spawning...";
 
 		public override void Run()
 		{
-			var vanilla = this.Method(() => Terraria.NPC.NewNPC(0, 0, 0, 0, 0, 0, 0, 0, 0));
+			var vanilla = this.Method(() => Terraria.NPC.NewNPC(null, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			int tmp = 0;
 			var callback = this.Method(() => OTAPI.Callbacks.Terraria.Npc.Spawn(ref tmp));
 			var importedCallback = SourceDefinition.MainModule.Import(callback);
@@ -41,7 +41,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Npc
 			//Find the `if (Type == 50) offset instruction so we can use it
 			//as our insertion point
 			var insInsertionPoint = vanilla.Body.Instructions.Single(i =>
-				i.OpCode == OpCodes.Ldarg_2
+				i.OpCode == OpCodes.Ldarg_3
 				&& i.Next.OpCode == OpCodes.Ldc_I4_S
 				&& i.Next.Operand.Equals((sbyte)50)
 				&& i.Next.Next.OpCode == OpCodes.Bne_Un_S

@@ -8,6 +8,7 @@
             public delegate HookResult BossBagItemHandler
             (
                 global::Terraria.NPC npc,
+                ref Terraria.DataStructures.IEntitySource source,
                 ref int X,
                 ref int Y,
                 ref int Width,
