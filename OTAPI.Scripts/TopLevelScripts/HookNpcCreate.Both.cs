@@ -32,7 +32,11 @@ using System;
 void HookNpcCreate(MonoModder modder)
 {
     var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeCreate(default, default, default, default, default, default, default, default, default));
+#if TerrariaServer_EntitySourcesActive
+    var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default, default));
+#else
     var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default));
+#endif
 
     NewNPC.GotoNext(
         i => i.OpCode == OpCodes.Newobj && i.Operand is MethodReference mr && mr.Name == ".ctor" && mr.DeclaringType.FullName == "Terraria.NPC"
