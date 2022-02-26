@@ -33,7 +33,11 @@ using System.Linq;
 [MonoModIgnore]
 void HookNpcSpawn(MonoModder modder)
 {
+#if TerrariaServer_EntitySourcesActive
+    var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default, default));
+#else
     var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default));
+#endif
 
     NewNPC.GotoNext(
         i => i.OpCode == OpCodes.Stfld && i.Operand is FieldReference fieldReference && fieldReference.Name == "target" && fieldReference.DeclaringType.FullName == "Terraria.NPC"

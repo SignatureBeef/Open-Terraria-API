@@ -11,6 +11,7 @@ namespace OTAPI.Common
         public static IEnumerable<string> WindowsClient = new[] {
             "F3E96856E497906842C7C88C97D320EB4669A199" // 1.4.2.3
             ,"81B3E10FCDCA2535F4F00D53F30F18C4F32ECBC7" // 1.4.3.2
+            ,"AC183B8C2CC86FC578D348FE5DB6F5DBB0A26424" // 1.4.3.4
         };
         public static IEnumerable<string> MacOSClient = Enumerable.Empty<string>();
         public static IEnumerable<string> LinuxClient = Enumerable.Empty<string>();

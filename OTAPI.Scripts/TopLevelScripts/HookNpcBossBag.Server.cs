@@ -120,7 +120,11 @@ namespace OTAPI
                 if (args.Result == HookResult.Cancel)
                     return -1;
 
+#if TerrariaServer_EntitySourcesActive
+                return Terraria.Item.NewItem(npc.GetItemSource_Loot(), args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);
+#else
                 return Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);
+#endif
             }
         }
     }

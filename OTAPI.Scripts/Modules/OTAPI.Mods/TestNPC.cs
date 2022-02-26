@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.DataStructures;
 
 namespace OTAPI.Mods
 {
@@ -74,7 +75,11 @@ namespace OTAPI.Mods
             orig(self, context);
 
             Console.WriteLine($"[{GetName()}] Player spawned netMode {Terraria.Main.netMode}");
+#if TerrariaServer_EntitySourcesActive
+            Terraria.NPC.NewNPC(new EntitySource_DebugCommand(), Terraria.Main.spawnTileX * 16, Terraria.Main.spawnTileY * 16, this.TypeID);
+#else
             Terraria.NPC.NewNPC(Terraria.Main.spawnTileX * 16, Terraria.Main.spawnTileY * 16, this.TypeID);
+#endif
         }
 
         static void InlineTest()
@@ -94,7 +99,11 @@ namespace OTAPI.Mods
                         orig(self, context);
 
                         Console.WriteLine($"[{m.GetName()}] Player spawned netMode {Terraria.Main.netMode}");
+#if TerrariaServer_EntitySourcesActive
+                        Terraria.NPC.NewNPC(new EntitySource_DebugCommand(), Terraria.Main.spawnTileX * 16, Terraria.Main.spawnTileY * 16, m.TypeID);
+#else
                         Terraria.NPC.NewNPC(Terraria.Main.spawnTileX * 16, Terraria.Main.spawnTileY * 16, m.TypeID);
+#endif
                     };
                 };
                 m.OnSetDefaults += (s, e) =>

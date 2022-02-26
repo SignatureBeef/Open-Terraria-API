@@ -94,7 +94,11 @@ namespace OTAPI
                 DropLoot?.Invoke(null, args);
                 if (args.Result != HookResult.Cancel)
                 {
+#if TerrariaServer_EntitySourcesActive
+                    args.ItemIndex = Terraria.Item.NewItem(instance.GetItemSource_Loot(), X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+#else
                     args.ItemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+#endif
                     args.Event = HookEvent.After;
                     DropLoot?.Invoke(null, args);
                 }
