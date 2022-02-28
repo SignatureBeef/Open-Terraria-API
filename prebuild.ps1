@@ -44,7 +44,7 @@ If(Test-Path $zipSavePath)
 	Remove-Item $zipSavePath
 }
 
-$downloadUrl = "https://terraria.org/api/download/pc-dedicated-server/terraria-server-1434.zip";
+$downloadUrl = "https://terraria.org/api/download/pc-dedicated-server/terraria-server-1435.zip";
 
 #Download the latest zip
 Write-Host "Downloading $downloadUrl";
@@ -66,7 +66,7 @@ Write-Host "Extracting TerrariaServer.exe from $zipSavePath";
 $zip = [System.IO.Compression.ZipFile]::OpenRead($zipSavePath); #not working on PASH yet :c
 
 #Get the particular .exe we are after
-$entry = $zip.GetEntry("1434/Windows/TerrariaServer.exe");
+$entry = $zip.GetEntry("1435/Windows/TerrariaServer.exe");
 
 #Write the new zip to disk
 $output = New-Object IO.StreamWriter $serverSaveFile;

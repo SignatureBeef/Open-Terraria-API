@@ -17,7 +17,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.3.4, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.3.5, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking statue spawning...";
 		public override void Run()

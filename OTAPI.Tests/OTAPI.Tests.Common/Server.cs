@@ -180,6 +180,7 @@ namespace OTAPI.Tests.Common
             };
             Hooks.Npc.PreDropLoot = (
                  global::Terraria.NPC npc,
+                 ref global::Terraria.DataStructures.IEntitySource source,
                  ref int itemId,
                  ref int x,
                  ref int y,
@@ -198,16 +199,17 @@ namespace OTAPI.Tests.Common
 
             Hooks.Npc.BossBagItem = (
                 global::Terraria.NPC npc,
-            ref int X,
-            ref int Y,
-            ref int Width,
-             ref int Height,
-             ref int Type,
-             ref int Stack,
-             ref bool noBroadcast,
-             ref int pfix,
-            ref bool noGrabDelay,
-             ref bool reverseLookup) =>
+                ref global::Terraria.DataStructures.IEntitySource source,
+                ref int X,
+                ref int Y,
+                ref int Width,
+                ref int Height,
+                ref int Type,
+                ref int Stack,
+                ref bool noBroadcast,
+                ref int pfix,
+                ref bool noGrabDelay,
+                ref bool reverseLookup) =>
             {
                 LogHook(nameof(Hooks.Npc.BossBagItem));
                 return HookResult.Continue;
