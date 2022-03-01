@@ -45,7 +45,7 @@ namespace OTAPI.Patcher.Targets
         public virtual string NuSpecFilePath { get; } = "../../../../docs/OTAPI.PC.nuspec";
         public virtual string MdFileName { get; } = "OTAPI.PC.Server.mfw.md";
 
-        public virtual string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/pc-dedicated-server/terraria-server-1435.zip";
+        public virtual string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/pc-dedicated-server/terraria-server-1436.zip";
         public virtual string ArtifactName { get; } = "artifact-pc";
 
         private MarkdownDocumentor markdownDocumentor = new ModificationMdDocumentor();
