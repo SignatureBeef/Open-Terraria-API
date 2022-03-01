@@ -41,7 +41,11 @@ void HookNpcLoot(MonoModder modder)
     );
 
     NewNPC.Emit(OpCodes.Ldarg_0); // NPC instance
+#if TerrariaServer_EntitySourcesActive
+    NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default, default, default));
+#else
     NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default, default));
+#endif
 }
 
 namespace OTAPI
@@ -55,6 +59,9 @@ namespace OTAPI
                 public HookEvent Event { get; set; }
                 public HookResult? Result { get; set; }
 
+#if TerrariaServer_EntitySourcesActive
+                public Terraria.DataStructures.IEntitySource Source { get; set; }
+#endif
                 public Terraria.NPC Npc { get; set; }
                 public int ItemIndex { get; set; }
                 public int X { get; set; }
@@ -70,13 +77,20 @@ namespace OTAPI
             }
             public static event EventHandler<DropLootEventArgs> DropLoot;
 
+#if TerrariaServer_EntitySourcesActive
+            public static int InvokeDropLoot(Terraria.DataStructures.IEntitySource source, int X, int Y, int Width, int Height, int Type,
+#else
             public static int InvokeDropLoot(int X, int Y, int Width, int Height, int Type,
+#endif
                 int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup,
                 Terraria.NPC instance)
             {
                 var args = new DropLootEventArgs()
                 {
                     Event = HookEvent.Before,
+#if TerrariaServer_EntitySourcesActive
+                    Source = source,
+#endif
                     X = X,
                     Y = Y,
                     Width = Width,
@@ -95,7 +109,7 @@ namespace OTAPI
                 if (args.Result != HookResult.Cancel)
                 {
 #if TerrariaServer_EntitySourcesActive
-                    args.ItemIndex = Terraria.Item.NewItem(instance.GetItemSource_Loot(), X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                    args.ItemIndex = Terraria.Item.NewItem(args.Source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
 #else
                     args.ItemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
 #endif
