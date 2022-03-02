@@ -22,11 +22,12 @@ using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.Audio
 {
-    public class AudioEngine
-    {
+    public class AudioEngine : IDisposable
+	{
         public AudioEngine(string settingsFile) { }
 
 		public void Update() { }
+		public void Dispose() { }
 	}
 
 	[Serializable]

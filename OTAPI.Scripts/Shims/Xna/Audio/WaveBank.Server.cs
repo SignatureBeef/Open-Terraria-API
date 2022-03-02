@@ -18,9 +18,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0436 // Type conflicts with imported type
 
+using System;
+
 namespace Microsoft.Xna.Framework.Audio
 {
-    public class WaveBank
+    public class WaveBank : IDisposable
     {
         public static WaveBank[] Array;
 
@@ -28,5 +30,6 @@ namespace Microsoft.Xna.Framework.Audio
 
         public WaveBank(AudioEngine audioEngine, string nonStreamingWaveBankFilename) { }
         public WaveBank(AudioEngine audioEngine, string streamingWaveBankFilename, int offset, short packetsize) { }
+        public void Dispose() { }
     }
 }
