@@ -8,16 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.35-alpha" />
-    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.35-alpha" />
-    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.35-alpha" />
-    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.35-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.37-alpha" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.37-alpha" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.37-alpha" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.37-alpha" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="System.IO.Packaging" Version="6.0.0" />
     <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
     <PackageReference Include="Mono.Cecil" Version="0.11.4" />
-	<PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.12.11.1" />
+	<PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="22.3.23.4" />
   </ItemGroup>
 
   <ItemGroup>
