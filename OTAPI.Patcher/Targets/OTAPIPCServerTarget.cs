@@ -85,6 +85,8 @@ namespace OTAPI.Patcher.Targets
             markdownDocumentor.Dispose();
 
             this.WriteCIArtifacts(ArtifactName);
+
+            Console.WriteLine($"Patching completed");
         }
 
         #region Produce OTAPI

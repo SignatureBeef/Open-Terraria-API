@@ -35,13 +35,13 @@
 		  <dependency id="Newtonsoft.Json" version="13.0.1" />
 		  <dependency id="MonoMod" version="22.3.23.4" />
 		  <dependency id="MonoMod.RuntimeDetour" version="22.3.23.4" />
-		  <dependency id="ModFramework" version="1.0.37-alpha" />
+		  <dependency id="ModFramework" version="1.0.38-alpha" />
 	  </group>
 	  <group targetFramework="netstandard2.0">
 		  <dependency id="Newtonsoft.Json" version="13.0.1" />
 		  <dependency id="MonoMod" version="22.3.23.4" />
 		  <dependency id="MonoMod.RuntimeDetour" version="22.3.23.4" />
-		  <dependency id="ModFramework" version="1.0.37-alpha" />
+		  <dependency id="ModFramework" version="1.0.38-alpha" />
 	  </group>
     </dependencies>
   </metadata>
