@@ -13,10 +13,10 @@
 	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>-->
 	<ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.38-alpha" />
-    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.38-alpha" />
-    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.38-alpha" />
-    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.38-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.39-alpha" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.39-alpha" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.39-alpha" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.39-alpha" />
     <PackageReference Include="Mono.Cecil" Version="0.11.4" />
     <PackageReference Include="MonoMod" Version="22.3.23.4" />
     <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="22.3.23.4" />
