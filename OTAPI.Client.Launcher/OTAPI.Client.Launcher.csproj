@@ -72,7 +72,7 @@
 		<PackageReference Include="ModFramework.Modules.Lua" Version="1.0.35-alpha" GeneratePathProperty="true" />
 		<PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="21.12.11.1" />
 		<PackageReference Include="MonoMod" Version="21.12.11.1" />
-		<PackageReference Include="SharpZipLib" Version="1.3.2" />
+		<PackageReference Include="SharpZipLib" Version="1.3.3" />
 		<PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
 	</ItemGroup>
