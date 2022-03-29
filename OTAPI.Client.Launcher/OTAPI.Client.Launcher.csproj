@@ -62,7 +62,7 @@
 		</Reference>
 	</ItemGroup> -->
 	<ItemGroup>
-		<PackageReference Include="ImGui.NET" Version="1.87.3" />
+		<PackageReference Include="ImGui.NET" Version="1.87.3" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.2.3" />
 		<PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.2.3" />
 		<PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.2.3" />
@@ -140,6 +140,7 @@
 		<Copy SourceFiles="@(ClientLua)" DestinationFolder="$(TargetDir)lua/%(RecursiveDir)" />
 
 		<Copy SourceFiles="$(PkgMicrosoft_Win32_Registry)/lib/netstandard2.0/Microsoft.Win32.Registry.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(PkgImGui_NET)/runtimes/osx-universal/native/libcimgui.dylib" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="false" />
 	</Target>
 	<Target Name="AfterPrepareForPublish" AfterTargets="Publish">
 		<Message Text="Copying release OTAPI patch files" Importance="high" />
@@ -152,7 +153,7 @@
 		<Copy SourceFiles="$(PkgModFramework_Modules_CSharp)/lib/$(TargetFramework)/ModFramework.Modules.CSharp.dll" DestinationFolder="$(PublishDir)modifications" SkipUnchangedFiles="false" />
 		<Copy SourceFiles="$(PkgModFramework_Modules_ClearScript)/lib/$(TargetFramework)/ModFramework.Modules.ClearScript.dll" DestinationFolder="$(PublishDir)modifications" SkipUnchangedFiles="false" />
 		<Copy SourceFiles="$(PkgModFramework_Modules_Lua)/lib/$(TargetFramework)/ModFramework.Modules.Lua.dll" DestinationFolder="$(PublishDir)modifications" SkipUnchangedFiles="false" />
-
+		<Copy SourceFiles="$(PkgImGui_NET)/runtimes/osx-universal/native/libcimgui.dylib" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false" />
 
 		<MakeDir Directories="$(PublishDir)patchtime/" />
 		<RemoveDir Directories="$(PublishDir)patchtime/" />
