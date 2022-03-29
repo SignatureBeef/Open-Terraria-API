@@ -519,7 +519,7 @@ using System.Runtime.Versioning;
 
         public static void InstallSteamworks64(this IPlatformTarget target, string installPath, string steam_appid_folder)
         {
-            var zipPath = target.DownloadZip("https://github.com/rlabrecque/Steamworks.NET/releases/download/15.0.1/Steamworks.NET-Standalone_15.0.1.zip", "steamworks64");
+            var zipPath = target.DownloadZip("https://github.com/rlabrecque/Steamworks.NET/releases/download/20.1.0/Steamworks.NET-Standalone_20.1.0.zip", "steamworks64");
             var folderName = Path.GetFileNameWithoutExtension(zipPath);
             if (Directory.Exists(folderName)) Directory.Delete(folderName, true);
             ZipFile.ExtractToDirectory(zipPath, folderName);
