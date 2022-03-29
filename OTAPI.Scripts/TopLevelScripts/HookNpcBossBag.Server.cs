@@ -35,7 +35,7 @@ void HookNpcBossBag(ModFramework.ModFwModder modder)
 
     var csr = modder.GetILCursor(() => (new Terraria.NPC()).DropItemInstanced(default, default, 0, 0, false));
     var callback = csr.Module.ImportReference(
-#if TerrariaServer_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
         modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(null, 0, 0, 0, 0, 0, 0, false, 0, false, false, null))
 #else
         modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(0, 0, 0, 0, 0, 0, false, 0, false, false, null))
@@ -78,7 +78,7 @@ namespace OTAPI
             {
                 public HookResult? Result { get; set; }
 
-#if TerrariaServer_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
                 public Terraria.DataStructures.IEntitySource Source { get; set; }
 #endif
 
@@ -97,7 +97,7 @@ namespace OTAPI
             public static event EventHandler<BossBagEventArgs> BossBag;
 
             public static int InvokeBossBag(
-#if TerrariaServer_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
                 Terraria.DataStructures.IEntitySource Source,
 #endif
                 int X,
@@ -115,7 +115,7 @@ namespace OTAPI
             {
                 var args = new BossBagEventArgs()
                 {
-#if TerrariaServer_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
                     Source = Source,
 #endif
                     X = X,
@@ -134,7 +134,7 @@ namespace OTAPI
                 if (args.Result == HookResult.Cancel)
                     return -1;
 
-#if TerrariaServer_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
                 return Terraria.Item.NewItem(Source, args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);
 #else
                 return Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);

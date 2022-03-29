@@ -99,15 +99,9 @@ namespace OTAPI.Client.Launcher
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
-                .AfterSetup(AfterSetupCallback)
                 .UsePlatformDetect()
-                .LogToTrace();
-
-        // Called after setup
-        private static void AfterSetupCallback(AppBuilder appBuilder)
-        {
-            // Register icon provider(s)
-            IconProvider.Register<FontAwesomeIconProvider>();
-        }
+                .LogToTrace()
+                .WithIcons(container => container
+                    .Register<FontAwesomeIconProvider>());
     }
 }
