@@ -67,7 +67,7 @@ namespace OTAPI.Client.Launcher.Targets
             //Utils.CopyFiles(sourceContentPath, destContentPath);
             Console.WriteLine(Status = "Linking Terraria Content files...");
             if (!Directory.Exists(destContentPath))
-                File.CreateSymbolicLink(destContentPath, sourceContentPath);
+                Directory.CreateSymbolicLink(destContentPath, sourceContentPath);
 
             //    Console.WriteLine(Status = "Patching launch scripts...");
             //    this.PatchLinuxLaunch(installPath);
