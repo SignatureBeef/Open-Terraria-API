@@ -77,6 +77,8 @@ jobs:
             mkdir OTAPI.app/Contents/Resources
             mv bin/Release/net6.0/osx-x64/publish OTAPI.app/Contents/MacOS
             cp ../docs/MacOS.Info.plist OTAPI.app/Contents/Info.plist
+            cp OTAPI.osx.sh OTAPI.app/Contents/MacOS/OTAPI
+            chmod +x OTAPI.app/Contents/MacOS/OTAPI
             zip -r ../OTAPI_MacOS.zip OTAPI.app
 
       # - uses: actions/upload-artifact@v2
