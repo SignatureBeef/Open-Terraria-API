@@ -29,6 +29,7 @@ using System.Collections.Generic;
 /// @doc Patch in a custom Terraria.RemoteClient.ClientUUID property, and hooks it up into the network protocol.
 /// </summary>
 [Modification(ModType.PostPatch, "Patching in Client UUID")]
+[MonoMod.MonoModIgnore]
 void PatchClientUUID(MonoModder modder)
 {
     const int PacketID = 68;

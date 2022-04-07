@@ -26,6 +26,7 @@ using System.Linq;
 /// @doc A mod to update Newtonsoft.Json assembly references.
 /// </summary>
 [Modification(ModType.PostPatch, "Upgrading Newtonsoft.Json")]
+[MonoMod.MonoModIgnore]
 void PatchNewtonsoftJson(MonoModder modder)
 {
     var desired = typeof(Newtonsoft.Json.JsonConvert).Assembly.GetName().Version;

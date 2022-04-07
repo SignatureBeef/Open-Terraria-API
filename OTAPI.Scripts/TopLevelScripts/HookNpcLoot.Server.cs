@@ -32,6 +32,7 @@ using MonoMod;
 /// @doc Creates Hooks.NPC.DropLoot. Allows plugins to alter or cancel NPC loot drops.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.GameContent.ItemDropRules.CommonCode.DropItemFromNPC")]
+[MonoMod.MonoModIgnore]
 void HookNpcLoot(MonoModder modder)
 {
     var NewNPC = modder.GetILCursor(() => Terraria.GameContent.ItemDropRules.CommonCode.DropItemFromNPC(default, default, default, default));

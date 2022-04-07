@@ -25,6 +25,7 @@ using ModFramework.Relinker;
 /// @doc Transforms the fields of Terraria.Tile into properties
 /// </summary>
 [Modification(ModType.PreMerge, "Implementing Tile properties")]
+[MonoMod.MonoModIgnore]
 void ITileProperties(ModFwModder modder, IRelinkProvider relinkProvider)
 {
     var tile = modder.GetDefinition<Terraria.Tile>();

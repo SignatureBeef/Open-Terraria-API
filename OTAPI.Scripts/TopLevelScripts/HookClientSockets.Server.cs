@@ -33,6 +33,7 @@ using Terraria.Net.Sockets;
 /// @doc Creates Hooks.Netplay.CreateTcpListener. Allows custom TCP implementations to be used.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking tcp interfaces")]
+[MonoMod.MonoModIgnore]
 void HookClientSockets(ModFwModder modder)
 {
     var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.Netplay.InvokeCreateTcpListener());

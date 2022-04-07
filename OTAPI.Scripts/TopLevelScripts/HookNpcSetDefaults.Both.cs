@@ -28,6 +28,7 @@ using MonoMod;
 /// @doc Creates Terraria.NPC.OnSetDefaultType. Allows plugins to hook when NPC instances need to set custom type values in SetDefaults.
 /// </summary>
 [Modification(ModType.PreMerge, "Adding Terraria.NPC.OnSetDefaultType()")]
+[MonoMod.MonoModIgnore]
 void CreateOnSetDefaultType(MonoModder modder)
 {
 #if tModLoaderServer_V1_3

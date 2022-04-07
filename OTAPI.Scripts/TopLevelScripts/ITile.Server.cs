@@ -30,9 +30,10 @@ using MonoMod;
 /// @doc Transforms Terraria.Tile into Terraria.ITile
 /// </summary>
 [Modification(ModType.PreMerge, "Implementing ITile", Dependencies = new[]{
-        "ITileCollection", // this mod uses Terraria.Tile directly so it will emit references to it that this needs to clean up
-        "ITileProperties", // properties required first, interfaces do not like instance fields
-    })]
+    "ITileCollection", // this mod uses Terraria.Tile directly so it will emit references to it that this needs to clean up
+    "ITileProperties", // properties required first, interfaces do not like instance fields
+})]
+[MonoMod.MonoModIgnore]
 void ITile(ModFwModder modder, IRelinkProvider relinkProvider)
 {
     var tile = modder.GetDefinition<Terraria.Tile>();

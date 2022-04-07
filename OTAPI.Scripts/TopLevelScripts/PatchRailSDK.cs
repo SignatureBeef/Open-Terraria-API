@@ -28,6 +28,7 @@ using System.Linq;
 /// @doc Patches RailSDK to load on netcore
 /// </summary>
 [Modification(ModType.PreMerge, "Patching RailSDK")]
+[MonoMod.MonoModIgnore]
 void PatchRailSDK(MonoModder modder)
 {
 	var sw = modder.Module.Resources.Single(r => r.Name.EndsWith("RailSDK.NET.dll", System.StringComparison.CurrentCultureIgnoreCase));

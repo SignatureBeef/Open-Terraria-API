@@ -28,6 +28,7 @@ using MonoMod.Cil;
 /// @doc Attaches newtwork packets to the Terraria.Main.ServerSideCharacter variable. This allows sub projects like TShock to activate SSC. 
 /// </summary>
 [Modification(ModType.PreMerge, "Enabling server side characters")]
+[MonoMod.MonoModIgnore]
 void EnableServerSideCharacters(MonoModder modder)
 {
     // find the occurance of downedClown and insert the SSC field to the missing BitsByte instance

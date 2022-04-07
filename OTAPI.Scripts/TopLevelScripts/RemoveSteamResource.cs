@@ -26,6 +26,7 @@ using System.Linq;
 /// @doc Removes steam from embedded resources as its replaced
 /// </summary>
 [Modification(ModType.PreMerge, "Removing Steam Embedded Resource")]
+[MonoMod.MonoModIgnore]
 void RemoveSteamResource(MonoModder modder)
 {
 	var sw = modder.Module.Resources.Single(r => r.Name.EndsWith("Steamworks.NET.dll", System.StringComparison.CurrentCultureIgnoreCase));

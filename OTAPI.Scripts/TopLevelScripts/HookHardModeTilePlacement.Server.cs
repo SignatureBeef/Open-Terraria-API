@@ -31,6 +31,7 @@ using System.Linq;
 /// @doc Creates Hooks.WorldGen.HardmodeTilePlace. Allows plugins to intercept hard mode tile placements.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking hardmode tile placements")]
+[MonoMod.MonoModIgnore]
 void HardModeTilePlacement(MonoModder modder)
 {
     var csr = modder.GetILCursor(() => Terraria.WorldGen.hardUpdateWorld(0, 0));

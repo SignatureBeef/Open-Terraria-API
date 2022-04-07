@@ -24,6 +24,7 @@ using ModFramework;
 /// @doc Patches FileOperationAPIWrapper.SHFILEOPSTRUCT to work for x64
 /// </summary>
 [Modification(ModType.PreMerge, "Patching FileOperationAPIWrapper.SHFILEOPSTRUCT to work for x64")]
+[MonoMod.MonoModIgnore]
 void ModifyFileOperationAPIWrapper(ModFwModder modder)
 {
     // windows only mod, but tls needs a Main()

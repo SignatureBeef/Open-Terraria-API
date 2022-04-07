@@ -30,6 +30,7 @@ using Terraria.DataStructures;
 /// @doc Creates Hooks.NPC.Create. Allows plugins to create NPC instances.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking Terraria.NPC.NewNPC(Create)")]
+[MonoMod.MonoModIgnore]
 void HookNpcCreate(MonoModder modder)
 {
 #if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive

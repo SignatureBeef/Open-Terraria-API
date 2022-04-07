@@ -28,6 +28,7 @@ using MonoMod;
 /// @doc Creates Hooks.Main.Create. Allows plugins to extend and return a custom Terraria.Main instance.
 /// </summary>
 [Modification(ModType.PostPatch, "Hooking new Main calls", ModPriority.Last)]
+[MonoMod.MonoModIgnore]
 void HookMainCtor(MonoModder modder)
 {
     var LaunchGame = modder.GetILCursor(() => Terraria.Program.LaunchGame(null, false));

@@ -28,6 +28,7 @@ using MonoMod;
 /// @doc Disables the world map to be created on the server (it is not needed, at least on vanilla).
 /// </summary>
 [Modification(ModType.PreMerge, "Removing world map")]
+[MonoMod.MonoModIgnore]
 void RemoveMap(MonoModder modder)
 {
 	var worldMap = modder.GetDefinition<Terraria.Map.WorldMap>();

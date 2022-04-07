@@ -26,6 +26,7 @@ using MonoMod;
 /// @doc Transforms Terraria.Tile[] types to ModFramework.DefaultCollection
 /// </summary>
 [Modification(ModType.PreMerge, "Implementing Tile collections")]
+[MonoMod.MonoModIgnore]
 void ITileCollection(MonoModder modder, IRelinkProvider relinkProvider)
 {
     var tile = modder.GetDefinition<Terraria.Tile>();

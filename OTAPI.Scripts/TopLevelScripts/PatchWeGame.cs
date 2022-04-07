@@ -26,6 +26,7 @@ using MonoMod;
 /// @doc Removes windows references from WeGame
 /// </summary>
 [Modification(ModType.PreMerge, "Removing WeGame windows calls")]
+[MonoMod.MonoModIgnore]
 void RemoveWeGame(MonoModder modder)
 {
 	var ctr = modder.GetDefinition<Terraria.Social.WeGame.CurrentThreadRunner>();

@@ -26,6 +26,7 @@ using System.Linq;
 /// @doc Removes ReLogic.dll from embedded resources as its replaced
 /// </summary>
 [Modification(ModType.PreMerge, "Removing ReLogic Embedded Resource")]
+[MonoMod.MonoModIgnore]
 void RemoveReLogicResource(MonoModder modder)
 {
 	var sw = modder.Module.Resources.Single(r => r.Name.EndsWith("ReLogic.dll", System.StringComparison.CurrentCultureIgnoreCase));

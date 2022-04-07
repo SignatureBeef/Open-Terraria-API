@@ -27,6 +27,7 @@ using System.Linq;
 /// @doc Adds a Terraria.WorldGen.autoSave check in saveAndPlay
 /// </summary>
 [Modification(ModType.PreMerge, "Adding autoSave check to saveAndPlay")]
+[MonoMod.MonoModIgnore]
 void SaveAndPlay(MonoModder modder)
 {
     var vanilla = modder.GetILCursor(() => Terraria.WorldGen.saveAndPlay());

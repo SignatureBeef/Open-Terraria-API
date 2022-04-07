@@ -34,6 +34,7 @@ using Terraria.Localization;
 /// @doc Creates Hooks.NetMessage.PlayerAnnounce. Allows plugins to intercept the vanilla join message.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking player announcements (has join, has left)")]
+[MonoMod.MonoModIgnore]
 void HookPlayerAnnouncements(ModFwModder modder)
 {
     var syncOne = modder.GetReference(() => Terraria.NetMessage.SyncOnePlayer(0, 0, 0));
