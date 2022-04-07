@@ -18,7 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS8321 // Local function is declared but never used
 
-#if !tModLoader
+#if !tModLoader && !tModLoaderServer
 using ModFramework;
 using MonoMod;
 
