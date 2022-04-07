@@ -20,9 +20,8 @@ namespace System.Drawing
 {
     public sealed class Graphics
     {
-        public static Graphics FromHwnd(IntPtr hwnd)
-        {
-            return null;
-        }
+        public static Graphics FromHwnd(IntPtr hwnd) => null;
+
+        public IntPtr GetHdc() => IntPtr.Zero;
     }
 }
