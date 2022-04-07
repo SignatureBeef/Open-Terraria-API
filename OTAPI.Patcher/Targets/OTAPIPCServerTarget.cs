@@ -265,14 +265,14 @@ namespace OTAPI.Patcher.Targets
                 //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
                 //Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
                 Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
-                Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("Steamworks.NET.dll", StringComparison.CurrentCultureIgnoreCase)),
+                //Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("Steamworks.NET.dll", StringComparison.CurrentCultureIgnoreCase)),
             })
             {
                 mm.ReadMod(path);
             }
 
             mm.RelinkAssembly("ReLogic");
-            mm.RelinkAssembly("Steamworks.NET");
+            //mm.RelinkAssembly("Steamworks.NET");
 
             this.AddPatchMetadata(mm, initialModuleName, input);
 

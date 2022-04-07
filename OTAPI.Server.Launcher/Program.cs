@@ -82,7 +82,7 @@ namespace OTAPI.Launcher
         private static void Main_ctor(On.Terraria.Main.orig_ctor orig, Terraria.Main self)
         {
             orig(self);
-            Terraria.Main.SkipAssemblyLoad = true;
+            Terraria.Main.SkipAssemblyLoad = false; // ensure prejit - helps with monomod hooks
             //    //Terraria.Program.ForceLoadThread(null);
         }
 
