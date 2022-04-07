@@ -31,6 +31,7 @@ System.Console.WriteLine("BroadcastThread not available in TML1.3");
 /// @doc Fix Terraria.Netplay.BroadcastThread infinite loop.
 /// </summary>
 [Modification(ModType.PostPatch, "Patching Netplay Broadcast")]
+[MonoMod.MonoModIgnore]
 void PatchNetplayBroadcast(MonoModder modder)
 {
     const string Name_BroadcastThreadActive = nameof(Terraria.patch_Netplay.BroadcastThreadActive);

@@ -32,6 +32,7 @@ using System.Linq;
      "PatchSendDataWriter",
      "PatchSendDataLocks",
 })]
+[MonoMod.MonoModIgnore]
 void OnPacketWrite(MonoModder modder)
 {
     /*

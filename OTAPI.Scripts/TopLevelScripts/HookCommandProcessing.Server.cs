@@ -33,6 +33,7 @@ using System.Linq;
 /// @doc Creates Hooks.Main.CommandProcess. Allows plugins to intercept issued commands.
 /// </summary>
 [Modification(ModType.PreMerge, "Hooking command processing")]
+[MonoMod.MonoModIgnore]
 void HookCommandProcessing(MonoModder modder)
 {
     var startDedInputCallBack = modder.GetILCursor(() => Terraria.Main.startDedInputCallBack());
