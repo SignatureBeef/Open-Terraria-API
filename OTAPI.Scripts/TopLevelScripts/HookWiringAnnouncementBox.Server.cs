@@ -56,7 +56,7 @@ void HookWiringAnnounceBox(MonoModder modder)
         new { OpCodes.Ldloc_S, Operand = signVariable as VariableDefinition }
     );
 
-    csr.EmitDelegate<AnnouncementBoxCallback>(OTAPI.Hooks.Wiring.InvokeAnnouncementBox);
+    csr.EmitDelegate(OTAPI.Hooks.Wiring.InvokeAnnouncementBox);
 
     insertionPoint.ReplaceTransfer(injectedInstructions.First(), csr.Method);
 
@@ -65,9 +65,6 @@ void HookWiringAnnounceBox(MonoModder modder)
         new { OpCodes.Ret }
     );
 }
-
-[MonoMod.MonoModIgnore]
-public delegate bool AnnouncementBoxCallback(int x, int y, int signId);
 
 namespace OTAPI
 {

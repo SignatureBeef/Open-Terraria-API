@@ -114,7 +114,7 @@ namespace OTAPI.Launcher
 
         private static void WindowsLaunch_Main(On.Terraria.WindowsLaunch.orig_Main orig, string[] args)
         {
-            Console.WriteLine($"MonoMod runtime hooks active");
+            Console.WriteLine($"MonoMod runtime hooks active, runtime: " + DetourHelper.Runtime.GetType().Name);
             orig(args);
         }
     }

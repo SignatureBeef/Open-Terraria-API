@@ -55,14 +55,11 @@ void HookClientSendBytes(MonoModder modder)
         if (handler.TryStart.Next.OpCode == OpCodes.Ldloc_S || handler.TryStart.Next.OpCode == OpCodes.Ldarg_1)
         {
             SendData.Emit(handler.TryStart.Next.OpCode, handler.TryStart.Next.Operand);
-            SendData.EmitDelegate<SendBytesCallback>(OTAPI.Hooks.NetMessage.InvokeSendBytes);
+            SendData.EmitDelegate(OTAPI.Hooks.NetMessage.InvokeSendBytes);
             SendData.Remove();
         }
     }
 }
-
-[MonoMod.MonoModIgnore]
-public delegate void SendBytesCallback(Terraria.Net.Sockets.ISocket socket, byte[] data, int offset, int size, global::Terraria.Net.Sockets.SocketSendCallback callback, object state, int remoteClient);
 
 namespace OTAPI
 {

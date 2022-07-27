@@ -44,12 +44,9 @@ void HookPlayerNameCollision(MonoModder modder)
     csr.Goto(flag, MonoMod.Cil.MoveType.After);
 
     csr.Emit(OpCodes.Ldloc_S, player.Operand as VariableDefinition);
-    csr.EmitDelegate<PlayerNameCollisionCallback>(OTAPI.Hooks.MessageBuffer.InvokeNameCollision);
+    csr.EmitDelegate(OTAPI.Hooks.MessageBuffer.InvokeNameCollision);
     csr.Emit(OpCodes.Brfalse_S, flag.Operand as Instruction);
 }
-
-[MonoMod.MonoModIgnore]
-public delegate bool PlayerNameCollisionCallback(Terraria.Player player);
 
 namespace OTAPI
 {

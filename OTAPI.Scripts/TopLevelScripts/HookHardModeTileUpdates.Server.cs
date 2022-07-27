@@ -83,13 +83,10 @@ void HardModeTileUpdates(MonoModder modder)
 
         csr.Emit(csrTypes[0].Next.OpCode, csrTypes[0].Next.Operand);
 
-        csr.EmitDelegate<HardmodeTilePlaceCallback>(OTAPI.Hooks.WorldGen.InvokeHardmodeTileUpdate);
+        csr.EmitDelegate(OTAPI.Hooks.WorldGen.InvokeHardmodeTileUpdate);
         csr.Emit(OpCodes.Brfalse_S, continueBranch);
     }
 }
-
-[MonoMod.MonoModIgnore]
-public delegate bool HardmodeTilePlaceCallback(int x, int y, ushort type);
 
 namespace OTAPI
 {

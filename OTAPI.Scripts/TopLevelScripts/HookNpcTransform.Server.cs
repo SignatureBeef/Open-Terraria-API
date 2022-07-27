@@ -38,13 +38,10 @@ void HookNpcTransform(MonoModder modder)
     transform.GotoNext(ins => ins.Operand is FieldReference fr && fr.Name == "netMode" && ins.Next.OpCode == OpCodes.Ldc_I4_2);
     transform.Emit(OpCodes.Ldarg_0);
     transform.Emit(OpCodes.Ldarga, transform.Method.Parameters.Single());
-    transform.EmitDelegate<NpcTransformCallback>(OTAPI.Hooks.NPC.InvokeTransforming);
+    transform.EmitDelegate(OTAPI.Hooks.NPC.InvokeTransforming);
     transform.Emit(OpCodes.Brtrue, transform.Next);
     transform.Emit(OpCodes.Ret);
 }
-
-[MonoMod.MonoModIgnore]
-public delegate bool NpcTransformCallback(global::Terraria.NPC instance, ref int newType);
 
 namespace OTAPI
 {

@@ -45,14 +45,11 @@ void HookNpcSpawn(MonoModder modder)
     NewNPC.Index++;
 
     NewNPC.Emit(OpCodes.Ldloca, NewNPC.Body.Variables.First());
-    NewNPC.EmitDelegate<NpcSpawnCallback>(OTAPI.Hooks.NPC.InvokeSpawn);
+    NewNPC.EmitDelegate(OTAPI.Hooks.NPC.InvokeSpawn);
     NewNPC.Emit(OpCodes.Brtrue_S, NewNPC.Instrs[NewNPC.Index]);
     NewNPC.Emit(OpCodes.Ldloc, NewNPC.Body.Variables.First());
     NewNPC.Emit(OpCodes.Ret);
 }
-
-[MonoMod.MonoModIgnore]
-public delegate bool NpcSpawnCallback(ref int index);
 
 namespace OTAPI
 {

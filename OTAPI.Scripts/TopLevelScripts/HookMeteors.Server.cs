@@ -55,7 +55,7 @@ void HookMeteors(ModFramework.ModFwModder modder)
         new { OpCodes.Ldarga, Operand = csr.Method.Parameters[1] } //reference to int y
     );
 
-    csr.EmitDelegate<MeteorCallback>(OTAPI.Hooks.WorldGen.InvokeMeteor);
+    csr.EmitDelegate(OTAPI.Hooks.WorldGen.InvokeMeteor);
 
     csr.EmitAll(
         //If the callback is not canceled, continue on with vanilla code
@@ -66,9 +66,6 @@ void HookMeteors(ModFramework.ModFwModder modder)
         new { OpCodes.Ret } //return
     );
 }
-
-[MonoMod.MonoModIgnore]
-public delegate bool MeteorCallback(ref int x, ref int y);
 
 namespace OTAPI
 {

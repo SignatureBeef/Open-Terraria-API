@@ -51,12 +51,8 @@ void ClientGetDataExceptions(ModFramework.ModFwModder modder)
     csr.Goto(handler.HandlerEnd.Previous(x => x.OpCode == OpCodes.Leave_S), MonoMod.Cil.MoveType.Before);
 
     csr.Emit(OpCodes.Ldloc, exVariable);
-    csr.EmitDelegate<CheckBytesExceptionCallback>(OTAPI.Hooks.NetMessage.InvokeCheckBytesException);
+    csr.EmitDelegate(OTAPI.Hooks.NetMessage.InvokeCheckBytesException);
 }
-
-
-[MonoMod.MonoModIgnore]
-public delegate void CheckBytesExceptionCallback(Exception exception);
 
 namespace OTAPI
 {

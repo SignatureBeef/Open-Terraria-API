@@ -57,14 +57,10 @@ void HookClientGetData(MonoModder modder)
         GetData.Emit(prm.IsOut ? OpCodes.Ldarg : OpCodes.Ldarga, prm);
 
     GetData.Emit(OpCodes.Ldc_I4, maxPackets);
-    GetData.EmitDelegate<GetDataCallback>(OTAPI.Hooks.MessageBuffer.InvokeGetData);
+    GetData.EmitDelegate(OTAPI.Hooks.MessageBuffer.InvokeGetData);
     GetData.Emit(OpCodes.Brtrue, GetData.Instrs[GetData.Index]);
     GetData.Emit(OpCodes.Ret);
 }
-
-// this is merely the callback signature 
-[MonoMod.MonoModIgnore]
-public delegate bool GetDataCallback(global::Terraria.MessageBuffer instance, ref byte packetId, ref int readOffset, ref int start, ref int length, ref int messageType, int maxPackets);
 
 namespace OTAPI
 {

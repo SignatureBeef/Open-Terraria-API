@@ -85,7 +85,7 @@ void PatchSendDataWriter(MonoModder modder)
         //SendData.Emit(OpCodes.Ldloc, memoryStream);
         //SendData.Emit(OpCodes.Newobj, SendData.Module.ImportReference(bw_ctor));
         SendData.Emit(OpCodes.Ldloc, memoryStream);
-        SendData.EmitDelegate<CreatePacketWriterCallback>(OTAPI.Hooks.NetMessage.InvokeCreatePacketWriter);
+        SendData.EmitDelegate(OTAPI.Hooks.NetMessage.InvokeCreatePacketWriter);
         (SendData.Previous.Operand as MethodReference).DeclaringType.Name = "NetMessage";
         binaryWriter.VariableType = SendData.Module.ImportReference(pkt);
     }
@@ -154,9 +154,6 @@ void PatchSendDataWriter(MonoModder modder)
     // reapply
     SendData.Body.OptimizeMacros();
 }
-
-[MonoMod.MonoModIgnore]
-public delegate OTAPI.PacketWriter CreatePacketWriterCallback(MemoryStream output);
 
 namespace Terraria
 {

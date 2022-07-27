@@ -52,9 +52,6 @@ void HookNpcCreate(MonoModder modder)
         NewNPC.Emit(OpCodes.Ldarg, prm);
 }
 
-[MonoMod.MonoModIgnore]
-public delegate Terraria.NPC NpcCreateCallback();
-
 namespace OTAPI
 {
     public static partial class Hooks
