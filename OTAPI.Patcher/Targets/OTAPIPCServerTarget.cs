@@ -186,7 +186,7 @@ namespace OTAPI.Patcher.Targets
             var commitSha = Common.GetGitCommitSha();
             nuspec_xml = nuspec_xml.Replace("[INJECT_GIT_HASH]", String.IsNullOrWhiteSpace(commitSha) ? "" : $" git#{commitSha}");
 
-            var platforms = new[] { "net6.0" };
+            var platforms = new[] { "net6.0", "netstandard2.1"/*@TODO next patcher needs to handle multiframeworks*/ };
             var steamworks = modder.Module.AssemblyReferences.First(x => x.Name == "Steamworks.NET");
             var newtonsoft = modder.Module.AssemblyReferences.First(x => x.Name == "Newtonsoft.Json");
             var dependencies = new[]
