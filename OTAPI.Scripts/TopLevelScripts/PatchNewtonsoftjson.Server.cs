@@ -31,7 +31,7 @@ void PatchNewtonsoftJson(MonoModder modder)
 {
     var desired = typeof(Newtonsoft.Json.JsonConvert).Assembly.GetName().Version;
 
-    //Update the references to match what is installed to OTAPI.Modifications.Json
+    //Update the references to match what is installed
     foreach (var reference in modder.Module.AssemblyReferences)
     {
         if (reference.Name == "Newtonsoft.Json")

@@ -19,16 +19,32 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS8321 // Local function is declared but never used
 
 using ModFramework;
+using Mono.Cecil;
 using MonoMod;
+using System.IO;
 using System.Linq;
 
 /// <summary>
-/// @doc Removes steam from embedded resources as its replaced
+/// @doc Patches to the current steamworks.net binary
 /// </summary>
-[Modification(ModType.PreMerge, "Removing Steam Embedded Resource")]
+[Modification(ModType.PreMerge, "Patching Steamworks.NET")]
 [MonoMod.MonoModIgnore]
-void RemoveSteamResource(MonoModder modder)
+void PatchSteam(MonoModder modder)
 {
-	var sw = modder.Module.Resources.Single(r => r.Name.EndsWith("Steamworks.NET.dll", System.StringComparison.CurrentCultureIgnoreCase));
-	modder.Module.Resources.Remove(sw);
+    var desired = typeof(Steamworks.SteamShutdown_t).Assembly.GetName().Version;
+
+    //Update the references to match what is installed
+    foreach (var reference in modder.Module.AssemblyReferences)
+    {
+        if (reference.Name == "Steamworks.NET")
+        {
+            reference.Version = desired;
+            break;
+        }
+    }
+
+    //Remove the embedded Newtonsoft resource
+    modder.Module.Resources.Remove(
+        modder.Module.Resources.Single(x => x.Name.EndsWith("Steamworks.NET.dll"))
+    );
 }
