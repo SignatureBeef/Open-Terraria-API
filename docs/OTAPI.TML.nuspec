@@ -28,23 +28,8 @@
     <releaseNotes>
       Preliminary Terraria 1.4.0.5 (tModLoader)
     </releaseNotes>
-    <copyright>Copyright 2016-2021</copyright>
+    <copyright>Copyright 2016-[INJECT_YEAR]</copyright>
     <tags>Terraria,OTAPI</tags>
-    <dependencies>
-	  <group targetFramework="net6.0">
-		  <dependency id="Newtonsoft.Json" version="13.0.1" />
-		  <dependency id="MonoMod" version="22.3.23.4" />
-		  <dependency id="MonoMod.RuntimeDetour" version="22.3.23.4" />
-		  <dependency id="ModFramework" version="1.0.41-alpha" />
-      <dependency id="Steamworks.NET" version="20.1.0" />
-	  </group>
-	  <group targetFramework="netstandard2.1">
-		  <dependency id="Newtonsoft.Json" version="13.0.1" />
-		  <dependency id="MonoMod" version="22.3.23.4" />
-		  <dependency id="MonoMod.RuntimeDetour" version="22.3.23.4" />
-		  <dependency id="ModFramework" version="1.0.41-alpha" />
-      <dependency id="Steamworks.NET" version="20.1.0" />
-	  </group>
-    </dependencies>
+    [INJECT_DEPENDENCIES]
   </metadata>
 </package>

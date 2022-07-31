@@ -133,7 +133,7 @@ namespace OTAPI.Patcher.Targets
 
                 MarkdownDocumentor = markdownDocumentor,
             };
-            (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
+            mm.AssemblyResolver.AddSearchDirectory(embeddedResourcesDir);
             mm.Read();
 
             mm.MapDependencies();
@@ -167,18 +167,44 @@ namespace OTAPI.Patcher.Targets
             CoreLibRelinker.PostProcessCoreLib(null, null, new[] { embeddedResourcesDir }, assembly_output, runtime_output);
 
             mm.Log("[OTAPI] Building NuGet package...");
-            BuildNuGetPackage();
+            BuildNuGetPackage(mm);
 
             mm.Log("[OTAPI] Done.");
         }
 
-        void BuildNuGetPackage()
+        string GetNugetVersionFromAssembly(Assembly assembly)
+            => assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+
+        string GetNugetVersionFromAssembly<TType>()
+            => GetNugetVersionFromAssembly(typeof(TType).Assembly); 
+
+        void BuildNuGetPackage(ModFwModder modder)
         {
             var nuspec_xml = File.ReadAllText(NuSpecFilePath);
             nuspec_xml = nuspec_xml.Replace("[INJECT_VERSION]", Common.GetVersion());
 
             var commitSha = Common.GetGitCommitSha();
             nuspec_xml = nuspec_xml.Replace("[INJECT_GIT_HASH]", String.IsNullOrWhiteSpace(commitSha) ? "" : $" git#{commitSha}");
+
+            var platforms = new[] { "net6.0" };
+            var steamworks = modder.Module.AssemblyReferences.First(x => x.Name == "Steamworks.NET");
+            var newtonsoft = modder.Module.AssemblyReferences.First(x => x.Name == "Newtonsoft.Json");
+            var dependencies = new[]
+            {
+                (typeof(ModFwModder).Assembly.GetName().Name, Version: typeof(ModFwModder).Assembly.GetName().Version.ToString()),
+                (typeof(MonoMod.MonoModder).Assembly.GetName().Name, Version: GetNugetVersionFromAssembly<MonoMod.MonoModder>()),
+                (typeof(MonoMod.RuntimeDetour.Detour).Assembly.GetName().Name, Version: typeof(MonoMod.RuntimeDetour.Detour).Assembly.GetName().Version.ToString()),
+                (steamworks.Name, Version: steamworks.Version.ToString()),
+                (newtonsoft.Name, Version: newtonsoft.Version.ToString()),
+            };
+
+            var xml_dependency = String.Join("", dependencies.Select(dep => $"\n\t    <dependency id=\"{dep.Name}\" version=\"{dep.Version}\" />"));
+            var xml_group = String.Join("", platforms.Select(platform => $"\n\t<group targetFramework=\"{platform}\">{xml_dependency}\n\t</group>"));
+            var xml_dependencies = $"<dependencies>{xml_group}\n    </dependencies>";
+
+            nuspec_xml = nuspec_xml.Replace("[INJECT_DEPENDENCIES]", xml_dependencies);
+
+            nuspec_xml = nuspec_xml.Replace("[INJECT_YEAR]", DateTime.UtcNow.Year.ToString());
 
             using (var nuspec = new MemoryStream(Encoding.UTF8.GetBytes(nuspec_xml)))
             {
@@ -187,10 +213,13 @@ namespace OTAPI.Patcher.Targets
                 packageBuilder.Populate(manifest.Metadata);
 
                 packageBuilder.AddFiles("../../../../", "COPYING.txt", "COPYING.txt");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\net6.0");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\net6.0");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", "lib\\netstandard2.0");
-                packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", "lib\\netstandard2.0");
+
+                foreach (var platform in platforms)
+                {
+                    var dest = Path.Combine("lib", platform);
+                    packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.dll", dest);
+                    packageBuilder.AddFiles(Environment.CurrentDirectory, "OTAPI.Runtime.dll", dest);
+                }
 
                 if (File.Exists(NuGetPackageFileName))
                     File.Delete(NuGetPackageFileName);

@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net6.0</TargetFramework>
-		<Version>3.0.37-alpha</Version>
+		<Version>3.0.38-alpha</Version>
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 		<PlatformTarget>x64</PlatformTarget>
 		<RuntimeIdentifiers>win7-x64;osx.10.11-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
@@ -13,10 +13,10 @@
 	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>-->
 	<ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.41-alpha" />
-    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.41-alpha" />
-    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.41-alpha" />
-    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.41-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.42-alpha" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.42-alpha" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.42-alpha" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.42-alpha" />
     <PackageReference Include="Mono.Cecil" Version="0.11.4" />
     <PackageReference Include="MonoMod" Version="22.5.1.1" />
     <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="22.5.1.1" />
