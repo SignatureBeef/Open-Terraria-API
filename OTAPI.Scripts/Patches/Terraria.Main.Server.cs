@@ -20,8 +20,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
+using System.Runtime.InteropServices;
 /// <summary>
-/// @doc Enable Terraria.Main.NeverSleep calls based off updated ReLogic.OS.Platform.IsWindows
+/// @doc Enable Terraria.Main.NeverSleep calls based off RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
 /// </summary>
 /// <summary>
 /// @doc Fixes auto save when Terraria.Main.autoSave is false
@@ -33,13 +34,13 @@ namespace Terraria
         public extern void orig_NeverSleep();
         public void NeverSleep()
         {
-            if (ReLogic.OS.Platform.IsWindows) orig_NeverSleep();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) orig_NeverSleep();
         }
 
         public extern void orig_YouCanSleepNow();
         public void YouCanSleepNow()
         {
-            if (ReLogic.OS.Platform.IsWindows) orig_YouCanSleepNow();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) orig_YouCanSleepNow();
         }
 
         // this was implemented in v2. by looking at the vanilla code it will auto

@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
+#if !tModLoader_V1_4
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.RuntimeDetour;
@@ -26,6 +27,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// @doc Improves cross platform launch checks and add extra launch features
@@ -37,7 +39,7 @@ namespace Terraria
         public static extern bool orig_SetConsoleCtrlHandler(WindowsLaunch.HandlerRoutine handler, bool add);
         public static bool SetConsoleCtrlHandler(WindowsLaunch.HandlerRoutine handler, bool add)
         {
-            if (ReLogic.OS.Platform.IsWindows)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return orig_SetConsoleCtrlHandler(handler, add);
             }
@@ -134,3 +136,4 @@ namespace Terraria
         }
     }
 }
+#endif

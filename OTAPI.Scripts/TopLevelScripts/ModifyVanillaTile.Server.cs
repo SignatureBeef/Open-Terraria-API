@@ -18,6 +18,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS8321 // Local function is declared but never used
 
+#if tModLoader_V1_4
+System.Console.WriteLine("ITile not available in TML");
+#else
 using System.Linq;
 using ModFramework;
 using Mono.Cecil;
@@ -67,3 +70,4 @@ static void ModifyVanillaTile(ModFramework.ModFwModder modder)
     //it in the new method, so we need to put a new one back into the constructor too.
     ctor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
 }
+#endif

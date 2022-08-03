@@ -24,8 +24,8 @@ using Mono.Cecil.Cil;
 using MonoMod;
 using System.Linq;
 
-#if tModLoaderServer_V1_3
-System.Console.WriteLine("BroadcastThread not available in TML1.3");
+#if tModLoaderServer_V1_3 || tModLoader_V1_4
+System.Console.WriteLine("BroadcastThread not available in TML");
 #else
 /// <summary>
 /// @doc Fix Terraria.Netplay.BroadcastThread infinite loop.

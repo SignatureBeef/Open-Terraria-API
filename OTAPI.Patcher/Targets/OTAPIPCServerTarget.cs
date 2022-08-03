@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -76,9 +77,9 @@ namespace OTAPI.Patcher.Targets
             //        line = line.Replace("@doc", "").Trim();
             //    }
             //};
-
-            PreShimForCompilation();
-            ApplyModifications();
+            bool tml = false;
+            PreShimForCompilation(ref tml);
+            ApplyModifications(ref tml);
 
             if (File.Exists(MdFileName)) File.Delete(MdFileName);
             markdownDocumentor.Write(MdFileName);
@@ -90,17 +91,44 @@ namespace OTAPI.Patcher.Targets
         }
 
         #region Produce OTAPI
-        public void ApplyModifications()
+        public void ApplyModifications(ref bool isTML)
         {
             var localPath = "./TerrariaServer.dll";
 
             // load into the current app domain for patch refs
             var asm = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, localPath));
+            var cache = new Dictionary<string, Assembly>();
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
+                if (cache.TryGetValue(args.Name, out Assembly? asmm))
+                    return asmm;
+
                 if (args.Name.IndexOf("TerrariaServer") > -1)
                 {
+                    cache[args.Name] = asm;
                     return asm;
+                }
+                var ix = args.Name.IndexOf(',');
+                if (ix > -1)
+                {
+                    var name = args.Name.Substring(0, ix);
+                    var dll = $"{name}.dll";
+
+                    // try tml first, its binaries override other builds
+                    var tmp = Path.Combine("tModLoader", "Libraries", name, "1.0.0", dll);
+                    if (File.Exists(tmp))
+                    {
+                        asm = Assembly.Load(File.ReadAllBytes(tmp));
+                        cache[args.Name] = asm;
+                        return asm;
+                    }
+
+                    if (File.Exists(dll))
+                    {
+                        asm = Assembly.Load(File.ReadAllBytes(dll));
+                        cache[args.Name] = asm;
+                        return asm;
+                    }
                 }
                 return null;
             };
@@ -134,6 +162,19 @@ namespace OTAPI.Patcher.Targets
                 MarkdownDocumentor = markdownDocumentor,
             };
             mm.AssemblyResolver.AddSearchDirectory(embeddedResourcesDir);
+
+            //isTML = TrySetupTML(mm, localPath);
+
+            //var tml_libs = Path.Combine(Path.GetDirectoryName(input), "Libraries");
+            //isTML = Directory.Exists(tml_libs) && Path.GetFileNameWithoutExtension(input).Equals("tModLoader", StringComparison.CurrentCultureIgnoreCase);
+            if (isTML)
+            {
+                var tml_libs = Path.Combine("tModLoader", "Libraries");
+                foreach (var lib_folder in Directory.GetDirectories(tml_libs))
+                    foreach (var version_folder in Directory.GetDirectories(lib_folder))
+                        mm.AssemblyResolver.AddSearchDirectory(version_folder);
+            }
+
             mm.Read();
 
             mm.MapDependencies();
@@ -146,11 +187,11 @@ namespace OTAPI.Patcher.Targets
             mm.AutoPatch();
 
 #if tModLoaderServer_V1_3
-                mm.WriterParameters.SymbolWriterProvider = null;
-                mm.WriterParameters.WriteSymbols = false;
+            mm.WriterParameters.SymbolWriterProvider = null;
+            mm.WriterParameters.WriteSymbols = false;
 #endif
 
-            mm.AddVersion(Common.GetVersion());
+            if (!isTML) mm.AddVersion(Common.GetVersion());
 
             mm.Write();
 
@@ -164,7 +205,7 @@ namespace OTAPI.Patcher.Targets
             }
 
             PluginLoader.Clear();
-            CoreLibRelinker.PostProcessCoreLib(null, null, new[] { embeddedResourcesDir }, assembly_output, runtime_output);
+            CoreLibRelinker.PostProcessCoreLib(null, null, mm.AssemblyResolver.GetSearchDirectories(), assembly_output, runtime_output);
 
             mm.Log("[OTAPI] Building NuGet package...");
             BuildNuGetPackage(mm);
@@ -176,7 +217,7 @@ namespace OTAPI.Patcher.Targets
             => assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
         string GetNugetVersionFromAssembly<TType>()
-            => GetNugetVersionFromAssembly(typeof(TType).Assembly); 
+            => GetNugetVersionFromAssembly(typeof(TType).Assembly);
 
         void BuildNuGetPackage(ModFwModder modder)
         {
@@ -232,7 +273,18 @@ namespace OTAPI.Patcher.Targets
 
         #region Produce TerrariaServer.dll (shimmed, vanilla)
 
-        public virtual void PreShimForCompilation()
+        void UpdateCSRefs(bool isTML)
+        {
+            var loc = Path.Combine("csharp", "plugins", "Metadata.refs");
+            var meta = new List<string>(File.ReadAllLines(loc).Where(l => !l.Contains("FNA")));
+            if (isTML)
+            {
+                meta.Add(Path.Combine("tModLoader", "Libraries", "FNA", "1.0.0", "FNA.dll"));
+            }
+            File.WriteAllLines(loc, meta);
+        }
+
+        public virtual void PreShimForCompilation(ref bool isTML)
         {
             var input = DownloadServer();
 
@@ -261,7 +313,19 @@ namespace OTAPI.Patcher.Targets
 
                 MarkdownDocumentor = markdownDocumentor,
             };
-            (mm.AssemblyResolver as DefaultAssemblyResolver)!.AddSearchDirectory(embeddedResourcesDir);
+
+            mm.AssemblyResolver.AddSearchDirectory(embeddedResourcesDir);
+
+            var tml_libs = Path.Combine(Path.GetDirectoryName(input), "Libraries");
+            isTML = Directory.Exists(tml_libs) && Path.GetFileNameWithoutExtension(input).Equals("tModLoader", StringComparison.CurrentCultureIgnoreCase);
+            if (isTML)
+            {
+                foreach (var lib_folder in Directory.GetDirectories(tml_libs))
+                    foreach (var version_folder in Directory.GetDirectories(lib_folder))
+                        mm.AssemblyResolver.AddSearchDirectory(version_folder);
+            }
+            UpdateCSRefs(isTML);
+
             mm.Read();
 
             // for HookResult + HookEvent
@@ -275,46 +339,49 @@ namespace OTAPI.Patcher.Targets
             mm.Module.Name = "TerrariaServer.dll";
             mm.Module.Assembly.Name.Name = "TerrariaServer";
 
-            // build shims
-            PluginLoader.Init();
-            var ldr = new CSharpLoader()
-                .SetAutoLoadAssemblies(true)
-                .SetMarkdownDocumentor(markdownDocumentor);
-            var md = ldr.CreateMetaData();
-            var shims = ldr.LoadModules(md, "shims").ToArray();
-
-            //var asd = "";
-
-            foreach (var path in shims)
+            if (!isTML)
             {
-                mm.ReadMod(path);
+                // build shims
+                PluginLoader.Init();
+                var ldr = new CSharpLoader()
+                    .SetAutoLoadAssemblies(true)
+                    .SetMarkdownDocumentor(markdownDocumentor);
+                var md = ldr.CreateMetaData();
+                var shims = ldr.LoadModules(md, "shims").ToArray();
+
+                foreach (var path in shims)
+                {
+                    mm.ReadMod(path);
+                }
             }
 
-            foreach (var path in new[] {
-                //Path.Combine(System.Environment.CurrentDirectory, "TerrariaServer.OTAPI.Shims.mm.dll"),
-                //Path.Combine(System.Environment.CurrentDirectory, "ModFramework.dll"),
-                Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
-                //Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("Steamworks.NET.dll", StringComparison.CurrentCultureIgnoreCase)),
-            })
+            if (!isTML)
             {
-                mm.ReadMod(path);
-            }
+                foreach (var path in new[] {
+                    Directory.GetFiles(embeddedResourcesDir).Single(x => Path.GetFileName(x).Equals("ReLogic.dll", StringComparison.CurrentCultureIgnoreCase)),
+                })
+                {
+                    mm.ReadMod(path);
+                }
 
-            mm.RelinkAssembly("ReLogic");
-            //mm.RelinkAssembly("Steamworks.NET");
+                mm.RelinkAssembly("ReLogic");
+            }
 
             this.AddPatchMetadata(mm, initialModuleName, input);
 
             mm.MapDependencies();
-            mm.AddTask(new CoreLibRelinker());
+            if (!isTML) mm.AddTask(new CoreLibRelinker());
             mm.AutoPatch();
 
             //mm.OutputPath = mm.Module.Name; // the merged TerrariaServer + ReLogic (so we can apply patches)
 
-            // switch to any cpu so that we can compile and use types in mods
-            // this is usually in a modification otherwise
-            mm.Module.Architecture = TargetArchitecture.I386;
-            mm.Module.Attributes = ModuleAttributes.ILOnly;
+            if (!isTML)
+            {
+                // switch to any cpu so that we can compile and use types in mods
+                // this is usually in a modification otherwise
+                mm.Module.Architecture = TargetArchitecture.I386;
+                mm.Module.Attributes = ModuleAttributes.ILOnly;
+            }
 
             Console.WriteLine($"[OTAPI] Saving {mm.OutputPath}");
             mm.Write();

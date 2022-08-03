@@ -75,7 +75,7 @@ namespace OTAPI.Mods
             orig(self, context);
 
             Console.WriteLine($"[{GetName()}] Player spawned netMode {Terraria.Main.netMode}");
-#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
             Terraria.NPC.NewNPC(new EntitySource_DebugCommand(), Terraria.Main.spawnTileX * 16, Terraria.Main.spawnTileY * 16, this.TypeID);
 #else
             Terraria.NPC.NewNPC(Terraria.Main.spawnTileX * 16, Terraria.Main.spawnTileY * 16, this.TypeID);
@@ -99,7 +99,7 @@ namespace OTAPI.Mods
                         orig(self, context);
 
                         Console.WriteLine($"[{m.GetName()}] Player spawned netMode {Terraria.Main.netMode}");
-#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
                         Terraria.NPC.NewNPC(new EntitySource_DebugCommand(), Terraria.Main.spawnTileX * 16, Terraria.Main.spawnTileY * 16, m.TypeID);
 #else
                         Terraria.NPC.NewNPC(Terraria.Main.spawnTileX * 16, Terraria.Main.spawnTileY * 16, m.TypeID);

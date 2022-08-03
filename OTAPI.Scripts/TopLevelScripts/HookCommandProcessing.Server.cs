@@ -19,8 +19,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS8321 // Local function is declared but never used
 #pragma warning disable CS0436 // Type conflicts with imported type
 
-#if tModLoaderServer_V1_3
-System.Console.WriteLine("Command processing not available in TML1.3");
+#if tModLoaderServer_V1_3 || tModLoader_V1_4
+System.Console.WriteLine("Command processing not available in TML");
 #else
 using ModFramework;
 using Mono.Cecil.Cil;

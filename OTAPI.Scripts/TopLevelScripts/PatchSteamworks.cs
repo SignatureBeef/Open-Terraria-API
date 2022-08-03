@@ -18,6 +18,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS8321 // Local function is declared but never used
 
+#if tModLoader_V1_4
+System.Console.WriteLine("Steamworks.NET patch not available in TML1.4");
+#else
 using ModFramework;
 using Mono.Cecil;
 using MonoMod;
@@ -48,3 +51,4 @@ void PatchSteam(MonoModder modder)
         modder.Module.Resources.Single(x => x.Name.EndsWith("Steamworks.NET.dll"))
     );
 }
+#endif

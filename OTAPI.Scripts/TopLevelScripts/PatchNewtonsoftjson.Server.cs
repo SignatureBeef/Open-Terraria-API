@@ -18,6 +18,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS8321 // Local function is declared but never used
 
+#if tModLoader_V1_4
+System.Console.WriteLine("Newtonsoft.Json upgrade not needed on TML1.4");
+#else
 using ModFramework;
 using MonoMod;
 using System.Linq;
@@ -46,3 +49,4 @@ void PatchNewtonsoftJson(MonoModder modder)
         modder.Module.Resources.Single(x => x.Name.EndsWith("Newtonsoft.Json.dll"))
     );
 }
+#endif

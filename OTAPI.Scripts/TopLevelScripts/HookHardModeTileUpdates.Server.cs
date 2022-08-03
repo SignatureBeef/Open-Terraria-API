@@ -19,6 +19,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS8321 // Local function is declared but never used
 #pragma warning disable CS0436 // Type conflicts with imported type
 
+#if tModLoader_V1_4
+System.Console.WriteLine("Hardmode patch b not available in TML");
+#else
 using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -123,3 +126,4 @@ namespace OTAPI
         }
     }
 }
+#endif

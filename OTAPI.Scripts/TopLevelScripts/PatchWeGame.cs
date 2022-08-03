@@ -36,4 +36,6 @@ void RemoveWeGame(MonoModder modder)
 		method.ClearBody();
 	}
 }
+#else
+System.Console.WriteLine("WeGame patch not needed on TML1.4");
 #endif

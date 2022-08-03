@@ -19,8 +19,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS8321 // Local function is declared but never used
 #pragma warning disable CS0436 // Type conflicts with imported type
 
-#if tModLoaderServer_V1_3
-System.Console.WriteLine("Npc loot not available in TML1.3");
+#if tModLoaderServer_V1_3 || tModLoader_V1_4
+System.Console.WriteLine("Npc loot not available in TML");
 #else
 using System;
 using ModFramework;
@@ -42,7 +42,7 @@ void HookNpcLoot(MonoModder modder)
     );
 
     NewNPC.Emit(OpCodes.Ldarg_0); // NPC instance
-#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
     NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default, default, default));
 #else
     NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default, default));
@@ -60,7 +60,7 @@ namespace OTAPI
                 public HookEvent Event { get; set; }
                 public HookResult? Result { get; set; }
 
-#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
                 public Terraria.DataStructures.IEntitySource Source { get; set; }
 #endif
                 public Terraria.NPC Npc { get; set; }
@@ -76,9 +76,9 @@ namespace OTAPI
                 public bool NoGrabDelay { get; set; }
                 public bool ReverseLookup { get; set; }
             }
-            public static event EventHandler<DropLootEventArgs> DropLoot;
+            public static event EventHandler<DropLootEventArgs>? DropLoot;
 
-#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
             public static int InvokeDropLoot(Terraria.DataStructures.IEntitySource source, int X, int Y, int Width, int Height, int Type,
 #else
             public static int InvokeDropLoot(int X, int Y, int Width, int Height, int Type,
@@ -89,7 +89,7 @@ namespace OTAPI
                 var args = new DropLootEventArgs()
                 {
                     Event = HookEvent.Before,
-#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
                     Source = source,
 #endif
                     X = X,
@@ -109,7 +109,7 @@ namespace OTAPI
                 DropLoot?.Invoke(null, args);
                 if (args.Result != HookResult.Cancel)
                 {
-#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive
+#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
                     args.ItemIndex = Terraria.Item.NewItem(args.Source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
 #else
                     args.ItemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);

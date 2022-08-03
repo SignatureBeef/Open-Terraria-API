@@ -28,11 +28,11 @@ namespace OTAPI.Patcher.Targets
         public override string NuGetPackageFileName { get; } = "OTAPI.TML.nupkg";
         public override string NuSpecFilePath { get; } = "../../../../docs/OTAPI.TML.nuspec";
         public override string MdFileName { get; } = "OTAPI.TML.PC.Server.mfw.md";
-        public override string SupportedDownloadUrl { get; } = "https://github.com/tModLoader/tModLoader/releases/download/v0.11.8.4/tModLoader.Windows.v0.11.8.4.zip";
+        public override string SupportedDownloadUrl { get; } = "https://github.com/tModLoader/tModLoader/releases/download/v2022.07.58.3/tModLoader.zip";
         public override string ArtifactName { get; } = "artifact-tml";
 
         public override string DetermineInputAssembly(string extractedFolder)
-            => Directory.EnumerateFiles(extractedFolder, "tModLoaderServer.exe", SearchOption.AllDirectories).Single();
+            => Directory.EnumerateFiles(extractedFolder, "tModLoader.dll", SearchOption.TopDirectoryOnly).Single();
 
         public override string GetZipUrl() => SupportedDownloadUrl;
     }
