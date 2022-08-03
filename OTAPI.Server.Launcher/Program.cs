@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 
 namespace OTAPI.Launcher
 {
@@ -45,18 +46,60 @@ namespace OTAPI.Launcher
         static void Nop() { }
 
         static Dictionary<string, Assembly?> _assemblyCache = new Dictionary<string, Assembly?>();
+        static Dictionary<string, IntPtr?> _nativeAssemblyCache = new Dictionary<string, IntPtr?>();
+
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+#if TML
+            AppDomain.CurrentDomain.AssemblyResolve += OnResolveManaged;
+            AssemblyLoadContext.Default.ResolvingUnmanagedDll += OnResolveNative;
+#endif
 
             Terraria.Program.OnLaunched += Program_OnLaunched;
             On.Terraria.Program.LaunchGame += Program_LaunchGame;
-            //Terraria.WindowsLaunch.Main(args);
+
+#if TML
+            Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath = Path.Combine("tModLoader", Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath);
+            if (args == null || args.Length == 0)
+                args = new[] { "-server" };
+
+            if (!args.Any(s => s.Equals("-server")))
+                args = args.Concat(new[] { "-server" }).ToArray();
+#endif
 
             GetTerrariaAssembly().EntryPoint.Invoke(null, new object[] { args });
         }
 
-        private static Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
+#if TML
+        private static IntPtr OnResolveNative(Assembly arg1, string arg2)
+        {
+            if (_nativeAssemblyCache.TryGetValue(arg2, out IntPtr? add) && add.HasValue)
+            {
+                return add.Value;
+            }
+
+            var platform = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "OSX" :
+                RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "Linux" : "Windows";
+
+            var path = Path.Combine("tModLoader", "Libraries", "Native", platform);
+            if (Directory.Exists(path))
+            {
+                var pattern = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? $"lib{arg2}*.dylib" :
+                    RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? $"lib{arg2}*.so" : $"{arg2}.dll";
+                var binaries = Directory.GetFiles(path, pattern, SearchOption.AllDirectories);
+                foreach (var bin in binaries)
+                {
+                    add = NativeLibrary.Load(bin);
+                    _nativeAssemblyCache[arg2] = add;
+
+                    return add.Value;
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+
+        private static Assembly OnResolveManaged(object sender, ResolveEventArgs args)
         {
             lock (_assemblyCache)
             {
@@ -69,7 +112,7 @@ namespace OTAPI.Launcher
                     return asm;
                 }
 
-                var path = Path.Combine("Libraries", name);
+                var path = Path.Combine("tModLoader", "Libraries", name);
                 if (Directory.Exists(path))
                 {
                     var binaries = Directory.GetFiles(path, $"{name}.dll", SearchOption.AllDirectories);
@@ -93,6 +136,7 @@ namespace OTAPI.Launcher
                 return null;
             }
         }
+#endif
 
         private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
         {

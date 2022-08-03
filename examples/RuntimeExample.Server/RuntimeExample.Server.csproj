@@ -4,10 +4,11 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Platforms>x64</Platforms>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.42-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.45-alpha" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

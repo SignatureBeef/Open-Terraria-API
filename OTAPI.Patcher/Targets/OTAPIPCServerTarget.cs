@@ -305,7 +305,7 @@ namespace OTAPI.Patcher.Targets
                 OutputPath = output,
                 //ReadingMode = ReadingMode.Deferred,
                 MissingDependencyThrow = false,
-                PublicEverything = true, // we want all of terraria exposed
+                PublicEverything = !isTML, // we want all of terraria exposed
 
                 LogVerboseEnabled = false,
 
