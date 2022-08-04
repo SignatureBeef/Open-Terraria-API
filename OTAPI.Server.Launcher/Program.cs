@@ -51,8 +51,8 @@ namespace OTAPI.Launcher
         static void Main(string[] args)
         {
 #if TML
-            AppDomain.CurrentDomain.AssemblyResolve += OnResolveManaged;
-            AssemblyLoadContext.Default.ResolvingUnmanagedDll += OnResolveNative;
+            //AppDomain.CurrentDomain.AssemblyResolve += OnResolveManaged;
+            //AssemblyLoadContext.Default.ResolvingUnmanagedDll += OnResolveNative;
 #endif
 
             Terraria.Program.OnLaunched += Program_OnLaunched;

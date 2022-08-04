@@ -1,0 +1,8 @@
+﻿{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "tModLoader/Libraries",
+      "."
+    ]
+  }
+}
