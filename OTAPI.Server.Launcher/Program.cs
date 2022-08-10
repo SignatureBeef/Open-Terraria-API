@@ -24,6 +24,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using Terraria.ModLoader;
 
 namespace OTAPI.Launcher
 {

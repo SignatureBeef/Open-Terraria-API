@@ -23,6 +23,7 @@ System.Console.WriteLine("MonoMod patch only needed for TML");
 #else
 using System;
 using System.IO;
+using System.Linq;
 using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -35,7 +36,8 @@ using MonoMod;
 [MonoMod.MonoModIgnore]
 void PathMonoLaunch(MonoModder modder)
 {
-    var rnl = modder.GetILCursor(() => MonoLaunch.ResolveNativeLibrary(null, null));
+    var mth = modder.Module.GetType("MonoLaunch").Methods.Single(m => m.Name == "ResolveNativeLibrary");
+    var rnl = modder.GetILCursor(mth);
     var gbd = modder.GetMethodDefinition(() => patch_MonoLaunch.GetBaseDirectory(), followRedirect: true);
 
     rnl.GotoNext(i => i.OpCode == OpCodes.Call && i.Operand is MethodReference mref && mref.Name == "get_CurrentDirectory");

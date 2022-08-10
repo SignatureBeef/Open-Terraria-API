@@ -13,16 +13,16 @@
 	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>-->
 	<ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.45-alpha" />
-    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.45-alpha" />
-    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.45-alpha" />
-    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.45-alpha" />
+    <PackageReference Include="ModFramework" Version="1.0.46-alpha" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.46-alpha" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.46-alpha" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.46-alpha" />
     <PackageReference Include="Mono.Cecil" Version="0.11.4" />
     <PackageReference Include="MonoMod" Version="22.5.1.1" />
     <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="22.5.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
-    <PackageReference Include="NuGet.Packaging" Version="6.2.1" />
+    <PackageReference Include="NuGet.Packaging" Version="6.3.0" />
     <PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.3.1" />
     <PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.3.1" />
     <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.3.1" />

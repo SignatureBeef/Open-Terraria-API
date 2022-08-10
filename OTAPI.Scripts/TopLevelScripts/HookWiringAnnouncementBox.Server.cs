@@ -33,7 +33,12 @@ using MonoMod;
 [MonoMod.MonoModIgnore]
 void HookWiringAnnounceBox(MonoModder modder)
 {
+#if tModLoader_V1_4
+    var mth = modder.Module.GetType("Terraria.Wiring").Methods.Single(m => m.Name == "HitWireSingle");
+    var csr = modder.GetILCursor(mth);
+#else
     var csr = modder.GetILCursor(() => Terraria.Wiring.HitWireSingle(0, 0));
+#endif
 
     if (csr.Method.Parameters.Count != 2)
         throw new NotSupportedException("Expected 2 parameters for the callback");

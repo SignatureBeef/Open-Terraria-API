@@ -77,7 +77,7 @@ namespace OTAPI.Patcher.Targets
             //        line = line.Replace("@doc", "").Trim();
             //    }
             //};
-            bool tml = false;
+            bool tml = this is TMLPCServerTarget;
             PreShimForCompilation(ref tml);
             ApplyModifications(ref tml);
 

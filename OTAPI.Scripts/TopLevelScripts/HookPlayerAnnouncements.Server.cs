@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 System.Console.WriteLine("Player announce not available in TML1.3");
 #else
 using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using ModFramework;
 using Mono.Cecil;
@@ -37,7 +38,12 @@ using Terraria.Localization;
 [MonoMod.MonoModIgnore]
 void HookPlayerAnnouncements(ModFwModder modder)
 {
+#if tModLoader_V1_4
+    var mth = modder.Module.GetType("Terraria.NetMessage").Methods.Single(m => m.Name == "SyncOnePlayer");
+    var syncOne = modder.GetReference(mth);
+#else
     var syncOne = modder.GetReference(() => Terraria.NetMessage.SyncOnePlayer(0, 0, 0));
+#endif
     var broadcast = modder.GetReference(() => Terraria.Chat.ChatHelper.BroadcastChatMessage(null, default, 0));
     var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NetMessage.InvokePlayerAnnounce(null, default, 0, 0, 0, 0));
 
