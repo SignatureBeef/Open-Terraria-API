@@ -9,9 +9,6 @@
 		<RuntimeIdentifiers>win7-x64;osx.10.11-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
-	<!--<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
-	  <PlatformTarget>x86</PlatformTarget>
-	</PropertyGroup>-->
 	<ItemGroup>
     <PackageReference Include="ModFramework" Version="1.0.46-alpha" />
     <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.46-alpha" />

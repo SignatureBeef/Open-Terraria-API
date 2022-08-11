@@ -22,7 +22,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 System.Console.WriteLine("MonoMod patch only needed for TML");
 #else
 using System;
-using System.IO;
 using System.Linq;
 using ModFramework;
 using Mono.Cecil;
@@ -48,8 +47,6 @@ void PathMonoLaunch(MonoModder modder)
 partial class patch_MonoLaunch
 {
     public static string GetBaseDirectory()
-    {
-        return Path.Combine(Environment.CurrentDirectory); //, "tModLoader"); // dont do this by default. allow consumers to redirect this call instead.
-    }
+        => Environment.CurrentDirectory; // dont change the path by default. allow consumers to redirect this call instead.
 }
 #endif
