@@ -31,6 +31,7 @@ using MonoMod;
 [MonoMod.MonoModIgnore]
 void PatchPrivateClasses(MonoModder modder)
 {
+    modder.Module.GetType("MonoLaunch").MakePublic();
     modder.Module.GetType("Terraria.Program").MakePublic();
     modder.Module.GetType("Terraria.ModLoader.Engine.InstallVerifier").MakePublic().Field("steamAPIPath").MakePublic();
 }

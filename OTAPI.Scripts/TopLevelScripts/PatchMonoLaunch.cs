@@ -49,7 +49,7 @@ partial class patch_MonoLaunch
 {
     public static string GetBaseDirectory()
     {
-        return Path.Combine(Environment.CurrentDirectory, "tModLoader");
+        return Path.Combine(Environment.CurrentDirectory); //, "tModLoader"); // dont do this by default. allow consumers to redirect this call instead.
     }
 }
 #endif

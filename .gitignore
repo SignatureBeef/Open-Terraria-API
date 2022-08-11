@@ -355,3 +355,4 @@ MigrationBackup/
 .idea
 
 OTAPI.Client.Launcher/OTAPI.app/
+server/
