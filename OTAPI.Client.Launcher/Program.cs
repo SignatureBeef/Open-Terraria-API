@@ -22,86 +22,82 @@ using Projektanker.Icons.Avalonia.FontAwesome;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using Xilium.CefGlue;
 
-namespace OTAPI.Client.Launcher
+namespace OTAPI.Client.Launcher;
+
+class Program
 {
-    class Program
+    public static string LaunchFolder { get; set; } = Environment.CurrentDirectory;
+    public static string? LaunchID { get; set; }
+    public static Targets.IPlatformTarget[] Targets = new Targets.IPlatformTarget[]
     {
-        public static string LaunchFolder { get; set; } = Environment.CurrentDirectory;
-        public static string? LaunchID { get; set; }
-        public static Targets.IPlatformTarget[] Targets = new Targets.IPlatformTarget[]
-        {
-            new Targets.MacOSPlatformTarget(),
-            new Targets.WindowsPlatformTarget(),
-            new Targets.LinuxPlatformTarget(),
-        };
+        new Targets.MacOSPlatformTarget(),
+        new Targets.WindowsPlatformTarget(),
+        new Targets.LinuxPlatformTarget(),
+    };
 
-        static void TryDelete(string file)
-        {
-            if (File.Exists(file))
-                File.Delete(file);
-        }
-
-        static Dictionary<string, Assembly> _cache = new Dictionary<string, Assembly>();
-
-        static Assembly? Default_Resolving(System.Runtime.Loader.AssemblyLoadContext arg1, AssemblyName arg2)
-        {
-            if (arg2?.Name is null) return null;
-            if (_cache.TryGetValue(arg2.Name, out Assembly? asm) && asm is not null) return asm;
-
-            var loc = Path.Combine(Environment.CurrentDirectory, "bin", arg2.Name + ".dll");
-            if (File.Exists(loc))
-                asm = arg1.LoadFromAssemblyPath(loc);
-
-            loc = Path.ChangeExtension(loc, ".exe");
-            if (File.Exists(loc))
-                asm = arg1.LoadFromAssemblyPath(loc);
-
-            if (asm is not null)
-                _cache[arg2.Name] = asm;
-
-            return asm;
-        }
-
-        // Initialization code. Don't use any Avalonia, third-party APIs or any
-        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-        // yet and stuff might break.
-        public static void Main(string[] args)
-        {
-            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += Default_Resolving;
-            Start(args);
-        }
-
-        static void Start(string[] args)
-        {
-            // FNA added their own native resolver...which doesn't work (or their libs are not correct either)
-            // this hack here forces their resolver to not be set, allowing us to configure our own
-            // which scans the right folders.
-            TryDelete(Path.Combine(AppContext.BaseDirectory, "FNA.dll.config"));
-            TryDelete(Path.Combine(Environment.CurrentDirectory, "FNA.dll.config"));
-            TryDelete(Path.Combine("bin", "FNA.dll.config"));
-
-            // start the launcher, then OTAPI if requested
-            BuildAvaloniaApp()
-                .StartWithClassicDesktopLifetime(args);
-
-            if (LaunchID == "OTAPI")
-                Actions.OTAPI.Launch(args);
-
-            else if (LaunchID == "VANILLA")
-                Actions.Vanilla.Launch(LaunchFolder, args);
-        }
-
-        // Avalonia configuration, don't remove; also used by visual designer.
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                .UsePlatformDetect()
-                .LogToTrace()
-                .WithIcons(container => container
-                    .Register<FontAwesomeIconProvider>());
+    static void TryDelete(string file)
+    {
+        if (File.Exists(file))
+            File.Delete(file);
     }
+
+    static Dictionary<string, Assembly> _cache = new Dictionary<string, Assembly>();
+
+    static Assembly? Default_Resolving(System.Runtime.Loader.AssemblyLoadContext arg1, AssemblyName arg2)
+    {
+        if (arg2?.Name is null) return null;
+        if (_cache.TryGetValue(arg2.Name, out Assembly? asm) && asm is not null) return asm;
+
+        var loc = Path.Combine(Environment.CurrentDirectory, "bin", arg2.Name + ".dll");
+        if (File.Exists(loc))
+            asm = arg1.LoadFromAssemblyPath(loc);
+
+        loc = Path.ChangeExtension(loc, ".exe");
+        if (File.Exists(loc))
+            asm = arg1.LoadFromAssemblyPath(loc);
+
+        if (asm is not null)
+            _cache[arg2.Name] = asm;
+
+        return asm;
+    }
+
+    // Initialization code. Don't use any Avalonia, third-party APIs or any
+    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+    // yet and stuff might break.
+    public static void Main(string[] args)
+    {
+        System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += Default_Resolving;
+        Start(args);
+    }
+
+    static void Start(string[] args)
+    {
+        // FNA added their own native resolver...which doesn't work (or their libs are not correct either)
+        // this hack here forces their resolver to not be set, allowing us to configure our own
+        // which scans the right folders.
+        TryDelete(Path.Combine(AppContext.BaseDirectory, "FNA.dll.config"));
+        TryDelete(Path.Combine(Environment.CurrentDirectory, "FNA.dll.config"));
+        TryDelete(Path.Combine("bin", "FNA.dll.config"));
+
+        // start the launcher, then OTAPI if requested
+        BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+
+        if (LaunchID == "OTAPI")
+            Actions.OTAPI.Launch(args);
+
+        else if (LaunchID == "VANILLA")
+            Actions.Vanilla.Launch(LaunchFolder, args);
+    }
+
+    // Avalonia configuration, don't remove; also used by visual designer.
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .LogToTrace()
+            .WithIcons(container => container
+                .Register<FontAwesomeIconProvider>());
 }

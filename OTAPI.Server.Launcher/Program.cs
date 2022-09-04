@@ -16,125 +16,109 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using MonoMod.RuntimeDetour;
+using OTAPI;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using MonoMod.RuntimeDetour;
 
-namespace OTAPI.Launcher
+//namespace OTAPI.Launcher;
+
+static Assembly GetTerrariaAssembly() => typeof(Terraria.Animation).Assembly;
+
+static Hook LazyHook(string type, string method, Delegate callback)
 {
-    static class Program
+    var match = GetTerrariaAssembly().GetType(type);
+    var func = match?.GetMethod(method);
+
+    if (func != null)
     {
-        static Assembly GetTerrariaAssembly() => typeof(Terraria.Animation).Assembly;
+        return new Hook(func, callback);
+    }
+    return null;
+}
 
-        static Hook LazyHook(string type, string method, Delegate callback)
-        {
-            var match = GetTerrariaAssembly().GetType(type);
-            var func = match?.GetMethod(method);
+static void Nop() { }
 
-            if (func != null)
-            {
-                return new Hook(func, callback);
-            }
-            return null;
-        }
+static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
+{
+    Console.WriteLine("Preloading assembly...");
 
-        static void Nop() { }
+    if (GetTerrariaAssembly().EntryPoint.DeclaringType.Name != "MonoLaunch")
+        Terraria.Program.ForceLoadAssembly(GetTerrariaAssembly(), initializeStaticMembers: true);
 
-        static void Main(string[] args)
-        {
-            Terraria.Program.OnLaunched += Program_OnLaunched;
-            On.Terraria.Program.LaunchGame += Program_LaunchGame;
+    orig(args, monoArgs);
+}
+
+static void Program_OnLaunched(object sender, EventArgs e)
+{
+    Console.WriteLine($"MonoMod runtime hooks active, runtime: " + DetourHelper.Runtime.GetType().Name);
+
+    if (Common.IsTMLServer)
+    {
+        LazyHook("Terraria.ModLoader.Engine.HiDefGraphicsIssues", "Init", new Action(Nop));
+    }
+
+    On.Terraria.Main.ctor += Main_ctor;
+
+    Hooks.MessageBuffer.ClientUUIDReceived += (_, args) =>
+    {
+        if (args.Event == HookEvent.After)
+            Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[args.Instance.whoAmI].ClientUUID}");
+    };
+    Hooks.NPC.MechSpawn += (_, args) =>
+    {
+        Console.WriteLine($"Hooks.NPC.MechSpawn x={args.X}, y={args.Y}, type={args.Type}, num={args.Num}, num2={args.Num2}, num3={args.Num3}");
+    };
+    Hooks.Item.MechSpawn += (_, args) =>
+    {
+        Console.WriteLine($"Hooks.Item.MechSpawn x={args.X}, y={args.Y}, type={args.Type}, num={args.Num}, num2={args.Num2}, num3={args.Num3}");
+    };
+
+    On.Terraria.Main.DedServ += Main_DedServ;
+
+    On.Terraria.RemoteClient.Update += (orig, rc) =>
+    {
+        Console.WriteLine($"RemoteClient.Update: HOOK ID#{rc.Id} IsActive:{rc.IsActive},PT:{rc.PendingTermination}");
+        orig(rc);
+    };
+    On.Terraria.RemoteClient.Reset += (orig, rc) =>
+    {
+        Console.WriteLine($"RemoteClient.Reset: HOOK ID#{rc.Id} IsActive:{rc.IsActive},PT:{rc.PendingTermination}");
+        orig(rc);
+    };
+}
+
+static void Main_ctor(On.Terraria.Main.orig_ctor orig, Terraria.Main self)
+{
+    orig(self);
+    Terraria.Main.SkipAssemblyLoad = true; // we will do this.
+    Console.WriteLine("Main invoked");
+}
+
+static void Main_DedServ(On.Terraria.Main.orig_DedServ orig, Terraria.Main self)
+{
+    Console.WriteLine($"Server init process successful");
+
+    if (!Environment.GetCommandLineArgs().Any(x => x.ToLower() == "-test-init"))
+        orig(self);
+}
+
+Terraria.Program.OnLaunched += Program_OnLaunched;
+On.Terraria.Program.LaunchGame += Program_LaunchGame;
 
 #if TML
-            On.MonoLaunch.GetBaseDirectory += (orig) =>
-            {
-                return Path.Combine(Environment.CurrentDirectory, "tModLoader");
-            };
+    On.MonoLaunch.GetBaseDirectory += (orig) =>
+    {
+        return Path.Combine(Environment.CurrentDirectory, "tModLoader");
+    };
 
-            Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath = Path.Combine("tModLoader", Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath);
-            if (args == null || args.Length == 0)
-                args = new[] { "-server" };
+    Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath = Path.Combine("tModLoader", Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath);
+    if (args == null || args.Length == 0)
+        args = new[] { "-server" };
 
-            if (!args.Any(s => s.Equals("-server")))
-                args = args.Concat(new[] { "-server" }).ToArray();
+    if (!args.Any(s => s.Equals("-server")))
+        args = args.Concat(new[] { "-server" }).ToArray();
 #endif
 
-            GetTerrariaAssembly().EntryPoint.Invoke(null, new object[] { args });
-        }
-
-        private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
-        {
-            Console.WriteLine("Preloading assembly...");
-
-            if (GetTerrariaAssembly().EntryPoint.DeclaringType.Name != "MonoLaunch")
-                Terraria.Program.ForceLoadAssembly(GetTerrariaAssembly(), initializeStaticMembers: true);
-
-            orig(args, monoArgs);
-        }
-
-        private static void Program_OnLaunched(object sender, EventArgs e)
-        {
-            Console.WriteLine($"MonoMod runtime hooks active, runtime: " + DetourHelper.Runtime.GetType().Name);
-
-            if (OTAPI.Common.IsTMLServer)
-            {
-                LazyHook("Terraria.ModLoader.Engine.HiDefGraphicsIssues", "Init", new Action(Nop));
-            }
-
-            On.Terraria.Main.ctor += Main_ctor;
-
-            Hooks.MessageBuffer.ClientUUIDReceived += (_, args) =>
-            {
-                if (args.Event == HookEvent.After)
-                    Console.WriteLine($"ClientUUIDReceived {Terraria.Netplay.Clients[args.Instance.whoAmI].ClientUUID}");
-            };
-            Hooks.NPC.MechSpawn += (_, args) =>
-            {
-                Console.WriteLine($"Hooks.NPC.MechSpawn x={args.X}, y={args.Y}, type={args.Type}, num={args.Num}, num2={args.Num2}, num3={args.Num3}");
-            };
-            Hooks.Item.MechSpawn += (_, args) =>
-            {
-                Console.WriteLine($"Hooks.Item.MechSpawn x={args.X}, y={args.Y}, type={args.Type}, num={args.Num}, num2={args.Num2}, num3={args.Num3}");
-            };
-
-            //Hooks.Main.StatusTextChange += Main_StatusTextChange;
-
-            On.Terraria.Main.DedServ += Main_DedServ;
-
-            On.Terraria.RemoteClient.Update += (orig, rc) =>
-            {
-                System.Console.WriteLine($"RemoteClient.Update: HOOK ID#{rc.Id} IsActive:{rc.IsActive},PT:{rc.PendingTermination}");
-                orig(rc);
-            };
-            On.Terraria.RemoteClient.Reset += (orig, rc) =>
-            {
-                System.Console.WriteLine($"RemoteClient.Reset: HOOK ID#{rc.Id} IsActive:{rc.IsActive},PT:{rc.PendingTermination}");
-                orig(rc);
-            };
-        }
-
-        //private static void Main_StatusTextChange(object sender, Hooks.Main.StatusTextChangeArgs e)
-        //{
-        //    e.Value = "[OTAPI] " + e.Value;
-        //}
-
-        private static void Main_ctor(On.Terraria.Main.orig_ctor orig, Terraria.Main self)
-        {
-            orig(self);
-            Terraria.Main.SkipAssemblyLoad = true; // we will do this.
-            Console.WriteLine("Main invoked");
-        }
-
-        private static void Main_DedServ(On.Terraria.Main.orig_DedServ orig, Terraria.Main self)
-        {
-            Console.WriteLine($"Server init process successful");
-
-            if (!Environment.GetCommandLineArgs().Any(x => x.ToLower() == "-test-init"))
-                orig(self);
-        }
-    }
-}
+GetTerrariaAssembly().EntryPoint.Invoke(null, new object[] { args });

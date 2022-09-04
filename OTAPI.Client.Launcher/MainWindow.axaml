@@ -58,9 +58,7 @@
 
   <StackPanel Margin="30" VerticalAlignment="Center" HorizontalAlignment="Center">
 
-    <TextBlock Classes="heading" TextAlignment="Center">
-      Open Terraria API 3.0
-    </TextBlock>
+    <TextBlock Classes="heading" TextAlignment="Center" Text="{Binding VersionText}" />
     <TextBlock Classes="subheading" TextAlignment="Center">
       You must own Terraria and have a preexisting installation from Steam or Gog.
     </TextBlock>

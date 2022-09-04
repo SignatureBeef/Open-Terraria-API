@@ -20,229 +20,195 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Microsoft.CodeAnalysis;
 using OTAPI.Client.Launcher.Targets;
 using OTAPI.Common;
 using OTAPI.Patcher.Targets;
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace OTAPI.Client.Launcher
+namespace OTAPI.Client.Launcher;
+
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    private FileSystemWatcher _watcher;
+
+    MainWindowViewModel Context { get; set; } = new MainWindowViewModel();
+
+    public MainWindow()
     {
-        private FileSystemWatcher _watcher;
-
-        MainWindowViewModel Context { get; set; } = new MainWindowViewModel();
-
-        public MainWindow()
-        {
-            InitializeComponent();
+        InitializeComponent();
 #if DEBUG
-            this.AttachDevTools();
+        this.AttachDevTools();
 #endif
 
-            IPlatformTarget? target = null;
+        IPlatformTarget? target = null;
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                target = new WindowsPlatformTarget();
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            target = new WindowsPlatformTarget();
 
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                target = new LinuxPlatformTarget();
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            target = new LinuxPlatformTarget();
 
-            else //if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                target = new MacOSPlatformTarget();
+        else //if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            target = new MacOSPlatformTarget();
 
-            //else throw new NotSupportedException();
+        //else throw new NotSupportedException();
 
-            Context.LaunchTarget = target;
-            target.OnUILoad(Context);
+        Context.LaunchTarget = target;
+        target.OnUILoad(Context);
 
-            DataContext = Context;
+        DataContext = Context;
 
-            _watcher = new FileSystemWatcher(Environment.CurrentDirectory, "OTAPI.exe");
-            _watcher.Created += OTAPI_Changed;
-            _watcher.Changed += OTAPI_Changed;
-            _watcher.Deleted += OTAPI_Changed;
-            _watcher.Renamed += OTAPI_Changed;
-            _watcher.EnableRaisingEvents = true;
+        _watcher = new FileSystemWatcher(Environment.CurrentDirectory, "OTAPI.exe");
+        _watcher.Created += OTAPI_Changed;
+        _watcher.Changed += OTAPI_Changed;
+        _watcher.Deleted += OTAPI_Changed;
+        _watcher.Renamed += OTAPI_Changed;
+        _watcher.EnableRaisingEvents = true;
+    }
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        base.OnClosing(e);
+        _watcher?.Dispose();
+        _watcher = null;
+    }
+    private void OTAPI_Changed(object sender, FileSystemEventArgs e)
+    {
+        Context.LaunchTarget?.OnUILoad(Context);
+    }
+
+    public void OnStartVanilla(object sender, RoutedEventArgs e)
+    {
+        Program.LaunchID = "VANILLA";
+        Program.LaunchFolder = Context.InstallPath.Path;
+        this.Close();
+    }
+
+    public void OnStartOTAPI(object sender, RoutedEventArgs e)
+    {
+        Program.LaunchID = "OTAPI";
+        Program.LaunchFolder = Context.InstallPath.Path;
+        this.Close();
+    }
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+
+        try
+        {
+            var target = ClientHelpers.DetermineClientInstallPath(Program.Targets);
+            OnInstallPathChange(target);
+        }
+        catch (DirectoryNotFoundException) { }
+    }
+
+    void OnInstallPathChange(ClientInstallPath<IPlatformTarget> target)
+    {
+        Context.InstallPath = target;
+        Context.InstallPathValid = target?.Target?.IsValidInstallPath(target.Path) == true;
+
+        target?.Target?.OnUILoad(Context);
+
+        // try copy the icons from the vanilla installation
+        try
+        {
+            if (Context.InstallPathValid)
+            {
+                var is_bundle = Path.GetFileName(Environment.CurrentDirectory).Equals("MacOS", StringComparison.CurrentCultureIgnoreCase);
+                if (is_bundle)
+                {
+                    var icon_src = Path.Combine(Context.InstallPath.Path, "Resources", "Terraria.icns");
+                    var icon_dst = Path.Combine(Environment.CurrentDirectory, "..", "Resources", "OTAPI.icns");
+
+                    if (File.Exists(icon_dst)) File.Delete(icon_dst);
+
+                    if (File.Exists(icon_src) && !File.Exists(icon_dst))
+                        File.Copy(icon_src, icon_dst);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Failed to copy icons");
+            Console.WriteLine(ex);
+        }
+    }
+
+    public async void OnFindExe(object sender, RoutedEventArgs e)
+    {
+        Context.InstallStatus = null;
+
+        var fd = new OpenFolderDialog()
+        {
+            Directory = Context.InstallPath?.Path
+        };
+        var directory = await fd.ShowAsync(this);
+
+        if (directory is not null && Directory.Exists(directory))
+        {
+            foreach (var target in Program.Targets)
+            {
+                if (target.IsValidInstallPath(directory))
+                {
+                    Context.InstallPath = new ClientInstallPath<IPlatformTarget>()
+                    {
+                        Path = directory,
+                        Target = target,
+                    };
+                    OnInstallPathChange(Context.InstallPath);
+                    return;
+                }
+            }
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            _watcher?.Dispose();
-            _watcher = null;
-        }
-        private void OTAPI_Changed(object sender, FileSystemEventArgs e)
-        {
-            Context.LaunchTarget?.OnUILoad(Context);
-        }
+        Context.InstallStatus = "Install path is not supported";
+    }
 
-        public void OnStartVanilla(object sender, RoutedEventArgs e)
-        {
-            Program.LaunchID = "VANILLA";
-            Program.LaunchFolder = Context.InstallPath.Path;
-            this.Close();
-        }
+    public void OnOpenWorkspace(object sender, RoutedEventArgs e) => OpenFolder(Environment.CurrentDirectory);
+    public void OnOpenCSharp(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "csharp", "plugins"));
+    public void OnOpenJavascript(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "clearscript"));
+    public void OnOpenLua(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "lua"));
 
-        public void OnStartOTAPI(object sender, RoutedEventArgs e)
-        {
-            Program.LaunchID = "OTAPI";
-            Program.LaunchFolder = Context.InstallPath.Path;
-            this.Close();
-        }
+    public void OpenFolder(string folder)
+    {
+        using var process = new System.Diagnostics.Process();
+        process.StartInfo.UseShellExecute = true;
+        process.StartInfo.FileName = folder;
+        process.Start();
+    }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
+    public void OnInstall(object sender, RoutedEventArgs e)
+    {
+        if (Context.IsInstalling) return;
+        Context.IsInstalling = true;
 
+        new System.Threading.Thread(() =>
+        {
             try
             {
-                var target = ClientHelpers.DetermineClientInstallPath(Program.Targets);
-                OnInstallPathChange(target);
+                var target = new PCClientTarget();
+                target.InstallPath = Context.InstallPath.Path;
+
+                target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
+                target.Patch();
+                Context.InstallStatus = "Patching completed, installing to existing installation...";
+
+                Context.InstallPath.Target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
+                Context.InstallPath.Target.Install(Context.InstallPath.Path);
+
+                Context.InstallStatus = "Install completed";
+
+                Context.IsInstalling = false;
+                Context.LaunchTarget.OnUILoad(Context);
             }
-            catch (DirectoryNotFoundException) { }
-        }
-
-        void OnInstallPathChange(ClientInstallPath<IPlatformTarget> target)
-        {
-            Context.InstallPath = target;
-            Context.InstallPathValid = target?.Target?.IsValidInstallPath(target.Path) == true;
-
-            target?.Target?.OnUILoad(Context);
-
-            // try copy the icons from the vanilla installation
-            try
+            catch (System.Exception ex)
             {
-                if (Context.InstallPathValid)
-                {
-                    var is_bundle = Path.GetFileName(Environment.CurrentDirectory).Equals("MacOS", StringComparison.CurrentCultureIgnoreCase);
-                    if (is_bundle)
-                    {
-                        var icon_src = Path.Combine(Context.InstallPath.Path, "Resources", "Terraria.icns");
-                        var icon_dst = Path.Combine(Environment.CurrentDirectory, "..", "Resources", "OTAPI.icns");
-
-                        if (File.Exists(icon_dst)) File.Delete(icon_dst);
-
-                        if (File.Exists(icon_src) && !File.Exists(icon_dst))
-                            File.Copy(icon_src, icon_dst);
-                    }
-                }
+                Context.InstallStatus = "Err: " + ex.ToString();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Failed to copy icons");
-                Console.WriteLine(ex);
-            }
-        }
-
-        public async void OnFindExe(object sender, RoutedEventArgs e)
-        {
-            Context.InstallStatus = null;
-
-            var fd = new OpenFolderDialog()
-            {
-                Directory = Context.InstallPath?.Path
-            };
-            var directory = await fd.ShowAsync(this);
-
-            if (directory is not null && Directory.Exists(directory))
-            {
-                foreach (var target in Program.Targets)
-                {
-                    if (target.IsValidInstallPath(directory))
-                    {
-                        Context.InstallPath = new ClientInstallPath<IPlatformTarget>()
-                        {
-                            Path = directory,
-                            Target = target,
-                        };
-                        OnInstallPathChange(Context.InstallPath);
-                        return;
-                    }
-                }
-            }
-
-            Context.InstallStatus = "Install path is not supported";
-        }
-
-        public void OnOpenWorkspace(object sender, RoutedEventArgs e) => OpenFolder(Environment.CurrentDirectory);
-        public void OnOpenCSharp(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "csharp", "plugins"));
-        public void OnOpenJavascript(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "clearscript"));
-        public void OnOpenLua(object sender, RoutedEventArgs e) => OpenFolder(Path.Combine(Environment.CurrentDirectory, "lua"));
-
-        public void OpenFolder(string folder)
-        {
-            using var process = new System.Diagnostics.Process();
-            process.StartInfo.UseShellExecute = true;
-            process.StartInfo.FileName = folder;
-            process.Start();
-        }
-
-        public void OnInstall(object sender, RoutedEventArgs e)
-        {
-            if (Context.IsInstalling) return;
-            Context.IsInstalling = true;
-
-            new System.Threading.Thread(() =>
-            {
-                //void CompileCtx(object instance, ModFramework.Modules.CSharp.CSharpLoader.CompilationContextArgs args)
-                //{
-                //    var asms = System.AppDomain.CurrentDomain.GetAssemblies();
-                //    if (args.CoreLibAssemblies is not null && args.CoreLibAssemblies.Count() == 0)
-                //    {
-                //        Context.InstallStatus = $"Binding {asms.Length} assemblies";
-                //        //Console.WriteLine(Context.InstallStatus = $"Binding {asms.Length} assemblies");
-
-                //        foreach (var asm in asms.Where(x => !x.IsDynamic
-                //            && !Path.GetFileName(x.Location).Equals("OTAPI.Patcher.dll"))
-                //        )
-                //        {
-                //            if (!string.IsNullOrWhiteSpace(asm.Location) && File.Exists(asm.Location))
-                //            {
-                //                //Console.WriteLine($"Linking {asm.Location}");
-                //                args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(asm.Location));
-                //            }
-                //        }
-
-                //        foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "Syste*.dll"))
-                //            args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile(file));
-
-                //        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("netstandard.dll"));
-                //        args.Context.Compilation = args.Context.Compilation.AddReferences(MetadataReference.CreateFromFile("mscorlib.dll"));
-                //    }
-                //};
-                //ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext += CompileCtx;
-                try
-                {
-                    var target = new PCClientTarget();
-                    target.InstallPath = Context.InstallPath.Path;
-
-                    target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
-                    target.Patch();
-                    Context.InstallStatus = "Patching completed, installing to existing installation...";
-
-                    Context.InstallPath.Target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;
-                    Context.InstallPath.Target.Install(Context.InstallPath.Path);
-
-                    Context.InstallStatus = "Install completed";
-
-                    Context.IsInstalling = false;
-                    Context.LaunchTarget.OnUILoad(Context);
-                }
-                catch (System.Exception ex)
-                {
-                    Context.InstallStatus = "Err: " + ex.ToString();
-                }
-                //finally
-                //{
-                //    ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext -= CompileCtx;
-                //}
-            }).Start();
-        }
+        }).Start();
     }
 }

@@ -19,19 +19,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using OTAPI.Common;
 using System;
 
-namespace OTAPI.Client.Launcher.Targets
-{
-    public interface IPlatformTarget : IInstallDiscoverer
-    {
-        void Install(string installPath);
-        bool IsValidInstallPath(string installPath);
-        event EventHandler<InstallStatusUpdate> StatusUpdate;
-        string Status { set; }
+namespace OTAPI.Client.Launcher.Targets;
 
-        /// <summary>
-        /// Triggers when the UI is loading, allowing the data to be filled.
-        /// </summary>
-        /// <param name="vm"></param>
-        void OnUILoad(MainWindowViewModel vm);
-    }
+public interface IPlatformTarget : IInstallDiscoverer
+{
+    void Install(string installPath);
+    bool IsValidInstallPath(string installPath);
+    event EventHandler<InstallStatusUpdate> StatusUpdate;
+    string Status { set; }
+
+    /// <summary>
+    /// Triggers when the UI is loading, allowing the data to be filled.
+    /// </summary>
+    /// <param name="vm"></param>
+    void OnUILoad(MainWindowViewModel vm);
 }

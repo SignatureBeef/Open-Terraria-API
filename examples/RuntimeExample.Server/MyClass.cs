@@ -20,28 +20,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System;
 using ModFramework;
 
-namespace RuntimeExample.Server
+namespace RuntimeExample.Server;
+
+public static class Hooks
 {
-    public static class Hooks
+    [Modification(ModType.Runtime, "Loading Runtime Example!")]
+    public static void OnRunning()
     {
-        [Modification(ModType.Runtime, "Loading Runtime Example!")]
-        public static void OnRunning()
-        {
-            Console.WriteLine("[RuntimeExample Server] Hello World! from a compiled DLL");
-            On.Terraria.Program.LaunchGame += Program_LaunchGame;
-            On.Terraria.NetMessage.greetPlayer += NetMessage_greetPlayer;
-        }
+        Console.WriteLine("[RuntimeExample Server] Hello World! from a compiled DLL");
+        On.Terraria.Program.LaunchGame += Program_LaunchGame;
+        On.Terraria.NetMessage.greetPlayer += NetMessage_greetPlayer;
+    }
 
-        private static void NetMessage_greetPlayer(On.Terraria.NetMessage.orig_greetPlayer orig, int plr)
-        {
-            Console.WriteLine($"[RuntimeExample Server] Greet player: {plr}");
-            orig(plr);
-        }
+    private static void NetMessage_greetPlayer(On.Terraria.NetMessage.orig_greetPlayer orig, int plr)
+    {
+        Console.WriteLine($"[RuntimeExample Server] Greet player: {plr}");
+        orig(plr);
+    }
 
-        private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
-        {
-            Console.WriteLine("[RuntimeExample Server] LaunchGame was called!");
-            orig(args, monoArgs);
-        }
+    private static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
+    {
+        Console.WriteLine("[RuntimeExample Server] LaunchGame was called!");
+        orig(args, monoArgs);
     }
 }

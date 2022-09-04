@@ -20,79 +20,35 @@ using OTAPI.Common;
 using System;
 using System.IO;
 
-namespace OTAPI.Client.Launcher.Targets
+namespace OTAPI.Client.Launcher.Targets;
+
+public class MacOSPlatformTarget : MacOSInstallDiscoverer, IPlatformTarget
 {
-    public class MacOSPlatformTarget : MacOSInstallDiscoverer, IPlatformTarget
+    public void OnUILoad(MainWindowViewModel vm)
     {
-        public void OnUILoad(MainWindowViewModel vm)
-        {
-            vm.OtapiExe = Path.Combine(Environment.CurrentDirectory, "client", "OTAPI.exe");
-            vm.VanillaExe = (vm.InstallPath?.Path is not null && Directory.Exists(vm.InstallPath.Path)) ? Path.Combine(vm.InstallPath.Path, "Resources", "Terraria.exe") : null;
-        }
+        vm.OtapiExe = Path.Combine(Environment.CurrentDirectory, "client", "OTAPI.exe");
+        vm.VanillaExe = (vm.InstallPath?.Path is not null && Directory.Exists(vm.InstallPath.Path)) ? Path.Combine(vm.InstallPath.Path, "Resources", "Terraria.exe") : null;
+    }
 
-        public void Install(string installPath)
-        {
-            //var packagePaths = this.PublishHostGame();
+    public void Install(string installPath)
+    {
+        var sourceContentPath = Path.Combine(installPath, "Resources", "Content");
+        var clientPath = Path.Combine(Environment.CurrentDirectory, "client");
+#if USE_BIN_FOLDER
+        var destContentPath = Path.Combine(Environment.CurrentDirectory, "bin", "Content");
+#else
+        var destContentPath = Path.Combine(clientPath, "Content");
+#endif
+        var macOS = Path.Combine(installPath, "MacOS");
 
-            //if (packagePaths.Any())
-            //{
-            //    var otapiFolder = Path.Combine(installPath, "otapi");
-            var sourceContentPath = Path.Combine(installPath, "Resources", "Content");
-            var clientPath = Path.Combine(Environment.CurrentDirectory, "client");
-            #if USE_BIN_FOLDER
-            var destContentPath = Path.Combine(Environment.CurrentDirectory, "bin", "Content");
-            #else
-            var destContentPath = Path.Combine(clientPath, "Content");
-            #endif
-            var macOS = Path.Combine(installPath, "MacOS");
+        Console.WriteLine(Status = "Installing FNA libs...");
+        this.InstallLibs(clientPath);
 
-            //    if (!Directory.Exists(otapiFolder))
-            //        Directory.CreateDirectory(otapiFolder);
+        Console.WriteLine(Status = "Installing Steamworks...");
+        this.InstallSteamworks64(clientPath, macOS);
 
-            Console.WriteLine(Status = "Installing FNA libs...");
-            this.InstallLibs(clientPath);
-
-            //    Console.WriteLine(Status = "Installing LUA...");
-            //    this.InstallLua(otapiFolder);
-
-            //    Console.WriteLine(Status = "Installing ClearScript...");
-            //    this.InstallClearScript(otapiFolder);
-
-            //    Console.WriteLine(Status = "Installing extra files...");
-            //    this.CopyInstallFiles(otapiFolder);
-
-            Console.WriteLine(Status = "Installing Steamworks...");
-            this.InstallSteamworks64(clientPath, macOS);
-
-            //Console.WriteLine(Status = "Copying Terraria Content files, this may take a while...");
-            //Utils.CopyFiles(sourceContentPath, destContentPath);
-            Console.WriteLine(Status = "Linking Terraria Content files...");
-            if (!Directory.Exists(destContentPath))
-                Directory.CreateSymbolicLink(destContentPath, sourceContentPath);
-
-            //    Console.WriteLine(Status = "Patching launch scripts...");
-            //    this.PatchOSXLaunch(installPath);
-
-            //    this.CopyOTAPI(otapiFolder, packagePaths);
-
-            //    Console.WriteLine(Status = "OSX install finished");
-
-            //    // TODO typings are not yet ready.
-            //    //Console.Write("Would you like to generate TypeScript typings? y/n: ");
-            //    //var resp = Console.ReadKey().Key;
-            //    //Console.WriteLine();
-            //    //if (resp == ConsoleKey.Y)
-            //    //{
-            //    //    Console.WriteLine("Generating typings...this will take a while");
-            //    //    GenerateTypings(otapiFolder);
-            //    //}
-
-            //    //Console.WriteLine("Done");
-            //}
-            //else
-            //{
-            //    Console.Error.WriteLine("Failed to produce or find the appropriate package");
-            //}
-        }
+        Console.WriteLine(Status = "Linking Terraria Content files...");
+        if (!Directory.Exists(destContentPath))
+            Directory.CreateSymbolicLink(destContentPath, sourceContentPath);
     }
 }

@@ -22,61 +22,60 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
 
-namespace OTAPI.Client.Launcher
+namespace OTAPI.Client.Launcher;
+
+public partial class MessageBoxWindow : Window
 {
-    public partial class MessageBoxWindow : Window
+    public MessageBoxWindow()
     {
-        public MessageBoxWindow()
-        {
-            InitializeComponent();
+        InitializeComponent();
 #if DEBUG
-            this.AttachDevTools();
-            //DataContext = new MessageBoxWindowViewModel();
+        this.AttachDevTools();
+        //DataContext = new MessageBoxWindowViewModel();
 #endif
-        }
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
-
-        public void OK(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
     }
 
-    public static class MessageBox
+    private void InitializeComponent()
     {
-        public static void Show(string text, string title)
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    public void OK(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+    }
+}
+
+public static class MessageBox
+{
+    public static void Show(string text, string title)
+    {
+        var wnd = new MessageBoxWindow()
         {
-            var wnd = new MessageBoxWindow()
+            DataContext = new MessageBoxWindowViewModel()
             {
-                DataContext = new MessageBoxWindowViewModel()
-                {
-                    Text = text,
-                    Title = title.ToUpper()
-                }
-            };
-            wnd.Show();
-            Application.Current.Run(wnd);
-        }
+                Text = text,
+                Title = title.ToUpper()
+            }
+        };
+        wnd.Show();
+        Application.Current.Run(wnd);
+    }
+}
+
+public class MessageBoxWindowViewModel : ReactiveObject
+{
+    private string? title;
+    public string? Title
+    {
+        get => title;
+        set => this.RaiseAndSetIfChanged(ref title, $"OTAPI Client: {value}");
     }
 
-    public class MessageBoxWindowViewModel : ReactiveObject
+    private string? text;
+    public string? Text
     {
-        private string? title;
-        public string? Title
-        {
-            get => title;
-            set => this.RaiseAndSetIfChanged(ref title, $"OTAPI Client: {value}");
-        }
-
-        private string? text;
-        public string? Text
-        {
-            get => text;
-            set => this.RaiseAndSetIfChanged(ref text, value);
-        }
+        get => text;
+        set => this.RaiseAndSetIfChanged(ref text, value);
     }
 }

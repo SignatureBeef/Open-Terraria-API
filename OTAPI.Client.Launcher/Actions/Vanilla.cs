@@ -20,38 +20,37 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace OTAPI.Client.Launcher.Actions
+namespace OTAPI.Client.Launcher.Actions;
+
+static class Vanilla
 {
-    static class Vanilla
+    public static void Launch(string installPath, string[] args)
     {
-        public static void Launch(string installPath, string[] args)
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            var script = Path.Combine(installPath, "MacOS", "Terraria");
+            System.Console.WriteLine($"Launching: {script}");
+            using var process = new Process();
+            process.StartInfo.FileName = script;
+            process.Start();
+        }
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            var script = Path.Combine(installPath, "Terraria");
+            System.Console.WriteLine($"Launching: {script}");
+            using var process = new Process();
+            process.StartInfo.FileName = script;
+            process.Start();
+        }
+        else
+        {
+            var script = Path.Combine(installPath, "Terraria.exe");
+            System.Console.WriteLine($"Launching: {script}");
+            Process.Start(new ProcessStartInfo()
             {
-                var script = Path.Combine(installPath, "MacOS", "Terraria");
-                System.Console.WriteLine($"Launching: {script}");
-                using var process = new Process();
-                process.StartInfo.FileName = script;
-                process.Start();
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                var script = Path.Combine(installPath, "Terraria");
-                System.Console.WriteLine($"Launching: {script}");
-                using var process = new Process();
-                process.StartInfo.FileName = script;
-                process.Start();
-            }
-            else
-            {
-                var script = Path.Combine(installPath, "Terraria.exe");
-                System.Console.WriteLine($"Launching: {script}");
-                Process.Start(new ProcessStartInfo()
-                {
-                    WorkingDirectory = installPath,
-                    FileName = script
-                });
-            }
+                WorkingDirectory = installPath,
+                FileName = script
+            });
         }
     }
 }

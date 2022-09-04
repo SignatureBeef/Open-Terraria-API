@@ -19,77 +19,82 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using OTAPI.Client.Launcher.Targets;
 using OTAPI.Common;
 using ReactiveUI;
-using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 
-namespace OTAPI.Client.Launcher
+namespace OTAPI.Client.Launcher;
+
+public class MainWindowViewModel : ReactiveObject
 {
-    public class MainWindowViewModel : ReactiveObject
+    public string VersionText => $"Open Terraria API {RemovePaddedVersion(typeof(OTAPI.Patcher.Common)!.Assembly!.GetName()!.Version!.ToString())}";
+    static string RemovePaddedVersion(string str)
     {
-        private string? _vanillaExe;
-        public string? VanillaExe
-        {
-            get => _vanillaExe;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _vanillaExe, value);
-                this.RaisePropertyChanged(nameof(IsVanillaFound));
-                this.RaisePropertyChanged(nameof(IsVanillaReady));
-            }
-        }
-
-        private string? _otapiExe;
-        public string? OtapiExe
-        {
-            get => _otapiExe;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _otapiExe, value);
-                this.RaisePropertyChanged(nameof(IsOTAPIFound));
-                this.RaisePropertyChanged(nameof(IsOTAPIReady));
-            }
-        }
-
-
-        public bool IsVanillaFound => File.Exists(VanillaExe);
-        public bool IsVanillaReady => IsVanillaFound && !IsInstalling;
-
-        public bool IsOTAPIFound => File.Exists(OtapiExe);
-        public bool IsOTAPIReady => IsOTAPIFound && !IsInstalling;
-
-        public IPlatformTarget? LaunchTarget { get; set; }
-
-        private ClientInstallPath<IPlatformTarget>? _installPath;
-        public ClientInstallPath<IPlatformTarget>? InstallPath { get => _installPath; set => this.RaiseAndSetIfChanged(ref _installPath, value); }
-
-        private bool _installPathValid;
-        public bool InstallPathValid
-        {
-            get => _installPathValid;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _installPathValid, value);
-                this.RaisePropertyChanged(nameof(CanInstall));
-            }
-        }
-
-        private string _installStatus = string.Empty;
-        public string InstallStatus { get => _installStatus; set => this.RaiseAndSetIfChanged(ref _installStatus, value); }
-
-        private bool _installing;
-        public bool IsInstalling
-        {
-            get => _installing;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _installing, value);
-                this.RaisePropertyChanged(nameof(CanInstall));
-                this.RaisePropertyChanged(nameof(IsOTAPIReady));
-                this.RaisePropertyChanged(nameof(IsVanillaReady));
-            }
-        }
-
-        public bool CanInstall => InstallPathValid && !IsInstalling;
+        while(str.EndsWith(".0"))
+            str = str.Remove(str.Length - 2, 2);
+        return str;
     }
+
+    private string? _vanillaExe;
+    public string? VanillaExe
+    {
+        get => _vanillaExe;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _vanillaExe, value);
+            this.RaisePropertyChanged(nameof(IsVanillaFound));
+            this.RaisePropertyChanged(nameof(IsVanillaReady));
+        }
+    }
+
+    private string? _otapiExe;
+    public string? OtapiExe
+    {
+        get => _otapiExe;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _otapiExe, value);
+            this.RaisePropertyChanged(nameof(IsOTAPIFound));
+            this.RaisePropertyChanged(nameof(IsOTAPIReady));
+        }
+    }
+
+
+    public bool IsVanillaFound => File.Exists(VanillaExe);
+    public bool IsVanillaReady => IsVanillaFound && !IsInstalling;
+
+    public bool IsOTAPIFound => File.Exists(OtapiExe);
+    public bool IsOTAPIReady => IsOTAPIFound && !IsInstalling;
+
+    public IPlatformTarget? LaunchTarget { get; set; }
+
+    private ClientInstallPath<IPlatformTarget>? _installPath;
+    public ClientInstallPath<IPlatformTarget>? InstallPath { get => _installPath; set => this.RaiseAndSetIfChanged(ref _installPath, value); }
+
+    private bool _installPathValid;
+    public bool InstallPathValid
+    {
+        get => _installPathValid;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _installPathValid, value);
+            this.RaisePropertyChanged(nameof(CanInstall));
+        }
+    }
+
+    private string _installStatus = string.Empty;
+    public string InstallStatus { get => _installStatus; set => this.RaiseAndSetIfChanged(ref _installStatus, value); }
+
+    private bool _installing;
+    public bool IsInstalling
+    {
+        get => _installing;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _installing, value);
+            this.RaisePropertyChanged(nameof(CanInstall));
+            this.RaisePropertyChanged(nameof(IsOTAPIReady));
+            this.RaisePropertyChanged(nameof(IsVanillaReady));
+        }
+    }
+
+    public bool CanInstall => InstallPathValid && !IsInstalling;
 }
