@@ -1,4 +1,4 @@
-import ImGuiNET from 'AddHostObject-ImGuiNET';
+import ImGuiNET from 'AddHostObject-ImGui.NET';
 import OTAPI from 'AddHostObject-OTAPI';
 import Runtime from 'AddHostObject-OTAPI.Runtime';
 import tmr from 'AddHostObject-System.ComponentModel.TypeConverter';

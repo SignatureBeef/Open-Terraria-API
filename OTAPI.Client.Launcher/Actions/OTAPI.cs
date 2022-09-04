@@ -16,13 +16,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using ModFramework;
 using ModFramework.Modules.CSharp;
+using MonoMod.RuntimeDetour;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 
 namespace OTAPI.Client.Launcher.Actions
 {
@@ -30,11 +34,61 @@ namespace OTAPI.Client.Launcher.Actions
     {
         static Assembly Terraria;
 
+        //static void CompileAndInstall()
+        //{
+        //    ModContext ctx = new("OTAPI");
+        //    ctx.BaseDirectory = Path.Combine(Environment.CurrentDirectory, "patchtime");
+        //    new CSharpLoader(ctx)
+        //        .SetAutoLoadAssemblies(false)
+        //        .SetClearExistingModifications(false)
+        //        .LoadModifications("modules-patched", CSharpLoader.EModification.Module);
+        //}
+
+        //static Type GetTypeByName(Func<string, Type> orig, string typeName)
+        //{
+        //    var r = orig("Microsoft.Xna.Framework.Content.ListReader`1[[Microsoft.Xna.Framework.Rectangle, FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null]]");
+        //    var r1 = orig("Microsoft.Xna.Framework.Content.ListReader`1[Microsoft.Xna.Framework.Rectangle, FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null]");
+        //    var r2 = orig("Microsoft.Xna.Framework.Content.ListReader`1");
+        //    var r3 = orig("Microsoft.Xna.Framework.Content.ListReader`1, FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null");
+        //    var r4 = orig("Microsoft.Xna.Framework.Rectangle, FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null");
+        //    var res = orig(typeName.Replace(", ReLogic", ", OTAPI"));
+
+        //    if(res is null && typeName.StartsWith("Microsoft.Xna.Framework.Content") && typeName.EndsWith("]]"))
+        //    {
+        //        res = orig(typeName + ", FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null");
+        //    }
+
+        //    return res;
+        //}
+
         public static void Launch(string[] args)
         {
             Console.WriteLine("[OTAPI.Client] Starting!");
 
+            ModContext.ContextCreated += (ctx) =>
+            {
+                ctx.ReferenceFiles.Add("ModFramework.dll");
+                ctx.ReferenceFiles.Add("MonoMod.dll");
+                ctx.ReferenceFiles.Add("MonoMod.RuntimeDetour.dll");
+                ctx.ReferenceFiles.Add("Newtonsoft.Json.dll");
+                ctx.ReferenceFiles.Add(Path.Combine("client", "OTAPI.exe"));
+                ctx.ReferenceFiles.Add(Path.Combine("client", "OTAPI.Runtime.dll"));
+                ctx.ReferenceFiles.Add("ImGui.NET.dll");
+                ctx.ReferenceFiles.Add("FNA.dll");
+                ctx.ReferenceFiles.Add("System.Drawing.Common.dll");
+                ctx.ReferenceFiles.Add("Xilium.CefGlue.dll");
+                ctx.ReferenceFiles.Add("Xilium.CefGlue.Common.dll");
+                ctx.ReferenceFiles.Add("OTAPI.Client.Launcher.dll");
+            };
+            //CompileAndInstall();
+
             NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep);
+
+            //Expression<Action> d = () => Type.GetType("");
+            //var mce = d.Body as MethodCallExpression;
+            //Expression<Action> b = () => GetTypeByName(null!, "");
+            //var mceb = b.Body as MethodCallExpression;
+            //new Hook(mce.Method, mceb.Method);
 
             var steam = ResolveFile("Steamworks.NET.dll");
             if (!File.Exists(steam)) throw new Exception("Failed to find Steamworks.NET.dll");
@@ -42,18 +96,25 @@ namespace OTAPI.Client.Launcher.Actions
 
             GC.Collect();
 
-            // reset the runtime paths
-            ModFramework.Plugins.PluginLoader.Clear();
-            CSharpLoader.GlobalRootDirectory = Path.Combine("csharp");
-            CSharpLoader.GlobalAssemblies.Clear();
+            //// reset the runtime paths
+            //ModFramework.Plugins.PluginLoader.Clear();
+            //CSharpLoader.GlobalRootDirectory = Path.Combine("csharp");
+            //CSharpLoader.GlobalAssemblies.Clear();
 
             CSharpLoader.OnCompilationContext += CSharpLoader_OnCompilationContext;
 
+            //AssemblyLoadContext.Default.Resolving += OnResolveAssembly; cant use this since ReLogic lives in OTAPI atm and this has a check to ensure similar assembly name.
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            AppDomain.CurrentDomain.TypeResolve += CurrentDomain_TypeResolve;
 
             Terraria = LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "client", "OTAPI.exe"));
 
             Terraria.EntryPoint!.Invoke(null, new object[] { args });
+        }
+
+        private static Assembly? CurrentDomain_TypeResolve(object? sender, ResolveEventArgs args)
+        {
+            return null;
         }
 
         private static void CSharpLoader_OnCompilationContext(object? sender, CSharpLoader.CompilationContextArgs e)
@@ -114,20 +175,20 @@ namespace OTAPI.Client.Launcher.Actions
             if (_assemblyCache.TryGetValue(asmName.Name, out Assembly? cached))
                 return cached;
 
-            Console.WriteLine("[OTAPI Host] Resolving assembly: " + args.Name);
-            if (args.Name.StartsWith("ReLogic") // this occurs as the assembly name is encoded in the xna content files
+            Console.WriteLine("[OTAPI Host] Resolving assembly: " + asmName.Name);
+            if (asmName.Name.StartsWith("ReLogic") // this occurs as the assembly name is encoded in the xna content files
                 || asmName.Name.StartsWith("Terraria")
                 || (asmName.Name.StartsWith("OTAPI") && !asmName.Name.StartsWith("OTAPI.Runtime"))
             )
                 return Terraria;
 
-            else if (args.Name.StartsWith("OTAPI.Runtime"))
+            else if (asmName.Name.StartsWith("OTAPI.Runtime"))
                 return LoadAndCacheAssembly(ResolveFile("OTAPI.Runtime.dll"));
 
-            else if (args.Name.StartsWith("ImGuiNET"))
+            else if (asmName.Name.StartsWith("ImGuiNET"))
                 return LoadAndCacheAssembly(ResolveFile("ImGui.NET.dll"));
 
-            else if (args.Name.StartsWith("Steamworks.NET"))
+            else if (asmName.Name.StartsWith("Steamworks.NET"))
                 return LoadAndCacheAssembly(ResolveFile("Steamworks.NET.dll"));
 
             else
@@ -188,19 +249,19 @@ namespace OTAPI.Client.Launcher.Actions
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
                     var osx = Path.Combine(basePath, "osx");
-                    if(Directory.Exists(osx))
+                    if (Directory.Exists(osx))
                         matches = matches.Union(Directory.GetFiles(osx, "*" + libraryName + "*"));
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
                     var lib64 = Path.Combine(basePath, "lib64");
-                    if(Directory.Exists(lib64))
+                    if (Directory.Exists(lib64))
                         matches = matches.Union(Directory.GetFiles(lib64, "*" + libraryName + "*"));
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     var x64 = Path.Combine(basePath, "x64");
-                    if(Directory.Exists(x64))
+                    if (Directory.Exists(x64))
                         matches = matches.Union(Directory.GetFiles(x64, "*" + libraryName + "*"));
                 }
 

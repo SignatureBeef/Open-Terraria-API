@@ -18,9 +18,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.IO;
-using ModFramework;
-using ModFramework.Modules.CSharp;
 
 namespace OTAPI.Patcher.Targets
 {
@@ -32,9 +29,9 @@ namespace OTAPI.Patcher.Targets
 
         static Dictionary<char, IPatchTarget> _targets = new Dictionary<char, IPatchTarget>()
         {
-            {'p', new OTAPIPCServerTarget() },
-            {'m', new OTAPIMobileServerTarget() },
-            {'c', new OTAPIClientLightweightTarget() },
+            {'p', new PCServerTarget() },
+            {'m', new MobileServerTarget() },
+            {'c', new PCClientTarget() },
             {'t', new TMLPCServerTarget() },
         };
 
@@ -42,7 +39,7 @@ namespace OTAPI.Patcher.Targets
         {
             var cli = Common.GetCliValue("patchTarget");
 
-            if (!String.IsNullOrWhiteSpace(cli) && _targets.TryGetValue(cli[0], out IPatchTarget match))
+            if (!String.IsNullOrWhiteSpace(cli) && _targets.TryGetValue(cli[0], out IPatchTarget? match))
                 return match;
 
             int attempts = 5;
@@ -59,14 +56,14 @@ namespace OTAPI.Patcher.Targets
 
                 Console.WriteLine(input.Key);
 
-                if (_targets.TryGetValue(input.KeyChar.ToString().ToLower()[0], out IPatchTarget inputMatch))
+                if (_targets.TryGetValue(input.KeyChar.ToString().ToLower()[0], out IPatchTarget? inputMatch))
                     return inputMatch;
 
                 if (input.Key == ConsoleKey.Enter) // no key entered
                     break;
             } while (attempts-- > 0);
 
-            return new OTAPIPCServerTarget();
+            return new PCServerTarget();
         }
     }
 }

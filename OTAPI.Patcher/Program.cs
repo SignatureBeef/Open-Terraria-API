@@ -17,15 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace OTAPI.Patcher
+namespace OTAPI.Patcher;
+
+[MonoMod.MonoModIgnore]
+static class Program
 {
-    [MonoMod.MonoModIgnore]
-    static class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            var target = Targets.PatchTargets.DeterminePatchTarget();
-            target.Patch();
-        }
+        var target = Targets.PatchTargets.DeterminePatchTarget();
+        target.Patch();
     }
 }

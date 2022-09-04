@@ -80,7 +80,7 @@ function TML-Server {
     New-Item -ItemType Directory -Force -Path ./server
     New-Item -ItemType Directory -Force -Path ./server/packages
 
-    Write-Host Acquiring latest OTAPI release (and dependencies)
+    Write-Host Acquiring latest OTAPI release and dependencies
     # #Register-PackageSource -Name nuget.org -Location https://www.nuget.org/api/v2 -ProviderName NuGet
     Find-Package -Name OTAPI.Upcoming.tModLoader -ProviderName NuGet -AllowPrereleaseVersions | Install-Package -Destination ./server/packages -SkipDependencies
     Find-Package -Name ModFramework -ProviderName NuGet -AllowPrereleaseVersions | Install-Package -Destination ./server/packages -SkipDependencies
@@ -89,7 +89,8 @@ function TML-Server {
     Find-Package -Name MonoMod.RuntimeDetour -ProviderName NuGet | Install-Package -Destination ./server/packages -SkipDependencies
 
     Write-Host Acquiring latest tModLoader release
-    $tag = (Invoke-WebRequest "https://api.github.com/repos/tModLoader/tModLoader/releases" | ConvertFrom-Json)[0].tag_name
+    # $tag = (Invoke-WebRequest "https://api.github.com/repos/tModLoader/tModLoader/releases" | ConvertFrom-Json)[0].tag_name
+    $tag = "v2022.07.58.3" #tied to 3.0.42-alpha, todo: extract tag from otapi assembly
 
     $download_url = "https://github.com/tModLoader/tModLoader/releases/download/$tag/tModLoader.zip"
 

@@ -219,7 +219,7 @@ namespace OTAPI.Client.Launcher
                 //ModFramework.Modules.CSharp.CSharpLoader.OnCompilationContext += CompileCtx;
                 try
                 {
-                    var target = new OTAPIClientLightweightTarget();
+                    var target = new PCClientTarget();
                     target.InstallPath = Context.InstallPath.Path;
 
                     target.StatusUpdate += (sender, e) => Context.InstallStatus = e.Text;

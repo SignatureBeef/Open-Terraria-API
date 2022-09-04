@@ -19,13 +19,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 #pragma warning disable CS0436 // Type conflicts with imported type
 
+using ModFramework;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using ModFramework;
-using ModFramework.Plugins;
 
 /// <summary>
 /// @doc Fixes platform issues in Terraria.Program.DisplayException
@@ -50,6 +49,8 @@ namespace Terraria
         /// Triggers when mods should start attaching events. At this point assembly resolution should be ready on all platforms.
         /// </summary>
         public static event EventHandler? OnLaunched;
+
+        public static ModContext ModContext { get; } = new ModContext("OTAPI");
 
         static string CSV(params string[] args) => String.Join(",", args.Where(x => !String.IsNullOrWhiteSpace(x)));
 
@@ -85,7 +86,7 @@ namespace Terraria
         }
 
         /// <summary>
-        /// Root entry point for OTAPI. Host games can use OTAPI.Runtime.dll to override the 
+        /// Initialises OTAPI, ModFramework and other plugins.
         /// </summary>
         public static void LaunchOTAPI()
         {
@@ -93,9 +94,13 @@ namespace Terraria
 
             Console.WriteLine($"[OTAPI] Starting up ({CSV(OTAPI.Common.Target, OTAPI.Common.Version, OTAPI.Common.GitHubCommit, $"ModFw:{OTAPI.Common.ModFramework.Version}")}).");
 
+            // set Assembly type to Terraria/OTAPI for runtime plugins to resolve easier when they dont have a direct ref
+            ModContext.Parameters.Add(Assembly.GetExecutingAssembly());
+
             // load modfw plugins
-            PluginLoader.TryLoad();
-            Modifier.Apply(ModType.Runtime, optionalParams: new[] { Assembly.GetExecutingAssembly() }); // set Assembly type to Terraria/OTAPI for runtime plugins to resolve easier when they dont have a direct ref
+            ModContext.PluginLoader.AddFromFolder(Path.Combine(Environment.CurrentDirectory, "modifications"), searchOption: SearchOption.AllDirectories/*load sub folders, e.g. OTAPI.Mods*/);
+            ModContext.Apply(ModType.Runtime);
+
 
 #if Terraria // client
             Main.versionNumber += " OTAPI";
@@ -108,7 +113,8 @@ namespace Terraria
         public static void ShutdownOTAPI()
         {
             // give modfw mods the chance to safely shutdown. e.g. currently the csharp module can run scripts, and some of those scripts (currently) use native Cef.
-            Modifier.Apply(ModType.Shutdown, optionalParams: new[] { Assembly.GetExecutingAssembly() });
+            //Modifier.Apply(ModType.Shutdown, optionalParams: new[] { Assembly.GetExecutingAssembly() });
+            ModContext.Apply(ModType.Shutdown);
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]

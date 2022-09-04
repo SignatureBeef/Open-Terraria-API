@@ -16,24 +16,48 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+
+using ModFramework;
+using OTAPI.Patcher.Resolvers;
 using System.IO;
 using System.Linq;
 
-namespace OTAPI.Patcher.Targets
+namespace OTAPI.Patcher.Targets;
+
+[MonoMod.MonoModIgnore]
+public class TMLPCServerTarget : PCServerTarget
 {
-    [MonoMod.MonoModIgnore]
-    public class TMLPCServerTarget : OTAPIPCServerTarget
+    public override string DisplayText { get; } = "TML PC Server";
+    public override string ArtifactName { get; } = "artifact-tml";
+    public override IFileResolver FileResolver { get; } = new TMLFileResolver();
+
+    public override NugetPackageBuilder NugetPackager { get; } = new("OTAPI.TML.nupkg", "../../../../docs/OTAPI.TML.nuspec");
+    public override MarkdownDocumentor MarkdownDocumentor { get; } = new("OTAPI.TML.PC.Server.mfw.md");
+
+    public override bool PublicEverything => false; // tml expects various classes to still be private
+
+    public override void AddSearchDirectories(ModFwModder modder)
     {
-        public override string DisplayText { get; } = "TML PC Server";
-        public override string NuGetPackageFileName { get; } = "OTAPI.TML.nupkg";
-        public override string NuSpecFilePath { get; } = "../../../../docs/OTAPI.TML.nuspec";
-        public override string MdFileName { get; } = "OTAPI.TML.PC.Server.mfw.md";
-        public override string SupportedDownloadUrl { get; } = "https://github.com/tModLoader/tModLoader/releases/download/v2022.07.58.3/tModLoader.zip";
-        public override string ArtifactName { get; } = "artifact-tml";
+        base.AddSearchDirectories(modder);
 
-        public override string DetermineInputAssembly(string extractedFolder)
-            => Directory.EnumerateFiles(extractedFolder, "tModLoader.dll", SearchOption.TopDirectoryOnly).Single();
+        var folders = Directory.GetFiles(Path.Combine("tModLoader", "Libraries"), "*.dll", SearchOption.AllDirectories)
+                .Select(x => Path.GetDirectoryName(x))
+                .Distinct();
 
-        public override string GetZipUrl() => SupportedDownloadUrl;
+        foreach (var folder in folders)
+            modder.AssemblyResolver.AddSearchDirectory(folder);
+    }
+
+    public override void MergeReLogic(ModFwModder modder, string embeddedResources) { } // tml has this in libraries
+
+    public override void AddVersion(ModFwModder modder) { } // dont break tml versions
+
+    public override void CompileAndReadShims(ModFwModder modder) { } // tml doesn need shims
+
+    public override void LoadModifications()
+    {
+        base.LoadModifications();
+
+        ModContext.ReferenceFiles.Add(Path.Combine("tModLoader", "Libraries", "FNA", "1.0.0", "FNA.dll"));
     }
 }

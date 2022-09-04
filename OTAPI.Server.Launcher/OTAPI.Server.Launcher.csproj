@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ModFramework" Version="1.0.46-alpha">
+    <PackageReference Include="ModFramework" Version="1.1.0-alpha">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </PackageReference>
-    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.0.46-alpha" />
-    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.0.46-alpha" />
-    <PackageReference Include="ModFramework.Modules.Lua" Version="1.0.46-alpha" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.1.0-alpha" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.1.0-alpha" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.1.0-alpha" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Steamworks.NET" Version="20.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
@@ -60,7 +60,6 @@
     <Folder Include="csharp\" />
     <Folder Include="csharp\plugins\" />
     <Folder Include="lua\" />
-    <Folder Include="csharp\plugins\toplevel\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="csharp\Metadata.refs">

@@ -5,7 +5,7 @@ import ('Terraria.GameContent.NetModules')
 import ('Terraria.Localization')
 import ('OTAPI');
 import ('System');
-import ('ImGuiNET');
+import ('ImGui.NET');
 import ('System.Numerics', 'System.Numerics')
 import ('FNA', 'Microsoft.Xna.Framework');
 local Runtime = import ('OTAPI.Runtime', 'On.Terraria');
