@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,6 +6,10 @@
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="csharp\plugins\modules\otapi\Example.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ModFramework" Version="1.1.0-alpha">
@@ -57,11 +61,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="csharp\" />
-    <Folder Include="csharp\plugins\" />
     <Folder Include="lua\" />
   </ItemGroup>
+
   <ItemGroup>
+    <None Include="csharp\plugins\modules\otapi\example\Example.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="csharp\Metadata.refs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

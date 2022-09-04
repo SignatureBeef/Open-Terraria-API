@@ -121,4 +121,11 @@ On.Terraria.Program.LaunchGame += Program_LaunchGame;
         args = args.Concat(new[] { "-server" }).ToArray();
 #endif
 
+// let plugins reference the runtime hooks. this is up to the consumer
+Terraria.Program.ModContext.ReferenceFiles.Add("OTAPI.Runtime.dll");
+Terraria.Program.ModContext.ReferenceFiles.Add("Mono.Cecil.dll");
+Terraria.Program.ModContext.ReferenceFiles.Add("MonoMod.dll");
+Terraria.Program.ModContext.ReferenceFiles.Add("MonoMod.RuntimeDetour.dll");
+Terraria.Program.ModContext.ReferenceFiles.Add("ModFramework.dll");
+
 GetTerrariaAssembly().EntryPoint.Invoke(null, new object[] { args });
