@@ -19,19 +19,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace OTAPI.Common
+namespace OTAPI.Common;
+
+public interface IInstallDiscoverer
 {
-    public interface IInstallDiscoverer
-    {
-        IEnumerable<string> FindInstalls();
+    IEnumerable<string> FindInstalls();
 
-        OSPlatform GetClientPlatform();
+    OSPlatform GetClientPlatform();
 
-        string GetResource(string fileName, string installPath);
-        string GetResourcePath(string installPath);
+    string GetResource(string fileName, string installPath);
+    string GetResourcePath(string installPath);
 
-        bool IsValidInstallPath(string folder);
+    bool IsValidInstallPath(string folder);
 
-        bool VerifyIntegrity(string path);
-    }
+    bool VerifyIntegrity(string path);
 }

@@ -56,12 +56,12 @@ public class NugetPackageBuilder
         var newtonsoft = modder.Module.AssemblyReferences.First(x => x.Name == "Newtonsoft.Json");
         var dependencies = new[]
         {
-                (typeof(ModFwModder).Assembly.GetName().Name, Version: GetNugetVersionFromAssembly<ModFwModder>()),
-                (typeof(MonoMod.MonoModder).Assembly.GetName().Name, Version: typeof(MonoMod.MonoModder).Assembly.GetName().Version.ToString()),
-                (typeof(MonoMod.RuntimeDetour.Detour).Assembly.GetName().Name, Version: typeof(MonoMod.RuntimeDetour.Detour).Assembly.GetName().Version.ToString()),
-                (steamworks.Name, Version: steamworks.Version.ToString()),
-                (newtonsoft.Name, Version: newtonsoft.Version.ToString()),
-            };
+            (typeof(ModFwModder).Assembly.GetName().Name, Version: GetNugetVersionFromAssembly<ModFwModder>()),
+            (typeof(MonoMod.MonoModder).Assembly.GetName().Name, Version: typeof(MonoMod.MonoModder).Assembly.GetName().Version.ToString()),
+            (typeof(MonoMod.RuntimeDetour.Detour).Assembly.GetName().Name, Version: typeof(MonoMod.RuntimeDetour.Detour).Assembly.GetName().Version.ToString()),
+            (steamworks.Name, Version: steamworks.Version.ToString()),
+            (newtonsoft.Name, Version: newtonsoft.Version.ToString()),
+        };
 
         var xml_dependency = String.Join("", dependencies.Select(dep => $"\n\t    <dependency id=\"{dep.Name}\" version=\"{dep.Version}\" />"));
         var xml_group = String.Join("", platforms.Select(platform => $"\n\t<group targetFramework=\"{platform}\">{xml_dependency}\n\t</group>"));

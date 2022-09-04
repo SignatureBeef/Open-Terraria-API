@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using ModFramework;
+﻿using ModFramework;
 using ModFramework.Modules.CSharp;
 using Mono.Cecil;
 using OTAPI.Common;
@@ -410,50 +409,6 @@ public class PCClientTarget : IClientPatchTarget
         return Path.Combine(ModContext.BaseDirectory, Path.GetDirectoryName(fileinput));
     }
     public virtual void AddSearchDirectories(ModFwModder modder) { }
-
-    //void Apply(string x64, IEnumerable<string> shims, ClientInstallPath<IInstallDiscoverer> discoverer)
-    //{
-    //    var embeddedResourcesPath = ExtractEmbeddedResources(x64);
-    //    var resourcesPath = discoverer.GetResourcePath();
-
-    //    SetStatus("Applying modifications");
-    //    using var mm = new ModFwModder(ModContext)
-    //    {
-    //        InputPath = x64,
-    //        OutputPath = "OTAPI.dll",
-    //        MissingDependencyThrow = false,
-    //        //LogVerboseEnabled = true,
-    //        PublicEverything = true,
-
-    //        GACPaths = new string[] { }, // avoid MonoMod looking up the GAC, which causes an exception on .netcore
-
-    //        MarkdownDocumentor = MarkdownDocumentor,
-    //    };
-
-    //    mm.AssemblyResolver.AddSearchDirectory(embeddedResourcesPath);
-    //    mm.AssemblyResolver.AddSearchDirectory(resourcesPath);
-    //    mm.AssemblyResolver.AddSearchDirectory(TemporaryFiles);
-
-    //    mm.Read();
-    //    mm.MapDependencies();
-    //    //public_mm.ReadMod(ResolveFile("OTAPI.Patcher.dll"));
-    //    //public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "ReLogic.dll"));
-    //    //public_mm.ReadMod(Path.Combine(embeddedResourcesDir, "RailSDK.Net.dll"));
-
-    //    foreach (var path in shims)
-    //    {
-    //        mm.ReadMod(path);
-    //    }
-
-    //    // relink / merge into the output
-    //    mm.RelinkAssembly("ReLogic");
-    //    mm.RelinkAssembly("RailSDK.Net");
-
-    //    SetStatus("Merging and pregenerating files, this will be brief...");
-
-    //    mm.AutoPatch();
-    //    mm.Write();
-    //}
 
     public virtual void SetupFilters()
     {

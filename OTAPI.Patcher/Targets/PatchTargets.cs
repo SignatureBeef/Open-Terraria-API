@@ -19,51 +19,50 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 
-namespace OTAPI.Patcher.Targets
+namespace OTAPI.Patcher.Targets;
+
+[MonoMod.MonoModIgnore]
+public static class PatchTargets
 {
-    [MonoMod.MonoModIgnore]
-    public static class PatchTargets
+    public static void Log(this IPatchTarget target, string message) => Common.Log(message);
+    public static string GetCliValue(this IPatchTarget target, string key) => Common.GetCliValue(key);
+
+    static Dictionary<char, IPatchTarget> _targets = new Dictionary<char, IPatchTarget>()
     {
-        public static void Log(this IPatchTarget target, string message) => Common.Log(message);
-        public static string GetCliValue(this IPatchTarget target, string key) => Common.GetCliValue(key);
+        {'p', new PCServerTarget() },
+        {'m', new MobileServerTarget() },
+        {'c', new PCClientTarget() },
+        {'t', new TMLPCServerTarget() },
+    };
 
-        static Dictionary<char, IPatchTarget> _targets = new Dictionary<char, IPatchTarget>()
+    public static IPatchTarget DeterminePatchTarget()
+    {
+        var cli = Common.GetCliValue("patchTarget");
+
+        if (!String.IsNullOrWhiteSpace(cli) && _targets.TryGetValue(cli[0], out IPatchTarget? match))
+            return match;
+
+        int attempts = 5;
+        do
         {
-            {'p', new PCServerTarget() },
-            {'m', new MobileServerTarget() },
-            {'c', new PCClientTarget() },
-            {'t', new TMLPCServerTarget() },
-        };
+            Console.Write("Which target would you like?\n");
 
-        public static IPatchTarget DeterminePatchTarget()
-        {
-            var cli = Common.GetCliValue("patchTarget");
+            foreach (var item in _targets.Keys)
+                Console.Write($"\t {item} - {_targets[item].DisplayText}\n");
 
-            if (!String.IsNullOrWhiteSpace(cli) && _targets.TryGetValue(cli[0], out IPatchTarget? match))
-                return match;
+            Console.Write(": ");
 
-            int attempts = 5;
-            do
-            {
-                Console.Write("Which target would you like?\n");
+            var input = Console.ReadKey(true);
 
-                foreach (var item in _targets.Keys)
-                    Console.Write($"\t {item} - {_targets[item].DisplayText}\n");
+            Console.WriteLine(input.Key);
 
-                Console.Write(": ");
+            if (_targets.TryGetValue(input.KeyChar.ToString().ToLower()[0], out IPatchTarget? inputMatch))
+                return inputMatch;
 
-                var input = Console.ReadKey(true);
+            if (input.Key == ConsoleKey.Enter) // no key entered
+                break;
+        } while (attempts-- > 0);
 
-                Console.WriteLine(input.Key);
-
-                if (_targets.TryGetValue(input.KeyChar.ToString().ToLower()[0], out IPatchTarget? inputMatch))
-                    return inputMatch;
-
-                if (input.Key == ConsoleKey.Enter) // no key entered
-                    break;
-            } while (attempts-- > 0);
-
-            return new PCServerTarget();
-        }
+        return new PCServerTarget();
     }
 }

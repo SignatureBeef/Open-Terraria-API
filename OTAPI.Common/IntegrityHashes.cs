@@ -4,33 +4,32 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace OTAPI.Common
+namespace OTAPI.Common;
+
+public static class IntegrityHashes
 {
-    public static class IntegrityHashes
+    public static IEnumerable<string> WindowsClient = new[] {
+        "F3E96856E497906842C7C88C97D320EB4669A199" // 1.4.2.3
+        ,"81B3E10FCDCA2535F4F00D53F30F18C4F32ECBC7" // 1.4.3.2
+        ,"AC183B8C2CC86FC578D348FE5DB6F5DBB0A26424" // 1.4.3.4
+        ,"C8A3C5B2F45C11B96E9B8632E0E44C161F847DAE" // 1.4.3.6
+    };
+    public static IEnumerable<string> MacOSClient = Enumerable.Empty<string>();
+    public static IEnumerable<string> LinuxClient = Enumerable.Empty<string>();
+
+    public static IEnumerable<string> Clients = WindowsClient.Union(MacOSClient).Union(LinuxClient);
+
+    public static string ComputeHash(string path)
     {
-        public static IEnumerable<string> WindowsClient = new[] {
-            "F3E96856E497906842C7C88C97D320EB4669A199" // 1.4.2.3
-            ,"81B3E10FCDCA2535F4F00D53F30F18C4F32ECBC7" // 1.4.3.2
-            ,"AC183B8C2CC86FC578D348FE5DB6F5DBB0A26424" // 1.4.3.4
-            ,"C8A3C5B2F45C11B96E9B8632E0E44C161F847DAE" // 1.4.3.6
-        };
-        public static IEnumerable<string> MacOSClient = Enumerable.Empty<string>();
-        public static IEnumerable<string> LinuxClient = Enumerable.Empty<string>();
+        using var fs = File.Open(path, FileMode.Open);
+        using var bs = new BufferedStream(fs);
+        using var sha1 = SHA1.Create();
 
-        public static IEnumerable<string> Clients = WindowsClient.Union(MacOSClient).Union(LinuxClient);
+        var hash = sha1.ComputeHash(bs);
+        var formatted = new StringBuilder(2 * hash.Length);
+        foreach (var b in hash)
+            formatted.AppendFormat("{0:X2}", b);
 
-        public static string ComputeHash(string path)
-        {
-            using var fs = File.Open(path, FileMode.Open);
-            using var bs = new BufferedStream(fs);
-            using var sha1 = SHA1.Create();
-
-            var hash = sha1.ComputeHash(bs);
-            var formatted = new StringBuilder(2 * hash.Length);
-            foreach (var b in hash)
-                formatted.AppendFormat("{0:X2}", b);
-
-            return formatted.ToString();
-        }
+        return formatted.ToString();
     }
 }

@@ -36,11 +36,6 @@ public class PCServerTarget : IServerPatchTarget
         return Path.Combine(ModContext.BaseDirectory, Path.GetDirectoryName(fileinput));
     }
 
-    //public PCServerTarget()
-    //{
-    //    FileResolver = PCFileResolver = new PCFileResolver(this);
-    //}
-
     public virtual string DownloadServer()
     {
         var zipUrl = this.GetZipUrl();
@@ -72,12 +67,7 @@ public class PCServerTarget : IServerPatchTarget
             .SetModder(modder);
         ldr.AssemblyContext = ModContext.PluginLoader.AssemblyLoader;
         var md = ldr.CreateMetaData();
-        var shims = ldr.LoadModules(md, "shims").ToArray();
-
-        //foreach (var path in shims)
-        //{
-        //    modder.ReadMod(path);
-        //}
+        _ = ldr.LoadModules(md, "shims").ToArray();
     }
 
     public virtual void LoadModifications()
@@ -116,8 +106,6 @@ public class PCServerTarget : IServerPatchTarget
                 "Mono.Cecil.dll",
                 "Mono.Cecil.Rocks.dll",
                 "Newtonsoft.Json.dll",
-                //"System.Drawing.Primitives.dll",
-                //"System.Collections.Specialized.dll",
                 "Steamworks.NET.dll",
             });
 

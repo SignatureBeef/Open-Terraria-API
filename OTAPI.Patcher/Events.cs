@@ -16,16 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-namespace OTAPI
+namespace OTAPI;
+
+public enum HookResult
 {
-    public enum HookResult
-    {
-        Continue,
-        Cancel
-    }
-    public enum HookEvent
-    {
-        Before,
-        After
-    }
+    Continue,
+    Cancel
+}
+
+public enum HookEvent
+{
+    Before,
+    After
 }

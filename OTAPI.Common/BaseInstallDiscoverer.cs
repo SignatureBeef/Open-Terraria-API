@@ -20,41 +20,40 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace OTAPI.Common
+namespace OTAPI.Common;
+
+public class InstallStatusUpdate : EventArgs
 {
-    public class InstallStatusUpdate : EventArgs
+    public string Text { get; set; }
+}
+
+public abstract class BaseInstallDiscoverer : IInstallDiscoverer
+{
+    public event EventHandler<InstallStatusUpdate> StatusUpdate;
+
+    public abstract string[] SearchPaths { get; }
+
+    public abstract bool IsValidInstallPath(string folder);
+
+    public abstract OSPlatform GetClientPlatform();
+
+    public abstract string GetResource(string fileName, string installPath);
+    public abstract string GetResourcePath(string installPath);
+
+    public virtual IEnumerable<string> FindInstalls()
     {
-        public string Text { get; set; }
+        foreach (var path in SearchPaths)
+        {
+            var formatted = path.Replace("[USER_NAME]", Environment.UserName);
+            if (IsValidInstallPath(formatted))
+                yield return formatted;
+        }
     }
 
-    public abstract class BaseInstallDiscoverer : IInstallDiscoverer
+    public virtual bool VerifyIntegrity(string path) => true;
+
+    public string Status
     {
-        public event EventHandler<InstallStatusUpdate> StatusUpdate;
-
-        public abstract string[] SearchPaths { get; }
-
-        public abstract bool IsValidInstallPath(string folder);
-
-        public abstract OSPlatform GetClientPlatform();
-
-        public abstract string GetResource(string fileName, string installPath);
-        public abstract string GetResourcePath(string installPath);
-
-        public virtual IEnumerable<string> FindInstalls()
-        {
-            foreach (var path in SearchPaths)
-            {
-                var formatted = path.Replace("[USER_NAME]", Environment.UserName);
-                if (IsValidInstallPath(formatted))
-                    yield return formatted;
-            }
-        }
-
-        public virtual bool VerifyIntegrity(string path) => true;
-
-        public string Status
-        {
-            set => StatusUpdate?.Invoke(this, new InstallStatusUpdate() { Text = value });
-        }
+        set => StatusUpdate?.Invoke(this, new InstallStatusUpdate() { Text = value });
     }
 }

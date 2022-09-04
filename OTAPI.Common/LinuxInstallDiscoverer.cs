@@ -19,37 +19,36 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace OTAPI.Common
+namespace OTAPI.Common;
+
+public class LinuxInstallDiscoverer : BaseInstallDiscoverer
 {
-    public class LinuxInstallDiscoverer : BaseInstallDiscoverer
+    public override string[] SearchPaths { get; } = new[]
     {
-        public override string[] SearchPaths { get; } = new[]
-        {
-            "/home/[USER_NAME]/.steam/debian-installation/steamapps/common/Terraria",
-            "/home/[USER_NAME]/.steam/steam/steamapps/common/Terraria",
-        };
+        "/home/[USER_NAME]/.steam/debian-installation/steamapps/common/Terraria",
+        "/home/[USER_NAME]/.steam/steam/steamapps/common/Terraria",
+    };
 
-        public override OSPlatform GetClientPlatform() => OSPlatform.Linux;
+    public override OSPlatform GetClientPlatform() => OSPlatform.Linux;
 
-        public override string GetResource(string fileName, string installPath) => Path.Combine(installPath, fileName);
-        public override string GetResourcePath(string installPath) => installPath;
+    public override string GetResource(string fileName, string installPath) => Path.Combine(installPath, fileName);
+    public override string GetResourcePath(string installPath) => installPath;
 
-        public override bool IsValidInstallPath(string folder)
-        {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return false;
+    public override bool IsValidInstallPath(string folder)
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            return false;
 
-            bool valid = Directory.Exists(folder);
+        bool valid = Directory.Exists(folder);
 
-            var startScript = Path.Combine(folder, "Terraria");
-            var startBin = Path.Combine(folder, "Terraria.bin.x86_64");
-            var assembly = Path.Combine(folder, "Terraria.exe");
+        var startScript = Path.Combine(folder, "Terraria");
+        var startBin = Path.Combine(folder, "Terraria.bin.x86_64");
+        var assembly = Path.Combine(folder, "Terraria.exe");
 
-            valid &= File.Exists(startScript);
-            valid &= File.Exists(startBin);
-            valid &= File.Exists(assembly);
+        valid &= File.Exists(startScript);
+        valid &= File.Exists(startBin);
+        valid &= File.Exists(assembly);
 
-            return valid;
-        }
+        return valid;
     }
 }

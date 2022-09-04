@@ -19,43 +19,42 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace OTAPI.Common
+namespace OTAPI.Common;
+
+public class MacOSInstallDiscoverer : BaseInstallDiscoverer
 {
-    public class MacOSInstallDiscoverer : BaseInstallDiscoverer
+    public override string[] SearchPaths { get; } = new[]
     {
-        public override string[] SearchPaths { get; } = new[]
-        {
-            "/Users/[USER_NAME]/Library/Application Support/Steam/steamapps/common/Terraria/Terraria.app/Contents/",
-            "/Applications/Terraria.app/Contents/",
-        };
+        "/Users/[USER_NAME]/Library/Application Support/Steam/steamapps/common/Terraria/Terraria.app/Contents/",
+        "/Applications/Terraria.app/Contents/",
+    };
 
-        public override OSPlatform GetClientPlatform() => OSPlatform.OSX;
+    public override OSPlatform GetClientPlatform() => OSPlatform.OSX;
 
-        public override string GetResource(string fileName, string installPath) => Path.Combine(installPath, "Resources", fileName);
-        public override string GetResourcePath(string installPath) => Path.Combine(installPath, "Resources");
+    public override string GetResource(string fileName, string installPath) => Path.Combine(installPath, "Resources", fileName);
+    public override string GetResourcePath(string installPath) => Path.Combine(installPath, "Resources");
 
-        public override bool IsValidInstallPath(string folder)
-        {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                return false;
+    public override bool IsValidInstallPath(string folder)
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            return false;
 
-            bool valid = Directory.Exists(folder);
+        bool valid = Directory.Exists(folder);
 
-            var macOS = Path.Combine(folder, "MacOS");
-            var resources = Path.Combine(folder, "Resources");
+        var macOS = Path.Combine(folder, "MacOS");
+        var resources = Path.Combine(folder, "Resources");
 
-            var startScript = Path.Combine(macOS, "Terraria");
-            var startBin = Path.Combine(macOS, "Terraria.bin.osx");
-            var assembly = Path.Combine(resources, "Terraria.exe");
+        var startScript = Path.Combine(macOS, "Terraria");
+        var startBin = Path.Combine(macOS, "Terraria.bin.osx");
+        var assembly = Path.Combine(resources, "Terraria.exe");
 
-            valid &= Directory.Exists(macOS);
-            valid &= Directory.Exists(resources);
+        valid &= Directory.Exists(macOS);
+        valid &= Directory.Exists(resources);
 
-            valid &= File.Exists(startScript);
-            valid &= File.Exists(startBin);
-            valid &= File.Exists(assembly);
+        valid &= File.Exists(startScript);
+        valid &= File.Exists(startBin);
+        valid &= File.Exists(assembly);
 
-            return valid;
-        }
+        return valid;
     }
 }
