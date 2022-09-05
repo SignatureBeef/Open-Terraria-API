@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using MonoMod.RuntimeDetour;
 using OTAPI;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -42,11 +43,13 @@ static void Nop() { }
 
 static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[] args, bool monoArgs)
 {
+#if !TML
     Console.WriteLine("Preloading assembly...");
 
     if (GetTerrariaAssembly().EntryPoint.DeclaringType.Name != "MonoLaunch")
         Terraria.Program.ForceLoadAssembly(GetTerrariaAssembly(), initializeStaticMembers: true);
 
+#endif
     orig(args, monoArgs);
 }
 
@@ -108,17 +111,17 @@ Terraria.Program.OnLaunched += Program_OnLaunched;
 On.Terraria.Program.LaunchGame += Program_LaunchGame;
 
 #if TML
-    On.MonoLaunch.GetBaseDirectory += (orig) =>
-    {
-        return Path.Combine(Environment.CurrentDirectory, "tModLoader");
-    };
+On.MonoLaunch.GetBaseDirectory += (orig) =>
+{
+    return Path.Combine(Environment.CurrentDirectory, "tModLoader");
+};
 
-    Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath = Path.Combine("tModLoader", Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath);
-    if (args == null || args.Length == 0)
-        args = new[] { "-server" };
+Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath = Path.Combine("tModLoader", Terraria.ModLoader.Engine.InstallVerifier.steamAPIPath);
+if (args == null || args.Length == 0)
+    args = new[] { "-server" };
 
-    if (!args.Any(s => s.Equals("-server")))
-        args = args.Concat(new[] { "-server" }).ToArray();
+if (!args.Any(s => s.Equals("-server")))
+    args = args.Concat(new[] { "-server" }).ToArray();
 #endif
 
 // let plugins reference the runtime hooks. this is up to the consumer
