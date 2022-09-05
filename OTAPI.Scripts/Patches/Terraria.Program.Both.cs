@@ -98,7 +98,10 @@ namespace Terraria
             ModContext.Parameters.Add(Assembly.GetExecutingAssembly());
 
             // load modfw plugins
-            ModContext.PluginLoader.AddFromFolder(Path.Combine(Environment.CurrentDirectory, "modifications"), searchOption: SearchOption.AllDirectories/*load sub folders, e.g. OTAPI.Mods*/);
+            var modificationsPath = Path.Combine(Environment.CurrentDirectory, "modifications");
+            if (Directory.Exists(modificationsPath)) {
+                ModContext.PluginLoader.AddFromFolder(modificationsPath, searchOption: SearchOption.AllDirectories/*load sub folders, e.g. OTAPI.Mods*/);
+            }
             ModContext.Apply(ModType.Runtime);
 
 
