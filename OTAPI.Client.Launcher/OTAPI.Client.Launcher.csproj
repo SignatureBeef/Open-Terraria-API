@@ -35,7 +35,7 @@
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.13" />
 		<PackageReference Include="Avalonia.Desktop" Version="0.10.13" />
-		<PackageReference Include="Avalonia.Diagnostics" Version="0.10.13" />
+		<PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
 		<PackageReference Include="cef.redist.osx64" Version="91.1.6" />
 		<PackageReference Include="cef.redist.x64" Version="99.2.12" />
 		<PackageReference Include="CefGlue.Avalonia" Version="91.4472.28" />
