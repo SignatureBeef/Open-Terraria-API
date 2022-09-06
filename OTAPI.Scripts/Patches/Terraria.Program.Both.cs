@@ -98,7 +98,7 @@ namespace Terraria
             ModContext.Parameters.Add(Assembly.GetExecutingAssembly());
 
             // load modfw plugins
-            var modificationsPath = Path.Combine(Environment.CurrentDirectory, "modifications");
+            const String modificationsPath = "modifications"; // dont use current directory, this then should work for packaged consumers
             if (Directory.Exists(modificationsPath)) {
                 ModContext.PluginLoader.AddFromFolder(modificationsPath, searchOption: SearchOption.AllDirectories/*load sub folders, e.g. OTAPI.Mods*/);
             }
