@@ -30,12 +30,23 @@ namespace Terraria.Utilities
         public static extern bool orig_MoveToRecycleBin(string path);
         public static bool MoveToRecycleBin(string path)
         {
-            if (!orig_MoveToRecycleBin(path))
-            {
-                File.Delete(path);
-                return !File.Exists(path);
-            }
-            return false;
+            //bool processed;
+            //try
+            //{
+            //    processed = orig_MoveToRecycleBin(path);
+            //}
+            //catch
+            //{
+            //    processed = false;
+            //}
+
+            //if (!processed)
+            //{
+            File.Delete(path);
+            return !File.Exists(path);
+            //}
+
+            //return false;
         }
     }
 }

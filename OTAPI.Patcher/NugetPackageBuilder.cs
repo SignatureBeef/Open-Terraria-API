@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using ModFramework;
+using Mono.Cecil;
 using System;
 using System.IO;
 using System.Linq;
@@ -51,7 +52,7 @@ public class NugetPackageBuilder
         var commitSha = Common.GetGitCommitSha();
         nuspec_xml = nuspec_xml.Replace("[INJECT_GIT_HASH]", String.IsNullOrWhiteSpace(commitSha) ? "" : $" git#{commitSha}");
 
-        var platforms = new[] { "net6.0", "netstandard2.1"/*@TODO next patcher needs to handle multiframeworks*/ };
+        var platforms = new[] { "net6.0" }; // relinker only does net6 currently. until there is a reason to implement it...
         var steamworks = modder.Module.AssemblyReferences.First(x => x.Name == "Steamworks.NET");
         var newtonsoft = modder.Module.AssemblyReferences.First(x => x.Name == "Newtonsoft.Json");
         var dependencies = new[]
@@ -60,7 +61,7 @@ public class NugetPackageBuilder
             (typeof(MonoMod.MonoModder).Assembly.GetName().Name, Version: typeof(MonoMod.MonoModder).Assembly.GetName().Version.ToString()),
             (typeof(MonoMod.RuntimeDetour.Detour).Assembly.GetName().Name, Version: typeof(MonoMod.RuntimeDetour.Detour).Assembly.GetName().Version.ToString()),
             (steamworks.Name, Version: steamworks.Version.ToString()),
-            (newtonsoft.Name, Version: newtonsoft.Version.ToString()),
+            (newtonsoft.Name, Version: GetNugetVersionFromAssembly<Newtonsoft.Json.JsonConverter>().Split('+')[0]  ),
         };
 
         var xml_dependency = String.Join("", dependencies.Select(dep => $"\n\t    <dependency id=\"{dep.Name}\" version=\"{dep.Version}\" />"));
