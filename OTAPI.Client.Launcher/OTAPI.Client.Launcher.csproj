@@ -165,10 +165,10 @@
 
 		<MakeDir Directories="$(PublishDir)patchtime/csharp/" />
 		<Copy SourceFiles="@(Refs)" DestinationFolder="$(PublishDir)patchtime/csharp/plugins/" />
-		<Copy SourceFiles="@(Patches)" DestinationFolder="$(PublishDir)patchtime/csharp/plugins/patches/otapi/%(RecursiveDir)" />
-		<Copy SourceFiles="@(TopLevelScripts)" DestinationFolder="$(PublishDir)patchtime/csharp/plugins/scripts/otapi/%(RecursiveDir)" />
-		<Copy SourceFiles="@(Shims)" DestinationFolder="$(PublishDir)patchtime/csharp/plugins/shims/%(RecursiveDir)" />
-		<Copy SourceFiles="@(Modules)" DestinationFolder="$(PublishDir)patchtime/csharp/plugins/modules-patched/%(RecursiveDir)" />
+		<Copy SourceFiles="@(Patches)" DestinationFolder="$(PublishDir)patchtime/csharp/plugins/patches/terraria/%(RecursiveDir)" />
+		<Copy SourceFiles="@(TopLevelScripts)" DestinationFolder="$(PublishDir)patchtime/csharp/plugins/mods/terraria/%(RecursiveDir)" />
+		<Copy SourceFiles="@(Shims)" DestinationFolder="$(PublishDir)patchtime/csharp/plugins/shims/terraria/%(RecursiveDir)" />
+		<Copy SourceFiles="@(Modules)" DestinationFolder="$(PublishDir)patchtime/csharp/plugins/modules-patched/otapi/%(RecursiveDir)" />
 
 		<MakeDir Directories="$(PublishDir)csharp/" />
 		<Copy SourceFiles="@(ClientModules)" DestinationFolder="$(PublishDir)csharp/plugins/modules/%(RecursiveDir)" />

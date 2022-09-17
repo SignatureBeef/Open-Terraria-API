@@ -21,9 +21,9 @@ public class PCClientTarget : IClientPatchTarget
 
     public virtual string InstallDestination { get; } = Path.Combine(Environment.CurrentDirectory, "client");
     public virtual string TemporaryFiles { get; } = Path.Combine(Environment.CurrentDirectory, "temp");
-    public virtual string PatchtimePath => Path.Combine(Environment.CurrentDirectory, "patchtime");
-    public virtual string PatchtimeScripts => Path.Combine(PatchtimePath, "csharp");
-    public virtual string PatchtimePluginFolder => Path.Combine(PatchtimeScripts, "plugins");
+    //public virtual string PatchtimePath => "patchtime";
+    //public virtual string PatchtimeScripts => Path.Combine(PatchtimePath, "csharp");
+    //public virtual string PatchtimePluginFolder => Path.Combine(PatchtimeScripts, "plugins");
     public virtual string BinFolder => Path.Combine(Environment.CurrentDirectory, "bin");
     public virtual MarkdownDocumentor MarkdownDocumentor { get; } = new("Unknown.md");
 
@@ -105,15 +105,15 @@ public class PCClientTarget : IClientPatchTarget
     void SetupDirectories()
     {
         Directory.CreateDirectory(TemporaryFiles);
-        Directory.CreateDirectory(PatchtimeScripts);
-        Directory.CreateDirectory(PatchtimePluginFolder);
+        //Directory.CreateDirectory(PatchtimeScripts);
+        //Directory.CreateDirectory(PatchtimePluginFolder);
         Directory.CreateDirectory(InstallDestination);
         Directory.CreateDirectory(BinFolder);
     }
 
     IEnumerable<string> LoadShims()
     {
-        var ldr = new CSharpLoader(ModContext, PatchtimeScripts)
+        var ldr = new CSharpLoader(ModContext)
             .SetAutoLoadAssemblies(true)
             .SetMarkdownDocumentor(MarkdownDocumentor);
 
@@ -161,7 +161,7 @@ public class PCClientTarget : IClientPatchTarget
     {
         Console.WriteLine($"Open Terraria API v{Common.GetVersion()}");
 
-        ModContext.BaseDirectory = PatchtimePath;
+        ModContext.BaseDirectory = "patchtime"; // PatchtimePath;
         var refs = Path.Combine(Environment.CurrentDirectory, "OTAPI.dll");
         var otapi = Path.Combine(InstallDestination, "OTAPI.exe");
         var hooks = Path.Combine(InstallDestination, "OTAPI.Runtime.dll");
@@ -218,6 +218,7 @@ public class PCClientTarget : IClientPatchTarget
                     //{
                         foreach (var path in shims)
                         {
+                            SetStatus($"Reading: {Path.GetFileNameWithoutExtension(path)}");
                             mm.ReadMod(path);
                         }
                         //mm.ReadMod("Microsoft.Win32.Registry.dll");
