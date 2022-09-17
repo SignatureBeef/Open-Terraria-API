@@ -24,13 +24,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: 'recursive'
 
-      - uses: actions/setup-dotnet@v1
+      - uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.100' # SDK Version to use; x will use the latest version of the 3.1 channel
+          dotnet-version: '6.0.x' # SDK Version to use; x will use the latest version of the 3.1 channel
 
       # - name: MonoMod dev build
       #   run: dotnet nuget add source https://pkgs.dev.azure.com/MonoMod/MonoMod/_packaging/DevBuilds%40Local/nuget/v3/index.json -n DevBuilds@Local
