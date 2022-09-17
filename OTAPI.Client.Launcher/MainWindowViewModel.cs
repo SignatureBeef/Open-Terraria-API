@@ -19,6 +19,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using OTAPI.Client.Launcher.Targets;
 using OTAPI.Common;
 using ReactiveUI;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace OTAPI.Client.Launcher;
@@ -28,7 +30,7 @@ public class MainWindowViewModel : ReactiveObject
     public string VersionText => $"Open Terraria API {RemovePaddedVersion(typeof(OTAPI.Patcher.Common)!.Assembly!.GetName()!.Version!.ToString())}";
     static string RemovePaddedVersion(string str)
     {
-        while(str.EndsWith(".0"))
+        while (str.EndsWith(".0"))
             str = str.Remove(str.Length - 2, 2);
         return str;
     }
@@ -56,7 +58,6 @@ public class MainWindowViewModel : ReactiveObject
             this.RaisePropertyChanged(nameof(IsOTAPIReady));
         }
     }
-
 
     public bool IsVanillaFound => File.Exists(VanillaExe);
     public bool IsVanillaReady => IsVanillaFound && !IsInstalling;
@@ -97,4 +98,6 @@ public class MainWindowViewModel : ReactiveObject
     }
 
     public bool CanInstall => InstallPathValid && !IsInstalling;
+
+    public ObservableCollection<Plugin> Plugins { get; } = new ObservableCollection<Plugin>();
 }

@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Avalonia;
+using NuGet.Protocol.Plugins;
 using Projektanker.Icons.Avalonia;
 using Projektanker.Icons.Avalonia.FontAwesome;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace OTAPI.Client.Launcher;
@@ -36,6 +38,36 @@ class Program
         new Targets.WindowsPlatformTarget(),
         new Targets.LinuxPlatformTarget(),
     };
+    public static Plugin[] Plugins = LoadPlugins();
+    const String PluginSaveStateFile = "plugin.state";
+
+    public static void SavePluginState()
+    {
+        var states = Newtonsoft.Json.JsonConvert.SerializeObject(Plugins);
+        File.WriteAllText(PluginSaveStateFile, states);
+    }
+
+    static Plugin[] LoadPlugins()
+    {
+        var plugins = DiscoverPlugins()
+        .Select(p => new Plugin(Path.GetFileNameWithoutExtension(p), true, p))
+        .ToArray();
+
+        if (File.Exists(PluginSaveStateFile))
+        {
+            var json = File.ReadAllText(PluginSaveStateFile);
+            var old = Newtonsoft.Json.JsonConvert.DeserializeObject<Plugin[]>(json);
+
+            foreach (var plg in old)
+            {
+                var current = plugins.FirstOrDefault(x => x.Path == plg.Path);
+                if (current is not null)
+                    current.IsEnabled = plg.IsEnabled;
+            }
+        }
+
+        return plugins;
+    }
 
     static void TryDelete(string file)
     {
@@ -73,6 +105,47 @@ class Program
         Start(args);
     }
 
+    public static IEnumerable<string> DiscoverFilesInFolder(string folder, string pattern, SearchOption searchOption = SearchOption.AllDirectories)
+    {
+        if (Directory.Exists(folder))
+            return Directory.GetFiles(folder, pattern, searchOption);
+
+        return Enumerable.Empty<string>();
+    }
+
+    public static IEnumerable<string> DiscoverFoldersInFolder(string folder, string? pattern = null, SearchOption searchOption = SearchOption.AllDirectories)
+    {
+        if (Directory.Exists(folder))
+            return pattern is not null ?
+                Directory.GetDirectories(folder, pattern, searchOption)
+                : Directory.GetDirectories(folder);
+
+        return Enumerable.Empty<string>();
+    }
+
+    public static string[] DiscoverPlugins()
+    {
+        return DiscoverFilesInFolder("modifications", "*.dll", SearchOption.TopDirectoryOnly)
+            .Concat(DiscoverFoldersInFolder("modifications"))
+            .Concat(DiscoverFilesInFolder("lua", "*.lua", SearchOption.TopDirectoryOnly))
+            .Concat(DiscoverFilesInFolder("clearscript", "*.js", SearchOption.TopDirectoryOnly))
+            .Concat(DiscoverFoldersInFolder("clearscript"))
+            .Concat(DiscoverFoldersInFolder(Path.Combine("csharp", "plugins", "modules")))
+            .Concat(DiscoverFoldersInFolder(Path.Combine("csharp", "plugins", "scripts")).SelectMany(x =>
+            {
+                return DiscoverFilesInFolder(x, "*.cs");
+            }))
+            .ToArray();
+
+        //foreach (var plugin in plugins)
+        //{
+        //    if (!Context.Plugins.Any(x => x.Path == plugin))
+        //    {
+        //        Context.Plugins.Add(new Plugin(Path.GetFileNameWithoutExtension(plugin), true, plugin));
+        //    }
+        //}
+    }
+
     static void Start(string[] args)
     {
         // FNA added their own native resolver...which doesn't work (or their libs are not correct either)
@@ -81,6 +154,9 @@ class Program
         TryDelete(Path.Combine(AppContext.BaseDirectory, "FNA.dll.config"));
         TryDelete(Path.Combine(Environment.CurrentDirectory, "FNA.dll.config"));
         TryDelete(Path.Combine("bin", "FNA.dll.config"));
+
+        foreach(var plg in Plugins)
+            plg.OnEnabledChanged += OnPluginChanged;
 
         // start the launcher, then OTAPI if requested
         BuildAvaloniaApp()
@@ -91,6 +167,11 @@ class Program
 
         else if (LaunchID == "VANILLA")
             Actions.Vanilla.Launch(LaunchFolder, args);
+    }
+
+    private static void OnPluginChanged(object? sender, EventArgs e)
+    {
+        SavePluginState();
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.

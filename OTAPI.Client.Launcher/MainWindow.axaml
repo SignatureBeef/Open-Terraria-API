@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
-        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500" Width="700" Height="500"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="800" Width="700" Height="800"
         x:Class="OTAPI.Client.Launcher.MainWindow"
         Background="#333" Foreground="#fff"
         Title="OTAPI Client Launcher">
@@ -54,6 +54,15 @@
     <Style Selector="Button">
       <Setter Property="Margin" Value="0,10,0,0" />
     </Style>
+    <Style Selector="TextBlock.output_heading">
+      <Setter Property="FontSize" Value="20" />
+      <Setter Property="FontStyle" Value="Italic" />
+      <Setter Property="Margin" Value="0,10,0,0" />
+      <Setter Property="Foreground" Value="ForestGreen" />
+    </Style>
+    <Style Selector="ScrollViewer.scrollview">
+      <Setter Property="Background" Value="#444" />
+    </Style>
   </Window.Styles>
 
   <StackPanel Margin="30" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -75,22 +84,23 @@
       Terraria executable not found
     </TextBlock>
 
-    <Button Classes="warning STYLE_NAME"
+    <Button Classes="warning"
             IsEnabled="{Binding !IsInstalling}"
             Click="OnFindExe">
       Change Base Game Path
     </Button>
 
-    <Button Classes="warning STYLE_NAME"
+    <Button Classes="warning"
             ToolTip.Tip="Uses the base game and creates a patched OTAPI game and then downloads extra dependencies for your machine and configuration."
             IsEnabled="{Binding CanInstall}"
             Click="OnInstall">
       Build OTAPI
     </Button>
 
-    <Button Classes="warning STYLE_NAME"
+    <Button Classes="warning"
             IsEnabled="{Binding IsOTAPIReady}"
-            Click="OnStartOTAPI">
+            Click="OnStartOTAPI"
+            Margin="0,30,0,0">
       Launch modded Terraria (otapi)
     </Button>
     <TextBlock Classes="warning"
@@ -98,7 +108,7 @@
       OTAPI executable not found
     </TextBlock>
 
-    <Button Classes="warning STYLE_NAME"
+    <Button Classes="warning"
             IsEnabled="{Binding IsVanillaReady}"
             Click="OnStartVanilla">
       Launch normal Terraria (vanilla)
@@ -155,7 +165,25 @@
               Content="Lua mods" />
     </Grid>
 
-    <ScrollViewer Height="300">
+    <TextBlock Classes="output_heading">
+      Plugins
+    </TextBlock>
+    <ScrollViewer Height="200" Classes="scrollview">
+      <ItemsControl Items="{Binding Plugins}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <CheckBox Margin="4"
+                      IsChecked="{Binding IsEnabled}"
+                      Content="{Binding Path}"/>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+
+    <TextBlock Classes="output_heading">
+      Status
+    </TextBlock>
+    <ScrollViewer Height="100" Classes="scrollview">
       <TextBlock Classes="installStatus"
                  Text="{Binding InstallStatus}" />
     </ScrollViewer>

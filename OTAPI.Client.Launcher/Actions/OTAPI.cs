@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using ModFramework;
 using ModFramework.Modules.CSharp;
+using OTAPI.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,15 +32,54 @@ static class OTAPI
 {
     static Assembly Terraria;
 
-    //static void CompileAndInstall() //considering to keep or not. this can recompile OTAPI mods on launch...which will be great for developing it. will look into when i get back to it one day
-    //{
-    //    ModContext ctx = new("OTAPI");
-    //    ctx.BaseDirectory = "patchtime";
-    //    new CSharpLoader(ctx)
-    //        .SetAutoLoadAssemblies(false)
-    //        .SetClearExistingModifications(false)
-    //        .LoadModifications("modules-patched", CSharpLoader.EModification.Module);
-    //}
+    static void CompileAndInstall() //considering to keep or not. this can recompile OTAPI mods on launch...which will be great for developing it. will look into when i get back to it one day
+    {
+        ModContext ctx = new("OTAPI");
+        ctx.BaseDirectory = "patchtime";
+        var cl = new CSharpLoader(ctx)
+            .SetAutoLoadAssemblies(false)
+            .SetClearExistingModifications(false)
+            .AddConstants(Terraria);
+
+        cl.LoadModifications("modules-patched", CSharpLoader.EModification.Module);
+
+        InstallModules(ctx);
+    }
+
+    static void InstallModules(ModContext ctx)
+    {
+        var sources = Path.Combine(ctx.BaseDirectory, CSharpLoader.DefaultBaseDirectory, "plugins", "modules-patched", "otapi");
+        var generated = Path.Combine(ctx.BaseDirectory, CSharpLoader.DefaultBaseDirectory, "generated", "otapi");
+
+        if (Directory.Exists(sources))
+            foreach (var dir in Directory.GetDirectories(sources, "*", SearchOption.TopDirectoryOnly))
+            {
+                var mod_name = Path.GetFileName(dir);
+                var generated_dll = Path.Combine(generated, $"CSharpScript_{mod_name}.dll");
+                var generated_pdb = Path.Combine(generated, $"CSharpScript_{mod_name}.pdb");
+                var generated_xml = Path.Combine(generated, $"CSharpScript_{mod_name}.xml");
+                var resources = Path.Combine(sources, mod_name, $"Resources");
+
+                var destination = Path.Combine("modifications", mod_name);
+                var destination_dll = Path.Combine("modifications", mod_name, $"{mod_name}.dll");
+                var destination_pdb = Path.Combine("modifications", mod_name, $"{mod_name}.pdb");
+                var destination_xml = Path.Combine("modifications", mod_name, $"{mod_name}.xml");
+                var destination_resources = Path.Combine("modifications", mod_name, "Resources");
+
+                if (Directory.Exists(destination))
+                    Directory.Delete(destination, true);
+
+                Directory.CreateDirectory(destination);
+                Directory.CreateDirectory(destination_resources);
+
+                Utils.TransferFile(generated_dll, destination_dll);
+                Utils.TransferFile(generated_pdb, destination_pdb);
+                Utils.TransferFile(generated_xml, destination_xml);
+
+                if (Directory.Exists(resources))
+                    Utils.CopyFiles(resources, destination_resources);
+            }
+    }
 
     public static void Launch(string[] args)
     {
@@ -61,8 +101,9 @@ static class OTAPI
             ctx.ReferenceFiles.Add("OTAPI.Client.Launcher.dll");
             ctx.ReferenceFiles.Add(Path.Combine("client", "OTAPI.exe"));
             ctx.ReferenceFiles.Add(Path.Combine("client", "OTAPI.Runtime.dll"));
+
+            ctx.PluginLoader.OnModFileLoading += PluginLoader_OnModFileLoading;
         };
-        //CompileAndInstall();
 
         NativeLibrary.SetDllImportResolver(typeof(Microsoft.Xna.Framework.Game).Assembly, ResolveNativeDep);
 
@@ -80,7 +121,20 @@ static class OTAPI
 
         Terraria = LoadAndCacheAssembly(Path.Combine(Environment.CurrentDirectory, "client", "OTAPI.exe"));
 
+        CompileAndInstall();
+
         Terraria.EntryPoint!.Invoke(null, new object[] { args });
+    }
+
+    private static bool PluginLoader_OnModFileLoading(string filePath)
+    {
+        var plugin = Program.Plugins.FirstOrDefault(x => x.Path == filePath);
+        if(plugin is not null)
+        {
+            if (!plugin.IsEnabled) Console.WriteLine($"Plugin tried to load but was disabled: {filePath}");
+            return plugin.IsEnabled;
+        }
+        return true;
     }
 
     private static Assembly? CurrentDomain_TypeResolve(object? sender, ResolveEventArgs args)

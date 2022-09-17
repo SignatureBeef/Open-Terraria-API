@@ -24,15 +24,19 @@ using OTAPI.Client.Launcher.Targets;
 using OTAPI.Common;
 using OTAPI.Patcher.Targets;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Reactive.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace OTAPI.Client.Launcher;
 
 public partial class MainWindow : Window
 {
-    private FileSystemWatcher _watcher;
+    private FileSystemWatcher? _watcher;
 
     MainWindowViewModel Context { get; set; } = new MainWindowViewModel();
 
@@ -61,12 +65,21 @@ public partial class MainWindow : Window
 
         DataContext = Context;
 
-        _watcher = new FileSystemWatcher(Environment.CurrentDirectory, "OTAPI.exe");
-        _watcher.Created += OTAPI_Changed;
-        _watcher.Changed += OTAPI_Changed;
-        _watcher.Deleted += OTAPI_Changed;
-        _watcher.Renamed += OTAPI_Changed;
-        _watcher.EnableRaisingEvents = true;
+        var dir = Path.Combine(Environment.CurrentDirectory, "client");
+        if (Directory.Exists(dir))
+        {
+            _watcher = new FileSystemWatcher(dir, "OTAPI.exe");
+            _watcher.Created += OTAPI_Changed;
+            _watcher.Changed += OTAPI_Changed;
+            _watcher.Deleted += OTAPI_Changed;
+            _watcher.Renamed += OTAPI_Changed;
+            _watcher.EnableRaisingEvents = true;
+        }
+
+        foreach (var plugin in Program.Plugins)
+        {
+            Context.Plugins.Add(plugin);
+        }
     }
 
     protected override void OnClosing(CancelEventArgs e)
@@ -75,6 +88,7 @@ public partial class MainWindow : Window
         _watcher?.Dispose();
         _watcher = null;
     }
+
     private void OTAPI_Changed(object sender, FileSystemEventArgs e)
     {
         Context.LaunchTarget?.OnUILoad(Context);
@@ -82,6 +96,8 @@ public partial class MainWindow : Window
 
     public void OnStartVanilla(object sender, RoutedEventArgs e)
     {
+        if (Context.InstallPath?.Path is null) return;
+
         Program.LaunchID = "VANILLA";
         Program.LaunchFolder = Context.InstallPath.Path;
         this.Close();
@@ -89,6 +105,8 @@ public partial class MainWindow : Window
 
     public void OnStartOTAPI(object sender, RoutedEventArgs e)
     {
+        if (Context.InstallPath?.Path is null) return;
+
         Program.LaunchID = "OTAPI";
         Program.LaunchFolder = Context.InstallPath.Path;
         this.Close();
@@ -140,7 +158,7 @@ public partial class MainWindow : Window
 
     public async void OnFindExe(object sender, RoutedEventArgs e)
     {
-        Context.InstallStatus = null;
+        Context.InstallStatus = string.Empty;
 
         var fd = new OpenFolderDialog()
         {
@@ -183,11 +201,13 @@ public partial class MainWindow : Window
 
     public void OnInstall(object sender, RoutedEventArgs e)
     {
-        if (Context.IsInstalling) return;
+        if (Context.IsInstalling || Context.InstallPath?.Path is null || Context.LaunchTarget is null) return;
         Context.IsInstalling = true;
 
         new System.Threading.Thread(() =>
         {
+            if (Context.IsInstalling || Context.InstallPath?.Path is null) return;
+
             try
             {
                 var target = new PCClientTarget();
