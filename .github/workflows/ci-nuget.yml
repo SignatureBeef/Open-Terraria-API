@@ -38,7 +38,7 @@ jobs:
       - name: Build the project
         run: Get-Content .\build.sh | Invoke-Expression
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: NuGet Packages
           path: |
@@ -46,7 +46,7 @@ jobs:
             OTAPI.Patcher/bin/Debug/net6.0/OTAPI.Mobile.nupkg
             OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.nupkg
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: PC Binaries
           path: |
@@ -54,7 +54,7 @@ jobs:
             OTAPI.Patcher/bin/Debug/net6.0/artifact-pc/OTAPI.dll
             OTAPI.Patcher/bin/Debug/net6.0/artifact-pc/OTAPI.Runtime.dll
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: Mobile Binaries
           path: |
@@ -62,7 +62,7 @@ jobs:
             OTAPI.Patcher/bin/Debug/net6.0/artifact-mobile/OTAPI.dll
             OTAPI.Patcher/bin/Debug/net6.0/artifact-mobile/OTAPI.Runtime.dll
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: tModLoader Binaries
           path: |
@@ -70,7 +70,7 @@ jobs:
             OTAPI.Patcher/bin/Debug/net6.0/artifact-tml/OTAPI.dll
             OTAPI.Patcher/bin/Debug/net6.0/artifact-tml/OTAPI.Runtime.dll
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: Wiki MD files
           path: |
