@@ -38,7 +38,7 @@
 		<PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
 		<PackageReference Include="cef.redist.osx64" Version="91.1.6" />
 		<PackageReference Include="cef.redist.x64" Version="99.2.12" />
-		<PackageReference Include="CefGlue.Avalonia" Version="91.4472.28" />
+		<PackageReference Include="CefGlue.Avalonia" Version="91.4472.30" />
 		<PackageReference Include="CefGlue.Common" Version="91.4472.28" />
 		<PackageReference Include="Material.Avalonia" Version="2.5.1" />
 		<PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="4.3.0" />
