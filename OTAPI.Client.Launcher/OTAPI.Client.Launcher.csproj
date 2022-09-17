@@ -63,7 +63,7 @@
 	</ItemGroup> -->
 	<ItemGroup>
 		<PackageReference Include="ImGui.NET" Version="1.87.3" GeneratePathProperty="true" />
-		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.3.1" />
+		<PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.3.2" />
 		<PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.3.1" />
 		<PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.3.1" />
 		<PackageReference Include="ModFramework" Version="1.1.1-alpha" />
