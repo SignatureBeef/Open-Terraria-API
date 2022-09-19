@@ -24,13 +24,9 @@ using OTAPI.Client.Launcher.Targets;
 using OTAPI.Common;
 using OTAPI.Patcher.Targets;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Reactive.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 namespace OTAPI.Client.Launcher;
 
@@ -80,6 +76,15 @@ public partial class MainWindow : Window
         {
             Context.Plugins.Add(plugin);
         }
+
+        try
+        {
+            var fw = File.OpenWrite("otapi.log");
+            var sw = new ConsoleWriter(Context, fw);
+            sw.AutoFlush = true;
+            Console.SetOut(sw);
+        }
+        catch { }
     }
 
     protected override void OnClosing(CancelEventArgs e)
@@ -206,8 +211,6 @@ public partial class MainWindow : Window
 
         new System.Threading.Thread(() =>
         {
-            if (Context.IsInstalling || Context.InstallPath?.Path is null) return;
-
             try
             {
                 var target = new PCClientTarget();

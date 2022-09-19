@@ -184,8 +184,16 @@
       Status
     </TextBlock>
     <ScrollViewer Height="100" Classes="scrollview">
-      <TextBlock Classes="installStatus"
-                 Text="{Binding InstallStatus}" />
+      <!--<TextBlock Classes="installStatus"
+                 Text="{Binding InstallStatus}" />-->
+      
+      <ItemsControl Items="{Binding Console}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Margin="5" Text="{Binding}" />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
     </ScrollViewer>
 
   </StackPanel>

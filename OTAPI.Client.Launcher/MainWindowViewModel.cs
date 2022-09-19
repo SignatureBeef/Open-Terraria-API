@@ -100,4 +100,6 @@ public class MainWindowViewModel : ReactiveObject
     public bool CanInstall => InstallPathValid && !IsInstalling;
 
     public ObservableCollection<Plugin> Plugins { get; } = new ObservableCollection<Plugin>();
+
+    public ObservableCollection<string> Console { get; } = new ObservableCollection<string>();
 }

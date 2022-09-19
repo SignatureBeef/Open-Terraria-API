@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using Avalonia;
-using NuGet.Protocol.Plugins;
 using Projektanker.Icons.Avalonia;
 using Projektanker.Icons.Avalonia.FontAwesome;
 using System;
@@ -155,7 +154,7 @@ class Program
         TryDelete(Path.Combine(Environment.CurrentDirectory, "FNA.dll.config"));
         TryDelete(Path.Combine("bin", "FNA.dll.config"));
 
-        foreach(var plg in Plugins)
+        foreach (var plg in Plugins)
             plg.OnEnabledChanged += OnPluginChanged;
 
         // start the launcher, then OTAPI if requested
