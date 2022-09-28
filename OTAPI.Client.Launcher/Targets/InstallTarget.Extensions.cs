@@ -387,7 +387,7 @@ using System.Runtime.Versioning;
                     int lastPercentage = -1;
                     wc.DownloadProgressChanged += (s, e) =>
                     {
-                        if (lastPercentage != e.ProgressPercentage)
+                        if (lastPercentage != e.ProgressPercentage && e.ProgressPercentage % 10 == 0)
                         {
                             lastPercentage = e.ProgressPercentage;
                             Console.WriteLine($"Downloading {name}...{e.ProgressPercentage}%");

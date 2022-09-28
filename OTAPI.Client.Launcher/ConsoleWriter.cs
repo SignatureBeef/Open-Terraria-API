@@ -6,17 +6,15 @@ namespace OTAPI.Client.Launcher;
 
 public class ConsoleWriter : StreamWriter
 {
-    MainWindowViewModel Context { get; set; }
+    public delegate void OnLineReceived(string line);
+    public event OnLineReceived? LineReceived;
 
-    public ConsoleWriter(MainWindowViewModel context, Stream stream) : base(stream)
-    {
-        Context = context;
-    }
+    public ConsoleWriter(Stream stream) : base(stream) { }
 
     void Log(string? value)
     {
         if (!String.IsNullOrWhiteSpace(value))
-            Context.Console.Insert(0, $"[{DateTime.Now:yyyyMMdd HH:mm:ss}] {value}");
+            LineReceived?.Invoke(value);
     }
 
     public override void Write(string? value)

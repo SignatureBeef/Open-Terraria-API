@@ -95,11 +95,23 @@ class Program
         return asm;
     }
 
+    public static ConsoleWriter? ConsoleWriter;
+
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
     // yet and stuff might break.
     public static void Main(string[] args)
     {
+        try
+        {
+            var fw = File.Open("otapi.log", FileMode.Append, FileAccess.Write);
+            var sw = new ConsoleWriter(fw);
+            sw.AutoFlush = true;
+            Console.SetOut(sw);
+            ConsoleWriter = sw;
+        }
+        catch { }
+
         System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += Default_Resolving;
         Start(args);
     }

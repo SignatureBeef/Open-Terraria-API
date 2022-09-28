@@ -20,6 +20,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Newtonsoft.Json.Linq;
 using OTAPI.Client.Launcher.Targets;
 using OTAPI.Common;
 using OTAPI.Patcher.Targets;
@@ -77,14 +78,13 @@ public partial class MainWindow : Window
             Context.Plugins.Add(plugin);
         }
 
-        try
-        {
-            var fw = File.OpenWrite("otapi.log");
-            var sw = new ConsoleWriter(Context, fw);
-            sw.AutoFlush = true;
-            Console.SetOut(sw);
-        }
-        catch { }
+        if (Program.ConsoleWriter is not null)
+            Program.ConsoleWriter.LineReceived += OnConsoleLineReceived;
+    }
+
+    private void OnConsoleLineReceived(string line)
+    {
+        Context.Console.Insert(0, $"[{DateTime.Now:yyyyMMdd HH:mm:ss}] {line}");
     }
 
     protected override void OnClosing(CancelEventArgs e)
@@ -227,6 +227,8 @@ public partial class MainWindow : Window
 
                 Context.IsInstalling = false;
                 Context.LaunchTarget.OnUILoad(Context);
+
+                Console.WriteLine("Patching completed");
             }
             catch (System.Exception ex)
             {

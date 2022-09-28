@@ -21,9 +21,17 @@ void OnInit(On.Terraria.Main.orig_Initialize orig, Terraria.Main self)
 void OnUpdate(On.Terraria.Main.orig_Update orig, Terraria.Main self, GameTime gametime)
 {
     orig(self, gametime);
-    if (CefRuntime.IsInitialized && CefRuntime.Platform != CefRuntimePlatform.Windows)
+    try
     {
-        CefRuntime.DoMessageLoopWork();
+
+        if (CefRuntime.IsInitialized && CefRuntime.Platform != CefRuntimePlatform.Windows)
+        {
+            CefRuntime.DoMessageLoopWork();
+        }
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine("CEF.OnUpdate", ex);
     }
 }
 // void OnDraw(On.Terraria.Main.orig_Draw orig, Terraria.Main self, Microsoft.Xna.Framework.GameTime gameTime)
@@ -53,27 +61,34 @@ void OnGUI(On.Terraria.Main.orig_OnExtGUI orig)
         Terraria.Main.spriteBatch.End();
     }
 
-    if (active)
+    try
     {
-        ImGui.Begin("Cef Browser", ref active);
-        ImGui.Checkbox("Enable browser", ref enabled);
-        ImGui.End();
+        if (active)
+        {
+            ImGui.Begin("Cef Browser", ref active);
+            ImGui.Checkbox("Enable browser", ref enabled);
+            ImGui.End();
 
-        if (!active || !enabled)
-        {
-            offscreenBrowser?.Dispose();
-            offscreenBrowser = null;
-            currentFrame = null;
-        }
-        if (enabled && offscreenBrowser is null)
-        {
-            if (ready)
+            if (!active || !enabled)
             {
-                //browser = new ChromiumWebBrowser("https://google.com.au");
-                //browser.Paint += Browser_Paint;
-                CreateBrowser();
+                offscreenBrowser?.Dispose();
+                offscreenBrowser = null;
+                currentFrame = null;
+            }
+            if (enabled && offscreenBrowser is null)
+            {
+                if (ready)
+                {
+                    //browser = new ChromiumWebBrowser("https://google.com.au");
+                    //browser.Paint += Browser_Paint;
+                    CreateBrowser();
+                }
             }
         }
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine("CEF.OnGUI", ex);
     }
 }
 

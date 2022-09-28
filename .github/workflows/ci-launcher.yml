@@ -7,6 +7,8 @@ on:
   # Triggers the workflow on push/pull events but only for the upcoming-nuget-release branch
   push:
     branches: [ upcoming-client-release ]
+    tags:
+      - "v*"
   pull_request:
     branches: [ upcoming-client-release ]
 
@@ -51,7 +53,9 @@ jobs:
           automatic_release_tag: "launcher-windows"
           prerelease: true
           title: "Windows Launcher"
-          files: otapi_launcher.zip
+          files: |
+            ../LICENSE.txt
+            otapi_launcher_win.zip
 
   build_osx:
     # The type of runner that the job will run on
@@ -92,7 +96,9 @@ jobs:
           automatic_release_tag: "launcher-macos"
           prerelease: true
           title: "MacOS Launcher"
-          files: OTAPI_MacOS.zip
+          files: |
+            ../LICENSE.txt
+            otapi_launcher_macos.zip
 
   # This workflow contains a single job called "build"
   build_lin:
@@ -127,4 +133,6 @@ jobs:
           automatic_release_tag: "launcher-linux"
           prerelease: true
           title: "Linux Launcher"
-          files: otapi_launcher.zip
+          files: |
+            ../LICENSE.txt
+            otapi_launcher_linux.zip

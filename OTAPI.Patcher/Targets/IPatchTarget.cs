@@ -199,7 +199,7 @@ public static partial class PatchTargetExtensions
             print(mm, $"[OTAPI] Patching: {status}");
             mm.AutoPatch();
 
-            print(mm, $"[OTAPI] Writing: {status}, Path={mm.OutputPath}");
+            print(mm, $"[OTAPI] Writing: {status}, Path={new Uri(Environment.CurrentDirectory).MakeRelativeUri(new(mm.OutputPath))}");
             mm.WriterParameters.SymbolWriterProvider = null;
             mm.WriterParameters.WriteSymbols = false;
             mm.Write();
