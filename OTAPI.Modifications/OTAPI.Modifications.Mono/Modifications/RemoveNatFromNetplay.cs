@@ -11,7 +11,7 @@ namespace OTAPI.Modifications.Mono.Modifications
 	{
 		public override IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.3.6, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.4.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Removing NAT from Netplay";
 

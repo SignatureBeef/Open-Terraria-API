@@ -7,7 +7,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.3.6, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.4.1, Culture=neutral, PublicKeyToken=null"
 		};
 		public override string Description => "Hooking world grass spreading...";
 		public override void Run()
@@ -15,7 +15,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.World
 			int tmpi = 0;
 			bool tmpb = false;
 			byte tmp8 = 0;
-			var vanilla = this.Method(() => Terraria.WorldGen.SpreadGrass(0, 0, 0, 0, false, 0));
+			var vanilla = this.Method(() => Terraria.WorldGen.SpreadGrass(0, 0, 0, 0, false, default(Terraria.TileColorCache)));
 			var callback = this.Method(() => OTAPI.Callbacks.Terraria.World.SpreadGrass(ref tmpi, ref tmpi, ref tmpi, ref tmpi, ref tmpb, ref tmp8));
 
 			vanilla.Wrap
