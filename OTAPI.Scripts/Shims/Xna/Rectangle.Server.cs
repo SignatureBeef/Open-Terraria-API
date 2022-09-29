@@ -211,8 +211,24 @@ namespace Microsoft.Xna.Framework
 			result.Height = num8 - num6;
 			return result;
 		}
+        public static void Union(ref Rectangle value1, ref Rectangle value2, out Rectangle result)
+        {
+            int num = value1.X + value1.Width;
+            int num2 = value2.X + value2.Width;
+            int num3 = value1.Y + value1.Height;
+            int num4 = value2.Y + value2.Height;
+            int num5 = ((value1.X < value2.X) ? value1.X : value2.X);
+            int num6 = ((value1.Y < value2.Y) ? value1.Y : value2.Y);
+            int num7 = ((num > num2) ? num : num2);
+            int num8 = ((num3 > num4) ? num3 : num4);
+            result.X = num5;
+            result.Y = num6;
+            result.Width = num7 - num5;
+            result.Height = num8 - num6;
+        }
 
-		public bool Equals (Rectangle other)
+
+        public bool Equals (Rectangle other)
 		{
 			return this.X == other.X && this.Y == other.Y && this.Width == other.Width && this.Height == other.Height;
 		}

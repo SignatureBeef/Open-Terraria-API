@@ -32,10 +32,18 @@ namespace Terraria
     partial class patch_Collision : Terraria.Collision
     {
         // fix index out of range exceptions in this method.
+
+#if TerrariaServer_1441_OrAbove
+        public static extern void orig_GetEntityEdgeTiles(List<Point> result, Entity entity, bool left = true, bool right = true, bool up = true, bool down = true);
+        public static void GetEntityEdgeTiles(List<Point> result, Entity entity, bool left = true, bool right = true, bool up = true, bool down = true)
+        {
+            orig_GetEntityEdgeTiles(result, entity, left, right, up, down);
+#else
         public static extern List<Point> orig_GetEntityEdgeTiles(Entity entity, bool left = true, bool right = true, bool up = true, bool down = true);
         public static List<Point> GetEntityEdgeTiles(Entity entity, bool left = true, bool right = true, bool up = true, bool down = true)
         {
             var result = orig_GetEntityEdgeTiles(entity, left, right, up, down);
+#endif
 
             for (var i = 0; i < result.Count; i++)
             {
@@ -50,7 +58,9 @@ namespace Terraria
                 result[i] = pnt;
             }
 
+#if !TerrariaServer_1441_OrAbove
             return result;
+#endif
         }
 
     }

@@ -47,7 +47,10 @@ static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[
     Console.WriteLine("Preloading assembly...");
 
     if (GetTerrariaAssembly().EntryPoint.DeclaringType.Name != "MonoLaunch")
+    {
+        Terraria.Main.dedServ = true;
         Terraria.Program.ForceLoadAssembly(GetTerrariaAssembly(), initializeStaticMembers: true);
+    }
 
 #endif
     orig(args, monoArgs);

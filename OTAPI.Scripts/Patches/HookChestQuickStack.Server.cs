@@ -52,7 +52,11 @@ partial class ChestHooks
 
         // inject the hook
         {
+#if TerrariaServer_1441_OrAbove
+            var beginInstruction = csr.Method.Body.Instructions.Single(x => x.Previous?.Operand is MethodReference mref && mref.Name == "IsLocked" && x.OpCode == OpCodes.Brtrue);
+#else
             var beginInstruction = csr.Method.Body.Instructions.Single(x => x.OpCode == OpCodes.Bge_Un);
+#endif
             var endInstruction = beginInstruction.Next(x => x.OpCode == OpCodes.Ldc_I4_0);
 
             csr.Goto(beginInstruction, MoveType.After);
@@ -94,7 +98,7 @@ partial class ChestHooks
                     case "QuickStackAllChests":
                         body.GetILProcessor().InsertBefore(instr,
                             new { OpCodes.Ldarg_0, },
-#if !tModLoaderServer_V1_3 
+#if !tModLoaderServer_V1_3
                             new { OpCodes.Ldfld, Operand = (FieldReference)modder.GetFieldDefinition(() => (new Terraria.Player()).whoAmI) }
 #else
                             new { OpCodes.Ldfld, Operand = (FieldReference)modder.GetFieldDefinition(() => (new Terraria.Player(true)).whoAmI) }

@@ -26,6 +26,13 @@ namespace Microsoft.Xna.Framework.Graphics
         public static readonly BlendState AlphaBlend;
         public static readonly BlendState NonPremultiplied;
         public static readonly BlendState Opaque;
+
+        public BlendFunction ColorBlendFunction { get; set; }
+        public Blend ColorDestinationBlend { get; set; }
+        public Blend ColorSourceBlend { get; set; }
+        public BlendFunction AlphaBlendFunction { get; set; }
+        public Blend AlphaDestinationBlend { get; set; }
+        public Blend AlphaSourceBlend { get; set; }
     }
 
     public enum SetDataOptions
@@ -33,5 +40,30 @@ namespace Microsoft.Xna.Framework.Graphics
         None,
         Discard,
         NoOverwrite
+    }
+
+    public enum BlendFunction
+    {
+        Add,
+        Subtract,
+        ReverseSubtract,
+        Min,
+        Max
+    }
+    public enum Blend
+    {
+        One,
+        Zero,
+        SourceColor,
+        InverseSourceColor,
+        SourceAlpha,
+        InverseSourceAlpha,
+        DestinationColor,
+        InverseDestinationColor,
+        DestinationAlpha,
+        InverseDestinationAlpha,
+        BlendFactor,
+        InverseBlendFactor,
+        SourceAlphaSaturation
     }
 }

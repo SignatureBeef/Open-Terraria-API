@@ -85,6 +85,7 @@ partial class NpcStrikeArgs
                     case "Player.ApplyDamageToNPC":
                     case "Player.ItemCheck_MeleeHitNPCs":
                     case "Projectile.Damage":
+                    case "Player.ProcessHitAgainstNPC":
                         body.GetILProcessor().InsertBefore(instr,
                             new { OpCodes.Ldarg_0 }
                         );
