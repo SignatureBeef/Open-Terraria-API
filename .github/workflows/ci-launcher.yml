@@ -40,7 +40,7 @@ jobs:
         run: |
             cd OTAPI.Client.Launcher
             dotnet publish -r win-x64 --framework net6.0 -p:PublishReadyToRun=true --self-contained false -c Release
-            Compress-Archive bin/Release/net6.0/win-x64/publish ../otapi_launcher.zip
+            Compress-Archive bin/Release/net6.0/win-x64/publish ../otapi_launcher_win.zip
 
       # - uses: actions/upload-artifact@v2
       #   with:
@@ -54,7 +54,7 @@ jobs:
           prerelease: true
           title: "Windows Launcher"
           files: |
-            ../LICENSE.txt
+            LICENSE.txt
             otapi_launcher_win.zip
 
   build_osx:
@@ -83,7 +83,7 @@ jobs:
             cp ../docs/MacOS.Info.plist OTAPI.app/Contents/Info.plist
             cp OTAPI.osx.sh OTAPI.app/Contents/MacOS/OTAPI
             chmod +x OTAPI.app/Contents/MacOS/OTAPI
-            zip -r ../OTAPI_MacOS.zip OTAPI.app
+            zip -r ../otapi_launcher_macos.zip OTAPI.app
 
       # - uses: actions/upload-artifact@v2
       #   with:
@@ -97,7 +97,7 @@ jobs:
           prerelease: true
           title: "MacOS Launcher"
           files: |
-            ../LICENSE.txt
+            LICENSE.txt
             otapi_launcher_macos.zip
 
   # This workflow contains a single job called "build"
@@ -120,7 +120,7 @@ jobs:
         run: |
             cd OTAPI.Client.Launcher
             dotnet publish -r ubuntu.16.04-x64 --framework net6.0 -p:PublishReadyToRun=true --self-contained false -c Release
-            zip -r ../otapi_launcher.zip bin/Release/net6.0/ubuntu.16.04-x64/publish
+            zip -r ../otapi_launcher_linux.zip bin/Release/net6.0/ubuntu.16.04-x64/publish
 
       # - uses: actions/upload-artifact@v2
       #   with:
@@ -134,5 +134,5 @@ jobs:
           prerelease: true
           title: "Linux Launcher"
           files: |
-            ../LICENSE.txt
+            LICENSE.txt
             otapi_launcher_linux.zip
