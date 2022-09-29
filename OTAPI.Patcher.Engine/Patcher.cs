@@ -363,7 +363,7 @@ namespace OTAPI.Patcher.Engine
 					Console.Error.WriteLine($"Error executing modification {mod.GetType().Name}: {ex.Message}\n{ex.StackTrace}");
 					if (System.Diagnostics.Debugger.IsAttached)
 						System.Diagnostics.Debugger.Break();
-					return;
+					throw;
 				}
 			}
 		}
