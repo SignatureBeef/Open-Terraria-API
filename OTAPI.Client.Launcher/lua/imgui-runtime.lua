@@ -11,7 +11,7 @@ import ('FNA', 'Microsoft.Xna.Framework');
 local Runtime = import ('OTAPI.Runtime', 'On.Terraria');
 -- ImGui.Text("Hello, world!");
 
-Main.versionNumber = 'Last script load: ' .. DateTime.Now:ToString();
+-- Main.versionNumber = 'Last script load: ' .. DateTime.Now:ToString();
 
 print ('[LUA] ImGUI script active: ' .. Main.versionNumber);
 local show_test_window = false;
