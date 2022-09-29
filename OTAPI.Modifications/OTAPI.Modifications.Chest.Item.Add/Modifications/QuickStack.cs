@@ -10,7 +10,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
 	{
 		public override System.Collections.Generic.IEnumerable<string> AssemblyTargets => new[]
 		{
-			"TerrariaServer, Version=1.4.3.6, Culture=neutral, PublicKeyToken=null"
+			"TerrariaServer, Version=1.4.4.1, Culture=neutral, PublicKeyToken=null"
 		};
 
 		public override string Description => "Hooking Chest.PutItemInNearbyChest...";
@@ -23,7 +23,7 @@ namespace OTAPI.Patcher.Engine.Modifications.Hooks.Item
 
 			var processor = vanilla.Body.GetILProcessor();
 
-			var beginInstruction = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Bge_Un);
+			var beginInstruction = vanilla.Body.Instructions.Single(x => x.OpCode == OpCodes.Bne_Un_S);
 			var endInstruction = beginInstruction.Next(x => x.OpCode == OpCodes.Ldc_I4_0);
 
 			processor.InsertAfter(beginInstruction,
