@@ -176,16 +176,21 @@ namespace OTAPI.Patcher.Engine.Extensions
 
 			var missing = compareToInstanceMethods.Where(m => !typeInstanceMethods.Any(m2 => m2.Name == m.Name));
 
-			if (typeInstanceMethods.Count() != compareToInstanceMethods.Count())
+			if (typeInstanceMethods.Count() != compareToInstanceMethods.Count()) {
+				System.Console.WriteLine($"thistype has {typeInstanceMethods.Count()} instance methods, but comptype has {compareToInstanceMethods.Count()}");
+				System.Console.WriteLine($"the following methods seem to be missing: {string.Join(", ", missing)}");
 				return false;
+			}
 
 			for (var x = 0; x < typeInstanceMethods.Count(); x++)
 			{
 				var typeMethod = typeInstanceMethods.ElementAt(x);
 				var compareToMethod = compareToInstanceMethods.ElementAt(x);
 
-				if (!typeMethod.SignatureMatches(compareToMethod))
+				if (!typeMethod.SignatureMatches(compareToMethod)) {
+					System.Console.WriteLine($"{typeMethod} doesn't equal {compareToMethod}");
 					return false;
+				}
 			}
 
 			return true;
