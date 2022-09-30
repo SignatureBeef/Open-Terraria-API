@@ -18,8 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using MonoMod.RuntimeDetour;
 using OTAPI;
+using ReLogic.OS;
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -48,6 +48,7 @@ static void Program_LaunchGame(On.Terraria.Program.orig_LaunchGame orig, string[
 
     if (GetTerrariaAssembly().EntryPoint.DeclaringType.Name != "MonoLaunch")
     {
+        Terraria.Program.SavePath = (Terraria.Program.LaunchParameters.ContainsKey("-savedirectory") ? Terraria.Program.LaunchParameters["-savedirectory"] : Platform.Get<IPathService>().GetStoragePath("Terraria"));
         Terraria.Main.dedServ = true;
         Terraria.Program.ForceLoadAssembly(GetTerrariaAssembly(), initializeStaticMembers: true);
     }
