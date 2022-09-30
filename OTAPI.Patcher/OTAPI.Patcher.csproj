@@ -23,7 +23,7 @@
     <PackageReference Include="NuGet.Packaging" Version="6.3.0" />
     <PackageReference Include="Microsoft.ClearScript.V8.Native.osx-x64" Version="7.3.3" />
     <PackageReference Include="Microsoft.ClearScript.linux-x64" Version="7.3.3" />
-    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.3.3" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.3.4" />
     <PackageReference Include="Steamworks.NET" Version="20.1.0" />
 	</ItemGroup>
 	<ItemGroup>
