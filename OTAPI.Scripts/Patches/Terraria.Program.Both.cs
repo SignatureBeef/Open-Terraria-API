@@ -142,6 +142,15 @@ namespace Terraria
             ShutdownOTAPI();
         }
 #else // server + client
+#if Terraria_1442_OrAbove
+        public static extern void orig_RunGame();
+        public static void RunGame()
+        {
+            LaunchOTAPI();
+            orig_RunGame();
+            ShutdownOTAPI();
+        }
+#else
         public static extern void orig_LaunchGame(string[] args, bool monoArgs = false);
         public static void LaunchGame(string[] args, bool monoArgs = false)
         {
@@ -149,6 +158,7 @@ namespace Terraria
             orig_LaunchGame(args, monoArgs);
             ShutdownOTAPI();
         }
+#endif
 #endif
     }
 }

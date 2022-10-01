@@ -31,7 +31,11 @@ using MonoMod;
 [MonoMod.MonoModIgnore]
 void HookMainCtor(MonoModder modder)
 {
+#if Terraria_1442_OrAbove
+    var LaunchGame = modder.GetILCursor(() => Terraria.Program.RunGame());
+#else
     var LaunchGame = modder.GetILCursor(() => Terraria.Program.LaunchGame(null, false));
+#endif
 
     var createGame = modder.GetMethodDefinition(() => OTAPI.Hooks.Main.InvokeCreate());
 

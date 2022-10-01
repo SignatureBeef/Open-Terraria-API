@@ -233,6 +233,7 @@ public partial class MainWindow : Window
             catch (System.Exception ex)
             {
                 Context.InstallStatus = "Err: " + ex.ToString();
+                OnConsoleLineReceived(ex.ToString());
             }
         }).Start();
     }
