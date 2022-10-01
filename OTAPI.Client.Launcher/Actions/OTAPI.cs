@@ -89,6 +89,7 @@ static class OTAPI
         {
             ctx.ReferenceFiles.Add("ModFramework.dll");
             ctx.ReferenceFiles.Add("MonoMod.dll");
+            ctx.ReferenceFiles.Add("MonoMod.Utils.dll");
             ctx.ReferenceFiles.Add("MonoMod.RuntimeDetour.dll");
             ctx.ReferenceFiles.Add("Newtonsoft.Json.dll");
             ctx.ReferenceFiles.Add(Path.Combine("client", "OTAPI.exe"));
