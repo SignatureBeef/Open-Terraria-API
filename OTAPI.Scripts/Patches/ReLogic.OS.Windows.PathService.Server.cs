@@ -18,7 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS0626 // Method, operator, or accessor is marked external and has no attributes on it
 
-#if !tModLoader_V1_4
+#if !tModLoader_V1_4 && Terraria_1442_OrAbove
 
 /// <summary>
 /// @doc Fixes ReLogic.OS.Platform.Current using RuntimeInformation
