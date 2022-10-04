@@ -126,7 +126,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: PC NuGet Package
+          name: tModLoader NuGet Package
           path: OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.nupkg
 
       - uses: actions/upload-artifact@v3
@@ -139,6 +139,6 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: TML Wiki MD files
+          name: tModLoader Wiki MD files
           path: OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.PC.Server.mfw.md
             
