@@ -12,39 +12,37 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: windows-latest
-    environment: CI
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  PCServer:
+    runs-on: ubuntu-latest
+    
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
           submodules: 'recursive'
 
       - uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.x' # SDK Version to use; x will use the latest version of the 3.1 channel
-
-      # - name: MonoMod dev build
-      #   run: dotnet nuget add source https://pkgs.dev.azure.com/MonoMod/MonoMod/_packaging/DevBuilds%40Local/nuget/v3/index.json -n DevBuilds@Local
+          dotnet-version: '6.0.x'
 
       - name: Build the project
-        run: Get-Content .\build.sh | Invoke-Expression
+        run: |
+          dotnet restore OTAPI.Mods.sln
+          dotnet restore OTAPI.Server.Launcher.sln
+          dotnet build OTAPI.Mods.sln
+          cd OTAPI.Patcher/bin/Debug/net6.0
+          dotnet run --project ../../../OTAPI.Patcher.csproj -patchTarget=p -latest=n --framework net6.0
+          cd ../../../../
+          dotnet build OTAPI.Server.Launcher.sln
+          cd OTAPI.Server.Launcher/bin/Debug/net6.0
+          dotnet OTAPI.Server.Launcher.dll -test-init
 
       - uses: actions/upload-artifact@v3
         with:
-          name: NuGet Packages
-          path: |
-            OTAPI.Patcher/bin/Debug/net6.0/OTAPI.PC.nupkg
-            OTAPI.Patcher/bin/Debug/net6.0/OTAPI.Mobile.nupkg
-            OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.nupkg
+          name: PC NuGet Package
+          path:  OTAPI.Patcher/bin/Debug/net6.0/OTAPI.PC.nupkg
 
       - uses: actions/upload-artifact@v3
         with:
@@ -56,11 +54,89 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
+          name: PC Wiki MD files
+          path: OTAPI.Patcher/bin/Debug/net6.0/OTAPI.PC.Server.mfw.md
+
+      - name: "Releasing to NuGet: OTAPI.Upcoming"
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push OTAPI.Patcher/bin/Debug/net6.0/OTAPI.PC.nupkg --source https://api.nuget.org/v3/index.json --api-key "$env:NUGET_API_KEY"
+
+  MobileServer:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Build the project
+        run: |
+          dotnet restore OTAPI.Mods.sln
+          dotnet restore OTAPI.Server.Launcher.sln
+          dotnet build OTAPI.Mods.sln
+          cd OTAPI.Patcher/bin/Debug/net6.0
+          dotnet run --project ../../../OTAPI.Patcher.csproj -patchTarget=m -latest=n --framework net6.0
+          cd ../../../../
+          dotnet build OTAPI.Server.Launcher.sln
+          cd OTAPI.Server.Launcher/bin/Debug/net6.0
+          dotnet OTAPI.Server.Launcher.dll -test-init
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Mobile NuGet Package
+          path: OTAPI.Patcher/bin/Debug/net6.0/OTAPI.Mobile.nupkg
+
+      - uses: actions/upload-artifact@v3
+        with:
           name: Mobile Binaries
           path: |
             OTAPI.Patcher/bin/Debug/net6.0/artifact-mobile/COPYING.txt
             OTAPI.Patcher/bin/Debug/net6.0/artifact-mobile/OTAPI.dll
             OTAPI.Patcher/bin/Debug/net6.0/artifact-mobile/OTAPI.Runtime.dll
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Mobile Wiki MD files
+          path: OTAPI.Patcher/bin/Debug/net6.0/OTAPI.Mobile.Server.mfw.md
+
+      - name: "Releasing to NuGet: OTAPI.Upcoming.Mobile"
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push OTAPI.Patcher/bin/Debug/net6.0/OTAPI.Mobile.nupkg --source https://api.nuget.org/v3/index.json --api-key "$env:NUGET_API_KEY"
+
+  tModLoaderServer:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Build the project
+        run: |
+          dotnet restore OTAPI.Mods.sln
+          dotnet restore OTAPI.Server.Launcher.sln
+          dotnet build OTAPI.Mods.sln
+          cd OTAPI.Patcher/bin/Debug/net6.0
+          dotnet run --project ../../../OTAPI.Patcher.csproj -patchTarget=t -latest=n --framework net6.0
+          cd ../../../../
+          dotnet build OTAPI.Server.Launcher.sln
+          cd OTAPI.Server.Launcher/bin/Debug/net6.0
+          dotnet OTAPI.Server.Launcher.dll -test-init
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tModLoader NuGet Package
+          path: OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.nupkg
 
       - uses: actions/upload-artifact@v3
         with:
@@ -72,23 +148,10 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Wiki MD files
-          path: |
-            OTAPI.Patcher/bin/Debug/net6.0/OTAPI.PC.Server.mfw.md
-            OTAPI.Patcher/bin/Debug/net6.0/OTAPI.Mobile.Server.mfw.md
-            OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.PC.Server.mfw.md
-
-      - name: "Releasing to NuGet: OTAPI.Upcoming"
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push .\OTAPI.Patcher\bin\Debug\net6.0\OTAPI.PC.nupkg --source https://api.nuget.org/v3/index.json --api-key "$env:NUGET_API_KEY"
-
-      - name: "Releasing to NuGet: OTAPI.Upcoming.Mobile"
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push .\OTAPI.Patcher\bin\Debug\net6.0\OTAPI.Mobile.nupkg --source https://api.nuget.org/v3/index.json --api-key "$env:NUGET_API_KEY"
-
+          name: tModLoader Wiki MD files
+          path: OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.PC.Server.mfw.md
+          
       - name: "Releasing to NuGet: OTAPI.Upcoming.tModLoader"
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push .\OTAPI.Patcher\bin\Debug\net6.0\OTAPI.TML.nupkg --source https://api.nuget.org/v3/index.json --api-key "$env:NUGET_API_KEY"
+        run: dotnet nuget push OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.nupkg --source https://api.nuget.org/v3/index.json --api-key "$env:NUGET_API_KEY"
