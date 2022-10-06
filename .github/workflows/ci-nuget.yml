@@ -56,7 +56,7 @@ jobs:
       - name: "Releasing to NuGet: OTAPI.Upcoming"
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push OTAPI.Patcher/bin/Debug/net6.0/OTAPI.PC.nupkg --source https://api.nuget.org/v3/index.json --api-key "$env:NUGET_API_KEY"
+        run: dotnet nuget push OTAPI.Patcher/bin/Debug/net6.0/OTAPI.PC.nupkg --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY"
 
   MobileServer:
     runs-on: ubuntu-latest
@@ -104,7 +104,7 @@ jobs:
       - name: "Releasing to NuGet: OTAPI.Upcoming.Mobile"
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push OTAPI.Patcher/bin/Debug/net6.0/OTAPI.Mobile.nupkg --source https://api.nuget.org/v3/index.json --api-key "$env:NUGET_API_KEY"
+        run: dotnet nuget push OTAPI.Patcher/bin/Debug/net6.0/OTAPI.Mobile.nupkg --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY"
 
   tModLoaderServer:
     runs-on: ubuntu-latest
@@ -152,4 +152,4 @@ jobs:
       - name: "Releasing to NuGet: OTAPI.Upcoming.tModLoader"
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.nupkg --source https://api.nuget.org/v3/index.json --api-key "$env:NUGET_API_KEY"
+        run: dotnet nuget push OTAPI.Patcher/bin/Debug/net6.0/OTAPI.TML.nupkg --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY"
