@@ -28,7 +28,7 @@ public class PCFileResolver : IFileResolver
 {
     public const String TerrariaWebsite = "https://terraria.org";
 
-    public virtual string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/pc-dedicated-server/terraria-server-1444.zip";
+    public virtual string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/pc-dedicated-server/terraria-server-1445.zip";
 
     public virtual string GetUrlFromHttpResponse(string content)
     {
