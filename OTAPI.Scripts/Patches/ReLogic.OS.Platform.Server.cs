@@ -39,7 +39,7 @@ namespace ReLogic.OS
 #if !tModLoaderServer_V1_3
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 Current = new ReLogic.OS.OSX.OsxPlatform();
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
                 Current = new ReLogic.OS.Linux.LinuxPlatform();
             else
                 Current = new ReLogic.OS.Windows.WindowsPlatform();
