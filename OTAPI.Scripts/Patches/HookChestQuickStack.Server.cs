@@ -53,7 +53,7 @@ partial class ChestHooks
         // inject the hook
         {
 #if TerrariaServer_1441_OrAbove
-            var beginInstruction = csr.Method.Body.Instructions.Single(x => x.Previous?.Operand is MethodReference mref && mref.Name == "IsLocked" && x.OpCode == OpCodes.Brtrue);
+            var beginInstruction = csr.Method.Body.Instructions.Single(x => x.OpCode == OpCodes.Bge);
 #else
             var beginInstruction = csr.Method.Body.Instructions.Single(x => x.OpCode == OpCodes.Bge_Un);
 #endif
@@ -64,8 +64,12 @@ partial class ChestHooks
             csr.EmitAll(
                 new { OpCodes.Ldarg, Operand = csr.Method.Parameters.Skip(2).SingleOrDefault() },
                 new { OpCodes.Ldarg, Operand = csr.Method.Parameters.First() },
+#if TerrariaServer_1441_OrAbove
+                new { OpCodes.Ldloc_1 },
+#else
                 new { OpCodes.Ldloc_0 },
-                new { OpCodes.Call, Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.Chest.InvokeQuickStack(0, null, 0)) },
+#endif
+            new { OpCodes.Call, Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.Chest.InvokeQuickStack(0, null, 0)) },
                 new { OpCodes.Brtrue, endInstruction },
                 new { OpCodes.Br, Operand = (Instruction)beginInstruction.Operand }
             );
