@@ -142,7 +142,7 @@ namespace Terraria
             ShutdownOTAPI();
         }
 #else // server + client
-#if Terraria_1442_OrAbove
+#if Terraria_1442_OrAbove || TerrariaServer_1442_OrAbove
         public static extern void orig_RunGame();
         public static void RunGame()
         {
