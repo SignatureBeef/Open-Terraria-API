@@ -19,28 +19,30 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 
 namespace OTAPI.Patcher.Resolvers;
 
 [MonoMod.MonoModIgnore]
 public class MobileFileResolver : PCFileResolver
 {
-    public override string SupportedDownloadUrl => $"{TerrariaWebsite}/api/download/mobile-dedicated-server/MobileTerrariaServer.zip";
-
-    public override string DetermineInputAssembly(string extractedFolder)
-    {
-        var zip = Directory.EnumerateFiles(extractedFolder, "Windows_MobileServer*.zip", SearchOption.AllDirectories).Single();
-        extractedFolder = Common.ExtractZip(zip);
-
-        return Directory.EnumerateFiles(extractedFolder, "TerrariaServer.exe", SearchOption.AllDirectories).Single(x =>
-            Path.GetFileName(Path.GetDirectoryName(x)).Equals("WindowsServer", StringComparison.CurrentCultureIgnoreCase)
-        );
-    }
+    public override string SupportedDownloadUrl => $"{TerrariaWebsite}/api/download/mobile-dedicated-server/terraria-server-1441-fixed.zip";
 
     public override string GetUrlFromHttpResponse(string content)
     {
         var items = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(content);
-        var server = items.Single(i => i.Contains("MobileTerrariaServer", StringComparison.OrdinalIgnoreCase));
+        var server = items.Last(i => i.Contains("terraria-server-", StringComparison.OrdinalIgnoreCase));
         return $"{TerrariaWebsite}/api/download/mobile-dedicated-server/{server}";
+    }
+
+    public override string AquireLatestBinaryUrl()
+    {
+        Console.WriteLine("Determining the latest TerrariaServer.exe...");
+        using var client = new HttpClient();
+
+        var data = client.GetByteArrayAsync($"{TerrariaWebsite}/api/get/dedicated-servers-names").Result;
+        var json = System.Text.Encoding.UTF8.GetString(data);
+
+        return GetUrlFromHttpResponse(json);
     }
 }
