@@ -26,6 +26,7 @@ public class PCClientTarget : IClientPatchTarget
     //public virtual string PatchtimePluginFolder => Path.Combine(PatchtimeScripts, "plugins");
     public virtual string BinFolder => Path.Combine(Environment.CurrentDirectory, "bin");
     public virtual MarkdownDocumentor MarkdownDocumentor { get; } = new("Unknown.md");
+    public virtual bool GenerateSymbols => true;
 
     public string? InstallPath { get; set; }
 

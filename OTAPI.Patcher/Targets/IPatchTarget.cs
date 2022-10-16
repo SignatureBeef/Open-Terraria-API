@@ -44,6 +44,7 @@ public interface IModPatchTarget : IPatchTarget
     string GetEmbeddedResourcesDirectory(string fileinput);
     void AddSearchDirectories(ModFwModder modder);
     MarkdownDocumentor MarkdownDocumentor { get; }
+    bool GenerateSymbols { get; }
 }
 
 [MonoMod.MonoModIgnore]
@@ -210,8 +211,13 @@ public static partial class PatchTargetExtensions
             mm.AutoPatch();
 
             print(mm, $"[OTAPI] Writing: {status}, Path={new Uri(Environment.CurrentDirectory).MakeRelativeUri(new(mm.OutputPath))}");
-            mm.WriterParameters.SymbolWriterProvider = null;
-            mm.WriterParameters.WriteSymbols = false;
+
+            if (!target.GenerateSymbols)
+            {
+                mm.WriterParameters.SymbolWriterProvider = null;
+                mm.WriterParameters.WriteSymbols = false;
+            }
+
             mm.Write();
 
             return mm.OutputPath;

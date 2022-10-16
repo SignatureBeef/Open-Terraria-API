@@ -35,6 +35,7 @@ public class TMLPCServerTarget : PCServerTarget
     public override MarkdownDocumentor MarkdownDocumentor { get; } = new("OTAPI.TML.PC.Server.mfw.md");
 
     public override bool PublicEverything => false; // tml expects various classes to still be private
+    public override bool GenerateSymbols => false; // write currently throws an exception. havent had the chance to fix the problem yet
 
     public override void AddSearchDirectories(ModFwModder modder)
     {

@@ -133,12 +133,12 @@ namespace Terraria
 
         const int LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000;
 
-#if tModLoaderServer
-        public static extern void orig_LaunchGame_();
-        public static void LaunchGame_()
+#if tModLoaderServer || tModLoader
+        public static extern void orig_LaunchGame_(bool isServer);
+        public static void LaunchGame_(bool isServer)
         {
             LaunchOTAPI();
-            orig_LaunchGame_();
+            orig_LaunchGame_(isServer);
             ShutdownOTAPI();
         }
 #else // server + client

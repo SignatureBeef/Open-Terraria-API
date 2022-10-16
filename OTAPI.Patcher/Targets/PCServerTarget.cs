@@ -30,6 +30,7 @@ public class PCServerTarget : IServerPatchTarget
     public virtual string ArtifactName { get; } = "artifact-pc";
 
     public virtual bool PublicEverything => true;
+    public virtual bool GenerateSymbols => true;
 
     public virtual string GetEmbeddedResourcesDirectory(string fileinput)
     {
