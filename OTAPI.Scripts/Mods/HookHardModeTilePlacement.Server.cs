@@ -126,7 +126,7 @@ namespace OTAPI
                 if (args.Result == HardmodeTileUpdateResult.Cancel)
                     return false;
 
-                else if (args.Result == HardmodeTileUpdateResult.Continue)
+                else
                     Terraria.WorldGen.PlaceTile(args.X, args.Y, args.Type, args.Mute, args.Forced, args.Plr, args.Style);
 
                 return true;
