@@ -119,6 +119,7 @@ namespace OTAPI
                     Forced = forced,
                     Plr = plr,
                     Style = style,
+                    Result = HardmodeTileUpdateResult.Continue,
                 };
 
                 HardmodeTilePlace?.Invoke(null, args);
@@ -126,7 +127,7 @@ namespace OTAPI
                 if (args.Result == HardmodeTileUpdateResult.Cancel)
                     return false;
 
-                else
+                else if (args.Result == HardmodeTileUpdateResult.Continue)
                     Terraria.WorldGen.PlaceTile(args.X, args.Y, args.Type, args.Mute, args.Forced, args.Plr, args.Style);
 
                 return true;
