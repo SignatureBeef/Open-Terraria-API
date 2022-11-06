@@ -119,6 +119,7 @@ namespace OTAPI
                     Forced = forced,
                     Plr = plr,
                     Style = style,
+                    Result = HardmodeTileUpdateResult.Continue,
                 };
 
                 HardmodeTilePlace?.Invoke(null, args);
