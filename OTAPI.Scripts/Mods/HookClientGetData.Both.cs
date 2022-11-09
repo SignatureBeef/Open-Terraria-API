@@ -41,7 +41,7 @@ void HookClientGetData(MonoModder modder)
     GetData.GotoNext(
         //if (b >= 140) { return; }
         i => i.OpCode == OpCodes.Ldloc_0
-#if TerrariaServer_1448_OrAbove
+#if TerrariaServer_1448_OrAbove || Terraria_1448_OrAbove
         , i => i.OpCode == OpCodes.Ldsfld
 #else
         , i => i.OpCode == OpCodes.Ldc_I4
@@ -49,7 +49,7 @@ void HookClientGetData(MonoModder modder)
         , i => i.OpCode == OpCodes.Blt_S
         , i => i.OpCode == OpCodes.Ret
     );
-#if !TerrariaServer_1448_OrAbove
+#if !TerrariaServer_1448_OrAbove && !Terraria_1448_OrAbove
     var maxPackets = (int)GetData.Instrs[GetData.Index + 1].Operand;
 #endif
 
@@ -62,7 +62,7 @@ void HookClientGetData(MonoModder modder)
     foreach (var prm in GetData.Method.Parameters)
         GetData.Emit(prm.IsOut ? OpCodes.Ldarg : OpCodes.Ldarga, prm);
 
-#if TerrariaServer_1448_OrAbove
+#if TerrariaServer_1448_OrAbove || Terraria_1448_OrAbove
     var fld = modder.GetFieldDefinition(() => Terraria.ID.MessageID.Count);
     GetData.Emit(OpCodes.Ldsfld, fld);
 #else
