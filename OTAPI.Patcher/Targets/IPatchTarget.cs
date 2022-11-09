@@ -157,6 +157,8 @@ public static partial class PatchTargetExtensions
             constants.Add($"{inputName}_1441_OrAbove");
         if (version >= new Version("1.4.4.2"))
             constants.Add($"{inputName}_1442_OrAbove");
+        if (version >= new Version("1.4.4.8"))
+            constants.Add($"{inputName}_1448_OrAbove");
 
         target.ModContext.ReferenceConstants.AddRange(constants.Select(x => $"#define {x}"));
 

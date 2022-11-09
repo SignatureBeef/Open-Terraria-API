@@ -57,14 +57,11 @@ namespace Microsoft.Xna.Framework.Graphics
         {
         }
 
+        public void SetData<T>(T[] data, int startIndex, int elementCount, SetDataOptions options) where T : struct
+        { }
+
         public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride, SetDataOptions options) where T : struct
-        {
-
-        }
-
-        public void SetData<T>(T value)
-        {
-        }
+        { }
     }
 
     public enum IndexElementSize
@@ -94,6 +91,11 @@ namespace Microsoft.Xna.Framework.Graphics
         )
         {
         }
+        public void SetData<T>(T[] data, int startIndex, int elementCount, SetDataOptions options) where T : struct
+        { }
+
+        public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, SetDataOptions options) where T : struct
+        { }
     }
 
     public interface IVertexType
@@ -122,6 +124,22 @@ namespace Microsoft.Xna.Framework.Graphics
 
     public class IndexBuffer : GraphicsResource
     {
+        public IndexBuffer()
+        {
+        }
+
+        public unsafe IndexBuffer(GraphicsDevice graphicsDevice, Type indexType, int indexCount, BufferUsage usage)
+            : this()
+        {
+
+        }
+
+        public unsafe IndexBuffer(GraphicsDevice graphicsDevice, IndexElementSize indexElementSize, int indexCount, BufferUsage usage)
+            : this()
+        {
+
+        }
+
         public void SetData<T>(
             int offsetInBytes,
             T[] data,

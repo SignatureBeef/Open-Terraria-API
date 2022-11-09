@@ -3,17 +3,17 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net6.0</TargetFramework>
-		<Version>3.1.17</Version>
+		<Version>3.1.18</Version>
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 		<PlatformTarget>x64</PlatformTarget>
 		<RuntimeIdentifiers>win7-x64;osx.10.11-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
 		<Nullable>enable</Nullable>
-		<PackageReleaseNotes>Fix Crystal Shard not growing (@sgkoishi)</PackageReleaseNotes>
+		<PackageReleaseNotes>Initial 1.4.4.8 support</PackageReleaseNotes>
 	</PropertyGroup>
 	<ItemGroup>
-    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.1.6" />
-    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.1.6" />
-    <PackageReference Include="ModFramework.Modules.Lua" Version="1.1.6" />
+    <PackageReference Include="ModFramework.Modules.ClearScript" Version="1.1.7" />
+    <PackageReference Include="ModFramework.Modules.CSharp" Version="1.1.7" />
+    <PackageReference Include="ModFramework.Modules.Lua" Version="1.1.7" />
     <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="22.5.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
