@@ -128,7 +128,11 @@ namespace OTAPI.Mods
 
         private static Terraria.Localization.LocalizedText Lang_GetNPCName(On.Terraria.Lang.orig_GetNPCName orig, int netID)
         {
+#if TerrariaServer_1448_OrAbove || Terraria_1448_OrAbove
+            if (netID > Terraria.ID.NPCID.Count)
+#else
             if (netID > Terraria.Main.maxNPCTypes)
+#endif
             {
                 var rego = EntityDiscovery.Instance
                     .GetTypeModRegistrations<ModNPC>()
@@ -235,7 +239,11 @@ namespace OTAPI.Mods
         public void Registered()
         {
             // setup this type for instancing later on when the NPC needs to be spawned.
+#if TerrariaServer_1448_OrAbove || Terraria_1448_OrAbove
+            TypeID = IModRegistry.AllocateType<ModNPC>(Terraria.ID.NPCID.Count);
+#else
             TypeID = IModRegistry.AllocateType<ModNPC>(Terraria.Main.maxNPCTypes);
+#endif
 
             var name = this.Name?.Key;
 
