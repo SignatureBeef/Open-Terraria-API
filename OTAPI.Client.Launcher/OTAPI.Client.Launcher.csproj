@@ -31,7 +31,7 @@
 		<PackageReference Include="Avalonia" Version="0.10.18" />
 		<PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
 		<PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
-		<PackageReference Include="CefGlue.Avalonia" Version="91.4472.30" />
+		<PackageReference Include="CefGlue.Avalonia" Version="106.5249.4" />
 		<PackageReference Include="CefGlue.Common" Version="91.4472.30" />
 		<PackageReference Include="Material.Avalonia" Version="2.5.1" />
 		<PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="5.5.0" />
