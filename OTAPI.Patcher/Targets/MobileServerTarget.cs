@@ -18,6 +18,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using ModFramework;
 using OTAPI.Patcher.Resolvers;
+using System;
+using System.IO;
 
 namespace OTAPI.Patcher.Targets;
 
@@ -28,7 +30,7 @@ public class MobileServerTarget : PCServerTarget
     public override string ArtifactName { get; } = "artifact-mobile";
     public override IFileResolver FileResolver { get; } = new MobileFileResolver();
 
-    public override NugetPackageBuilder NugetPackager { get; } = new("OTAPI.Mobile.nupkg", "../../../../docs/OTAPI.Mobile.nuspec");
+    public override NugetPackageBuilder NugetPackager { get; } = new("OTAPI.Mobile.nupkg", Path.Combine(AppContext.BaseDirectory, "../../../../docs/OTAPI.Mobile.nuspec"));
     public override MarkdownDocumentor MarkdownDocumentor { get; } = new("OTAPI.Mobile.Server.mfw.md");
 }
 

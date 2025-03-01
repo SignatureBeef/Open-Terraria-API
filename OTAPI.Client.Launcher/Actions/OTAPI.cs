@@ -35,7 +35,7 @@ static class OTAPI
     static void CompileAndInstall() //considering to keep or not. this can recompile OTAPI mods on launch...which will be great for developing it. will look into when i get back to it one day
     {
         ModContext ctx = new("OTAPI");
-        ctx.BaseDirectory = "patchtime";
+        ctx.BaseDirectory = Path.Combine(ModContext.DefaultBaseDirectory, "patchtime");
         var cl = new CSharpLoader(ctx)
             .SetAutoLoadAssemblies(false)
             .SetClearExistingModifications(false)
