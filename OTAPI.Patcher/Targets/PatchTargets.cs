@@ -16,13 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+using Mono.Cecil;
+using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Mono.Cecil;
-using Mono.Cecil.Cil;
 
 namespace OTAPI.Patcher.Targets;
 
@@ -47,7 +47,7 @@ public static class PatchTargets
         if (!String.IsNullOrWhiteSpace(cli) && _targets.TryGetValue(cli[0], out IPatchTarget? match))
             return match;
 
-        if(Console.IsInputRedirected)
+        if (Console.IsInputRedirected)
             return new PCServerTarget();
 
         int attempts = 5;
@@ -82,7 +82,8 @@ public static class PatchTargets
     /// </summary>
     public static void PatchMonoMod()
     {
-        var bin = File.ReadAllBytes("MonoMod.dll");
+        var dllPath = Path.Combine(AppContext.BaseDirectory, "MonoMod.dll");
+        var bin = File.ReadAllBytes(dllPath);
         using MemoryStream ms = new(bin);
         var asm = AssemblyDefinition.ReadAssembly(ms);
         var modder = asm.MainModule.Types.Single(x => x.FullName == "MonoMod.MonoModder");
@@ -114,7 +115,7 @@ public static class PatchTargets
                 OpCodes.Ldc_I4, RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? 37 : 0
             ));
 
-            asm.Write("MonoMod.dll");
+            asm.Write(dllPath);
         }
     }
 }

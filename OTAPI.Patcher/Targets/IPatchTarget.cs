@@ -84,9 +84,9 @@ public static partial class PatchTargetExtensions
         if (Directory.Exists(outputFolder)) Directory.Delete(outputFolder, true);
         Directory.CreateDirectory(outputFolder);
 
-        File.Copy("../../../../COPYING.txt", Path.Combine(outputFolder, "COPYING.txt"));
-        File.Copy("OTAPI.dll", Path.Combine(outputFolder, "OTAPI.dll"));
-        File.Copy("OTAPI.Runtime.dll", Path.Combine(outputFolder, "OTAPI.Runtime.dll"));
+        File.Copy(Path.Combine(AppContext.BaseDirectory, "../../../../COPYING.txt"), Path.Combine(outputFolder, "COPYING.txt"));
+        File.Copy(Path.Combine(AppContext.BaseDirectory, "OTAPI.dll"), Path.Combine(outputFolder, "OTAPI.dll"));
+        File.Copy(Path.Combine(AppContext.BaseDirectory, "OTAPI.Runtime.dll"), Path.Combine(outputFolder, "OTAPI.Runtime.dll"));
     }
 
     public static void AddEnvMetadata(this ModFwModder modder)

@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using ModFramework;
 using OTAPI.Patcher.Resolvers;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -31,7 +32,7 @@ public class TMLPCServerTarget : PCServerTarget
     public override string ArtifactName { get; } = "artifact-tml";
     public override IFileResolver FileResolver { get; } = new TMLFileResolver();
 
-    public override NugetPackageBuilder NugetPackager { get; } = new("OTAPI.TML.nupkg", "../../../../docs/OTAPI.TML.nuspec");
+    public override NugetPackageBuilder NugetPackager { get; } = new("OTAPI.TML.nupkg", Path.Combine(AppContext.BaseDirectory, "../../../../docs/OTAPI.TML.nuspec"));
     public override MarkdownDocumentor MarkdownDocumentor { get; } = new("OTAPI.TML.PC.Server.mfw.md");
 
     public override bool PublicEverything => false; // tml expects various classes to still be private

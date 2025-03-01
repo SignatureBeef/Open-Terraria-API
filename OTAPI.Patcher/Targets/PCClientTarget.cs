@@ -163,7 +163,7 @@ public class PCClientTarget : IClientPatchTarget
     {
         Console.WriteLine($"Open Terraria API v{Common.GetVersion()}");
 
-        ModContext.BaseDirectory = "patchtime"; // PatchtimePath;
+        ModContext.BaseDirectory = Path.Combine(ModContext.DefaultBaseDirectory, "patchtime");
         var refs = Path.Combine(Environment.CurrentDirectory, "OTAPI.dll");
         var otapi = Path.Combine(InstallDestination, "OTAPI.exe");
         var hooks = Path.Combine(InstallDestination, "OTAPI.Runtime.dll");

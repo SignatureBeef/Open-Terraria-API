@@ -25,6 +25,8 @@ using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
+using System;
+using System.IO;
 using System.Linq;
 
 /// <summary>
@@ -34,7 +36,8 @@ using System.Linq;
 [MonoMod.MonoModIgnore]
 void PatchSteam(ModFwModder modder)
 {
-    var steamworks = AssemblyDefinition.ReadAssembly("Steamworks.NET.dll"); // Avoid using type refs, as arm64 will die on this assembly.
+    var assemblyPath = Path.Combine(AppContext.BaseDirectory, "Steamworks.NET.dll");
+    var steamworks = AssemblyDefinition.ReadAssembly(assemblyPath); // Avoid using type refs, as arm64 will die on this assembly.
     var version = steamworks.Name.Version; // Avoid using type refs, as arm64 will die on this assembly.
 
     //Update the references to match what is installed
