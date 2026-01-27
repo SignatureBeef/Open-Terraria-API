@@ -27,11 +27,10 @@ namespace ReLogic.OS.Windows
 {
     public class patch_PathService : ReLogic.OS.Windows.PathService
     {
-        public extern bool orig_MoveToRecycleBin(string path);
-        public override bool MoveToRecycleBin(string path)
+        public extern void orig_MoveToRecycleBin(string path);
+        public override void MoveToRecycleBin(string path)
         {
             System.IO.File.Delete(path);
-            return true;
         }
     }
 }
