@@ -43,9 +43,9 @@ void HookNpcLoot(MonoModder modder)
 
     NewNPC.Emit(OpCodes.Ldarg_0); // NPC instance
 #if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
-    NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default, default, default));
-#else
     NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default, default));
+#else
+    NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default));
 #endif
 }
 
@@ -74,7 +74,6 @@ namespace OTAPI
                 public bool NoBroadcast { get; set; }
                 public int Pfix { get; set; }
                 public bool NoGrabDelay { get; set; }
-                public bool ReverseLookup { get; set; }
             }
             public static event EventHandler<DropLootEventArgs>? DropLoot;
 
@@ -83,7 +82,7 @@ namespace OTAPI
 #else
             public static int InvokeDropLoot(int X, int Y, int Width, int Height, int Type,
 #endif
-                int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup,
+                int Stack, bool noBroadcast, int pfix, bool noGrabDelay,
                 Terraria.NPC instance)
             {
                 var args = new DropLootEventArgs()
@@ -101,7 +100,6 @@ namespace OTAPI
                     NoBroadcast = noBroadcast,
                     Pfix = pfix,
                     NoGrabDelay = noGrabDelay,
-                    ReverseLookup = reverseLookup,
                     Npc = instance,
 
                     ItemIndex = 0,
@@ -110,9 +108,9 @@ namespace OTAPI
                 if (args.Result != HookResult.Cancel)
                 {
 #if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
-                    args.ItemIndex = Terraria.Item.NewItem(args.Source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                    args.ItemIndex = Terraria.Item.NewItem(args.Source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay);
 #else
-                    args.ItemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                    args.ItemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay);
 #endif
                     args.Event = HookEvent.After;
                     DropLoot?.Invoke(null, args);
