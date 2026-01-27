@@ -36,7 +36,7 @@ partial class NpcStrikeArgs
     [Modification(ModType.PreMerge, "Patching in entity source for NPC strike")]
     static void PatchNpcStrikeArgs(ModFwModder modder)
     {
-        var csr = modder.GetILCursor(() => (new Terraria.NPC()).StrikeNPC(0, 0, 0, false, false, false));
+        var csr = modder.GetILCursor(() => (new Terraria.NPC()).StrikeNPC(0, 0, 0, false, false, false, 0));
         var redirects = csr.Method.DeclaringType.Methods
             .Where(x => (HookEmitter.HookMethodNamePrefix + x.Name) == csr.Method.Name || ("orig_" + x.Name) == csr.Method.Name)
             .Select(x => x.GetILCursor())
