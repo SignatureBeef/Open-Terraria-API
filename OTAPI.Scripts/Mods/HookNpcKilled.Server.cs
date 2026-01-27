@@ -36,8 +36,10 @@ void HookNpcKilled(MonoModder modder)
 
     checkDead.GotoNext(
         // active = false;
-        i => i.OpCode == OpCodes.Ldc_I4_0
-        , i => i.OpCode == OpCodes.Stfld && i.Operand is FieldReference fieldReference && fieldReference.Name == "active" && fieldReference.DeclaringType.FullName == "Terraria.Entity"
+        i => i.OpCode == OpCodes.Ldc_I4_0, 
+        i => i.OpCode == OpCodes.Stfld &&
+        i.Operand is FieldReference fieldReference &&
+        fieldReference.Name == "active" && fieldReference.DeclaringType.FullName == "Terraria.NPC"
     );
 
     checkDead.EmitDelegate(OTAPI.Hooks.NPC.InvokeKilled);
