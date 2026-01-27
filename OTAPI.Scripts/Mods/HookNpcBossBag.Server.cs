@@ -40,9 +40,9 @@ void HookNpcBossBag(ModFramework.ModFwModder modder)
     {
         var callback = csr.Module.ImportReference(
 #if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
-            modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(null, 0, 0, 0, 0, 0, 0, false, 0, false, false, null))
+            modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(null, 0, 0, 0, 0, 0, 0, false, 0, false, null))
 #else
-            modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(0, 0, 0, 0, 0, 0, false, 0, false, false, null))
+            modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(0, 0, 0, 0, 0, 0, false, 0, false, null))
 #endif
         );
 
@@ -98,7 +98,6 @@ namespace OTAPI
                 public bool NoBroadcast { get; set; }
                 public int Pfix { get; set; }
                 public bool NoGrabDelay { get; set; }
-                public bool ReverseLookup { get; set; }
             }
             public static event EventHandler<BossBagEventArgs> BossBag;
 
@@ -115,7 +114,6 @@ namespace OTAPI
                 bool noBroadcast,
                 int pfix,
                 bool noGrabDelay,
-                bool reverseLookup,
                 Terraria.NPC npc
             )
             {
@@ -133,7 +131,6 @@ namespace OTAPI
                     NoBroadcast = noBroadcast,
                     Pfix = pfix,
                     NoGrabDelay = noGrabDelay,
-                    ReverseLookup = reverseLookup,
                     Npc = npc,
                 };
                 BossBag?.Invoke(null, args);
@@ -141,9 +138,9 @@ namespace OTAPI
                     return -1;
 
 #if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
-                return Terraria.Item.NewItem(Source, args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);
+                return Terraria.Item.NewItem(Source, args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay);
 #else
-                return Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);
+                return Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay);
 #endif
             }
         }
