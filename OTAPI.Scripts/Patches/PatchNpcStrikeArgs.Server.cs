@@ -91,11 +91,12 @@ partial class NpcStrikeArgs
                             case "Projectile.Damage":
                             case "Player.ProcessHitAgainstNPC":
                             case "NPC.StrikeNPC":
+                            case "Projectile.Damage_PVE_Inner":
                                 body.GetILProcessor().InsertBefore(instr,
                                     new { OpCodes.Ldarg_0 }
                                 );
                                 break;
-
+                            
                             default:
                                 throw new NotImplementedException($"{body.Method.Name} is not a supported caller for this modification");
                         }
