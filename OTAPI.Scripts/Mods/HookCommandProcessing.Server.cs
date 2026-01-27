@@ -47,13 +47,37 @@ void HookCommandProcessing(MonoModder modder)
         throw new NotSupportedException("Expected the second variable to be string");
 
     var exceptionHandler = startDedInputCallBack.Body.ExceptionHandlers.Single(
-        x => x.TryStart.Next.OpCode == OpCodes.Ldstr
-            && x.TryStart.Next.Operand.Equals("CLI.Help_Command")
+        x => x.TryStart.OpCode == OpCodes.Ldstr
+            && x.TryStart.Operand.Equals("CLI.Help_Command")
     );
+    
+    
+    
 
+    
+    // [-] if (text == Language.GetTextValue("CLI.Help_Command"))
+    
+    /*
+        // while (!Netplay.Disconnect)
+        IL_001e: ldloc.0
+        IL_001f: ldstr "CLI.Help_Command"
+    */
+    
+    // [+] if (Language.GetText("CLI.Help_Command").EqualsCommand(text))
+    
+    /*
+        // while (!Netplay.Disconnect)
+        IL_0017: ldstr "CLI.Help_Command"
+        IL_001c: call class Terraria.Localization.LocalizedText Terraria.Localization.Language::GetText(string)
+        IL_0021: ldloc.0
+        IL_0022: callvirt instance bool Terraria.Localization.LocalizedText::EqualsCommand(string)
+        IL_0027: brfalse IL_0283
+    */ 
+    
+    
     startDedInputCallBack.Goto(exceptionHandler.TryStart, MoveType.Before);
     startDedInputCallBack.Emit(OpCodes.Ldloc, vText);
-    var newStart = startDedInputCallBack.Instrs[startDedInputCallBack.Index - 1];
+    var newStart = startDedInputCallBack.Instrs[startDedInputCallBack.Index];
 
     exceptionHandler.TryStart.ReplaceTransfer(newStart, startDedInputCallBack.Method);
 
