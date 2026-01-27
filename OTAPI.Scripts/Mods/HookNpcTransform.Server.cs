@@ -33,11 +33,11 @@ using System.Linq;
 [MonoMod.MonoModIgnore]
 void HookNpcTransform(MonoModder modder)
 {
-    var transform = modder.GetILCursor(() => (new Terraria.NPC()).Transform(0));
+    var transform = modder.GetILCursor(() => (new Terraria.NPC()).Transform(0, 0f, 0f, 0f, 0f, true));
 
     transform.GotoNext(ins => ins.Operand is FieldReference fr && fr.Name == "netMode" && ins.Next.OpCode == OpCodes.Ldc_I4_2);
     transform.Emit(OpCodes.Ldarg_0);
-    transform.Emit(OpCodes.Ldarga, transform.Method.Parameters.Single());
+    transform.Emit(OpCodes.Ldarga, transform.Method.Parameters.First());
     transform.EmitDelegate(OTAPI.Hooks.NPC.InvokeTransforming);
     transform.Emit(OpCodes.Brtrue, transform.Next);
     transform.Emit(OpCodes.Ret);
