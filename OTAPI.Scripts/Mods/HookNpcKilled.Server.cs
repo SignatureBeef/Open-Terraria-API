@@ -34,10 +34,16 @@ void HookNpcKilled(MonoModder modder)
 {
     var checkDead = modder.GetILCursor(() => (new Terraria.NPC()).checkDead());
 
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+    var declaringType = "Terraria.NPC";
+#else
+    var declaringType = "Terraria.Entity";
+#endif
+
     checkDead.GotoNext(
         // active = false;
         i => i.OpCode == OpCodes.Ldc_I4_0
-        , i => i.OpCode == OpCodes.Stfld && i.Operand is FieldReference fieldReference && fieldReference.Name == "active" && fieldReference.DeclaringType.FullName == "Terraria.Entity"
+        , i => i.OpCode == OpCodes.Stfld && i.Operand is FieldReference fieldReference && fieldReference.Name == "active" && fieldReference.DeclaringType.FullName == declaringType
     );
 
     checkDead.EmitDelegate(OTAPI.Hooks.NPC.InvokeKilled);
