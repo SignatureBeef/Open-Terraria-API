@@ -38,6 +38,9 @@ partial class ChestHooks
     [Modification(ModType.PreMerge, "Hooking chest stacking")]
     static void HookChestQuickStack(ModFwModder modder)
     {
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+        Console.WriteLine("[TODO] reimplement HookChestQuickStack for 1.4.5+");
+#else
         var csr = modder.GetILCursor(() => Terraria.Chest.PutItemInNearbyChest(null, default));
         PutItemInNearbyChest = csr.Method;
 
@@ -74,6 +77,7 @@ partial class ChestHooks
                 new { OpCodes.Br, Operand = (Instruction)beginInstruction.Operand }
             );
         }
+#endif
     }
 
     private static void Modder_OnRewritingMethodBody(MonoModder modder, MethodBody body, Instruction instr, int instri)

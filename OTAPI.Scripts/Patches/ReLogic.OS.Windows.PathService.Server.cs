@@ -27,12 +27,20 @@ namespace ReLogic.OS.Windows
 {
     public class patch_PathService : ReLogic.OS.Windows.PathService
     {
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+        public extern void orig_MoveToRecycleBin(string path);
+        public override void MoveToRecycleBin(string path)
+        {
+            System.IO.File.Delete(path);
+        }
+#else
         public extern bool orig_MoveToRecycleBin(string path);
         public override bool MoveToRecycleBin(string path)
         {
             System.IO.File.Delete(path);
             return true;
         }
+#endif
     }
 }
 #endif

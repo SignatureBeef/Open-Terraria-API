@@ -30,13 +30,15 @@ using System.Linq;
 [MonoModIgnore]
 partial class NpcStrikeArgs
 {
-    //static ParameterDefinition Entity { get; set; }
-    //static MethodDefinition StrikeNPC { get; set; }
-
     [Modification(ModType.PreMerge, "Patching in entity source for NPC strike")]
     static void PatchNpcStrikeArgs(ModFwModder modder)
     {
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+        var csr = modder.GetILCursor(() => (new Terraria.NPC()).StrikeNPC(0, 0, 0, false, false, false, 0));
+#else
         var csr = modder.GetILCursor(() => (new Terraria.NPC()).StrikeNPC(0, 0, 0, false, false, false));
+#endif
+        
         var redirects = csr.Method.DeclaringType.Methods
             .Where(x => (HookEmitter.HookMethodNamePrefix + x.Name) == csr.Method.Name || ("orig_" + x.Name) == csr.Method.Name)
             .Select(x => x.GetILCursor())
@@ -71,12 +73,22 @@ partial class NpcStrikeArgs
                         switch (methodName.Replace(HookEmitter.HookMethodNamePrefix, ""))
                         {
                             case "MessageBuffer.GetData":
+                                var playerRef = Instruction.Create(OpCodes.Ldsfld, modder.Module.ImportReference(modder.GetFieldDefinition(() => Terraria.Main.player)));
+                                body.GetILProcessor().InsertBefore(instr, playerRef);
                                 body.GetILProcessor().InsertBefore(instr,
-                                    new { OpCodes.Ldsfld, Operand = modder.Module.ImportReference(modder.GetFieldDefinition(() => Terraria.Main.player)) },
-                                    new { OpCodes.Ldarg_0 },
-                                    new { OpCodes.Ldfld, Operand = modder.Module.ImportReference(modder.GetFieldDefinition(() => (new Terraria.MessageBuffer()).whoAmI)) },
-                                    new { OpCodes.Ldelem_Ref }
-                                );
+                                    new { OpCodes.Ldarg_0 }, 
+                                    new { OpCodes.Ldfld, Operand = modder.Module.ImportReference(modder.GetFieldDefinition(() => (new Terraria.MessageBuffer()).whoAmI)) }, 
+                                    new { OpCodes.Ldelem_Ref } 
+                                ); 
+
+                                var hasWhoAmI = instr.Previous.OpCode == OpCodes.Ldfld &&
+                                    instr.Previous.Operand is FieldReference fieldReference && 
+                                    fieldReference.Name == "whoAmI";                                     
+                                if (hasWhoAmI) { // 145+  
+                                    // rewire the branching
+                                    var brs = instr.Previous(x => x.OpCode == OpCodes.Br_S);
+                                    brs.Operand = playerRef;
+                                } 
                                 break;
 
                             case "NPC.StrikeNPCNoInteraction":
@@ -96,8 +108,16 @@ partial class NpcStrikeArgs
                                 );
                                 break;
 
+                            case "Projectile.Damage_PVE_Inner":
+                                // find the NPC parameter
+                                var prm = body.Method.Parameters.Single(x => x.ParameterType.FullName == "Terraria.NPC");
+                                body.GetILProcessor().InsertBefore(instr,
+                                    new { OpCodes.Ldarg, Operand = prm }
+                                );
+                                break;
+
                             default:
-                                throw new NotImplementedException($"{body.Method.Name} is not a supported caller for this modification");
+                                throw new NotImplementedException($"{body.Method.FullName} is not a supported caller for this modification");
                         }
                     }
                 }
