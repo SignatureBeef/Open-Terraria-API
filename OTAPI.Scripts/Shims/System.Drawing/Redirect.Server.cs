@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using ModFramework;
+using System.Linq;
 
 /// <summary>
 /// @doc Shims and relinks System.Drawing.Graphics
@@ -30,6 +31,20 @@ namespace System.Drawing
         public static void RedirectAssembly(ModFwModder modder)
         {
             modder.RelinkAssembly("System.Drawing.Graphics");
+        }
+
+        /// <summary>
+        /// Renames the System.Graphics shim due to conflicts with plugins that use the newer NuGet package.
+        /// </summary>
+        /// <remarks>These shims are not intended for use</remarks>
+        /// <see cref="https://github.com/elevatorguy/map/issues/4"/>
+        /// <param name="modder"></param>
+        [Modification(ModType.PostPatch, "Renaming System.Drawing")]
+        public static void Rename(ModFwModder modder)
+        {
+            var type = modder.Module.Types.Where(x => x.Namespace == "System.Drawing");
+            foreach (var mod in type)
+                mod.Namespace += ".Shims";
         }
     }
 }

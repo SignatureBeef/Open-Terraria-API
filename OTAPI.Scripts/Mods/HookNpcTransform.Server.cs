@@ -33,11 +33,16 @@ using System.Linq;
 [MonoMod.MonoModIgnore]
 void HookNpcTransform(MonoModder modder)
 {
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+    var transform = modder.GetILCursor(() => (new Terraria.NPC()).Transform(0, 0f, 0f, 0f, 0f, false));
+#else
     var transform = modder.GetILCursor(() => (new Terraria.NPC()).Transform(0));
+#endif
 
     transform.GotoNext(ins => ins.Operand is FieldReference fr && fr.Name == "netMode" && ins.Next.OpCode == OpCodes.Ldc_I4_2);
     transform.Emit(OpCodes.Ldarg_0);
-    transform.Emit(OpCodes.Ldarga, transform.Method.Parameters.Single());
+    foreach(var parameter in transform.Method.Parameters)
+        transform.Emit(OpCodes.Ldarga, parameter);
     transform.EmitDelegate(OTAPI.Hooks.NPC.InvokeTransforming);
     transform.Emit(OpCodes.Brtrue, transform.Next);
     transform.Emit(OpCodes.Ret);
@@ -55,18 +60,44 @@ namespace OTAPI
 
                 public Terraria.NPC Npc { get; set; }
                 public int NewType { get; set; }
+
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+                public float Ai0 { get; set; }
+                public float Ai1 { get; set; }
+                public float Ai2 { get; set; }
+                public float Ai3 { get; set; }
+                public bool WithReposition { get; set; }
+#endif
             }
             public static event EventHandler<TransformingEventArgs> Transforming;
 
-            public static bool InvokeTransforming(Terraria.NPC instance, ref int newType)
+            public static bool InvokeTransforming(Terraria.NPC instance, ref int newType
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+                , ref float ai0, ref float ai1, ref float ai2, ref float ai3, ref bool withReposition
+#endif      
+            )
             {
                 var args = new TransformingEventArgs()
                 {
                     Npc = instance,
                     NewType = newType,
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+                    Ai0 = ai0,
+                    Ai1 = ai1,
+                    Ai2 = ai2,
+                    Ai3 = ai3,
+                    WithReposition = withReposition,
+#endif
                 };
                 Transforming?.Invoke(null, args);
                 newType = args.NewType;
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+                ai0 = args.Ai0;
+                ai1 = args.Ai1;
+                ai2 = args.Ai2;
+                ai3 = args.Ai3;
+                withReposition = args.WithReposition;
+#endif
                 return args.Result != HookResult.Cancel;
             }
         }

@@ -47,8 +47,13 @@ void HookCommandProcessing(MonoModder modder)
         throw new NotSupportedException("Expected the second variable to be string");
 
     var exceptionHandler = startDedInputCallBack.Body.ExceptionHandlers.Single(
-        x => x.TryStart.Next.OpCode == OpCodes.Ldstr
+        x => (
+            x.TryStart.Next.OpCode == OpCodes.Ldstr
             && x.TryStart.Next.Operand.Equals("CLI.Help_Command")
+        ) || (
+            x.TryStart.OpCode == OpCodes.Ldstr
+            && x.TryStart.Operand.Equals("CLI.Help_Command")
+        )
     );
 
     startDedInputCallBack.Goto(exceptionHandler.TryStart, MoveType.Before);
