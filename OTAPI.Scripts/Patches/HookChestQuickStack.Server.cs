@@ -78,7 +78,7 @@ partial class ChestHooks
                 csr.Emit(OpCodes.Ldfld, modder.GetFieldDefinition(() => default(QuickStacking.SourceInventory).slots));
                 // ^[0]
                 csr.Emit(OpCodes.Ldc_I4_0);
-                csr.Emit(OpCodes.Ldelem_Any, typeof(PlayerItemSlotID.SlotReference));
+                csr.Emit(OpCodes.Ldelem_Any, modder.GetDefinition<PlayerItemSlotID.SlotReference>());
                 // ^.Player
                 csr.Emit(OpCodes.Ldfld, modder.GetFieldDefinition(() => default(PlayerItemSlotID.SlotReference).Player));
                 // ^.whoAmI
@@ -92,7 +92,7 @@ partial class ChestHooks
                 // NOTE: this is very fragile, but I can't think of a way to write it better without significantly bloating the code
                 csr.Emit(OpCodes.Ldloc_S, (byte)(count == 1 ? 7 : 10));
                 // ^.ChestIndex (property get)
-                csr.Emit(OpCodes.Callvirt, typeof(QuickStacking.DestinationHelper).GetProperty("ChestIndex")!.GetGetMethod());
+                csr.Emit(OpCodes.Callvirt, modder.GetDefinition<QuickStacking.DestinationHelper>().Properties.Single(p => p.Name == "ChestIndex")!.GetMethod);
 
                 // Call hook
                 csr.Emit(OpCodes.Call, modder.GetMethodDefinition(() => OTAPI.Hooks.Chest.InvokeQuickStack(default, default!, default)));
