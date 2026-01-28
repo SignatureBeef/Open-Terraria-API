@@ -24,7 +24,11 @@ using Mono.Cecil.Cil;
 using MonoMod;
 using MonoMod.Cil;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
 
 /// <summary>
 /// @doc Creates Hooks.Chest.QuickStack.
@@ -39,7 +43,67 @@ partial class ChestHooks
     static void HookChestQuickStack(ModFwModder modder)
     {
 #if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
-        Console.WriteLine("[TODO] reimplement HookChestQuickStack for 1.4.5+");
+        // used for the out parameter only
+        List<int> _blockedChests;
+
+        // DO NOT use GetILCursor(). The instruction body does not have jumps transformed into labels,
+        // a process which is required to happen for the edits below to work.
+        var ctx = new ILContext(modder.GetMethodDefinition(() => QuickStacking.Transfer(default, default, out _blockedChests, false)));
+        ctx.Invoke((ctx) =>
+        {
+            var csr = new ILCursor(ctx);
+            int count = 0;
+
+            while (csr.TryGotoNext(
+                MoveType.Before,
+                i => i.MatchLdarg(0),
+                i => i.MatchLdloc(out _),
+                i => i.MatchCall(typeof(QuickStacking), nameof(QuickStacking.Consolidate))
+            ))
+            {
+                if (++count > 2)
+                {
+                    throw new Exception($"More than two matches of {nameof(QuickStacking.Consolidate)}.");
+                }
+
+                // Both targets are preceded by a jump instruction exiting the loop
+                var endInstruction = csr.Prev.Operand;
+
+                csr.MoveAfterLabels();
+
+                // Load player ID (source.slots[0].Player.whoAmI)
+                // source
+                csr.Emit(OpCodes.Ldarg_0);
+                // ^.slots
+                csr.Emit(OpCodes.Ldfld, modder.GetFieldDefinition(() => default(QuickStacking.SourceInventory).slots));
+                // ^[0]
+                csr.Emit(OpCodes.Ldc_I4_0);
+                csr.Emit(OpCodes.Ldelem_Any, typeof(PlayerItemSlotID.SlotReference));
+                // ^.Player
+                csr.Emit(OpCodes.Ldfld, modder.GetFieldDefinition(() => default(PlayerItemSlotID.SlotReference).Player));
+                // ^.whoAmI
+                csr.Emit(OpCodes.Ldfld, modder.GetFieldDefinition(() => default(Player)!.whoAmI));
+
+                // Load item
+                // NOTE: this is very fragile, but I can't think of a way to write it better without significantly bloating the code
+                csr.Emit(OpCodes.Ldloc_S, (byte)(count == 1 ? 6 : 9));
+
+                // Load chest index
+                // NOTE: this is very fragile, but I can't think of a way to write it better without significantly bloating the code
+                csr.Emit(OpCodes.Ldloc_S, (byte)(count == 1 ? 7 : 10));
+                // ^.ChestIndex (property get)
+                csr.Emit(OpCodes.Callvirt, typeof(QuickStacking.DestinationHelper).GetProperty("ChestIndex")!.GetGetMethod());
+
+                // Call hook
+                csr.Emit(OpCodes.Call, modder.GetMethodDefinition(() => OTAPI.Hooks.Chest.InvokeQuickStack(default, default!, default)));
+
+                // Continue if handled
+                csr.Emit(OpCodes.Brtrue, endInstruction);
+
+                // Move after Consolidate call
+                csr.Goto(csr.Index + 3);
+            }
+        });
 #else
         var csr = modder.GetILCursor(() => Terraria.Chest.PutItemInNearbyChest(null, default));
         PutItemInNearbyChest = csr.Method;
