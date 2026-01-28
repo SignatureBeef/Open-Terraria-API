@@ -187,7 +187,8 @@ static void Main_ctor(On.Terraria.Main.orig_ctor orig, Terraria.Main self)
 {
     orig(self);
     Terraria.Main.SkipAssemblyLoad = true; // we will do this.
-    Console.WriteLine("Main invoked");
+    var rnd = Terraria.Main.rand.Next();
+    Console.WriteLine($"Main invoked, random number: {rnd}");
 }
 
 static void Main_DedServ(object sender, HookEvents.Terraria.Main.DedServEventArgs e)
