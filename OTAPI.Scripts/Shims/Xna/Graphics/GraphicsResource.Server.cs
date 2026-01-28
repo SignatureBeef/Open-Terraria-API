@@ -33,5 +33,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public bool IsDisposed { get; set; }
         public string Name { get; set; }
+        public object Tag { get; set; }
     }
 }
