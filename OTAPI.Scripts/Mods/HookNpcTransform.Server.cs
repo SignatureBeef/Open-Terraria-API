@@ -73,7 +73,7 @@ namespace OTAPI
 
             public static bool InvokeTransforming(Terraria.NPC instance, ref int newType
 #if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
-                , float ai0, float ai1, float ai2, float ai3, bool withReposition
+                , ref float ai0, ref float ai1, ref float ai2, ref float ai3, ref bool withReposition
 #endif      
             )
             {
