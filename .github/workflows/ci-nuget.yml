@@ -24,16 +24,16 @@ jobs:
             patch_target: p,
             package_path: OTAPI.PC.nupkg,
           },
-          {
-            name: Mobile,
-            patch_target: m,
-            package_path: OTAPI.Mobile.nupkg,
-          },
-          {
-            name: tModLoader,
-            patch_target: t,
-            package_path: OTAPI.TML.nupkg,
-          },
+          # {
+          #   name: Mobile,
+          #   patch_target: m,
+          #   package_path: OTAPI.Mobile.nupkg,
+          # },
+          # {
+          #   name: tModLoader,
+          #   patch_target: t,
+          #   package_path: OTAPI.TML.nupkg,
+          # },
         ]
 
     name: ${{ matrix.profile.name }} Server
