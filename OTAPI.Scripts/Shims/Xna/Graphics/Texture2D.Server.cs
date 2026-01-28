@@ -35,6 +35,8 @@ namespace Microsoft.Xna.Framework.Graphics
 		public int Height { get; set; }
 
 		public int Width { get; set; }
+		
+		public Rectangle Bounds => new (0, 0, Width, Height);
 
 		public Texture2D (
 			GraphicsDevice graphicsDevice,

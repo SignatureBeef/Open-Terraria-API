@@ -29,6 +29,11 @@ namespace Microsoft.Xna.Framework.Input
             return false;
         }
 
+        public bool IsKeyUp(Keys key)
+        {
+            return false;
+        }
+
         public Keys[] GetPressedKeys() { return Empty; }
     }
 }

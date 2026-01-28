@@ -73,17 +73,18 @@ partial class NpcStrikeArgs
                         switch (methodName.Replace(HookEmitter.HookMethodNamePrefix, ""))
                         {
                             case "MessageBuffer.GetData":
+                                // order matters with this logic...
+                                var hasWhoAmI = instr.Previous.OpCode == OpCodes.Ldfld &&
+                                    instr.Previous.Operand is FieldReference fieldReference && 
+                                    fieldReference.Name == "whoAmI";    
+
                                 var playerRef = Instruction.Create(OpCodes.Ldsfld, modder.Module.ImportReference(modder.GetFieldDefinition(() => Terraria.Main.player)));
                                 body.GetILProcessor().InsertBefore(instr, playerRef);
                                 body.GetILProcessor().InsertBefore(instr,
                                     new { OpCodes.Ldarg_0 }, 
                                     new { OpCodes.Ldfld, Operand = modder.Module.ImportReference(modder.GetFieldDefinition(() => (new Terraria.MessageBuffer()).whoAmI)) }, 
                                     new { OpCodes.Ldelem_Ref } 
-                                ); 
-
-                                var hasWhoAmI = instr.Previous.OpCode == OpCodes.Ldfld &&
-                                    instr.Previous.Operand is FieldReference fieldReference && 
-                                    fieldReference.Name == "whoAmI";                                     
+                                );                                  
                                 if (hasWhoAmI) { // 145+  
                                     // rewire the branching
                                     var brs = instr.Previous(x => x.OpCode == OpCodes.Br_S);
