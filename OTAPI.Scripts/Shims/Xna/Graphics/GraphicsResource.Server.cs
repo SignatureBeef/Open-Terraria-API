@@ -32,5 +32,6 @@ namespace Microsoft.Xna.Framework.Graphics
         public GraphicsDevice GraphicsDevice { get; set; }
 
         public bool IsDisposed { get; set; }
+        public string Name { get; set; }
     }
 }
