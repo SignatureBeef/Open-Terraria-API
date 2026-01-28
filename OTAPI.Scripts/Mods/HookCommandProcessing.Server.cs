@@ -39,13 +39,18 @@ void HookCommandProcessing(MonoModder modder)
     var startDedInputCallBack = modder.GetILCursor(() => Terraria.Main.startDedInputCallBack());
 
     var vText = startDedInputCallBack.Body.Variables[0];
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#else
     var vTextLowered = startDedInputCallBack.Body.Variables[1];
+#endif
 
     if (vText.VariableType.FullName != modder.Module.TypeSystem.String.FullName)
         throw new NotSupportedException("Expected the first variable to be string");
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#else
     if (vTextLowered.VariableType.FullName != modder.Module.TypeSystem.String.FullName)
         throw new NotSupportedException("Expected the second variable to be string");
-
+#endif
     var exceptionHandler = startDedInputCallBack.Body.ExceptionHandlers.Single(
         x => (
             x.TryStart.Next.OpCode == OpCodes.Ldstr
@@ -62,8 +67,12 @@ void HookCommandProcessing(MonoModder modder)
 
     exceptionHandler.TryStart.ReplaceTransfer(newStart, startDedInputCallBack.Method);
 
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+    startDedInputCallBack.EmitDelegate<Func<string, bool>>(OTAPI.Hooks.Main.InvokeCommandProcess);
+#else
     startDedInputCallBack.Emit(OpCodes.Ldloc, vTextLowered)
         .EmitDelegate<Func<string, string, bool>>(OTAPI.Hooks.Main.InvokeCommandProcess);
+#endif
     startDedInputCallBack.Emit(OpCodes.Brfalse, exceptionHandler.TryEnd.Previous);
 }
 
@@ -87,6 +96,17 @@ namespace OTAPI
                 var args = new CommandProcessEventArgs()
                 {
                     Lowered = lowered,
+                    Command = raw,
+                };
+                CommandProcess?.Invoke(null, args);
+                return args.Result != HookResult.Cancel;
+            }
+            
+            public static bool InvokeCommandProcess(string raw)
+            {
+                var args = new CommandProcessEventArgs()
+                {
+                    Lowered = raw.ToLower(),
                     Command = raw,
                 };
                 CommandProcess?.Invoke(null, args);
