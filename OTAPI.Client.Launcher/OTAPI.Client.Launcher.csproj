@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<DebugType>embedded</DebugType>
 		<RunPostBuildEvent>Always</RunPostBuildEvent>
@@ -62,7 +62,7 @@
 		<PackageReference Include="MonoMod" Version="22.7.31.1">
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 		</PackageReference>
-		<PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.3">
+		<PackageReference Include="MonoMod.RuntimeDetour" Version="25.3.3">
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 		</PackageReference>
 	</ItemGroup>

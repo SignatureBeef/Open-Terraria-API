@@ -51,7 +51,7 @@ public static class InstallTargetExtensions
 
         File.WriteAllText(Path.Combine(otapiFolder, "Terraria.runtimeconfig.json"), @"{
   ""runtimeOptions"": {
-    ""tfm"": ""net9.0"",
+    ""tfm"": ""net10.0"",
     ""framework"": {
       ""name"": ""Microsoft.NETCore.App"",
       ""version"": ""9.0.0""
@@ -419,8 +419,8 @@ using System.Runtime.Versioning;
                 if (File.Exists(dll))
                     return Assembly.LoadFile(dll);
 
-                exe = Path.Combine(patcherDir, "bin", "Debug", "net9.0", "EmbeddedResources", $"{asr.Name}.exe");
-                dll = Path.Combine(patcherDir, "bin", "Debug", "net9.0", "EmbeddedResources", $"{asr.Name}.dll");
+                exe = Path.Combine(patcherDir, "bin", "Debug", "net10.0", "EmbeddedResources", $"{asr.Name}.exe");
+                dll = Path.Combine(patcherDir, "bin", "Debug", "net10.0", "EmbeddedResources", $"{asr.Name}.dll");
 
                 if (File.Exists(exe))
                     return Assembly.LoadFile(exe);

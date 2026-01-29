@@ -70,12 +70,12 @@ jobs:
       - name: Build
         run: |
             cd OTAPI.Client.Launcher
-            dotnet publish -r ${{ matrix.profile.runtime_identifier }} --framework net9.0 -p:PublishReadyToRun=true --self-contained false -c Release
+            dotnet publish -r ${{ matrix.profile.runtime_identifier }} --framework net10.0 -p:PublishReadyToRun=true --self-contained false -c Release
             if ${{ matrix.profile.runs_on != 'macos-latest' }} ; then
-              7z a ../${{ matrix.profile.archive_name }} './bin/Release/net9.0/${{ matrix.profile.runtime_identifier }}/publish/*'
+              7z a ../${{ matrix.profile.archive_name }} './bin/Release/net10.0/${{ matrix.profile.runtime_identifier }}/publish/*'
             else
               mkdir -p OTAPI.app/Contents/Resources
-              mv bin/Release/net9.0/osx-x64/publish OTAPI.app/Contents/MacOS
+              mv bin/Release/net10.0/osx-x64/publish OTAPI.app/Contents/MacOS
               cp ../docs/MacOS.Info.plist OTAPI.app/Contents/Info.plist
               cp OTAPI.osx.sh OTAPI.app/Contents/MacOS/OTAPI
               chmod +x OTAPI.app/Contents/MacOS/OTAPI
@@ -85,7 +85,7 @@ jobs:
       # - uses: actions/upload-artifact@v2
       #   with:
       #     name: ${{ matrix.profile.name }} Launcher
-      #     path: OTAPI.Client.Launcher/bin/Release/net9.0/${{ matrix.profile.runtime_identifier }}/publish
+      #     path: OTAPI.Client.Launcher/bin/Release/net10.0/${{ matrix.profile.runtime_identifier }}/publish
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
