@@ -71,6 +71,20 @@ public class ClientHelpers
             else Console.Error.WriteLine("Invalid option, expected a number.");
         }
 
+        // prompt for path
+        Console.Write("Please enter the path to your Terraria installation: ");
+        var inputPath = Console.ReadLine();
+        if (inputPath != null)
+        {
+            foreach (var discover in discoverers)
+            {
+                if (discover.IsValidInstallPath(inputPath))
+                {
+                    return new ClientInstallPath<ITarget> { Path = inputPath, Target = (ITarget)discover };
+                }
+            }
+        }
+
         throw new DirectoryNotFoundException();
     }
 
