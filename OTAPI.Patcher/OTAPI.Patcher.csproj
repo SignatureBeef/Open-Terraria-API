@@ -3,11 +3,11 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net9.0</TargetFramework>
-		<Version>3.3.3</Version>
+		<Version>3.3.4</Version>
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 		<RuntimeIdentifiers>win;osx;linux;</RuntimeIdentifiers>
 		<Nullable>enable</Nullable>
-		<PackageReleaseNotes>Terraria 1.4.5.2 on .NET9</PackageReleaseNotes>
+		<PackageReleaseNotes>Terraria 1.4.5.3 on .NET9</PackageReleaseNotes>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="ModFramework.Modules.ClearScript" Version="1.1.15" />
@@ -19,6 +19,7 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
 		<PackageReference Include="System.Security.Permissions" Version="9.0.2" />
+		<PackageReference Include="System.Drawing.Common" Version="9.0.2" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\FNA\FNA.Core.csproj" />
