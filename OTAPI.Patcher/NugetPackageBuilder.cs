@@ -61,7 +61,8 @@ public class NugetPackageBuilder
             (typeof(MonoMod.MonoModder).Assembly.GetName().Name, Version: typeof(MonoMod.MonoModder).Assembly.GetName().Version.ToString()),
             (typeof(MonoMod.RuntimeDetour.DetourBase).Assembly.GetName().Name, Version: typeof(MonoMod.RuntimeDetour.DetourBase).Assembly.GetName().Version.ToString()),
             (steamworks.Name, Version: steamworks.Version.ToString()),
-            (newtonsoft.Name, Version: GetNugetVersionFromAssembly<Newtonsoft.Json.JsonConverter>().Split('+')[0]  ),
+            (newtonsoft.Name, Version: GetNugetVersionFromAssembly<Newtonsoft.Json.JsonConverter>().Split('+')[0]),
+            (Name: "System.IO.Packaging", Version: GetNugetVersionFromAssembly<System.IO.Packaging.ZipPackage>().Split('+')[0]),
         };
 
         var xml_dependency = String.Join("", dependencies.Select(dep => $"\n\t    <dependency id=\"{dep.Name}\" version=\"{dep.Version}\" />"));
