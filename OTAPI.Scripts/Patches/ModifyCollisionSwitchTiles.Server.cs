@@ -33,52 +33,55 @@ using MonoMod;
 [MonoModIgnore]
 partial class CollisionSwitchTiles
 {
-    //static ParameterDefinition Entity { get; set; }
-    //static MethodDefinition SwitchTiles { get; set; }
-
     [Modification(ModType.PreMerge, "Patching Collision.SwitchTiles")]
-    static void ModifyCollisionSwitchTiles(ModFramework.ModFwModder modder)
+    public static void ModifyCollisionSwitchTiles(ModFwModder modder)
     {
+#if TerrariaServer_1455_OrAbove
+        var csr = modder.GetILCursor(() => Terraria.Collision.SwitchTiles(default, default, 0, 0, default, 0));
+#else
         var csr = modder.GetILCursor(() => Terraria.Collision.SwitchTiles(default, 0, 0, default, 0));
+#endif
         var redirects = csr.Method.DeclaringType.Methods
             .Where(x => (HookEmitter.HookMethodNamePrefix + x.Name) == csr.Method.Name || ("orig_" + x.Name) == csr.Method.Name)
             .Select(x => x.GetILCursor())
             .ToArray();
-        //SwitchTiles = csr.Method;
 
         foreach (var method in redirects.Append(csr))
         {
-            ParameterDefinition entity;
-            method.Method.Parameters.Add(entity = new("entity",
-                ParameterAttributes.HasDefault | ParameterAttributes.Optional,
-
-                modder.Module.ImportReference(modder.GetDefinition<Terraria.Entity>())
-            )
+            ParameterDefinition? entity = method.Method.Parameters.FirstOrDefault(x => x.Name == "entity");
+            if(entity is null) // 1455 added this natively.
             {
-                Constant = null
-            });
+                method.Method.Parameters.Add(entity = new("entity",
+                    ParameterAttributes.HasDefault | ParameterAttributes.Optional,
 
-            modder.OnRewritingMethodBody += (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
-            {
-                if (instr.Operand is MethodReference methodReference &&
-                    methodReference.DeclaringType.Name == method.Method.DeclaringType.Name &&
-                    methodReference.Name == method.Method.Name
+                    modder.Module.ImportReference(modder.GetDefinition<Terraria.Entity>())
                 )
                 {
-                    if (methodReference.Parameters.Any(x => x.Name == entity.Name))
-                        return;
+                    Constant = null
+                });
 
-                    methodReference.Parameters.Add(entity);
-
-                    if (body.Method.DeclaringType.BaseType.FullName == typeof(Terraria.Entity).FullName)
+                modder.OnRewritingMethodBody += (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
+                {
+                    if (instr.Operand is MethodReference methodReference &&
+                        methodReference.DeclaringType.Name == method.Method.DeclaringType.Name &&
+                        methodReference.Name == method.Method.Name
+                    )
                     {
-                        body.GetILProcessor().InsertBefore(instr,
-                            new { OpCodes.Ldarg_0 }
-                        );
+                        if (methodReference.Parameters.Any(x => x.Name == entity.Name))
+                            return;
+
+                        methodReference.Parameters.Add(entity);
+
+                        if (body.Method.DeclaringType.BaseType.FullName == typeof(Terraria.Entity).FullName)
+                        {
+                            body.GetILProcessor().InsertBefore(instr,
+                                new { OpCodes.Ldarg_0 }
+                            );
+                        }
+                        else throw new NotImplementedException($"{body.Method.Name} is not a supported caller for this modification");
                     }
-                    else throw new NotImplementedException($"{body.Method.Name} is not a supported caller for this modification");
-                }
-            };
+                };
+            }
 
             // inject the callback if the target
             if(method == csr)
@@ -121,8 +124,7 @@ partial class CollisionSwitchTiles
     }
 }
 
-
-[MonoMod.MonoModIgnore]
+[MonoModIgnore]
 public delegate bool PressurePlateCallback(int x, int y, Terraria.Entity entity);
 
 namespace OTAPI
