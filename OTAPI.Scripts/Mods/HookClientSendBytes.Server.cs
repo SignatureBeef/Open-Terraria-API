@@ -59,6 +59,21 @@ void HookClientSendBytes(MonoModder modder)
             SendData.Remove();
         }
     }
+
+#if TerrariaServer_1448_OrAbove
+        var SendPacket = modder.GetILCursor(() => Terraria.NetMessage.SendPacket(default, default));
+        // find each AsyncSend, replace with OTAPI.Hooks.NetMessage.InvokeSendBytes, and inject arg2 (remoteClient) as well.
+        while (SendPacket.TryGotoNext(
+            i => i.OpCode == OpCodes.Callvirt
+                && i.Operand is MethodReference methodReference
+                && methodReference.Name == "AsyncSend"
+        ))
+        {            
+            SendPacket.Emit(OpCodes.Ldarg_1); // remoteClient
+            SendPacket.EmitDelegate(OTAPI.Hooks.NetMessage.InvokeSendBytes);
+            SendPacket.Remove();
+        }
+#endif
 }
 
 namespace OTAPI
