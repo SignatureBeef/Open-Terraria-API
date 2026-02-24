@@ -101,10 +101,11 @@ partial class NpcStrikeArgs
 
                             case "Player.ApplyDamageToNPC":
                             case "Player.ItemCheck_MeleeHitNPCs":
-                            case "Projectile.Damage":
                             case "Player.ProcessHitAgainstNPC":
                             case "NPC.StrikeNPC":
-                            case "Projectile.Damage_PVE_Inner":
+#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+                            case "Projectile.Damage_PVE_Inner": // introduced/split in 145+
+#endif
                                 body.GetILProcessor().InsertBefore(instr,
                                     new { OpCodes.Ldarg_0 }
                                 );
