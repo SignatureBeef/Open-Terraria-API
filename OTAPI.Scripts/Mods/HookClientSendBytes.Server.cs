@@ -30,34 +30,24 @@ using System.Linq;
 /// <summary>
 /// @doc Creates Hooks.NetMessage.SendBytes. Allows plugins to intercept the sending of data.
 /// </summary>
-[Modification(ModType.PreMerge, "Hooking Terraria.NetMessage.SendData")]
+[Modification(ModType.PreMerge, "Hooking Terraria.NetMessage.SendPacket")]
 [MonoMod.MonoModIgnore]
 void HookClientSendBytes(MonoModder modder)
 {
-#if TerrariaServer_SendDataNumber8
-    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default, default));
-#else
-    var SendData = modder.GetILCursor(() => Terraria.NetMessage.SendData(default, default, default, default, default, default, default, default, default, default, default));
-#endif
+    var sendPacketMethod = modder.Module.GetType("Terraria.NetMessage").Methods
+        .Single(m => m.Name == "SendPacket" && m.Parameters.Count == 2);
 
-    while (SendData.TryGotoNext(
+    var sendPacketContext = new ILContext(sendPacketMethod);
+    var SendPacket = new ILCursor(sendPacketContext);
+    while (SendPacket.TryGotoNext(
         i => i.OpCode == OpCodes.Callvirt
             && i.Operand is MethodReference methodReference
             && methodReference.Name == "AsyncSend"
     ))
     {
-        SendData.FindNext(out ILCursor[] cursors, i => i.OpCode == OpCodes.Pop && (i.Previous?.OpCode == OpCodes.Leave || i.Previous?.OpCode == OpCodes.Leave_S));
-
-        if (cursors.Length != 1) throw new System.Exception($"Expected to be within a try/catch block");
-
-        var handler = SendData.Method.Body.ExceptionHandlers.Single(x => x.TryEnd == cursors[0].Next);
-
-        if (handler.TryStart.Next.OpCode == OpCodes.Ldloc_S || handler.TryStart.Next.OpCode == OpCodes.Ldarg_1)
-        {
-            SendData.Emit(handler.TryStart.Next.OpCode, handler.TryStart.Next.Operand);
-            SendData.EmitDelegate(OTAPI.Hooks.NetMessage.InvokeSendBytes);
-            SendData.Remove();
-        }
+        SendPacket.Emit(OpCodes.Ldarg_1); // remoteClient parameter
+        SendPacket.EmitDelegate(OTAPI.Hooks.NetMessage.InvokeSendBytes);
+        SendPacket.Remove();
     }
 }
 
