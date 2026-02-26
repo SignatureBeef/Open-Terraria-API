@@ -104,16 +104,9 @@ partial class NpcStrikeArgs
                             case "Projectile.Damage":
                             case "Player.ProcessHitAgainstNPC":
                             case "NPC.StrikeNPC":
+                            case "Projectile.Damage_PVE_Inner":
                                 body.GetILProcessor().InsertBefore(instr,
                                     new { OpCodes.Ldarg_0 }
-                                );
-                                break;
-
-                            case "Projectile.Damage_PVE_Inner":
-                                // find the NPC parameter
-                                var prm = body.Method.Parameters.Single(x => x.ParameterType.FullName == "Terraria.NPC");
-                                body.GetILProcessor().InsertBefore(instr,
-                                    new { OpCodes.Ldarg, Operand = prm }
                                 );
                                 break;
 
