@@ -133,7 +133,7 @@ static void TShockHooks()
     HookEvents.Terraria.WorldGen.StartHardmode += Print;
     HookEvents.Terraria.WorldGen.SpreadGrass += Print;
     HookEvents.Terraria.Chat.ChatHelper.BroadcastChatMessage += Print;
-    HookEvents.Terraria.IO.WorldFile.SaveWorld_Boolean_Boolean += Print;
+    HookEvents.Terraria.IO.WorldFile.SaveWorld += Print;
     HookEvents.Terraria.Net.NetManager.SendData += Print;
     HookEvents.Terraria.Projectile.SetDefaults += Print;
     HookEvents.Terraria.Projectile.AI += Print;
