@@ -33,7 +33,10 @@ using Terraria.DataStructures;
 [MonoMod.MonoModIgnore]
 void HookNpcCreate(MonoModder modder)
 {
-#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+    var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeCreate(default, default, default, default, default, default, default, default, default, default, default, default));
+    var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default, default));
+#elif TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
     var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeCreate(default, default, default, default, default, default, default, default, default, default));
     var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default, default));
 #else
@@ -42,7 +45,11 @@ void HookNpcCreate(MonoModder modder)
 #endif
 
     NewNPC.GotoNext(
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+        i => i.OpCode == OpCodes.Call && i.Operand is MethodReference mr && mr.Name == "NewNPCInstanceInSlot"
+#else
         i => i.OpCode == OpCodes.Newobj && i.Operand is MethodReference mr && mr.Name == ".ctor" && mr.DeclaringType.FullName == "Terraria.NPC"
+#endif
     );
 
     NewNPC.Next.OpCode = OpCodes.Call;
@@ -74,10 +81,16 @@ namespace OTAPI
                 public float Ai2 { get; set; }
                 public float Ai3 { get; set; }
                 public int Target { get; set; }
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                public int Slot { get; set; }
+                public int Generation { get; set; }
+#endif
             }
             public static event EventHandler<CreateEventArgs> Create;
 
-#if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+            public static Terraria.NPC InvokeCreate(int Slot, int Generation, IEntitySource source, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
+#elif TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
             public static Terraria.NPC InvokeCreate(IEntitySource source, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
 #else
             public static Terraria.NPC InvokeCreate(int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
@@ -97,6 +110,10 @@ namespace OTAPI
                     Ai2 = ai2,
                     Ai3 = ai3,
                     Target = Target
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                    , Slot = Slot
+                    , Generation = Generation
+#endif
                 };
                 Create?.Invoke(null, args);
 

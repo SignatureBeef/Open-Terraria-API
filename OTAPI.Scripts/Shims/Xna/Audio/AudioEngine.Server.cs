@@ -17,14 +17,23 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.Audio
 {
-    public class AudioEngine : IDisposable
+	public class AudioEngine : IDisposable
 	{
-        public AudioEngine(string settingsFile) { }
+		public AudioEngine(string settingsFile) { }
+
+		public AudioEngine(
+			string settingsFile,
+			TimeSpan lookAheadTime,
+			string rendererId
+		) { }
+
+		public ReadOnlyCollection<RendererDetail> RendererDetails { get; }
 
 		public void Update() { }
 		public void Dispose() { }

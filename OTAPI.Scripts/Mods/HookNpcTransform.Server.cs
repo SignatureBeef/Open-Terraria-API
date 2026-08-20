@@ -33,7 +33,7 @@ using System.Linq;
 [MonoMod.MonoModIgnore]
 void HookNpcTransform(MonoModder modder)
 {
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
     var transform = modder.GetILCursor(() => (new Terraria.NPC()).Transform(0, 0f, 0f, 0f, 0f, false));
 #else
     var transform = modder.GetILCursor(() => (new Terraria.NPC()).Transform(0));
@@ -61,7 +61,7 @@ namespace OTAPI
                 public Terraria.NPC Npc { get; set; }
                 public int NewType { get; set; }
 
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                 public float Ai0 { get; set; }
                 public float Ai1 { get; set; }
                 public float Ai2 { get; set; }
@@ -72,7 +72,7 @@ namespace OTAPI
             public static event EventHandler<TransformingEventArgs> Transforming;
 
             public static bool InvokeTransforming(Terraria.NPC instance, ref int newType
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                 , ref float ai0, ref float ai1, ref float ai2, ref float ai3, ref bool withReposition
 #endif      
             )
@@ -81,7 +81,7 @@ namespace OTAPI
                 {
                     Npc = instance,
                     NewType = newType,
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                     Ai0 = ai0,
                     Ai1 = ai1,
                     Ai2 = ai2,
@@ -91,7 +91,7 @@ namespace OTAPI
                 };
                 Transforming?.Invoke(null, args);
                 newType = args.NewType;
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                 ai0 = args.Ai0;
                 ai1 = args.Ai1;
                 ai2 = args.Ai2;

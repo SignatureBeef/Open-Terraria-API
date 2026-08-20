@@ -33,7 +33,9 @@ partial class NpcStrikeArgs
     [Modification(ModType.PreMerge, "Patching in entity source for NPC strike")]
     static void PatchNpcStrikeArgs(ModFwModder modder)
     {
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+        var csr = modder.GetILCursor(() => (new Terraria.NPC()).StrikeNPC(0, 0, 0, false, false, 0));
+#elif TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
         var csr = modder.GetILCursor(() => (new Terraria.NPC()).StrikeNPC(0, 0, 0, false, false, false, 0));
 #else
         var csr = modder.GetILCursor(() => (new Terraria.NPC()).StrikeNPC(0, 0, 0, false, false, false));
@@ -105,9 +107,11 @@ partial class NpcStrikeArgs
                             case "Player.ProcessHitAgainstNPC":
                             case "NPC.StrikeNPC":
                             case "Projectile.Damage_PVE_Inner":
-                                body.GetILProcessor().InsertBefore(instr,
+                                var ldarg = body.GetILProcessor().InsertBefore(instr,
                                     new { OpCodes.Ldarg_0 }
-                                );
+                                ).Single();
+
+                                instr.ReplaceTransfer(ldarg, body.Method);
                                 break;
 
                             default:

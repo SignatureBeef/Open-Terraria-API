@@ -27,6 +27,9 @@ using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
+using Terraria;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 
 /// <summary>
 /// @doc Creates Hooks.NPC.DropLoot. Allows plugins to alter or cancel NPC loot drops.
@@ -42,7 +45,9 @@ void HookNpcLoot(MonoModder modder)
     );
 
     NewNPC.Emit(OpCodes.Ldarg_0); // NPC instance
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+    NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(null, 0, 0, 0, 0, 0, 0, false, 0, NewItemOwnership.None, null, null, null));
+#elif TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
     NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default, default));
 #elif TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
     NewNPC.Next.Operand = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeDropLoot(default, default, default, default, default, default, default, default, default, default, default, default));
@@ -75,11 +80,20 @@ namespace OTAPI
                 public int Stack { get; set; }
                 public bool NoBroadcast { get; set; }
                 public int Pfix { get; set; }
+
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                [Obsolete("NoGrabDelay is no longer used in Terraria 1.4.5.7 and above, but is kept for API compatibility.")]
+#endif
                 public bool NoGrabDelay { get; set; }
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                 [Obsolete("ReverseLookup is no longer used in Terraria 1.4.5 and above, but is kept for API compatibility.")]
 #endif
                 public bool ReverseLookup { get; set; }
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                public NewItemOwnership Ownership { get; set; }
+                public Vector2? Velocity { get; set; }
+                public Item.NewItemModifier Modifier { get; set; }
+#endif
             }
             public static event EventHandler<DropLootEventArgs>? DropLoot;
 
@@ -89,7 +103,9 @@ namespace OTAPI
             public static int InvokeDropLoot(int X, int Y, int Width, int Height, int Type,
 #endif
 
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                int stack, bool noBroadcast, int prefix, NewItemOwnership ownership, Vector2? velocity, Item.NewItemModifier modifier,
+#elif TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                 int Stack, bool noBroadcast, int pfix, bool noGrabDelay,
 #else            
                 int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup,
@@ -107,11 +123,20 @@ namespace OTAPI
                     Width = Width,
                     Height = Height,
                     Type = Type,
-                    Stack = Stack,
                     NoBroadcast = noBroadcast,
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                    Stack = stack,
+                    Pfix = prefix,
+                    Ownership = ownership,
+                    Velocity = velocity,
+                    Modifier = modifier,
+                    NoGrabDelay = false, // no longer used, but kept for api compatibility.
+#else
+                    Stack = Stack,
                     Pfix = pfix,
                     NoGrabDelay = noGrabDelay,
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#endif
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                     ReverseLookup = false, // no longer used, but kept for api compatibility.
 #else
                     ReverseLookup = reverseLookup,
@@ -123,12 +148,14 @@ namespace OTAPI
                 DropLoot?.Invoke(null, args);
                 if (args.Result != HookResult.Cancel)
                 {
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
-                    args.ItemIndex = Terraria.Item.NewItem(args.Source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay);
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                    args.ItemIndex = Terraria.Item.NewItem(args.Source, args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.Ownership, args.Velocity, args.Modifier);
+#elif TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
+                    args.ItemIndex = Terraria.Item.NewItem(args.Source, args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay);
 #elif TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
-                    args.ItemIndex = Terraria.Item.NewItem(args.Source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                    args.ItemIndex = Terraria.Item.NewItem(args.Source, args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);
 #else
-                    args.ItemIndex = Terraria.Item.NewItem(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                    args.ItemIndex = Terraria.Item.NewItem(args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);
 #endif
                     args.Event = HookEvent.After;
                     DropLoot?.Invoke(null, args);

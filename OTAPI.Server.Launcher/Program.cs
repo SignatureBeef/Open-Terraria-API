@@ -180,7 +180,7 @@ static void Program_OnLaunched(object sender, EventArgs e)
         //Console.WriteLine($"RemoteClient.Reset: HOOK ID#{rc.Id} IsActive:{rc.IsActive},PT:{rc.PendingTermination}");
         orig(rc);
     };
-    
+
 }
 
 static void Main_ctor(On.Terraria.Main.orig_ctor orig, Terraria.Main self)
@@ -231,4 +231,85 @@ Terraria.Program.ModContext.ReferenceFiles.Add("MonoMod.dll");
 Terraria.Program.ModContext.ReferenceFiles.Add("MonoMod.RuntimeDetour.dll");
 Terraria.Program.ModContext.ReferenceFiles.Add("ModFramework.dll");
 
+bool IsMono = Type.GetType("Mono.Runtime") != null;
+
+var asm = GetTerrariaAssembly();
+
+AppDomain.CurrentDomain.AssemblyResolve += delegate(object sender, ResolveEventArgs sargs)
+{
+    string resourceName = new AssemblyName(sargs.Name).Name + ".dll";
+    string text = Array.Find(asm.GetManifestResourceNames(), (string element) => element.EndsWith(resourceName));
+    if (text == null)
+    {
+        return (Assembly)null;
+    }
+    using Stream stream = asm.GetManifestResourceStream(text);
+    byte[] array = new byte[stream.Length];
+    stream.Read(array, 0, array.Length);
+    return Assembly.Load(array);
+};
+
+// ForceLoadAssembly(asm, initializeStaticMembers: true);
+
 GetTerrariaAssembly().EntryPoint.Invoke(null, new object[] { args });
+
+
+
+void ForceLoadAssembly(Assembly assembly, bool initializeStaticMembers)
+{
+    ForceJITOnAssembly(assembly);
+    if (initializeStaticMembers)
+    {
+        ForceStaticInitializers(assembly);
+    }
+}
+
+void ForceStaticInitializers(Assembly assembly)
+{
+    Type[] types = assembly.GetTypes();
+    foreach (Type type in types)
+    {
+        if (!type.IsGenericType)
+        {
+            try
+            {
+                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(type.TypeHandle);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to run class constructor for {type.FullName}: {ex}");
+            }
+        }
+    }
+}
+
+void ForceJITOnAssembly(Assembly assembly)
+{
+    Type[] types = assembly.GetTypes();
+    foreach (Type type in types)
+    {
+        MethodInfo[] array = (IsMono ? type.GetMethods() : type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic));
+        foreach (MethodInfo methodInfo in array)
+        {
+            if (!methodInfo.IsAbstract && !methodInfo.ContainsGenericParameters && methodInfo.GetMethodBody() != null)
+            {
+                try
+                {
+
+                    if (IsMono)
+                    {
+                        methodInfo.MethodHandle.GetFunctionPointer();
+                    }
+                    else
+                    {
+                        System.Runtime.CompilerServices.RuntimeHelpers.PrepareMethod(methodInfo.MethodHandle);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to JIT method {methodInfo.DeclaringType.FullName}.{methodInfo.Name}: {ex}");
+                }
+            }
+        }
+    }
+}

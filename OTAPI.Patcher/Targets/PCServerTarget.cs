@@ -216,7 +216,7 @@ public class PCServerTarget : IServerPatchTarget
                             mm.Module.GetType("Terraria.Net.NetManager").CreateHooks(mm);
                             mm.Module.GetType("Terraria.Projectile").CreateHooks(mm);
                             mm.Module.GetType("Terraria.RemoteClient").CreateHooks(mm);
-                            mm.Module.GetType("Terraria.Liquid").CreateHooks(mm);
+                            // mm.Module.GetType("Terraria.Liquid").CreateHooks(mm); TODO add value type hooks
                             mm.Module.GetType("Terraria.Program").CreateHooks(mm);
                             mm.Module.GetType("Terraria.Wiring").CreateHooks(mm);
                             mm.Module.GetType("Terraria.GameContent.PressurePlateHelper").CreateHooks(mm);
