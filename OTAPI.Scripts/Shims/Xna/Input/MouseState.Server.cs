@@ -29,7 +29,28 @@ namespace Microsoft.Xna.Framework.Input
         public ButtonState RightButton { get; set; }
         public int ScrollWheelValue { get; set; }
 
-        public ButtonState XButton1 => ButtonState.Released;
-        public ButtonState XButton2 => ButtonState.Released;
+        public ButtonState XButton1 { get; } = ButtonState.Released;
+        public ButtonState XButton2 { get; } = ButtonState.Released;
+
+        public MouseState(
+            int x,
+            int y,
+            int scrollWheel,
+            ButtonState leftButton,
+            ButtonState middleButton,
+            ButtonState rightButton,
+            ButtonState xButton1,
+            ButtonState xButton2
+        ) : this()
+        {
+            X = x;
+            Y = y;
+            ScrollWheelValue = scrollWheel;
+            LeftButton = leftButton;
+            MiddleButton = middleButton;
+            RightButton = rightButton;
+            XButton1 = xButton1;
+            XButton2 = xButton2;
+        }
     }
 }

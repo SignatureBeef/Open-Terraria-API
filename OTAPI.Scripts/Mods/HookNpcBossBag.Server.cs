@@ -24,6 +24,9 @@ using System.Linq;
 using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Terraria;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 
 /// <summary>
 /// @doc Creates Hooks.NPC.BossBag. Allows plugins to customize boss loot as well as the distribution.
@@ -34,12 +37,16 @@ void HookNpcBossBag(ModFramework.ModFwModder modder)
 {
     // replace NewItem calls, and handle the -1 result to cancel the method from actioning.
     foreach (var csr in new[] {
+#if !Terraria_1457_OrAbove && !TerrariaServer_1457_OrAbove
          modder.GetILCursor(() => (new Terraria.NPC()).DropItemInstanced(default, default, 0, 0, false)),
+#endif
          modder.GetILCursor(() => Terraria.GameContent.ItemDropRules.CommonCode.DropItemLocalPerClientAndSetNPCMoneyTo0(default, default, default, default))
     })
     {
         var callback = csr.Module.ImportReference(
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+            modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(null, 0, 0, 0, 0, 0, 0, false, 0, NewItemOwnership.None, null, null, null))
+#elif TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
             modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(null, 0, 0, 0, 0, 0, 0, false, 0, false, null))
 #elif TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
             modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeBossBag(null, 0, 0, 0, 0, 0, 0, false, 0, false, false, null))
@@ -50,7 +57,11 @@ void HookNpcBossBag(ModFramework.ModFwModder modder)
 
         var instructions = csr.Body.Instructions.Where(x => x.OpCode == OpCodes.Call
                                                             && x.Operand is MethodReference mref && mref.Name == "NewItem"
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                                                            && x.Next.OpCode == OpCodes.Stloc_1);
+#else
                                                             && x.Next.OpCode == OpCodes.Stloc_0);
+#endif
 
         if (instructions.Count() != 1) throw new NotSupportedException("Only one server NewItem call expected in DropBossBags.");
 
@@ -66,6 +77,15 @@ void HookNpcBossBag(ModFramework.ModFwModder modder)
         );
 
         csr.Goto(ins.Next.Next);
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+        csr.EmitAll(
+            new { OpCodes.Ldloc_1 },
+            new { OpCodes.Ldc_I4_M1 },
+            new { OpCodes.Ceq },
+            new { OpCodes.Brfalse_S, Operand = ins.Next.Next },
+            new { OpCodes.Ret }
+        );
+#else
         csr.EmitAll(
             new { OpCodes.Ldloc_0 },
             new { OpCodes.Ldc_I4_M1 },
@@ -73,6 +93,7 @@ void HookNpcBossBag(ModFramework.ModFwModder modder)
             new { OpCodes.Brfalse_S, Operand = ins.Next.Next },
             new { OpCodes.Ret }
         );
+#endif
     }
 }
 
@@ -87,7 +108,7 @@ namespace OTAPI
                 public HookResult? Result { get; set; }
 
 #if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
-                public Terraria.DataStructures.IEntitySource Source { get; set; }
+                public IEntitySource Source { get; set; }
 #endif
 
                 public Terraria.NPC Npc { get; set; }
@@ -99,29 +120,45 @@ namespace OTAPI
                 public int Stack { get; set; }
                 public bool NoBroadcast { get; set; }
                 public int Pfix { get; set; }
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                [Obsolete("NoGrabDelay is no longer used in Terraria 1.4.5.7 and above, but is kept for API compatibility.")]
+#endif
                 public bool NoGrabDelay { get; set; }
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                 [Obsolete("ReverseLookup is no longer used in Terraria 1.4.5 and above, but is kept for API compatibility.")]
 #endif
                 public bool ReverseLookup { get; set; }
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                public NewItemOwnership Ownership { get; set; }
+                public Vector2? Velocity { get; set; }
+                public Item.NewItemModifier Modifier { get; set; }
+#endif
             }
             public static event EventHandler<BossBagEventArgs> BossBag;
 
             public static int InvokeBossBag(
 #if TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
-                Terraria.DataStructures.IEntitySource Source,
+                IEntitySource Source,
 #endif
                 int X,
                 int Y,
                 int Width,
                 int Height,
                 int Type,
-                int Stack,
-                bool noBroadcast,
-                int pfix,
-                bool noGrabDelay,
-#if !TerrariaServer_1450_OrAbove && !Terraria__1450_OrAbove && !tModLoader_1450_OrAbove
-                bool reverseLookup,
+//                 int Stack,
+//                 bool noBroadcast,
+//                 int pfix,
+//                 bool noGrabDelay,
+// #if !TerrariaServer_1450_OrAbove && !Terraria_1450_OrAbove && !tModLoader_1450_OrAbove
+//                 bool reverseLookup,
+// #endif
+
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                int stack, bool noBroadcast, int prefix, NewItemOwnership ownership, Vector2? velocity, Item.NewItemModifier modifier,
+#elif TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
+                int Stack, bool noBroadcast, int pfix, bool noGrabDelay,
+#else            
+                int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup,
 #endif
                 Terraria.NPC npc
             )
@@ -136,11 +173,20 @@ namespace OTAPI
                     Width = Width,
                     Height = Height,
                     Type = Type,
-                    Stack = Stack,
                     NoBroadcast = noBroadcast,
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                    Stack = stack,
+                    Pfix = prefix,
+                    Ownership = ownership,
+                    Velocity = velocity,
+                    Modifier = modifier,
+                    NoGrabDelay = false, // no longer used, but kept for api compatibility.
+#else
+                    Stack = Stack,
                     Pfix = pfix,
                     NoGrabDelay = noGrabDelay,
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#endif
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                     ReverseLookup = false, // no longer used, but kept for api compatibility.
 #else
                     ReverseLookup = reverseLookup,
@@ -150,7 +196,10 @@ namespace OTAPI
                 BossBag?.Invoke(null, args);
                 if (args.Result == HookResult.Cancel)
                     return -1;
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                return Terraria.Item.NewItem(Source, args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.Ownership, args.Velocity, args.Modifier);
+#elif TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
                 return Terraria.Item.NewItem(Source, args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay);
 #elif TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
                 return Terraria.Item.NewItem(Source, args.X, args.Y, args.Width, args.Height, args.Type, args.Stack, args.NoBroadcast, args.Pfix, args.NoGrabDelay, args.ReverseLookup);

@@ -34,7 +34,7 @@ void HookNpcKilled(MonoModder modder)
 {
     var checkDead = modder.GetILCursor(() => (new Terraria.NPC()).checkDead());
 
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
     var declaringType = "Terraria.NPC";
 #else
     var declaringType = "Terraria.Entity";

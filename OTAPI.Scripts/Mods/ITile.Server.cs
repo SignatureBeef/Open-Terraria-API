@@ -48,7 +48,9 @@ void ITile(ModFwModder modder)
     // replace ctor/new instances and route to a hook
     {
         var createTile = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Hooks.Tile.InvokeCreate()));
+#if !Terraria_1457_OrAbove && !TerrariaServer_1457_OrAbove
         var createTileRef = modder.Module.ImportReference(modder.GetMethodDefinition(() => OTAPI.Hooks.Tile.InvokeCreate(null)));
+#endif
 
         modder.OnRewritingMethodBody += (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
         {
@@ -62,11 +64,13 @@ void ITile(ModFwModder modder)
                     instr.OpCode = OpCodes.Call;
                     instr.Operand = createTile;
                 }
+#if !Terraria_1457_OrAbove && !TerrariaServer_1457_OrAbove
                 else if (mref.Parameters.Count == 1)
                 {
                     instr.OpCode = OpCodes.Call;
                     instr.Operand = createTileRef;
                 }
+#endif
                 else throw new NotImplementedException();
             }
         };
@@ -87,11 +91,12 @@ namespace OTAPI
             {
                 return Create?.Invoke() ?? new Terraria.Tile();
             }
-
+#if !Terraria_1457_OrAbove && !TerrariaServer_1457_OrAbove
             public static Terraria.Tile InvokeCreate(Terraria.Tile existing)
             {
                 return Create?.Invoke(existing) ?? new Terraria.Tile(existing);
             }
+#endif
         }
     }
 }

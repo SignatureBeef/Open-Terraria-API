@@ -42,7 +42,7 @@ partial class ChestHooks
     [Modification(ModType.PreMerge, "Hooking chest stacking")]
     static void HookChestQuickStack(ModFwModder modder)
     {
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
         {
             // DO NOT use GetILCursor(). The instruction body does not have jumps transformed into labels,
             // a process which is required to happen for the edits below to work.

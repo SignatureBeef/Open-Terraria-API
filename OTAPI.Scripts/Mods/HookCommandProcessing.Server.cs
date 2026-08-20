@@ -39,14 +39,14 @@ void HookCommandProcessing(MonoModder modder)
     var startDedInputCallBack = modder.GetILCursor(() => Terraria.Main.startDedInputCallBack());
 
     var vText = startDedInputCallBack.Body.Variables[0];
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
 #else
     var vTextLowered = startDedInputCallBack.Body.Variables[1];
 #endif
 
     if (vText.VariableType.FullName != modder.Module.TypeSystem.String.FullName)
         throw new NotSupportedException("Expected the first variable to be string");
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
 #else
     if (vTextLowered.VariableType.FullName != modder.Module.TypeSystem.String.FullName)
         throw new NotSupportedException("Expected the second variable to be string");
@@ -67,7 +67,7 @@ void HookCommandProcessing(MonoModder modder)
 
     exceptionHandler.TryStart.ReplaceTransfer(newStart, startDedInputCallBack.Method);
 
-#if TerrariaServer_1450_OrAbove || Terraria__1450_OrAbove || tModLoader_1450_OrAbove
+#if TerrariaServer_1450_OrAbove || Terraria_1450_OrAbove || tModLoader_1450_OrAbove
     startDedInputCallBack.EmitDelegate<Func<string, bool>>(OTAPI.Hooks.Main.InvokeCommandProcess);
 #else
     startDedInputCallBack.Emit(OpCodes.Ldloc, vTextLowered)

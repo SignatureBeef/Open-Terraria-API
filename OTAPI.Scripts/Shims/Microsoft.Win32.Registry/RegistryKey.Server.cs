@@ -23,6 +23,7 @@ namespace Microsoft.Win32
     public class Registry
     {
         public static RegistryKey CurrentUser;
+        public static RegistryKey LocalMachine;
     }
 
     public class RegistryKey : IDisposable
