@@ -83,13 +83,13 @@ namespace OTAPI
                 public int Target { get; set; }
 #if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
                 public int Slot { get; set; }
-                public int Generation { get; set; }
+                public byte Generation { get; set; }
 #endif
             }
             public static event EventHandler<CreateEventArgs> Create;
 
 #if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
-            public static Terraria.NPC InvokeCreate(int Slot, int Generation, IEntitySource source, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
+            public static Terraria.NPC InvokeCreate(int Slot, byte Generation, IEntitySource source, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
 #elif TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
             public static Terraria.NPC InvokeCreate(IEntitySource source, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
 #else
@@ -117,7 +117,11 @@ namespace OTAPI
                 };
                 Create?.Invoke(null, args);
 
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+                return args.Npc ?? Terraria.NPC.NewNPCInstanceInSlot(args.Slot, args.Generation);
+#else
                 return args.Npc ?? new Terraria.NPC();
+#endif
             }
         }
     }
