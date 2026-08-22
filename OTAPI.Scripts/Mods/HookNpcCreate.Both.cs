@@ -73,7 +73,6 @@ void HookNpcCreate(MonoModder modder)
     NewNPC.Emit(OpCodes.Ldarg_S, (byte)9);
     NewNPC.Emit(OpCodes.Ldloc_1);         
     NewNPC.Emit(OpCodes.Call, callback);
-    NewNPC.Emit(OpCodes.Pop); 
 #else
     NewNPC.Next.OpCode = OpCodes.Call;
     NewNPC.Next.Operand = callback;
