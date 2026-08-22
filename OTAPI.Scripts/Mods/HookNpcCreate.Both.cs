@@ -23,6 +23,7 @@ using ModFramework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod;
+using MonoMod.Cil;
 using System;
 using Terraria.DataStructures;
 
@@ -34,7 +35,7 @@ using Terraria.DataStructures;
 void HookNpcCreate(MonoModder modder)
 {
 #if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
-    var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeCreate(default, default, default, default, default, default, default, default, default, default, default, default));
+    var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeCreate(default, default, default, default, default, default, default, default, default, default, default, default, default));
     var NewNPC = modder.GetILCursor(() => Terraria.NPC.NewNPC(default, default, default, default, default, default, default, default, default, default));
 #elif TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
     var callback = modder.GetMethodDefinition(() => OTAPI.Hooks.NPC.InvokeCreate(default, default, default, default, default, default, default, default, default, default));
@@ -52,11 +53,35 @@ void HookNpcCreate(MonoModder modder)
 #endif
     );
 
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
+    NewNPC.GotoNext(MoveType.After,
+        i => i.OpCode == OpCodes.Stloc_1 ||
+             (i.OpCode == OpCodes.Stloc && i.Operand is VariableDefinition vd && vd.Index == 1)
+    );
+
+    NewNPC.Emit(OpCodes.Ldloc_0);         
+    NewNPC.Emit(OpCodes.Ldc_I4_0);        
+    NewNPC.Emit(OpCodes.Ldarg_0);         
+    NewNPC.Emit(OpCodes.Ldarg_1);         
+    NewNPC.Emit(OpCodes.Ldarg_2);         
+    NewNPC.Emit(OpCodes.Ldarg_3);         
+    NewNPC.Emit(OpCodes.Ldarg_S, (byte)4);
+    NewNPC.Emit(OpCodes.Ldarg_S, (byte)5);
+    NewNPC.Emit(OpCodes.Ldarg_S, (byte)6);
+    NewNPC.Emit(OpCodes.Ldarg_S, (byte)7);
+    NewNPC.Emit(OpCodes.Ldarg_S, (byte)8);
+    NewNPC.Emit(OpCodes.Ldarg_S, (byte)9);
+    NewNPC.Emit(OpCodes.Ldloc_1);         
+    NewNPC.Emit(OpCodes.Call, callback);
+    NewNPC.Emit(OpCodes.Pop); 
+#else
     NewNPC.Next.OpCode = OpCodes.Call;
     NewNPC.Next.Operand = callback;
 
     foreach (var prm in NewNPC.Method.Parameters)
         NewNPC.Emit(OpCodes.Ldarg, prm);
+#endif
+
 }
 
 namespace OTAPI
@@ -89,7 +114,7 @@ namespace OTAPI
             public static event EventHandler<CreateEventArgs> Create;
 
 #if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
-            public static Terraria.NPC InvokeCreate(int Slot, int Generation, IEntitySource source, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
+            public static void InvokeCreate(int Slot, int Generation, IEntitySource source, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target, Terraria.NPC? npc = null)
 #elif TerrariaServer_EntitySourcesActive || Terraria_EntitySourcesActive || tModLoader_EntitySourcesActive
             public static Terraria.NPC InvokeCreate(IEntitySource source, int X, int Y, int Type, int Start, float ai0, float ai1, float ai2, float ai3, int Target)
 #else
@@ -113,11 +138,15 @@ namespace OTAPI
 #if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
                     , Slot = Slot
                     , Generation = Generation
+                    , Npc = npc
 #endif
                 };
                 Create?.Invoke(null, args);
+#if Terraria_1457_OrAbove || TerrariaServer_1457_OrAbove
 
+#else
                 return args.Npc ?? new Terraria.NPC();
+#endif
             }
         }
     }
