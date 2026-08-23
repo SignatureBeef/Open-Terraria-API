@@ -18,6 +18,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #pragma warning disable CS8321 // Local function is declared but never used
 
+#if Terraria_1458_OrAbove || TerrariaServer_1458_OrAbove
+System.Console.WriteLine("Ignoring GetData exception patched - 1.4.5.8+ includes logging in CheckBytes");
+#else
 using System;
 using System.Linq;
 using ModFramework;
@@ -84,3 +87,4 @@ namespace OTAPI
         }
     }
 }
+#endif
