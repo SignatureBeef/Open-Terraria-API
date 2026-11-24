@@ -49,6 +49,29 @@ void HookPlayerAnnouncements(ModFwModder modder)
 
     modder.OnRewritingMethodBody += (MonoModder modder, MethodBody body, Instruction instr, int instri) =>
     {
+        if (instr.Operand is MethodReference connectionRef
+            && connectionRef.FullName == broadcast.FullName
+            && body.Method.DeclaringType.FullName == "Terraria.NetMessage"
+            && (body.Method.Name == "SyncConnectedPlayer" || body.Method.Name == "SyncDisconnectedPlayer")
+        )
+        {
+            var il = body.GetILProcessor();
+            var plr = body.Method.Parameters[0];
+            il.InsertBefore(instr, Instruction.Create(OpCodes.Ldarg, plr));
+            il.InsertBefore(instr, Instruction.Create(OpCodes.Ldc_I4_M1));
+            il.InsertBefore(instr, Instruction.Create(OpCodes.Ldarg, plr));
+            instr.Operand = callback;
+
+            var writeLine = instr.Next;
+            while (writeLine is not null && !(writeLine.Operand is MethodReference w && w.DeclaringType.FullName == "System.Console" && w.Name == "WriteLine"))
+                writeLine = writeLine.Next;
+            if (writeLine is null)
+                throw new Exception("Expected a Console.WriteLine after the player announcement.");
+
+            il.InsertAfter(instr, Instruction.Create(OpCodes.Brfalse, writeLine.Next));
+            return;
+        }
+
         if (instr.Operand is MethodReference mref
             && mref.FullName == broadcast.FullName
             && body.Method.FullName == syncOne.FullName
