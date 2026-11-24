@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (C) 2020 DeathCradle
 
 This file is part of Open Terraria API v3 (OTAPI)
@@ -28,7 +28,7 @@ public class PCFileResolver : IFileResolver
 {
     public const String TerrariaWebsite = "https://terraria.org";
 
-    public virtual string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/pc-dedicated-server/terraria-server-1458.zip";
+    public virtual string SupportedDownloadUrl { get; } = $"{TerrariaWebsite}/api/download/pc-dedicated-server/terraria-server-146.zip";
 
     public virtual string GetUrlFromHttpResponse(string content)
     {
