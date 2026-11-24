@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (C) 2020 DeathCradle
 
 This file is part of Open Terraria API v3 (OTAPI)
@@ -36,6 +36,15 @@ namespace Terraria
                 return orig_SetConsoleCtrlHandler(handler, add);
             }
             return false;
+        }
+
+        public static extern void orig_Preload(string nativeLibName);
+        public static void Preload(string nativeLibName)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                orig_Preload(nativeLibName);
+            }
         }
 
         ///// <summary>
