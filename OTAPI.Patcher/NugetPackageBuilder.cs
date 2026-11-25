@@ -20,6 +20,7 @@ using ModFramework;
 using Mono.Cecil;
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -37,6 +38,7 @@ public class NugetPackageBuilder
 
     public string PackageName { get; set; }
     public string NuspecPath { get; set; }
+    public List<(string Source, string Target)> NativeFiles { get; } = new();
 
     public NugetPackageBuilder(string packageName, string nuspecPath)
     {
@@ -88,6 +90,12 @@ public class NugetPackageBuilder
                 packageBuilder.AddFiles(AppContext.BaseDirectory, "OTAPI.dll", dest);
                 packageBuilder.AddFiles(AppContext.BaseDirectory, "OTAPI.Runtime.dll", dest);
                 packageBuilder.AddFiles(AppContext.BaseDirectory, "OpenNAT.dll", dest);
+            }
+
+            foreach (var (source, target) in NativeFiles)
+            {
+                if (File.Exists(source))
+                    packageBuilder.AddFiles(Path.GetDirectoryName(source), Path.GetFileName(source), target);
             }
 
             var output = Path.Combine(AppContext.BaseDirectory, PackageName);
