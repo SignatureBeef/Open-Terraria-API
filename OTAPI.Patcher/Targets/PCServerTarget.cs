@@ -57,6 +57,25 @@ public class PCServerTarget : IServerPatchTarget
         modder.RelinkAssembly("ReLogic");
     }
 
+    public virtual void RegisterNativeFiles(string vanillaDllPath)
+    {
+        var root = Path.GetDirectoryName(Path.GetDirectoryName(vanillaDllPath)!)!;
+        var natives = new (string Source, string Rid)[]
+        {
+            (Path.Combine(root, "Linux", "lib64", "libGNS_Wrapper.so"), "linux-x64"),
+            (Path.Combine(root, "Linux", "lib64", "libprotobuf.so.3.15.3.0"), "linux-x64"),
+            (Path.Combine(root, "Linux", "lib64", "libssl.so.1.1"), "linux-x64"),
+            (Path.Combine(root, "Linux", "lib64", "libcrypto.so.1.1"), "linux-x64"),
+            (Path.Combine(root, "Mac", "Terraria Server.app", "Contents", "MacOS", "osx", "libGNS_Wrapper.dylib"), "osx-x64"),
+            (Path.Combine(root, "Mac", "Terraria Server.app", "Contents", "MacOS", "osx", "libGNS_Wrapper.dylib"), "osx-arm64"),
+        };
+        foreach (var (source, rid) in natives)
+        {
+            if (File.Exists(source))
+                NugetPackager.NativeFiles.Add((source, Path.Combine("runtimes", rid, "native")));
+        }
+    }
+
     public virtual void AddVersion(ModFwModder modder)
     {
         modder.AddVersion(Common.GetVersion());
@@ -88,6 +107,7 @@ public class PCServerTarget : IServerPatchTarget
             Common.AddMarkdownFormatter();
 
             var vanillaDllPath = await DownloadServerAsync();
+            RegisterNativeFiles(vanillaDllPath);
             var vanillaName = Path.GetFileNameWithoutExtension(vanillaDllPath);
 
             Console.WriteLine("[OTAPI] Extracting embedded binaries and packing into one binary...");
