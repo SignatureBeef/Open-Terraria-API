@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (C) 2020 DeathCradle
 
 This file is part of Open Terraria API v3 (OTAPI)
@@ -43,7 +43,7 @@ void PatchNetplayBroadcast(MonoModder modder)
         i => i.OpCode == OpCodes.Call
             && i.Operand is MethodReference methodReference
             && methodReference.Name == "Sleep"
-            && i.Next.OpCode == OpCodes.Br_S
+            && (i.Next.OpCode == OpCodes.Br_S || i.Next.OpCode == OpCodes.Br)
     );
 
     BroadcastThread.Index++;
