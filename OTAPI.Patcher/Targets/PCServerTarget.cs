@@ -100,6 +100,11 @@ public class PCServerTarget : IServerPatchTarget
             var otapiDllDestination = Path.Combine(ModContext.BaseDirectory, "OTAPI.dll");
             var otapiRuntimeDllDestination = Path.Combine(ModContext.BaseDirectory, "OTAPI.Runtime.dll");
 
+            // Copy OpenNAT.dll to the output directory
+            var vanillaDirectory = Path.GetDirectoryName(vanillaDllPath);
+            var openNatDllDestination = Path.Combine(ModContext.BaseDirectory, "OpenNAT.dll");
+            File.Copy(Path.Combine(vanillaDirectory, "OpenNAT.dll"), openNatDllDestination, true);
+            
             ModContext.ReferenceFiles.AddRange(new[]
             {
                 "ModFramework.dll",

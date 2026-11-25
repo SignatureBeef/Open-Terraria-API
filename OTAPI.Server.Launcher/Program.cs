@@ -233,6 +233,8 @@ Terraria.Program.ModContext.ReferenceFiles.Add("ModFramework.dll");
 
 bool IsMono = Type.GetType("Mono.Runtime") != null;
 
+Terraria.Netplay.UseGNS = false;
+
 var asm = GetTerrariaAssembly();
 
 AppDomain.CurrentDomain.AssemblyResolve += delegate(object sender, ResolveEventArgs sargs)
