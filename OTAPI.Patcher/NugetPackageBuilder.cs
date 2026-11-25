@@ -87,6 +87,7 @@ public class NugetPackageBuilder
                 var dest = Path.Combine("lib", platform);
                 packageBuilder.AddFiles(AppContext.BaseDirectory, "OTAPI.dll", dest);
                 packageBuilder.AddFiles(AppContext.BaseDirectory, "OTAPI.Runtime.dll", dest);
+                packageBuilder.AddFiles(AppContext.BaseDirectory, "OpenNAT.dll", dest);
             }
 
             var output = Path.Combine(AppContext.BaseDirectory, PackageName);
