@@ -37,30 +37,48 @@ using System.Linq;
 [MonoMod.MonoModIgnore]
 void HardModeTileUpdates(MonoModder modder)
 {
-    var tile = modder.GetFieldDefinition(() => Terraria.Main.tile);
-    var tileType = (tile.FieldType as ArrayType).ElementType;
     var csr = modder.GetILCursor(() => Terraria.WorldGen.hardUpdateWorld(0, 0));
 
+    // from v1.4.5, direct tile type updates are now wrapped inside the WorldGen.Convert method
     var targets = csr.Body.Instructions.Where(ins =>
-        //(instruction.Operand is FieldReference fieldRef) && fieldRef.FullName == tile.FullName
-        ins.OpCode == OpCodes.Stfld
-        && ins.Operand is FieldReference fieldRef
-        && fieldRef.DeclaringType.FullName == tileType.FullName
-        && fieldRef.Name == "type"
-    ).ToArray();
+        ins.OpCode == OpCodes.Call && 
+        ins.Operand is MethodReference methodRef &&
+        methodRef.DeclaringType.FullName == "Terraria.WorldGen" &&
+        methodRef.Name == "Convert"
+        ).ToArray();
 
     foreach (var match in targets)
     {
         csr.Goto(match);
 
-        // move back to the tile collection being pushed on the stack, we will wrap this up until SendTileSquare
-        csr.GotoPrev(MoveType.Before, ins => ins.OpCode == OpCodes.Ldsfld && (ins.Operand as FieldReference).Name == "tile");
+        // trace back to find the tile position being pushed onto on the stack as an argument for WorldGen.Convert method
+        // we will use this to correctly find the correct branch to insert our hook
+        csr.FindPrev(out ILCursor[] tileLoadCursors, 
+            xIns => xIns.OpCode == OpCodes.Ldloc_S, 
+            yIns => yIns.OpCode == OpCodes.Ldloc_S
+            );
+
+        if (tileLoadCursors.Length != 2)
+            throw new Exception($"{nameof(Terraria.WorldGen.hardUpdateWorld)} unable to find tile position for WorldGen.Convert");
+
+        var convertArgsStart = tileLoadCursors[0].Next;
+
+        // move back to the tile position being pushed onto the stack, we will wrap this up until WorldGen.Convert
+        csr.GotoPrev(MoveType.After, ins =>
+            ins.OpCode.FlowControl == FlowControl.Cond_Branch && 
+            ins.Operand != convertArgsStart // this is to also include the WorldGen.genRand.Next branch
+            );
 
         // store this for later. otherwise we need to cycle back to here, so its easier to just store it upfront
         var startOfBranch = csr.Next;
 
         // find the instruction to where our cancel code should end up.
-        csr.FindNext(out ILCursor[] continuation, ins => ins.OpCode == OpCodes.Call && (ins.Operand as MethodReference).Name == "SendTileSquare");
+        csr.FindNext(out ILCursor[] continuation,  ins =>
+            ins.OpCode == OpCodes.Call &&
+            ins.Operand is MethodReference methodRef &&
+            methodRef.DeclaringType.FullName == "Terraria.WorldGen" && 
+            methodRef.Name == "Convert"
+            );
 
         if (continuation.Length != 1)
             throw new Exception($"{nameof(Terraria.WorldGen.hardUpdateWorld)} unable to determine continuation branch.");
@@ -71,20 +89,13 @@ void HardModeTileUpdates(MonoModder modder)
         var nop = csr.Emit(OpCodes.Nop).Prev;
         startOfBranch.ReplaceTransfer(nop, csr.Method);
 
-        // add the x/y (params)
-        var param = startOfBranch.Next;
+        // add the x, y, biomeConversionType, walls, tiles (params)
+        var param = convertArgsStart;
         while (param.OpCode.FlowControl != FlowControl.Call)
         {
             csr.Emit(param.OpCode, param.Operand);
             param = param.Next;
         }
-
-        // find the tile type instruction and add it to our param stack.
-        csr.FindNext(out ILCursor[] csrTypes, ins => ins.OpCode == OpCodes.Ldc_I4_S || ins.OpCode == OpCodes.Ldc_I4);
-        if (csrTypes.Length != 1)
-            throw new Exception($"{nameof(Terraria.WorldGen.hardUpdateWorld)} unable to determine type instructions.");
-
-        csr.Emit(csrTypes[0].Next.OpCode, csrTypes[0].Next.Operand);
 
         csr.EmitDelegate(OTAPI.Hooks.WorldGen.InvokeHardmodeTileUpdate);
         csr.Emit(OpCodes.Brfalse_S, continueBranch);
@@ -103,25 +114,24 @@ namespace OTAPI
 
                 public int X { get; set; }
                 public int Y { get; set; }
-                public int Type { get; set; }
+                public int BiomeConversionType { get; set; }
+                public bool Walls { get; set; }
+                public bool Tiles { get; set; }
             }
             public static event EventHandler<HardmodeTileUpdateEventArgs> HardmodeTileUpdate;
 
-            public static bool InvokeHardmodeTileUpdate(int x, int y, ushort type)
+            public static bool InvokeHardmodeTileUpdate(int x, int y, int biomeConversionType, bool walls, bool tiles)
             {
                 var args = new HardmodeTileUpdateEventArgs()
                 {
                     X = x,
                     Y = y,
-                    Type = type,
+                    BiomeConversionType = biomeConversionType,
+                    Walls = walls,
+                    Tiles = tiles,
                 };
-
                 HardmodeTileUpdate?.Invoke(null, args);
-
-                if (args.Result == HookResult.Cancel)
-                    return false;
-
-                return true;
+                return args.Result != HookResult.Cancel;
             }
         }
     }
